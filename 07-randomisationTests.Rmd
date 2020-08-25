@@ -249,7 +249,7 @@ Therefore to carry out this test, we can permute the SIGN of the change in weigh
 ```{r}
 head(an)
 
-anSuffled <- an %>%
+anShuffled <- an %>%
   mutate(sign = sample(c(1,-1),size = nrow(an),replace = TRUE)) %>%
   mutate(shuffledChange = change * sign)
 ```

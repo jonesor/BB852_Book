@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics</title>
+  <meta name="description" content="This is the course book for BB852." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the course book for BB852." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics" />
+  
+  <meta name="twitter:description" content="This is the course book for BB852." />
+  
+
+<meta name="author" content="Owen Jones" />
+
+
+<meta name="date" content="2020-08-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="linear-models-with-a-single-continuous-explanatory-variable.html"/>
+<link rel="next" href="generalised-linear-models.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">BB852</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#data-wrangling"><i class="fa fa-check"></i><b>1.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-visualisation"><i class="fa fa-check"></i><b>1.2</b> Data visualisation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#statistics"><i class="fa fa-check"></i><b>1.3</b> Statistics</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#general-approach"><i class="fa fa-check"></i><b>1.4</b> General approach</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.5</b> Data sources</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.6</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#error-reporting"><i class="fa fa-check"></i><b>1.7</b> Error reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting acquainted with R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#getting-started-with-r"><i class="fa fa-check"></i><b>2.2</b> Getting started with R</a></li>
+<li class="chapter" data-level="2.3" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting help</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#r-as-a-fancy-calculator"><i class="fa fa-check"></i><b>2.4</b> R as a fancy calculator</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#objects-in-r"><i class="fa fa-check"></i><b>2.5</b> Objects in R</a></li>
+<li class="chapter" data-level="2.6" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#missing-values-infinity-and-non-numbers"><i class="fa fa-check"></i><b>2.6</b> Missing values, infinity and “non-numbers”</a></li>
+<li class="chapter" data-level="2.7" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#basic-information-about-objects"><i class="fa fa-check"></i><b>2.7</b> Basic information about objects</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#data-frames"><i class="fa fa-check"></i><b>2.8</b> Data frames</a></li>
+<li class="chapter" data-level="2.9" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#classes-in-r"><i class="fa fa-check"></i><b>2.9</b> Classes in R</a></li>
+<li class="chapter" data-level="2.10" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#tables-and-summary-statistics"><i class="fa fa-check"></i><b>2.10</b> Tables and summary statistics</a></li>
+<li class="chapter" data-level="2.11" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#plotting-data"><i class="fa fa-check"></i><b>2.11</b> Plotting data</a></li>
+<li class="chapter" data-level="2.12" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#exercises---getting-acquainted-with-r"><i class="fa fa-check"></i><b>2.12</b> Exercises - Getting acquainted with R</a>
+<ul>
+<li class="chapter" data-level="2.12.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#background"><i class="fa fa-check"></i><b>2.12.1</b> Background</a></li>
+<li class="chapter" data-level="2.12.2" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#the-data"><i class="fa fa-check"></i><b>2.12.2</b> The data</a></li>
+<li class="chapter" data-level="2.12.3" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#try-the-following"><i class="fa fa-check"></i><b>2.12.3</b> Try the following</a></li>
+<li class="chapter" data-level="2.12.4" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#references"><i class="fa fa-check"></i><b>2.12.4</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>3</b> Data wrangling with dplyr</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#select"><i class="fa fa-check"></i><b>3.2</b> select</a></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>3.3</b> filter</a></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>3.4</b> arrange</a></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>3.5</b> summarise and group_by</a></li>
+<li class="chapter" data-level="3.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>3.6</b> Using pipes, saving data.</a></li>
+<li class="chapter" data-level="3.7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercises---data-wrangling"><i class="fa fa-check"></i><b>3.7</b> Exercises - data wrangling</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exploring-the-amniote-life-history-database"><i class="fa fa-check"></i><b>3.7.1</b> Exploring the Amniote Life History Database</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>4</b> Combining data sets</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="combining-data-sets.html"><a href="combining-data-sets.html#exercise---joining-datasets"><i class="fa fa-check"></i><b>4.1</b> Exercise - joining datasets</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#the-data"><i class="fa fa-check"></i><b>4.1.1</b> The data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="combining-data-sets.html"><a href="combining-data-sets.html#the-bird-data"><i class="fa fa-check"></i><b>4.1.2</b> The bird data</a></li>
+<li class="chapter" data-level="4.1.3" data-path="combining-data-sets.html"><a href="combining-data-sets.html#the-weather-data"><i class="fa fa-check"></i><b>4.1.3</b> The weather data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Visualising data with ggplot2</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#histograms"><i class="fa fa-check"></i><b>5.2</b> Histograms</a></li>
+<li class="chapter" data-level="5.3" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#facets---splitting-data-across-panels"><i class="fa fa-check"></i><b>5.3</b> “Facets” - splitting data across panels</a></li>
+<li class="chapter" data-level="5.4" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>5.4</b> box plots</a></li>
+<li class="chapter" data-level="5.5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#lines-and-points"><i class="fa fa-check"></i><b>5.5</b> lines and points</a></li>
+<li class="chapter" data-level="5.6" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#scatter-plot"><i class="fa fa-check"></i><b>5.6</b> scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html"><i class="fa fa-check"></i><b>6</b> Distributions and summarising data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#distributions"><i class="fa fa-check"></i><b>6.2</b> Distributions</a></li>
+<li class="chapter" data-level="6.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#normal-distribution"><i class="fa fa-check"></i><b>6.3</b> Normal distribution</a></li>
+<li class="chapter" data-level="6.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#compare-normal-distributions"><i class="fa fa-check"></i><b>6.4</b> Compare normal distributions</a></li>
+<li class="chapter" data-level="6.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#the-poisson-distribution"><i class="fa fa-check"></i><b>6.5</b> The Poisson distribution</a></li>
+<li class="chapter" data-level="6.6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>6.6</b> Comparing normal and Poisson distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="customising-your-plots.html"><a href="customising-your-plots.html"><i class="fa fa-check"></i><b>7</b> Customising your plots</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="customising-your-plots.html"><a href="customising-your-plots.html#a-basic-plot"><i class="fa fa-check"></i><b>7.2</b> A basic plot</a></li>
+<li class="chapter" data-level="7.3" data-path="customising-your-plots.html"><a href="customising-your-plots.html#axis-limits"><i class="fa fa-check"></i><b>7.3</b> Axis limits</a></li>
+<li class="chapter" data-level="7.4" data-path="customising-your-plots.html"><a href="customising-your-plots.html#transforming-the-axis-log-scale"><i class="fa fa-check"></i><b>7.4</b> Transforming the axis (log scale)</a></li>
+<li class="chapter" data-level="7.5" data-path="customising-your-plots.html"><a href="customising-your-plots.html#changing-the-axis-tick-marks"><i class="fa fa-check"></i><b>7.5</b> Changing the axis tick marks</a></li>
+<li class="chapter" data-level="7.6" data-path="customising-your-plots.html"><a href="customising-your-plots.html#axis-labels"><i class="fa fa-check"></i><b>7.6</b> Axis labels</a></li>
+<li class="chapter" data-level="7.7" data-path="customising-your-plots.html"><a href="customising-your-plots.html#colours"><i class="fa fa-check"></i><b>7.7</b> Colours</a></li>
+<li class="chapter" data-level="7.8" data-path="customising-your-plots.html"><a href="customising-your-plots.html#themes"><i class="fa fa-check"></i><b>7.8</b> Themes</a></li>
+<li class="chapter" data-level="7.9" data-path="customising-your-plots.html"><a href="customising-your-plots.html#moving-the-legend"><i class="fa fa-check"></i><b>7.9</b> Moving the legend</a></li>
+<li class="chapter" data-level="7.10" data-path="customising-your-plots.html"><a href="customising-your-plots.html#combining-multiple-plots"><i class="fa fa-check"></i><b>7.10</b> Combining multiple plots</a></li>
+<li class="chapter" data-level="7.11" data-path="customising-your-plots.html"><a href="customising-your-plots.html#saving-your-plot"><i class="fa fa-check"></i><b>7.11</b> Saving your plot</a></li>
+<li class="chapter" data-level="7.12" data-path="customising-your-plots.html"><a href="customising-your-plots.html#final-word-on-plots"><i class="fa fa-check"></i><b>7.12</b> Final word on plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="randomisation-tests.html"><a href="randomisation-tests.html"><i class="fa fa-check"></i><b>8</b> Randomisation Tests</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-example"><i class="fa fa-check"></i><b>8.2</b> The example</a></li>
+<li class="chapter" data-level="8.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#setting-up"><i class="fa fa-check"></i><b>8.3</b> Setting up</a></li>
+<li class="chapter" data-level="8.4" data-path="randomisation-tests.html"><a href="randomisation-tests.html#calculate-the-observed-difference"><i class="fa fa-check"></i><b>8.4</b> Calculate the observed difference</a></li>
+<li class="chapter" data-level="8.5" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution"><i class="fa fa-check"></i><b>8.5</b> Null distribution</a></li>
+<li class="chapter" data-level="8.6" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-significance"><i class="fa fa-check"></i><b>8.6</b> Testing significance</a></li>
+<li class="chapter" data-level="8.7" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-the-hypothesis"><i class="fa fa-check"></i><b>8.7</b> Testing the hypothesis</a></li>
+<li class="chapter" data-level="8.8" data-path="randomisation-tests.html"><a href="randomisation-tests.html#writing-it-up"><i class="fa fa-check"></i><b>8.8</b> Writing it up</a></li>
+<li class="chapter" data-level="8.9" data-path="randomisation-tests.html"><a href="randomisation-tests.html#paired-randomisation-tests"><i class="fa fa-check"></i><b>8.9</b> Paired Randomisation Tests</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#plot-the-data"><i class="fa fa-check"></i><b>8.9.1</b> Plot the data</a></li>
+<li class="chapter" data-level="8.9.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-paired-randomisation-test"><i class="fa fa-check"></i><b>8.9.2</b> The paired randomisation test</a></li>
+<li class="chapter" data-level="8.9.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#plot-the-null-distribution"><i class="fa fa-check"></i><b>8.9.3</b> Plot the null distribution</a></li>
+<li class="chapter" data-level="8.9.4" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-formal-hypothesis-test"><i class="fa fa-check"></i><b>8.9.4</b> The formal hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="randomisation-tests.html"><a href="randomisation-tests.html#exercises---randomisation-tests"><i class="fa fa-check"></i><b>8.10</b> Exercises - Randomisation tests</a>
+<ul>
+<li class="chapter" data-level="8.10.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#introduction-1"><i class="fa fa-check"></i><b>8.10.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.10.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#your-task"><i class="fa fa-check"></i><b>8.10.2</b> Your task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html"><i class="fa fa-check"></i><b>9</b> Comparing two means with a t-test</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#some-theory."><i class="fa fa-check"></i><b>9.1</b> Some theory.</a></li>
+<li class="chapter" data-level="9.2" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#one-sample-t-test"><i class="fa fa-check"></i><b>9.2</b> One sample t-test</a></li>
+<li class="chapter" data-level="9.3" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#doing-it-by-hand---where-does-the-t-statistic-come-from"><i class="fa fa-check"></i><b>9.3</b> Doing it “by hand” - where does the t-statistic come from?</a></li>
+<li class="chapter" data-level="9.4" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#paired-t-test"><i class="fa fa-check"></i><b>9.4</b> Paired t-test</a></li>
+<li class="chapter" data-level="9.5" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#a-paired-t-test-is-a-one-sample-test."><i class="fa fa-check"></i><b>9.5</b> A paired t-test is a one-sample test.</a></li>
+<li class="chapter" data-level="9.6" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#two-sample-t-test"><i class="fa fa-check"></i><b>9.6</b> Two sample t-test</a></li>
+<li class="chapter" data-level="9.7" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#t-tests-are-linear-models"><i class="fa fa-check"></i><b>9.7</b> t-tests are linear models</a></li>
+<li class="chapter" data-level="9.8" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercises---two-sample-t-test"><i class="fa fa-check"></i><b>9.8</b> Exercises - Two-sample t-test</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#paired-t-test-1"><i class="fa fa-check"></i><b>9.8.1</b> Paired t-test</a></li>
+<li class="chapter" data-level="9.8.2" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#optional-extra."><i class="fa fa-check"></i><b>9.8.2</b> Optional extra.</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html"><i class="fa fa-check"></i><b>10</b> Linear models with a single categorical explanatory variable</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#one-way-anova"><i class="fa fa-check"></i><b>10.2</b> One-way ANOVA</a></li>
+<li class="chapter" data-level="10.3" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#fitting-an-anova-in-r"><i class="fa fa-check"></i><b>10.3</b> Fitting an ANOVA in R</a></li>
+<li class="chapter" data-level="10.4" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>10.4</b> Where are the differences?</a></li>
+<li class="chapter" data-level="10.5" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>10.5</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
+<li class="chapter" data-level="10.6" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand-optional"><i class="fa fa-check"></i><b>10.6</b> ANOVA calculation “by hand” (optional)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html"><i class="fa fa-check"></i><b>11</b> Linear models with a several categorical explanatory variables</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#background"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
+<li class="chapter" data-level="11.2" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#fitting-a-two-way-anova-model"><i class="fa fa-check"></i><b>11.2</b> Fitting a two-way ANOVA model</a></li>
+<li class="chapter" data-level="11.3" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#summarising-the-model-anova"><i class="fa fa-check"></i><b>11.3</b> Summarising the model (<code>anova</code>)</a></li>
+<li class="chapter" data-level="11.4" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#summarising-the-model-summary"><i class="fa fa-check"></i><b>11.4</b> Summarising the model (<code>summary</code>)</a></li>
+<li class="chapter" data-level="11.5" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#a-2-way-anova-on-a-fish-behaviour-study"><i class="fa fa-check"></i><b>11.5</b> A 2-way ANOVA on a fish behaviour study</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#background-1"><i class="fa fa-check"></i><b>11.5.1</b> Background</a></li>
+<li class="chapter" data-level="11.5.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#your-task"><i class="fa fa-check"></i><b>11.5.2</b> Your task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>12</b> Linear models with a single continuous explanatory variable</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#background"><i class="fa fa-check"></i><b>12.1</b> Background</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#some-theory"><i class="fa fa-check"></i><b>12.2</b> Some theory</a></li>
+<li class="chapter" data-level="12.3" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#evaluating-a-hypothesis-with-a-linear-regression-model"><i class="fa fa-check"></i><b>12.3</b> Evaluating a hypothesis with a linear regression model</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#assumptions"><i class="fa fa-check"></i><b>12.4</b> Assumptions</a></li>
+<li class="chapter" data-level="12.5" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#an-example-using-r"><i class="fa fa-check"></i><b>12.5</b> An example using R</a></li>
+<li class="chapter" data-level="12.6" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#exercises---linear-regression"><i class="fa fa-check"></i><b>12.6</b> Exercises - Linear Regression</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#background-1"><i class="fa fa-check"></i><b>12.6.1</b> Background</a></li>
+<li class="chapter" data-level="12.6.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#your-task"><i class="fa fa-check"></i><b>12.6.2</b> Your task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html"><i class="fa fa-check"></i><b>13</b> Linear models with categorical and continuous explanatory variables</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#background"><i class="fa fa-check"></i><b>13.1</b> Background</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#the-height-hand-width-example."><i class="fa fa-check"></i><b>13.2</b> The height ~ hand width example.</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#summarising-with-anova"><i class="fa fa-check"></i><b>13.3</b> Summarising with <code>anova</code></a></li>
+<li class="chapter" data-level="13.4" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#the-summary-of-coefficients-summary"><i class="fa fa-check"></i><b>13.4</b> The summary of coefficients (<code>summary</code>)</a></li>
+<li class="chapter" data-level="13.5" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#simplifying-the-model"><i class="fa fa-check"></i><b>13.5</b> Simplifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html"><i class="fa fa-check"></i><b>14</b> Generalised linear models</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#count-data-with-poisson-errors."><i class="fa fa-check"></i><b>14.1</b> Count data with Poisson errors.</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-number-of-offspring-in-foxes."><i class="fa fa-check"></i><b>14.1.1</b> Example: Number of offspring in foxes.</a></li>
+<li class="chapter" data-level="14.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>14.1.2</b> Example: Cancer clusters</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>15</b> Extending use cases of GLM</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#logistic-regression-with-binary-01-data"><i class="fa fa-check"></i><b>15.1</b> Logistic regression with binary (0/1) data</a></li>
+<li class="chapter" data-level="15.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-species-presenceabsence-data"><i class="fa fa-check"></i><b>15.2</b> Example: species presence/absence data</a></li>
+<li class="chapter" data-level="15.3" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#binomial-regression-with-proportionratio-data"><i class="fa fa-check"></i><b>15.3</b> Binomial regression with proportion/ratio data</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-sex-ratios"><i class="fa fa-check"></i><b>15.3.1</b> Example: sex ratios</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="power-and-study-design.html"><a href="power-and-study-design.html"><i class="fa fa-check"></i><b>16</b> Power and study design</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="power-and-study-design.html"><a href="power-and-study-design.html#power-analysis-by-simulation"><i class="fa fa-check"></i><b>16.1</b> Power analysis by simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html"><i class="fa fa-check"></i><b>17</b> Coming soon (maybe)!</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#multivariate-statistics"><i class="fa fa-check"></i><b>17.1</b> Multivariate statistics</a></li>
+<li class="chapter" data-level="17.2" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#transforming-variables"><i class="fa fa-check"></i><b>17.2</b> Transforming variables</a></li>
+<li class="chapter" data-level="17.3" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#non-linear-regression"><i class="fa fa-check"></i><b>17.3</b> Non-linear regression</a></li>
+<li class="chapter" data-level="17.4" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#nested-or-blocked-study-designs"><i class="fa fa-check"></i><b>17.4</b> Nested or blocked study designs</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BB852 - Data handling, visualisation and statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-models-with-categorical-and-continuous-explanatory-variables" class="section level1" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Linear models with categorical and continuous explanatory variables</h1>
+<div id="background" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Background</h2>
+<p>In the previous worksheet we looked at linear models where there is a continuous response variable and two categorical explanatory variables (we call this type of linear model two-way ANOVA). In this worksheet we will look at linear models where the explanatory variables are both continuous and categorical. You can think of these as a kind of cross between ANOVA and linear regression. These type of models are often given the name “<em>ANCOVA</em>” or <em>Analysis of Covariance</em>.</p>
+<p>In a simple case, you might be interested in a model with a continuous response variable (e.g. height) and continous and a categorical explanatory variables (e.g. hand width and gender). The categoreical variable may have any number of levels, but the simplest case is with two (e.g. gender with male and female levels).</p>
+<p>Some of these different possible outcomes of this type of analysis are illustrated in Figure . We might see that neither of the two explanatory variables has a significant effect. We might see that one of them does but not the other one. We might see an interaction effect (where the effect of one variable (e.g. hand width) depends on the other (e.g gender). We might also see an interaction effect but no main effect.</p>
+<div class="figure" style="text-align: center"><span id="fig:ANCOVApossibilities"></span>
+<img src="BB852_files/figure-html/ANCOVApossibilities-1.png" alt="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not)." width="960" />
+<p class="caption">
+Figure 13.1: Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).
+</p>
+</div>
+</div>
+<div id="the-height-hand-width-example." class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> The height ~ hand width example.</h2>
+<p>In a previous class (linear regression) you explored the relationship between hand width and height. The aim there was (1) to determine if the relationship (i.e. the slope) was significantly differnet from 0. and (2) to make an estimate of what the equation of the relationship would be so you could make predictions of height from hand width.</p>
+<p>Here we will extend that example by asking whether there are differences between males and females.</p>
+<p>We’ll begin by plotting the data (Figure ).</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb383-1" aria-hidden="true"></a>classData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>)</span>
+<span id="cb383-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb383-2" aria-hidden="true"></a>(A&lt;-<span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height,<span class="dt">colour =</span> Gender)) <span class="op">+</span></span>
+<span id="cb383-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb383-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb383-4"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb383-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span><span class="st">&quot;lm&quot;</span>,<span class="dt">se =</span> <span class="ot">FALSE</span>)) <span class="co">#This shows the ANCOVA model </span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:exampleANCOVA"></span>
+<img src="BB852_files/figure-html/exampleANCOVA-1.png" alt="ANCOVA on hand width vs. height data in males and females" width="432" />
+<p class="caption">
+Figure 13.2: ANCOVA on hand width vs. height data in males and females
+</p>
+</div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb384-1" aria-hidden="true"></a>                                       <span class="co">#before we have even fit it!</span></span></code></pre></div>
+<p>You can see that our two continuous variables, <code>Height</code> (the response variable) and <code>HandWidth</code> (one of the explanatory variables) are associated: There is an overall positive relationship between <code>HandWidth</code> and <code>Height</code> You can also see that <code>Gender</code> (the categorical explanatory variable) is important: males tend to be taller than females for any given hand width. For example, a female with hand width of 9cm is ~172cm tall while a male would be about 180cm tall. This shows us that males have a higher <strong>intercept</strong> than females. There is also a <strong>slight</strong> difference in the slope of the relationship, with males having a slightly steeper slope than females. We already know that the overall relationship between hand width and height is significant (from the regression worksheet). These new observations leave us with the following additional questions: (1) are the intercepts for males and females significantly different? (2) are the slopes for males and females significantly different (or would a model with a single slope, but different intercepts be better)?</p>
+<p>Now we can fit our model using the <code>lm</code> function. The model formula is <code>Height ~ HandWidth + Gender + HandWidth:Gender</code>. The <code>HandWidth</code> and <code>Gender</code> are the so called <strong>main effects</strong> while <code>HandWidth:Gender</code> represents the interaction between them (i.e. it is used to address the question “<em>does the effect of hand width differ between the sexes?</em>”). R knows that is fitting an ANCOVA type model rather than a two-way ANOVA because it knows the type of variables that it is dealing with. You can see this if you ask R to tell you what the <code>class</code> of the variables are:</p>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb385-1" aria-hidden="true"></a><span class="kw">class</span>(classData<span class="op">$</span>Gender)</span></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb387-1" aria-hidden="true"></a><span class="kw">class</span>(classData<span class="op">$</span>HandWidth)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb389-1" aria-hidden="true"></a>mod_A &lt;-<span class="st"> </span><span class="kw">lm</span>(Height <span class="op">~</span><span class="st"> </span>HandWidth <span class="op">+</span><span class="st"> </span>Gender <span class="op">+</span><span class="st"> </span>HandWidth<span class="op">:</span>Gender, <span class="dt">data =</span> classData)</span></code></pre></div>
+<p>The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size. Nevertheless, lets keep with good habits:</p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb390-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
+<span id="cb390-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb390-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-220-1.png" width="672" /></p>
+<p>These look good. No evidence of non-normality in the residuals, no heteroscedasticity and no weird outliers.</p>
+</div>
+<div id="summarising-with-anova" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Summarising with <code>anova</code></h2>
+<p>Now we can get the <code>anova</code> table of our ANCOVA model (yes, I know that sounds strange.).</p>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb391-1" aria-hidden="true"></a><span class="kw">anova</span>(mod_A)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Height
+##                  Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## HandWidth         1 1038.46 1038.46 40.8621 7.576e-07 ***
+## Gender            1  369.46  369.46 14.5378 0.0007246 ***
+## HandWidth:Gender  1    4.89    4.89  0.1922 0.6645538    
+## Residuals        27  686.17   25.41                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>This type of <em>sequential sum of squares</em> Analysis of Variance table should be getting fairly familiar to you now, but let’s unpack what this means. There are four rows in the summary table - one for each of the terms in the model (<code>HandWidth</code>, <code>Gender</code> and <code>HandWidth:Gender</code>), and one for the <code>Residuals</code> (the unexplained variation that remains after fitting the model). The table includes degrees of freedom (<code>Df</code>), sum of squares (<code>Sum Sq</code>), mean sum of squares (<code>Mean Sq</code>) and the associated F and p-values (<code>F value</code> and <code>Pr(&gt;F)</code>.</p>
+<p>You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by a model that includes a common slope for both genders (1038.46). Then it tells us that an <em>additional</em> bit of variation (369.46) is captured if we allow the intercepts to vary with gender. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the genders (4.89). Finally, there is a bit of unexplained variation left over (Residuals) (25.41). So you can see that hand width explains most variation, followed by gender, followed by the interaction between them.</p>
+<p>You would report from this table something like this:</p>
+<p><em>Hand width and gender both explain a significant amount of the variation in height (ANCOVA - Handwidth: F = 40.862, d.f. = 1 and 27, p&lt;0.001; Gender: F = 14.538, d.f. = 1 and 27, p&lt;0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand width and height are not significantly different (ANCOVA - F = 0.192, d.f. = 1 and 27, p = 0.665).</em></p>
+<p>It is of course useful to take the interpretation a bit further. You could do this with reference to the plot - e.g. <em>Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller.</em></p>
+</div>
+<div id="the-summary-of-coefficients-summary" class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> The summary of coefficients (<code>summary</code>)</h2>
+<p>To put some quantitative numbers on this description of the pattern we need to get the summary from R.</p>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb393-1" aria-hidden="true"></a><span class="kw">summary</span>(mod_A)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Height ~ HandWidth + Gender + HandWidth:Gender, 
+##     data = classData)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -9.480 -4.096  1.845  3.195  7.821 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)          154.9285    10.3206  15.012 1.26e-14 ***
+## HandWidth              1.7667     1.2707   1.390    0.176    
+## GenderMale             1.3710    18.4712   0.074    0.941    
+## HandWidth:GenderMale   0.8839     2.0160   0.438    0.665    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.041 on 27 degrees of freedom
+## Multiple R-squared:  0.6731,	Adjusted R-squared:  0.6368 
+## F-statistic: 18.53 on 3 and 27 DF,  p-value: 9.892e-07</code></pre>
+<p>This summary table gives the coefficients of the statistical model, their standard errors, and the t-test results of whether the estimate is greater than 0. This is the same as the <code>summary</code> tables given for ANOVA and linear regression.</p>
+<p>In the ANOVA <code>summary</code> tables, the estimates were given in relation to the <em>reference level</em> – the <code>(Intercept)</code> and these ANCOVA <code>summary</code> tables are no difference. Interpreting is best done with reference to the graph of the data and fitted model outputs (the graph above).</p>
+<p>The reference level (the <code>(Intercept)</code>) is the intercept for the line for the first level of the categorical variable (Females, in this case). Here the model estimates that the intercept for Females is at 154.9 (i.e. if you extended the line out to the left it would eventually cross the y-axis at this point). The next coefficient <code>HandWidth</code> is the slope of this Female line (1.7667). Then we have <code>GenderMale</code>: this coefficient is the difference in intercept between the Female and Male lines. This is followed by the intercept for the interaction term <code>HandWidth:GenderMale</code>: this is the difference between slopes for the two genders.</p>
+<p>We can therefore do some simple arithmetic to get the equations (i.e. slopes and intercepts) of the lines for both genders. For females this is easy (they are reference level, so you can just read the values directly from the table) - the intercept is 154.93 and the slope is 1.77.</p>
+<p>For males the intercept is 154.93 + 1.37 = 156.30. The slope is 1.77 + 0.88 = 2.65</p>
+<p>We could add these equations to our reporting of the results.</p>
+<p><em>Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller. The model fit for males is Height = 2.65<span class="math inline">\(\times\)</span>HandWidth + 156.30 and the fit for females is Height = 1.77<span class="math inline">\(\times\)</span>HandWidth + 154.93</em></p>
+<p>You could check these by using <code>geom_abline</code> to add lines with those equations to the plot (just as a “sanity check”).</p>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb395-1" aria-hidden="true"></a>A <span class="op">+</span><span class="st"> </span></span>
+<span id="cb395-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb395-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">154.93</span>, <span class="dt">slope =</span> <span class="fl">1.77</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb395-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb395-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">156.30</span>, <span class="dt">slope =</span> <span class="fl">2.65</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-223-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>At the bottom of the <code>summary</code> output we are given the <span class="math inline">\(R^2\)</span> values. Because this model has several terms (i.e. variables) in it we should use the adjusted <span class="math inline">\(R^2\)</span> values. These have been corrected for the fact that the model has extra explanatory variables. So in this case, we could report that <em>the model explains 64% of variation in Height (Adjusted <span class="math inline">\(R^2\)</span> = 0.6368)</em> - not bad!</p>
+<p>So, to describe this <code>summary</code> table more generally - the coefficients can be slopes, intercepts, differences between slopes, and differences between intercepts. They are slopes and intercepts for the first level of the categorical variable, and for the subsequent levels they are differences. Piecing these together can be hard to figure out without reference to the plot of the data and model fits - another good reason to plot your data!</p>
+</div>
+<div id="simplifying-the-model" class="section level2" number="13.5">
+<h2><span class="header-section-number">13.5</span> Simplifying the model</h2>
+<p>Our results above showed that the interaction between the gender and hand width was not significant. Think about what that means? It means that the effect of hand width on height (the slope) does <strong>not</strong> depend on gender. Therefore, one can argue that we don’t need to have a model that estimates both slopes - we could have a simpler model with one slope for both genders.</p>
+<p>In fact, creating models that are as simple as possible to explain the observations is a useful goal that is captured by <strong>the law of parsimony</strong> or “<em>Occam’s razor</em>”, which essentially states that simple explanations for a phenomenon are favorable to complex explanations.</p>
+<p>Let’s refit the model without this non-significant interaction:</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb396-1" aria-hidden="true"></a>mod_B &lt;-<span class="st"> </span><span class="kw">lm</span>(Height <span class="op">~</span><span class="st"> </span>HandWidth <span class="op">+</span><span class="st"> </span>Gender, <span class="dt">data =</span> classData)</span>
+<span id="cb396-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb396-2" aria-hidden="true"></a><span class="kw">anova</span>(mod_B)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Height
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## HandWidth  1 1038.46 1038.46  42.076 4.992e-07 ***
+## Gender     1  369.46  369.46  14.970 0.0005963 ***
+## Residuals 28  691.05   24.68                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Now all the terms in the model are significant.</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-1" aria-hidden="true"></a><span class="kw">summary</span>(mod_B)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Height ~ HandWidth + Gender, data = classData)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -9.613 -3.797  1.446  3.203  8.210 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 152.0964     7.9323  19.174  &lt; 2e-16 ***
+## HandWidth     2.1179     0.9722   2.179 0.037945 *  
+## GenderMale    9.3971     2.4288   3.869 0.000596 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.968 on 28 degrees of freedom
+## Multiple R-squared:  0.6708,	Adjusted R-squared:  0.6472 
+## F-statistic: 28.52 on 2 and 28 DF,  p-value: 1.758e-07</code></pre>
+<p>The coefficient summary now gives us a two intercept estimates (152.0964 for females and 152.0964 + 2.1179 = 154.2143 for males) and single estimate for a slope that applies to both genders (2.1179).</p>
+<p>Unfortunately, the handy <code>geom_smooth</code> function cannot handle this simpler model! We must take a slightly different, and sadly mode complicated approach:</p>
+<p>What we need to do is <strong>predict</strong> using the model what the height will be under different conditions. Think of this as “plugging values into an equation”.</p>
+<p>We want to predict heights across the range of hand widths (from 6.5cm to 11cm), and we need to do this for males and females.</p>
+<p>We do this by creating a “fake” dataset to predict from using the useful function <code>expand.grid</code>. This function takes inputs from columns of data and “expands” them to ensure that all possible combinations are included.</p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb400-1" aria-hidden="true"></a>predictData &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">HandWidth =</span> <span class="kw">c</span>(<span class="fl">6.5</span>,<span class="dv">11</span>),<span class="dt">Gender =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>))</span>
+<span id="cb400-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb400-2" aria-hidden="true"></a>predictData</span></code></pre></div>
+<pre><code>##   HandWidth Gender
+## 1       6.5   Male
+## 2      11.0   Male
+## 3       6.5 Female
+## 4      11.0 Female</code></pre>
+<p>Now we can use these values to <code>predict</code> what the heights will be for those particular combinations of values. The arguments for the <code>predict</code> function are the model name, then <code>newdata =</code> to give the function the data that you want to predict from. Here we can use the function to add the models predicted fitted value (<code>fit</code>) to the <code>predictData</code> object we just created.</p>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-1" aria-hidden="true"></a>predictData<span class="op">$</span>Height &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_B,<span class="dt">newdata =</span> predictData)</span>
+<span id="cb402-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-2" aria-hidden="true"></a>predictData</span></code></pre></div>
+<pre><code>##   HandWidth Gender   Height
+## 1       6.5   Male 175.2598
+## 2      11.0   Male 184.7902
+## 3       6.5 Female 165.8626
+## 4      11.0 Female 175.3931</code></pre>
+<p>Now we can add lines for these predicted values to our plot. We do this using the <code>geom_smooth</code> function as before, but this time we use the arguments <code>data = predictData</code> to tell R to use the new data, and <code>stat = "identity"</code> and to ensure that we plot the data rather than fitting any model.</p>
+<p>You may wish to add an error ribbon to these lines. We will cover this in a later class (but see pages 159-164 in the GSWR textbook).</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height,<span class="dt">colour =</span> Gender)) <span class="op">+</span></span>
+<span id="cb404-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb404-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> predictData,<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)           </span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-228-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>We could report this in the usual way but first saying something like: <em>“The interaction term was not significant (F = 0.1922, d.f. 1 and 27, p = 0.665) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender …”</em></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linear-models-with-a-single-continuous-explanatory-variable.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generalised-linear-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jonesor/BB852_Course_Book/edit/master/12-ANCOVA.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+},
+"split_by": "section"
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

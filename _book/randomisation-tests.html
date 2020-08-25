@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Randomisation Tests | BB852 - Data handling, visualisation and statistics</title>
+  <meta name="description" content="This is the course book for BB852." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Randomisation Tests | BB852 - Data handling, visualisation and statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the course book for BB852." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Randomisation Tests | BB852 - Data handling, visualisation and statistics" />
+  
+  <meta name="twitter:description" content="This is the course book for BB852." />
+  
+
+<meta name="author" content="Owen Jones" />
+
+
+<meta name="date" content="2020-08-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="customising-your-plots.html"/>
+<link rel="next" href="comparing-two-means-with-a-t-test.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">BB852</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#data-wrangling"><i class="fa fa-check"></i><b>1.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-visualisation"><i class="fa fa-check"></i><b>1.2</b> Data visualisation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#statistics"><i class="fa fa-check"></i><b>1.3</b> Statistics</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#general-approach"><i class="fa fa-check"></i><b>1.4</b> General approach</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.5</b> Data sources</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.6</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#error-reporting"><i class="fa fa-check"></i><b>1.7</b> Error reporting</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html"><i class="fa fa-check"></i><b>2</b> Getting acquainted with R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#getting-started-with-r"><i class="fa fa-check"></i><b>2.2</b> Getting started with R</a></li>
+<li class="chapter" data-level="2.3" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting help</a></li>
+<li class="chapter" data-level="2.4" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#r-as-a-fancy-calculator"><i class="fa fa-check"></i><b>2.4</b> R as a fancy calculator</a></li>
+<li class="chapter" data-level="2.5" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#objects-in-r"><i class="fa fa-check"></i><b>2.5</b> Objects in R</a></li>
+<li class="chapter" data-level="2.6" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#missing-values-infinity-and-non-numbers"><i class="fa fa-check"></i><b>2.6</b> Missing values, infinity and “non-numbers”</a></li>
+<li class="chapter" data-level="2.7" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#basic-information-about-objects"><i class="fa fa-check"></i><b>2.7</b> Basic information about objects</a></li>
+<li class="chapter" data-level="2.8" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#data-frames"><i class="fa fa-check"></i><b>2.8</b> Data frames</a></li>
+<li class="chapter" data-level="2.9" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#classes-in-r"><i class="fa fa-check"></i><b>2.9</b> Classes in R</a></li>
+<li class="chapter" data-level="2.10" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#tables-and-summary-statistics"><i class="fa fa-check"></i><b>2.10</b> Tables and summary statistics</a></li>
+<li class="chapter" data-level="2.11" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#plotting-data"><i class="fa fa-check"></i><b>2.11</b> Plotting data</a></li>
+<li class="chapter" data-level="2.12" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#exercises---getting-acquainted-with-r"><i class="fa fa-check"></i><b>2.12</b> Exercises - Getting acquainted with R</a>
+<ul>
+<li class="chapter" data-level="2.12.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#background"><i class="fa fa-check"></i><b>2.12.1</b> Background</a></li>
+<li class="chapter" data-level="2.12.2" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#the-data"><i class="fa fa-check"></i><b>2.12.2</b> The data</a></li>
+<li class="chapter" data-level="2.12.3" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#try-the-following"><i class="fa fa-check"></i><b>2.12.3</b> Try the following</a></li>
+<li class="chapter" data-level="2.12.4" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#references"><i class="fa fa-check"></i><b>2.12.4</b> References</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>3</b> Data wrangling with dplyr</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#select"><i class="fa fa-check"></i><b>3.2</b> select</a></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>3.3</b> filter</a></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>3.4</b> arrange</a></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>3.5</b> summarise and group_by</a></li>
+<li class="chapter" data-level="3.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>3.6</b> Using pipes, saving data.</a></li>
+<li class="chapter" data-level="3.7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercises---data-wrangling"><i class="fa fa-check"></i><b>3.7</b> Exercises - data wrangling</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exploring-the-amniote-life-history-database"><i class="fa fa-check"></i><b>3.7.1</b> Exploring the Amniote Life History Database</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>4</b> Combining data sets</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="combining-data-sets.html"><a href="combining-data-sets.html#exercise---joining-datasets"><i class="fa fa-check"></i><b>4.1</b> Exercise - joining datasets</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#the-data"><i class="fa fa-check"></i><b>4.1.1</b> The data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="combining-data-sets.html"><a href="combining-data-sets.html#the-bird-data"><i class="fa fa-check"></i><b>4.1.2</b> The bird data</a></li>
+<li class="chapter" data-level="4.1.3" data-path="combining-data-sets.html"><a href="combining-data-sets.html#the-weather-data"><i class="fa fa-check"></i><b>4.1.3</b> The weather data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Visualising data with ggplot2</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.2" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#histograms"><i class="fa fa-check"></i><b>5.2</b> Histograms</a></li>
+<li class="chapter" data-level="5.3" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#facets---splitting-data-across-panels"><i class="fa fa-check"></i><b>5.3</b> “Facets” - splitting data across panels</a></li>
+<li class="chapter" data-level="5.4" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>5.4</b> box plots</a></li>
+<li class="chapter" data-level="5.5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#lines-and-points"><i class="fa fa-check"></i><b>5.5</b> lines and points</a></li>
+<li class="chapter" data-level="5.6" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#scatter-plot"><i class="fa fa-check"></i><b>5.6</b> scatter plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html"><i class="fa fa-check"></i><b>6</b> Distributions and summarising data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#distributions"><i class="fa fa-check"></i><b>6.2</b> Distributions</a></li>
+<li class="chapter" data-level="6.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#normal-distribution"><i class="fa fa-check"></i><b>6.3</b> Normal distribution</a></li>
+<li class="chapter" data-level="6.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#compare-normal-distributions"><i class="fa fa-check"></i><b>6.4</b> Compare normal distributions</a></li>
+<li class="chapter" data-level="6.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#the-poisson-distribution"><i class="fa fa-check"></i><b>6.5</b> The Poisson distribution</a></li>
+<li class="chapter" data-level="6.6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>6.6</b> Comparing normal and Poisson distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="customising-your-plots.html"><a href="customising-your-plots.html"><i class="fa fa-check"></i><b>7</b> Customising your plots</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="customising-your-plots.html"><a href="customising-your-plots.html#a-basic-plot"><i class="fa fa-check"></i><b>7.2</b> A basic plot</a></li>
+<li class="chapter" data-level="7.3" data-path="customising-your-plots.html"><a href="customising-your-plots.html#axis-limits"><i class="fa fa-check"></i><b>7.3</b> Axis limits</a></li>
+<li class="chapter" data-level="7.4" data-path="customising-your-plots.html"><a href="customising-your-plots.html#transforming-the-axis-log-scale"><i class="fa fa-check"></i><b>7.4</b> Transforming the axis (log scale)</a></li>
+<li class="chapter" data-level="7.5" data-path="customising-your-plots.html"><a href="customising-your-plots.html#changing-the-axis-tick-marks"><i class="fa fa-check"></i><b>7.5</b> Changing the axis tick marks</a></li>
+<li class="chapter" data-level="7.6" data-path="customising-your-plots.html"><a href="customising-your-plots.html#axis-labels"><i class="fa fa-check"></i><b>7.6</b> Axis labels</a></li>
+<li class="chapter" data-level="7.7" data-path="customising-your-plots.html"><a href="customising-your-plots.html#colours"><i class="fa fa-check"></i><b>7.7</b> Colours</a></li>
+<li class="chapter" data-level="7.8" data-path="customising-your-plots.html"><a href="customising-your-plots.html#themes"><i class="fa fa-check"></i><b>7.8</b> Themes</a></li>
+<li class="chapter" data-level="7.9" data-path="customising-your-plots.html"><a href="customising-your-plots.html#moving-the-legend"><i class="fa fa-check"></i><b>7.9</b> Moving the legend</a></li>
+<li class="chapter" data-level="7.10" data-path="customising-your-plots.html"><a href="customising-your-plots.html#combining-multiple-plots"><i class="fa fa-check"></i><b>7.10</b> Combining multiple plots</a></li>
+<li class="chapter" data-level="7.11" data-path="customising-your-plots.html"><a href="customising-your-plots.html#saving-your-plot"><i class="fa fa-check"></i><b>7.11</b> Saving your plot</a></li>
+<li class="chapter" data-level="7.12" data-path="customising-your-plots.html"><a href="customising-your-plots.html#final-word-on-plots"><i class="fa fa-check"></i><b>7.12</b> Final word on plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="randomisation-tests.html"><a href="randomisation-tests.html"><i class="fa fa-check"></i><b>8</b> Randomisation Tests</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-example"><i class="fa fa-check"></i><b>8.2</b> The example</a></li>
+<li class="chapter" data-level="8.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#setting-up"><i class="fa fa-check"></i><b>8.3</b> Setting up</a></li>
+<li class="chapter" data-level="8.4" data-path="randomisation-tests.html"><a href="randomisation-tests.html#calculate-the-observed-difference"><i class="fa fa-check"></i><b>8.4</b> Calculate the observed difference</a></li>
+<li class="chapter" data-level="8.5" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution"><i class="fa fa-check"></i><b>8.5</b> Null distribution</a></li>
+<li class="chapter" data-level="8.6" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-significance"><i class="fa fa-check"></i><b>8.6</b> Testing significance</a></li>
+<li class="chapter" data-level="8.7" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-the-hypothesis"><i class="fa fa-check"></i><b>8.7</b> Testing the hypothesis</a></li>
+<li class="chapter" data-level="8.8" data-path="randomisation-tests.html"><a href="randomisation-tests.html#writing-it-up"><i class="fa fa-check"></i><b>8.8</b> Writing it up</a></li>
+<li class="chapter" data-level="8.9" data-path="randomisation-tests.html"><a href="randomisation-tests.html#paired-randomisation-tests"><i class="fa fa-check"></i><b>8.9</b> Paired Randomisation Tests</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#plot-the-data"><i class="fa fa-check"></i><b>8.9.1</b> Plot the data</a></li>
+<li class="chapter" data-level="8.9.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-paired-randomisation-test"><i class="fa fa-check"></i><b>8.9.2</b> The paired randomisation test</a></li>
+<li class="chapter" data-level="8.9.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#plot-the-null-distribution"><i class="fa fa-check"></i><b>8.9.3</b> Plot the null distribution</a></li>
+<li class="chapter" data-level="8.9.4" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-formal-hypothesis-test"><i class="fa fa-check"></i><b>8.9.4</b> The formal hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="randomisation-tests.html"><a href="randomisation-tests.html#exercises---randomisation-tests"><i class="fa fa-check"></i><b>8.10</b> Exercises - Randomisation tests</a>
+<ul>
+<li class="chapter" data-level="8.10.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#introduction-1"><i class="fa fa-check"></i><b>8.10.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.10.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#your-task"><i class="fa fa-check"></i><b>8.10.2</b> Your task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html"><i class="fa fa-check"></i><b>9</b> Comparing two means with a t-test</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#some-theory."><i class="fa fa-check"></i><b>9.1</b> Some theory.</a></li>
+<li class="chapter" data-level="9.2" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#one-sample-t-test"><i class="fa fa-check"></i><b>9.2</b> One sample t-test</a></li>
+<li class="chapter" data-level="9.3" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#doing-it-by-hand---where-does-the-t-statistic-come-from"><i class="fa fa-check"></i><b>9.3</b> Doing it “by hand” - where does the t-statistic come from?</a></li>
+<li class="chapter" data-level="9.4" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#paired-t-test"><i class="fa fa-check"></i><b>9.4</b> Paired t-test</a></li>
+<li class="chapter" data-level="9.5" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#a-paired-t-test-is-a-one-sample-test."><i class="fa fa-check"></i><b>9.5</b> A paired t-test is a one-sample test.</a></li>
+<li class="chapter" data-level="9.6" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#two-sample-t-test"><i class="fa fa-check"></i><b>9.6</b> Two sample t-test</a></li>
+<li class="chapter" data-level="9.7" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#t-tests-are-linear-models"><i class="fa fa-check"></i><b>9.7</b> t-tests are linear models</a></li>
+<li class="chapter" data-level="9.8" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercises---two-sample-t-test"><i class="fa fa-check"></i><b>9.8</b> Exercises - Two-sample t-test</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#paired-t-test-1"><i class="fa fa-check"></i><b>9.8.1</b> Paired t-test</a></li>
+<li class="chapter" data-level="9.8.2" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#optional-extra."><i class="fa fa-check"></i><b>9.8.2</b> Optional extra.</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html"><i class="fa fa-check"></i><b>10</b> Linear models with a single categorical explanatory variable</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.2" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#one-way-anova"><i class="fa fa-check"></i><b>10.2</b> One-way ANOVA</a></li>
+<li class="chapter" data-level="10.3" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#fitting-an-anova-in-r"><i class="fa fa-check"></i><b>10.3</b> Fitting an ANOVA in R</a></li>
+<li class="chapter" data-level="10.4" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>10.4</b> Where are the differences?</a></li>
+<li class="chapter" data-level="10.5" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>10.5</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
+<li class="chapter" data-level="10.6" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand-optional"><i class="fa fa-check"></i><b>10.6</b> ANOVA calculation “by hand” (optional)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html"><i class="fa fa-check"></i><b>11</b> Linear models with a several categorical explanatory variables</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#background"><i class="fa fa-check"></i><b>11.1</b> Background</a></li>
+<li class="chapter" data-level="11.2" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#fitting-a-two-way-anova-model"><i class="fa fa-check"></i><b>11.2</b> Fitting a two-way ANOVA model</a></li>
+<li class="chapter" data-level="11.3" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#summarising-the-model-anova"><i class="fa fa-check"></i><b>11.3</b> Summarising the model (<code>anova</code>)</a></li>
+<li class="chapter" data-level="11.4" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#summarising-the-model-summary"><i class="fa fa-check"></i><b>11.4</b> Summarising the model (<code>summary</code>)</a></li>
+<li class="chapter" data-level="11.5" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#a-2-way-anova-on-a-fish-behaviour-study"><i class="fa fa-check"></i><b>11.5</b> A 2-way ANOVA on a fish behaviour study</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#background-1"><i class="fa fa-check"></i><b>11.5.1</b> Background</a></li>
+<li class="chapter" data-level="11.5.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#your-task"><i class="fa fa-check"></i><b>11.5.2</b> Your task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>12</b> Linear models with a single continuous explanatory variable</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#background"><i class="fa fa-check"></i><b>12.1</b> Background</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#some-theory"><i class="fa fa-check"></i><b>12.2</b> Some theory</a></li>
+<li class="chapter" data-level="12.3" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#evaluating-a-hypothesis-with-a-linear-regression-model"><i class="fa fa-check"></i><b>12.3</b> Evaluating a hypothesis with a linear regression model</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#assumptions"><i class="fa fa-check"></i><b>12.4</b> Assumptions</a></li>
+<li class="chapter" data-level="12.5" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#an-example-using-r"><i class="fa fa-check"></i><b>12.5</b> An example using R</a></li>
+<li class="chapter" data-level="12.6" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#exercises---linear-regression"><i class="fa fa-check"></i><b>12.6</b> Exercises - Linear Regression</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="linear-models-with-a-several-categorical-explanatory-variables.html"><a href="linear-models-with-a-several-categorical-explanatory-variables.html#background-1"><i class="fa fa-check"></i><b>12.6.1</b> Background</a></li>
+<li class="chapter" data-level="12.6.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#your-task"><i class="fa fa-check"></i><b>12.6.2</b> Your task</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html"><i class="fa fa-check"></i><b>13</b> Linear models with categorical and continuous explanatory variables</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#background"><i class="fa fa-check"></i><b>13.1</b> Background</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#the-height-hand-width-example."><i class="fa fa-check"></i><b>13.2</b> The height ~ hand width example.</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#summarising-with-anova"><i class="fa fa-check"></i><b>13.3</b> Summarising with <code>anova</code></a></li>
+<li class="chapter" data-level="13.4" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#the-summary-of-coefficients-summary"><i class="fa fa-check"></i><b>13.4</b> The summary of coefficients (<code>summary</code>)</a></li>
+<li class="chapter" data-level="13.5" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#simplifying-the-model"><i class="fa fa-check"></i><b>13.5</b> Simplifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html"><i class="fa fa-check"></i><b>14</b> Generalised linear models</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#count-data-with-poisson-errors."><i class="fa fa-check"></i><b>14.1</b> Count data with Poisson errors.</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-number-of-offspring-in-foxes."><i class="fa fa-check"></i><b>14.1.1</b> Example: Number of offspring in foxes.</a></li>
+<li class="chapter" data-level="14.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>14.1.2</b> Example: Cancer clusters</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>15</b> Extending use cases of GLM</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#logistic-regression-with-binary-01-data"><i class="fa fa-check"></i><b>15.1</b> Logistic regression with binary (0/1) data</a></li>
+<li class="chapter" data-level="15.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-species-presenceabsence-data"><i class="fa fa-check"></i><b>15.2</b> Example: species presence/absence data</a></li>
+<li class="chapter" data-level="15.3" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#binomial-regression-with-proportionratio-data"><i class="fa fa-check"></i><b>15.3</b> Binomial regression with proportion/ratio data</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-sex-ratios"><i class="fa fa-check"></i><b>15.3.1</b> Example: sex ratios</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="power-and-study-design.html"><a href="power-and-study-design.html"><i class="fa fa-check"></i><b>16</b> Power and study design</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="power-and-study-design.html"><a href="power-and-study-design.html#power-analysis-by-simulation"><i class="fa fa-check"></i><b>16.1</b> Power analysis by simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html"><i class="fa fa-check"></i><b>17</b> Coming soon (maybe)!</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#multivariate-statistics"><i class="fa fa-check"></i><b>17.1</b> Multivariate statistics</a></li>
+<li class="chapter" data-level="17.2" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#transforming-variables"><i class="fa fa-check"></i><b>17.2</b> Transforming variables</a></li>
+<li class="chapter" data-level="17.3" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#non-linear-regression"><i class="fa fa-check"></i><b>17.3</b> Non-linear regression</a></li>
+<li class="chapter" data-level="17.4" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#nested-or-blocked-study-designs"><i class="fa fa-check"></i><b>17.4</b> Nested or blocked study designs</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BB852 - Data handling, visualisation and statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="randomisation-tests" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Randomisation Tests</h1>
+<div id="introduction" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Introduction</h2>
+<p>Simple experiments testing for a difference in mean values between two groups usually have the null hypothesis that there is no difference. The alternative hypothesis varies. Sometimes it is simply that the two groups are different (and that the difference could be wither positive or negative). In other cases the alternetive hypothesis is that the mean of Group A is less then the mean of Group B (or that it is greater).</p>
+<p>Randomisation tests are an intuitive, but computationally intensive way of testing these hypotheses. They have a long history and were first proposed by R.A. Fisher in the 1930s. However they only became convenient when computers became sufficiently fast to do the calculations.</p>
+<p>Carrying out a test in R requires that you put your <code>dplyr</code> skills to the test. Here you will be guided through an example.</p>
+</div>
+<div id="the-example" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> The example</h2>
+<p>A new drug has been developed that is supposed to reduce cholesterol levels in men. An experiment has been carried out where 12 human test subjects have been assigned randomly to two groups: “Control” and “Drug”. The pharmaceutical company is hoping that the “Drug” group will have lower cholesterol than the “Control” group. The aim here is to do a randomisation test to check that.</p>
+</div>
+<div id="setting-up" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Setting up</h2>
+<p>First you need to load the <code>tidyverse</code> libraries required (we’ll be making use of <code>dplyr</code>, <code>magrittr</code> and <code>ggplot</code> which are all included in the <code>tidyverse</code> set of packages.</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="randomisation-tests.html#cb241-1" aria-hidden="true"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<p>Next, import the data, called <code>cholesterol</code>. Note that your path will be different from mine, and that you should set your working directory accordingly.</p>
+<p>Let’s first take a look at the data by plotting it. I will first plot a boxplot first, and add the jittered points for clarity.</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="randomisation-tests.html#cb242-1" aria-hidden="true"></a><span class="kw">ggplot</span>(ch,<span class="kw">aes</span>(<span class="dt">x=</span>Treatment,<span class="dt">y=</span>Cholesterol)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb242-2"><a href="randomisation-tests.html#cb242-2" aria-hidden="true"></a><span class="st">      </span><span class="kw">geom_boxplot</span>()<span class="op">+</span></span>
+<span id="cb242-3"><a href="randomisation-tests.html#cb242-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_jitter</span>(<span class="dt">colour=</span><span class="st">&quot;grey&quot;</span>,<span class="dt">width=</span>.<span class="dv">1</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p>It looks like there might be a difference between the groups.
+Now let’s consider our test statistic and our hypotheses. Our test statistic is the difference in mean cholesterol levels between the two groups: mean of control group minus the mean of the drug group.
+The <em>null hypothesis</em> is that there is no difference between these two groups (i.e. the difference should be close to 0)
+The <em>alternative hypothesis</em> is that the mean of the drug group should be less than the mean of the drug group. (i.e. mean of control group minus the mean of the drug group should be negative).</p>
+</div>
+<div id="calculate-the-observed-difference" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Calculate the observed difference</h2>
+<p>There are a few ways of doing this. In base-R you can use the function <code>tapply</code> (“table apply”), followed by <code>diff</code> (“difference”).</p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="randomisation-tests.html#cb243-1" aria-hidden="true"></a><span class="kw">tapply</span>(ch<span class="op">$</span>Cholesterol,ch<span class="op">$</span>Treatment,mean)</span></code></pre></div>
+<pre><code>##  Control     Drug 
+## 205.6667 185.5000</code></pre>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="randomisation-tests.html#cb245-1" aria-hidden="true"></a><span class="kw">diff</span>(<span class="kw">tapply</span>(ch<span class="op">$</span>Cholesterol,ch<span class="op">$</span>Treatment,mean))</span></code></pre></div>
+<pre><code>##      Drug 
+## -20.16667</code></pre>
+<p>Because we are focussing on learning <code>dplyr</code>, you can also calculate the means like like this:</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="randomisation-tests.html#cb247-1" aria-hidden="true"></a>ch <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ch is the cholesterol data</span></span>
+<span id="cb247-2"><a href="randomisation-tests.html#cb247-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(Treatment) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group the data by treatment</span></span>
+<span id="cb247-3"><a href="randomisation-tests.html#cb247-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Cholesterol)) <span class="co"># calculate means</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   Treatment  mean
+##   &lt;chr&gt;     &lt;dbl&gt;
+## 1 Control    206.
+## 2 Drug       186.</code></pre>
+<p>Here the pipes (<code>%&gt;%</code>) are passing the result of each function on as imput to the next.
+You can use further commands, <code>pull</code> to get the <code>mean</code> vector from the summary table, and then use <code>diff</code> to calculate the difference between the groups, before passing that to a value called “<code>observedDiff</code>”.</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="randomisation-tests.html#cb249-1" aria-hidden="true"></a>observedDiff &lt;-<span class="st"> </span>ch <span class="op">%&gt;%</span></span>
+<span id="cb249-2"><a href="randomisation-tests.html#cb249-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(Treatment) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group the data by treatment</span></span>
+<span id="cb249-3"><a href="randomisation-tests.html#cb249-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Cholesterol)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># calculate means</span></span>
+<span id="cb249-4"><a href="randomisation-tests.html#cb249-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># extract the mean vector</span></span>
+<span id="cb249-5"><a href="randomisation-tests.html#cb249-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">diff</span>()</span></code></pre></div>
+<p>This is a complicated set of commands. To make sure that you understand it, try running it bit-by-bit to see what is going on.</p>
+</div>
+<div id="null-distribution" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Null distribution</h2>
+<p>Now we ask, what would the world look like if our null hypothesis was <em>true</em>. To do this we can dissassociate the treatment group variable from the measured cholesterol values. We do this using by using the <code>mutate</code> function to replace the <code>Treatment</code> variable with a shuffled version of itself with the <code>sample</code> function.</p>
+<p>Let’s try that one time:</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="randomisation-tests.html#cb250-1" aria-hidden="true"></a>ch <span class="op">%&gt;%</span></span>
+<span id="cb250-2"><a href="randomisation-tests.html#cb250-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Treatment =</span> <span class="kw">sample</span>(Treatment)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#shuffle the Treatment data</span></span>
+<span id="cb250-3"><a href="randomisation-tests.html#cb250-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(Treatment) <span class="op">%&gt;%</span></span>
+<span id="cb250-4"><a href="randomisation-tests.html#cb250-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Cholesterol)) <span class="op">%&gt;%</span></span>
+<span id="cb250-5"><a href="randomisation-tests.html#cb250-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span></span>
+<span id="cb250-6"><a href="randomisation-tests.html#cb250-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">diff</span>()</span></code></pre></div>
+<pre><code>## [1] -10.16667</code></pre>
+<p>In this instance, the difference with the shuffled <code>Treatment</code> values is 0.833, which is rather different from our observed difference of -20.1666667.</p>
+<p>Doing this one time is not much help though - we need to repeat this many times. I suggest that you do it 1000 times here, but some statisticians would suggest 5000 or even 10000 replicates.</p>
+<p>We can do this easily in R using the function <code>replicate</code> which simply a kind of wrapper that tells R to repeat a command <code>n</code> times and then pass the result to a vector.
+Let’s try it first 10 times to see how it works:</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="randomisation-tests.html#cb252-1" aria-hidden="true"></a><span class="kw">replicate</span>(<span class="dv">10</span>,</span>
+<span id="cb252-2"><a href="randomisation-tests.html#cb252-2" aria-hidden="true"></a>            ch <span class="op">%&gt;%</span></span>
+<span id="cb252-3"><a href="randomisation-tests.html#cb252-3" aria-hidden="true"></a><span class="st">            </span><span class="kw">mutate</span>(<span class="dt">Treatment =</span> <span class="kw">sample</span>(Treatment)) <span class="op">%&gt;%</span></span>
+<span id="cb252-4"><a href="randomisation-tests.html#cb252-4" aria-hidden="true"></a><span class="st">            </span><span class="kw">group_by</span>(Treatment) <span class="op">%&gt;%</span></span>
+<span id="cb252-5"><a href="randomisation-tests.html#cb252-5" aria-hidden="true"></a><span class="st">            </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Cholesterol)) <span class="op">%&gt;%</span></span>
+<span id="cb252-6"><a href="randomisation-tests.html#cb252-6" aria-hidden="true"></a><span class="st">            </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span></span>
+<span id="cb252-7"><a href="randomisation-tests.html#cb252-7" aria-hidden="true"></a><span class="st">            </span><span class="kw">diff</span>()</span>
+<span id="cb252-8"><a href="randomisation-tests.html#cb252-8" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>##  [1]  -8.500000  13.500000  -8.166667  -2.833333 -14.500000   5.833333  15.500000   6.500000  -1.166667  -1.833333</code></pre>
+<p>You can see that the <code>replicate</code> command simply does the sampling-recalculation of the mean 10 times.</p>
+<p>In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a <code>data.frame</code> called <code>shuffledData</code>. This data frame initially has a variable called <code>rep</code> which consists of the numbers 1-1000. I then use <code>mutate</code> to add the 1000 shuffled differences.</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="randomisation-tests.html#cb254-1" aria-hidden="true"></a>shuffledData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">rep =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">1000</span>) <span class="op">%&gt;%</span></span>
+<span id="cb254-2"><a href="randomisation-tests.html#cb254-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">shuffledDiffs =</span> <span class="kw">replicate</span>(<span class="dv">1000</span>,</span>
+<span id="cb254-3"><a href="randomisation-tests.html#cb254-3" aria-hidden="true"></a>            ch <span class="op">%&gt;%</span></span>
+<span id="cb254-4"><a href="randomisation-tests.html#cb254-4" aria-hidden="true"></a><span class="st">            </span><span class="kw">mutate</span>(<span class="dt">Treatment =</span> <span class="kw">sample</span>(Treatment)) <span class="op">%&gt;%</span></span>
+<span id="cb254-5"><a href="randomisation-tests.html#cb254-5" aria-hidden="true"></a><span class="st">            </span><span class="kw">group_by</span>(Treatment) <span class="op">%&gt;%</span></span>
+<span id="cb254-6"><a href="randomisation-tests.html#cb254-6" aria-hidden="true"></a><span class="st">            </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Cholesterol)) <span class="op">%&gt;%</span></span>
+<span id="cb254-7"><a href="randomisation-tests.html#cb254-7" aria-hidden="true"></a><span class="st">            </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span></span>
+<span id="cb254-8"><a href="randomisation-tests.html#cb254-8" aria-hidden="true"></a><span class="st">            </span><span class="kw">diff</span>()</span>
+<span id="cb254-9"><a href="randomisation-tests.html#cb254-9" aria-hidden="true"></a>            ))</span></code></pre></div>
+</div>
+<div id="testing-significance" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Testing significance</h2>
+<p>Before formally testing the hypothesis it is useful to visualise what we have created in a histogram. I can use <code>ggplot</code> to do this, to create a plot called <code>p1</code>. Note that by putting the command in brackets R will both create the plot object, and print it to the screen. Note that because the shuffling of the data is random process your graph will look slightly different to mine.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="randomisation-tests.html#cb255-1" aria-hidden="true"></a>(p1&lt;-<span class="kw">ggplot</span>(shuffledData,<span class="kw">aes</span>(<span class="dt">x=</span>shuffledDiffs)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb255-2"><a href="randomisation-tests.html#cb255-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb255-3"><a href="randomisation-tests.html#cb255-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_minimal</span>()<span class="op">+</span></span>
+<span id="cb255-4"><a href="randomisation-tests.html#cb255-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Drug mean - Control mean&quot;</span>))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
+<p>You can now add your observed difference (calculated above) to this plot like this:</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="randomisation-tests.html#cb256-1" aria-hidden="true"></a>p1 <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> observedDiff)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-143-1.png" width="672" /></p>
+</div>
+<div id="testing-the-hypothesis" class="section level2" number="8.7">
+<h2><span class="header-section-number">8.7</span> Testing the hypothesis</h2>
+<p>Recall that the alternative hypothesis is that the observed difference (control mean-drug mean) will be less than 0.
+You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="randomisation-tests.html#cb257-1" aria-hidden="true"></a><span class="kw">table</span>(shuffledData<span class="op">$</span>shuffledDiffs<span class="op">&lt;=</span>observedDiff)</span></code></pre></div>
+<pre><code>## 
+## FALSE  TRUE 
+##   958    42</code></pre>
+<p>So that is 42 of the shuffled values that are equal to or less than the observed difference. The p-value is then simply 42/1000 = 0.042.</p>
+<p>Therefore we can say that the drug appears to be effective at reducing cholesterol.</p>
+</div>
+<div id="writing-it-up" class="section level2" number="8.8">
+<h2><span class="header-section-number">8.8</span> Writing it up</h2>
+<p>We can report our findings something like this:</p>
+<p>"To test whether effect of the drug at reducing cholesterol level is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means and the alternative hypothesis that the mean for the drug treatment is lower than the control treatment. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.</p>
+<p>The observed mean values of the control and treatment groups 205.667 and 185.500 respectively and the difference between them is therefore -20.167 (drug mean - control mean). Only 25 of the 1000 null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = 0.025)"</p>
+</div>
+<div id="paired-randomisation-tests" class="section level2" number="8.9">
+<h2><span class="header-section-number">8.9</span> Paired Randomisation Tests</h2>
+<p>The paired randomisation test is simply a one-sample randomisation test where the distribution is tested against a value of 0 (no difference between the two). I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. He collected data on weights of people before and after therapy. These data are in the file <code>anorexiaCBT.csv</code></p>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="randomisation-tests.html#cb259-1" aria-hidden="true"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="randomisation-tests.html#cb260-1" aria-hidden="true"></a><span class="co">#Remember to set your working directory first</span></span>
+<span id="cb260-2"><a href="randomisation-tests.html#cb260-2" aria-hidden="true"></a>an &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/anorexiaCBT.csv&quot;</span>)</span>
+<span id="cb260-3"><a href="randomisation-tests.html#cb260-3" aria-hidden="true"></a><span class="kw">head</span>(an)</span></code></pre></div>
+<pre><code>##   Subject Week01 Week08
+## 1       1   80.5   82.2
+## 2       2   84.9   85.6
+## 3       3   81.5   81.4
+## 4       4   82.6   81.9
+## 5       5   79.9   76.4
+## 6       6   88.7  103.6</code></pre>
+<p>These data are arrange in a so-called “wide” format. To make plotting and analysis data need to be rearranged into a tidy “long” format so that each observation is on a row. We can do this using the gather function:</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="randomisation-tests.html#cb262-1" aria-hidden="true"></a>an &lt;-<span class="st"> </span>an <span class="op">%&gt;%</span></span>
+<span id="cb262-2"><a href="randomisation-tests.html#cb262-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;time&quot;</span>,<span class="st">&quot;weight&quot;</span>,<span class="op">-</span>Subject)</span>
+<span id="cb262-3"><a href="randomisation-tests.html#cb262-3" aria-hidden="true"></a></span>
+<span id="cb262-4"><a href="randomisation-tests.html#cb262-4" aria-hidden="true"></a><span class="kw">head</span>(an)</span></code></pre></div>
+<pre><code>##   Subject   time weight
+## 1       1 Week01   80.5
+## 2       2 Week01   84.9
+## 3       3 Week01   81.5
+## 4       4 Week01   82.6
+## 5       5 Week01   79.9
+## 6       6 Week01   88.7</code></pre>
+<div id="plot-the-data" class="section level3" number="8.9.1">
+<h3><span class="header-section-number">8.9.1</span> Plot the data</h3>
+<p>We should ALWAYS plot the data. So here goes.</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="randomisation-tests.html#cb264-1" aria-hidden="true"></a>(p1&lt;-<span class="kw">ggplot</span>(an,<span class="kw">aes</span>(<span class="dt">x=</span>weight,<span class="dt">fill=</span>time)) <span class="op">+</span></span>
+<span id="cb264-2"><a href="randomisation-tests.html#cb264-2" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>,<span class="dt">alpha=</span>.<span class="dv">7</span>)</span>
+<span id="cb264-3"><a href="randomisation-tests.html#cb264-3" aria-hidden="true"></a> )</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
+<p>Another useful way to plot this data is to use an “interaction plot”. In these plots the matched pairs (grouped by <code>Subject</code>) are joined together with lines. You can plot one like this:</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="randomisation-tests.html#cb265-1" aria-hidden="true"></a>(p2&lt;-<span class="kw">ggplot</span>(an,<span class="kw">aes</span>(<span class="dt">x=</span>time,<span class="dt">y=</span>weight,<span class="dt">group=</span>Subject)) <span class="op">+</span></span>
+<span id="cb265-2"><a href="randomisation-tests.html#cb265-2" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb265-3"><a href="randomisation-tests.html#cb265-3" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_line</span>(<span class="dt">size=</span><span class="dv">1</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)</span>
+<span id="cb265-4"><a href="randomisation-tests.html#cb265-4" aria-hidden="true"></a> )</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-149-1.png" width="672" /></p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="randomisation-tests.html#cb266-1" aria-hidden="true"></a><span class="co">#ggsave(&quot;/Users/jones/Dropbox/_SDU_Teaching/BB852 New Stats Course/PlotsintPlot.png&quot;,p2,width=6, height=8, dpi = 300, units=&quot;cm&quot;)</span></span></code></pre></div>
+<p>What we are interested in is whether there has been a change in weight of the subjects after CBT. The null hypothesis is that there is zero change in weight. The alternative hypothesis is that weight has increased.</p>
+<p>The starting point for the analysis is to calculate the observed change in weight.</p>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="randomisation-tests.html#cb267-1" aria-hidden="true"></a>an &lt;-<span class="st"> </span>an <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb267-2"><a href="randomisation-tests.html#cb267-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(Subject) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb267-3"><a href="randomisation-tests.html#cb267-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">change =</span> <span class="kw">diff</span>(weight))</span></code></pre></div>
+<p>You have created a dataset that looks like this:</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="randomisation-tests.html#cb268-1" aria-hidden="true"></a><span class="kw">head</span>(an)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   Subject change
+##     &lt;int&gt;  &lt;dbl&gt;
+## 1       1  1.7  
+## 2       2  0.700
+## 3       3 -0.100
+## 4       4 -0.700
+## 5       5 -3.5  
+## 6       6 14.9</code></pre>
+<p>And you can calculate the observed change like this:</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="randomisation-tests.html#cb270-1" aria-hidden="true"></a>obsChange &lt;-<span class="st"> </span><span class="kw">mean</span>(an<span class="op">$</span>change)</span>
+<span id="cb270-2"><a href="randomisation-tests.html#cb270-2" aria-hidden="true"></a>obsChange</span></code></pre></div>
+<pre><code>## [1] 3.006897</code></pre>
+</div>
+<div id="the-paired-randomisation-test" class="section level3" number="8.9.2">
+<h3><span class="header-section-number">8.9.2</span> The paired randomisation test</h3>
+<p>The logic of this test is that if the experimental treatment has no effect on weight, then the Before weight is just as likely to be larger than the After weight as it is to be smaller.
+In other words, if the null hypothesis is true, a permutation within any pair of scores is as likely as the reverse.</p>
+<p>Therefore to carry out this test, we can permute the SIGN of the change in weight (i.e. we randomly flip values from positive to negative and vice versa). We can do this by multiplying by 1 or -1, randomly.</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="randomisation-tests.html#cb272-1" aria-hidden="true"></a><span class="kw">head</span>(an)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   Subject change
+##     &lt;int&gt;  &lt;dbl&gt;
+## 1       1  1.7  
+## 2       2  0.700
+## 3       3 -0.100
+## 4       4 -0.700
+## 5       5 -3.5  
+## 6       6 14.9</code></pre>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="randomisation-tests.html#cb274-1" aria-hidden="true"></a>anShuffled &lt;-<span class="st"> </span>an <span class="op">%&gt;%</span></span>
+<span id="cb274-2"><a href="randomisation-tests.html#cb274-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sign =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>),<span class="dt">size =</span> <span class="kw">nrow</span>(an),<span class="dt">replace =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb274-3"><a href="randomisation-tests.html#cb274-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">shuffledChange =</span> change <span class="op">*</span><span class="st"> </span>sign)</span></code></pre></div>
+<p>Let’s take a look at this new shuffled dataset:</p>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="randomisation-tests.html#cb275-1" aria-hidden="true"></a><span class="kw">head</span>(anShuffled)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   Subject change  sign shuffledChange
+##     &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;
+## 1       1  1.7       1          1.7  
+## 2       2  0.700    -1         -0.700
+## 3       3 -0.100    -1          0.100
+## 4       4 -0.700    -1          0.700
+## 5       5 -3.5      -1          3.5  
+## 6       6 14.9      -1        -14.9</code></pre>
+<p>We need to calculate the mean of this shuffled vector. We can do this by <code>pull</code> to get the vector, and then <code>mean</code>.</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="randomisation-tests.html#cb277-1" aria-hidden="true"></a>an <span class="op">%&gt;%</span></span>
+<span id="cb277-2"><a href="randomisation-tests.html#cb277-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sign =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>),<span class="dt">size =</span> <span class="kw">nrow</span>(an),<span class="dt">replace =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb277-3"><a href="randomisation-tests.html#cb277-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">shuffledChange =</span> change <span class="op">*</span><span class="st"> </span>sign) <span class="op">%&gt;%</span></span>
+<span id="cb277-4"><a href="randomisation-tests.html#cb277-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(shuffledChange) <span class="op">%&gt;%</span></span>
+<span id="cb277-5"><a href="randomisation-tests.html#cb277-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mean</span>()</span></code></pre></div>
+<pre><code>## [1] -0.462069</code></pre>
+<p>Now we will build a null distribution of changes in weight by repeating this 1000 times. We can do this using the <code>replicate</code> function to “wrap” around the function, passing the result into a data frame. We can then compare this null distribution to the observed change.</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="randomisation-tests.html#cb279-1" aria-hidden="true"></a>nullDist =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">change =</span></span>
+<span id="cb279-2"><a href="randomisation-tests.html#cb279-2" aria-hidden="true"></a>                        <span class="kw">replicate</span>(<span class="dv">1000</span>,an <span class="op">%&gt;%</span></span>
+<span id="cb279-3"><a href="randomisation-tests.html#cb279-3" aria-hidden="true"></a><span class="st">                                    </span><span class="kw">mutate</span>(<span class="dt">sign =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>),<span class="dt">size =</span> <span class="kw">nrow</span>(an),<span class="dt">replace =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb279-4"><a href="randomisation-tests.html#cb279-4" aria-hidden="true"></a><span class="st">                                    </span><span class="kw">mutate</span>(<span class="dt">shuffledChange =</span> change <span class="op">*</span><span class="st"> </span>sign) <span class="op">%&gt;%</span></span>
+<span id="cb279-5"><a href="randomisation-tests.html#cb279-5" aria-hidden="true"></a><span class="st">                                    </span><span class="kw">pull</span>(shuffledChange) <span class="op">%&gt;%</span></span>
+<span id="cb279-6"><a href="randomisation-tests.html#cb279-6" aria-hidden="true"></a><span class="st">                                    </span><span class="kw">mean</span>())) </span></code></pre></div>
+</div>
+<div id="plot-the-null-distribution" class="section level3" number="8.9.3">
+<h3><span class="header-section-number">8.9.3</span> Plot the null distribution</h3>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="randomisation-tests.html#cb280-1" aria-hidden="true"></a>(nullDistPlot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(nullDist,<span class="kw">aes</span>(<span class="dt">x=</span>change)) <span class="op">+</span></span>
+<span id="cb280-2"><a href="randomisation-tests.html#cb280-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>())</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
+<p>We can add the observed change as a line to this:</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="randomisation-tests.html#cb281-1" aria-hidden="true"></a>nullDistPlot <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> obsChange)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-159-1.png" width="672" /></p>
+</div>
+<div id="the-formal-hypothesis-test" class="section level3" number="8.9.4">
+<h3><span class="header-section-number">8.9.4</span> The formal hypothesis test</h3>
+<p>The formal test of significance then is to ask how many of the null distribution replicates are as extreme as the observed change.</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="randomisation-tests.html#cb282-1" aria-hidden="true"></a><span class="kw">table</span>(nullDist<span class="op">$</span>change<span class="op">&gt;=</span>obsChange)</span></code></pre></div>
+<pre><code>## 
+## FALSE  TRUE 
+##   975    25</code></pre>
+<p>So we can see that 25 of 1000 replicates were greater than or equal to the observed change. This translates to a p-value of 0.025. We can therefore say that the observed change in weight after CBT was signficantly greater than what we would expect from chance.</p>
+</div>
+</div>
+<div id="exercises---randomisation-tests" class="section level2" number="8.10">
+<h2><span class="header-section-number">8.10</span> Exercises - Randomisation tests</h2>
+<div id="introduction-1" class="section level3" number="8.10.1">
+<h3><span class="header-section-number">8.10.1</span> Introduction</h3>
+<p>A hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> on width measurements in cm of a small sample of 20 individuals of each sex. Can you use your skills to report whether males are signficantly larger than females.</p>
+<p>The data are called <code>herculesBeetle.csv</code> and can be found via the Dropbox link on Blackboard.</p>
+</div>
+<div id="your-task" class="section level3" number="8.10.2">
+<h3><span class="header-section-number">8.10.2</span> Your task</h3>
+<p>Follow the following prompts to get to your answer:</p>
+<ol style="list-style-type: decimal">
+<li><p>What is your null hypothesis?</p></li>
+<li><p>What is your alternative hypothesis?</p></li>
+<li><p>Import the data.</p></li>
+<li><p>Calculate the mean for each sex (either using <code>tapply</code> or using <code>dplyr</code> tools)</p></li>
+<li><p>Plot the data as a histogram.</p></li>
+<li><p>Add vertical lines to the plot to indicate the mean values.</p></li>
+<li><p>Now calculate the difference between the mean values using <code>dplyr</code> tools, or <code>tapply</code>.</p></li>
+<li><p>Use <code>sample</code> to randomise the sex column of the data, and recalculate the difference between the mean.</p></li>
+<li><p>Use <code>replicate</code> to repeat this 10 times (to ensure that you code works).</p></li>
+<li><p>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</p></li>
+<li><p>Use <code>ggplot</code> to plot the null distribution you have just created, and add the observed difference.</p></li>
+<li><p>Obtain the p-value for the hypothesis test described above. (1) how many of the observed differences are greater than or equal to the shuffled differences in the null distribution. (2) what is this expressed as a proportion of the number of replicates.</p></li>
+<li><p>Summarise your result as in a report. Describe the method, followed by the result and conclusion.</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>This example from: <a href="https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html" class="uri">https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html</a><a href="randomisation-tests.html#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="customising-your-plots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="comparing-two-means-with-a-t-test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jonesor/BB852_Course_Book/edit/master/07-randomisationTests.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+},
+"split_by": "section"
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
