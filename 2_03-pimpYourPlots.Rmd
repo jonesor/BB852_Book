@@ -86,7 +86,6 @@ You can set a log scale by using the commands `scale_x_continuous(trans = "log")
 ```{r,echo = FALSE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (ggplot(anage,aes(x = log(Mass), y = log(BMR), colour = Class)) + 
    geom_point(alpha=0.3))
-#ggsave("basicGgplot.png",width = 12, height=7,units="cm")
 ```
 
 
@@ -211,14 +210,14 @@ p3 +
 
 It is often useful to combine two or more plots into a single figure. For example, many journals have strict limits on the number of plots so it is useful to combine plots into "Figure 1A and B" etc.
 
-There are several R packages that can do this and my favourite is called `ggpubr`. The important function in the package is called `ggarrange`.
+There are several R packages that can do this and my favourite is called `patchwork`. 
 
 ```{r,eval = FALSE}
-install.packages("ggpubr") #only need to do this once
+install.packages("patchwork") #only need to do this once
 ```
 
 ```{r}
-library(ggpubr)
+library(patchwork)
 ```
 
 I will illustrate it by first making another plot, this time showing the relationship between body mass and *standardised* BMR (BMR per kg). Because I am combining the plots into a smaller space I have decided to remove the figure legend (I could put it in the figure caption instead).
@@ -246,74 +245,36 @@ plotA <- ggplot(anage,aes(x = Mass, y = BMR, colour = Class)) +
 ) #This one is wrapped in brackets so that R shows it
 ```
 
-Now I can combine these using the `ggarrange` function from `ggpubr`. I can add titles to the sub-plots using the command `ggtitle`.
+Now I can combine these using the very simple syntax like this:
 
 ```{r,fig.height = 4,fig.width=7}
-(AB <- ggarrange(plotA + ggtitle("A"), plotB + ggtitle("B")))
+plotA + plotB
 ```
-You caould place the sub-plots on top of eachother using `nrow` or `ncol` (specifying the number of rows/columns) like this.
+
+I can add titles using the `ggtitle` command like this.
+```{r,fig.height = 4,fig.width=7}
+plotA + ggtitle("A") +  plotB + ggtitle("B")
+```
+
+You caould place the sub-plots on top of eachother like this.
 
 ```{r,fig.height = 7,fig.width=4}
-(AB2 <- ggarrange(plotA + ggtitle("A"), plotB + ggtitle("B"),nrow=2))
+(plotA + ggtitle("A")) / (plotB + ggtitle("B"))
 ```
 
-
-```{r, echo=FALSE}
-(ggarrange(plotA + 
-             ggtitle("A") +
-             scale_colour_brewer(palette = "BrBG"),
-           plotB + 
-             ggtitle("B")+
-             scale_colour_brewer(palette = "BrBG")))
-
-#ggsave("betterGgplot.png",width = 18, height=10,units="cm")
-
-(ggarrange(plotA + 
-             ggtitle("A") +
-             scale_colour_brewer(palette = "BrBG")+
-             theme_tufte()+
-             theme(legend.position  = "none"),
-           plotB + 
-             ggtitle("B")+
-             scale_colour_brewer(palette = "BrBG")+
-             theme_tufte()+
-             theme(legend.position  = "none")))
-
-#ggsave("betterGgplot2.png",width = 20, height=10,units="cm")
-
- 
-(ggarrange(plotA + 
-             ggtitle("A") +
-             scale_colour_brewer(palette = "BrBG")+
-             theme_clean()+
-             theme(legend.position  = "none"),
-           plotB + 
-             ggtitle("B") +
-             scale_colour_brewer(palette = "BrBG")+
-             theme_clean()+
-             theme(legend.position  = "none")))
-
-#ggsave("betterGgplot3.png",width = 18, height=10,units="cm")
-
-```
 
 
 ## Saving your plot
 
 You should, I think, already know about using the "Export" button in RStudio to save out your plot. This is useful and easy, but you should know that you can also save the plots using a typed command (`ggsave`) in your script. This command is handy because it allows you to automatically set the size, and file name of your plot. 
 
-The default setting for `ggsave` is that it will save the last plot that was printed to your computer screen. Therefore easiest way to use the command is to simply place the `ggsave` command immediately after your `ggplot` command. Otherwise, you can use the `plot` argument to tell `ggsave` which plot you want to save.
-
-The command can save to various file types including `png`, `jpeg`, `pdf` (see the `ggplot` help file for more). R knows what file file type is chosen by checking the file extension in the file name (e.g. `.png`). I advise to use `png`.
-
-You should also set the width and height of the plot and the units (the default is inches). It usually takes a few attempts and a bit of trial-and-error to choose the dimensions so that the plot looks nice.
+The default setting for `ggsave` is that it will save the last plot that was printed to your computer screen to a filename that you specify. Therefore easiest way to use the command is to simply place the `ggsave` command immediately after your `ggplot` command. You should set the width and height of the plot and the units (the default is inches). It usually takes a few attempts and a bit of trial-and-error to choose the dimensions so that the plot looks nice.
 
 ```{r,eval=FALSE}
-ggsave("MySavedPlot1.png", plot = AB, width = 18, height=10, units = "cm")
-
-ggsave("MySavedPlot2.png", plot = AB2, width = 10, height=18, units = "cm")
+ggsave("MySavedPlot1.png", width = 18, height=10, units = "cm")
 ```
 
+The command can save to various file types including `png`, `jpeg`, `pdf` (see the `ggplot` help file for more). R knows what file file type is chosen by checking the file extension in the file name (e.g. `.png`). I advise to use `png`.
 
 ## Final word on plots
 

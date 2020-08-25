@@ -67,7 +67,7 @@ B <- ggplot(data = data.frame(x = c(0, 350)), aes(x)) +
     NULL
 
 
-ggpubr::ggarrange(A+ggtitle("A"),B+ggtitle("B"))
+A+ggtitle("A") + B+ggtitle("B")
 ```
 
 This should look familiar -- it is the same concept as we used in the class on randomisation tests. If you find it confusing, please go back and review the randomisation test materials!
@@ -305,7 +305,7 @@ B <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
     #theme_minimal()+
     NULL
 
-ggpubr::ggarrange(A+ggtitle("A"),B+ggtitle("B"))
+A+ggtitle("A") + B+ggtitle("B")
 ```
 
 The mathematics involved with calculating the t-statistic is very similar to the one-sample t-test, except the numerator in the fraction is the difference between two means rather than between a mean and a fixed value.

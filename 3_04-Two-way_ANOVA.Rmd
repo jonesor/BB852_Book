@@ -1,10 +1,5 @@
 # Linear models with a several categorical explanatory variables
 
-```{r}
-require(tidyverse)
-require(ggpubr)
-
-```
 
 ## Background
 
@@ -92,10 +87,7 @@ Fa<- ggplot(fakeData %>%
   theme(axis.text.y = element_blank()) + 
   ggtitle("E) diet N; gt: N; int: Y")
 
-
-ggpubr::ggarrange(A,B, C,D, E, Fa, nrow=2,ncol=3)
-
-
+(A+B+C)/(D+E+Fa)
 ```
 
 

@@ -82,8 +82,8 @@ Fa<- ggplot(fakeData %>%
   theme(axis.text.y = element_blank()) + 
   NULL
 
-
-ggpubr::ggarrange(A,B, C,D, E, Fa, nrow=2,ncol=3)
+#Plot the graphs using patchwork
+(A + B + C)/(D + E + Fa)
 
 
 

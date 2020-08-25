@@ -9,10 +9,6 @@ With the previous work on t-tests (and also with randomisation tests), you are n
 
 The one-way ANOVA is illustrated below with two cases (Figure \ref{fig:anova_vis}). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether *at least one* of the groups is different from the others.
 
-```{r, echo=FALSE,message=FALSE}
-library(tidyverse)
-library(ggpubr)
-```
 
 ```{r anova_vis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="", fig.pos = "ht"}
 
@@ -58,7 +54,7 @@ B <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
   #theme_minimal()+
   NULL
 
-ggpubr::ggarrange(A+ggtitle("A"),B+ggtitle("B"))
+A+ggtitle("A") + B+ggtitle("B")
 ```
 
 
@@ -80,8 +76,8 @@ B<-ggplot(dfB, aes(x = x,y =y)) +
   geom_boxplot() + 
   ggtitle("B")+ ylim(20,100)
 
-ggpubr::ggarrange(A,B)
-#ggsave("anovaExampleBoxplot.png",width = 6,height=2,units = "in",dpi=300)
+A+B
+
 ```
 
 After figuring out if at least one of the groups is significantly different from the others it is often enough to examine plots (or summary statistics) to see where the differences are (e.g. which group(s) are different from each other). In other cases it might be necessary to do follow up *post-hoc multiple comparison* tests. We will come to those later.
@@ -252,7 +248,7 @@ annotate("text", x = 2.3, y = sum(temp$value[1:2])/2, label = temp$coef[2])+
 annotate("text", x = 3.3, y = sum(temp$value[c(1,3)])/2, label = formatC(temp$coef[3], digits = 1, format = "f"))+
 ylim(0,75)  
 
-ggpubr::ggarrange(A+ggtitle("A - default,\nBM reference"),B+ggtitle("B - releveled,\nHIP reference"),ncol=2)
+A+ggtitle("A - default,\nBM reference") + B+ggtitle("B - releveled,\nHIP reference")
 ```
 
 
@@ -329,10 +325,9 @@ geom_segment(data = espressoAugmented %>% filter(method == "IES"),aes(x = min(n)
 xlab("Index")+
 NULL
 
-ggpubr::ggarrange(SSTotalPlot + ggtitle("A - Total errors\n SSTotal"),SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError"))
+ggarrange(SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError"))
 
 
-#ggsave("ANOVAmodel1.png",width=8,height=3.5,dpi=300,units = "in")
 ```
 
 
@@ -447,10 +442,7 @@ SSErrorPlot <- ggplot(espressoAugmented,aes(x=n,y=foamIndx,colour=method)) +
   xlab("Index")+
   NULL
 
-xx <-ggpubr::ggarrange(SSTotalPlot + ggtitle("A - Total errors\n SSTotal"),SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError"))
-
-
-#ggsave(plot = xx,filename = "ANOVAmodel2.png",width=8,height=3.5,dpi=300,units = "in")
+xx <- SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError")
 
 ```
 

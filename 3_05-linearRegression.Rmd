@@ -71,9 +71,10 @@ B <- ggplot(df_reg)+
                arrow=arrow(angle = 30, length = unit(.1, "cm"),
                            ends = "both", type = "open"),colour="grey40")+
   NULL
-ggpubr::ggarrange(A,B,nrow=1,ncol=2)
 
-#ggsave("Equation_of_line.png",width = 15,height=8,dpi=300,units="cm")
+#plot the results
+A + B
+
 ```
 
 When looking at data points on a graph, unless all of the data points are arranged perfectly along a straight line, there will be some distance between the points and the line. These distances, measured parallel to the vertical axis, are called residuals (you have encountered them before in this course). These residuals represent the variation left after fitting the line (a linear model) through the data. Because we want to fit a model that explains as much variation as possible, it is intuitive that we should wish to minimise this residual variation. 
@@ -140,10 +141,8 @@ D<-ggplot(residualData,aes(x=HandWidth,y=Height,xend = HandWidth,yend = Height_P
   ggtitle(paste0("D) slope:  ",slopeCoef[4],"; int: ",interceptCoef[4])) + theme_minimal()
 
 
-ggpubr::ggarrange(A,B,C,D,nrow=2,ncol=2)
-#ggsave("Example_LeastSquares.png",width = 16.5,height=12,dpi=300,units="cm")
-
-
+#plot the results
+(A+B)/(C+D)
 ```
 
 In fact, these residuals represent "error" caused by factors including measurement error, random variation, variation caused by unmeasured factors etc. This error term is given the label, $\epsilon$. Thus we can write the model equation as:
@@ -337,8 +336,8 @@ slopePlot <- ggplot(data = data.frame(x = c(-.1, 9)), aes(x)) +
   ggtitle("Slope coefficient")+
     NULL
 
-ggpubr::ggarrange(slopePlot,interceptPlot,nrow=1,ncol=2)
-#ggsave("Example_Coefficients.png",width = 13.5, height=5, dpi=300, units="cm")
+#plot results
+slopePlot+interceptPlot
 
 ```
 
@@ -408,9 +407,7 @@ D<-ggplot(df1,aes(x,y))+
     ggtitle(paste0("R-sq = ",formatC(R2, digits = 2, format = "f"))) +
     NULL
 
-
-ggpubr::ggarrange(A,B,C,D,nrow=2,ncol=2)
-#ggsave("Example_R2.png",width = 13.5,height=10,dpi=300,units="cm")
+(A+B)/(C+D)
 ```
 
 A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The `ggplot2` package has a neat and simple function called `geom_smooth` which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use `method = "lm"`. This will plot the fitted regression model, and will add, by default" a shaded "ribbon" which represents the so called "95% confidence interval" for the fitted values. These are 2 time the standard error.
