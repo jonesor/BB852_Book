@@ -164,6 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.12.4" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#references"><i class="fa fa-check"></i><b>2.12.4</b> References</a></li>
 </ul></li>
 </ul></li>
+<li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>3</b> Data wrangling with dplyr</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
@@ -186,6 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.3" data-path="combining-data-sets.html"><a href="combining-data-sets.html#the-weather-data"><i class="fa fa-check"></i><b>4.1.3</b> The weather data</a></li>
 </ul></li>
 </ul></li>
+<li class="part"><span><b>II Data visualisation (exploratory data analysis)</b></span></li>
 <li class="chapter" data-level="5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Visualising data with ggplot2</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
@@ -219,6 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.11" data-path="customising-your-plots.html"><a href="customising-your-plots.html#saving-your-plot"><i class="fa fa-check"></i><b>7.11</b> Saving your plot</a></li>
 <li class="chapter" data-level="7.12" data-path="customising-your-plots.html"><a href="customising-your-plots.html#final-word-on-plots"><i class="fa fa-check"></i><b>7.12</b> Final word on plots</a></li>
 </ul></li>
+<li class="part"><span><b>III Statistics</b></span></li>
 <li class="chapter" data-level="8" data-path="randomisation-tests.html"><a href="randomisation-tests.html"><i class="fa fa-check"></i><b>8</b> Randomisation Tests</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
@@ -320,6 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="16.1" data-path="power-and-study-design.html"><a href="power-and-study-design.html#power-analysis-by-simulation"><i class="fa fa-check"></i><b>16.1</b> Power analysis by simulation</a></li>
 </ul></li>
+<li class="part"><span><b>IV Coming soon(ish)</b></span></li>
 <li class="chapter" data-level="17" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html"><i class="fa fa-check"></i><b>17</b> Coming soon (maybe)!</a>
 <ul>
 <li class="chapter" data-level="17.1" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#multivariate-statistics"><i class="fa fa-check"></i><b>17.1</b> Multivariate statistics</a></li>
@@ -406,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now lets start with a basic plot. You will see a warning about removing rows with missing values. This is just a warning to let you know that there are missing (<code>NA</code>) values in the data you are plotting.</p>
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="customising-your-plots.html#cb219-1" aria-hidden="true"></a>(p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(anage,<span class="kw">aes</span>(<span class="dt">x =</span> Mass, <span class="dt">y =</span> BMR, <span class="dt">colour =</span> Class)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb219-2"><a href="customising-your-plots.html#cb219-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.3</span>)) <span class="co">#use alpha argument to make points transparent</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-110-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-112-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="axis-limits" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Axis limits</h2>
@@ -414,7 +418,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="customising-your-plots.html#cb220-1" aria-hidden="true"></a>p1 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb220-2"><a href="customising-your-plots.html#cb220-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">xlim</span>(<span class="dv">0</span>,<span class="dv">500</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb220-3"><a href="customising-your-plots.html#cb220-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylim</span>(<span class="dv">0</span>,<span class="dv">300</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-111-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-113-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="transforming-the-axis-log-scale" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> Transforming the axis (log scale)</h2>
@@ -423,8 +427,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="customising-your-plots.html#cb221-1" aria-hidden="true"></a>(p2 &lt;-<span class="st"> </span>p1 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb221-2"><a href="customising-your-plots.html#cb221-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="op">+</span></span>
 <span id="cb221-3"><a href="customising-your-plots.html#cb221-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">trans =</span> <span class="st">&quot;log&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-112-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="BB852_files/figure-html/unnamed-chunk-113-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-114-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-115-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="changing-the-axis-tick-marks" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Changing the axis tick marks</h2>
@@ -432,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="customising-your-plots.html#cb222-1" aria-hidden="true"></a>(p2 &lt;-<span class="st"> </span>p1 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb222-2"><a href="customising-your-plots.html#cb222-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="op">+</span></span>
 <span id="cb222-3"><a href="customising-your-plots.html#cb222-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">trans =</span> <span class="st">&quot;log&quot;</span>, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="fl">0.0001</span>,<span class="fl">0.001</span>,<span class="fl">0.01</span>,<span class="fl">0.1</span>,<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">1000</span>)))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-114-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-116-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Using <code>summary(anage$Mass)</code> tells us that the range of data is from 0.001 to 3672. We could place tick marks anywhere on this axis, but let’s try 0.001,0.1, 1,10, 100, 1000.</p>
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="customising-your-plots.html#cb223-1" aria-hidden="true"></a>(p2 &lt;-<span class="st"> </span>p1 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb223-2"><a href="customising-your-plots.html#cb223-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">trans =</span> <span class="st">&quot;log&quot;</span>, </span>
@@ -440,7 +444,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb223-4"><a href="customising-your-plots.html#cb223-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">trans =</span> <span class="st">&quot;log&quot;</span>, </span>
 <span id="cb223-5"><a href="customising-your-plots.html#cb223-5" aria-hidden="true"></a>                     <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="fl">0.0001</span>,<span class="fl">0.001</span>,<span class="fl">0.01</span>,<span class="fl">0.1</span>,<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">1000</span>))</span>
 <span id="cb223-6"><a href="customising-your-plots.html#cb223-6" aria-hidden="true"></a> )</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-115-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-117-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="axis-labels" class="section level2" number="7.6">
 <h2><span class="header-section-number">7.6</span> Axis labels</h2>
@@ -449,7 +453,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb224-2"><a href="customising-your-plots.html#cb224-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Adult body mass (kg)&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb224-3"><a href="customising-your-plots.html#cb224-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Basal metabolic rate (W)&quot;</span>)</span>
 <span id="cb224-4"><a href="customising-your-plots.html#cb224-4" aria-hidden="true"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-116-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-118-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="colours" class="section level2" number="7.7">
 <h2><span class="header-section-number">7.7</span> Colours</h2>
@@ -458,24 +462,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>With colour names…</p>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="customising-your-plots.html#cb225-1" aria-hidden="true"></a>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb225-2"><a href="customising-your-plots.html#cb225-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;green&quot;</span>,<span class="st">&quot;orange&quot;</span>,<span class="st">&quot;black&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-117-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-119-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>And with some hex codes…</p>
 <div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="customising-your-plots.html#cb226-1" aria-hidden="true"></a>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb226-2"><a href="customising-your-plots.html#cb226-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#33FF6475&quot;</span>,<span class="st">&quot;#3368FF75&quot;</span>,<span class="st">&quot;#FF33CE75&quot;</span>,<span class="st">&quot;#FFCA3375&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-118-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-120-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Another alternative is to use some of <code>ggplot</code>’s built in “palettes” of colour combinations. For example, there are several palettes called “<code>viridis</code>”.</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="customising-your-plots.html#cb227-1" aria-hidden="true"></a>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb227-2"><a href="customising-your-plots.html#cb227-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_colour_viridis_d</span>(<span class="dt">option =</span> <span class="st">&quot;D&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-119-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-121-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p><em>Try using other <code>option</code> arguments <code>A</code>, <code>B</code>, <code>C</code> and <code>E</code>. Try also adding an argument for transparency <code>alpha = 0.5</code>.</em></p>
 <p>Here’s a couple more palettes. There’s one for shades of grey…</p>
 <div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="customising-your-plots.html#cb228-1" aria-hidden="true"></a>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb228-2"><a href="customising-your-plots.html#cb228-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_colour_grey</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-120-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-122-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>There’s another one for various colour schemes, called “colour brewer”. <em>Try using “RdGy”, “RdYlBu” and “Spectral”</em> see <code>?scale_colour_brewer</code> for more options.</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="customising-your-plots.html#cb229-1" aria-hidden="true"></a>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb229-2"><a href="customising-your-plots.html#cb229-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;BrBG&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-121-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-123-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="themes" class="section level2" number="7.8">
 <h2><span class="header-section-number">7.8</span> Themes</h2>
@@ -484,24 +488,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="customising-your-plots.html#cb230-1" aria-hidden="true"></a>(p4 &lt;-<span class="st"> </span>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb230-2"><a href="customising-your-plots.html#cb230-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_minimal</span>()</span>
 <span id="cb230-3"><a href="customising-your-plots.html#cb230-3" aria-hidden="true"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-122-1.png" width="480" style="display: block; margin: auto;" />
+<p><img src="BB852_files/figure-html/unnamed-chunk-124-1.png" width="480" style="display: block; margin: auto;" />
 For more theme fun, you can install packages that include more themes. The best one is called <code>ggthemes</code> (remember that you only need to install the package once). Try <code>theme_economist()</code>, <code>theme_tufte()</code> and (ugh!) <code>theme_excel()</code>. You can see what other themes there in this package at <a href="https://jrnold.github.io/ggthemes/reference/index.html" class="uri">https://jrnold.github.io/ggthemes/reference/index.html</a> (some of them are really ugly in my opinion!).</p>
 <div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="customising-your-plots.html#cb231-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;ggthemes&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="customising-your-plots.html#cb232-1" aria-hidden="true"></a><span class="kw">library</span>(ggthemes)</span>
 <span id="cb232-2"><a href="customising-your-plots.html#cb232-2" aria-hidden="true"></a>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb232-3"><a href="customising-your-plots.html#cb232-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme_economist</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-124-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-126-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>This package also includes some useful colour scales, including some for colour blind people.</p>
 <div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="customising-your-plots.html#cb233-1" aria-hidden="true"></a>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb233-2"><a href="customising-your-plots.html#cb233-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_color_colorblind</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-125-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-127-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="moving-the-legend" class="section level2" number="7.9">
 <h2><span class="header-section-number">7.9</span> Moving the legend</h2>
 <p>By default, the legend is placed on the right. You can move it around by adding a <code>theme</code> argument to your plot commands. It can also be placed on the “<code>top</code>”, “<code>bottom</code>”, or “<code>left</code>”. You can also remove the legend altogether by using <code>legend.position = "none"</code>. You might also want to remove the legend title using the theme argument <code>legend.title = element_blank()</code>.</p>
 <div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="customising-your-plots.html#cb234-1" aria-hidden="true"></a>p3 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb234-2"><a href="customising-your-plots.html#cb234-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position  =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-126-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-128-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="combining-multiple-plots" class="section level2" number="7.10">
 <h2><span class="header-section-number">7.10</span> Combining multiple plots</h2>
@@ -530,14 +534,14 @@ For more theme fun, you can install packages that include more themes. The best 
 <span id="cb237-18"><a href="customising-your-plots.html#cb237-18" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></span>
 <span id="cb237-19"><a href="customising-your-plots.html#cb237-19" aria-hidden="true"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position  =</span> <span class="st">&quot;none&quot;</span>)</span>
 <span id="cb237-20"><a href="customising-your-plots.html#cb237-20" aria-hidden="true"></a>) <span class="co">#This one is wrapped in brackets so that R shows it</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-129-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
 <p>Now I can combine these using the <code>ggarrange</code> function from <code>ggpubr</code>. I can add titles to the sub-plots using the command <code>ggtitle</code>.</p>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="customising-your-plots.html#cb238-1" aria-hidden="true"></a>(AB &lt;-<span class="st"> </span><span class="kw">ggarrange</span>(plotA <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;A&quot;</span>), plotB <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;B&quot;</span>)))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-130-1.png" width="672" />
+<p><img src="BB852_files/figure-html/unnamed-chunk-132-1.png" width="672" />
 You caould place the sub-plots on top of eachother using <code>nrow</code> or <code>ncol</code> (specifying the number of rows/columns) like this.</p>
 <div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="customising-your-plots.html#cb239-1" aria-hidden="true"></a>(AB2 &lt;-<span class="st"> </span><span class="kw">ggarrange</span>(plotA <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;A&quot;</span>), plotB <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&quot;B&quot;</span>),<span class="dt">nrow=</span><span class="dv">2</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-131-1.png" width="384" /></p>
-<p><img src="BB852_files/figure-html/unnamed-chunk-132-1.png" width="672" /><img src="BB852_files/figure-html/unnamed-chunk-132-2.png" width="672" /><img src="BB852_files/figure-html/unnamed-chunk-132-3.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-133-1.png" width="384" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-134-1.png" width="672" /><img src="BB852_files/figure-html/unnamed-chunk-134-2.png" width="672" /><img src="BB852_files/figure-html/unnamed-chunk-134-3.png" width="672" /></p>
 </div>
 <div id="saving-your-plot" class="section level2" number="7.11">
 <h2><span class="header-section-number">7.11</span> Saving your plot</h2>
@@ -575,6 +579,10 @@ You caould place the sub-plots on top of eachother using <code>nrow</code> or <c
 <!-- ``` -->
 
 </div>
+</div>
+
+
+
 </div>
 <div class="footnotes">
 <hr />
@@ -619,7 +627,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jonesor/BB852_Course_Book/edit/master/06-pimpYourPlots.Rmd",
+"link": "https://github.com/jonesor/BB852_Course_Book/edit/master/2_03-pimpYourPlots.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -630,7 +638,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["BB852.pdf"],
 "toc": {
 "collapse": "section"
 },

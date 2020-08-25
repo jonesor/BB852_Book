@@ -164,6 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.12.4" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#references"><i class="fa fa-check"></i><b>2.12.4</b> References</a></li>
 </ul></li>
 </ul></li>
+<li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>3</b> Data wrangling with dplyr</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
@@ -186,6 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.3" data-path="combining-data-sets.html"><a href="combining-data-sets.html#the-weather-data"><i class="fa fa-check"></i><b>4.1.3</b> The weather data</a></li>
 </ul></li>
 </ul></li>
+<li class="part"><span><b>II Data visualisation (exploratory data analysis)</b></span></li>
 <li class="chapter" data-level="5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html"><i class="fa fa-check"></i><b>5</b> Visualising data with ggplot2</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a></li>
@@ -219,6 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.11" data-path="customising-your-plots.html"><a href="customising-your-plots.html#saving-your-plot"><i class="fa fa-check"></i><b>7.11</b> Saving your plot</a></li>
 <li class="chapter" data-level="7.12" data-path="customising-your-plots.html"><a href="customising-your-plots.html#final-word-on-plots"><i class="fa fa-check"></i><b>7.12</b> Final word on plots</a></li>
 </ul></li>
+<li class="part"><span><b>III Statistics</b></span></li>
 <li class="chapter" data-level="8" data-path="randomisation-tests.html"><a href="randomisation-tests.html"><i class="fa fa-check"></i><b>8</b> Randomisation Tests</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="getting-acquainted-with-r.html"><a href="getting-acquainted-with-r.html#introduction"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
@@ -320,6 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="16.1" data-path="power-and-study-design.html"><a href="power-and-study-design.html#power-analysis-by-simulation"><i class="fa fa-check"></i><b>16.1</b> Power analysis by simulation</a></li>
 </ul></li>
+<li class="part"><span><b>IV Coming soon(ish)</b></span></li>
 <li class="chapter" data-level="17" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html"><i class="fa fa-check"></i><b>17</b> Coming soon (maybe)!</a>
 <ul>
 <li class="chapter" data-level="17.1" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#multivariate-statistics"><i class="fa fa-check"></i><b>17.1</b> Multivariate statistics</a></li>
@@ -419,14 +423,14 @@ Figure 12.4: (A) the total variation around the overall mean Height value (B) th
 <p>We should then plot the data to make sure it looks OK.</p>
 <div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb375-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x=</span>HandWidth,<span class="dt">y=</span>Height)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb375-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb375-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-211-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-214-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>This looks OK, and the relationship looks fairly linear. Now we can fit a model using the <code>lm</code> function (same as for ANOVA!).<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
 <p>The response variable is always the one we would like to predict, in this case <code>Height</code>. The explanatory variable (sometimes called the predictor) is <code>HandWidth</code>. These are added to the model using a formula where they are separated with the <code>~</code> (“tilde”) symbol: <code>Height ~ HandWidth</code>. In the model expression, we also need to tell R where the data are using the <code>data =</code> argument. We can save the model as an R object by naming it e.g. <code>mod_A &lt;-</code>.</p>
 <div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb376-1" aria-hidden="true"></a>mod_A &lt;-<span class="st"> </span><span class="kw">lm</span>(Height <span class="op">~</span><span class="st"> </span>HandWidth, <span class="dt">data =</span> classData)</span></code></pre></div>
 <p>Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the <code>autoplot</code> function in the <code>ggfortify</code> package (you may need to install and/or load the package).</p>
 <div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb377-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
 <span id="cb377-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb377-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-213-1.png" width="480" style="display: block; margin: auto;" />
+<p><img src="BB852_files/figure-html/unnamed-chunk-216-1.png" width="480" style="display: block; margin: auto;" />
 These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows “leverage” which is a measure of how much influence individual data points have on the model. Outliers will have large leverage and can mess up your model. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.</p>
 <p>Now that we are satisfied that the model doesn’t violate the assumptions we can dig into the model to see what it is telling us.</p>
 <p>To test the (slightly boring) slope hypothesis we use the <code>anova</code> function (again, this is the same as with the ANOVA).</p>
@@ -487,7 +491,7 @@ Figure 12.6: An illustration of different R-squared values.
 <div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb382-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height)) <span class="op">+</span></span>
 <span id="cb382-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb382-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
 <span id="cb382-3"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb382-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-216-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-219-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p><strong>Question:</strong> If police find the 9.8cm wide hand print at a crime scene, what is your best guess of the height of the person involved?</p>
 <!--
 predict(mod_A,list(HandWidth = 9.8))
@@ -565,7 +569,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jonesor/BB852_Course_Book/edit/master/11-linearRegression.Rmd",
+"link": "https://github.com/jonesor/BB852_Course_Book/edit/master/3_05-linearRegression.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -576,7 +580,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["BB852.pdf"],
 "toc": {
 "collapse": "section"
 },
