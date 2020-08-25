@@ -1,0 +1,24 @@
+# Power and study design
+
+This chapter will cover aspects of statistical power and study design. It will first focus on answering questions like "what sample size should I use in my experiment?" and "with this sample size, what difference could I detect?" 
+
+The chapter will then focus on study designs such as nested or blocked designs, and what this means in terms of analytical approach. 
+
+## Power analysis by simulation
+
+As you learned in the chapters on t-tests and ANOVA, the detection of a significant difference between treatment groups (if there is one) depends on two things: (1) the actual difference between mean values for the groups (the "signal") and (2) the amount of variation there is in the groups (the "noise"). When there is a lot of noise it is hard to detect the signal.
+
+In most cases we will already have some idea about what to expect when doing a study. Previous work on similar topics, or pilot studies, will have given us an idea of typical values for the response variable, and will give us a ballpark estimate of the amount of variation to expect. This information can be put to use to conduct a power analysis by simulation. 
+
+The gist of this approach is to draw numbers from appropriate distributions to simulate the experiment before actually carrying out the experiment. For example, consider a planned study on bird song volume (amplitude) in relation to ambient noise. Previous work has shown that the amplitude of the particular species we're interested in has a mean value of X with a standard distribution of Y. We could simulate an experiment, with a sample size of 20, by drawing from a normal distribution like this `rnorm(20,mean = X, sd = Y)`
+
+We could then figure out what difference we could detect using a t-test (or linear model) by repeating this sampling many times with different values of X using the `replicate` funtion to repeat the sampling procedure many times. I will illustrate this by using :
+
+```{r}
+rnorm(20,mean = 250, sd = 40)
+```
+
+
+
+
+

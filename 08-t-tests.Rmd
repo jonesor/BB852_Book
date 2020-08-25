@@ -1,0 +1,422 @@
+# Comparing two means with a t-test
+
+We will cover the following:
+
+* One-sample t-test
+* Paired t-test
+* Two-sample t-test ("Welch t-test")
+
+## Some theory.
+
+In this theory section I focus on the one-sample t-test, but the concepts apply to the other types of t-test. 
+
+The one-sample t-test is used to compare the mean of a sample to some fixed value. For example, we might want to compare pollution levels (e.g. in mg/m^3^) in a sample to some acceptable threshold value to help us decide whether we need to take action to prevent or clean up pollution.
+
+One of the assumptions of t-tests (and many other tests/models) is that the distribution of values in the **sample** of data can be described by a normal distribution. If this assumption is true, you can use these data to estimate the parameters of this sample's normal distribution: the mean and standard error of the mean. 
+
+The mean gives an estimate of location, and the standard error of the mean (which is calculated as $s/ \sqrt{n}$, where *s* = standard deviation and *n* = sample size) gives an estimate of precision of this estimate (i.e. how certain is it that the mean value is really where you think it is?)
+
+The t-test then works by comparing your estimated distribution with some fixed value. Sometimes you are asking "is my mean *different* from the value?", other times you are asking "is my mean less than/greater than the value?". This depends on the hypothesis. The default that R-uses is that it tests whether the mean of your distribution is *different* to the fixed value, but in many cases you should really be framing a **directional** hypothesis.
+
+It is helpful to visualise this, so some examples of the pollution threshold test are shown in the figure below (Figure \ref{fig:one_sample_vis}). The curves illustrate the estimated normal distributions that describe our estimate of the mean pollution level from some data (e.g. each curve might represent samples from different locations). We are interested in whether the mean values (the vertical dashed lines) are significantly **greater** than the threshold of 100mg/m^2^ (solid vertical black line) (this gives us a directional hypothesis).
+
+Formally we do this by establishing two hypotheses a **null hypothesis** and an **alternative hypothesis**. In this case, the null hypothesis is that the mean of the sample measurements is **not** significantly different from the threshold value we define. The alternative hypothesis is that the sample mean is significantly **greater** than this threshold value.
+
+The degree of confidence that we can have that the mean pollution values are different from the threshold value depend on (A) the position of the distribution relative to the threshold value and (B) on the spread of the distribution (the standard deviation/error).
+
+Based on Figure \ref{fig:one_sample_vis}, which of these four different samples shows a mean value **significantly** greater than 100? (you should be looking at the amount of the normal distribution curve that is overlapping the threshold value.)
+
+```{r one_sample_vis, echo=FALSE,fig.width=6,fig.height=2,fig.align='center',fig.cap=""}
+
+d1<-c(150,40)
+d2<-c(200,40)
+
+A <- ggplot(data = data.frame(x = c(0, 350)), aes(x)) +
+    stat_function(fun = dnorm, n = 101, args = list(mean = d1[1], sd = d1[2]),colour = "#007F00") + 
+    stat_function(fun = dnorm, n = 101, args = list(mean = d2[1], sd = d2[2]),colour="red") + 
+    ylab("Probability density") + 
+    xlab(expression(Pollution~level~mg/m^3)) +
+    scale_y_continuous(breaks = NULL) + 
+    geom_vline(xintercept = 100, linetype="solid") +
+    geom_segment(data = data.frame(y=.002,yend=.002,x=100,xend=d1[1]),
+                 aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="#007F00") +
+    geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
+                aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="red")+
+    geom_vline(xintercept = d1[1], linetype="dashed",colour="#007F00") +
+    geom_vline(xintercept = d2[1], linetype="dashed",colour="red") +
+    #theme_minimal()+
+    NULL
+
+d1<-c(170,40)
+d2<-c(170,80)
+
+B <- ggplot(data = data.frame(x = c(0, 350)), aes(x)) +
+    stat_function(fun = dnorm, n = 101, args = list(mean = d1[1], sd = d1[2]),colour = "#007F00") + 
+    stat_function(fun = dnorm, n = 101, args = list(mean = d2[1], sd = d2[2]),colour="red") + 
+    ylab("Probability density") + 
+    xlab(expression(Pollution~level~mg/m^3)) +
+    scale_y_continuous(breaks = NULL) + 
+    geom_vline(xintercept = 100, linetype="solid") +
+    geom_segment(data = data.frame(y=.002,yend=.002,x=100,xend=d1[1]),
+                 aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="#007F00") +
+    geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
+                aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="red")+
+    geom_vline(xintercept = d1[1], linetype="dashed",colour="#007F00") +
+    geom_vline(xintercept = d2[1], linetype="dashed",colour="red") +
+    #theme_minimal()+
+    NULL
+
+
+ggpubr::ggarrange(A+ggtitle("A"),B+ggtitle("B"))
+```
+
+This should look familiar -- it is the same concept as we used in the class on randomisation tests. If you find it confusing, please go back and review the randomisation test materials!
+
+Another useful way to think about t-tests is that it is a way of distinguishing between **signal** and **noise**: the signal is the mean value of the thing you are measuring, and the noise is the uncertainty in that estimate. This uncertainty could be due to measurement error and/or natural variation. In fact, the *t-value* that the t-test relies on is a ratio between the signal (difference between mean  ($\bar{x}$) and threshold ($\mu_{0}$)) and noise (variability, standard error of the mean ($s/ \sqrt{n}$)): $$t = \frac{\bar{x}-\mu_{0}} {s/ \sqrt{n}}$$
+
+The larger the signal is compared to the noise, the higher the t-value will be. e.g. a t-value of 2 means that the signal was 2 times the variability in the data. A t-value of zero, or close to zero, means that the signal is "drowned out" by the noise. Therefore, high t-values give you more confidence that the difference is true.
+
+To know if the t-value means that the difference is significant, the t-value is compared to a known theoretical distribution (the t-distribution). The area under the curve of the distribution is 1, but its shape depends on the degrees of freedom (i.e. sample size - 1). The plot below (Figure \ref{fig:t_dist}) shows three t-distributions of different degrees of freedom (d.f.). 
+
+What R is doing when it figures out the p-value is calculating the area under the curve *beyond* the positive/negative values of the t-statistic. If t is small, then this value is large (p-value). If t is large then the area (and the p-value) is small. In the olden-days (>15 years ago) you would have looked these values up in printed tables, but now R does that for us.
+
+
+```{r t_dist, echo=FALSE,fig.width=3,fig.height=2,fig.align='center',fig.cap=""}
+
+(ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dt, args = list(df = 5), aes(colour="05")) +
+  stat_function(fun = dt, args = list(df = 10),aes(colour="10")) +
+  stat_function(fun = dt, args = list(df = 30),aes(colour="30")) +
+  geom_vline(xintercept = c(-2,2), linetype="dashed") +
+  scale_colour_manual("d.f.", values = c("red", "blue", "green")) + 
+  xlab("t-value") + 
+  ylab("Probability density")
+)  
+```
+
+
+
+## One sample t-test
+
+Enough theory. Here's how you would apply such a test in R.
+
+Firstly, lets load some data. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.
+
+```{r}
+pollution <- data.frame(mgm3 = c(105, 196, 226, 81, 156, 201, 142, 149, 191, 192,
+                                178, 185, 231, 76, 207, 138, 146, 175, 114, 155))
+
+```
+
+First I plot the data (Figure \ref{fig:pollution}). One reason for doing this is to check that the data look approximately normally distributed. These data are slightly left-skewed but they are close enough.
+
+```{r pollution, fig.width=4,fig.height=3,fig.align='center',fig.cap="Histogram of the pollution data."}
+ggplot(pollution,aes(x=mgm3))+
+  geom_histogram(bins=8) +
+  geom_vline(xintercept = 100)
+```
+
+Now we can run a t-test in R like this. The command is simple - the first two arguments are the data (`x`) and the the fixed value you are comparing the data to. The final argument defines the alternative hypothesis. This can take values of "`two.sided`", "`less`" or "`greater`" (the default is `two.sided`). In this example, the alternative hypothesis is that the mean of our sample is greater than the threshold of 100.
+
+```{r}
+t.test(x = pollution$mgm3, mu = 100, alternative = "greater")
+```
+
+The output of the model tells us (1) what type of t-test is being fitted ("`One Sample t-test`"). Then it gives some values for the t-statistic, the degrees of freedom and the p-value. The model output also tells us that the alternative hypothesis "**true mean is greater than 100**". Because the p-value is very small (p<0.05) we can reject the null hypothesis and accept the alternative hypothesis.  Finally, the output gives you the confidence interval (the area where we strongly believe the true mean to lie) and the estimate of the mean. 
+
+We could report these results like this: "*the mean value of the sample was 162.2 mg/m^3^, which is significantly greater than the acceptable threshold of 100 mg/m^3^ (t-test: t = 6.2824, df = 19, p-value = 2.478e-06)*. 
+
+
+## Doing it "by hand" - where does the t-statistic come from?
+
+At this point, to ensure that you understand where the t-statistic comes from we will calculate the t-statistic using the equation from above. The purpose of this is to illustrate that this is not brain surgery - it all hinges on a straightforward comparison between signal (the difference between mean and threshold in this case) and noise (the variation, or standard error of the mean).
+
+To do this we first need to know the mean value and the threshold (the signal: $\bar{x} - \mu_{0}$). We can then divide that by the standard error of the mean (the noise: $s/ \sqrt{n}$)
+
+Here goes... I first create a vector (`x`) of the values to save typing. Then I show how to calculate `mean` and standard error, before dividing the "signal" by the "noise".
+
+
+```{r}
+#First create a vector of the values
+x <- pollution$mgm3
+
+#mean
+mean(x)
+
+#standard error of the mean
+sd(x)/sqrt(length(x))
+
+#Putting it all together
+(mean(x) - 100) / (sd(x) / sqrt(length(x)))
+```
+
+This matches exactly with the t-statistic above!
+
+One can obtain a p-value from a given t-statistic and degrees of freedom like this for a t-test like the one fitted above (the d.f. is the sample size minus one for a one-sample t-test):
+
+```{r}
+1 - pt(6.282373, 19)
+```
+Again, this matches the value from the `t.test` function above.
+
+
+## Paired t-test 
+
+It's actually quite hard to find examples of one-sample t-tests in biology. In most cases, the one-sample t-tests are really paired t-tests, which are a special case of the one sample test where rather than using the actual values measured, we use the difference between them instead (Figure \ref{fig:paired_t}). 
+
+```{r paired_t,echo=FALSE,fig.width=3,fig.height=2,fig.align='center',fig.cap=""}
+(ggplot(data = data.frame(x = c(-10, 90)), aes(x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean = 40, sd = 20)) + ylab("Probability density") + 
+   xlab("Difference between pairs") +
+  scale_y_continuous(breaks = NULL) + 
+  #geom_vline(xintercept = 0, linetype="dashed") +
+  geom_vline(xintercept = 40, linetype="dashed",col="red") +
+   geom_segment(data = data.frame(y=.002,yend=.002,x=0,xend=40),
+                aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")))+
+   geom_vline(xintercept = 0, linetype="dashed",colour="black") +
+  #theme_minimal()+
+   NULL
+)
+```
+
+Here's a simple example. Anthropologists studied tool use in women from the indigenous Machinguenga of Peru. They estimated the amount of cassava obtained in kg/hour using either a wooden tool (a broken bow) or a metal machete. The study focused on 5 women who were randomly assigned to groups to use the wooden tool then the machete (or vice versa). 
+
+<!--- [^ A.M. Hurtado, K. Hill (1989). "Experimental Studies of Tool Efficiency Among Machinguenga Women and Implications for Root-Digging Foragers", Journal of Anthropological Research, Vol.45,2,pp207-217.] --->
+
+The anthropologists hypothesised that using different tools led to different harvesting efficiencies. The null hypothesis is that there is no difference between the two groups and that a woman was equally efficient at foraging using either tool. The alternative hypothesis was that there is a difference between the two tools. (NOTE - this could also be formulated as a directional hypothesis e.g. with the expectation that machete is more efficient than the bow.)
+
+First let's import and look at the data. Make sure you understand it. A plot will be fairly useless to tell if the data are normally distributed, so we will simply have to assume that they are. In fact, t-tests are famously robust to non-normality.
+
+```{r}
+toolUse <- read.csv("CourseData/toolUse.csv")
+toolUse
+```
+
+We should now plot our data (Figure \ref{fig:toolData}). A nice way of doing this for paired data is to plot points with lines joining the pairs. This way, the slope of the lines is a striking visual indication of the effect.
+
+```{r toolData,fig.width=4.5,fig.height=3, fig.align='center',fig.cap="An interaction plot for the tool use data"}
+ggplot(toolUse,aes(x=tool,y=amount,group=subjectID)) + 
+  geom_line()+
+  geom_point() +
+  xlab("Tool used") +
+  ylab("Casava harvested (kg/hr)")
+
+```
+
+We can also look at the mean values and standard deviations:
+
+```{r}
+toolUse %>%
+  group_by(tool) %>%
+  summarise(meanAmount = mean(amount),sdAmount = sd(amount))
+```
+
+Now lets do a paired t-test to compare the means using the two tools. There are several ways to do a paired t-test. The first is to use a model formula in the command. The formula takes the form `measurements ~ group`. You must also specify the name of the `data.frame` and that the data are paired (`paired = TRUE`). 
+
+**IMPORTANT:** it is very important that the pairs are grouped together in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use `arrange` to sort the data by first the pairing variable (in this case, `subjectID`), and then the explanatory variable (the variable that defines the group - in this case, `tool`.
+
+```{r}
+toolUse <- toolUse %>% 
+  arrange(subjectID, tool)
+
+t.test(amount ~ tool, data = toolUse, paired = TRUE)
+```
+
+An alternative way is to give the two samples separately in the `t.test` command. To do this you will need to create two vectors containing the data from the two groups like this, using the `dplyr` command `pull` to extract the variable along with `filter` to subset the data:
+
+```{r}
+A <- toolUse %>% 
+  filter(tool == "machete") %>% 
+  pull(amount)
+
+B <- toolUse %>% 
+  filter(tool == "bow") %>% 
+  pull(amount)
+
+t.test(A, B, data = toolUse, paired = TRUE)
+```
+
+You would report these results something like this: *"Women harvested cassava more efficiently with a machete (168.2 kg/hr) than with a wooden tool (82.8kg/hr). The difference of 85.4 kg/hr (95% CI 72.2-98.6 kg) was statistically significant (paired t-test: t = 17.98, df = 4, p-value = 5.625e-05)."*
+
+NOTE: you could add the argument `alternative = "less"` or `greater` to these t-tests to turn them into directional one-tailed hypotheses. However, you should also be aware that the p-value for a one-tailed t-test is always half that of the two-tailed test. Therefore, you could also simply half the p-value when you report it rather than adding the "alternative" argument.
+
+## A paired t-test is a one-sample test.
+
+A paired t-test is the same as a one-sample t-test really. Here's proof.
+
+First we need to calculate the difference between the two measures
+
+```{r}
+difference <- A - B
+```
+
+Then we can fit the one-sample t-test from above, with the `mu` set as 0 (because the null hypothesis is that there is no difference between the groups). Compare this result with the paired t-test above.
+
+```{r}
+t.test(x = difference, mu = 0)
+```
+
+
+## Two sample t-test
+
+The two sample t-test is used for comparing the means of two samples [no shit!? :)]
+
+You can visualise this by picturing your two distributions (Figure \ref{fig:twosample}) and thinking about their overlap. If they overlap a lot the difference between means will not be significant. If they don't overlap very much then the difference between means *will* be significant. 
+
+The underlying mathematical machinery for the two-sample t-test is similar to the one-sample and paired t-tests. 
+Again, the important value is the t-statistic, which can be thought of as a measure of signal:noise ratio (*see above*). It is harder to detect a signal (the true difference between means) if there is a lot of noise (the variability, or spread of the distributions), or if the signal is small (the difference between means is small).
+
+
+```{r twosample, echo=FALSE, fig.width=6,fig.height=2,fig.align='center',fig.cap="A two-sample t-test.", fig.pos="ht"}
+
+d1<-c(40,10)
+d2<-c(60,10)
+
+A <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
+    stat_function(fun = dnorm, n = 101, args = list(mean = d1[1], sd = d1[2]),colour = "#007F00") + 
+    stat_function(fun = dnorm, n = 101, args = list(mean = d2[1], sd = d2[2]),colour="red") + 
+    ylab("Probability density") + 
+    xlab("x") +
+    scale_y_continuous(breaks = NULL) + 
+    geom_segment(data = data.frame(y=.002,yend=.002,x=d1[1],xend=d2[1]),
+                 aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="black") +
+    #geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
+    #            aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="red")+
+    geom_vline(xintercept = d1[1], linetype="dashed",colour="#007F00") +
+    geom_vline(xintercept = d2[1], linetype="dashed",colour="red") +
+    #theme_minimal()+
+    NULL
+
+d1<-c(40,10)
+d2<-c(80,10)
+
+B <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
+    stat_function(fun = dnorm, n = 101, args = list(mean = d1[1], sd = d1[2]),colour = "#007F00") + 
+    stat_function(fun = dnorm, n = 101, args = list(mean = d2[1], sd = d2[2]),colour="red") + 
+    ylab("Probability density") + 
+    xlab("x") +
+    scale_y_continuous(breaks = NULL) + 
+    geom_segment(data = data.frame(y=.002,yend=.002,x=d1[1],xend=d2[1]),
+                 aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="black") +
+    #geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
+    #            aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="red")+
+    geom_vline(xintercept = d1[1], linetype="dashed",colour="#007F00") +
+    geom_vline(xintercept = d2[1], linetype="dashed",colour="red") +
+    #theme_minimal()+
+    NULL
+
+ggpubr::ggarrange(A+ggtitle("A"),B+ggtitle("B"))
+```
+
+The mathematics involved with calculating the t-statistic is very similar to the one-sample t-test, except the numerator in the fraction is the difference between two means rather than between a mean and a fixed value.
+
+$$t = \frac{\bar{x_1}-\bar{x_2}} {s/ \sqrt{n}}$$
+So far so good... let's push on and use R to do some statistics.
+
+In this example, we can revisit the class data and ask the question, *Is the reaction time of males different than that of females?* The null hypothesis for this question is that there is no difference in mean reaction times between the two groups. The alternative hypothesis is that there **is** a difference in the mean reaction time between the two groups.
+
+Import the data in the usual way, and subset it to the right year.
+
+```{r}
+x <- read.csv("CourseData/classData.csv")
+```
+
+Then look at the data. Here I do this using a box plot with jittered points (a nice way of plotting data with small sample sizes) (Figure \ref{fig:reactionData}). From the Figure \ref{fig:reactionData} it looks like males have a faster reaction time than females, but there is a lot of variation. We need to apply the t-test in a similar way to above.
+
+```{r reactionData, fig.width=4,fig.height=3,fig.align='center',fig.cap="", fig.pos="ht"}
+ggplot(x,aes(x=Gender,y=Reaction)) +
+  geom_boxplot() + 
+  geom_jitter(col="grey60",width=0.2)
+```
+
+
+
+```{r echo=FALSE}
+temp <- t.test(Reaction ~ Gender, data = x)
+```
+
+```{r}
+t.test(Reaction ~ Gender, data = x,var.equal=F)
+```
+
+This output first tells us that we are using something called a "Welch Two Sample t-test". This is a form of the two-sample t-test that relaxes the assumption that the variance in the two groups is the same. This is a good thing. Although it *is* possible to fit a t-test with equal variances, I recommend that you stick with the default Welch's test and **not** make this limiting assumption. 
+
+Then we are told the t-statistic (`r formatC(temp$statistic, digits = 3, format = "f")`), the degrees of freedom (`r formatC(temp$parameter, digits = 3, format = "f")`) and the p-value (`r formatC(temp$p.value, digits = 3, format = "f")`). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are *not* faster than females. We could write report this something like this: 
+
+"*Although females had a slightly slower reaction time than males (`r formatC(temp$estimate[1], digits = 3, format = "f")` seconds compared to `r formatC(temp$estimate[2], digits = 3, format = "f")` seconds), this difference was not statistically significant (Welch t-test: t= `r formatC(temp$statistic, digits = 3, format = "f")`, d.f.= `r formatC(temp$parameter, digits = 3, format = "f")`), p=`r formatC(temp$p.value, digits = 3, format = "f")`).*"
+
+Note: With a t-test that *did* assume equal variances in the two groups, the d.f. is calculated as the sample size - 2 (the number of groups). You can do this by adding the argument "`var.equal = TRUE`" to the t-test command. With the Welch test, the appropriate degrees of freedom are estimated by looking at the sample sizes and variances in the two groups. The details of this are beyond the scope of this course.
+
+
+## t-tests are linear models
+
+It is also possible to formulate t-tests as linear models (using the `lm` function). To do this with the paired t-test you would specify a model that estimates an intercept. In R you can do this by writing the formula as `x ~ 1`. So, for the tool use example you can write the code like this: 
+
+```{r}
+mod1 <- lm(difference ~ 1)
+summary(mod1)
+```
+
+If you look at the summary will notice that the estimate of the intercept (the average difference between the two pairs), the degrees of freedom and the t-value and the p-value are all the same as the value reported when using `t.test`.
+
+In fact, all of the t-tests, and ANOVA (below) are kinds linear models and can be also fitted with `lm`.
+
+Here is the paired t-test investigating gender differences in reaction time. You can see that the test statistics and coefficients match those obtained from `t.test`.
+
+```{r}
+mod <- lm(Reaction ~ Gender, data = x)
+anova(mod)
+summary(mod)
+```
+
+
+## Exercises - Two-sample t-test
+
+Some people have suggested that there might be sex differences in fine motor skills in humans. Use the data collected on the class to address this topic using t-tests. The relevant data set is called `classData.csv`, and the columns of interest are `Gender` and `Precision`.
+
+Carry out a two-sample t-test. 
+
+1) Plot the data (e.g. with a box plot, or histogram)
+
+2) Formulate null and alternative hypotheses. 
+
+3) Use the `t.test` function to do the test.
+
+4) Write a sentence or two describing the results.
+
+
+
+### Paired t-test
+
+A study was carried out looking at the effect of cognitive behavioural therapy on weight of people with anorexia. Weight was measured in week 1 and again in week 8. Use a paired t-test to assess whether the treatment is effective.
+
+The data is called `anorexiaCBT.csv`
+
+The data are in "wide format". You may wish to convert it to "long format" depending on how you use the data. You can do that with the `gather` function, which rearranges the data:
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv",header=TRUE)
+```
+
+```{r}
+anorexiaCBT_long <- anorexiaCBT %>% 
+  gather("week","weight",-Subject)
+```
+1) Plot the data (e.g. with an interaction plot like Figure 5 in the t-tests PDF)
+
+2) Formulate a null and alternative hypothesis.
+
+3) Use `t.test` to conduct a *paired* t-test.
+
+4) Write a couple of sentences to report your result.
+
+
+### Optional extra.
+
+* Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give the same results?
+
+* Try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `courseData.csv`. Can you think of any problems with this analysis?
+
+<!--MOVE TO RANDOMISATION TESTS. Try answering the question - "*do people who prefer cats travel less?* " using the `courseData.csv`-->
+

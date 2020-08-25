@@ -1,0 +1,68 @@
+--- 
+title: "BB852 - Data handling, visualisation and statistics"
+author: "Owen Jones"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+pandoc_args: --listings
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is the course book for BB852."
+papersize: a4paper
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE, message = FALSE
+)
+```
+
+# Preface
+
+This book has been written to accompany the course, BB852 - planning and evaluation of biological studies.
+
+It is a "work in progress" and will change during the course. The latest version can always be found by downloading it again.
+
+It is designed to be followed along with the course lectures. 
+
+Most subject chapters finish with some exercises to apply the material covered.
+
+The course is divided into three parts:
+
+* Data wrangling
+* Data visualisation
+* Statistics
+
+## Data wrangling
+
+The term data wrangling covers manipulation of data, for example collected from an experiment or observational study, from its raw form to a form that is ready for analysis, or summarised into tables. It includes reshaping, transforming, filtering and augmenting from other data. This book covers these processes in R mainly using the tools from the `dplyr` and `tidyr` packages.
+
+## Data visualisation
+
+Graphing data is a crucial analytical step that can both highlight problems with the data (e.g. errors and outliers) and can inform on appropriate analytical approaches to take. This book covers the use of `ggplot2` to make high quality, publication-ready plots.
+
+## Statistics
+
+Statistics is a huge field and this book does not attempt to cover more than a small fraction of it. Instead it focusses on (ordinary) linear models and generalised linear models. In a nutshell, linear models model the effects of explanatory variables on a continuous response variable with a gaussian (normal) error distribution while generalised linear models (GLMs) offer a more flexible approach that allows the response variable to have non-normal error distributions. This flexibility allows the more-appropriate modelling of phenomena including integer counts (e.g. number of individuals, or species, or events), binary (0/1) data (e.g. survived/died) or binomial count data (e.g. counts of successess and failures). It is important to realise that most commonly-used statistical methods including t-tests, ANOVA, ANCOVA, n-way ANOVA, and of course linear and multiple regression are all special cases of linear models. 
+
+
+
+## General approach
+
+My general approach with communicating these methods and ideas is to teach using examples. Therefore, the bulk of the text here consists of walk-throughs of manipulating, plotting and analysing real data. For the statistics section I focus on communicating the "gist" of the underlying mathematical machinery rather than the nitty-gritty details. If you find yourself interested in these details then there are more specialist textbooks available. 
+
+## Data sources
+
+This book uses numerous data sets in examples, most of which are real datasets obtained from published works, or collected by me.
+
+The data sets can be found at the following link:
+https://www.dropbox.com/sh/z8iv9fl9l00bm0w/AAD1WjFwcrr1ERugpunp_YH-a?dl=0
+
+## Acknowledgements
+
+These materials are inspired by the excellent textbook, "Getting Started With R" (2nd edition) by Andrew Beckerman, Dylan Childs and Owen Petchey and Dylan Childs', which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" ([https://dzchilds.github.io/stats-for-bio/]).
+
+## Error reporting
+
+Please report any errors you find (even small ones) to me at [jones@biology.sdu.dk](mailto:jones@biology.sdu.dk)

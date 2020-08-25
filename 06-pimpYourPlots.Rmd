@@ -1,0 +1,352 @@
+# Customising your plots
+
+## Introduction 
+
+The purpose of this worksheet it to learn how to customise plots made with `ggplot` to improve "readability", or just for aesthetic reasons. 
+
+We will cover the following:
+
+1. Modifying axes (log transform, different tick marks/ranges etc.).
+2. Colour schemes .
+3. "Themes" - built-in sets of styles.
+4. Multiple sub-plots in a plot.
+5. Saving your plots.
+
+As usual we need to install `tidyverse`.
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+library(tidyverse)
+```
+
+For these examples I will use the dataset on animal life history, Anage. 
+
+```{r import data,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+x <- read.csv("CourseData/anage_data.csv")
+```
+You can remind yourself what this data looks like using commands like `summary`, `str` and `names`.
+
+I will process the data a bit to make it easier to work with. One of the commands might be new to you - `rename`. This is simply a way of renaming columns, in this case to make them more "user friendly" (e.g. I want to rename the column "Metabolic.rate..W." to "BMR" (for basal metabolic rate)).
+
+I will also use `mutate` to (1) convert the Mass from grams to kilograms and (2) to make a new variable called "BMRperKg" which standardises metabolic rate by expressing it as rate per kilogram.
+
+```{r process data,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+
+anage <- x %>% 
+  mutate(Species = paste(Genus,Species)) %>%
+  rename(Longevity = "Maximum.longevity..yrs.",
+         Mass = "Body.mass..g." ,
+         BMR = "Metabolic.rate..W.") %>%
+  select(Class, Order, Species,Mass,Longevity,BMR) %>%
+  filter(Class %in% c("Aves","Amphibia","Mammalia","Reptilia")) %>% 
+  droplevels() %>% #this removes unused "factor levels" e.g. "Insecta"
+  mutate(Mass = Mass/1000,
+         BMRperKg = BMR/Mass) 
+
+summary(anage)  
+```
+
+```{r, echo=FALSE,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+png("basePlot.png")
+plot(log(anage$Mass),log(anage$BMR))
+dev.off()
+```
+
+
+## A basic plot
+
+Now lets start with a basic plot. You will see a warning about removing rows with missing values. This is just a warning to let you know that there are missing (`NA`) values in the data you are plotting.
+
+```{r, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+(p1 <- ggplot(anage,aes(x = Mass, y = BMR, colour = Class)) + 
+  geom_point(alpha=0.3)) #use alpha argument to make points transparent
+```
+
+## Axis limits
+
+These points are really spread out. One option to deal with this might be to set the range over which the axes are allowed to go using `xlim` and `ylim`.
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+p1 + 
+  xlim(0,500) + 
+  ylim(0,300)
+```
+
+## Transforming the axis (log scale)
+
+In this particular case though use of a log scale would be best because even after focusing on a smaller part of the range of values you can see that the points are still concentrated at smaller values. In a moment, you will also see that log-transforming the data makes the cloud of points pleasingly linear.
+
+You can set a log scale by using the commands `scale_x_continuous(trans = "log")` and `scale_y_continuous(trans = "log")`.
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+(p2 <- p1 + 
+  scale_x_continuous(trans = "log") +
+  scale_y_continuous(trans = "log"))
+```
+
+```{r,echo = FALSE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+(ggplot(anage,aes(x = log(Mass), y = log(BMR), colour = Class)) + 
+   geom_point(alpha=0.3))
+#ggsave("basicGgplot.png",width = 12, height=7,units="cm")
+```
+
+
+## Changing the axis tick marks
+
+This looks nice. But the numbers on the axis are not very nice. Using `summary(anage$BMR)`  tells us that the range of data is from 0.0001 to 2336.5. We could place tick marks anywhere on this axis, but let's try 0.0001, 0.001,0.1, 1,10, 100, 1000.
+
+```{r, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+(p2 <- p1 + 
+  scale_x_continuous(trans = "log") +
+  scale_y_continuous(trans = "log", breaks = c(0.0001,0.001,0.01,0.1,1,10,100,1000)))
+```
+
+Using `summary(anage$Mass)`  tells us that the range of data is from 0.001 to 3672. We could place tick marks anywhere on this axis, but let's try 0.001,0.1, 1,10, 100, 1000.
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+(p2 <- p1 + 
+  scale_x_continuous(trans = "log", 
+                     breaks = c(0.001,0.01,0.1,1,10,100,1000)) +
+  scale_y_continuous(trans = "log", 
+                     breaks = c(0.0001,0.001,0.01,0.1,1,10,100,1000))
+ )
+```
+
+## Axis labels
+
+Now, let's think about the axis labels. The labels in the plots so far have no units indicated, and might not be easy to interpret for the reader. Let's add units, and also spell out more fully what "BMR" and "Mass" means (the axes is basal metabolic rate in Watts and adult body mass in kg).
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+(p3 <- p2 + 
+  xlab("Adult body mass (kg)") + 
+  ylab("Basal metabolic rate (W)")
+)
+```
+
+
+## Colours
+
+What about those colours? The `ggplot` package uses some default colours that are OK, but sometimes you will want to make a change. 
+
+You can "manually" adjust colours using the `scale_colour_manual` function. You can either name individual colours (e.g. "red","green","orange","black")^[See https://www.r-graph-gallery.com/42-colors-names.html], or you can find their so-called "hex-codes" from a site like http://colorbrewer2.org/ or https://htmlcolorcodes.com/color-picker/. You can add a two digit number after the hex code to set the "opaqueness" of the colour. For example "#FF000075" is red, with 75% opacity.
+
+With colour names...
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+p3 + 
+  scale_colour_manual(values = c("red","green","orange","black"))
+```
+
+
+And with some hex codes...
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+p3 + 
+  scale_colour_manual(values = c("#33FF6475","#3368FF75","#FF33CE75","#FFCA3375"))
+```
+
+Another alternative is to use some of `ggplot`'s built in "palettes" of colour combinations. For example, there are several palettes called "`viridis`".
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+p3 + 
+  scale_colour_viridis_d(option = "D")
+```
+
+*Try using other `option` arguments `A`, `B`, `C` and `E`. Try also adding an argument for transparency `alpha = 0.5`.*
+
+Here's a couple more palettes. There's one for shades of grey...
+
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+p3 + 
+  scale_colour_grey()
+```
+
+There's another one for various colour schemes, called "colour brewer". *Try using "RdGy", "RdYlBu" and "Spectral"* see `?scale_colour_brewer` for more options.
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+p3 + 
+  scale_colour_brewer(palette = "BrBG")
+```
+
+## Themes
+
+Finally, `ggplot` includes the option to set a  **theme** for the plots. "Themes"" make adjustments to the "look" of the plot.  It is possible to write your own themes, but I recommend to use some ready-made ones. You can implement them by adding them as you would any other addition to the `ggplot` command (e.g. `+ theme_light()`. 
+
+There are several themes included with `ggplot`. Try my favourite, `theme_minimal()`. Then try `theme_classic()` and `theme_dark()`.
+
+```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+(p4 <- p3 + 
+  theme_minimal()
+)
+```
+For more theme fun, you can install packages that include more themes. The best one is called `ggthemes` (remember that you only need to install the package once). Try `theme_economist()`, `theme_tufte()` and (ugh!) `theme_excel()`. You can see what other themes there in this package at https://jrnold.github.io/ggthemes/reference/index.html (some of them are really ugly in my opinion!).
+
+```{r,eval=FALSE,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+install.packages("ggthemes")
+```
+```{r,eval=TRUE,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+library(ggthemes)
+p3 + 
+  theme_economist()
+```
+
+This package also includes some useful colour scales, including some for colour blind people.
+
+```{r, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+p3 + 
+  scale_color_colorblind()
+```
+
+## Moving the legend
+
+By default, the legend is placed on the right. You can move it around by adding a `theme` argument to your plot commands. It can also be placed on the "`top`", "`bottom`", or "`left`". You can also remove the legend altogether by using `legend.position = "none"`. You might also want to remove the legend title using the theme argument `legend.title = element_blank()`. 
+
+```{r, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+p3 + 
+  theme(legend.position  = "bottom")
+```
+
+
+## Combining multiple plots
+
+It is often useful to combine two or more plots into a single figure. For example, many journals have strict limits on the number of plots so it is useful to combine plots into "Figure 1A and B" etc.
+
+There are several R packages that can do this and my favourite is called `ggpubr`. The important function in the package is called `ggarrange`.
+
+```{r,eval = FALSE}
+install.packages("ggpubr") #only need to do this once
+```
+
+```{r}
+library(ggpubr)
+```
+
+I will illustrate it by first making another plot, this time showing the relationship between body mass and *standardised* BMR (BMR per kg). Because I am combining the plots into a smaller space I have decided to remove the figure legend (I could put it in the figure caption instead).
+
+```{r}
+#PlotA (this is what you have already created above)
+plotA <- ggplot(anage,aes(x = Mass, y = BMR, colour = Class)) +
+  geom_point(alpha=0.5) + 
+  scale_x_continuous(trans = "log",breaks =c(0.001,0.01,0.1,1,10,100,1000)) + 
+  scale_y_continuous(trans = "log",breaks =c(0.0001,0.001,0.01,0.1,1,10,100,1000)) +
+  xlab("Adult body mass (kg)") + 
+  ylab("Basal metabolic rate (W)") +
+  theme_minimal() +
+  theme(legend.position  = "bottom",
+        legend.title = element_blank())
+
+(plotB <- ggplot(anage,aes(x = Mass, y = BMRperKg, colour = Class)) +
+    geom_point(alpha=0.5) + 
+    scale_x_continuous(trans = "log",breaks =c(0.001,0.01,0.1,1,10,100,1000)) +
+    scale_y_continuous(trans = "log",breaks =c(0.0001,0.001,0.01,0.1,1,10)) + 
+    xlab("Adult body mass (kg)") + 
+    ylab("Basal metabolic rate (W/kg)") +
+    theme_minimal() + 
+    theme(legend.position  = "none")
+) #This one is wrapped in brackets so that R shows it
+```
+
+Now I can combine these using the `ggarrange` function from `ggpubr`. I can add titles to the sub-plots using the command `ggtitle`.
+
+```{r,fig.height = 4,fig.width=7}
+(AB <- ggarrange(plotA + ggtitle("A"), plotB + ggtitle("B")))
+```
+You caould place the sub-plots on top of eachother using `nrow` or `ncol` (specifying the number of rows/columns) like this.
+
+```{r,fig.height = 7,fig.width=4}
+(AB2 <- ggarrange(plotA + ggtitle("A"), plotB + ggtitle("B"),nrow=2))
+```
+
+
+```{r, echo=FALSE}
+(ggarrange(plotA + 
+             ggtitle("A") +
+             scale_colour_brewer(palette = "BrBG"),
+           plotB + 
+             ggtitle("B")+
+             scale_colour_brewer(palette = "BrBG")))
+
+#ggsave("betterGgplot.png",width = 18, height=10,units="cm")
+
+(ggarrange(plotA + 
+             ggtitle("A") +
+             scale_colour_brewer(palette = "BrBG")+
+             theme_tufte()+
+             theme(legend.position  = "none"),
+           plotB + 
+             ggtitle("B")+
+             scale_colour_brewer(palette = "BrBG")+
+             theme_tufte()+
+             theme(legend.position  = "none")))
+
+#ggsave("betterGgplot2.png",width = 20, height=10,units="cm")
+
+ 
+(ggarrange(plotA + 
+             ggtitle("A") +
+             scale_colour_brewer(palette = "BrBG")+
+             theme_clean()+
+             theme(legend.position  = "none"),
+           plotB + 
+             ggtitle("B") +
+             scale_colour_brewer(palette = "BrBG")+
+             theme_clean()+
+             theme(legend.position  = "none")))
+
+#ggsave("betterGgplot3.png",width = 18, height=10,units="cm")
+
+```
+
+
+## Saving your plot
+
+You should, I think, already know about using the "Export" button in RStudio to save out your plot. This is useful and easy, but you should know that you can also save the plots using a typed command (`ggsave`) in your script. This command is handy because it allows you to automatically set the size, and file name of your plot. 
+
+The default setting for `ggsave` is that it will save the last plot that was printed to your computer screen. Therefore easiest way to use the command is to simply place the `ggsave` command immediately after your `ggplot` command. Otherwise, you can use the `plot` argument to tell `ggsave` which plot you want to save.
+
+The command can save to various file types including `png`, `jpeg`, `pdf` (see the `ggplot` help file for more). R knows what file file type is chosen by checking the file extension in the file name (e.g. `.png`). I advise to use `png`.
+
+You should also set the width and height of the plot and the units (the default is inches). It usually takes a few attempts and a bit of trial-and-error to choose the dimensions so that the plot looks nice.
+
+```{r,eval=FALSE}
+ggsave("MySavedPlot1.png", plot = AB, width = 18, height=10, units = "cm")
+
+ggsave("MySavedPlot2.png", plot = AB2, width = 10, height=18, units = "cm")
+```
+
+
+## Final word on plots
+
+We have covered a lot of ground here. There is a lot to learn, but don't feel like you have to remember all of these commands (I don't). Mostly it is simply a case of remembering that it is *possible* to do these things, and knowing where to look up the commands. Obvious starting points are these worksheets, and the text book (including the online version!). You can also usually find help by Googling "ggplot" followed by what you are trying to do (e.g. "ggplot change axis ticks"). One of my frequently used web sites is this one http://www.sthda.com/english/ which has an extensive section on `ggplot` (http://www.sthda.com/english/wiki/ggplot2-essentials).
+
+Even though we have covered a lot of ground we have still only gotten a taster of what `ggplot` is capable of. I encourage you to learn more. A useful resource for learning is the online R graph gallery" at https://www.r-graph-gallery.com/, which shows you how to make and modify many types of plot.
+
+
+<!-- ## A note about the order of point layers -->
+
+<!-- Sometimes the points end up obscuring each other. For example, here the points for birds (Aves) are mostly hidden by the points for mammals. This happens because `ggplot` places the points in the order that they appear in the data frame. Therefore, one way to deal with that would be to change the order of the rows (e.g. so Aves appears last) or to randomise the rows using a new command called `slice` in concert with the `sample` function. -->
+
+
+<!-- ```{r} -->
+<!-- anage <- anage %>% -->
+<!--   slice(sample(1:n())) -->
+
+<!-- ggplot(anage,aes(x = Mass, y = BMR, colour = Class)) + -->
+<!--   geom_point(alpha=0.5) +  -->
+<!--   scale_x_continuous(trans = "log",breaks =c(0.001,0.01,0.1,1,10,100,1000)) +  -->
+<!--   scale_y_continuous(trans = "log",breaks =c(0.0001,0.001,0.01,0.1,1,10,100,1000)) -->
+<!-- ``` -->
+
+<!-- Another way would be to create a "helper" variable (e.g. `plotOrder`) and then arrange the data by this variable. This is a bit fiddly, but it gets the job done. -->
+
+<!-- ```{r} -->
+<!-- anage <- anage %>% -->
+<!--   mutate(plotOrder = as.numeric(Class)) %>% -->
+<!--   arrange(-plotOrder) -->
+
+
+<!-- ggplot(anage,aes(x = Mass, y = BMR, colour = Class)) + -->
+<!--   geom_point(alpha=0.5) +  -->
+<!--   scale_x_continuous(trans = "log",breaks =c(0.001,0.01,0.1,1,10,100,1000)) +  -->
+<!--   scale_y_continuous(trans = "log",breaks =c(0.0001,0.001,0.01,0.1,1,10,100,1000)) -->
+<!-- ``` -->

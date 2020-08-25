@@ -1,0 +1,167 @@
+# Generalised linear models
+
+```{r echo=FALSE,message=FALSE}
+require(tidyverse)
+require(ggpubr)
+```
+
+The models we have covered so far are ordinary linear models (including ANOVA, ANCOVA, ordinary linear regression etc.) that assume thatthe relationship between the explanatory variables and the response variable is linear, and that the systematic error in the model is constant (homoscedastic, i.e. the standard deviation of the data does not depend on the magnitude of the explanatory variable). 
+
+In many cases this will not be the case. Non-linearity and heteroscedasticity tend to go hand-in-hand. Sometimes, for example, the data show an exponential growth type of pattern, and/or may be bounded in such a way that the errors cannot be homoscedastic. For example, counts of number of species on islands of different sizes have a lower bound at zero (you can't have negative numbers of species!) and increase exponentially while the standard deviations are are small for small islands and large for large islands.; ratio data or percentage data such as proportion of individuals dying/surviving is bounded between 0 and 1 (0 - 100%).
+
+Transformation of the response variable could an option to linearise these data (although there would be problems with 0 values (because log(0) = -Infinity)), but a second problem is that the ordinary linear model assumes "homoscedasticity" - that the errors in the model are evenly distributed along the explanatory variables. This assumption will be violated in most cases. For example, with count data (e.g. number of species in relation to island size), the errors for very small islands will be smaller than those for large islands. In fact, even if we transform the response variable, for example by log transformation, the predictions of the model will allow errors that include negative counts. This is clearly a problem!
+
+Generalised linear models (GLMs) solve these problems by not only applying a transformation but also explicitly altering the error assumption. They do this using a **link function** to carry out the transformation and by choosing an **error structure** (sometimes referred to as **family**, or **variance function**). The choice of link and error structure can be a bit confusing, but there are so-called "canonical links" that are commonly associated with particular error strucutres. For example, a model for count data would usually have a log link and a Poisson error structure.
+
+The flexibility of the GLM approach means that one can fit GLM versions of all of the models you have already learned about until this points: ANOVA-like GLMs, ANCOVA-like GLMs, ordinary regression-like GLMs and so on. 
+
+Here I will focus on this case, and in the next worksheet I will broaden the focus to illustrate uses of other error structures and links.
+
+## Count data with Poisson errors.
+
+The most common kind of count data where Poisson errors would be expected are frequencies of an event: we know how many times an event happened, but not how many times it did not happen (e.g. births, deaths, lightning strikes).
+
+In these cases:
+
+* Linear model could lead to negative counts.
+* Variance of response likely to increase with mean (it usually does with count data).
+* Errors are non-normal.
+* Zeros difficult to deal with by transformation (e.g. log(0) = -Inf).
+* Other error families do not allow zero values.
+
+The standard ("canonical") link used with the Poisson error family is the log link. The log link ensures that all fitted (i.e. predicted) values are positive, while the Poisson errors take account of the fact that the data are integer and the variance scales 1:1 with the mean (i.e. variance increases linearly and is equal to the mean). There are other potential link and error families that *could* be used with this kind of data, but we'll stick with the standard ones here. Lets look at a couple of examples...
+
+
+### Example: Number of offspring in foxes.
+
+This example uses the `fox.csv` data set. This data set gives the number of offspring produced by a group of foxes, alongside the weight (in kg) of the mothers. Let's import and plot the data.
+
+```{r  echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+fox <- read.csv("CourseData/fox.csv")
+
+ggplot(fox, aes(x=weight,y=noffspring)) + 
+  geom_point()
+```
+
+The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offpspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).
+
+
+```{r }
+mod1 <- glm(noffspring ~ weight, data = fox, family = poisson)
+```
+
+After fitting the model it is a good idea to look at the model diagnostics, using `autoplot` from the `ggfortify` package.
+
+```{r echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+library(ggfortify)
+autoplot(mod1)
+```
+
+
+Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using hte `test = "F"` or `test = "Chi"`.  For Poisson and binomial GLMs the chi-squared test is most appropriate while for  gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
+
+
+```{r}
+anova(mod1,test = "Chi")
+```
+
+This summary table tells us that the single explanatory variable (`weight`) is fantastically important (p-value is very small indeed).
+
+We can then ask for the coefficient summary using `summary`.
+
+```{r}
+summary(mod1)
+```
+
+
+The model coefficients and their standard errors are given on the scale of the linear predictor. They tell us that there is a significant association between the weight of the fox mother and the number of offspring she will produce: larger foxes produce more offspring. Because the coefficients are given on the scale of the linear predictor rather than on the real scale it is useful to plot predictions of the model to visualise the relationship.
+
+To do that we must (1) tell the model what to predict `from` i.e. we must provide a suitable sequence of numbers to predict from using `seq`, (2) use the `predict` function to predict values (`fit`) from the model. We use the argument `type = "response"` to tell the function that we want the preductions on the backtransformed (real) scale rather than on the scale of the linear predictor. We add the argument `se.fit = TRUE` to tell the function to give us the standard error estimates of the fit. The `se.fit` values are added or subtracted from the fit to obtain the plus/minus standard errors. We can multiply these by 1.96 to get the 95% confidence intervals of the fitted values.
+
+```{r}
+#Vector to predict from
+newData <- data.frame(weight = seq(1.7,4.4,0.01))
+
+#Predicted values (and SE)
+predVals <- predict(mod1,newData,type="response",se.fit = TRUE)
+
+#Create new data for the predicted fit line
+newData <- newData %>% 
+  mutate(noffspring = predVals$fit) %>% 
+  mutate(ymin = predVals$fit - 1.96*predVals$se.fit) %>% 
+  mutate(ymax = predVals$fit + 1.96*predVals$se.fit)
+```
+
+Take a look at this data to make sure it looks OK.
+
+```{r}
+head(newData)
+```
+This looks OK. Now we can plot the data and add a the model fit line, and a "ribbon" representing the errors (the 95% confidence interval for the line).
+
+
+```{r echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+(A <- ggplot(fox,aes(x= weight,y=noffspring)) + 
+  geom_ribbon(data = newData,aes(x =weight,ymin=ymin,ymax=ymax),fill="grey75")+
+  geom_point()+
+  geom_smooth(data = newData,stat="identity"))
+
+```
+
+
+So we could summarise this something like this:
+
+Methods: *I modelled the association between mother's weight and number of pups produced using a generalised linear model with a log link and Poisson error structure. This is appropriate because the data are count data (number of pups) that are bounded at 0 with increasing variance with increased maternal weight.*
+
+Results: *The GLM showed that maternal weight was significantly associated with the number of pups produced (GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63$\times$MotherWeight (see Figure XXX)*
+
+
+
+
+### Example: Cancer clusters
+
+This data show counts of prostate cancer and distance from a nuclear processing plant. Lets take a look at the data.
+
+Let's first import the data and use summary to examine it by plotting  it:
+
+First we can see that there are no negative count values.
+
+```{r  echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+cancer <- read.csv("CourseData/cancer.csv")
+
+ggplot(cancer,aes(x = Distance,y = Cancers))+
+  geom_point()
+```
+
+Again, you will notice that the data are formed into horizontal rows of integer response values. There are lots of zero values at all distances, but the biggest cluster (6 cases), is very close to the plant. But is there a relationship between the distance from the nuclear plant and the number of cancers?
+
+Let's fit a Generalised Linear Model to find out. As before will assume that the error is Poisson (that they variance increases directly in proportion to the mean), and we will use the standard log link to ensure that we don't predict negative values:
+
+```{r }
+mod1 <- glm(Cancers ~ Distance, data = cancer, family = poisson)
+```
+
+Next, plot the diagnostic plots.
+
+```{r echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+autoplot(mod1)
+```
+
+These look a bit dodgy, but we'll stick with it for the moment.
+
+Next ask for the Analysis of Variance table.
+
+```{r}
+anova(mod1,test = "Chi")
+```
+
+
+The ANOVA table tells us that there is no significant effect of the Distance variable. In other words a model that includes the `Distance` term does not explain significantly more variation than the `NULL` model that includes no terms and instead assumes that variation in cancer incidence is simply caused by random variation.
+
+We needn't go further with this model, but go ahead and plot the model in any case (just for practice). 
+
+```{r}
+summary(mod1)
+```
+
+Use the approach from the fox example as guidance to make a plot with a fit line.

@@ -1,0 +1,379 @@
+# Getting acquainted with R
+
+## Introduction
+
+`R` is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every concievable type of analysis. The aim of these introductory classes is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. There will be very little 'statistics', but you will be doing statistics using R during subsequent lectures.
+
+Before proceeding you will need to ensure you have intalled R and RStudio on your computer.
+
+
+## Getting started with R
+
+I encourage you to do all of your coding from within RStudio.  
+
+In RStudio, create a new "R Script" file. Scripts are essentially programs that can be saved to allow you to return to your work in the future. They also make debugging of errors much easier. You can use the menu to do creat a new R Script, but there's also a keyboard shortcut (Windows: Ctrl+Shift+N; Mac: Cmd+Shift+N). If you save (Windows: Ctrl+S; Mac: Cmd+S), you will be prompted for a file name. Make sure it has the suffix ".R" which denotes an R script file. When you double click on this file in future, it should automatically open in RStudio (if it doesn't you should be able to right-click and select 'Open with...').
+
+In RStudio you can execute commands using the "run" icon at the top of the script window, or by selecting the text and typing the shortcut Ctrl+Enter (Windows) or Cmd+Enter (Mac). Another helpful feature of RStudio is that it will colour-code the syntax that you type, making it easier to read and debug. Note that the colours you see may be different from the ones shown in this handout.
+
+You can customise the look of RStudio using by clicking Tools > Options menu on Windows or  RStudio > Preferences on a Mac. I will point out some of this in the lecture, or you can ask me to show you.
+
+Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensuring that you understand what the commands are doing. It is almost impossible to "break" R by typing the wrong command so I encourage you to experiment and explore the R language I introduce to you here as much as possible - it really is the best way to learn!
+
+## Getting help
+
+
+`R` features a wealth of commands, which are more properly termed `functions`. You will learn many of these over the next few weeks. Functions often feature a several options which are specified with `arguments`. For example, the function `sum`, has the argument `...`, which is intended to be one or more *vectors* of numbers (see below), and the argument `na.rm`, which is a logical argument specifying whether or not missing values should be removed or not. Usually the arguments have default options which are used you choose not to specify them. In addition, you don't necessarily need to fully-specify the argument if they are specified in the *correct order*. 
+
+You can get `help` on R functions from within R/RStudio with the `?` and `help.search` commands. `?` requires that you know the function name while *help.search* will search all the available help files for a particular word or phrase. `??` is a synonym for *help.search*:
+
+```{r comment = '#', eval=FALSE, echo=TRUE, results='asis', tidy=FALSE}
+?rep
+help.search("bar plot")
+??"bar plot"
+```
+
+
+In RStudio, the help results will appear in the lower right hand area.
+
+
+
+## R as a fancy calculator
+
+
+R features the usual arithmetic operations for addition, subtraction, division, multiplication: 
+
+```{r comment = '#'}
+4+3 
+9-12
+6/3
+7*3
+(2*7)+2-0.4
+```
+
+R also has commands for square root (sqrt), raising to powers (\^), taking the absolute value (abs), and rounding (round), natural log (log), antilog (exp), log to base-10 (log10):
+
+```{r comment = '#'}
+sqrt(945)
+3^5
+abs(-23.4)
+round(2.35425,digits=2)
+log(1.2)
+exp(1)
+log10(6)
+```
+Another thing you can do is evaluate TRUE/FALSE conditions:
+
+```{r}
+3<10
+5>7
+5==5
+6!=5
+3 %in% c(1,2,3,4,5)
+6 %in% c(1,2,3,4,5)
+```
+
+
+
+
+## Objects in R
+
+
+R is an object oriented programming language. This means that it represents concepts as `objects` that have data fields describing the object. These objects can be manipulated by `functions`. Objects can include data, but also models. Don't worry about these distinctions too much for now - all will become clear as you proceed!
+
+Objects are assigned names in R like this. The "<-" command is pronounced "gets" so I would pronounce the following "x gets four":
+
+```{r comment = '#'}
+x <- 4
+```
+
+To look at any object (function or data), just type its name.
+```{r comment = '#'}
+x
+```
+
+The main data object types in R are: *vectors*, *data frames*, *lists* and *matrices*. We will focus on the first two of these during this course.
+
+A vector is simply a series of data (e.g. the sequence _1, 2, 3, 4, 5_ is a vector, so is the non-numeric sequence _M, F, F, M, M_ ). Each item in a vector is termed an `element`. Therefore, both of these examples contain 5 elements.
+
+There are several ways to create vectors in R. For example, you can make vectors of integers using the *colon (:)* argument (e.g. *1:5*), or vectors of any kind of variable using the *c* function. *c* stands for `concatenate` and simply means to *link (things) together in a chain or series*. Other convenient functions for making vectors are `seq`, which builds a sequence of numbers, and `rep` which builds a vector by repeating elements a specified number of times.
+
+Try the following:
+```{r comment = '#'}
+A <- 1:5
+B <- c(1,3,6,1,7,9)
+C <- seq(1,10,2)
+D <- seq(1,5,0.1)
+E <- rep(c("M","F"),each = 3)
+G <- rep(c("M","F"),c(2,4))
+```
+
+In these examples, the commands `c`, `seq` and `rep` are *functions*. 
+
+You can *concatonate* vectors using the `c` function. E.g. concatonating the vectors A and B from above:
+```{r comment = '#'}
+c(A,B)  
+```
+
+When functions are applied to vectors, they are applied element-by-element. For example, multiplying a vector will multiply every element in that vector:
+
+```{r comment = '#'}
+B
+B*3
+```
+
+Other manipulations are also done "element-by-element". For example, here we multiply the first element of B by 1, the second by 2, the 3rd by 3 and so on...:
+
+```{r comment = '#'}
+B * c(1,2,3,4,5,6)
+```
+
+## Missing values, infinity and "non-numbers"
+
+
+By convention, *missing values* in R are coded by the value "NA". The way that particular functions handle missing values varies: sometimes the NA values are stripped out of the data, other times the function may fail.
+
+For example, if we asked for the mean value of a vector of numbers with an NA value, it will fail:
+
+```{r comment = '#'}
+mean(c(1,3,6,1,7,9,NA))
+```
+
+In this case you need to specify that any NA values should be removed before calculating the mean:
+```{r comment = '#'}
+mean(c(1,3,6,1,7,9,NA),na.rm=TRUE)
+```
+
+Calculations can sometimes lead to answers that are plus, or minus, infinity. These values are represented in R by Inf or -Inf:
+
+```{r comment = '#'}
+5/0
+-4/0
+```
+
+Other calculations lead to answers that are not numbers, and these are represented by NaN in R:
+```{r comment = '#'}
+0/0
+Inf-Inf
+```
+
+
+
+## Basic information about objects
+
+
+You can obtain information about most objects using the `summary` function:
+
+```{r comment = '#'}
+summary(B)
+```
+
+The functions `max`, `min`, `range`, and `length` are also useful:
+```{r comment = '#'}
+max(B)
+min(B)
+range(B)
+length(B)
+```
+
+## Data frames
+
+
+Data frames are the usual way of storing data in R. It is more-or-less the same as a worksheet in Excel. A data frame is usually made up of a number of vectors (of the same length) bound together in a single object. You can make a data frame by binding together vectors, or you can import them from outside R.
+
+This example shows the creation of a data frame in R, from 3 vectors:
+```{r comment = '#'}
+height <- c(173, 145, 187, 155, 179, 133)
+sex <- c("Male", "Female", "Male", "Female", "Male", "Female")
+age <- c(17, 22, 32, 20, 27, 30)
+
+mydata <- data.frame(height = height, age = age, sex = sex)
+mydata
+```
+
+Data frames can be summarised using the `summary` function (or the `glimpse` or `str` functions, which give you different views of the same data):
+
+```{r comment = '#'}
+summary(mydata)
+#glimpse(mydata)
+str(mydata)
+```
+
+Data frames can be subsetted using the square brackets `[]`, or `subset` functions. With the square brackets, the first number specifies the row number, while the second number specifies the column number:
+
+```{r comment = '#'}
+mydata[1,]
+mydata[,2]
+mydata[1,2]
+subset(mydata,sex == "Female")
+```
+
+It would be incredibly tedious to enter real data by typing it in like this. Thankfully, R can import data from a range of different data formats. The most commonly used data format is `comma separated value (CSV)` so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I'll cover this in a later class).
+
+At this point you should create a folder/directory somewhere on your computer called "IntroToR". We will use this as the `working directory` for the remainder of the session. In R you can set the working directory using the `setwd` function. 
+
+Note that file paths in Windows and Apple OSX are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\\). In windows you also need to define the drive (e.g. C:).
+
+So, to set the working directory in Apple OSX you would use something like this (obviously, you need to put YOUR path!):
+
+```{r comment = '#', eval = FALSE}
+setwd("/Users/orj/Desktop/IntroToR")
+```
+
+While in Windows the equivalent command would be something like this (both of the following should work):
+
+```{r comment = '#', eval = FALSE}
+setwd("C:\\Users\\orj\\Desktop\\IntroToR")
+setwd("C:/Users/orj/Desktop/IntroToR")
+```
+
+Typing the path in can be annoying but there are ways to speed it up. In Windows you can copy paths from the Windows Explorer location/address bar, or you can hold down the Shift key as you right-click the file, and then choose Copy As Path.
+
+On a Mac you can copy file paths from Finder: Select your file/folder > Right click > Press the option key (on my keyboard this is the `alt` key) and click "Copy X as Pathname"
+
+
+I can check what the current working directory is using the `getwd` function:
+```{r comment = '#', eval = FALSE}
+getwd()
+```
+
+On the Blackboard site for BB852 I have put a link to a Dropbox folder containing data files for use in the course. In there you should be able to find a file called "carnivora.csv". Download this to your new working directory. You can check the contents of your working directory with the `list.files` function:
+
+```{r comment = '#', eval = FALSE}
+list.files()
+```
+
+You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the fiest row of our CSV file contains the column names. Note that your file path will be different to mine:
+
+```{r comment = '#', eval = TRUE}
+carni <- read.csv("CourseData/carnivora.csv",header = TRUE)
+```
+
+We can get some basic information on the *carni* data frame using the `summary` function, but also the `dim` and `nrow/ncol` functions:
+
+```{r comment = '#', eval = FALSE}
+summary(carni)
+```
+
+```{r comment = '#', eval = TRUE, results = 'markup'}
+dim(carni)
+nrow(carni)
+ncol(carni)
+```
+
+We can find the names of the columns of a data frame with the `names` function:
+
+```{r comment = '#', eval = TRUE, results = 'markup'}
+names(carni)
+```
+
+The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
+SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independance (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).
+
+You can refer to the sub-parts of a `data.frame`(the columns) using the `$` syntax:
+
+```{r comment = '#', eval = TRUE, results = 'markup'}
+summary(carni$FW)
+```
+
+
+## Classes in R
+
+
+I have already mentioned the different object types in R (e.g. vectors and data frames). The object types are technically known as "classes". You can find out what "class" an object is by using the `class` function:
+
+```{r comment = '#', eval = TRUE, results = 'markup'}
+class(carni)
+```
+
+In this case, the data frame is, unsurprisingly, of class "data.frame". However, the vectors that compose the data frame also have classes. There are several classes of vectors including "integer" (whole numbers), "numeric" (real numbers), "factor" (categorical variables) and "logical" (true/false values).
+
+I expect you have heard of the first two data types, but "factor" might be puzzling. Factors are defined as variables which can take on a *limited* number of different values. They are often referred to as `categorical variables`. For example, in the carnivore dataset, the taxonomic variables are factors. The different values that a factor can take are known as `levels` and you can check on the levels of a vector with the `levels` function.
+
+```{r comment = '#', eval = TRUE, results = 'markup'}
+class(carni$Family)
+levels(carni$Family)
+```
+
+## Tables and summary statistics
+
+
+For vectors of class "factor" you can use the `table` function to give the counts for each level:
+
+```{r comment = '#', eval = TRUE, results = 'markup'}
+table(carni$Family)
+```
+
+You can use the function `tapply` ("table apply"), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument `mean`:
+
+```{r comment = '#', eval = TRUE, results = 'markup'}
+tapply(carni$FW, carni$Family, mean)
+```
+
+
+## Plotting data
+
+
+Basic plots can be made using the `plot` command. For example, let's have a look at the relationship between log gestation length and log female body weight (see Figure 1, below):
+
+```{r comment = '#', eval = TRUE, results = 'markup', fig.cap=('A simple scatter plot'), fig.show=('asis')}
+plot(log(carni$FW), log(carni$GL))
+```
+
+
+<!-- Try the following -->
+<!-- ------------------------- -->
+
+<!-- _Make sure you can do the following things successfully. If in doubt please ask for help!_ -->
+
+<!-- Q1. Make a table of the number of species in each Family of the Superfamily *Caniformia*. -->
+
+<!-- Q2. Using the carnivore data set, produce a box plot featuring female weight (FW) for the *Canidae*, *Felidae* and *Ursidae* together on the same plot. Hint: you will need to use `subset` and `droplevels` before plotting. -->
+
+<!-- Q3. Using the carnivore data set, make a table showing the average (mean) birth weight (BW) for Families in Superfamily *Feliformia*. Hint: Use `subset`, `droplevels` and `tapply`. -->
+
+<!-- Q4. Plot the relationship between log female weight (FW) and litter size (LS) in the *Mustelidae*. -->
+
+<!-- Q5. Identify the largest and smallest (by female weight (FW)) species in the *Viverridae* family. What are their brain sizes (FB)? Hint: use subset and the `which.min`/`which.max` functions (use help), and maybe square brackets [ ]. -->
+
+
+
+
+## Exercises - Getting acquainted with R
+
+### Background
+
+In the 1950s-1970s there was rapid growth in the number of houses being built in California, with suburbs sprawling out into the new sites in the countryside. What effect would this have on local bird communities? 
+
+Surveys on bird abundances were carried out in several locations near Oakland, California (Vale & Vale 1976). The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest developments as the baseline predevelopment condition.
+
+Think about what you might expect to happen to bird species diversity through time in a newly developing suburb.
+
+### The data
+
+The relevant data file is called `suburbanBirds.csv`. This file contains data on bird abundances surveyed in 1975. The columns of the data are `Name` (name of the suburb), `Year` (the year that the suburb was built), `HabitatIndex` (an index of habitat quality, related to tree height, garden maturity etc.), `nIndividuals` (number of indivual birds seen in a standard survey) and `nSpecies` (number of species seen in a standard survey).
+
+Additional surveys found an average species richess of 3.5 in nearby undisturbed habitats of grassland savanna.
+
+### Try the following
+
+1. First import the data. Check that the columns look as they should. (e.g. use `summary` or `str` functions). Tip: use the "Wizard" in RStudio to guide you.
+
+2. What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)
+
+3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)
+
+4. Plot the relationship between `Year` and `nSpecies` as a scatterplot using base-R graphics (using the `plot` function).
+
+5. The patern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Replot your results.
+
+6. What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?
+
+7. Export your plots and paste them into a Word Document.
+
+8. If you get this far, try plotting the other variables in the dataset.
+
+### References
+
+Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.
+
+

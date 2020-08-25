@@ -1,0 +1,166 @@
+# Combining data sets
+
+[INSERT PREAMBLE ABOUT DATA MANAGEMENT]
+
+
+In this exercise you will learn how to combine two data sets to create a new one of combined data to answer a conservation-related question: "**Does threat status vary with species' generation times?**" 
+
+This question is crucial to conservation biologists because it helps us to generalise our ideas about what drives extinction risks. In other words, if we can say "species with slow life histories tend to be more threatened" then this gives useful information that can help with planning. For example, imagine we have some species that have not yet been assessed (we don't know if they are threatened or not). Should we focus attention on the one with a short generation time, or long generation time?
+
+To answer this question we will need to import two large data sets, tidy them up a bit and then combine them for analysis.
+
+Let's start with the  "Amniote Life History Database" ^[https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1], which is a good source of life history data. We have encountered this database before. Recall that the missing values (which are normally coded as `NA` in R) are coded as "`-999`". The easiest way to take care of this is to specify this when we import the data using the `na.strings` argument of the `read.csv` function. Thus we can import the data like this:
+
+
+```{r}
+amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv",na.strings = "-999")
+```
+
+We first need to load the `tidyverse` packages.
+
+```{r,message=FALSE}
+library(tidyverse)
+```
+
+
+We can filter on the taxonomic `class` to subset to only mammals. Then, to address our question, we want data on generation time for mammals. Generation time is often measured as the average age at which females reproduce so we can get close to that with `female_maturity_d`. We will first `select` these columns, along with `genus` and `species`. We can combine these two taxonomic variables using `mutate` and `paste` to get our latin binomial species name.
+
+We have previously learned that log transforming such variables is a good thing to do, so we can use `mutate` again to do this transformation.
+
+Finally, we can use `na.omit` to get rid of entries with missing values (which we cannot use). This is not essential, but keeps things more manageable.
+
+```{r}
+mammal <- amniote %>%
+  filter(class == "Mammalia") %>% #get the mammals only
+  select(genus, species, female_maturity_d) %>% #get useful columns 
+  mutate(species = paste(genus, species)) %>%
+  select(-genus) %>%
+  mutate(logMaturity = log(female_maturity_d)) %>%
+  na.omit()
+```
+
+
+Let's take a quick look at what we have:
+
+```{r}
+head(mammal)
+```
+
+Looks good. Now let's import the IUCN Red List data.
+
+
+```{r}
+redlist <- read.csv("CourseData/MammalRedList.csv")
+```
+
+Let's take a look at that.
+
+```{r}
+names(redlist)
+unique(redlist$Red.List.status)
+```
+
+There's a lot of information there but what we really need is simply the latin binomial (for which we need `genus` and `species`) and the threat status `Red.List.status`. 
+
+R treats categorical variables (`factor` variables) as alphabetical, but in this case the red list status has a meaning going from low threat (Least Concern - LC) to Critically Endangered (CR) and even Extinct in the Wild (EX) at the other end of the spectrum. We can define this ordering using `mutate` with the `factor` function. 
+
+```{r}
+redlist <- redlist %>%
+  mutate(species = paste(Genus, Species))%>%
+  select(species, Red.List.status) %>%
+  mutate(Red.List.status = factor(Red.List.status, 
+                                  levels = c("LC","NT","VU","EN","CR","EW","EX")))
+
+head(redlist)
+```
+
+Now we can combine this with the life history data from above using `left_join`. 
+
+```{r}
+x <- left_join(mammal,redlist,by = "species")
+```
+
+Let's take a look at what we have now:
+
+```{r}
+head(x)
+summary(x)
+```
+
+You can see that there are `r sum(is.na(x$Red.List.status))` missing values for the Red List status. These are either species that have not yet been assessed, or maybe where there are mismatches in the species names between the two databases. We will ignore this problem today. 
+
+Before plotting, I will also use `filter` remove species that are extinct (status = "EX" and "EW"). To do this I use the `%in%` argument to allow me to match a vector of variables. Becuase I want to NOT match them I negate the match using `!`. 
+
+I  then ensure that those levels are removed from the variable using `droplevels`.
+
+```{r}
+x <- x %>%
+  filter(!Red.List.status %in% c("EX","EW")) %>%
+  droplevels()
+```
+
+Let's now plot the data to answer the question.
+
+```{r}
+plot(x$Red.List.status,x$logMaturity,ylab="Maturity")
+```
+
+What can we see? If you focus on the median values, it looks like there is a weak positive relationship between this life history trait and threat status: animals with slower life histories tend to be more threatened.
+
+## Exercise - joining datasets
+
+In this exercise you will practice your skills using `gather` to convert a wide-format data sheet into a long-format tidy data set. You will then use `left_join` to combine two data sets for analysis to answer an interesting biological question.
+
+### The data
+
+Data has been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to see if the egg laying date is associated with the temperature during the spring. The hypothesis is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change. 
+
+You are provided with two datasets: one on the birds and another on weather. You will need to process these, and merge them for analysis.
+
+### The bird data
+
+The first data set, `eggDates.csv`, is data from the SDU birds project. The data are arranged in columns where each column is a year and each row is a nest. The data in each column is the day of the year that the first egg in the nest was laid.
+
+These data do NOT fullfil the "tidy data" standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.
+
+You will need to use `gather` to fix this issue so that you produce a version of the data with three columns - `nestNumber`, `Year` and `dayNumber`.
+
+### The weather data
+
+The second dataset, `AarslevTemperature.csv`, is a weather dataset from Aarslev near Odense. This dataset includes daily temperatures records for several years. You will need to `summarise` this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.
+
+You will then join these datasets together.
+
+
+1. Import the data and take a look at it  with `head` or `str`.
+
+
+2. Use `gather` to reformat the data. This might take a bit of trial and error - don't give up! 
+
+Maybe this will help: The first argument in the gather command indicates what the columns in the main data represent (i.e. here the column represents "Year"). The second argument is the name you would give to the actual data (i.e. "day", in this case). The final argument then tells the function which columns of the data are not to be rearranged (i.e. "boxNumber" in this case).
+
+You should end up with a dataset with three columns as described above.
+
+
+3. Ensure that year is coded as numeric variable using `mutate`. [Hint, you can use the command `as.numeric`, but first remove the "y" in the name using `gsub`].
+
+
+4. Calculate the mean egg date per year using `summarise` (remember to `group_by` the year first). Take a look at the data.
+
+
+
+
+5. Import the weather data and take a look at it with `head` or `str`.
+
+
+
+6. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `year` and `meanSpringTemp`. 
+
+
+
+7. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
+
+
+8. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
+
+Now you should be able to answer the question we started with: is laying date associated with spring temperatures.
