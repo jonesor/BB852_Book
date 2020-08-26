@@ -4,11 +4,18 @@ author: "Owen Jones"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 pandoc_args: --listings
+output:
+  bookdown::gitbook:
+    config:
+      toc:
+        collapse: section
+    includes:
+      in_header: extras.css
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "This is the course book for BB852."
+description: "Course book for BB852 at the Biology Department, University of Southern Denmark"
 papersize: a4paper
 ---
 

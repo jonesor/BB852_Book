@@ -2,31 +2,52 @@
 
 ## Introduction
 
-`R` is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every concievable type of analysis. The aim of these introductory classes is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. There will be very little 'statistics', but you will be doing statistics using R during subsequent lectures.
+In this course we will be learning how manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every concievable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.
 
-Before proceeding you will need to ensure you have intalled R and RStudio on your computer.
+Before proceeding you will need to ensure you have a recent version of R installed on your computer (the current version is 4.0.3).
+
+```{block, type="do-something"}
+**Do this:** Check your R version, and/or install R on your own computer now.
+```
+
+In this course we will not be using R on its own. Instead, we will be using it with RStudio.
+
+R and RStudio are not the same thing. It is possible to run R without RStudio, but RStudio will not work if R is not installed. So what is RStudio? RStudio, essentially, is a helpful piece of software that makes R easier to use. The three most useful features are:
+
+* The R Console - this is where R runs inside RStudio. We can work *directly* with R by typing commands into this "console". It is also where outputs (results) from R are printed to the screen.
+
+* The Code Editor - this is where you can write R programs (called "scripts")", which are a set of commands/instructions in the R language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will "autocomplete" some text to speed up your work.
+
+* Useful "point-and-click" tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in *just* R - RStudio just makes things easier!
+
+You should do your coding from within RStudio.
+
+You can download the RStudio Desktop from https://rstudio.com/products/rstudio/download/. Select the correct version for your computer (Mac/Windows) and follow the usual instructions.
+
+```{block, type="do-something"}
+**Do this:** Install RStudio Desktop on your computer. 
+```
 
 
 ## Getting started with R
 
-I encourage you to do all of your coding from within RStudio.  
+In RStudio, create a new "R Script" file. Scripts are essentially programs that can be saved to allow you to return to your work in the future. They also make debugging of errors much easier. You can use the menu to do create a new R Script (`File > New File > R Script`), but there's also a keyboard shortcut (Windows: `Ctrl+Shift+N`; Mac: `Cmd+Shift+N`). If you save (Windows: `Ctrl+S`; Mac: `Cmd+S`), you will be prompted for a file name. Make sure it has the suffix ".R" which denotes an R script file. Save the file in a folder with a memorable name (e.g. `BB852_Work`).
 
-In RStudio, create a new "R Script" file. Scripts are essentially programs that can be saved to allow you to return to your work in the future. They also make debugging of errors much easier. You can use the menu to do creat a new R Script, but there's also a keyboard shortcut (Windows: Ctrl+Shift+N; Mac: Cmd+Shift+N). If you save (Windows: Ctrl+S; Mac: Cmd+S), you will be prompted for a file name. Make sure it has the suffix ".R" which denotes an R script file. When you double click on this file in future, it should automatically open in RStudio (if it doesn't you should be able to right-click and select 'Open with...').
+When you double click on this file in future, it should automatically open in RStudio (if it doesn't you should be able to right-click and select `Open with...`).
 
-In RStudio you can execute commands using the "run" icon at the top of the script window, or by selecting the text and typing the shortcut Ctrl+Enter (Windows) or Cmd+Enter (Mac). Another helpful feature of RStudio is that it will colour-code the syntax that you type, making it easier to read and debug. Note that the colours you see may be different from the ones shown in this handout.
+In RStudio you can execute commands using the "run" icon at the top of the script window, or by selecting the text and typing the shortcut `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac). Another helpful feature of RStudio is that it will colour-code the syntax that you type, making it easier to read and debug. Note that the colours you see may be different from the ones shown in this handout.
 
-You can customise the look of RStudio using by clicking Tools > Options menu on Windows or  RStudio > Preferences on a Mac. I will point out some of this in the lecture, or you can ask me to show you.
+You can customise the look of RStudio using by clicking **Tools ▶ Options** menu on Windows or **RStudio ▶ Preferences`** on a Mac. I will point out some of this in the lecture, or you can ask me to show you.
 
-Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensuring that you understand what the commands are doing. It is almost impossible to "break" R by typing the wrong command so I encourage you to experiment and explore the R language I introduce to you here as much as possible - it really is the best way to learn!
+Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensuring that you understand what the commands are doing. It is impossible to "break" R by typing the wrong command so I encourage you to experiment and explore the R language I introduce to you here as much as possible - it really is the best way to learn!
 
 ## Getting help
 
+**R** features a wealth of commands, which are more properly termed **functions**. You will learn many of these over the next few weeks. Functions often feature a several options which are specified with **arguments**. For example, the function `sum`, has the argument `...`, which is intended to be one or more **vectors** of numbers (see below), and the argument `na.rm`, which is a logical argument specifying whether or not missing values should be removed or not. Usually the arguments have default options which are used you choose not to specify them. In addition, you don't necessarily need to fully-specify the argument if they are specified in the *correct order*. 
 
-`R` features a wealth of commands, which are more properly termed `functions`. You will learn many of these over the next few weeks. Functions often feature a several options which are specified with `arguments`. For example, the function `sum`, has the argument `...`, which is intended to be one or more *vectors* of numbers (see below), and the argument `na.rm`, which is a logical argument specifying whether or not missing values should be removed or not. Usually the arguments have default options which are used you choose not to specify them. In addition, you don't necessarily need to fully-specify the argument if they are specified in the *correct order*. 
+You can get **help** on R functions from within R/RStudio with the `?` and `help.search` commands. `?` requires that you know the function name while *help.search* will search all the available help files for a particular word or phrase. `??` is a synonym for *help.search*:
 
-You can get `help` on R functions from within R/RStudio with the `?` and `help.search` commands. `?` requires that you know the function name while *help.search* will search all the available help files for a particular word or phrase. `??` is a synonym for *help.search*:
-
-```{r comment = '#', eval=FALSE, echo=TRUE, results='asis', tidy=FALSE}
+```{r, eval=FALSE, echo=TRUE}
 ?rep
 help.search("bar plot")
 ??"bar plot"
@@ -35,14 +56,11 @@ help.search("bar plot")
 
 In RStudio, the help results will appear in the lower right hand area.
 
-
-
 ## R as a fancy calculator
-
 
 R features the usual arithmetic operations for addition, subtraction, division, multiplication: 
 
-```{r comment = '#'}
+```{r}
 4+3 
 9-12
 6/3
@@ -52,7 +70,7 @@ R features the usual arithmetic operations for addition, subtraction, division, 
 
 R also has commands for square root (sqrt), raising to powers (\^), taking the absolute value (abs), and rounding (round), natural log (log), antilog (exp), log to base-10 (log10):
 
-```{r comment = '#'}
+```{r}
 sqrt(945)
 3^5
 abs(-23.4)
@@ -72,59 +90,68 @@ Another thing you can do is evaluate TRUE/FALSE conditions:
 6 %in% c(1,2,3,4,5)
 ```
 
-
-
-
 ## Objects in R
 
+R is an object oriented programming language. This means that it represents concepts as **objects** that have data fields describing the object. These objects can be manipulated by **functions**. Objects can include data, but also models. Don't worry about these distinctions too much for now - all will become clear as you proceed!
 
-R is an object oriented programming language. This means that it represents concepts as `objects` that have data fields describing the object. These objects can be manipulated by `functions`. Objects can include data, but also models. Don't worry about these distinctions too much for now - all will become clear as you proceed!
+Objects are assigned names in R like this. The "`<-`" command is pronounced "*gets*" so I would pronounce the following as "*x gets four*":
 
-Objects are assigned names in R like this. The "<-" command is pronounced "gets" so I would pronounce the following "x gets four":
-
-```{r comment = '#'}
+```{r}
 x <- 4
 ```
 
 To look at any object (function or data), just type its name.
-```{r comment = '#'}
+
+```{r}
 x
 ```
 
 The main data object types in R are: *vectors*, *data frames*, *lists* and *matrices*. We will focus on the first two of these during this course.
 
-A vector is simply a series of data (e.g. the sequence _1, 2, 3, 4, 5_ is a vector, so is the non-numeric sequence _M, F, F, M, M_ ). Each item in a vector is termed an `element`. Therefore, both of these examples contain 5 elements.
+A vector is simply a series of data (e.g. the sequence _1, 2, 3, 4, 5_ is a vector, so is the non-numeric sequence _Male, Female, Female, Male, Male_ ). Each item in a vector is called an **element**. Therefore, both of these examples contain 5 elements.
 
-There are several ways to create vectors in R. For example, you can make vectors of integers using the *colon (:)* argument (e.g. *1:5*), or vectors of any kind of variable using the *c* function. *c* stands for `concatenate` and simply means to *link (things) together in a chain or series*. Other convenient functions for making vectors are `seq`, which builds a sequence of numbers, and `rep` which builds a vector by repeating elements a specified number of times.
+There are several ways to create vectors in R. For example, you can make vectors of integers using the *colon* (`:`) function (e.g. `1:5`), or vectors of any kind of variable using the `c` function. `c` stands for *concatenate*, which means to *join (things) together in a chain or series*. Other convenient functions for making vectors are `seq`, which builds a sequence of numbers according to some rules, and `rep` which builds a vector by repeating elements a specified number of times.
 
 Try the following:
-```{r comment = '#'}
+```{r}
 A <- 1:5
 B <- c(1,3,6,1,7,9)
-C <- seq(1,10,2)
+C <- seq(1,12,2)
 D <- seq(1,5,0.1)
-E <- rep(c("M","F"),each = 3)
-G <- rep(c("M","F"),c(2,4))
+E <- rep(c("Male","Female"),each = 3)
+G <- rep(c("Male","Female"),c(2,4))
+```
+Try modifying the commands to make sure you know what the commands are doing.
+
+#Manipulating objects
+
+Objects can be manipulated (just like in real life). In R, we use **functions** to manipulate objects. 
+
+For example, we can use the basic arithmetic functions (`*`, `+`, `/`,`-`) on a vector:
+
+```{r}
+B
+B*3
+B-2
 ```
 
-In these examples, the commands `c`, `seq` and `rep` are *functions*. 
+You can *concatonate* entire vectors together using the `c` function. E.g. concatonating the vectors `A` and `B` from above:
 
-You can *concatonate* vectors using the `c` function. E.g. concatonating the vectors A and B from above:
-```{r comment = '#'}
+```{r}
 c(A,B)  
 ```
 
-When functions are applied to vectors, they are applied element-by-element. For example, multiplying a vector will multiply every element in that vector:
-
-```{r comment = '#'}
-B
-B*3
-```
 
 Other manipulations are also done "element-by-element". For example, here we multiply the first element of B by 1, the second by 2, the 3rd by 3 and so on...:
 
-```{r comment = '#'}
+```{r}
 B * c(1,2,3,4,5,6)
+```
+If the length of the vectors match, we can also multiply (or add/subtract/divide etc.) multiple vectors:
+
+
+```{r}
+A / B
 ```
 
 ## Missing values, infinity and "non-numbers"
@@ -134,24 +161,24 @@ By convention, *missing values* in R are coded by the value "NA". The way that p
 
 For example, if we asked for the mean value of a vector of numbers with an NA value, it will fail:
 
-```{r comment = '#'}
+```{r}
 mean(c(1,3,6,1,7,9,NA))
 ```
 
 In this case you need to specify that any NA values should be removed before calculating the mean:
-```{r comment = '#'}
+```{r}
 mean(c(1,3,6,1,7,9,NA),na.rm=TRUE)
 ```
 
 Calculations can sometimes lead to answers that are plus, or minus, infinity. These values are represented in R by Inf or -Inf:
 
-```{r comment = '#'}
+```{r}
 5/0
 -4/0
 ```
 
 Other calculations lead to answers that are not numbers, and these are represented by NaN in R:
-```{r comment = '#'}
+```{r}
 0/0
 Inf-Inf
 ```
@@ -163,12 +190,12 @@ Inf-Inf
 
 You can obtain information about most objects using the `summary` function:
 
-```{r comment = '#'}
+```{r}
 summary(B)
 ```
 
 The functions `max`, `min`, `range`, and `length` are also useful:
-```{r comment = '#'}
+```{r}
 max(B)
 min(B)
 range(B)
@@ -181,7 +208,7 @@ length(B)
 Data frames are the usual way of storing data in R. It is more-or-less the same as a worksheet in Excel. A data frame is usually made up of a number of vectors (of the same length) bound together in a single object. You can make a data frame by binding together vectors, or you can import them from outside R.
 
 This example shows the creation of a data frame in R, from 3 vectors:
-```{r comment = '#'}
+```{r}
 height <- c(173, 145, 187, 155, 179, 133)
 sex <- c("Male", "Female", "Male", "Female", "Male", "Female")
 age <- c(17, 22, 32, 20, 27, 30)
@@ -190,71 +217,77 @@ mydata <- data.frame(height = height, age = age, sex = sex)
 mydata
 ```
 
-Data frames can be summarised using the `summary` function (or the `glimpse` or `str` functions, which give you different views of the same data):
+Data frames can be summarised using the `summary` function (or the `str` function, which gives you a different view of the same data):
 
-```{r comment = '#'}
+```{r}
 summary(mydata)
-#glimpse(mydata)
 str(mydata)
 ```
 
 Data frames can be subsetted using the square brackets `[]`, or `subset` functions. With the square brackets, the first number specifies the row number, while the second number specifies the column number:
 
-```{r comment = '#'}
+```{r}
 mydata[1,]
 mydata[,2]
 mydata[1,2]
 subset(mydata,sex == "Female")
 ```
 
-It would be incredibly tedious to enter real data by typing it in like this. Thankfully, R can import data from a range of different data formats. The most commonly used data format is `comma separated value (CSV)` so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I'll cover this in a later class).
+## Organising your work
 
-At this point you should create a folder/directory somewhere on your computer called "IntroToR". We will use this as the `working directory` for the remainder of the session. In R you can set the working directory using the `setwd` function. 
+It would be incredibly tedious to enter real data by typing it in like this. There are eas
 
-Note that file paths in Windows and Apple OSX are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\\). In windows you also need to define the drive (e.g. C:).
+Thankfully, R can import data from a several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called *directories*) on your computer.
 
-So, to set the working directory in Apple OSX you would use something like this (obviously, you need to put YOUR path!):
+The most commonly used data format is `comma separated value (CSV)` so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I'll cover this in a later class).
 
-```{r comment = '#', eval = FALSE}
+For this course, I suggest that you make a folder somewhere on your computer called "IntroToR". We will use this as the `working directory` for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items **Session ▶ Set Working Directory ▶ Choose Directory*`**.
+
+You can also using the `setwd` function to do this, if you know where your files are stored (the *file path*). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\\). In windows you also need to define the drive (e.g. C:).
+
+So, to set the working directory in Apple OSX you would use something like this (obviously, you need to put *your* path!):
+
+```{r, eval = FALSE}
 setwd("/Users/orj/Desktop/IntroToR")
 ```
 
 While in Windows the equivalent command would be something like this (both of the following should work):
 
-```{r comment = '#', eval = FALSE}
+```{r, eval = FALSE}
 setwd("C:\\Users\\orj\\Desktop\\IntroToR")
 setwd("C:/Users/orj/Desktop/IntroToR")
 ```
 
 Typing the path in can be annoying but there are ways to speed it up. In Windows you can copy paths from the Windows Explorer location/address bar, or you can hold down the Shift key as you right-click the file, and then choose Copy As Path.
 
-On a Mac you can copy file paths from Finder: Select your file/folder > Right click > Press the option key (on my keyboard this is the `alt` key) and click "Copy X as Pathname"
+On a Mac you can copy file paths from Finder: Select your file/folder, Right click, Press the option key (on my keyboard this is the `alt` key) and click "Copy X as Pathname"
 
 
 I can check what the current working directory is using the `getwd` function:
-```{r comment = '#', eval = FALSE}
+
+```{r, eval = FALSE}
 getwd()
 ```
 
 On the Blackboard site for BB852 I have put a link to a Dropbox folder containing data files for use in the course. In there you should be able to find a file called "carnivora.csv". Download this to your new working directory. You can check the contents of your working directory with the `list.files` function:
 
-```{r comment = '#', eval = FALSE}
+```{r, eval = FALSE}
 list.files()
 ```
 
 You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the fiest row of our CSV file contains the column names. Note that your file path will be different to mine:
 
-```{r comment = '#', eval = TRUE}
+```{r}
 carni <- read.csv("CourseData/carnivora.csv",header = TRUE)
 ```
 
 We can get some basic information on the *carni* data frame using the `summary` function, but also the `dim` and `nrow/ncol` functions:
 
-```{r comment = '#', eval = FALSE}
+```{r, eval = FALSE}
 summary(carni)
 ```
 
-```{r comment = '#', eval = TRUE, results = 'markup'}
+```{r}
 dim(carni)
 nrow(carni)
 ncol(carni)
@@ -262,7 +295,7 @@ ncol(carni)
 
 We can find the names of the columns of a data frame with the `names` function:
 
-```{r comment = '#', eval = TRUE, results = 'markup'}
+```{r}
 names(carni)
 ```
 
@@ -271,17 +304,17 @@ SW = Average body weight of adult male and adult female (kg), FB = Female brain 
 
 You can refer to the sub-parts of a `data.frame`(the columns) using the `$` syntax:
 
-```{r comment = '#', eval = TRUE, results = 'markup'}
+```{r}
 summary(carni$FW)
 ```
 
 
-## Classes in R
+## "Classes" in R
 
 
 I have already mentioned the different object types in R (e.g. vectors and data frames). The object types are technically known as "classes". You can find out what "class" an object is by using the `class` function:
 
-```{r comment = '#', eval = TRUE, results = 'markup'}
+```{r}
 class(carni)
 ```
 
@@ -289,7 +322,7 @@ In this case, the data frame is, unsurprisingly, of class "data.frame". However,
 
 I expect you have heard of the first two data types, but "factor" might be puzzling. Factors are defined as variables which can take on a *limited* number of different values. They are often referred to as `categorical variables`. For example, in the carnivore dataset, the taxonomic variables are factors. The different values that a factor can take are known as `levels` and you can check on the levels of a vector with the `levels` function.
 
-```{r comment = '#', eval = TRUE, results = 'markup'}
+```{r}
 class(carni$Family)
 levels(carni$Family)
 ```
@@ -299,13 +332,13 @@ levels(carni$Family)
 
 For vectors of class "factor" you can use the `table` function to give the counts for each level:
 
-```{r comment = '#', eval = TRUE, results = 'markup'}
+```{r}
 table(carni$Family)
 ```
 
 You can use the function `tapply` ("table apply"), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument `mean`:
 
-```{r comment = '#', eval = TRUE, results = 'markup'}
+```{r}
 tapply(carni$FW, carni$Family, mean)
 ```
 
@@ -315,7 +348,7 @@ tapply(carni$FW, carni$Family, mean)
 
 Basic plots can be made using the `plot` command. For example, let's have a look at the relationship between log gestation length and log female body weight (see Figure 1, below):
 
-```{r comment = '#', eval = TRUE, results = 'markup', fig.cap=('A simple scatter plot'), fig.show=('asis')}
+```{r, fig.cap=('A simple scatter plot'), fig.show=('asis')}
 plot(log(carni$FW), log(carni$GL))
 ```
 
@@ -344,7 +377,7 @@ plot(log(carni$FW), log(carni$GL))
 
 In the 1950s-1970s there was rapid growth in the number of houses being built in California, with suburbs sprawling out into the new sites in the countryside. What effect would this have on local bird communities? 
 
-Surveys on bird abundances were carried out in several locations near Oakland, California (Vale & Vale 1976). The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest developments as the baseline predevelopment condition.
+Surveys on bird abundances were carried out in several locations near Oakland, California ^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.]. The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest developments as the baseline predevelopment condition.
 
 Think about what you might expect to happen to bird species diversity through time in a newly developing suburb.
 
@@ -372,8 +405,6 @@ Additional surveys found an average species richess of 3.5 in nearby undisturbed
 
 8. If you get this far, try plotting the other variables in the dataset.
 
-### References
 
-Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.
 
 
