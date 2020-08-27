@@ -5,7 +5,7 @@
 
 In this exercise you will learn how to combine two data sets to create a new one of combined data to answer a conservation-related question: "**Does threat status vary with species' generation times?**" 
 
-This question is crucial to conservation biologists because it helps us to generalise our ideas about what drives extinction risks. In other words, if we can say "species with slow life histories tend to be more threatened" then this gives useful information that can help with planning. For example, imagine we have some species that have not yet been assessed (we don't know if they are threatened or not). Should we focus attention on the one with a short generation time, or long generation time?
+This question is crucial to conservation biologists because it helps us to generalise our ideas about what drives extinction risks. In other words, if we can say "*species with slow life histories tend to be more threatened*" then this gives useful information that can help with planning. For example, imagine we have some species that have not yet been assessed (we don't know if they are threatened or not). Should we focus attention on the one with a short generation time, or long generation time?
 
 To answer this question we will need to import two large data sets, tidy them up a bit and then combine them for analysis.
 
@@ -107,17 +107,11 @@ plot(x$Red.List.status,x$logMaturity,ylab="Maturity")
 
 What can we see? If you focus on the median values, it looks like there is a weak positive relationship between this life history trait and threat status: animals with slower life histories tend to be more threatened.
 
-## Exercise - joining datasets
+## Exercise - Temperature effects on egg laying dates
 
-In this exercise you will practice your skills using `gather` to convert a wide-format data sheet into a long-format tidy data set. You will then use `left_join` to combine two data sets for analysis to answer an interesting biological question.
+Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: *is egg laying date associated with spring temperature?* The idea here is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change. 
 
-### The data
-
-Data has been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to see if the egg laying date is associated with the temperature during the spring. The hypothesis is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change. 
-
-You are provided with two datasets: one on the birds and another on weather. You will need to process these, and merge them for analysis.
-
-### The bird data
+You are provided with two datasets: one on the birds and another on weather. You will need to process these using tools in the `dplyr` package, and combine them (using `left_join`) for analysis.
 
 The first data set, `eggDates.csv`, is data from the SDU birds project. The data are arranged in columns where each column is a year and each row is a nest. The data in each column is the day of the year that the first egg in the nest was laid.
 
@@ -125,11 +119,9 @@ These data do NOT fullfil the "tidy data" standard where each variable gets a co
 
 You will need to use `gather` to fix this issue so that you produce a version of the data with three columns - `nestNumber`, `Year` and `dayNumber`.
 
-### The weather data
-
 The second dataset, `AarslevTemperature.csv`, is a weather dataset from Aarslev near Odense. This dataset includes daily temperatures records for several years. You will need to `summarise` this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.
 
-You will then join these datasets together.
+To answer the question, you will need to join these datasets together.
 
 
 1. Import the data and take a look at it  with `head` or `str`.

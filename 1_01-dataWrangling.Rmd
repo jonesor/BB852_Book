@@ -1,26 +1,13 @@
 # Data wrangling with dplyr
 
-## Introduction
-
-We are now going to use the package `dplyr` which is designed to make working with data in R easier. 
+This chapter focusses on using the package `dplyr`, which is designed to make working with data in R easier. 
 The package has several key "workhorse" functions, sometimes called **verbs**. These are: `filter`, `select`, `mutate`, `arrange` and `summarise`. I covered these in the lecture, and they are also discussed in the textbook. This worksheet guides you throigh worked examples to illustrate their use.
 
-We will also be using *pipes* from the `magrittr` package. These are implemented using the command `%>%`. 
-
-
-First you must install the packages (unless you have already done so). Conveniently, everything you need is already in the `Tidyverse` family of packages, so you can install them all like this:
-
-```{r install, eval=FALSE}
-install.packages("tidyverse")
-```
-
-Note that you only need to do this ONCE! After you have installed them you only need to load them on each session. I usually do this at the start of a script I am writing. 
-
-R will report some information to the screen telling you that it has attached a bunch of packages, and that there are some conflicts for some of them. This is nothing to worry about. It means that there are functions in different packages with the same name so R will get confused. For example, there is a function called `filter` in both the `dplyr` and `stats` package. The `dplyr` package will take priority, but you can still access the other one by using `::` double colons like this to specify which package the function is in (`stats::filter` or `dplyr::filter`).
-
+We will also be using **pipes** from the `magrittr` package. These are implemented using the command `%>%`. 
 
 ```{r}
-library(tidyverse)
+library("dplyr")
+library("magrittr")
 ```
 
 To get to know `dplyr` and its functions we'll use a data set 
@@ -203,9 +190,7 @@ You can save this out using the `write.csv` function. You will need to set the a
 write.csv(x = SDUClutchSize,file = "CourseData/SDUClutchSize.csv",row.names = FALSE)
 ```
 
-## Exercises - data wrangling
-
-### Exploring the Amniote Life History Database
+## Exercise: Wrangling the Amniote Life History Database
 
 In this exercise the aim is to use the "Amniote Life History Database" ^[https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1] to investigate some questions about life history evolution.
 

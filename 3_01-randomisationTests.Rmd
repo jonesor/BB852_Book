@@ -1,25 +1,20 @@
 # Randomisation Tests
 
-## Introduction
-
 Simple experiments testing for a difference in mean values between two groups usually have the null hypothesis that there is no difference. The alternative hypothesis varies. Sometimes it is simply that the two groups are different (and that the difference could be wither positive or negative). In other cases the alternetive hypothesis is that the mean of Group A is less then the mean of Group B (or that it is greater).
 
 Randomisation tests are an intuitive, but computationally intensive way of testing these hypotheses. They have a long history and were first proposed by R.A. Fisher in the 1930s. However they only became convenient when computers became sufficiently fast to do the calculations.
 
 Carrying out a test in R requires that you put your `dplyr` skills to the test. Here you will be guided through an example.
 
-## The example
+## An example
 
 A new drug has been developed that is supposed to reduce cholesterol levels in men. An experiment has been carried out where 12 human test subjects have been assigned randomly to two groups: "Control" and "Drug". The pharmaceutical company is hoping that the "Drug" group will have lower cholesterol than the "Control" group. The aim here is to do a randomisation test to check that.
 
-## Setting up
-First you need to load the `tidyverse` libraries required (we'll be making use of `dplyr`, `magrittr` and `ggplot` which are all included in the `tidyverse` set of packages.
-
-```{r,message=FALSE}
-library(tidyverse)
+```{block, type="do-something"}
+Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
-Next, import the data, called `cholesterol`. Note that your path will be different from mine, and that you should set your working directory accordingly.
+Import the data, called `cholesterol`. 
 
 ```{r data real,echo=FALSE}
 ch <-read.csv("CourseData/cholesterol.csv")
@@ -38,7 +33,7 @@ Now let's consider our test statistic and our hypotheses. Our test statistic is 
 The *null hypothesis* is that there is no difference between these two groups (i.e. the difference should be close to 0)
 The *alternative hypothesis* is that the mean of the drug group should be less than the mean of the drug group. (i.e.  mean of control group minus the mean of the drug group should be negative).
 
-## Calculate the observed difference
+### Calculate the observed difference
 
 There are a few ways of doing this. In base-R you can use the function `tapply` ("table apply"), followed by `diff` ("difference").
 
@@ -68,7 +63,7 @@ observedDiff <- ch %>%
 
 This is a complicated set of commands. To make sure that you understand it, try running it bit-by-bit to see what is going on.
 
-## Null distribution
+### Null distribution
 
 Now we ask, what would the world look like if our null hypothesis was *true*. To do this we can dissassociate the treatment group variable from the measured cholesterol values. We do this using by using the `mutate` function to replace the `Treatment` variable with a shuffled version of itself with the `sample` function. 
 
@@ -121,7 +116,7 @@ shuffledData <- data.frame(rep = 1:1000) %>%
             ))
 ```
 
-## Testing significance
+### Testing significance
 
 Before formally testing the hypothesis it is useful to visualise what we have created in a histogram. I can use `ggplot` to do this, to create a plot called `p1`. Note that by putting the command in brackets R will both create the plot object, and print it to the screen. Note that because the shuffling of the data is random process your graph will look slightly different to mine.
 
@@ -138,7 +133,7 @@ You can now add your observed difference (calculated above) to this plot like th
 p1 + geom_vline(xintercept = observedDiff)
 ```
 
-## Testing the hypothesis
+### Testing the hypothesis
 
 Recall that the alternative hypothesis is that the observed difference (control mean-drug mean) will be less than 0. 
 You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.
@@ -150,18 +145,20 @@ So that is `r sum(shuffledData$shuffledDiffs<=observedDiff)` of the shuffled val
 
 Therefore we can say that the drug appears to be effective at reducing cholesterol.
 
-## Writing it up
+### Writing it up
 
 We can report our findings something like this:
 
-"To test whether effect of the drug at reducing cholesterol level is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means and the alternative hypothesis that the mean for the drug treatment is lower than the control treatment. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.
+"*To test whether effect of the drug at reducing cholesterol level is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means and the alternative hypothesis that the mean for the drug treatment is lower than the control treatment. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.*
 
-The observed mean values of the control and treatment groups 205.667 and 185.500 respectively and the difference between them is therefore -20.167 (drug mean - control mean). Only 25 of the 1000 null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = 0.025)"
+*The observed mean values of the control and treatment groups 205.667 and 185.500 respectively and the difference between them is therefore -20.167 (drug mean - control mean). Only 25 of the 1000 null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = 0.025)*"
 
 
 ## Paired Randomisation Tests
 
-The paired randomisation test is simply a one-sample randomisation test where the distribution is tested against a value of 0 (no difference between the two). I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. He collected data on weights of people before and after therapy. These data are in the file `anorexiaCBT.csv`
+The paired randomisation test is a one-sample randomisation test where the distribution is tested against a value of 0 (i.e. where there is no difference between the two groups). Often, this distribution is the **difference** in measurements between two sets of measurements taken from the same individuals (or study sites) before and after some treatment has been applied. 
+
+I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. Everitt collected data on weights of people before and after therapy. These data are in the file `anorexiaCBT.csv`
 
 ```{r, message=FALSE}
 library(tidyverse)
@@ -173,7 +170,7 @@ an <- read.csv("CourseData/anorexiaCBT.csv")
 head(an)
 ```
 
-These data are arrange in a so-called "wide" format. To make plotting and analysis data need to be rearranged into a tidy "long" format so that each observation is on a row. We can do this using the gather function:
+These data are arranged in a so-called "wide" format. To make plotting and analysis data need to be rearranged into a tidy "long" format so that each observation is on a row. We can do this using the gather function:
 
 ```{r}
 an <- an %>%
@@ -199,18 +196,13 @@ Another useful way to plot this data is to use an "interaction plot". In these p
    geom_point() + 
    geom_line(size=1, alpha=0.5)
  )
-#ggsave("/Users/jones/Dropbox/_SDU_Teaching/BB852 New Stats Course/PlotsintPlot.png",p2,width=6, height=8, dpi = 300, units="cm")
 ```
 
 ```{r echo=FALSE}
-
 an2 <- an %>% group_by(Subject) %>% mutate(time = sample(time))
 p2.shuffled <-ggplot(an2,aes(x=time,y=weight,group=Subject)) +
    geom_point() + 
    geom_line(size=1, alpha=0.5)
- 
-#ggsave("/Users/jones/Dropbox/_SDU_Teaching/BB852 New Stats Course/Plots/intPlot.shuffled.png",p2.shuffled,width=6, height=8, dpi = 300, units="cm")
-
 ```
 
 
@@ -236,15 +228,11 @@ obsChange <- mean(an$change)
 obsChange
 ```
 
+### The randomisation test
 
+The logic of this test is that if the experimental treatment has no effect on weight, then the *Before* weight is just as likely to be larger than the *After* weight as it is to be smaller. 
 
-
-### The paired randomisation test
-
-The logic of this test is that if the experimental treatment has no effect on weight, then the Before weight is just as likely to be larger than the After weight as it is to be smaller. 
-In other words, if the null hypothesis is true, a permutation within any pair of scores is as likely as the reverse. 
-
-Therefore to carry out this test, we can permute the SIGN of the change in weight (i.e. we randomly flip values from positive to negative and vice versa). We can do this by multiplying by 1 or -1, randomly.
+Therefore, to carry out this test, we can permute the SIGN of the change in weight (i.e. we randomly flip values from positive to negative and vice versa). We can do this by multiplying by 1 or -1, randomly.
 
 ```{r}
 head(an)
@@ -307,19 +295,16 @@ So we can see that `r table(nullDist$change>=obsChange)[2]` of `r sum(table(null
 
 
 
-## Exercises - Randomisation tests
-
-### Introduction
+## Exercises - Sexual selection in hercules beetles
 
 A hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data[^1] on width measurements in cm of a small sample of 20 individuals of each sex. Can you use your skills to report whether males are signficantly larger than females. 
 
 The data are called `herculesBeetle.csv` and can be found via the Dropbox link on Blackboard. 
 
-[^1]: This example from: https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html
+[^1]: This example is from: https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html
 
-### Your task
 
-Follow the following prompts to get to your answer:
+**Follow the following prompts to get to your answer:**
 
 1. What is your null hypothesis? 
 

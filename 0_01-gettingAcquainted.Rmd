@@ -1,7 +1,5 @@
 # Getting acquainted with R
 
-## Introduction
-
 In this course we will be learning how manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every concievable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.
 
 Before proceeding you will need to ensure you have a recent version of R installed on your computer (the current version is 4.0.3).
@@ -37,9 +35,14 @@ When you double click on this file in future, it should automatically open in RS
 
 In RStudio you can execute commands using the "run" icon at the top of the script window, or by selecting the text and typing the shortcut `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac). Another helpful feature of RStudio is that it will colour-code the syntax that you type, making it easier to read and debug. Note that the colours you see may be different from the ones shown in this handout.
 
-You can customise the look of RStudio using by clicking **Tools ▶ Options** menu on Windows or **RStudio ▶ Preferences** on a Mac. I will point out some of this in the lecture, or you can ask me to show you.
+You can customise the look of RStudio using by clicking **Tools → Options** menu on Windows or **RStudio → Preferences** on a Mac. I will point out some of this in the lecture, or you can ask me to show you.
 
 Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensuring that you understand what the commands are doing. It is impossible to "break" R by typing the wrong command so I encourage you to experiment and explore the R language I introduce to you here as much as possible - it really is the best way to learn!
+
+```{block, type="do-something"}
+The "look" of RStudio can be modified by changing the Preferences (**RStudio → Preferences → Appearance**). 
+Also, there are some useful keyboard shortcuts that are worth learning, to run code, save files etc. without needing to point-and-click (**Tools → Keyboard Shortcuts Help**).
+```
 
 ## Getting help
 
@@ -235,7 +238,7 @@ subset(mydata,sex == "Female")
 
 ## Organising your work
 
-It would be incredibly tedious to enter real data by typing it in like this. There are eas
+It would be incredibly tedious to enter real data into **R** by typing it in!
 
 Thankfully, R can import data from a several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called *directories*) on your computer.
 
@@ -269,19 +272,26 @@ I can check what the current working directory is using the `getwd` function:
 getwd()
 ```
 
-On the Blackboard site for BB852 I have put a link to a Dropbox folder containing data files for use in the course. In there you should be able to find a file called "carnivora.csv". Download this to your new working directory. You can check the contents of your working directory with the `list.files` function:
+It is good practice to keep your files well-organised. I recommend that you create a folder in your working directory called `CourseData` (or similar). Store your data files in this folder. 
 
-```{r, eval = FALSE}
-list.files()
-```
+On the Blackboard site for BB852 I have put a link to a Dropbox folder containing data files for use in the course. In there you will find a file called "`carnivora.csv`". Download this to your new `CourseData` folder. 
 
 You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the fiest row of our CSV file contains the column names. Note that your file path will be different to mine:
 
 ```{r}
-carni <- read.csv("CourseData/carnivora.csv",header = TRUE)
+carni <- read.csv("CourseData/carnivora.csv", header = TRUE, stringsAsFactors = TRUE)
 ```
 
-We can get some basic information on the *carni* data frame using the `summary` function, but also the `dim` and `nrow/ncol` functions:
+The `stringsAsFactors` argument tells R to treat text-type data (technically known as "character **strings**") as a special kind of data called **factors**. Essentially, factors are "categorical data" where the data can take a limited number of discrete values. For example, "treatmentA", "treatmentB", "treatmentC". Although this may seem a little esoteric right now, it is important to ensure that your data is recognised by R in the correct way. In **most** cases, your text-type data will be factor data, so it is usually safe to set `stringsAsFactors = TRUE`. 
+
+```{block, type="do-something"}
+**Tip:** RStudio also has a point-and-click "Wizard" to help import data. Look for "Import Dataset" in the top-right pane. 
+```
+
+
+## Inspecting the data
+
+We can get some basic information on your imported data (e.g. the `carni` data frame) using the `summary` function, but also the `dim` and `nrow/ncol` functions:
 
 ```{r, eval = FALSE}
 summary(carni)
@@ -302,7 +312,7 @@ names(carni)
 The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
 SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independance (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).
 
-You can refer to the sub-parts of a `data.frame`(the columns) using the `$` syntax:
+You can refer to the sub-parts of a `data.frame` (the columns) using the `$` syntax:
 
 ```{r}
 summary(carni$FW)
@@ -352,6 +362,24 @@ Basic plots can be made using the `plot` command. For example, let's have a look
 plot(log(carni$FW), log(carni$GL))
 ```
 
+## R Packages
+
+R packages are collections of software that add capabilities to "base R". In this course we use several packages including `dplyr`, which adds functionality for manipulating data, `ggplot2` which helps us make pretty plots and `magrittr` which adds tools to allow more "elegant" programming. Packages need to be installed using `install.packages` command before they can be used. You only need to install them once.
+
+```{r,eval=FALSE}
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("magrittr")
+```
+
+To use the packages you need to load them with the `library` command, like this:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(magrittr)
+```
+We will be using these packages a lot, and you will need to remember to load them every session. It is therefore useful to add those `library` commands to the top of every script you write.
 
 <!-- Try the following -->
 <!-- ------------------------- -->
@@ -371,9 +399,7 @@ plot(log(carni$FW), log(carni$GL))
 
 
 
-## Exercises - Getting acquainted with R
-
-### Background
+## Exercise: Californian bird diversity
 
 In the 1950s-1970s there was rapid growth in the number of houses being built in California, with suburbs sprawling out into the new sites in the countryside. What effect would this have on local bird communities? 
 
@@ -389,7 +415,7 @@ Additional surveys found an average species richess of 3.5 in nearby undisturbed
 
 ### Try the following
 
-1. First import the data. Check that the columns look as they should. (e.g. use `summary` or `str` functions). Tip: use the "Wizard" in RStudio to guide you.
+1. First import the data. Check that the columns look as they should (use `summary` or `str` functions).
 
 2. What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)
 
