@@ -1,0 +1,352 @@
+# Linear models with >1 categorical explanatory variables
+
+In the one-way ANOVA we covered in the previous chapter we were interested in understanding the effect of a single categorical explanatory variable with two or more levels on a continuous response variable. Although the explanatory variable must be categorical (i.e. with discrete levels), it could represent a continuous variable. For example, the explanatory variable could be a two-level soil nutrient level (high or low), even though nutrient level is a continuous variable and one could measure the actual quantitative value of nutrients in mg/g.
+
+The two-way ANOVA is an extension of one-way ANOVA that allows you to investigate the effect of **two** categorical variables. This can be useful in an experimental context. 
+
+For example, one might have run an experiment investigating in the effect of two types of diet (*lowProtein* and *highProtein*), and genotype (*gt1* and *gt2*), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possible outcomes are illustrated in Figure \ref{fig:possibilities}. the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
+
+
+```{r possibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
+fakeData <- expand.grid(diet = c("lowP","highP"),genotype = c("gt1","gt2"))
+
+
+
+#No effect of diet nor genotype
+A<- ggplot(fakeData %>% 
+         mutate(lengthMM = c(5,5,5,5)),
+       aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+  geom_col(position = position_dodge()) +
+  ylim(0,9) + 
+  geom_point(position = position_dodge(width = 1)) + 
+  theme(axis.text.y = element_blank()) + 
+  ggtitle("A) diet N; gt: N; int: N")
+
+#Genotype significant, not diet
+B<- ggplot(fakeData %>% 
+         mutate(lengthMM = c(5,5,8,8)),
+       aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+  geom_col(position = position_dodge()) +
+  ylim(0,9) + 
+  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
+  geom_point(position = position_dodge(width = 1)) + 
+  theme(axis.text.y = element_blank()) + 
+  ggtitle("B) diet N; gt: Y; int: N")
+
+#Diet significant, not genotype
+C<- ggplot(fakeData %>% 
+         mutate(lengthMM = c(5,8,5,8)),
+       aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+  geom_col(position = position_dodge()) +
+  ylim(0,9) + 
+  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
+  geom_point(position = position_dodge(width = 1)) + 
+  theme(axis.text.y = element_blank()) + 
+  ggtitle("C) diet Y; gt: N; int: N")
+
+
+
+#Diet significant, genotype significant
+#No interaction
+
+D<- ggplot(fakeData %>% 
+         mutate(lengthMM = c(3,4,7,8)),
+       aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+  geom_col(position = position_dodge(1)) +
+  ylim(0,9) + 
+  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
+  geom_point(position = position_dodge(width = 1)) + 
+  theme(axis.text.y = element_blank())  + 
+  ggtitle("D) diet Y; gt: Y; int: N")
+
+
+#Diet significant, genotype  significant
+#Significant interaction
+
+E<- ggplot(fakeData %>% 
+         mutate(lengthMM = c(3,4,5,8)),aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+  geom_col(position = position_dodge(1)) +
+  ylim(0,9) + 
+  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
+  geom_point(position = position_dodge(width = 1)) + 
+    theme(axis.text.y = element_blank()) + 
+  ggtitle("E) diet Y; gt: Y; int: Y")
+
+#Diet not significant, genotype not significant
+#Significant interaction
+
+Fa<- ggplot(fakeData %>% 
+             mutate(lengthMM = c(3,6,6,3)),aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+  geom_col(position = position_dodge(1)) +
+  ylim(0,9) + 
+  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
+  geom_point(position = position_dodge(width = 1)) + 
+  theme(axis.text.y = element_blank()) + 
+  ggtitle("E) diet N; gt: N; int: Y")
+
+(A+B+C)/(D+E+Fa)
+```
+
+
+
+In the model we aim to quantify these effects, and ask if they are statistically significant (i.e. if the effect sizes are >0). We divide the effects of the explanatory variables into two types: **main effects** and **interaction effects**. The main effects are the overall effect of the explanatory variables (genotype and diet in this case) while the interaction effect allows us to ask whether one main effect *depends on another*. In this case we are asking whether *the effect of diet depends on genotype (and vice versa)*. Make sure that you understand this important concept.
+
+
+```{r dataPrep, echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+
+#Simulate some data.
+set.seed(9724)
+myData <- expand.grid(replicate = 1:12,diet = c("lowProtein","highProtein"),genotype = c("gt1","gt2")) %>%
+  left_join(expand.grid(diet = c("lowProtein","highProtein"),genotype = c("gt1","gt2")) %>%
+              mutate(meanSize = c(20,26,16,17.5),semSize = c(2.5,2.5,2,2))) %>%
+  mutate(lengthMM = round(rnorm(48,meanSize,semSize)),2) %>%
+  select(diet,genotype,lengthMM)
+
+write.csv(myData,"CourseData/insectDiet.csv",row.names = FALSE)
+rm(myData)
+```
+
+
+
+
+## Fitting a two-way ANOVA model
+
+Let's use R to fit a two-way ANOVA model using data from the example I just described. As with one-way ANOVA, you can fit a two-way ANOVA model in R using `lm`. 
+
+```{block, type="do-something"}
+Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+```
+
+
+First, import the `insectDiet.csv` data and plot it, to produce a plot like in Figure \ref{fig:dietAndGenotype}. From looking at the graph in Figure \ref{fig:dietAndGenotype} you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a  high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the *difference* in size between the insects raised on the different diets) is larger for genotype 1 than it is for genotype 2. But are these differences statistically meaningful?
+
+
+
+
+```{r dietAndGenotype,eval=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,fig.cap="The effect of diet protein content and genotype on adult size of an insect species"}
+insectDiet <- read.csv("CourseData/insectDiet.csv")
+
+ggplot(insectDiet,aes(x = genotype,y = lengthMM,fill=diet)) +
+  geom_boxplot() +
+  xlab("Genotype")+
+  ylab("Length (mm)")
+```
+
+
+To address this question, we will fit a linear model (the two-way ANOVA) to estimate the effects of diet and genotype.
+
+The model formula is `lengthMM ~ genotype + diet + genotype:diet`. 
+
+Let's try to understand this. The `genotype + diet` part represents the **main effects** of these two variables, and the `genotype:diet` part represents the **interaction effect** between them. This formula*can* be shortened to `lengthMM ~ genotype * diet` (i.e. this is exactly equivalent to the more complicated-looking formula), but I recommend to use the longer version because it is clearer.
+
+So we fit the model like this - putting the formula first, then telling R which data to use:
+
+```{r}
+mod_A <- lm(lengthMM ~ genotype + diet + genotype:diet, data = insectDiet)
+```
+
+Then we can look at diagnostic plots, as with ANOVA etc.:
+
+```{r}
+library(ggfortify)
+autoplot(mod_A)
+```
+
+These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots) now any major outliers. 
+
+
+## Summarising the model (`anova`)
+
+Since we are satisfied with the diagnostic plots we can proceed by summarising the model using first `anova` and then `summary`.
+
+```{r}
+anova(mod_A)
+```
+
+This summary `Analysis of Variance Table` is similar to the ones you have already seen for one-way ANOVA and linear regression. It just has some extra rows because you have extra explanatory variables. It shows you the degrees of freedom for the different terms in the model (all 1, because they have two levels), the sum of squares (`Sum Sq`) and mean sum of squares (`Mean Sq`) and the associated `F value` and p-value (`Pr(>F)`). Those F values are all large, leading to highly-significant p-values. 
+
+This means that all of those terms in the model explain a significant proportion of the variation in insect length. 
+
+But as you know, this summary table doesn't tell you the direction of the effects. The obvious way to understand your data is to simply look at the plot you have already produced. You could also make an **interaction plot** which is a simplified version of the plot of the raw data. 
+
+To do this you first need to create a summary table using `dplyr` tools `summarise` and `group_by` to get the mean and standard errors of the mean:
+
+
+```{r}
+insectDiet_means <- 
+  insectDiet %>% 
+  group_by(genotype, diet) %>% # <- remember to group by *both* factors
+  summarise(MeanLength = mean(lengthMM),SELength = sd(lengthMM)/sqrt(n()))
+insectDiet_means
+```
+
+Then you can make a simple plot of this information by plotting points, and lines joining them:
+
+```{r interactionPlot,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
+
+(A<-ggplot(insectDiet_means, 
+       aes(x = genotype, y = MeanLength, colour = diet, group = diet)) +
+  geom_point(size = 4) + 
+  geom_line())
+```
+
+You could add error bars to the points by adding a line defining the `ymin` and `ymax` values from the data summary like this:
+
+```{r errorBars,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
+
+ggplot(insectDiet_means, 
+       aes(x = genotype, y = MeanLength, colour = diet, group = diet,
+           ymin = MeanLength - SELength, ymax = MeanLength + SELength)) +
+  geom_point(size = 4) + 
+  geom_line() + 
+  geom_errorbar(width = 0.1)
+```
+
+But are these points statistically significantly different from each other?
+To answer that question we need to use a post-hoc test 
+
+```{r}
+library(agricolae)
+HSD.test(mod_A, trt = c("diet", "genotype"), console = TRUE)
+```
+
+The important part of this output is at the bottom where it tells us ` Treatments with the same letter are not significantly different.`. You can see that the mean lengths between diets for genotype 1 are significantly different (they do not share a letter). However, there is no significant difference between diets for genotype 2 (they share the same letter, `c`). The two genotypes are also significantly different from each other. 
+
+
+## Summarising the model (`summary`)
+
+This (above) is generally enough information for a complete write up of results.  However, you can ask R to provide the model summary that includes the $R^2$ values, coefficient estimates and standard errors using `summary`.
+
+```{r}
+summary(mod_A)
+```
+
+The most useful thing shown here is the $R^2$ value. Because we have several terms in the model we should use the `Adjusted R-squared` value of 0.742. This indicates that our model explains 74.2% of variation in insect length.
+
+The next bit is not 100% necessary most of the time...
+
+We already have a good idea of the mean values and standard errors for these data look because we calculated them above directly from the data. For completeness though I will now run through the coefficient estimates part of the summary table.
+
+The coefficient `Estimates` here are interpreted in a similar way to a one-way ANOVA. Again, it is important to know what the reference point is. When you understand this you can reconstruct the mean values for the various levels of the variables that are estimated by the model. You will see that the model estimates lead to precisely the same estimates as obtained from summarising the data. 
+
+Here you can see that: 
+
+* The `(Intercept)` is 25.8333 and must refer to the point for *genotype 1* on a *high protein diet* (look at the value of the intercept and compare to the graph/summary table, and/or the output from the Tukey test).
+
+* The second coefficient (`genotypegt2`) is -8.0833 which is the **difference** between the reference (intercept) and the value for *genotype 2* on a *high protein diet*:   (25.8333 + (-8.0833) = 17.75).
+
+* The third coefficient (`dietlowProtein`) is -5.1667 which is the difference between the reference point and for *genotype 1* on a *low protein diet*: (25.8333 + (-5.1667) = 20.6666). 
+
+* The final coefficient `dietlowProtein:genotypegt2` is 4.25 and is "interaction effect" of diet and genotype and represents the *additional* effect of genotype when it is on diet.  In other words, in comparison to the reference point (genotype 1 & high protein diet), the effect of a low protein diet is negative (-8.0833), as is the effect of being genotype 2 (-5.1667). However, having both a low protein diet **and** being genotype 2 leads to an additional positive effect (4.25) on length. The resulting estimate of mean length for *genotype 2* on a *low protein diet* is  25.8333 + (-8.0833) + (-5.1667) + 4.25 = 16.833.
+
+This is a bit complicated so my advice is generally to refer to the figures and the outputs of the `Tukey.HSD` function to obtain the estimate in the different groups.
+
+
+
+The logic and methods of the two-way ANOVA can be extended to produce $n$-way ANOVA with $n$ categorical variables. 
+
+
+
+
+
+
+## Exercise: Fish behaviour
+
+Individual differences in animal personality and external appearance such as colouration patterns have both been extensively studied separately. A significant body of research has explored many of pertinent ecological and biological aspects that can be affected by them and their impact upon fitness. Currently little is known about how both factors interact and their effect on reproductive success.
+
+Researchers carried out a study looking at differences in personality and its interaction with colour phenotype in zebra fish (*Danio rerio*). They used two colour morphs, "homogeneous" which has clearly defined lateral stripes,  and "heterogeneous" which has more variable and less clear patterns.
+
+They also assigned individuals to two personality types which they called "Proactive" (adventurous, risk taking) and "Reactive" (timid, less risk taking). They did this by recording how they explore a new environment
+
+The two variables of interest are:
+
+* Colour pattern (homogeneous and heterogeneous)
+* Personality (proactive and reactive)
+
+The research questions are:
+
+1) What is the relative influence of colour pattern and personality? Which is more important?
+2) How do the variables interact to determine fitness? e.g. do proactive individuals do better than reactive ones, and does this depend on colour pattern? Or some other pattern?
+
+
+
+**Your task**
+
+
+
+```{r generateFishData, eval = FALSE, echo = FALSE,message=FALSE}
+set.seed(123)
+meanSEM<-expand.grid(personality = c("Proactive","Reactive"), colouration = c("Homogeneous","Heterogeneous")) %>% 
+  mutate(spawningMean = c(270,260,240,170),spawningSEM = rep(40,4))
+
+sampleSize = 8
+fishPersonality<-expand.grid(ID = 1:sampleSize, personality = c("Proactive","Reactive"), colouration = c("Homogeneous","Heterogeneous")) %>% 
+  left_join(meanSEM) %>%
+  mutate(spawning = round(rnorm(sampleSize*4,spawningMean,spawningSEM))) %>%
+  select(personality,colouration,spawning)
+
+write.csv(fishPersonality,"CourseData/fishPersonality.csv",row.names = FALSE)
+rm(fishPersonality)
+```
+
+## Your task
+
+1) Import the data set, `fishPersonality.csv`
+
+<!--
+```{r}
+fishPersonality <- read.csv("CourseData/fishPersonality.csv")
+```
+-->
+
+2) Plot the data (e.g. as a box plot)
+<!--
+```{r}
+ggplot(fishPersonality,aes(x = colouration,y = spawning,fill=personality))+
+  geom_boxplot()
+```
+-->
+3) Fit an ANOVA model using `lm`.
+<!--
+```{r}
+mod_A <- lm(spawning ~ personality+colouration + personality:colouration,
+            data = fishPersonality)
+```
+-->
+4) Look at diagnostic plots from this model (`autoplot`)
+
+<!--
+library(ggfortify)
+autoplot(mod_A)
+-->
+5) Use `anova` to get an Analysis of Variance summary table, and interpret the results.
+
+<!--
+```{r}
+anova(mod_A)
+```
+-->
+
+6) Get the coefficient summary (`summary`) and interpret the output.
+<!--
+```{r}
+summary(mod_A)
+```
+-->
+7) Do post-hoc Tukey tests (e.g. using `HSD.test` from the `agricolae` package). Interpret the results.
+<!--
+```{r}
+library(agricolae)
+HSD.test(mod_A, c("personality","colouration"), console=TRUE)
+```
+-->
+
+8) Sum up your findings with reference to the initial research questions.
+
+<!--
+* Homogenous coloured fish seem to do better than heterogenous ones overall (from the plot)
+* The anova table shows that personality, colouration and the interaction between them are all important variables (p <0.05); Personality seems to be more important than colouration overall (based on p-values)
+* The Tukey test table shows that -  (1) Personality is associated with spawning, but only for heterogenous coloured fish. (2) In the heterogenous coloured fish the proactive fish spawn significantly more than the reactive ones. (3) In the homogenous coloured fish there is no significant difference between the personalities.
+-->
+
+

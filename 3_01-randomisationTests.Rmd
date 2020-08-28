@@ -72,7 +72,7 @@ Let's try that one time:
 set.seed(666)
 ```
 
-```{r,warning=FALSE}
+```{r,warning=FALSE, cache=TRUE}
 ch %>%
   mutate(Treatment = sample(Treatment)) %>% #shuffle the Treatment data
   group_by(Treatment) %>%
@@ -88,7 +88,7 @@ Doing this one time is not much help though - we need to repeat this many times.
 We can do this easily in R using the function `replicate` which simply a kind of wrapper that tells R to repeat a command `n` times and then pass the result to a vector.
 Let's try it first 10 times to see how it works:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, cache=TRUE}
 replicate(10,
             ch %>%
             mutate(Treatment = sample(Treatment)) %>%
@@ -104,7 +104,7 @@ You can see that the `replicate` command simply does the sampling-recalculation 
 In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a `data.frame` called `shuffledData`. This data frame initially has a variable called `rep` which consists of the numbers 1-1000. I then use `mutate` to add the 1000 shuffled differences. 
 
 
-```{r replicate, warning=FALSE}
+```{r replicate, warning=FALSE, cache=TRUE}
 shuffledData <- data.frame(rep = 1:1000) %>%
   mutate(shuffledDiffs = replicate(1000,
             ch %>%
@@ -254,7 +254,7 @@ an %>%
 
 Now we will build a null distribution of changes in weight by repeating this 1000 times. We can do this using the `replicate` function to "wrap" around the function, passing the result into a data frame. We can then compare this null distribution to the observed change.
 
-```{r}
+```{r, cache=TRUE}
 nullDist = data.frame(change =
                         replicate(1000,an %>%
                                     mutate(sign = sample(c(1,-1),size = nrow(an),replace = TRUE)) %>%

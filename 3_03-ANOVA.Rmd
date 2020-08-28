@@ -301,9 +301,9 @@ If that doesn't make sense yet, picture the case where the treatment-specific me
 
 ```{r ANOVAbyhand, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
 
-(overallMean <- espresso %>%
+overallMean <- espresso %>%
 summarise(overallMean = mean(foamIndx)) %>%
-pull())
+pull()
 
 #Add index and group means to the data
 espressoAugmented <- left_join(espresso,
@@ -468,20 +468,19 @@ xx <- SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitl
 
 An experiment was conducted to look at the effect of tree spacing on apple crop yield (total kg per tree of apples between 1975-1979) in different spacing conditions (i.e. distances between trees). There were 40 trees in each treatment group. The spacing was 6, 10 and 14 feet, and should be treated as a categorical variable. There may be some `NA` missing yield values.
 
-Import the data (`apples.csv`) and analyse it using the techniques you have learned in the ANOVA lecture, and the previous worksheet, to answer the question "What is the effect of tree spacing on apple yields?"
+Import the data (`apples.csv`) and analyse it using the techniques you have learned in the ANOVA lecture, and the previous chapter, to answer the question "What is the effect of tree spacing on apple yields?"
 
 <!--
 ```{r}
-setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
 apples <- read.csv("CourseData/apples.csv")
 summary(apples)
 ```
 -->
 
 1) Import and look at the data (e.g. `summary` or `str` or `head`)
+
 <!--
 ```{r}
-setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
 apples <- read.csv("CourseData/apples.csv")
 summary(apples)
 ```
@@ -498,6 +497,7 @@ apples <- apples %>%
 
 
 3) Plot the data using `ggplot` (a box plot with (optionally) added jittered points would be good).
+
 <!--
 ```{r}
 ggplot(apples,aes(x = spacing,y = yield)) +
@@ -557,3 +557,4 @@ HSD.test(apple_mod,"spacing",console=TRUE)
 ```{block, type="do-something"}
 If you get this far, try using the ANOVA approach on one of the previous t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the `t.test` function or the ANOVA approach with `lm`.
 ```
+
