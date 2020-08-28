@@ -1,8 +1,8 @@
 # Schedule
 
-This is the schedule for the course (HTML version only). 
+This is the schedule for the course. 
 Please note that it is liable to change (possibly at short notice). 
-If you find a mismatch between this schedule and the official one^[https://mitsdu.sdu.dk/skema/activity/N110040101/e20], then it the official one that is correct.
+If you find a mismatch between this schedule and the official one^[https://mitsdu.sdu.dk/skema/activity/N110040101/e20], then it is the official one that is correct.
 
 ```{r, echo = FALSE, include=knitr::is_latex_output()}
 plot(1,1,type = "n",axes = FALSE,xlab="",ylab="")
@@ -15,23 +15,39 @@ library(flextable)
 library(readxl)
 
 system("cp -r ~/Dropbox/_SDU_Teaching/BB852/'Course Documents'/BB852_Schedule.xlsx ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/BB852_Schedule.xlsx")
-schedule <- read_xlsx("BB852_Schedule.xlsx")
+schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 ```
 
 ```{r, echo = FALSE, message=FALSE,eval=knitr::is_html_output()}
 library(lubridate)
+library(officer)
+
 schedule2 <- schedule %>% 
   mutate(doy = paste(Day,Month,Year,sep="-")) %>% 
   mutate(Date = lubridate::dmy(doy)) %>% 
   mutate(wd = lubridate::wday(Date,label= TRUE)) %>% 
   mutate(Date = paste0( month(Date,label = TRUE)," ",Day,", ",wd)) %>% 
-  select(Date, Session, Part, Type, Topic)
-ft <- flextable(schedule2, cwidth = c(2,0.5,2,1,4))
-ft <- bold(ft, part = "header") # bold header
-ft <- color(ft, i = ~ Type == "Lecture",
-         j = ~ Date  + Session + Part + Type + Topic,
-        color="red")
-ft <- fontsize(ft, part = "all", size = 14)
+  select(Part, Date, Session, Type, Topic)
+
+
+big_b <- fp_border(color="gray70", width = 3)
+std_b <- fp_border(color="gray70", style = "dashed")
+big_b_end <- fp_border(color="white", width = 3)
+
+ft <- flextable(schedule2, cwidth = c(2,2,.5,1,4)) %>% 
+  bold(part = "header") %>% 
+  bold(j = 1) %>% 
+  color(i = ~ Type == "Lecture",
+         j = ~  Session  + Type + Topic,
+        color="red") %>% 
+  merge_v(j = ~ Date + Part) %>% 
+  fontsize(part = "all", size = 14) %>% 
+  vline(border = std_b, j = 1:4) %>% 
+  rotate(j = ~ Part, align = 'top', rotation = 'tblr') %>% 
+  hline(border = std_b ,i = seq(2,nrow(schedule2),2)) %>% 
+  hline(border = big_b_end ,i =nrow(schedule2))
+
+  
 ft
 ```
 
