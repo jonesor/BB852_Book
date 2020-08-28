@@ -1,6 +1,7 @@
 # Combining data sets
 
 [INSERT PREAMBLE ABOUT DATA MANAGEMENT]
+[ADD SECTION ON GATHER]
 
 ## Using `join`
 
@@ -17,7 +18,7 @@ Let's start with the  "Amniote Life History Database" ^[https://esajournals.onli
 amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv",na.strings = "-999")
 ```
 
-We can filter on the taxonomic `class` to subset to only mammals. Then, to address our question, we want data on generation time for mammals. Generation time is often measured as the average age at which females reproduce so we can get close to that with `female_maturity_d`. We will first `select` these columns, along with `genus` and `species`. We can combine these two taxonomic variables using `mutate` and `paste` to get our latin binomial species name.
+We can filter on the taxonomic `class` to subset to only mammals. Then, to address our question, we want data on generation time for mammals. Generation time is often measured as the average age at which females reproduce so we can get close to that with `female_maturity_d`. We will first `select` these columns, along with `genus` and `species`. We can combine these two taxonomic variables using `mutate` and `paste` to get our Latin binomial species name.
 
 We have previously learned that log transforming such variables is a good thing to do, so we can use `mutate` again to do this transformation.
 
@@ -54,7 +55,7 @@ names(redlist)
 unique(redlist$Red.List.status)
 ```
 
-There's a lot of information there but what we really need is simply the latin binomial (for which we need `genus` and `species`) and the threat status `Red.List.status`. 
+There's a lot of information there but what we really need is simply the Latin binomial (for which we need `genus` and `species`) and the threat status `Red.List.status`. 
 
 R treats categorical variables (`factor` variables) as alphabetical, but in this case the red list status has a meaning going from low threat (Least Concern - LC) to Critically Endangered (CR) and even Extinct in the Wild (EX) at the other end of the spectrum. We can define this ordering using `mutate` with the `factor` function. 
 
@@ -83,7 +84,7 @@ summary(x)
 
 You can see that there are `r sum(is.na(x$Red.List.status))` missing values for the Red List status. These are either species that have not yet been assessed, or maybe where there are mismatches in the species names between the two databases. We will ignore this problem today. 
 
-Before plotting, I will also use `filter` remove species that are extinct (status = "EX" and "EW"). To do this I use the `%in%` argument to allow me to match a vector of variables. Becuase I want to NOT match them I negate the match using `!`. 
+Before plotting, I will also use `filter` remove species that are extinct (status = "EX" and "EW"). To do this I use the `%in%` argument to allow me to match a vector of variables. Because I want to NOT match them I negate the match using `!`. 
 
 I  then ensure that those levels are removed from the variable using `droplevels`.
 
@@ -105,17 +106,17 @@ What can we see? If you focus on the median values, it looks like there is a wea
 
 Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: *is egg laying date associated with spring temperature?* The idea here is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change. 
 
-You are provided with two datasets: one on the birds and another on weather. You will need to process these using tools in the `dplyr` package, and combine them (using `left_join`) for analysis.
+You are provided with two data sets: one on the birds and another on weather. You will need to process these using tools in the `dplyr` package, and combine them (using `left_join`) for analysis.
 
 The first data set, `eggDates.csv`, is data from the SDU birds project. The data are arranged in columns where each column is a year and each row is a nest. The data in each column is the day of the year that the first egg in the nest was laid.
 
-These data do NOT fullfil the "tidy data" standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.
+These data do NOT fulfill the "tidy data" standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.
 
 You will need to use `gather` to fix this issue so that you produce a version of the data with three columns - `nestNumber`, `Year` and `dayNumber`.
 
-The second dataset, `AarslevTemperature.csv`, is a weather dataset from Aarslev near Odense. This dataset includes daily temperatures records for several years. You will need to `summarise` this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.
+The second dataset, `AarslevTemperature.csv`, is a weather dataset from Årslev near Odense. This dataset includes daily temperatures records for several years. You will need to `summarise` this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.
 
-To answer the question, you will need to join these datasets together.
+To answer the question, you will need to join these data sets together.
 
 
 1. Import the data and take a look at it  with `head` or `str`.

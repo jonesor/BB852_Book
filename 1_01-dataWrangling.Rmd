@@ -1,7 +1,7 @@
-# Data wrangling with dplyr
+# Data wrangling with `dplyr`
 
-This chapter focusses on using the package `dplyr`, which is designed to make working with data in R easier. 
-The package has several key "workhorse" functions, sometimes called **verbs**. These are: `filter`, `select`, `mutate`, `arrange` and `summarise`. I covered these in the lecture, and they are also discussed in the textbook. This worksheet guides you throigh worked examples to illustrate their use.
+This chapter focuses on using the package `dplyr`, which is designed to make working with data in R easier. 
+The package has several key "workhorse" functions, sometimes called **verbs**. These are: `filter`, `select`, `mutate`, `arrange` and `summarise`. I covered these in the lecture, and they are also discussed in the textbook. This chapter guides you through worked examples to illustrate their use.
 
 We will also be using **pipes** from the `magrittr` package. These are implemented using the command `%>%`. 
 
@@ -21,7 +21,7 @@ We will address two questions concerning clutch size (the number of eggs laid in
 To answer these questions we need to calculate the average clutch size (number of eggs) for each nest in each year. The data are in a file called (`sduBirds.csv`) and are raw data collected while visiting the nests. The data will need to be processed to answer those questions.
 
 Let's import the data and take a look at it. Make sure your data looks OK before moving on.
-You should first set up your working directory (e.g. a folder for the course, with a subfolder for course data etc.), and set it (with `setwd`)).
+You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data etc.), and set it (with `setwd`)).
 See the earlier material for how to do this, or ask for help.
 
 ```{r echo=TRUE}
@@ -30,9 +30,9 @@ str(df)
 ```
 
 
-## select
+## `select`
 
-From the `str` summary (above) you can see that thereare many columns in the data set and we only need some of them. Let's `select` only the columns that we need for our calculations to make things a bit easier to handle. We need the `species`, `Year`, `Day`, `boxNumber` and `nEggs`: 
+From the `str` summary (above) you can see that there are many columns in the data set and we only need some of them. Let's `select` only the columns that we need for our calculations to make things a bit easier to handle. We need the `species`, `Year`, `Day`, `boxNumber` and `nEggs`: 
 
 ```{r}
 df <- select(df, species, Year, Day, boxNumber, nEggs)
@@ -49,7 +49,7 @@ We can check what the make up of this part of the data is using the `table` func
 table(df$species)
 ```
 
-## filter
+## `filter`
 
 Now let's filter this data and double check that this has worked:
 
@@ -67,7 +67,8 @@ table(df$species)
 
 
 
-## arrange
+## `arrange`
+
 Recall that the data are records of visits to each nest a few times per week. To ensure that the data are in time order I can first `arrange` by first `Year` and then `Day`. To illustrate this we can make a temporary data set (called `temp`) to look at a particular nest in a particular year to get a record of the progress for that particular nest, and then plot it (this is an ugly plot and we will learn how to make beautiful ones soon):
 
 ```{r}
@@ -80,11 +81,11 @@ plot(temp$Day,temp$nEggs,type="b")
 
 Eggs are usually laid one per day, and the clutch size is the maximum number of eggs reached for each nest box. In this case, the clutch size is `r max(temp$nEggs)` eggs. The rapid decline in number of eggs after this peak value shows when the eggs have hatched and the researcher finds chicks instead of eggs!
 
-## summarise and group_by
+## `summarise` and `group_by`
 
 The next part is the crucial part of our investigation. We need to get the maximum number of eggs seen at each nest. Of course we could repeatedly use `filter`, followed by `max`, for each nest-year combination but this would be incredibly tedious.
 
-Instead, we will use the dplyr `summarise` function to do this by asking for the maximum value of `nEggs`. To make this work we need to first use the `group_by` function tell R to group the data by the variables we are interested in. If we don't do this we just get the overall maximum. We can ungroup the data using the `ungroup` function.
+Instead, we will use the `dplyr` function, `summarise`, to do this by asking for the maximum value of `nEggs`. To make this work we need to first use the `group_by` function tell R to group the data by the variables we are interested in. If we don't do this we just get the overall maximum. We can ungroup the data using the `ungroup` function.
 
 Because there are missing data (`NA` values) we need to specify `na.rm = TRUE` in the argument.
 
@@ -153,7 +154,7 @@ df2 <- summarise(df, meanClutchSize = mean(clutchSize))
 head(df2)
 ```
 
-We can plot this bt first making a plot for blue tits, and then adding the points for great tits. I have used the `pch` argument to use filled circles for the great tits:
+We can plot this by first making a plot for blue tits, and then adding the points for great tits. I have used the `pch` argument to use filled circles for the great tits:
 
 ```{r}
 plot(df2$Year[df2$species == "BT"],df2$meanClutchSize[df2$species == "BT"],type="b",
@@ -166,7 +167,7 @@ So it looks like the clutch size varies a fair amount from year to year, but tha
 
 ## Using pipes, saving data.
 
-I have walked you through a step-by-step data manipulation. During that process you made made (and replaced) new data sets at each step. In practice this can be dones more smoothly using *pipes* (`%>%`) to pass the result of one function into the next, and the next, and the next...
+I have walked you through a step-by-step data manipulation. During that process you made made (and replaced) new data sets at each step. In practice this can be done more smoothly using *pipes* (`%>%`) to pass the result of one function into the next, and the next, and the next...
 
 You'll get some more practice with this as we go on.
 Below I show how do do this to create a clutch size data set from the raw data (note that your file path will differ from mine):
@@ -212,7 +213,7 @@ Let's make a start...
 1. When you have imported the data, use `dim` to check the dimensions of the whole data frame (you should see that there are `r ncol(amniote)` columns and `r nrow(amniote)` rows). Use `names` to look at the names of all columns in the data in `amniote`.
 
 
-2. We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use `select` to pick relevent columns of the dataset and discard the others. Call the new data frame `x`. 
+2. We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use `select` to pick relevant columns of the dataset and discard the others. Call the new data frame `x`. 
 The relevant columns are the taxonomic variables (`class`, `species`) and `longevity_y`, `litter_or_clutch_size_n`, `litters_or_clutches_per_y`, and `adult_body_mass_g`.
 
 

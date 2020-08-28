@@ -1,11 +1,27 @@
-# Distributions and summarising data
+---
+title: "Distributions and summarising data"
+author: "Owen Jones"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+classoption: a4paper
+---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-This chapter covers two broad topics. First it covers the concept of distributions; Secondly it covers summarising data. 
+## Overview
+
+This worksheet covers two broad topics. First it covers the concept of distributions; Secondly it covers summarising data. We'll use some functions from the `tidyverse` so you should load those libraries before continuing.
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
 
 ## Distributions
 
-A statistical distribution is a description of the relative number of times (the *frequency*) possible outcomes will occur if repeated samples were to be taken. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, statistical analyses often assume a normal distribution. The normal distribution is symmetrical (centered on the mean) and 68% of observations fall within 1 standard deviation (s.d.), and 95% of observations fall within 2 s.d..
+A statistical distribution is a description of the relative number of times (frequency) possible outcomes will occur in many trials. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, normal distribution is often assumed. The normal distribution is symmetrical (centered on the mean) and 68% of observations fall within 1 standard deviation, and 95% of observations fall within 2 s.d..
 
 ```{r echo = FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 normData <- data.frame(x = seq(-3,3,0.1)) %>% 
@@ -51,10 +67,7 @@ The following command will produce 6 numbers from a distribution with a mean val
 ```{r}
 rnorm(6,5,2)
 ```
-
-```{block, type="do-something"}
-Try changing the values of the arguments to alter the number of values you generate, and to alter the mean and standard deviation.
-```
+*Try changing the values of the arguments to alter the number of values you generate, and to alter the mean and standard deviation.*
 
 Let's use this to generate a larger data frame, and then place markers for the various measures of "spread" onto a plot. *Note that here I put a set of parentheses around the plot code to both display the result AND save the plot as an R object called `p1`*
 
@@ -102,20 +115,16 @@ We can compare these with the true values (the values we set when we generated t
 
 ```
 
-```{block, type="do-something"}
-Try repeating these plots with data that has different sample sizes. For example, use sample sizes of 5000, 250, 100, 50, 10. What do you notice? You should notice that for smaller sample sizes, the true distribution is not captured very well.
-```
-
-When you calculate the mean and standard deviation, you are actually fitting a simple model: the mean and standard deviation are parameters of the model, which assumes that the data follow a normal distribution.
+*Try repeating these plots with data that has different sample sizes. For example, use sample sizes of 5000, 250, 100, 50, 10. What do you notice? You should notice that for smaller sample sizes, the true distribution is not captured very well.* 
 
 
-
-```{block, type="do-something"}
-Try adding lines for the standard error of the mean to one of your histograms.
-```
+When you calculate the mean and standard deviation, you are actually fitting a simple model: the mean and sd are parameters of the model, which assumes that the data follow a normal distribution.
 
 
-## Comparing normal distributions
+*Try adding lines for the standard error of the mean to one of your histograms.*
+
+
+# Compare normal distributions
 
 Because normal distributions all have the same shape, it can be hard to grasp the effect of changing the distribution's parameters viewing them in isolation. In this section you will write some code to compare two normal distributions. This approach can be useful when considering whether a proposed experiment will successfully detect a difference between treatment groups. We'll look at this topic, known as "power analysis", in greater detail in a later class. For now we will simply use `ggplot` to get a better feel for the normal distribution.
 
@@ -136,12 +145,9 @@ ggplot(rn,aes(x = value,fill=sampleID)) +
   geom_histogram(position = "identity", alpha=0.5)
 ```
 
+Try changing the distributions and replotting them (you can change the number of samples, the mean values and the standard deviations).
 
-```{block, type="do-something"}
-Try changing the distributions and re-plotting them (you can change the number of samples, the mean values and the standard deviations).
-```
-
-## Poisson distribution
+# The Poisson distribution
 
 The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the "`lambda`" parameter. Small values of lambda give more skewed distributions.
 
@@ -168,7 +174,7 @@ L5 <- ggplot(poissonData,aes(x = x,y = dens)) +
   ylab("Density") +
   theme_minimal()
 
-L2+ggtitle("lambda = 2")+L5 + ggtitle("lambda = 5")
+ggpubr::ggarrange(L2+ggtitle("lambda = 2"),L5 + ggtitle("lambda = 5"),ncol=2,nrow=1)
 
 ```
 
@@ -185,11 +191,7 @@ summary(rp) #Take a look
   geom_histogram(binwidth = 1) # we know the bins will be 1
   )
 ```
-
-
-```{block, type="do-something"}
-Try changing the value of lambda and look at how the shape changes.
-```
+*Try changing the value of lambda and look at how the shape changes.*
 
 Let's calculate summary statistics of mean and standard deviation for this distribution
 
@@ -199,7 +201,7 @@ Let's calculate summary statistics of mean and standard deviation for this distr
             sdEst = sd(d1))
  )
 ```
-Now lets plot the mean and the 2 times the standard deviation on the graph. Remember that for the normal distribution (above) that 95% of the data were within 2 times the standard deviation.
+Now lets plot the mean and the 2 times the sd on the graph. Remember that for the normal distribution (above) that 95% of the data were within 2 times the sd.
 
 ```{r, fig.height=3, fig.width = 4,fig.align='center'}
 p1 + 
@@ -209,7 +211,7 @@ p1 +
 
 ```
 
-This looks like a TERRIBLE fit: The mean is not close to the most common value in the data set and the lower limit of the standard deviation indicates we should expect some negative values - this is impossible for Poisson data. The reason for this is that mean and standard deviation, and therefore standard error, are intended for normally distributed data. When the data come from other distributions we must take another approach.
+This looks like a TERRIBLE fit: The mean is not close to the most common value in the data set and the lower limit of the s.d. indicates we should expect some negative values - this is impossible for Poisson data. The reason for this is that mean and standard deviation, and therefore standard error, are intended for normally distributed data. When the data come from other distributions we must take another approach.
 
 So how should we summarise this data?
 
@@ -228,7 +230,7 @@ One approach is to report the median as a measure of "central tendency" instead 
 summary(rp$d1)
 ```
 
-## Comparing normal and Poisson distributions
+# Comparing normal and Poisson distributions
 
 To get a better feel for how these two distributions differ, lets use the same approach we used above to plot two distributions together.
 
@@ -242,10 +244,7 @@ ggplot(rn,aes(x = value,fill=sampleID)) +
   geom_histogram(position = "identity", alpha=0.5,binwidth = 1)
 ```
 
-```{block, type="do-something"}
-Try changing the arguments in the `rnorm` and `rpois` commands to change the distributions. 
-```
- 
+*Try changing the arguments in the `rnorm` and `rpois` commands to change the distributions.* 
 
 Finally, let's take another view of these data and look at them using box plots. Box plots are a handy alternative to histograms and many people prefer them.
 
@@ -254,7 +253,7 @@ ggplot(rn,aes(x=sampleID, y = value,fill=sampleID)) +
   geom_boxplot()
 ```
 
-You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer then the other) and cannot be <0. Which graph to you prefer? (there's no right answer!)
+You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symetrical and the Poisson distribution is skewed (one whisker longer then the other) and cannot be <0. Which graph to you prefer? (there's no right answer!)
 
 
 

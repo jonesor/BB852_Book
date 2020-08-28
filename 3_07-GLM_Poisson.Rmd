@@ -6,7 +6,7 @@ In many cases this will not be the case. Non-linearity and heteroscedasticity te
 
 Transformation of the response variable could an option to linearise these data (although there would be problems with 0 values (because log(0) = -Infinity)), but a second problem is that the ordinary linear model assumes "homoscedasticity" - that the errors in the model are evenly distributed along the explanatory variables. This assumption will be violated in most cases. For example, with count data (e.g. number of species in relation to island size), the errors for very small islands will be smaller than those for large islands. In fact, even if we transform the response variable, for example by log transformation, the predictions of the model will allow errors that include negative counts. This is clearly a problem!
 
-Generalised linear models (GLMs) solve these problems by not only applying a transformation but also explicitly altering the error assumption. They do this using a **link function** to carry out the transformation and by choosing an **error structure** (sometimes referred to as **family**, or **variance function**). The choice of link and error structure can be a bit confusing, but there are so-called "canonical links" that are commonly associated with particular error strucutres. For example, a model for count data would usually have a log link and a Poisson error structure.
+Generalised linear models (GLMs) solve these problems by not only applying a transformation but also explicitly altering the error assumption. They do this using a **link function** to carry out the transformation and by choosing an **error structure** (sometimes referred to as **family**, or **variance function**). The choice of link and error structure can be a bit confusing, but there are so-called "canonical links" that are commonly associated with particular error structures. For example, a model for count data would usually have a log link and a Poisson error structure.
 
 The flexibility of the GLM approach means that one can fit GLM versions of all of the models you have already learned about until this points: ANOVA-like GLMs, ANCOVA-like GLMs, ordinary regression-like GLMs and so on. 
 
@@ -43,7 +43,7 @@ ggplot(fox, aes(x=weight,y=noffspring)) +
   geom_point()
 ```
 
-The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offpspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).
+The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).
 
 
 ```{r }
@@ -58,7 +58,7 @@ autoplot(mod1)
 ```
 
 
-Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using hte `test = "F"` or `test = "Chi"`.  For Poisson and binomial GLMs the chi-squared test is most appropriate while for  gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
+Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using the `test = "F"` or `test = "Chi"`.  For Poisson and binomial GLMs the chi-squared test is most appropriate while for  Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
 
 
 ```{r}
@@ -73,10 +73,12 @@ We can then ask for the coefficient summary using `summary`.
 summary(mod1)
 ```
 
-
+```{block, type="do-something"}
+GLM model coefficients and predicted values, are expressed on the scale of the *linear predictor* (i.e. the transformed data scale). It is usually desirable to "backtransform" to the natural scale before plotting. See below.
+```
 The model coefficients and their standard errors are given on the scale of the linear predictor. They tell us that there is a significant association between the weight of the fox mother and the number of offspring she will produce: larger foxes produce more offspring. Because the coefficients are given on the scale of the linear predictor rather than on the real scale it is useful to plot predictions of the model to visualise the relationship.
 
-To do that we must (1) tell the model what to predict `from` i.e. we must provide a suitable sequence of numbers to predict from using `seq`, (2) use the `predict` function to predict values (`fit`) from the model. We use the argument `type = "response"` to tell the function that we want the preductions on the backtransformed (real) scale rather than on the scale of the linear predictor. We add the argument `se.fit = TRUE` to tell the function to give us the standard error estimates of the fit. The `se.fit` values are added or subtracted from the fit to obtain the plus/minus standard errors. We can multiply these by 1.96 to get the 95% confidence intervals of the fitted values.
+To do that we must (1) tell the model what to predict `from` i.e. we must provide a suitable sequence of numbers to predict from using `seq`, (2) use the `predict` function to predict values (`fit`) from the model. We use the argument `type = "response"` to tell the function that we want the predictions on the back-transformed (real) scale rather than on the scale of the linear predictor. We add the argument `se.fit = TRUE` to tell the function to give us the standard error estimates of the fit. The `se.fit` values are added or subtracted from the fit to obtain the plus/minus standard errors. We can multiply these by 1.96 to get the 95% confidence intervals of the fitted values.
 
 ```{r}
 #Vector to predict from
@@ -165,3 +167,83 @@ summary(mod1)
 ```
 
 Use the approach from the fox example as guidance to make a plot with a fit line.
+
+## Exercise: Maze runner
+
+In an experiment, researchers studied the ability of children and adults to navigate through a maze. They recorded the number of mistakes each person made before successfully completing the maze. The data (`maze.csv`) has two columns: `Age` (a categorical variable with two levels - Adult and Child) and `nErrors` a count of the number of errors that each subject makes.
+
+In this example, you will be fitting a GLM equivalent of a t-test that is appropriate for count data. 
+
+```{r,eval = FALSE,echo=FALSE}
+#Create maze data
+
+<!--
+set.seed(123)
+maze <- data.frame(Age = rep(c("Child","Adult"),each = 10)) %>% 
+  mutate(nErrors = c(rpois(10,3),rpois(10,1)))
+write.csv(x=maze,file ="/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/CourseData/maze.csv",row.names=FALSE)
+
+```
+
+1) Import the data and graph it (`geom_boxplot`). Try adding the points to the `ggplot` using the new (to you) function `geom_dotplot(binaxis = "y", stackdir = "center")`.
+
+<!--
+```{r}
+maze <- read.csv("CourseData/maze.csv", stringsAsFactors = TRUE)
+head(maze)
+
+(A<-ggplot(maze,aes(x = Age,y = nErrors)) + 
+  geom_boxplot() + 
+  geom_dotplot(binaxis = "y", stackdir = "center"))
+```
+-->
+2) Fit an appropriate GLM.
+<!--
+```{r}
+mod_A<-glm(nErrors~Age,data = maze,family = poisson)
+```
+-->
+3) Examine the diagnostic plots of the model (`autoplot`).
+<!--
+```{r}
+library(ggfortify)
+autoplot(mod_A)
+```
+-->
+4) Get the analysis of variance (deviance) table (`anova`). What does this tell you?
+<!--
+```{r}
+anova(mod_A,test="Chi")
+```
+-->
+
+5) Obtain the `summary` table. What does this tell you?
+<!--
+```{r}
+summary(mod_A)
+```
+-->
+6) Use the coefficient information in the `summary` table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations "by hand", or using the `predict` function. Ask for help if you get stuck.
+<!--
+```{r}
+newData <- data.frame(Age = c("Child","Adult"))
+pv <- predict(mod_A,newData,se.fit = TRUE)
+
+newData <- newData %>% 
+  mutate(nErrors_LP = pv$fit) %>% 
+  mutate(lowerCI_LP = pv$fit - 1.96*pv$se.fit) %>% 
+  mutate(upperCI_LP = pv$fit + 1.96*pv$se.fit) 
+
+inverseFunction <- family(mod_A)$linkinv
+
+newData <- newData %>% 
+  mutate(nErrors = inverseFunction(nErrors_LP)) %>% 
+  mutate(lowerCI = inverseFunction(lowerCI_LP)) %>% 
+  mutate(upperCI = inverseFunction(upperCI_LP)) 
+  
+
+A + geom_point(data = newData,aes(x = Age,y = nErrors),colour="red") + 
+  geom_segment(data = newData,aes(x=Age,xend=Age,y=lowerCI,yend=upperCI),colour="red")
+
+```
+-->

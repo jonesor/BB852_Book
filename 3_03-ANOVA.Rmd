@@ -455,3 +455,105 @@ xx <- SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitl
 
 ```
 
+## Exercise: Apple tree crop yield
+
+<!-- to produce the dataset
+```{r}
+#require(agridat)
+#apples <- agridat::archbold.apple %>%
+#  select(spacing,yield)
+#write.csv(file= "CourseData/apples.csv",x = apples,row.names = FALSE)
+```
+-->
+
+An experiment was conducted to look at the effect of tree spacing on apple crop yield (total kg per tree of apples between 1975-1979) in different spacing conditions (i.e. distances between trees). There were 40 trees in each treatment group. The spacing was 6, 10 and 14 feet, and should be treated as a categorical variable. There may be some `NA` missing yield values.
+
+Import the data (`apples.csv`) and analyse it using the techniques you have learned in the ANOVA lecture, and the previous worksheet, to answer the question "What is the effect of tree spacing on apple yields?"
+
+<!--
+```{r}
+setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
+apples <- read.csv("CourseData/apples.csv")
+summary(apples)
+```
+-->
+
+1) Import and look at the data (e.g. `summary` or `str` or `head`)
+<!--
+```{r}
+setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
+apples <- read.csv("CourseData/apples.csv")
+summary(apples)
+```
+-->
+
+2) Ensure that the explanatory variable (`spacing`) is defined as a categorical variable (i.e. a "factor", in R-speak). You can use `mutate` and `as.factor` functions for this.
+
+<!--
+```{r}
+apples <- apples %>%
+  mutate(spacing = as.factor(spacing))
+```
+-->
+
+
+3) Plot the data using `ggplot` (a box plot with (optionally) added jittered points would be good).
+<!--
+```{r}
+ggplot(apples,aes(x = spacing,y = yield)) +
+  geom_boxplot() + 
+  geom_jitter(width=0.2) +
+  ylab("Yield (kg per tree)")
+```
+-->
+
+4) Fit an ANOVA model using `lm`. 
+
+<!--
+```{r}
+apple_mod <- lm(yield~spacing,data = apples)
+```
+-->
+
+5) Check the model using a diagnostic plot (i.e. using `autoplot` from the `ggfortify` package).
+
+<!--
+```{r}
+library(ggfortify)
+autoplot(apple_mod)
+```
+-->
+
+6) Use `anova` to get the ANOVA summary.
+
+<!--
+```{r}
+anova(apple_mod)
+```
+-->
+
+7) You should see that there are differences among treatments. But where are those differences? Use `summary` on  your model to find out.
+
+<!--
+```{r}
+summary(apple_mod)
+```
+-->
+
+8) Use a Tukey test to make all the pairwise comparisons among the treatments.
+
+<!--
+```{r}
+library(agricolae)
+HSD.test(apple_mod,"spacing",console=TRUE)
+```
+-->
+
+9) Write a few sentences that summarise your findings. What biological processes do you think drive the effects that you have detected?
+
+10) Optional. Instead of using a Tukey test, use the alternative "relevel" approach to make the missing comparison.
+
+
+```{block, type="do-something"}
+If you get this far, try using the ANOVA approach on one of the previous t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the `t.test` function or the ANOVA approach with `lm`.
+```

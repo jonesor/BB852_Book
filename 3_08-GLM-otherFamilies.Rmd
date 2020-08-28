@@ -1,41 +1,181 @@
 # Extending use cases of GLM
 
-In the previous chapter we used the case of modelling count data, which is bounded at 0 and takes integer values, to understand how Generalised Linear Models work. In this chapter we extend our understanding by looking at some other type of data. 
 
-We will look at three types of binomial data:
+In the previous chapter we used the case of modelling count data, which is bounded at 0 and takes integer values, to understand how Generalised Linear Models work. In this chapter we extend our understanding by looking at another type of data, namely *binomial* data. 
 
-* data coded as 0/1
-* data on number of successes/failures
-* percentage or proportion data
+## Binomial response data
 
-## Logistic regression with binary (0/1) data
+There are three types of Binomial data, but all three types have the idea of "success" and "failure" at their heart. It is up to you, the modeller, to decide what these successes and failures are, but they can be any kind of data that can be coerced into two discrete categories. Common examples include pass/fail, survived/died, presence/absence and yes/no.
 
-Sometimes we are confronted with data where the response variable is simply a success or a failure, or a presence or absence. This kind of data is often best-analysed using a Generalised Linear Model with a binomial error structure (strictly speaking the errors are Bernoulli errors, but these are simply one kind of binomial error). This kind of analysis is often called *logistic regression*. Some examples dead/alive, occupied/empty, healthy/diseased etc.
+The three data types are as follows:
 
-Again: 
+1) The data can be in the form of a two-level factor - often coded as zeros and ones (0/1 data). For example, this could represent whether an died (0) or survived (1) in a study; or it could represent male (`M`) or female (`F`) in a study trying to predict sex from other variables (e.g. size or morphology). 
+2) The data could be expressed as a numeric vector of proportions, bounded between 0 and 1 (i.e. can take any value between 0 and 1). For example these data could be percentages expressed as proportion, such as proportion (or percent) of individuals in a group surviving. In this case, the total number of cases that contributed to the proportion can be optionally included as `weights` in the regression model ^[weights allow some data points to be more influential than others - for example you would want to give more importance to points that represent large sample sizes].
+3) Finally, the data could be expressed as numbers in a two column matrix where the first column gives the number of "successes" and the second column gives the number of "failures".
 
-* Linear models could lead to unreasonable values (probabilities \>1 or \<0).
-* Variance of response likely to be n-shaped (small near 0 and 1, large inbetween).
-* Errors are non-normal.
+The aim of the GLM is usually to estimate probability of "success" (e.g. survival, passing, scoring a goal...). Thus, the outcome (the predicted response, or fit, of the model) is a value between 0 and 1 on the natural scale, that can be interpreted as a probability (e.g. of survival, of success, of presence etc.)
+
+The link function used for a binomial GLM is usually the *logit* transformation, and therefore another name for this type of regression is **logistic regression**. The logit transformation linearises an S-shaped curve and therefore allows a linear regression line to be fitted from data that follows this pattern. The function is $y = log(\frac{p}{1-p})$, where $p$ is the probability or proportion. The inverse logit (the anti-logit) is $p = \frac{exp(y)}{exp(y)+1}$.
+
+```{r echo=FALSE,fig.width=7,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+datBinom <- data.frame(x = 1:10) %>% 
+  mutate(tValue = seq(-6,6,length.out=10)) %>% 
+  mutate(prob = exp(tValue)/(exp(tValue)+1))
 
 
-* Can you think of any other examples of this kind of data?
+A <- ggplot(datBinom,aes(x = x,y = prob))+
+  geom_point()+
+  geom_line()+
+  ylab("Probability")+
+  ggtitle("A - probability of event")
 
-## Example: species presence/absence data
+B <- ggplot(datBinom,aes(x = x,y = tValue))+
+  geom_point()+
+  geom_line()+
+  ylab("Probability on logit scale")+
+  ggtitle("B - logit transformed probability")
 
-Our example concerns the presence or absence on a set of islands of a particular species of bird. The response variable we are interested in is called "incidence" and a value of 1 means that the bird is present and breeding on the island, while a value of 0 means that the island has no breeding population there. The explanatory variable is the size of the island in $km^2$ and isolation (the distance of the island from the mainland in km).
+A + B         
+```
+
+We **could** linearise the data and then fit an ordinary linear model using `lm` but (like with the Poisson regression) the other assumption of the ordinary linear model, homoscedasticity, would cause problems. With S-shaped binomial relationships the expected variance is small at the two ends of the range and large in the middle of the range. This contrasts strongly with the constant variance assumption of ordinary linear models. Therefore it is wise to account for this using a Generalised Linear Model that explicitly accounts for this variance structure.
+
+Let's try a couple of examples.
 
 ```{block, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
+## Example: NFL field goals
+
+In this example you will be dealing with binary data (0/1, failure/success) from the American National Football League (NFL). The data are a record of field goals, which are a relatively rare method of scoring where someone kicks the ball through over the crossbar and through the uprights of the goal during play. 
+
+Our aim is to estimate how the probability of success changes with distance from the goal. We already have a good idea that success probability will decline with increasing distance! But at what rate does the probability decline? And at what distance is there a probability of 0.5 (i.e. 50% chance of success)?
+
+First, import the data and convert the distance from yards to meters. 
+
+```{r}
+NFL <- read.csv("CourseData/NFLfieldgoal.csv") %>% 
+  mutate(Distance = Distance * 0.9144)
+```
+
+Next, plot the data with `ggplot` (`geom_jitter` would be a good option, but you might like to adjust the `height` and `alpha` arguments. e.g. `geom_jitter(height = 0.05,alpha = 0.5)`). You can see that the data is distributed in two bands with 1 representing success and 0 representing failure.
+
+```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+(A<-ggplot(NFL,aes(x = Distance,y = Success)) + 
+  geom_jitter(height = 0.05, alpha = 0.5))
+```
+
+Now we can fit a GLM using an appropriate binomial error structure.
+
+```{r}
+nflMod <- glm(Success ~ Distance, data = NFL, family = binomial)
+```
+
+As usual, we should look at the model diagnostics. These look pretty bad. One reason that these diagnostics (e.g. the QQ plot) can look bad is when we are missing important variables in the model. In this case, for example, the distribution could look "off" because we don't include important information on other aspects of the game (e.g. was the team winning or losing at the time? how many minutes until the end of the game? how experienced is the player?). We can be fairly sure that `binomial` is the most appropriate variance structure because of the nature of the 0/1 data so let's stick with it for now!
+
+```{r echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+library(ggfortify)
+autoplot(nflMod)
+```
+
+We proceed in the normal way by obtaining the ANOVA table for the model. We need to specify that we want to calculated p-values using a "Chi" squared test. This shows us that indeed distance is an important variable in determining probability of success (not so surprising!)
+
+```{r}
+anova(nflMod, test = "Chi")
+```
+
+We get more useful information from the coefficient `summary` of the model. This gives the intercept and slope of the model **on the scale of the linear predictor** (see the figure above).
+
+```{r}
+summary(nflMod)
+```
+
+We could report this something like this:
+
+*The binomial GLM showed that distance was significantly associated with the probability of goal success (GLM: Null Deviance = 955.38, Residual Deviance = 817.58, d.f. = 1 and 946 p <0.001). The slope and intercept of the relationship is -0.131 and 5.690 respectively on the logit scale. The equation of the best fit line was therefore logit(nOffspring) = 5.690 - 0.131$\times$distance (see Figure XXX)*
+
+The equation of the model if you want to express it on the natural scale works out to be:
+
+$y =\frac{1}{1+exp(-(\beta_0 + \beta_1 x))}$, or $probability =\frac{1}{1+exp(-(5.690 - 0.131\times distance))}$.
+
+Let's make sure that works by creating a set of predicted data from this equation and plotting it onto the graph:
+
+```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+d1 <- data.frame(x = 10:50) %>% 
+  mutate(y = 1/(1+exp(-(5.690 - 0.131 *x))))
+A + 
+  geom_line(data = d1,aes(x,y),colour="red")
+```
+
+Rather than using the equation, there is an easier way by using the **R**'s `predict` function. We will use `predict` to get the predicted probability of success across the range of distances that we provide as a new data frame that we are here calling `newDat`. We will also predict the 95% Confidence Interval (CI) for these estimates. We will use these data to add the CI ribbon and line to the plot.
+
+The `predict` function returns an object that includes the `fit` and the `se.fit` which are the predicted value of the regression and the standard error of that predicted value respectively. Thus, if the output of the `predict` function is stored as `pv` we can address those parts as `pv$fit` and `pv$se.fit`, and we can save these values alongside the data in `newDat`.
+
+```{block, type="do-something"}
+Remember that the model, and the predicted values from it, are expressed on the scale of the *linear predictor* (i.e. the transformed data scale). It is usually desirable to "backtransform" to the natural scale before plotting. See below.
+```
+
+First we obtain the predictions and CI on the scale of the linear predictor (logit scale). We calculate 95% CI from the standard errors simply by multiplying by 1.96.
+
+```{r}
+#Dataset to predict FROM
+newDat  <- data.frame(Distance = 14:52) 
+
+#Get predictions from the model
+pv <- predict(nflMod, newdata = newDat,se.fit = TRUE)
+
+#Add those predictions to newDat
+newDat <- newDat %>%  
+  mutate(Success_LP = pv$fit) %>% 
+  mutate(lowerCI_LP = pv$fit - 1.96*pv$se.fit) %>% 
+  mutate(upperCI_LP = pv$fit + 1.96*pv$se.fit)
+```
+
+Now we can first obtain the inverse link from the model object `family(nflMod)$linkinv`, and use that to backtransform the data onto the natural scale ready for plotting.
+
+```{r}
+#Get the inverse link function
+inverseFunction <-family(nflMod)$linkinv
+
+#transform predicted data to the natural scale
+newDat <- newDat %>% 
+  mutate(Success = inverseFunction(Success_LP),
+         ymin= inverseFunction(lowerCI_LP),
+         ymax = inverseFunction(upperCI_LP))
+```
+
+Now we can finally plot the model predictions and the 95% confidence intervals for them. 
+
+```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+#The plot and ribbon
+(A <- ggplot(NFL,aes(x= Distance,y=Success)) + 
+    geom_ribbon(data = newDat,aes(x =Distance,ymin=ymin,ymax=ymax),
+                fill="grey75",alpha = 0.5)+
+    geom_smooth(data = newDat,stat="identity")+
+    geom_jitter(height = 0.05,alpha = 0.5))
+
+```
+So, at what distance does the probability of success fall to just 50%? You could read this directly from the plot as "approximately 44m". Alternatively, you could obtain the value from the `newDat` dataset you created above with predictions from the model, by filtering it. This confirms the probability of success reaches 0.5 somewhere between 43-44m.
+
+```{r}
+newDat %>% 
+  filter(Success < 0.55) %>% 
+  filter(Success > 0.45) %>% 
+  select(Distance,Success)
+```
+
+<!--
+## Example: Island bird species
+
+This example concerns the presence or absence on a set of islands of a particular species of bird. The response variable we are interested in is called "incidence" and a value of 1 means that the bird is present and breeding on the island, while a value of 0 means that the island has no breeding population there. The explanatory variable is the size of the island in $km^2$ and isolation (the distance of the island from the mainland in km).
 
 Lets take a look at the data.
 
 ```{r }
 island <- read.csv("CourseData/isolation.csv")
 
-names(island)
+str(island)
 ```
 
 In this case there are two explanatory variables and we are therefore going to fit a *multiple regression* model with two variables using the GLM framework. 
@@ -66,87 +206,200 @@ newData <- data.frame(isolation = seq(0,10,0.01))
 newData$fit <- predict(modeli,newData,type="response")
 lines(newData$isolation,newData$fit,col="red")
 ```
+-->
 
-## Binomial regression with proportion/ratio data
+## Example: Sex ratio in turtles
 
-Another important class of binomial data is proportion or success/failure data. These data are characterised by the fact that we have information on how many times an event occurred *and* how many times it did *not* occur. These data include infection rates of diseases, sex ratios, percentage mortality etc. These data are bounded in a similar way to the data above, and are also best-analysed using binomial errors.
+In this example we will look at sex ratio of hawksbill turtles (*Eretmochelys imbricata*)^[data from: Godfrey et al. (1999) Can. J. Zool. 77: 1465–1473]. The data are counts of males and females in clutches of eggs incubated at different temperatures.
 
-* Can you think of any other examples of this kind of data?
+The sex ratio in the species varies with temperature during incubation. We are interested in what the "tipping point" temperature is between male-female biased ratios. 
 
-### Example: sex ratios
+```{r}
+hawksbill <- read.csv("CourseData/hawksbill.csv")
+```
+This is a small dataset, you can look at the whole thing:
 
-In the following example we will look at data from an experiment on sex ratios in an insect species. The experimenter wanted to know whether the population density at which the insect was held had a role in determining the sex ratio. Lets take a look at the data:
+```{r}
+hawksbill
+```
+We are interested in sex ratio which we can calculate as the proportion of the population that is female (i.e. number of females divided by total number).
 
-```{r }
-sexRatio <- read.csv("CourseData/sexratio.csv")
-str(sexRatio)
+```{r}
+hawksbill <- hawksbill %>% 
+  mutate(propFemale = Nfemale/(Nmale+Nfemale))
 ```
 
-You can see that the data are integer counts of males and females. In this case, the density is simply the sum of the females and males.
+Let's plot that data. We can use the trick of telling R to plot the points different sizes depending on the sample size (using the `size =` argument):
 
-Let's plot the data as proportion males to see if we can see any pattern. First we can need to add a new column with that information:
-
-```{r }
-sexRatio$propMale <- sexRatio$males/(sexRatio$males+sexRatio$females)
+```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+(A<-ggplot(hawksbill,aes(x = Temperature,y = propFemale,size = Total))+
+  geom_point())
 ```
 
-Now we can plot the data. In this case I use the `ylim` argument to specify that the y-axis should go from 0 to 1 (since this is a proportion).
+You can see that the proportion of females increases with temperature. Let's fit a model to these data to better understand them. We could use the `propFemale` data as the response variable, but there is a big problem with that: we would be giving equal weight to each of the data points, even though the sample size for each one ranges from 10 to 31 This is not good because we would have much more faith in the very large sample sizes than the small ones.
 
-```{r , tidy=TRUE, results='markup',eval=TRUE, echo=TRUE,fig.cap=('Sex ratio as a function of density')}
-plot(sexRatio$density,sexRatio$propMale,ylab = "Proportion male",ylim=c(0,1))
-```
-It looks like there is a relationship, and it is definitely non-linear so we are justified in using a GLM for the regression.
-This regression is different from the last `binomial` GLM because we are not dealing with a simple 0 or 1 response. Instead we have a number in two catefories (male and female). These are analysed by binding (using the `cbind` function) the two vectors of male and female counts into a single object that we will use as the response variable.
+Instead we can bind the data into a two column matrix using `cbind`. The first column is our "success" and the second column is our "failure". If we put `females` in the first column the model will predict "probability of being female", which is what we want. This two-column approach provides the model with the sample size which it can use to weight the regression appropriately.
 
-
-```{r }
-y = cbind(sexRatio$males, sexRatio$females)
+```{r}
+y <- cbind(hawksbill$Nfemale,hawksbill$Nmale)
 ```
 
-Lets have a look:
+Now lets fit the model.
+```{r}
+modA <- glm(y ~ Temperature,data=hawksbill,family = binomial)
+```
 
-```{r }
+As ever, we should take a quick look at the model diagnostic plots - these look OK.
+
+```{r echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+library(ggfortify)
+autoplot(modA)
+```
+
+Now we can look at the anova table. This will tell us what we already know - there is a strong effect of temperature on sex ratio.
+
+```{r}
+anova(modA,test="Chi")
+```
+
+
+Now for the coefficients:
+
+```{r}
+summary(modA)
+```
+
+This table gives us the coefficients for the formula of our relationship. We could use these to produce a formula of the form $y =\frac{1}{1+exp(-(\beta_0 + \beta_1 x))}$.
+
+It is perhaps more useful to plot the model fit onto the plot. First we need to create a data frame to predict from:
+
+```{r}
+newDat <- data.frame(Temperature = seq(27.9,30.4,0.1))
+```
+
+Now we can predict the values (and 95% CI) on the scale of the linear predictor (logit).
+
+```{r}
+pv<-predict(modA,newDat,se.fit = TRUE)
+newDat <- newDat %>% 
+  mutate(propFemale_LP = pv$fit,
+         lowerCI_LP = pv$fit - 1.96*pv$se.fit,
+         upperCI_LP = pv$fit + 1.96*pv$se.fit)
+```
+
+Now we can use the inverse link function to backtransform to the natural probability scale.
+
+```{r}
+#Get the inverse link function
+inverseFunction <-family(modA)$linkinv
+
+#transform predicted data to the natural scale
+newDat <- newDat %>% 
+  mutate(propFemale = inverseFunction(propFemale_LP),
+         ymin= inverseFunction(lowerCI_LP),
+         ymax = inverseFunction(upperCI_LP))
+```
+
+We can add these values to the plot like this:
+
+```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+#The plot and ribbon
+(A<-ggplot(hawksbill,aes(x = Temperature,y = propFemale, size = Total))+
+  geom_ribbon(data = newDat,aes(x =Temperature,ymin=ymin,ymax=ymax),
+                fill="grey75",alpha = 0.5,inherit.aes=FALSE)+
+    geom_smooth(data = newDat,aes(x = Temperature,y=propFemale),stat="identity",inherit.aes=FALSE)+
+ geom_point())
+```
+
+Can you give read off the graph the approximate estimated temperature at which sex ratio is 50:50? 
+
+```{block, type="do-something"}
+1. Try refitting the model using simply the proportion female (`propFemale`) data rather than the two-column (`cbind`) approach.
+2. Try writing up the result in the same way as shown for the NFL field goals example.
+```
+
+## Example: Smoking
+
+As I mentioned above binomial regression can be applied to anything where there data can be classified into two groups. I'll illustrate that now with an example about smoking.
+
+The data set is very small and looks like this:
+
+|                  | Student smokes | Student does not smoke |
+|:----------------:|:--------------:|:----------------------:|
+|  Parent(s) smoke |       816      |          3203          |
+| No parents smoke |       188      |          1168          |
+
+
+The dataset is the number of students smoking and not smoking grouped according to whether their parents smoke.
+These data are binomial/proportion data because the values in the cells of the table are constrained by the overall total and students must fall into one of the categories. We can use these data to calculate the probability of the student being a smoker.
+
+Before fitting a GLM lets just work out these probabilities by hand. What is the probability that a child of smoking parents is a smoker themselves? This is simply 816/(816+3203) = 0.2030. (i.e. it is the number of smokers divided by the total number). Similarly, the probability that the child of non-smokers smokes is 188/(188+1168) = 0.1386. 
+
+But is this a significant difference? That is what we are trying to find out using a GLM.
+
+To do this, we can turn these data into a two column matrix of success (yes - smoker) and failure (no - non-smoker). 
+
+```{r}
+y <- cbind("1_yes" = c(816,188),"0_no" = c(3203,1168))
 y
 ```
-You can see that this is simply a matrix with two columns.
 
-Now lets fit the model and take a look at the summary output:
+So we can see "success" on the left and "failure" on the right".
+We now create a (tiny) `data.frame` for the parental status (smoker = "1_yes", non-smoker = "0_no").
 
-```{r }
-model <- glm(y ~ density, data = sexRatio,family=binomial)
-summary(model)  
+```{r}
+smoke <- data.frame(parentSmoke = c("1_yes","0_no"))
 ```
 
-We can now plot the data and the model's fitted values through it:
+Now we can fit the model. Pause now and think about what the NULL hypothesis is here. It is that parental smoking does not have any influence on whether the child smokes, and that the probability that the student smokes is unrelated to parental smoking. 
 
-```{r }
-plot(sexRatio$density,sexRatio$propMale,ylab = "Proportion male",ylim=c(0,1))
-newData <- data.frame(density = seq(0,450,1))
-newData$fit <- predict(model,newData,type="response")
-lines(newData$density,newData$fit,col="red")
+```{r}
+smokeMod <- glm(y~parentSmoke,data = smoke,family=binomial)
 ```
 
-Hmmm. This doesn't look so great. The model doesn't really capture the initial increase in male sex ratio. Let's see if we can improve it by logging the density variable before fitting.
+With such a small dataset, diagnostic plots will not tell us anything useful so there's no point in doing them for this case.
 
-```{r }
-model2 <- glm(y ~ log(density), data = sexRatio,family=binomial)
-summary(model2)  
+As usual, we first ask for the (Analysis of Deviance table using `anova`.
+
+```{r}
+anova(smokeMod,test="Chi")
+```
+This tells us that the status of the parents (whether they smoke or not) is highly significant: it explains a lot of the pattern that we see in the data.
+
+We can find out what this pattern is by examining the `summary` table.
+
+```{r}
+summary(smokeMod)
 ```
 
-There are two ways of easily comparing two GLM models that have the same response variable. Firstly you can look at the residual deviance. Resdual deviance is simply the amount of variation in the response variable that is NOT explained by the model: models with smaller residual deviance are better. You can also look at the AIC (Akaike Information Criterion). The AIC is a summary statistic that tries to capture how well the model fits the data while accounting for how complex the model is. It is too complicated to get into right now except to say that smaller AIC values are better.
+This shows us the estimates on the logit scale. We can use `predict` to get a sense for these predictions on the more intuitive probability scale.
+First we calculate the fitted values and 95% confidence intervals on the scale of the linear predictor (logit):
 
-By both of these methods, the second model (`model2`) is better than model 1. Lets plot it to confirm that visually.
+```{r}
+pv<-predict(smokeMod,smoke,se.fit = TRUE)
+smoke <- smoke %>% 
+  mutate(prob_LP = pv$fit,
+         lowerCI_LP = pv$fit - 1.96*pv$se.fit,
+         upperCI_LP = pv$fit + 1.96*pv$se.fit)
+```
+Then we can backtransform these values to the probability scale using the inverse link function:
+```{r}
 
-```{r , tidy=TRUE, results='markup',eval=TRUE, echo=TRUE,fig.cap=('Sex ratio as a function of log density')}
-plot(log(sexRatio$density),sexRatio$propMale,ylab = "Proportion male",ylim=c(0,1))
-newData <- data.frame(density = seq(0,400,1))
-newData$fit <- predict(model2,newData,type="response")
-lines(log(newData$density),newData$fit,col="red")
+#Get the inverse link function
+inverseFunction <-family(smokeMod)$linkinv
+
+#transform predicted data to the natural scale
+smoke <- smoke %>% 
+  mutate(prob = inverseFunction(prob_LP),
+         ymin= inverseFunction(lowerCI_LP),
+         ymax = inverseFunction(upperCI_LP))
+smoke
 ```
 
-Yes, that looks much better. That just goes to show that one should visually inspect the models and consider other ways of fitting the data: there are often ways of improving the fit.
+This table shows us that the probability of the students smoking is 0.2030 (95% CI = 0.191-0.216) for children of smokers, and 0.139 (95% CI = 0.121-0.158) for children of non-smokers. We can plot this using `ggplot` like this.
 
-In the next session we'll get some more practice of choosing modelling approaches and interpreting outputs...
-
-
-
+```{r}
+ggplot(smoke,aes(x=parentSmoke,y = prob,ymin = ymin,ymax=ymax))+
+  geom_point()+
+  geom_segment(aes(xend = parentSmoke,y = ymin,yend = ymax))
+```

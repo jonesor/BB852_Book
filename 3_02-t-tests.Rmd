@@ -6,7 +6,7 @@ We will cover the following:
 * Paired t-test
 * Two-sample t-test ("Welch t-test")
 
-## Some theory.
+## Some theory
 
 In this theory section I focus on the one-sample t-test, but the concepts apply to the other types of t-test. 
 
@@ -183,11 +183,9 @@ It's actually quite hard to find examples of one-sample t-tests in biology. In m
 )
 ```
 
-Here's a simple example. Anthropologists studied tool use in women from the indigenous Machinguenga of Peru. They estimated the amount of cassava obtained in kg/hour using either a wooden tool (a broken bow) or a metal machete. The study focused on 5 women who were randomly assigned to groups to use the wooden tool then the machete (or vice versa). 
+Here's a simple example. Anthropologists studied tool use in women from the indigenous Machinguenga of Peru^[A.M. Hurtado, K. Hill (1989). "Experimental Studies of Tool Efficiency Among Machinguenga Women and Implications for Root-Digging Foragers", Journal of Anthropological Research, Vol.45,2,pp207-217.]. They estimated the amount of cassava obtained in kg/hour using either a wooden tool (a broken bow) or a metal machete. The study focused on 5 women who were randomly assigned to groups to use the wooden tool then the machete (or vice versa). 
 
-<!--- [^ A.M. Hurtado, K. Hill (1989). "Experimental Studies of Tool Efficiency Among Machinguenga Women and Implications for Root-Digging Foragers", Journal of Anthropological Research, Vol.45,2,pp207-217.] --->
-
-The anthropologists hypothesised that using different tools led to different harvesting efficiencies. The null hypothesis is that there is no difference between the two groups and that a woman was equally efficient at foraging using either tool. The alternative hypothesis was that there is a difference between the two tools. (NOTE - this could also be formulated as a directional hypothesis e.g. with the expectation that machete is more efficient than the bow.)
+The anthropologists hypothesised that using different tools led to different harvesting efficiency. The null hypothesis is that there is no difference between the two groups and that a woman was equally efficient at foraging using either tool. The alternative hypothesis was that there is a difference between the two tools. (NOTE - this could also be formulated as a directional hypothesis e.g. with the expectation that machete is more efficient than the bow.)
 
 First let's import and look at the data. Make sure you understand it. A plot will be fairly useless to tell if the data are normally distributed, so we will simply have to assume that they are. In fact, t-tests are famously robust to non-normality.
 
@@ -417,7 +415,9 @@ anorexiaCBT_long <- anorexiaCBT %>%
 
 ## Exercise: Compare t-tests with randomisation tests
 
-* Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give the same results?
+```{block, type="do-something"}
+1. Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give the same results?
 
-* Try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `courseData.csv`. Can you think of any problems with this analysis?
+2. Try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `courseData.csv`. Can you think of any problems with this analysis?
+```
 

@@ -49,7 +49,7 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 ```
 
 
-We can simulate a distribution of measurements from this distrubution using the `rnorm` function. This draws `n` numbers from a theoretical normal distribution with a particular `mean` and standard deviation (`sd`). For example:
+We can simulate a distribution of measurements from this distribution using the `rnorm` function. This draws `n` numbers from a theoretical normal distribution with a particular `mean` and standard deviation (`sd`). For example:
 
 ```{r}
 (control <- rnorm(n = 10, mean = 12, sd = 3))
@@ -84,9 +84,9 @@ res$p.value
 
 The idea with power analysis by simulation is to repeat this procedure many times (at least 1000) to estimate the probability that you get it right (that you detect a significant difference between groups when you know there is a difference^[You know there is a difference because you have set this difference!]).
 
-You have come across this sort of simulation approach before when we talked about randomisation tests. As before we will use the `replicate` function to repeatedly do t-tests on randomly generated data with the characteristics you select (i.e. sample size, mean, and sd).
+You have come across this sort of simulation approach before when we talked about randomisation tests. As before we will use the `replicate` function to repeatedly do t-tests on randomly generated data with the characteristics you select (i.e. sample size, mean, and standard deviation).
 
-We first set up our simulation by defining the mean, sd and sample size of our simulated experiment.
+We first set up our simulation by defining the mean, standard deviation, and sample size of our simulated experiment.
 
 ```{r}
 controlMean <- 12
@@ -95,7 +95,7 @@ sdValue <- 3
 sampleSize <- 10
 ```
 
-Now we can "wrap" a `t.test` on simulated control and treatment datasets within a `replicate` function like this. Take some time to study this part of the script - it is important that you understand what it is doing. In this case the replicate command is telling R to repeat the t-test 5 times.
+Now we can "wrap" a `t.test` on simulated control and treatment data sets within a `replicate` function like this. Take some time to study this part of the script - it is important that you understand what it is doing. In this case the replicate command is telling R to repeat the t-test 5 times.
 
 ```{r}
 replicate(5,
@@ -152,7 +152,7 @@ The power has increased to `r (sum(powerResults<0.05)/1000)*100`%.
 
 ## Summary
 
-Simulation can be a powerful tool to help design and understand the results of hypothesis-based studies. The example above focusses on data that are normally distributed and where the test involved is a t-test. However, the same principles apply for other types of data. One can adapt the approach to use different distributions e.g. `rpois` for Poisson or `rbinom` for binomial. One can also alter the tests being done. This case study used a `t.test` but one could alternatively simulate the results of other ordinary linear models with `lm` or GLMs with `glm`.
+Simulation can be a powerful tool to help design and understand the results of hypothesis-based studies. The example above focuses on data that are normally distributed and where the test involved is a t-test. However, the same principles apply for other types of data. One can adapt the approach to use different distributions e.g. `rpois` for Poisson or `rbinom` for binomial. One can also alter the tests being done. This case study used a `t.test` but one could alternatively simulate the results of other ordinary linear models with `lm` or GLMs with `glm`.
 
 
 ## Extending the simulation (optional, advanced)
@@ -198,7 +198,7 @@ ggplot(simulData,aes(x = sampleSize,y = Power)) +
 
 ## Exercise 1: Snails on the move
 
-Your supervisor has collected pilot study data on the distance travelled by a particular snail species during one day. In this study the mean distance travelled was 7.4m and there was a standard deviation of 2.76m. There are two colour morphs of the snails: One is bright and colourful with a striking black spiral while the other is drab and kinda boring-looking. Your supervisor focussed on the colourful snails, but assume that standard deviation is the same for both morphs.
+Your supervisor has collected pilot study data on the distance travelled by a particular snail species during one day. In this study the mean distance travelled was 7.4m and there was a standard deviation of 2.76m. There are two colour morphs of the snails: One is bright and colourful with a striking black spiral while the other is drab and kinda boring-looking. Your supervisor focused on the colourful snails, but assume that standard deviation is the same for both morphs.
 
 For your masters project you hypothesise that the boring snail will cover more distance because it is less scared of visual predators and willing to expose itself to more risk while foraging. You don't have a good feel for the difference, but you decide that a 25% difference between the morphs would be biologically interesting.
 

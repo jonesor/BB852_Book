@@ -4,7 +4,7 @@ In the one-way ANOVA we covered in the previous worksheet we were interested in 
 
 The two-way ANOVA is an extension of one-way ANOVA that allows you to investigate the effect of **two** categorical variables. This can be useful in an experimental context. 
 
-For example, one might have run an experiment investigating in the effect of two types of diet (*lowProtein* and *highProtein*), and genotype (*gt1* and *gt2*), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possibile outcomes are illustrated in Figure \ref{fig:possibilities}. the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
+For example, one might have run an experiment investigating in the effect of two types of diet (*lowProtein* and *highProtein*), and genotype (*gt1* and *gt2*), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possible outcomes are illustrated in Figure \ref{fig:possibilities}. the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
 
 
 ```{r possibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
@@ -254,13 +254,13 @@ The logic and methods of the two-way ANOVA can be extended to produce $n$-way AN
 
 Individual differences in animal personality and external appearance such as colouration patterns have both been extensively studied separately. A significant body of research has explored many of pertinent ecological and biological aspects that can be affected by them and their impact upon fitness. Currently little is known about how both factors interact and their effect on reproductive success.
 
-Researchers carried out a study looking at differences in personality and its interaction with colour phenotype in zebrafish (*Danio rerio*). They used two colour morphs, "homogenous" which has clearly defined lateral stripes,  and "heterogenous" which has more variable and less clear patterns.
+Researchers carried out a study looking at differences in personality and its interaction with colour phenotype in zebra fish (*Danio rerio*). They used two colour morphs, "homogeneous" which has clearly defined lateral stripes,  and "heterogeneous" which has more variable and less clear patterns.
 
 They also assigned individuals to two personality types which they called "Proactive" (adventurous, risk taking) and "Reactive" (timid, less risk taking). They did this by recording how they explore a new environment
 
 The two variables of interest are:
 
-* Colour pattern (homogenous and heterogenous)
+* Colour pattern (homogeneous and heterogeneous)
 * Personality (proactive and reactive)
 
 The research questions are:
@@ -272,23 +272,84 @@ The research questions are:
 
 **Your task**
 
+
+
+```{r, echo = FALSE,message=FALSE}
+library(tidyverse)
+set.seed(123)
+meanSEM<-expand.grid(personality = c("Proactive","Reactive"), colouration = c("Homogeneous","Heterogeneous")) %>% 
+  mutate(spawningMean = c(270,260,240,170),spawningSEM = rep(40,4))
+
+sampleSize = 8
+fishPersonality<-expand.grid(ID = 1:sampleSize, personality = c("Proactive","Reactive"), colouration = c("Homogeneous","Heterogeneous")) %>% 
+  left_join(meanSEM) %>%
+  mutate(spawning = round(rnorm(sampleSize*4,spawningMean,spawningSEM))) %>%
+  select(personality,colouration,spawning)
+
+
+setwd("~/Dropbox/_SDU_Teaching/BB839 New Stats Course")
+write.csv(fishPersonality,"CourseData/fishPersonality.csv",row.names = FALSE)
+rm(fishPersonality)
+```
+
+## Your task
+
 1) Import the data set, `fishPersonality.csv`
 
+<!--
+```{r}
+fishPersonality <- read.csv("CourseData/fishPersonality.csv")
+```
+-->
+
 2) Plot the data (e.g. as a box plot)
-
+<!--
+```{r}
+ggplot(fishPersonality,aes(x = colouration,y = spawning,fill=personality))+
+  geom_boxplot()
+```
+-->
 3) Fit an ANOVA model using `lm`.
-
+<!--
+```{r}
+mod_A <- lm(spawning ~ personality+colouration + personality:colouration,
+            data = fishPersonality)
+```
+-->
 4) Look at diagnostic plots from this model (`autoplot`)
 
+<!--
+library(ggfortify)
+autoplot(mod_A)
+-->
 5) Use `anova` to get an Analysis of Variance summary table, and interpret the results.
 
+<!--
+```{r}
+anova(mod_A)
+```
+-->
+
 6) Get the coefficient summary (`summary`) and interpret the output.
-
+<!--
+```{r}
+summary(mod_A)
+```
+-->
 7) Do post-hoc Tukey tests (e.g. using `HSD.test` from the `agricolae` package). Interpret the results.
-
+<!--
+```{r}
+library(agricolae)
+HSD.test(mod_A, c("personality","colouration"), console=TRUE)
+```
+-->
 
 8) Sum up your findings with reference to the initial research questions.
 
-
+<!--
+* Homogenous coloured fish seem to do better than heterogenous ones overall (from the plot)
+* The anova table shows that personality, colouration and the interaction between them are all important variables (p <0.05); Personality seems to be more important than colouration overall (based on p-values)
+* The Tukey test table shows that -  (1) Personality is associated with spawning, but only for heterogenous coloured fish. (2) In the heterogenous coloured fish the proactive fish spawn significantly more than the reactive ones. (3) In the homogenous coloured fish there is no significant difference between the personalities.
+-->
 
 

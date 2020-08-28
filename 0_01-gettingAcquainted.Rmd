@@ -1,6 +1,6 @@
 # Getting acquainted with R
 
-In this course we will be learning how manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every concievable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.
+In this course we will be learning how manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every conceivable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.
 
 Before proceeding you will need to ensure you have a recent version of **R** installed on your computer (the current version is 4.0.3).
 
@@ -14,7 +14,7 @@ In this course we will not be using **R** on its own. Instead, we will be using 
 
 * The R Console - this is where **R** runs inside RStudio. We can work *directly* with **R** by typing commands into this "console". It is also where outputs (results) from **R** are printed to the screen.
 
-* The Code Editor - this is where you can write **R** programs (called "scripts")", which are a set of commands/instructions in the **R** language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will "autocomplete" some text to speed up your work.
+* The Code Editor - this is where you can write **R** programs (called "scripts")", which are a set of commands/instructions in the **R** language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will "auto-complete" some text to speed up your work.
 
 * Useful "point-and-click" tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in *just* **R**: RStudio just makes things easier!
 
@@ -73,7 +73,7 @@ R features the usual arithmetic operations for addition, subtraction, division, 
 (2*7)+2-0.4
 ```
 
-R also has commands for square root (sqrt), raising to powers (\^), taking the absolute value (abs), and rounding (round), natural log (log), antilog (exp), log to base-10 (log10):
+R also has commands for square root (`sqrt`), raising to powers (\^), taking the absolute value (`abs`), and rounding (`round`), natural log (`log`), anti-log (`exp`), log to base-10 (`log10`):
 
 ```{r}
 sqrt(945)
@@ -126,7 +126,11 @@ D <- seq(1,5,0.1)
 E <- rep(c("Male","Female"),each = 3)
 G <- rep(c("Male","Female"),c(2,4))
 ```
+
+```{block, type="do-something"}
 Try modifying the commands to make sure you know what the commands are doing.
+```
+
 
 #Manipulating objects
 
@@ -140,7 +144,7 @@ B*3
 B-2
 ```
 
-You can *concatonate* entire vectors together using the `c` function. E.g. concatonating the vectors `A` and `B` from above:
+You can *concatenate* entire vectors together using the `c` function. E.g. concatenating the vectors `A` and `B` from above:
 
 ```{r}
 c(A,B)  
@@ -175,14 +179,14 @@ In this case you need to specify that any NA values should be removed before cal
 mean(c(1,3,6,1,7,9,NA),na.rm=TRUE)
 ```
 
-Calculations can sometimes lead to answers that are plus, or minus, infinity. These values are represented in R by Inf or -Inf:
+Calculations can sometimes lead to answers that are plus, or minus, infinity. These values are represented in R by `Inf` or `-Inf`:
 
 ```{r}
 5/0
 -4/0
 ```
 
-Other calculations lead to answers that are not numbers, and these are represented by NaN in R:
+Other calculations lead to answers that are not numbers, and these are represented by `NaN` in R:
 ```{r}
 0/0
 Inf-Inf
@@ -278,7 +282,7 @@ It is good practice to keep your files well-organised. I recommend that you crea
 
 On the Blackboard site for BB852 I have put a link to a Dropbox folder containing data files for use in the course. In there you will find a file called "`carnivora.csv`". Download this to your new `CourseData` folder. 
 
-You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the fiest row of our CSV file contains the column names. Note that your file path will be different to mine:
+You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the first row of our CSV file contains the column names. Note that your file path will be different to mine:
 
 ```{r}
 carni <- read.csv("CourseData/carnivora.csv", header = TRUE, stringsAsFactors = TRUE)
@@ -312,7 +316,7 @@ names(carni)
 ```
 
 The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
-SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independance (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).
+SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).
 
 You can refer to the sub-parts of a `data.frame` (the columns) using the `$` syntax:
 
@@ -358,9 +362,9 @@ tapply(carni$FW, carni$Family, mean)
 ## Plotting data
 
 
-Basic plots can be made using the `plot` command. For example, let's have a look at the relationship between log gestation length and log female body weight (see Figure 1, below):
+Basic plots can be made using the `plot` command. For example, let's have a look at the relationship between log gestation length and log female body weight (see Figure \ref{fig:basicplot}, below):
 
-```{r, fig.cap=('A simple scatter plot'), fig.show=('asis')}
+```{r basicplot, fig.cap=('A simple scatter plot'), fig.show=('asis')}
 plot(log(carni$FW), log(carni$GL))
 ```
 
@@ -405,15 +409,15 @@ We will be using these packages a lot, and you will need to remember to load the
 
 In the 1950s-1970s there was rapid growth in the number of houses being built in California, with suburbs sprawling out into the new sites in the countryside. What effect would this have on local bird communities? 
 
-Surveys on bird abundances were carried out in several locations near Oakland, California ^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.]. The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest developments as the baseline predevelopment condition.
+Surveys on bird abundances were carried out in several locations near Oakland, California ^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.]. The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest housing developments as the baseline pre-development condition.
 
 Think about what you might expect to happen to bird species diversity through time in a newly developing suburb.
 
 ### The data
 
-The relevant data file is called `suburbanBirds.csv`. This file contains data on bird abundances surveyed in 1975. The columns of the data are `Name` (name of the suburb), `Year` (the year that the suburb was built), `HabitatIndex` (an index of habitat quality, related to tree height, garden maturity etc.), `nIndividuals` (number of indivual birds seen in a standard survey) and `nSpecies` (number of species seen in a standard survey).
+The relevant data file is called `suburbanBirds.csv`. This file contains data on bird abundances surveyed in 1975. The columns of the data are `Name` (name of the suburb), `Year` (the year that the suburb was built), `HabitatIndex` (an index of habitat quality, related to tree height, garden maturity etc.), `nIndividuals` (number of individual birds seen in a standard survey) and `nSpecies` (number of species seen in a standard survey).
 
-Additional surveys found an average species richess of 3.5 in nearby undisturbed habitats of grassland savanna.
+Additional surveys found an average species richness of 3.5 in nearby undisturbed habitats of grassland savanna.
 
 ### Try the following
 
@@ -423,9 +427,9 @@ Additional surveys found an average species richess of 3.5 in nearby undisturbed
 
 3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)
 
-4. Plot the relationship between `Year` and `nSpecies` as a scatterplot using base-R graphics (using the `plot` function).
+4. Plot the relationship between `Year` and `nSpecies` as a scatter plot using base-R graphics (using the `plot` function).
 
-5. The patern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Replot your results.
+5. The pattern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Re-plot your results.
 
 6. What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?
 

@@ -1,6 +1,6 @@
 # Randomisation Tests
 
-Simple experiments testing for a difference in mean values between two groups usually have the null hypothesis that there is no difference. The alternative hypothesis varies. Sometimes it is simply that the two groups are different (and that the difference could be wither positive or negative). In other cases the alternetive hypothesis is that the mean of Group A is less then the mean of Group B (or that it is greater).
+Simple experiments testing for a difference in mean values between two groups usually have the null hypothesis that there is no difference. The alternative hypothesis varies. Sometimes it is simply that the two groups are different (and that the difference could be wither positive or negative). In other cases the alternative hypothesis is that the mean of Group A is less then the mean of Group B (or that it is greater).
 
 Randomisation tests are an intuitive, but computationally intensive way of testing these hypotheses. They have a long history and were first proposed by R.A. Fisher in the 1930s. However they only became convenient when computers became sufficiently fast to do the calculations.
 
@@ -42,7 +42,7 @@ tapply(ch$Cholesterol,ch$Treatment,mean)
 diff(tapply(ch$Cholesterol,ch$Treatment,mean))
 ```
 
-Because we are focussing on learning `dplyr`, you can also calculate the means like like this:
+Because we are focusing on learning `dplyr`, you can also calculate the means like like this:
 
 ```{r}
 ch %>% # ch is the cholesterol data
@@ -50,7 +50,7 @@ ch %>% # ch is the cholesterol data
   summarise(mean = mean(Cholesterol)) # calculate means
 ```
 
-Here the pipes (`%>%`) are passing the result of each function on as imput to the next. 
+Here the pipes (`%>%`) are passing the result of each function on as input to the next. 
 You can use further commands, `pull` to get the `mean` vector from the summary table, and then use `diff` to calculate the difference between the groups, before passing that to a value called "`observedDiff`". 
 
 ```{r}
@@ -65,7 +65,7 @@ This is a complicated set of commands. To make sure that you understand it, try 
 
 ### Null distribution
 
-Now we ask, what would the world look like if our null hypothesis was *true*. To do this we can dissassociate the treatment group variable from the measured cholesterol values. We do this using by using the `mutate` function to replace the `Treatment` variable with a shuffled version of itself with the `sample` function. 
+Now we ask, what would the world look like if our null hypothesis was *true*. To do this we can disassociate the treatment group variable from the measured cholesterol values. We do this using by using the `mutate` function to replace the `Treatment` variable with a shuffled version of itself with the `sample` function. 
 
 Let's try that one time:
 ```{r set seed,echo=FALSE}
@@ -285,13 +285,13 @@ The formal test of significance then works by asking how many of the null distri
 ```{r}
 table(nullDist$change>=obsChange)
 ```
-So we can see that `r table(nullDist$change>=obsChange)[2]` of `r sum(table(nullDist$change>=obsChange))` replicates were greater than or equal to the observed change. This translates to a p-value of `r table(nullDist$change>=obsChange)[2]/sum(table(nullDist$change>=obsChange))`. We can therefore say that the observed change in weight after CBT was signficantly greater than what we would expect from chance.
+So we can see that `r table(nullDist$change>=obsChange)[2]` of `r sum(table(nullDist$change>=obsChange))` replicates were greater than or equal to the observed change. This translates to a p-value of `r table(nullDist$change>=obsChange)[2]/sum(table(nullDist$change>=obsChange))`. We can therefore say that the observed change in weight after CBT was significantly greater than what we would expect from chance.
 
 
 
-## Exercise: Sexual selection in hercules beetles
+## Exercise: Sexual selection in Hercules beetles
 
-A hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data[^1] on width measurements in cm of a small sample of 20 individuals of each sex. Can you use your skills to report whether males are signficantly larger than females. 
+A Hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data[^1] on width measurements in cm of a small sample of 20 individuals of each sex. Can you use your skills to report whether males are significantly larger than females. 
 
 The data are called `herculesBeetle.csv` and can be found via the Dropbox link on Blackboard. 
 

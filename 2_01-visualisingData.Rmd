@@ -1,7 +1,7 @@
-# Visualising data with ggplot2
+# Visualising data with `ggplot`
 
 
-In this chapter you will be guided through using the `ggplot` package to make some pretty plots. You will need the `ggplot2` package to make this work. Remember, you can load packages like this:
+In this chapter you will be guided through using the `ggplot2` package to make some pretty plots. You will therefore need the `ggplot2` package to make this work. Remember, you can load packages like this:
 
 
 ```{r,message=FALSE}
@@ -31,13 +31,13 @@ I will illustrate the construction of a simple plot by making a histogram of the
 ggplot(df, aes(x = clutchSize))
 ```
 
-This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set binwidth to be 1 because we know we are dealing with counts between just 1 and 14. Try altering the binwidth.
+This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set `binwidth` to be 1 because we know we are dealing with counts between just 1 and 14. Try altering the `binwidth`.
 
 ```{r}
 ggplot(df, aes(x = clutchSize)) +
   geom_histogram(binwidth = 1)
 ```
-We know that we have two species here and we would like to compare them. This is done within the aesthetic argument. The default is that the bars for different categories are stacked on top of eachother. This is good in some cases, but probably not here.
+We know that we have two species here and we would like to compare them. This is done within the aesthetic argument. The default is that the bars for different categories are stacked on top of each other. This is good in some cases, but probably not here.
 
 ```{r}
 ggplot(df, aes(x = clutchSize,fill = species)) +
@@ -65,7 +65,7 @@ It is very clear from this plot that blue tits tend to have bigger clutch sizes 
 
 ## "Facets" - splitting data across panels
 
-You should recall that there were several years of data represnted here.
+You should recall that there were several years of data represented here.
 `ggplot` has a very clever way of splitting up the plot to examine this.
 
 ```{r}
@@ -82,7 +82,11 @@ ggplot(df, aes(x = clutchSize)) +
   facet_grid(species~.)
 ```
 
+```{block, type="do-something"}
 You can change whether the separate graphs are presented in a rows or columns by changing the order of the argument: ` facet_grid(species~.)` or ` facet_grid(.~species)`. Try it.
+```
+
+
 
 ## Box plots
 
@@ -108,8 +112,10 @@ ggplot(df, aes(x = species, y = clutchSize)) +
   
 ```
 
+```{block, type="do-something"}
+Try splitting the data into different years using `facet_grid` with the box plot. 
+```
 
-Try splitting the data into different years using `facet_grid` with the box plot.
 
 ## Lines and points
 

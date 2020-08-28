@@ -141,7 +141,11 @@ p3 +
   scale_colour_viridis_d(option = "D")
 ```
 
-*Try using other `option` arguments `A`, `B`, `C` and `E`. Try also adding an argument for transparency `alpha = 0.5`.*
+
+
+```{block, type="do-something"}
+Try using other `option` arguments `A`, `B`, `C` and `E`. Try also adding an argument for transparency `alpha = 0.5`.
+```
 
 Here's a couple more palettes. There's one for shades of grey...
 
@@ -151,7 +155,7 @@ p3 +
   scale_colour_grey()
 ```
 
-There's another one for various colour schemes, called "colour brewer". *Try using "RdGy", "RdYlBu" and "Spectral"* see `?scale_colour_brewer` for more options.
+There's another one for various colour schemes, called "colour brewer". Try using "RdGy", "RdYlBu" and "Spectral" see `?scale_colour_brewer` for more options.
 
 ```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 p3 + 
@@ -247,7 +251,7 @@ I can add titles using the `ggtitle` command like this.
 plotA + ggtitle("A") +  plotB + ggtitle("B")
 ```
 
-You caould place the sub-plots on top of eachother like this.
+You could place the sub-plots on top of each other like this.
 
 ```{r,fig.height = 7,fig.width=4}
 (plotA + ggtitle("A")) / (plotB + ggtitle("B"))
@@ -259,7 +263,7 @@ You caould place the sub-plots on top of eachother like this.
 
 You should, I think, already know about using the "Export" button in RStudio to save out your plot. This is useful and easy, but you should know that you can also save the plots using a typed command (`ggsave`) in your script. This command is handy because it allows you to automatically set the size, and file name of your plot. 
 
-The default setting for `ggsave` is that it will save the last plot that was printed to your computer screen to a filename that you specify. Therefore easiest way to use the command is to simply place the `ggsave` command immediately after your `ggplot` command. You should set the width and height of the plot and the units (the default is inches). It usually takes a few attempts and a bit of trial-and-error to choose the dimensions so that the plot looks nice.
+The default setting for `ggsave` is that it will save the last plot that was printed to your computer screen to a file name that you specify. Therefore easiest way to use the command is to simply place the `ggsave` command immediately after your `ggplot` command. You should set the width and height of the plot and the units (the default is inches). It usually takes a few attempts and a bit of trial-and-error to choose the dimensions so that the plot looks nice.
 
 ```{r,eval=FALSE}
 ggsave("MySavedPlot1.png", width = 18, height=10, units = "cm")
