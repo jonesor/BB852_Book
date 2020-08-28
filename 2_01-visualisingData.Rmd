@@ -1,6 +1,5 @@
 # Visualising data with ggplot2
 
-## Introduction
 
 In this chapter you will be guided through using the `ggplot` package to make some pretty plots. You will need the `ggplot2` package to make this work. Remember, you can load packages like this:
 
@@ -85,7 +84,7 @@ ggplot(df, aes(x = clutchSize)) +
 
 You can change whether the separate graphs are presented in a rows or columns by changing the order of the argument: ` facet_grid(species~.)` or ` facet_grid(.~species)`. Try it.
 
-## box plots
+## Box plots
 
 Box plots are suitable for cases where one variable is categorical with 2+ levels, and the other is continuous. Therefore, another way to look at these distributions is to use a box plot.
 
@@ -112,7 +111,7 @@ ggplot(df, aes(x = species, y = clutchSize)) +
 
 Try splitting the data into different years using `facet_grid` with the box plot.
 
-## lines and points
+## Lines and points
 
 Perhaps not surprisingly lines and points can be added with the geoms, `geom_line` and `geom_point` respectively.
 To illustrate this we will make a plot showing how clutch size changes among years.
@@ -161,7 +160,7 @@ ggplot(meanClutch, aes(x = Year, y = meanClutchSize, colour = species)) +
   
 ```
 
-## scatter plot
+## Scatter plots
 
 Finally, lets make a scatter plot.
 The SDU bird data are not suitable for this type of plot so we'll use the data from a few days ago on suburban bird diversity.

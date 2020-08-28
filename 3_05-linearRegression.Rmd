@@ -1,7 +1,5 @@
 # Linear models with a single continuous explanatory variable
 
-## Background
-
 Linear regression models, at their simplest, are a method of estimating the linear (straight line) relationships between two continuous variables. As an example, picture the relationship between two variables height and hand width (Figure \ref{fig:exampleRegression}). In this figure there is a clear  relationship between the two variables, and the straight line running through the cloud of data points is the fitted linear regression model. 
 
 The aim of linear regression is to (1) determine if there is a meaningful statistical relationship between the explanatory variable(s) and the response variable, and (2) to quantify those relationships by estimating the characteristics of those relationships. These characteristics include the slope and intercepts of fitted models, and the amount of variation explained by variables in the model.
@@ -225,7 +223,7 @@ B<-ggplot(residualDataError,aes(x=HandWidth,y=Height,xend = HandWidth,yend = Hei
                    y = (slopeCoefError * min(HandWidth)) + interceptCoefError,
                    yend = (slopeCoefError * max(HandWidth)) + interceptCoefError),inherit.aes = FALSE,colour = "#b20000")
 
-ggarrange(A+ggtitle("A - total errors"),B+ggtitle("A - residual errors"),ncol=2)
+A+ggtitle("A - total errors") + B+ggtitle("A - residual errors")
 
 ```
 
@@ -235,9 +233,13 @@ ggarrange(A+ggtitle("A - total errors"),B+ggtitle("A - residual errors"),ncol=2)
 
 These models have similar assumptions to the other linear models^[t-tests, ANOVA and linear regression are all types of linear model, mathematically]. These are (1) that the relationship between the variables is linear (hence the name); (2) that the data are continuous variables; (3) that the observations are randomly sampled; (4) that the errors in the model (the "residuals") can be described by a normal distribution; and (5) and that the errors are "homoscedastic" (that they are constant through the range of the data). You can evaluate these things by looking at diagnostic plots after you have fitted the model. See page 112-113 in GSWR for a nice explanation. 
 
-## An example using R
+## Worked example: height-hand width relationship
 
 Let's now use R to fit a linear regression model to estimate the relationship between hand width and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene.
+
+```{block, type="do-something"}
+Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+```
 
 
 First, load the data:
@@ -423,16 +425,11 @@ ggplot(classData,aes(x = HandWidth,y = Height)) +
 <!--
 predict(mod_A,list(HandWidth = 9.8))
 -->
-## Exercises - Linear Regression
-
-### Background
+## Exercise: Chirping crickets
 
 Male crickets produce a "chirping" sound by rubbing the edges of their wings together: the male cricket rubs a sharp ridge on his wing against a series ridges on the other wing.  In a 1948 study on striped ground cricket (*Allonemobius fasciatus*), the biologist George W. Pierce recorded the frequency of chirps (vibrations per second) in different temperature conditions.  
 
 Crickets are ectotherms so their physiology and metabolism is influenced by temperature. We therefore believe that temperature might have an effect on their chirp frequency.
-
-
-### Your task
 
 The data file `chirps.csv` contains data from Pierce's experiments. Your task is to analyse the data and find (1) whether there is a statistically significant relationship between temperature and chirp frequency and (2) what that relationship is.
 

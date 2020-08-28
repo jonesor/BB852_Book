@@ -11,12 +11,20 @@ output:
         collapse: section
     includes:
       in_header: extras.css
+  bookdown::pdf_book:
+    includes:
+      in_header: preamble.tex
+    papersize: a4
+  pdf_document:
+    includes:
+      in_header: preamble.tex
+classoption: a4paper
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 description: "Course book for BB852 at the Biology Department, University of Southern Denmark"
-papersize: a4paper
+
 ---
 
 ```{r, setup, include=FALSE}
@@ -29,17 +37,18 @@ knitr::opts_chunk$set(
 
 This book has been written to accompany the course, *BB852 - Data Handling, Visualisation and Statistics*.
 
-It is available as a website (https://jonesor.github.io/BB852_Book/) or as a PDF (http://bit.ly/BB852Book, or click the link at the top of the web page). I recommend to use the website where possible because the formatting is sometimes messy on the PDF, but the PDF is useful if you want a copy for offline use.
+It is available as a website (https://jonesor.github.io/BB852_Book/) or as a PDF (click the link at the top of book's website). I recommend to use the website where possible because the formatting is sometimes messy on the PDF, but the PDF is useful if you want a copy for offline use.
 
 ```{block, type="do-something"}
-**Note:** The book is a "work in progress" and will change during the course. The latest version can always be found at the website, or by downloading it again.
+**Note:** The book is a "work in progress" and will change during the course. The latest version can always be found at the website, or by downloading it again. 
+Please let me know if you spot any errors, or have any suggestions for improvement.
 ```
 
 The book is divided into three parts: data wrangling, data visualisation and statistics.
 
 ## Data wrangling
 
-The term data wrangling covers manipulation of data, for example collected from an experiment or observational study, from its raw form to a form that is ready for analysis, or summarised into tables. It includes reshaping, transforming, filtering and augmenting from other data. This book covers these processes in R mainly using the tools from the `dplyr` and `tidyr` packages.
+The term data wrangling covers manipulation of data, for example collected from an experiment or observational study, from its raw form to a form that is ready for analysis, or summarised into tables. It includes reshaping, transforming, filtering and augmenting from other data. This book covers these processes in R mainly using the tools from the `dplyr` package.
 
 ## Data visualisation
 
@@ -65,7 +74,7 @@ https://www.dropbox.com/sh/z8iv9fl9l00bm0w/AAD1WjFwcrr1ERugpunp_YH-a?dl=0
 
 ## Acknowledgements
 
-These materials are inspired by the excellent textbook, "Getting Started With R" (2nd edition) by Andrew Beckerman, Dylan Childs and Owen Petchey and Dylan Childs', which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" ([https://dzchilds.github.io/stats-for-bio/]).
+These materials are inspired by the excellent textbook, "Getting Started With R"^[Beckerman, Childs & Petchey (2017) *Getting Started With R*. Oxford University Press (2nd edition)], which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" ([https://dzchilds.github.io/stats-for-bio/]).
 
 ## Error reporting
 

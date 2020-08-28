@@ -44,6 +44,11 @@ There are several ways to estimate statistical power, required sample sizes etc.
 
 In an experiment, researchers would like to test a hypothesis that a high protein diet increases the size of adult insects from a pest species. Previous work has shown that the average size on a normal diet is 12mm with a standard deviation of 4mm. 
 
+```{block, type="do-something"}
+Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+```
+
+
 We can simulate a distribution of measurements from this distrubution using the `rnorm` function. This draws `n` numbers from a theoretical normal distribution with a particular `mean` and standard deviation (`sd`). For example:
 
 ```{r}
@@ -155,10 +160,10 @@ Simulation can be a powerful tool to help design and understand the results of h
 
 
 ```{block, type="do-something"}
-This section is for illustration only. It is intended to show the utility of using R to quickly address experimental design questions but it goes beyond what you are expected to learn.I hope you find it interesting nevertheless.
+This section is for illustration only. It is intended to show the utility of using R to quickly address experimental design questions but it goes beyond what you are expected to learn.I hope you find it interesting nevertheless. To this you will need to add the `purrr` library (using `install.packages("purrr")`). This package includes a useful function, `map_dbl`, which allows you to repeatedly apply functions over many different input values. I use the double colon (`::`) notation like this `purrr::map_dbl` to use this function without the need to load the whole package.
 ```
 
-One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) using by turning the calculations of the t-test into a function, and then applying that function over a range of values.
+One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) using by turning the calculations of the t-test into a function, and then applying that function over a range of values. 
 
 I illustrate this below by varying sample size between 5 and 40.
 
@@ -178,7 +183,7 @@ pwr <- function(n){sum(replicate(1000,
                                    rnorm(n,treatmentMean,sdValue))$p.value)<0.05)/1000}
 
 # map_dbl applying the function for every value of simulData$sampleSize
-simulData$Power <- map_dbl(simulData$sampleSize,pwr)
+simulData$Power <- purrr::map_dbl(simulData$sampleSize,pwr)
 
 ```
 These results can then be graphed with `ggplot`.

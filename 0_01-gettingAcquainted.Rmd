@@ -2,34 +2,36 @@
 
 In this course we will be learning how manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every concievable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.
 
-Before proceeding you will need to ensure you have a recent version of R installed on your computer (the current version is 4.0.3).
+Before proceeding you will need to ensure you have a recent version of **R** installed on your computer (the current version is 4.0.3).
 
 ```{block, type="do-something"}
 **Do this:** Check your R version, and/or install R on your own computer now.
 ```
 
-In this course we will not be using R on its own. Instead, we will be using it with RStudio.
+In this course we will not be using **R** on its own. Instead, we will be using it with RStudio.
 
-R and RStudio are not the same thing. It is possible to run R without RStudio, but RStudio will not work if R is not installed. So what is RStudio? RStudio, essentially, is a helpful piece of software that makes R easier to use. The three most useful features are:
+**R** and RStudio are not the same thing. It is possible to run R without RStudio, but RStudio will not work if **R** is not installed. So what is RStudio? RStudio, essentially, is a helpful piece of software that makes **R** easier to use. The three most useful features are:
 
-* The R Console - this is where R runs inside RStudio. We can work *directly* with R by typing commands into this "console". It is also where outputs (results) from R are printed to the screen.
+* The R Console - this is where **R** runs inside RStudio. We can work *directly* with **R** by typing commands into this "console". It is also where outputs (results) from **R** are printed to the screen.
 
-* The Code Editor - this is where you can write R programs (called "scripts")", which are a set of commands/instructions in the R language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will "autocomplete" some text to speed up your work.
+* The Code Editor - this is where you can write **R** programs (called "scripts")", which are a set of commands/instructions in the **R** language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will "autocomplete" some text to speed up your work.
 
-* Useful "point-and-click" tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in *just* R: RStudio just makes things easier!
+* Useful "point-and-click" tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in *just* **R**: RStudio just makes things easier!
 
 You should do your coding from within RStudio.
 
-You can download the RStudio Desktop from https://rstudio.com/products/rstudio/download/. Select the correct version for your computer (Mac/Windows) and follow the usual instructions.
+You can download **RStudio Desktop** from https://rstudio.com/products/rstudio/download/. Select the correct version for your computer (Mac/Windows) and follow the usual instructions.
 
 ```{block, type="do-something"}
-**Do this:** Install RStudio Desktop on your computer. 
+**Do this:** Install **RStudio Desktop** on your computer. 
 ```
 
 
 ## Getting started with R
 
-In RStudio, create a new "R Script" file. Scripts are essentially programs that can be saved to allow you to return to your work in the future. They also make debugging of errors much easier. You can use the menu to do create a new R Script (`File > New File > R Script`), but there's also a keyboard shortcut (Windows: `Ctrl+Shift+N`; Mac: `Cmd+Shift+N`). If you save (Windows: `Ctrl+S`; Mac: `Cmd+S`), you will be prompted for a file name. Make sure it has the suffix ".R" which denotes an R script file. Save the file in a folder with a memorable name (e.g. `BB852_Work`).
+In RStudio, create a new "R Script" file. *Scripts* are essentially programs that can be saved to allow you to return to your work in the future. They also make debugging of errors much easier. 
+
+You can use the menu to do create a new R Script (`File > New File > R Script`), but there's also a keyboard shortcut (Windows: `Ctrl+Shift+N`; Mac: `Cmd+Shift+N`). If you save (Windows: `Ctrl+S`; Mac: `Cmd+S`), you will be prompted for a file name. Make sure it has the suffix ".R" which denotes an R script file. Save the file in a folder with a memorable name (e.g. `BB852_Work`).
 
 When you double click on this file in future, it should automatically open in RStudio (if it doesn't you should be able to right-click and select `Open with...`).
 
@@ -244,7 +246,7 @@ Thankfully, R can import data from a several data formats, and it understands th
 
 The most commonly used data format is `comma separated value (CSV)` so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I'll cover this in a later class).
 
-For this course, I suggest that you make a folder somewhere on your computer called "IntroToR". We will use this as the `working directory` for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items **Session ▶ Set Working Directory ▶ Choose Directory*`**.
+For this course, I suggest that you make a folder somewhere on your computer called "IntroToR". We will use this as the `working directory` for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items **Session → Set Working Directory → Choose Directory**.
 
 You can also using the `setwd` function to do this, if you know where your files are stored (the *file path*). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\\). In windows you also need to define the drive (e.g. C:).
 

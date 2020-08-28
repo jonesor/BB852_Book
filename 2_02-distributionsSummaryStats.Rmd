@@ -1,17 +1,11 @@
 # Distributions and summarising data
 
-## Introduction
 
-This worksheet covers two broad topics. First it covers the concept of distributions; Secondly it covers summarising data. We'll use some functions from the `tidyverse` so you should load those libraries before continuing.
-
-```{r, message=FALSE}
-library(tidyverse)
-```
-
+This chapter covers two broad topics. First it covers the concept of distributions; Secondly it covers summarising data. 
 
 ## Distributions
 
-A statistical distribution is a description of the relative number of times (frequency) possible outcomes will occur in many trials. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, normal distribution is often assumed. The normal distribution is symmetrical (centered on the mean) and 68% of observations fall within 1 standard deviation, and 95% of observations fall within 2 s.d..
+A statistical distribution is a description of the relative number of times (the *frequency*) possible outcomes will occur if repeated samples were to be taken. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, statistical analyses often assume a normal distribution. The normal distribution is symmetrical (centered on the mean) and 68% of observations fall within 1 standard deviation (s.d.), and 95% of observations fall within 2 s.d..
 
 ```{r echo = FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 normData <- data.frame(x = seq(-3,3,0.1)) %>% 
@@ -114,7 +108,7 @@ When you calculate the mean and standard deviation, you are actually fitting a s
 *Try adding lines for the standard error of the mean to one of your histograms.*
 
 
-## Compare normal distributions
+## Comparing normal distributions
 
 Because normal distributions all have the same shape, it can be hard to grasp the effect of changing the distribution's parameters viewing them in isolation. In this section you will write some code to compare two normal distributions. This approach can be useful when considering whether a proposed experiment will successfully detect a difference between treatment groups. We'll look at this topic, known as "power analysis", in greater detail in a later class. For now we will simply use `ggplot` to get a better feel for the normal distribution.
 
@@ -137,7 +131,7 @@ ggplot(rn,aes(x = value,fill=sampleID)) +
 
 Try changing the distributions and replotting them (you can change the number of samples, the mean values and the standard deviations).
 
-## The Poisson distribution
+## Poisson distribution
 
 The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the "`lambda`" parameter. Small values of lambda give more skewed distributions.
 

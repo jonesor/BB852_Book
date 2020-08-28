@@ -1,7 +1,4 @@
-# Linear models with a several categorical explanatory variables
-
-
-## Background
+# Linear models with >1 categorical explanatory variables
 
 In the one-way ANOVA we covered in the previous worksheet we were interested in understanding the effect of a single categorical explanatory variable with two or more levels on a continuous response variable. Although the explanatory variable must be categorical (i.e. with discrete levels), it could represent a continuous variable. For example, the explanatory variable could be a two-level soil nutrient level (high or low), even though nutrient level is a continuous variable and one could measure the actual quantitative value of nutrients in mg/g.
 
@@ -115,6 +112,11 @@ rm(myData)
 ## Fitting a two-way ANOVA model
 
 Let's use R to fit a two-way ANOVA model using data from the example I just described. As with one-way ANOVA, you can fit a two-way ANOVA model in R using `lm`. 
+
+```{block, type="do-something"}
+Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+```
+
 
 First, import the `insectDiet.csv` data and plot it, to produce a plot like in Figure \ref{fig:dietAndGenotype}. From looking at the graph in Figure \ref{fig:dietAndGenotype} you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a  high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the *difference* in size between the insects raised on the different diets) is larger for genotype 1 than it is for genotype 2. But are these differences statistically meaningful?
 
@@ -248,9 +250,7 @@ The logic and methods of the two-way ANOVA can be extended to produce $n$-way AN
 
 
 
-## A 2-way ANOVA on a fish behaviour study
-
-### Background
+## Exercise: Fish behaviour
 
 Individual differences in animal personality and external appearance such as colouration patterns have both been extensively studied separately. A significant body of research has explored many of pertinent ecological and biological aspects that can be affected by them and their impact upon fitness. Currently little is known about how both factors interact and their effect on reproductive success.
 
@@ -270,7 +270,7 @@ The research questions are:
 
 
 
-### Your task
+**Your task**
 
 1) Import the data set, `fishPersonality.csv`
 

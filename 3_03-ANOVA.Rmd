@@ -1,9 +1,8 @@
 # Linear models with a single categorical explanatory variable
 
-## Introduction
+With the previous work on t-tests (and also with randomisation tests), you are now equipped to test for differences between two groups, or between one group and some fixed value. But what if there are more than two groups? 
 
-With the previous work on t-tests (and also with randomisation tests), you are now equipped to test for differences between two groups (or between one group and some fixed value). But what if there are more than two groups? The answer is to use a one-way analysis of variance (ANOVA). Conceptually, this works the same way as a t-test.
-
+The answer is to use a one-way analysis of variance (ANOVA). Conceptually, this works the same way as a t-test.
 
 ## One-way ANOVA 
 
@@ -87,6 +86,11 @@ After figuring out if at least one of the groups is significantly different from
 
 New coffee machines use "pods" to make espresso. These have become much more popular than the traditional "bar machines". This data looks at the amount of "crema" or foam produced (a sign of quality!) using three methods: bar machines (BM), Hyper Espresso Pods (HIP) and Illy Espresso System (IES). Are any of these methods better than the others?
 
+```{block, type="do-something"}
+Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+```
+
+
 Import the data and look at it.
 
 ```{r}
@@ -144,7 +148,7 @@ Based on this p-value we can reject the null hypothesis that there is no differe
 
 *The foam index varied significantly among groups (ANOVA: F = `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p = `r formatC(x$"Pr(>F)"[1], digits = 3, format = "f")`).*
 
-## Where are the differences?
+### Where are the differences?
 
 This model output doesn't tell us *where* those differences are, nor does it tell us what the estimated mean values of foaminess are for the three groups: what are the effects?  We need to dig further into the model to get to these details.
 
@@ -256,7 +260,7 @@ So, from the first of the model outputs above you can say that BM is significant
 
 e.g. *The foam index varied significantly among groups (ANOVA: F = `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p = `r formatC(x$"Pr(>F)"[1], digits = 3, format = "f")`). The pairwise comparisons in the ANOVA model showed that means of BM and HIP were significantly different (t= 7.248, p < 0.0001), as were those of HIP and IES (t=-5.417, p < 0.0001), but the BM-IES comparison showed no significant difference (t= 1.831, p= 0.0796)*.
 
-## Tukey's Honestly Significant Difference (HSD)
+### Tukey's Honestly Significant Difference (HSD)
 
 An alternative way to approach these comparisons between groups is to use something called a **post-hoc multiple comparison test**. The words "post-hoc" mean "after the event" -- i.e. after the ANOVA in this case -- while the "multiple comparison" refers to the (potentially many) pairwise comparisons that you would like to make with an ANOVA. One of the most widely used post-hoc tests is called Tukey’s Honestly Significant Difference (Tukey HSD) test. There is a convenient R package called `agricolae` that will do these for you.
 
@@ -275,9 +279,14 @@ The output is long-winded, and the main thing to look at is the part at the end.
 
 You could include these in a figure or a table with text like, *"Means followed by the same letter did not differ significantly (Tukey HSD test, p>0.05)"*.
 
-## ANOVA calculation "by hand" (optional)
+## ANOVA calculation "by hand".
 
-The ANOVA calculation involves calculating something called an F-value or F-statistic (the F stands for Fisher, who invented ANOVA). This is similar to the t-statistic in that it is a ratio between two quantities, in this case variances. In ANOVA, the F-statistic is calculated as the "**treatment variance**" divided by the "**error variance**".
+
+```{block, type="do-something"}
+The following is an optional exercise designed to help you understand how ANOVA works.
+```
+
+The ANOVA calculation involves calculating something called an F-value or F-statistic (the F stands for Fisher, who invented ANOVA). This is similar to the t-statistic in that it is a ratio between two quantities, in this case variances. In ANOVA, the F-statistic is calculated as the **treatment variance** divided by the **error variance**.
 
 What does that mean? Let's consider the espresso data set again. 
 
@@ -325,7 +334,7 @@ geom_segment(data = espressoAugmented %>% filter(method == "IES"),aes(x = min(n)
 xlab("Index")+
 NULL
 
-ggarrange(SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError"))
+SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError")
 
 
 ```

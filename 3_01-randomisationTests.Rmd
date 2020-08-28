@@ -6,7 +6,7 @@ Randomisation tests are an intuitive, but computationally intensive way of testi
 
 Carrying out a test in R requires that you put your `dplyr` skills to the test. Here you will be guided through an example.
 
-## An example
+## Randomisation test in R
 
 A new drug has been developed that is supposed to reduce cholesterol levels in men. An experiment has been carried out where 12 human test subjects have been assigned randomly to two groups: "Control" and "Drug". The pharmaceutical company is hoping that the "Drug" group will have lower cholesterol than the "Control" group. The aim here is to do a randomisation test to check that.
 
@@ -160,10 +160,6 @@ The paired randomisation test is a one-sample randomisation test where the distr
 
 I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. Everitt collected data on weights of people before and after therapy. These data are in the file `anorexiaCBT.csv`
 
-```{r, message=FALSE}
-library(tidyverse)
-```
-
 ```{r}
 #Remember to set your working directory first
 an <- read.csv("CourseData/anorexiaCBT.csv")
@@ -179,9 +175,7 @@ an <- an %>%
 head(an)
 ```
 
-### Plot the data
-
-We should ALWAYS plot the data. So here goes.
+We should *always* plot the data. So here goes.
 
 ```{r,message=FALSE}
 (p1<-ggplot(an,aes(x=weight,fill=time)) +
@@ -189,7 +183,7 @@ We should ALWAYS plot the data. So here goes.
  )
 ```
 
-Another useful way to plot this data is to use an "interaction plot". In these plots the matched pairs (grouped by `Subject`) are joined together with lines. You can plot one like this:
+Another useful way to plot this data is to use an **interaction plot**. In these plots the matched pairs (grouped by `Subject`) are joined together with lines. You can plot one like this:
 
 ```{r,message=FALSE}
 (p2<-ggplot(an,aes(x=time,y=weight,group=Subject)) +
@@ -271,7 +265,7 @@ nullDist = data.frame(change =
 
 
 
-### Plot the null distribution
+### Null distribution
 
 ```{r,message=FALSE}
 (nullDistPlot <- ggplot(nullDist,aes(x=change)) +
@@ -286,7 +280,7 @@ nullDistPlot + geom_vline(xintercept = obsChange)
 
 ### The formal hypothesis test
 
-The formal test of significance then is to ask how many of the null distribution replicates are as extreme as the observed change. 
+The formal test of significance then works by asking how many of the null distribution replicates are as extreme as the observed change. 
 
 ```{r}
 table(nullDist$change>=obsChange)
@@ -295,7 +289,7 @@ So we can see that `r table(nullDist$change>=obsChange)[2]` of `r sum(table(null
 
 
 
-## Exercises - Sexual selection in hercules beetles
+## Exercise: Sexual selection in hercules beetles
 
 A hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data[^1] on width measurements in cm of a small sample of 20 individuals of each sex. Can you use your skills to report whether males are signficantly larger than females. 
 

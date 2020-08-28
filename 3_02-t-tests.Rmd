@@ -100,6 +100,10 @@ What R is doing when it figures out the p-value is calculating the area under th
 
 Enough theory. Here's how you would apply such a test in R.
 
+```{block, type="do-something"}
+Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+```
+
 Firstly, lets load some data. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.
 
 ```{r}
@@ -370,7 +374,7 @@ summary(mod)
 ```
 
 
-## Exercises - Two-sample t-test
+## Exercise: Sex differences in fine motor skills
 
 Some people have suggested that there might be sex differences in fine motor skills in humans. Use the data collected on the class to address this topic using t-tests. The relevant data set is called `classData.csv`, and the columns of interest are `Gender` and `Precision`.
 
@@ -386,7 +390,7 @@ Carry out a two-sample t-test.
 
 
 
-### Paired t-test
+## Exercise: Therapy for anorexia
 
 A study was carried out looking at the effect of cognitive behavioural therapy on weight of people with anorexia. Weight was measured in week 1 and again in week 8. Use a paired t-test to assess whether the treatment is effective.
 
@@ -395,7 +399,6 @@ The data is called `anorexiaCBT.csv`
 The data are in "wide format". You may wish to convert it to "long format" depending on how you use the data. You can do that with the `gather` function, which rearranges the data:
 
 ```{r,echo=FALSE,message=FALSE}
-library(tidyverse)
 anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv",header=TRUE)
 ```
 
@@ -412,11 +415,9 @@ anorexiaCBT_long <- anorexiaCBT %>%
 4) Write a couple of sentences to report your result.
 
 
-### Optional extra.
+## Exercise: Compare t-tests with randomisation tests
 
 * Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give the same results?
 
 * Try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `courseData.csv`. Can you think of any problems with this analysis?
-
-<!--MOVE TO RANDOMISATION TESTS. Try answering the question - "*do people who prefer cats travel less?* " using the `courseData.csv`-->
 

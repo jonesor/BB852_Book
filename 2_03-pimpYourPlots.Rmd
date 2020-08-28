@@ -1,24 +1,17 @@
 # Customising your plots
 
-## Introduction 
-
-The purpose of this worksheet it to learn how to customise plots made with `ggplot` to improve "readability", or just for aesthetic reasons. 
+In this chapter you will learn, by following examples, how to customise plots made with `ggplot` to improve "readability", or just for aesthetic reasons. 
 
 We will cover the following:
 
 1. Modifying axes (log transform, different tick marks/ranges etc.).
-2. Colour schemes .
-3. "Themes" - built-in sets of styles.
+2. Colour schemes.
+3. *Themes* - built-in sets of styles.
 4. Multiple sub-plots in a plot.
 5. Saving your plots.
 
-As usual we need to install `tidyverse`.
 
-```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
-library(tidyverse)
-```
-
-For these examples I will use the dataset on animal life history, Anage. 
+For these examples I will use the dataset on animal life history, `Anage`. 
 
 ```{r import data,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 x <- read.csv("CourseData/anage_data.csv")
@@ -45,10 +38,8 @@ anage <- x %>%
 summary(anage)  
 ```
 
-```{r, echo=FALSE,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
-png("basePlot.png")
+```{r, echo=FALSE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 plot(log(anage$Mass),log(anage$BMR))
-dev.off()
 ```
 
 

@@ -1,7 +1,5 @@
 # Linear models with categorical and continuous explanatory variables
 
-## Background
-
 In the previous worksheet we looked at linear models where there is a continuous response variable and two categorical explanatory variables (we call this type of linear model two-way ANOVA). In this worksheet we will look at linear models where the explanatory variables are both continuous and categorical. You can think of these as a kind of cross between ANOVA and linear regression. These type of models are often given the name "*ANCOVA*" or *Analysis of Covariance*.
 
 In a simple case, you might be interested in a model with a continuous response variable (e.g. height) and continous and a categorical explanatory variables (e.g. hand width and gender). The categoreical variable may have any number of levels, but the simplest case is with two (e.g. gender with male and female levels). 
@@ -97,6 +95,11 @@ In a previous class (linear regression) you explored the relationship between ha
 
 Here we will extend that example by asking whether there are differences between males and females.
 
+```{block, type="do-something"}
+Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+```
+
+
 We'll begin by plotting the data (Figure \ref{fig:exampleANCOVA}).
 
 
@@ -136,7 +139,7 @@ These look good. No evidence of non-normality in the residuals, no heteroscedast
 
 ## Summarising with `anova`
 
-Now we can get the `anova` table of our ANCOVA model (yes, I know that sounds strange.).
+Now we can get the `anova` table of our ANCOVA model (yes, I know that sounds strange).
 
 ```{r}
 anova(mod_A)
