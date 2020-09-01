@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-08-30" />
+<meta name="date" content="2020-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -396,10 +396,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="combining-data-sets.html#cb154-1" aria-hidden="true"></a>redlist &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/MammalRedList.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at that.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="combining-data-sets.html#cb155-1" aria-hidden="true"></a><span class="kw">names</span>(redlist)</span></code></pre></div>
-<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                    &quot;Class&quot;                     &quot;Order&quot;                    
-##  [6] &quot;Family&quot;                    &quot;Genus&quot;                     &quot;Species&quot;                   &quot;Authority&quot;                 &quot;Infraspecific.rank&quot;       
-## [11] &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;   &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;       
-## [16] &quot;Common.names..Fre.&quot;        &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;           &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot;
+<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                    &quot;Class&quot;                    
+##  [5] &quot;Order&quot;                     &quot;Family&quot;                    &quot;Genus&quot;                     &quot;Species&quot;                  
+##  [9] &quot;Authority&quot;                 &quot;Infraspecific.rank&quot;        &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;  
+## [13] &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;        &quot;Common.names..Fre.&quot;       
+## [17] &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;           &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot;
 ## [21] &quot;Year.assessed&quot;             &quot;Population.trend&quot;          &quot;Petitioned&quot;</code></pre>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="combining-data-sets.html#cb157-1" aria-hidden="true"></a><span class="kw">unique</span>(redlist<span class="op">$</span>Red.List.status)</span></code></pre></div>
 <pre><code>## [1] &quot;DD&quot; &quot;LC&quot; &quot;CR&quot; &quot;NT&quot; &quot;EN&quot; &quot;VU&quot; &quot;EX&quot; &quot;EW&quot;</code></pre>
@@ -447,7 +448,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb166-3"><a href="combining-data-sets.html#cb166-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">droplevels</span>()</span></code></pre></div>
 <p>Let’s now plot the data to answer the question.</p>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="combining-data-sets.html#cb167-1" aria-hidden="true"></a><span class="kw">plot</span>(x<span class="op">$</span>Red.List.status,x<span class="op">$</span>logMaturity,<span class="dt">ylab=</span><span class="st">&quot;Maturity&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
 <p>What can we see? If you focus on the median values, it looks like there is a weak positive relationship between this life history trait and threat status: animals with slower life histories tend to be more threatened.</p>
 </div>
 <div id="exercise-temperature-effects-on-egg-laying-dates" class="section level2" number="4.2">

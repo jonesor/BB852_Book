@@ -15,6 +15,10 @@ text(1,1,labels = "The schedule is only available on the HTML version of this do
 ```{r, echo = FALSE, message=FALSE,warning=FALSE,eval=knitr::is_html_output()}
 library(flextable)
 library(readxl)
+library(lubridate)
+library(magrittr)
+library(dplyr)
+library(calendar)
 
 system("cp -r ~/Dropbox/_SDU_Teaching/BB852/'Course Documents'/BB852_Schedule.xlsx ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/BB852_Schedule.xlsx")
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
@@ -40,8 +44,9 @@ courseCal <- ic_read("bb852.ics") %>%
   mutate(wd = lubridate::wday(DTSTART2,label= TRUE)) %>% 
   mutate(Room = gsub(pattern = "Odense ",replacement = "", x = LOCATION)) %>% 
   mutate(Room = paste0("(",Room,")")) %>% 
-  mutate(Date = paste0( month(DTSTART2,label = TRUE)," ",day(DTSTART2),", ",wd,". kl.", St,"-",En)) %>% 
-  select(Session,Date, Room)
+  mutate(Date = paste0( month(DTSTART2,label = TRUE)," ",day(DTSTART2),", ",wd)) %>% 
+  mutate(Time = paste0("kl.", St,"-",En)) %>% 
+  select(Session,Date, Time, Room)
 
 schedule <- readxl::read_excel("BB852_Schedule.xlsx") %>% 
   select(-Day,-Month,-Year)
@@ -55,13 +60,13 @@ library(lubridate)
 library(officer)
 
 schedule2 <- schedule %>% 
-  select(Part, Date, Room, Session, Type, Topic, GSWR, CourseBook = `Course Book`)
+  select(Part, Date, Time, Room, Session, Type, Topic, GSWR, CourseBook = `Course Book`)
 
 big_b <- fp_border(color="gray70", width = 3)
 std_b <- fp_border(color="gray70", style = "dashed")
 big_b_end <- fp_border(color="white", width = 3)
 
-ft <- flextable(schedule2, cwidth = c(2,6,1,.5,1,4,.75,.75)) %>% 
+ft <- flextable(schedule2, cwidth = c(2,6,1,1,.5,1,4,.75,.75)) %>% 
   bold(part = "header") %>% 
   bold(j = 1) %>% 
   color(i = ~ Type == "Lecture",

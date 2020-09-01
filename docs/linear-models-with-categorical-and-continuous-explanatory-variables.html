@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-08-30" />
+<meta name="date" content="2020-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -404,7 +404,7 @@ Figure 12.2: ANCOVA on hand width vs. height data in males and females
 <p>The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size. Nevertheless, lets keep with good habits:</p>
 <div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb372-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
 <span id="cb372-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb372-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-269-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
 <p>These look good. No evidence of non-normality in the residuals, no heteroscedasticity and no weird outliers.</p>
 </div>
 <div id="summarising-with-anova" class="section level2" number="12.2">
@@ -463,7 +463,7 @@ Figure 12.2: ANCOVA on hand width vs. height data in males and females
 <div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb377-1" aria-hidden="true"></a>A <span class="op">+</span><span class="st"> </span></span>
 <span id="cb377-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb377-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">154.93</span>, <span class="dt">slope =</span> <span class="fl">1.77</span>) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb377-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb377-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="fl">156.30</span>, <span class="dt">slope =</span> <span class="fl">2.65</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-272-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-276-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>At the bottom of the <code>summary</code> output we are given the <span class="math inline">\(R^2\)</span> values. Because this model has several terms (i.e. variables) in it we should use the adjusted <span class="math inline">\(R^2\)</span> values. These have been corrected for the fact that the model has extra explanatory variables. So in this case, we could report that <em>the model explains 64% of variation in Height (Adjusted <span class="math inline">\(R^2\)</span> = 0.6368)</em> - not bad!</p>
 <p>So, to describe this <code>summary</code> table more generally - the coefficients can be slopes, intercepts, differences between slopes, and differences between intercepts. They are slopes and intercepts for the first level of the categorical variable, and for the subsequent levels they are differences. Piecing these together can be hard to figure out without reference to the plot of the data and model fits - another good reason to plot your data!</p>
 </div>
@@ -529,7 +529,7 @@ Figure 12.2: ANCOVA on hand width vs. height data in males and females
 <div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb386-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height,<span class="dt">colour =</span> Gender)) <span class="op">+</span></span>
 <span id="cb386-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb386-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
 <span id="cb386-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb386-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> predictData,<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)           </span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-277-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-281-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>We could report this in the usual way but first saying something like: <em>“The interaction term was not significant (F = 0.1922, d.f. 1 and 27, p = 0.665) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender …”</em></p>
 
 </div>
