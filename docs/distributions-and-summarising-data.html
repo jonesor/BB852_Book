@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-03" />
+<meta name="date" content="2020-09-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -168,7 +168,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-visualisation"><i class="fa fa-check"></i><b>1.2</b> Data visualisation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#statistics"><i class="fa fa-check"></i><b>1.3</b> Statistics</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.4</b> Data sources</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.5</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#your-instructors"><i class="fa fa-check"></i><b>1.5</b> Your instructors</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.6</b> Acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i><b>2</b> Schedule</a>
 <ul>
@@ -379,7 +380,7 @@ R has functions for generating random numbers from different kinds of distributi
 <p>The <code>rnorm</code> function has three arguments. The first argument is simply the number of values you want to generate. Then, the second and third arguments specify the the mean and standard deviation values of the distribution (i.e. where the distribution is centered and how spread out it is).</p>
 <p>The following command will produce 6 numbers from a distribution with a mean value of 5 and a standard deviation of 2.</p>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="distributions-and-summarising-data.html#cb189-1" aria-hidden="true"></a><span class="kw">rnorm</span>(<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## [1] 6.546567 5.868989 7.427407 2.799911 6.036900 4.607270</code></pre>
+<pre><code>## [1] 4.667565 5.897111 6.523377 6.252952 8.495031 4.429262</code></pre>
 <div class="do-something">
 <p>
 Try changing the values of the arguments to alter the number of values you generate, and to alter the mean and standard deviation.
@@ -388,13 +389,13 @@ Try changing the values of the arguments to alter the number of values you gener
 <p>Let’s use this to generate a larger data frame, and then place markers for the various measures of “spread” onto a plot. <em>Note that here I put a set of parentheses around the plot code to both display the result AND save the plot as an R object called <code>p1</code></em></p>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="distributions-and-summarising-data.html#cb191-1" aria-hidden="true"></a>rn &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">d1 =</span> <span class="kw">rnorm</span>(<span class="dv">500</span>,<span class="dv">5</span>,<span class="dv">2</span>))</span>
 <span id="cb191-2"><a href="distributions-and-summarising-data.html#cb191-2" aria-hidden="true"></a><span class="kw">summary</span>(rn) <span class="co">#Take a look</span></span></code></pre></div>
-<pre><code>##        d1          
-##  Min.   :-0.04319  
-##  1st Qu.: 3.80221  
-##  Median : 4.98292  
-##  Mean   : 5.05574  
-##  3rd Qu.: 6.29106  
-##  Max.   :10.73554</code></pre>
+<pre><code>##        d1        
+##  Min.   :-2.921  
+##  1st Qu.: 3.512  
+##  Median : 4.914  
+##  Mean   : 4.912  
+##  3rd Qu.: 6.154  
+##  Max.   :11.974</code></pre>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="distributions-and-summarising-data.html#cb193-1" aria-hidden="true"></a><span class="co">#Plot the data</span></span>
 <span id="cb193-2"><a href="distributions-and-summarising-data.html#cb193-2" aria-hidden="true"></a>(p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rn,<span class="kw">aes</span>(<span class="dt">x=</span>d1)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb193-3"><a href="distributions-and-summarising-data.html#cb193-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>()</span>
@@ -408,8 +409,8 @@ Try changing the values of the arguments to alter the number of values you gener
 <span id="cb194-4"><a href="distributions-and-summarising-data.html#cb194-4" aria-hidden="true"></a>            <span class="dt">varEst =</span> <span class="kw">var</span>(d1),</span>
 <span id="cb194-5"><a href="distributions-and-summarising-data.html#cb194-5" aria-hidden="true"></a>            <span class="dt">semEst =</span> <span class="kw">sd</span>(d1)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">n</span>()))</span>
 <span id="cb194-6"><a href="distributions-and-summarising-data.html#cb194-6" aria-hidden="true"></a> )</span></code></pre></div>
-<pre><code>##    meanEst    sdEst   varEst    semEst
-## 1 5.055737 2.000436 4.001743 0.0894622</code></pre>
+<pre><code>##    meanEst    sdEst   varEst     semEst
+## 1 4.912367 2.014929 4.059939 0.09011037</code></pre>
 <p>Let’s use the function <code>geom_vline</code> to add some markers to the plot from above to show these values…</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="distributions-and-summarising-data.html#cb196-1" aria-hidden="true"></a>(p2 &lt;-<span class="st"> </span>p1 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb196-2"><a href="distributions-and-summarising-data.html#cb196-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> sv<span class="op">$</span>meanEst, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="co">#mean</span></span>
@@ -443,12 +444,12 @@ Try adding lines for the standard error of the mean to one of your histograms.
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="distributions-and-summarising-data.html#cb198-1" aria-hidden="true"></a>rn &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">d1 =</span> <span class="kw">rnorm</span>(<span class="dv">500</span>,<span class="dv">5</span>,<span class="dv">2</span>),<span class="dt">d2 =</span> <span class="kw">rnorm</span>(<span class="dv">500</span>,<span class="dv">8</span>,<span class="dv">1</span>))</span>
 <span id="cb198-2"><a href="distributions-and-summarising-data.html#cb198-2" aria-hidden="true"></a><span class="kw">summary</span>(rn)</span></code></pre></div>
 <pre><code>##        d1               d2        
-##  Min.   :-1.703   Min.   : 5.375  
-##  1st Qu.: 3.724   1st Qu.: 7.289  
-##  Median : 4.960   Median : 7.969  
-##  Mean   : 5.008   Mean   : 7.957  
-##  3rd Qu.: 6.230   3rd Qu.: 8.643  
-##  Max.   :11.436   Max.   :10.773</code></pre>
+##  Min.   :-1.153   Min.   : 5.307  
+##  1st Qu.: 3.788   1st Qu.: 7.294  
+##  Median : 4.929   Median : 8.129  
+##  Mean   : 5.032   Mean   : 8.089  
+##  3rd Qu.: 6.195   3rd Qu.: 8.731  
+##  Max.   :10.523   Max.   :11.203</code></pre>
 <p>The summaries (above) show that the mean and the width of the distributions vary, but we should always plot our data. So lets make a plot in <code>ggplot</code>. In the dataset I created I have the data arranged by columns side-by-side, but <code>ggplot</code> needs the values to be arranged in a single column, and the identifier of the sample ID in a second column. I can use the function <code>gather</code> to rearrange the data into the required format.</p>
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="distributions-and-summarising-data.html#cb200-1" aria-hidden="true"></a>rn &lt;-<span class="st"> </span><span class="kw">gather</span>(rn,<span class="dt">key =</span> <span class="st">&quot;sampleID&quot;</span>,<span class="dt">value =</span> <span class="st">&quot;value&quot;</span>) <span class="co">#rearrange data</span></span>
 <span id="cb200-2"><a href="distributions-and-summarising-data.html#cb200-2" aria-hidden="true"></a></span>
@@ -469,13 +470,13 @@ Try changing the distributions and re-plotting them (you can change the number o
 <p>Let’s generate and plot some Poisson distributed data.</p>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="distributions-and-summarising-data.html#cb201-1" aria-hidden="true"></a>rp &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">d1 =</span> <span class="kw">rpois</span>(<span class="dv">500</span>,<span class="fl">2.4</span>))</span>
 <span id="cb201-2"><a href="distributions-and-summarising-data.html#cb201-2" aria-hidden="true"></a><span class="kw">summary</span>(rp) <span class="co">#Take a look</span></span></code></pre></div>
-<pre><code>##        d1      
-##  Min.   :0.00  
-##  1st Qu.:1.00  
-##  Median :2.00  
-##  Mean   :2.41  
-##  3rd Qu.:3.00  
-##  Max.   :7.00</code></pre>
+<pre><code>##        d1       
+##  Min.   :0.000  
+##  1st Qu.:1.000  
+##  Median :2.000  
+##  Mean   :2.342  
+##  3rd Qu.:3.000  
+##  Max.   :7.000</code></pre>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="distributions-and-summarising-data.html#cb203-1" aria-hidden="true"></a><span class="co">#Plot the data</span></span>
 <span id="cb203-2"><a href="distributions-and-summarising-data.html#cb203-2" aria-hidden="true"></a>(p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rp,<span class="kw">aes</span>(<span class="dt">x=</span>d1)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb203-3"><a href="distributions-and-summarising-data.html#cb203-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="co"># we know the bins will be 1</span></span>
@@ -492,7 +493,7 @@ Try changing the value of lambda and look at how the shape changes.
 <span id="cb204-3"><a href="distributions-and-summarising-data.html#cb204-3" aria-hidden="true"></a>            <span class="dt">sdEst =</span> <span class="kw">sd</span>(d1))</span>
 <span id="cb204-4"><a href="distributions-and-summarising-data.html#cb204-4" aria-hidden="true"></a> )</span></code></pre></div>
 <pre><code>##   meanEst    sdEst
-## 1    2.41 1.570616</code></pre>
+## 1   2.342 1.527646</code></pre>
 <p>Now lets plot the mean and the 2 times the standard deviation on the graph. Remember that for the normal distribution (above) that 95% of the data were within 2 times the standard deviation.</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="distributions-and-summarising-data.html#cb206-1" aria-hidden="true"></a>p1 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb206-2"><a href="distributions-and-summarising-data.html#cb206-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> sv<span class="op">$</span>meanEst, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="co">#mean</span></span>
@@ -514,7 +515,7 @@ Try changing the value of lambda and look at how the shape changes.
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="distributions-and-summarising-data.html#cb209-1" aria-hidden="true"></a><span class="co">#base R summary is just as good.</span></span>
 <span id="cb209-2"><a href="distributions-and-summarising-data.html#cb209-2" aria-hidden="true"></a><span class="kw">summary</span>(rp<span class="op">$</span>d1)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    0.00    1.00    2.00    2.41    3.00    7.00</code></pre>
+##   0.000   1.000   2.000   2.342   3.000   7.000</code></pre>
 </div>
 <div id="comparing-normal-and-poisson-distributions" class="section level2" number="7.5">
 <h2><span class="header-section-number">7.5</span> Comparing normal and Poisson distributions</h2>
@@ -522,12 +523,12 @@ Try changing the value of lambda and look at how the shape changes.
 <div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="distributions-and-summarising-data.html#cb211-1" aria-hidden="true"></a>rn &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">normDist =</span> <span class="kw">rnorm</span>(<span class="dv">500</span>,<span class="dv">2</span>,<span class="dv">2</span>),<span class="dt">poisDist =</span> <span class="kw">rpois</span>(<span class="dv">500</span>,<span class="fl">2.4</span>))</span>
 <span id="cb211-2"><a href="distributions-and-summarising-data.html#cb211-2" aria-hidden="true"></a><span class="kw">summary</span>(rn)</span></code></pre></div>
 <pre><code>##     normDist          poisDist    
-##  Min.   :-3.7862   Min.   :0.000  
-##  1st Qu.: 0.5507   1st Qu.:1.000  
-##  Median : 1.7944   Median :2.000  
-##  Mean   : 1.9137   Mean   :2.346  
-##  3rd Qu.: 3.3323   3rd Qu.:3.000  
-##  Max.   : 7.7925   Max.   :8.000</code></pre>
+##  Min.   :-3.7639   Min.   : 0.00  
+##  1st Qu.: 0.5013   1st Qu.: 1.00  
+##  Median : 1.8967   Median : 2.00  
+##  Mean   : 1.9555   Mean   : 2.41  
+##  3rd Qu.: 3.2937   3rd Qu.: 3.25  
+##  Max.   : 7.9591   Max.   :10.00</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="distributions-and-summarising-data.html#cb213-1" aria-hidden="true"></a>rn &lt;-<span class="st"> </span><span class="kw">gather</span>(rn,<span class="dt">key =</span> <span class="st">&quot;sampleID&quot;</span>,<span class="dt">value =</span> <span class="st">&quot;value&quot;</span>) <span class="co">#rearrange data</span></span>
 <span id="cb213-2"><a href="distributions-and-summarising-data.html#cb213-2" aria-hidden="true"></a></span>
 <span id="cb213-3"><a href="distributions-and-summarising-data.html#cb213-3" aria-hidden="true"></a><span class="co">#Plot histograms using &quot;identity&quot;, and make them transparent</span></span>

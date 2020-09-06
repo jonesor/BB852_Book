@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-03" />
+<meta name="date" content="2020-09-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -168,7 +168,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-visualisation"><i class="fa fa-check"></i><b>1.2</b> Data visualisation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#statistics"><i class="fa fa-check"></i><b>1.3</b> Statistics</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.4</b> Data sources</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.5</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#your-instructors"><i class="fa fa-check"></i><b>1.5</b> Your instructors</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.6</b> Acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i><b>2</b> Schedule</a>
 <ul>
@@ -398,12 +399,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="combining-data-sets.html#cb154-1" aria-hidden="true"></a>redlist &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/MammalRedList.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at that.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="combining-data-sets.html#cb155-1" aria-hidden="true"></a><span class="kw">names</span>(redlist)</span></code></pre></div>
-<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                    &quot;Class&quot;                    
-##  [5] &quot;Order&quot;                     &quot;Family&quot;                    &quot;Genus&quot;                     &quot;Species&quot;                  
-##  [9] &quot;Authority&quot;                 &quot;Infraspecific.rank&quot;        &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;  
-## [13] &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;        &quot;Common.names..Fre.&quot;       
-## [17] &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;           &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot;
-## [21] &quot;Year.assessed&quot;             &quot;Population.trend&quot;          &quot;Petitioned&quot;</code></pre>
+<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                   
+##  [4] &quot;Class&quot;                     &quot;Order&quot;                     &quot;Family&quot;                   
+##  [7] &quot;Genus&quot;                     &quot;Species&quot;                   &quot;Authority&quot;                
+## [10] &quot;Infraspecific.rank&quot;        &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;  
+## [13] &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;       
+## [16] &quot;Common.names..Fre.&quot;        &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;          
+## [19] &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot; &quot;Year.assessed&quot;            
+## [22] &quot;Population.trend&quot;          &quot;Petitioned&quot;</code></pre>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="combining-data-sets.html#cb157-1" aria-hidden="true"></a><span class="kw">unique</span>(redlist<span class="op">$</span>Red.List.status)</span></code></pre></div>
 <pre><code>## [1] &quot;DD&quot; &quot;LC&quot; &quot;CR&quot; &quot;NT&quot; &quot;EN&quot; &quot;VU&quot; &quot;EX&quot; &quot;EW&quot;</code></pre>
 <p>There’s a lot of information there but what we really need is simply the Latin binomial (for which we need <code>genus</code> and <code>species</code>) and the threat status <code>Red.List.status</code>.</p>

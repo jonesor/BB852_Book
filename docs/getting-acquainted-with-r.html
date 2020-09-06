@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-03" />
+<meta name="date" content="2020-09-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -168,7 +168,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-visualisation"><i class="fa fa-check"></i><b>1.2</b> Data visualisation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#statistics"><i class="fa fa-check"></i><b>1.3</b> Statistics</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.4</b> Data sources</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.5</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#your-instructors"><i class="fa fa-check"></i><b>1.5</b> Your instructors</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.6</b> Acknowledgements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i><b>2</b> Schedule</a>
 <ul>
@@ -614,9 +615,9 @@ Try modifying the commands to make sure you know what the commands are doing.
 <pre><code>## [1] 17</code></pre>
 <p>We can find the names of the columns of a data frame with the <code>names</code> function:</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="getting-acquainted-with-r.html#cb101-1" aria-hidden="true"></a><span class="kw">names</span>(carni)</span></code></pre></div>
-<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;     &quot;FW&quot;          &quot;SW&quot;          &quot;FB&quot;         
-##  [9] &quot;SB&quot;          &quot;LS&quot;          &quot;GL&quot;          &quot;BW&quot;          &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;          &quot;AM&quot;         
-## [17] &quot;IB&quot;</code></pre>
+<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;     &quot;FW&quot;         
+##  [7] &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;          &quot;GL&quot;          &quot;BW&quot;         
+## [13] &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;          &quot;AM&quot;          &quot;IB&quot;</code></pre>
 <p>The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
 SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).</p>
 <p>You can refer to the sub-parts of a <code>data.frame</code> (the columns) using the <code>$</code> syntax:</p>
@@ -634,7 +635,8 @@ SW = Average body weight of adult male and adult female (kg), FB = Female brain 
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="getting-acquainted-with-r.html#cb107-1" aria-hidden="true"></a><span class="kw">class</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="getting-acquainted-with-r.html#cb109-1" aria-hidden="true"></a><span class="kw">levels</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
-<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot;  &quot;Procyonidae&quot; &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
+<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot;  &quot;Procyonidae&quot;
+## [7] &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
 </div>
 <div id="tables-and-summary-statistics" class="section level2" number="3.11">
 <h2><span class="header-section-number">3.11</span> Tables and summary statistics</h2>
