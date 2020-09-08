@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 An R refresher | BB852 - Data handling, visualisation and statistics</title>
+  <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 An R refresher | BB852 - Data handling, visualisation and statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 An R refresher | BB852 - Data handling, visualisation and statistics" />
+  
+  <meta name="twitter:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
+  
+
+<meta name="author" content="Owen R. Jones" />
+
+
+<meta name="date" content="2020-09-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="schedule.html"/>
+<link rel="next" href="data-wrangling-with-dplyr.html"/>
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.0.0/tabwid.js"></script>
+<style type="text/css">
+
+.warning-box {
+  border: 3px solid #e60000;
+  margin:  25px;
+  padding: 10px 10px 5px 10px;
+  border-radius: 6px 6px 6px 6px;
+}
+
+.advanced-box {
+  border: 3px solid #268bd2;
+  margin:  25px;
+  padding: 10px 10px 5px 10px;
+  border-radius: 6px 6px 6px 6px;
+}
+
+.do-something {
+  border: 3px solid #803e00;
+  margin:  25px;
+  padding: 10px 10px 5px 10px;
+  border-radius: 6px 6px 6px 6px;
+}
+
+</style>
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">BB852</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#data-wrangling"><i class="fa fa-check"></i><b>1.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-visualisation"><i class="fa fa-check"></i><b>1.2</b> Data visualisation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#statistics"><i class="fa fa-check"></i><b>1.3</b> Statistics</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.4</b> Data sources</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#your-instructors"><i class="fa fa-check"></i><b>1.5</b> Your instructors</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.6</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i><b>2</b> Schedule</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="schedule.html"><a href="schedule.html#additional-recommended-reading"><i class="fa fa-check"></i><b>2.1</b> Additional recommended reading</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="an-r-refresher.html"><a href="an-r-refresher.html"><i class="fa fa-check"></i><b>3</b> An R refresher</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="an-r-refresher.html"><a href="an-r-refresher.html#getting-started-with-r"><i class="fa fa-check"></i><b>3.1</b> Getting started with R</a></li>
+<li class="chapter" data-level="3.2" data-path="an-r-refresher.html"><a href="an-r-refresher.html#getting-help"><i class="fa fa-check"></i><b>3.2</b> Getting help</a></li>
+<li class="chapter" data-level="3.3" data-path="an-r-refresher.html"><a href="an-r-refresher.html#r-as-a-fancy-calculator"><i class="fa fa-check"></i><b>3.3</b> R as a fancy calculator</a></li>
+<li class="chapter" data-level="3.4" data-path="an-r-refresher.html"><a href="an-r-refresher.html#objects-in-r"><i class="fa fa-check"></i><b>3.4</b> Objects in R</a></li>
+<li class="chapter" data-level="3.5" data-path="an-r-refresher.html"><a href="an-r-refresher.html#missing-values-infinity-and-non-numbers"><i class="fa fa-check"></i><b>3.5</b> Missing values, infinity and “non-numbers”</a></li>
+<li class="chapter" data-level="3.6" data-path="an-r-refresher.html"><a href="an-r-refresher.html#basic-information-about-objects"><i class="fa fa-check"></i><b>3.6</b> Basic information about objects</a></li>
+<li class="chapter" data-level="3.7" data-path="an-r-refresher.html"><a href="an-r-refresher.html#data-frames"><i class="fa fa-check"></i><b>3.7</b> Data frames</a></li>
+<li class="chapter" data-level="3.8" data-path="an-r-refresher.html"><a href="an-r-refresher.html#organising-your-work"><i class="fa fa-check"></i><b>3.8</b> Organising your work</a></li>
+<li class="chapter" data-level="3.9" data-path="an-r-refresher.html"><a href="an-r-refresher.html#inspecting-the-data"><i class="fa fa-check"></i><b>3.9</b> Inspecting the data</a></li>
+<li class="chapter" data-level="3.10" data-path="an-r-refresher.html"><a href="an-r-refresher.html#classes-in-r"><i class="fa fa-check"></i><b>3.10</b> “Classes” in R</a></li>
+<li class="chapter" data-level="3.11" data-path="an-r-refresher.html"><a href="an-r-refresher.html#tables-and-summary-statistics"><i class="fa fa-check"></i><b>3.11</b> Tables and summary statistics</a></li>
+<li class="chapter" data-level="3.12" data-path="an-r-refresher.html"><a href="an-r-refresher.html#plotting-data"><i class="fa fa-check"></i><b>3.12</b> Plotting data</a></li>
+<li class="chapter" data-level="3.13" data-path="an-r-refresher.html"><a href="an-r-refresher.html#r-packages"><i class="fa fa-check"></i><b>3.13</b> R Packages</a></li>
+<li class="chapter" data-level="3.14" data-path="an-r-refresher.html"><a href="an-r-refresher.html#exercise-californian-bird-diversity"><i class="fa fa-check"></i><b>3.14</b> Exercise: Californian bird diversity</a>
+<ul>
+<li class="chapter" data-level="3.14.1" data-path="an-r-refresher.html"><a href="an-r-refresher.html#the-data"><i class="fa fa-check"></i><b>3.14.1</b> The data</a></li>
+<li class="chapter" data-level="3.14.2" data-path="an-r-refresher.html"><a href="an-r-refresher.html#try-the-following"><i class="fa fa-check"></i><b>3.14.2</b> Try the following</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Data Wrangling</b></span></li>
+<li class="chapter" data-level="4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>4</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#select"><i class="fa fa-check"></i><b>4.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="4.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>4.2</b> <code>filter</code></a></li>
+<li class="chapter" data-level="4.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>4.3</b> <code>arrange</code></a></li>
+<li class="chapter" data-level="4.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>4.4</b> <code>summarise</code> and <code>group_by</code></a></li>
+<li class="chapter" data-level="4.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>4.5</b> Using pipes, saving data.</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="exercise-wrangling-the-amniote-life-history-database.html"><a href="exercise-wrangling-the-amniote-life-history-database.html"><i class="fa fa-check"></i><b>5</b> Exercise: Wrangling the Amniote Life History Database</a></li>
+<li class="chapter" data-level="6" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>6</b> Combining data sets</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-join"><i class="fa fa-check"></i><b>6.1</b> Using <code>join</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exercise-temperature-effects-on-egg-laying-dates.html"><a href="exercise-temperature-effects-on-egg-laying-dates.html"><i class="fa fa-check"></i><b>7</b> Exercise: Temperature effects on egg laying dates</a></li>
+<li class="part"><span><b>II Data visualisation</b></span></li>
+<li class="chapter" data-level="8" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html"><i class="fa fa-check"></i><b>8</b> Visualising data with <code>ggplot</code></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#histograms"><i class="fa fa-check"></i><b>8.1</b> Histograms</a></li>
+<li class="chapter" data-level="8.2" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#facets---splitting-data-across-panels"><i class="fa fa-check"></i><b>8.2</b> “Facets” - splitting data across panels</a></li>
+<li class="chapter" data-level="8.3" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#box-plots"><i class="fa fa-check"></i><b>8.3</b> Box plots</a></li>
+<li class="chapter" data-level="8.4" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#lines-and-points"><i class="fa fa-check"></i><b>8.4</b> Lines and points</a></li>
+<li class="chapter" data-level="8.5" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#scatter-plots"><i class="fa fa-check"></i><b>8.5</b> Scatter plots</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html"><i class="fa fa-check"></i><b>9</b> Distributions and summarising data</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#distributions"><i class="fa fa-check"></i><b>9.1</b> Distributions</a></li>
+<li class="chapter" data-level="9.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#normal-distribution"><i class="fa fa-check"></i><b>9.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="9.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-distributions"><i class="fa fa-check"></i><b>9.3</b> Comparing normal distributions</a></li>
+<li class="chapter" data-level="9.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#poisson-distribution"><i class="fa fa-check"></i><b>9.4</b> Poisson distribution</a></li>
+<li class="chapter" data-level="9.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>9.5</b> Comparing normal and Poisson distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="customising-your-plots.html"><a href="customising-your-plots.html"><i class="fa fa-check"></i><b>10</b> Customising your plots</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="customising-your-plots.html"><a href="customising-your-plots.html#a-basic-plot"><i class="fa fa-check"></i><b>10.1</b> A basic plot</a></li>
+<li class="chapter" data-level="10.2" data-path="customising-your-plots.html"><a href="customising-your-plots.html#axis-limits"><i class="fa fa-check"></i><b>10.2</b> Axis limits</a></li>
+<li class="chapter" data-level="10.3" data-path="customising-your-plots.html"><a href="customising-your-plots.html#transforming-the-axis-log-scale"><i class="fa fa-check"></i><b>10.3</b> Transforming the axis (log scale)</a></li>
+<li class="chapter" data-level="10.4" data-path="customising-your-plots.html"><a href="customising-your-plots.html#changing-the-axis-tick-marks"><i class="fa fa-check"></i><b>10.4</b> Changing the axis tick marks</a></li>
+<li class="chapter" data-level="10.5" data-path="customising-your-plots.html"><a href="customising-your-plots.html#axis-labels"><i class="fa fa-check"></i><b>10.5</b> Axis labels</a></li>
+<li class="chapter" data-level="10.6" data-path="customising-your-plots.html"><a href="customising-your-plots.html#colours"><i class="fa fa-check"></i><b>10.6</b> Colours</a></li>
+<li class="chapter" data-level="10.7" data-path="customising-your-plots.html"><a href="customising-your-plots.html#themes"><i class="fa fa-check"></i><b>10.7</b> Themes</a></li>
+<li class="chapter" data-level="10.8" data-path="customising-your-plots.html"><a href="customising-your-plots.html#moving-the-legend"><i class="fa fa-check"></i><b>10.8</b> Moving the legend</a></li>
+<li class="chapter" data-level="10.9" data-path="customising-your-plots.html"><a href="customising-your-plots.html#combining-multiple-plots"><i class="fa fa-check"></i><b>10.9</b> Combining multiple plots</a></li>
+<li class="chapter" data-level="10.10" data-path="customising-your-plots.html"><a href="customising-your-plots.html#saving-your-plot"><i class="fa fa-check"></i><b>10.10</b> Saving your plot</a></li>
+<li class="chapter" data-level="10.11" data-path="customising-your-plots.html"><a href="customising-your-plots.html#final-word-on-plots"><i class="fa fa-check"></i><b>10.11</b> Final word on plots</a></li>
+</ul></li>
+<li class="part"><span><b>III Statistics</b></span></li>
+<li class="chapter" data-level="11" data-path="randomisation-tests.html"><a href="randomisation-tests.html"><i class="fa fa-check"></i><b>11</b> Randomisation Tests</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#randomisation-test-in-r"><i class="fa fa-check"></i><b>11.1</b> Randomisation test in R</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#calculate-the-observed-difference"><i class="fa fa-check"></i><b>11.1.1</b> Calculate the observed difference</a></li>
+<li class="chapter" data-level="11.1.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution"><i class="fa fa-check"></i><b>11.1.2</b> Null distribution</a></li>
+<li class="chapter" data-level="11.1.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-significance"><i class="fa fa-check"></i><b>11.1.3</b> Testing significance</a></li>
+<li class="chapter" data-level="11.1.4" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-the-hypothesis"><i class="fa fa-check"></i><b>11.1.4</b> Testing the hypothesis</a></li>
+<li class="chapter" data-level="11.1.5" data-path="randomisation-tests.html"><a href="randomisation-tests.html#writing-it-up"><i class="fa fa-check"></i><b>11.1.5</b> Writing it up</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#paired-randomisation-tests"><i class="fa fa-check"></i><b>11.2</b> Paired Randomisation Tests</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-randomisation-test"><i class="fa fa-check"></i><b>11.2.1</b> The randomisation test</a></li>
+<li class="chapter" data-level="11.2.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution-1"><i class="fa fa-check"></i><b>11.2.2</b> Null distribution</a></li>
+<li class="chapter" data-level="11.2.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-formal-hypothesis-test"><i class="fa fa-check"></i><b>11.2.3</b> The formal hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#exercise-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>11.3</b> Exercise: Sexual selection in Hercules beetles</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html"><i class="fa fa-check"></i><b>12</b> Comparing two means with a t-test</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#some-theory"><i class="fa fa-check"></i><b>12.1</b> Some theory</a></li>
+<li class="chapter" data-level="12.2" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#one-sample-t-test"><i class="fa fa-check"></i><b>12.2</b> One sample t-test</a></li>
+<li class="chapter" data-level="12.3" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#doing-it-by-hand---where-does-the-t-statistic-come-from"><i class="fa fa-check"></i><b>12.3</b> Doing it “by hand” - where does the t-statistic come from?</a></li>
+<li class="chapter" data-level="12.4" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#paired-t-test"><i class="fa fa-check"></i><b>12.4</b> Paired t-test</a></li>
+<li class="chapter" data-level="12.5" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#a-paired-t-test-is-a-one-sample-test."><i class="fa fa-check"></i><b>12.5</b> A paired t-test is a one-sample test.</a></li>
+<li class="chapter" data-level="12.6" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#two-sample-t-test"><i class="fa fa-check"></i><b>12.6</b> Two sample t-test</a></li>
+<li class="chapter" data-level="12.7" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#t-tests-are-linear-models"><i class="fa fa-check"></i><b>12.7</b> t-tests are linear models</a></li>
+<li class="chapter" data-level="12.8" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>12.8</b> Exercise: Sex differences in fine motor skills</a></li>
+<li class="chapter" data-level="12.9" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-therapy-for-anorexia"><i class="fa fa-check"></i><b>12.9</b> Exercise: Therapy for anorexia</a></li>
+<li class="chapter" data-level="12.10" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>12.10</b> Exercise: Compare t-tests with randomisation tests</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html"><i class="fa fa-check"></i><b>13</b> Linear models with a single categorical explanatory variable</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#one-way-anova"><i class="fa fa-check"></i><b>13.1</b> One-way ANOVA</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#fitting-an-anova-in-r"><i class="fa fa-check"></i><b>13.2</b> Fitting an ANOVA in R</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>13.2.1</b> Where are the differences?</a></li>
+<li class="chapter" data-level="13.2.2" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>13.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>13.3</b> ANOVA calculation “by hand”.</a></li>
+<li class="chapter" data-level="13.4" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>13.4</b> Exercise: Apple tree crop yield</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>14</b> Linear models with a single continuous explanatory variable</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#some-theory"><i class="fa fa-check"></i><b>14.1</b> Some theory</a></li>
+<li class="chapter" data-level="14.2" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#evaluating-a-hypothesis-with-a-linear-regression-model"><i class="fa fa-check"></i><b>14.2</b> Evaluating a hypothesis with a linear regression model</a></li>
+<li class="chapter" data-level="14.3" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#assumptions"><i class="fa fa-check"></i><b>14.3</b> Assumptions</a></li>
+<li class="chapter" data-level="14.4" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#worked-example-height-hand-width-relationship"><i class="fa fa-check"></i><b>14.4</b> Worked example: height-hand width relationship</a></li>
+<li class="chapter" data-level="14.5" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#exercise-chirping-crickets"><i class="fa fa-check"></i><b>14.5</b> Exercise: Chirping crickets</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html"><i class="fa fa-check"></i><b>15</b> Linear models with categorical and continuous explanatory variables</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#the-height-hand-width-example."><i class="fa fa-check"></i><b>15.1</b> The height ~ hand width example.</a></li>
+<li class="chapter" data-level="15.2" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#summarising-with-anova"><i class="fa fa-check"></i><b>15.2</b> Summarising with <code>anova</code></a></li>
+<li class="chapter" data-level="15.3" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#the-summary-of-coefficients-summary"><i class="fa fa-check"></i><b>15.3</b> The summary of coefficients (<code>summary</code>)</a></li>
+<li class="chapter" data-level="15.4" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#simplifying-the-model"><i class="fa fa-check"></i><b>15.4</b> Simplifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html"><i class="fa fa-check"></i><b>16</b> Linear models with &gt;1 categorical explanatory variables</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html#fitting-a-two-way-anova-model"><i class="fa fa-check"></i><b>16.1</b> Fitting a two-way ANOVA model</a></li>
+<li class="chapter" data-level="16.2" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-anova"><i class="fa fa-check"></i><b>16.2</b> Summarising the model (<code>anova</code>)</a></li>
+<li class="chapter" data-level="16.3" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-summary"><i class="fa fa-check"></i><b>16.3</b> Summarising the model (<code>summary</code>)</a></li>
+<li class="chapter" data-level="16.4" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html#exercise-fish-behaviour"><i class="fa fa-check"></i><b>16.4</b> Exercise: Fish behaviour</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html"><i class="fa fa-check"></i><b>17</b> Generalised linear models</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#count-data-with-poisson-errors."><i class="fa fa-check"></i><b>17.1</b> Count data with Poisson errors.</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-number-of-offspring-in-foxes."><i class="fa fa-check"></i><b>17.1.1</b> Example: Number of offspring in foxes.</a></li>
+<li class="chapter" data-level="17.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>17.1.2</b> Example: Cancer clusters</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>17.2</b> Exercise: Maze runner</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>18</b> Extending use cases of GLM</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#binomial-response-data"><i class="fa fa-check"></i><b>18.1</b> Binomial response data</a></li>
+<li class="chapter" data-level="18.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-nfl-field-goals"><i class="fa fa-check"></i><b>18.2</b> Example: NFL field goals</a></li>
+<li class="chapter" data-level="18.3" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-sex-ratio-in-turtles"><i class="fa fa-check"></i><b>18.3</b> Example: Sex ratio in turtles</a></li>
+<li class="chapter" data-level="18.4" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-smoking"><i class="fa fa-check"></i><b>18.4</b> Example: Smoking</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html"><i class="fa fa-check"></i><b>19</b> Power analysis by simulation</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#type-i-and-ii-errors-and-statistical-power"><i class="fa fa-check"></i><b>19.1</b> Type I and II errors and statistical power</a></li>
+<li class="chapter" data-level="19.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#what-determines-statistical-power"><i class="fa fa-check"></i><b>19.2</b> What determines statistical power?</a></li>
+<li class="chapter" data-level="19.3" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#an-example-of-calculating-statistical-power."><i class="fa fa-check"></i><b>19.3</b> An example of calculating statistical power.</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#the-simulation"><i class="fa fa-check"></i><b>19.3.1</b> The simulation</a></li>
+<li class="chapter" data-level="19.3.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#some-questions-for-you-to-address"><i class="fa fa-check"></i><b>19.3.2</b> Some questions for you to address:</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#summary"><i class="fa fa-check"></i><b>19.4</b> Summary</a></li>
+<li class="chapter" data-level="19.5" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#extending-the-simulation-optional-advanced"><i class="fa fa-check"></i><b>19.5</b> Extending the simulation (optional, advanced)</a></li>
+<li class="chapter" data-level="19.6" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-1-snails-on-the-move"><i class="fa fa-check"></i><b>19.6</b> Exercise 1: Snails on the move</a></li>
+<li class="chapter" data-level="19.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>19.7</b> Exercise 2: Mouse lemur strength</a></li>
+</ul></li>
+<li class="part"><span><b>IV Coming soon(ish)</b></span></li>
+<li class="chapter" data-level="20" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html"><i class="fa fa-check"></i><b>20</b> Coming soon (maybe)!</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#multivariate-statistics"><i class="fa fa-check"></i><b>20.1</b> Multivariate statistics</a></li>
+<li class="chapter" data-level="20.2" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#transforming-variables"><i class="fa fa-check"></i><b>20.2</b> Transforming variables</a></li>
+<li class="chapter" data-level="20.3" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#non-linear-regression"><i class="fa fa-check"></i><b>20.3</b> Non-linear regression</a></li>
+<li class="chapter" data-level="20.4" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#nested-or-blocked-study-designs"><i class="fa fa-check"></i><b>20.4</b> Nested or blocked study designs</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BB852 - Data handling, visualisation and statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="an-r-refresher" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> An R refresher</h1>
+<p>In this course we will be learning how manipulate, visualise and analyse data statistically using <strong>R</strong>. <strong>R</strong> is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every conceivable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.</p>
+<p>Before proceeding you will need to ensure you have a recent version of <strong>R</strong> installed on your computer (the current version is 4.0.3).</p>
+<div class="do-something">
+<p>
+<strong>Do this:</strong> Check your R version, and/or install R on your own computer now.
+</p>
+</div>
+<p>In this course we will not be using <strong>R</strong> on its own. Instead, we will be using it with RStudio.</p>
+<p><strong>R</strong> and RStudio are not the same thing. It is possible to run R without RStudio, but RStudio will not work if <strong>R</strong> is not installed. So what is RStudio? RStudio, essentially, is a helpful piece of software that makes <strong>R</strong> easier to use. The three most useful features are:</p>
+<ul>
+<li><p>The R Console - this is where <strong>R</strong> runs inside RStudio. We can work <em>directly</em> with <strong>R</strong> by typing commands into this “console”. It is also where outputs (results) from <strong>R</strong> are printed to the screen.</p></li>
+<li><p>The Code Editor - this is where you can write <strong>R</strong> programs (called “scripts”)“, which are a set of commands/instructions in the <strong>R</strong> language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will”auto-complete" some text to speed up your work.</p></li>
+<li><p>Useful “point-and-click” tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in <em>just</em> <strong>R</strong>: RStudio just makes things easier!</p></li>
+</ul>
+<p>You should do your coding from within RStudio.</p>
+<p>You can download <strong>RStudio Desktop</strong> from <a href="https://rstudio.com/products/rstudio/download/" class="uri">https://rstudio.com/products/rstudio/download/</a>. Select the correct version for your computer (Mac/Windows) and follow the usual instructions.</p>
+<div class="do-something">
+<p>
+<strong>Do this:</strong> Install <strong>RStudio Desktop</strong> on your computer.
+</p>
+</div>
+<div id="getting-started-with-r" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Getting started with R</h2>
+<p>In RStudio, create a new “R Script” file. <em>Scripts</em> are essentially programs that can be saved to allow you to return to your work in the future. They also make debugging of errors much easier.</p>
+<p>You can use the menu to do create a new R Script (<code>File &gt; New File &gt; R Script</code>), but there’s also a keyboard shortcut (Windows: <code>Ctrl+Shift+N</code>; Mac: <code>Cmd+Shift+N</code>). If you save (Windows: <code>Ctrl+S</code>; Mac: <code>Cmd+S</code>), you will be prompted for a file name. Make sure it has the suffix “.R” which denotes an R script file. Save the file in a folder with a memorable name (e.g. <code>BB852_Work</code>).</p>
+<p>When you double click on this file in future, it should automatically open in RStudio (if it doesn’t you should be able to right-click and select <code>Open with...</code>).</p>
+<p>In RStudio you can execute commands using the “run” icon at the top of the script window, or by selecting the text and typing the shortcut <code>Ctrl+Enter</code> (Windows) or <code>Cmd+Enter</code> (Mac). Another helpful feature of RStudio is that it will colour-code the syntax that you type, making it easier to read and debug. Note that the colours you see may be different from the ones shown in this handout.</p>
+<p>You can customise the look of RStudio using by clicking <strong>Tools → Options</strong> menu on Windows or <strong>RStudio → Preferences</strong> on a Mac. I will point out some of this in the lecture, or you can ask me to show you.</p>
+<p>Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensuring that you understand what the commands are doing. It is impossible to “break” R by typing the wrong command so I encourage you to experiment and explore the R language I introduce to you here as much as possible - it really is the best way to learn!</p>
+<div class="do-something">
+<p>
+The “look” of RStudio can be modified by changing the Preferences (<strong>RStudio → Preferences → Appearance</strong>). Also, there are some useful keyboard shortcuts that are worth learning, to run code, save files etc. without needing to point-and-click (<strong>Tools → Keyboard Shortcuts Help</strong>).
+</p>
+</div>
+</div>
+<div id="getting-help" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Getting help</h2>
+<p><strong>R</strong> features a wealth of commands, which are more properly termed <strong>functions</strong>. You will learn many of these over the next few weeks. Functions often feature a several options which are specified with <strong>arguments</strong>. For example, the function <code>sum</code>, has the argument <code>...</code>, which is intended to be one or more <strong>vectors</strong> of numbers (see below), and the argument <code>na.rm</code>, which is a logical argument specifying whether or not missing values should be removed or not. Usually the arguments have default options which are used you choose not to specify them. In addition, you don’t necessarily need to fully-specify the argument if they are specified in the <em>correct order</em>.</p>
+<p>You can get <strong>help</strong> on R functions from within R/RStudio with the <code>?</code> and <code>help.search</code> commands. <code>?</code> requires that you know the function name while <em>help.search</em> will search all the available help files for a particular word or phrase. <code>??</code> is a synonym for <em>help.search</em>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="an-r-refresher.html#cb1-1" aria-hidden="true"></a>?rep</span>
+<span id="cb1-2"><a href="an-r-refresher.html#cb1-2" aria-hidden="true"></a><span class="kw">help.search</span>(<span class="st">&quot;bar plot&quot;</span>)</span>
+<span id="cb1-3"><a href="an-r-refresher.html#cb1-3" aria-hidden="true"></a>??<span class="st">&quot;bar plot&quot;</span></span></code></pre></div>
+<p>In RStudio, the help results will appear in the lower right hand area.</p>
+</div>
+<div id="r-as-a-fancy-calculator" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> R as a fancy calculator</h2>
+<p>R features the usual arithmetic operations for addition, subtraction, division, multiplication:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="an-r-refresher.html#cb2-1" aria-hidden="true"></a><span class="dv">4</span><span class="op">+</span><span class="dv">3</span> </span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="an-r-refresher.html#cb4-1" aria-hidden="true"></a><span class="dv">9-12</span></span></code></pre></div>
+<pre><code>## [1] -3</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="an-r-refresher.html#cb6-1" aria-hidden="true"></a><span class="dv">6</span><span class="op">/</span><span class="dv">3</span></span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="an-r-refresher.html#cb8-1" aria-hidden="true"></a><span class="dv">7</span><span class="op">*</span><span class="dv">3</span></span></code></pre></div>
+<pre><code>## [1] 21</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="an-r-refresher.html#cb10-1" aria-hidden="true"></a>(<span class="dv">2</span><span class="op">*</span><span class="dv">7</span>)<span class="op">+</span><span class="dv">2</span><span class="fl">-0.4</span></span></code></pre></div>
+<pre><code>## [1] 15.6</code></pre>
+<p>R also has commands for square root (<code>sqrt</code>), raising to powers (^), taking the absolute value (<code>abs</code>), and rounding (<code>round</code>), natural log (<code>log</code>), anti-log (<code>exp</code>), log to base-10 (<code>log10</code>):</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="an-r-refresher.html#cb12-1" aria-hidden="true"></a><span class="kw">sqrt</span>(<span class="dv">945</span>)</span></code></pre></div>
+<pre><code>## [1] 30.74085</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="an-r-refresher.html#cb14-1" aria-hidden="true"></a><span class="dv">3</span><span class="op">^</span><span class="dv">5</span></span></code></pre></div>
+<pre><code>## [1] 243</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="an-r-refresher.html#cb16-1" aria-hidden="true"></a><span class="kw">abs</span>(<span class="op">-</span><span class="fl">23.4</span>)</span></code></pre></div>
+<pre><code>## [1] 23.4</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="an-r-refresher.html#cb18-1" aria-hidden="true"></a><span class="kw">round</span>(<span class="fl">2.35425</span>,<span class="dt">digits=</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 2.35</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="an-r-refresher.html#cb20-1" aria-hidden="true"></a><span class="kw">log</span>(<span class="fl">1.2</span>)</span></code></pre></div>
+<pre><code>## [1] 0.1823216</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="an-r-refresher.html#cb22-1" aria-hidden="true"></a><span class="kw">exp</span>(<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] 2.718282</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="an-r-refresher.html#cb24-1" aria-hidden="true"></a><span class="kw">log10</span>(<span class="dv">6</span>)</span></code></pre></div>
+<pre><code>## [1] 0.7781513</code></pre>
+<p>Another thing you can do is evaluate TRUE/FALSE conditions:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="an-r-refresher.html#cb26-1" aria-hidden="true"></a><span class="dv">3</span><span class="op">&lt;</span><span class="dv">10</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="an-r-refresher.html#cb28-1" aria-hidden="true"></a><span class="dv">5</span><span class="op">&gt;</span><span class="dv">7</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="an-r-refresher.html#cb30-1" aria-hidden="true"></a><span class="dv">5</span><span class="op">==</span><span class="dv">5</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="an-r-refresher.html#cb32-1" aria-hidden="true"></a><span class="dv">6</span><span class="op">!=</span><span class="dv">5</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="an-r-refresher.html#cb34-1" aria-hidden="true"></a><span class="dv">3</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="an-r-refresher.html#cb36-1" aria-hidden="true"></a><span class="dv">6</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+</div>
+<div id="objects-in-r" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Objects in R</h2>
+<p>R is an object oriented programming language. This means that it represents concepts as <strong>objects</strong> that have data fields describing the object. These objects can be manipulated by <strong>functions</strong>. Objects can include data, but also models. Don’t worry about these distinctions too much for now - all will become clear as you proceed!</p>
+<p>Objects are assigned names in R like this. The “<code>&lt;-</code>” command is pronounced “<em>gets</em>” so I would pronounce the following as “<em>x gets four</em>”:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="an-r-refresher.html#cb38-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="dv">4</span></span></code></pre></div>
+<p>To look at any object (function or data), just type its name.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="an-r-refresher.html#cb39-1" aria-hidden="true"></a>x</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>The main data object types in R are: <em>vectors</em>, <em>data frames</em>, <em>lists</em> and <em>matrices</em>. We will focus on the first two of these during this course.</p>
+<p>A vector is simply a series of data (e.g. the sequence <em>1, 2, 3, 4, 5</em> is a vector, so is the non-numeric sequence <em>Male, Female, Female, Male, Male</em> ). Each item in a vector is called an <strong>element</strong>. Therefore, both of these examples contain 5 elements.</p>
+<p>There are several ways to create vectors in R. For example, you can make vectors of integers using the <em>colon</em> (<code>:</code>) function (e.g. <code>1:5</code>), or vectors of any kind of variable using the <code>c</code> function. <code>c</code> stands for <em>concatenate</em>, which means to <em>join (things) together in a chain or series</em>. Other convenient functions for making vectors are <code>seq</code>, which builds a sequence of numbers according to some rules, and <code>rep</code> which builds a vector by repeating elements a specified number of times.</p>
+<p>Try the following:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="an-r-refresher.html#cb41-1" aria-hidden="true"></a>A &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></span>
+<span id="cb41-2"><a href="an-r-refresher.html#cb41-2" aria-hidden="true"></a>B &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>)</span>
+<span id="cb41-3"><a href="an-r-refresher.html#cb41-3" aria-hidden="true"></a>C &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">12</span>,<span class="dv">2</span>)</span>
+<span id="cb41-4"><a href="an-r-refresher.html#cb41-4" aria-hidden="true"></a>D &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="fl">0.1</span>)</span>
+<span id="cb41-5"><a href="an-r-refresher.html#cb41-5" aria-hidden="true"></a>E &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>),<span class="dt">each =</span> <span class="dv">3</span>)</span>
+<span id="cb41-6"><a href="an-r-refresher.html#cb41-6" aria-hidden="true"></a>G &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>),<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>))</span></code></pre></div>
+<div class="do-something">
+<p>
+Try modifying the commands to make sure you know what the commands are doing.
+</p>
+</div>
+<p>#Manipulating objects</p>
+<p>Objects can be manipulated (just like in real life). In R, we use <strong>functions</strong> to manipulate objects.</p>
+<p>For example, we can use the basic arithmetic functions (<code>*</code>, <code>+</code>, <code>/</code>,<code>-</code>) on a vector:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="an-r-refresher.html#cb42-1" aria-hidden="true"></a>B</span></code></pre></div>
+<pre><code>## [1] 1 3 6 1 7 9</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="an-r-refresher.html#cb44-1" aria-hidden="true"></a>B<span class="op">*</span><span class="dv">3</span></span></code></pre></div>
+<pre><code>## [1]  3  9 18  3 21 27</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="an-r-refresher.html#cb46-1" aria-hidden="true"></a>B<span class="dv">-2</span></span></code></pre></div>
+<pre><code>## [1] -1  1  4 -1  5  7</code></pre>
+<p>You can <em>concatenate</em> entire vectors together using the <code>c</code> function. E.g. concatenating the vectors <code>A</code> and <code>B</code> from above:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="an-r-refresher.html#cb48-1" aria-hidden="true"></a><span class="kw">c</span>(A,B)  </span></code></pre></div>
+<pre><code>##  [1] 1 2 3 4 5 1 3 6 1 7 9</code></pre>
+<p>Other manipulations are also done “element-by-element”. For example, here we multiply the first element of B by 1, the second by 2, the 3rd by 3 and so on…:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="an-r-refresher.html#cb50-1" aria-hidden="true"></a>B <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)</span></code></pre></div>
+<pre><code>## [1]  1  6 18  4 35 54</code></pre>
+<p>If the length of the vectors match, we can also multiply (or add/subtract/divide etc.) multiple vectors:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="an-r-refresher.html#cb52-1" aria-hidden="true"></a>A <span class="op">/</span><span class="st"> </span>B</span></code></pre></div>
+<pre><code>## [1] 1.0000000 0.6666667 0.5000000 4.0000000 0.7142857 0.1111111</code></pre>
+</div>
+<div id="missing-values-infinity-and-non-numbers" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Missing values, infinity and “non-numbers”</h2>
+<p>By convention, <em>missing values</em> in R are coded by the value “NA”. The way that particular functions handle missing values varies: sometimes the NA values are stripped out of the data, other times the function may fail.</p>
+<p>For example, if we asked for the mean value of a vector of numbers with an NA value, it will fail:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="an-r-refresher.html#cb54-1" aria-hidden="true"></a><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="ot">NA</span>))</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<p>In this case you need to specify that any NA values should be removed before calculating the mean:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="an-r-refresher.html#cb56-1" aria-hidden="true"></a><span class="kw">mean</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="ot">NA</span>),<span class="dt">na.rm=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 4.5</code></pre>
+<p>Calculations can sometimes lead to answers that are plus, or minus, infinity. These values are represented in R by <code>Inf</code> or <code>-Inf</code>:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="an-r-refresher.html#cb58-1" aria-hidden="true"></a><span class="dv">5</span><span class="op">/</span><span class="dv">0</span></span></code></pre></div>
+<pre><code>## [1] Inf</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="an-r-refresher.html#cb60-1" aria-hidden="true"></a><span class="dv">-4</span><span class="op">/</span><span class="dv">0</span></span></code></pre></div>
+<pre><code>## [1] -Inf</code></pre>
+<p>Other calculations lead to answers that are not numbers, and these are represented by <code>NaN</code> in R:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="an-r-refresher.html#cb62-1" aria-hidden="true"></a><span class="dv">0</span><span class="op">/</span><span class="dv">0</span></span></code></pre></div>
+<pre><code>## [1] NaN</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="an-r-refresher.html#cb64-1" aria-hidden="true"></a><span class="ot">Inf</span><span class="op">-</span><span class="ot">Inf</span></span></code></pre></div>
+<pre><code>## [1] NaN</code></pre>
+</div>
+<div id="basic-information-about-objects" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Basic information about objects</h2>
+<p>You can obtain information about most objects using the <code>summary</code> function:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="an-r-refresher.html#cb66-1" aria-hidden="true"></a><span class="kw">summary</span>(B)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    1.50    4.50    4.50    6.75    9.00</code></pre>
+<p>The functions <code>max</code>, <code>min</code>, <code>range</code>, and <code>length</code> are also useful:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="an-r-refresher.html#cb68-1" aria-hidden="true"></a><span class="kw">max</span>(B)</span></code></pre></div>
+<pre><code>## [1] 9</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="an-r-refresher.html#cb70-1" aria-hidden="true"></a><span class="kw">min</span>(B)</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="an-r-refresher.html#cb72-1" aria-hidden="true"></a><span class="kw">range</span>(B)</span></code></pre></div>
+<pre><code>## [1] 1 9</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="an-r-refresher.html#cb74-1" aria-hidden="true"></a><span class="kw">length</span>(B)</span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+</div>
+<div id="data-frames" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Data frames</h2>
+<p>Data frames are the usual way of storing data in R. It is more-or-less the same as a worksheet in Excel. A data frame is usually made up of a number of vectors (of the same length) bound together in a single object. You can make a data frame by binding together vectors, or you can import them from outside R.</p>
+<p>This example shows the creation of a data frame in R, from 3 vectors:</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="an-r-refresher.html#cb76-1" aria-hidden="true"></a>height &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">173</span>, <span class="dv">145</span>, <span class="dv">187</span>, <span class="dv">155</span>, <span class="dv">179</span>, <span class="dv">133</span>)</span>
+<span id="cb76-2"><a href="an-r-refresher.html#cb76-2" aria-hidden="true"></a>sex &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)</span>
+<span id="cb76-3"><a href="an-r-refresher.html#cb76-3" aria-hidden="true"></a>age &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">17</span>, <span class="dv">22</span>, <span class="dv">32</span>, <span class="dv">20</span>, <span class="dv">27</span>, <span class="dv">30</span>)</span>
+<span id="cb76-4"><a href="an-r-refresher.html#cb76-4" aria-hidden="true"></a></span>
+<span id="cb76-5"><a href="an-r-refresher.html#cb76-5" aria-hidden="true"></a>mydata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">height =</span> height, <span class="dt">age =</span> age, <span class="dt">sex =</span> sex)</span>
+<span id="cb76-6"><a href="an-r-refresher.html#cb76-6" aria-hidden="true"></a>mydata</span></code></pre></div>
+<pre><code>##   height age    sex
+## 1    173  17   Male
+## 2    145  22 Female
+## 3    187  32   Male
+## 4    155  20 Female
+## 5    179  27   Male
+## 6    133  30 Female</code></pre>
+<p>Data frames can be summarised using the <code>summary</code> function (or the <code>str</code> function, which gives you a different view of the same data):</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="an-r-refresher.html#cb78-1" aria-hidden="true"></a><span class="kw">summary</span>(mydata)</span></code></pre></div>
+<pre><code>##      height           age            sex           
+##  Min.   :133.0   Min.   :17.00   Length:6          
+##  1st Qu.:147.5   1st Qu.:20.50   Class :character  
+##  Median :164.0   Median :24.50   Mode  :character  
+##  Mean   :162.0   Mean   :24.67                     
+##  3rd Qu.:177.5   3rd Qu.:29.25                     
+##  Max.   :187.0   Max.   :32.00</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="an-r-refresher.html#cb80-1" aria-hidden="true"></a><span class="kw">str</span>(mydata)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:	6 obs. of  3 variables:
+##  $ height: num  173 145 187 155 179 133
+##  $ age   : num  17 22 32 20 27 30
+##  $ sex   : chr  &quot;Male&quot; &quot;Female&quot; &quot;Male&quot; &quot;Female&quot; ...</code></pre>
+<p>Data frames can be subsetted using the square brackets <code>[]</code>, or <code>subset</code> functions. With the square brackets, the first number specifies the row number, while the second number specifies the column number:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="an-r-refresher.html#cb82-1" aria-hidden="true"></a>mydata[<span class="dv">1</span>,]</span></code></pre></div>
+<pre><code>##   height age  sex
+## 1    173  17 Male</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="an-r-refresher.html#cb84-1" aria-hidden="true"></a>mydata[,<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 17 22 32 20 27 30</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="an-r-refresher.html#cb86-1" aria-hidden="true"></a>mydata[<span class="dv">1</span>,<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 17</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="an-r-refresher.html#cb88-1" aria-hidden="true"></a><span class="kw">subset</span>(mydata,sex <span class="op">==</span><span class="st"> &quot;Female&quot;</span>)</span></code></pre></div>
+<pre><code>##   height age    sex
+## 2    145  22 Female
+## 4    155  20 Female
+## 6    133  30 Female</code></pre>
+</div>
+<div id="organising-your-work" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Organising your work</h2>
+<p>It would be incredibly tedious to enter real data into <strong>R</strong> by typing it in!</p>
+<p>Thankfully, R can import data from a several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called <em>directories</em>) on your computer.</p>
+<p>The most commonly used data format is <code>comma separated value (CSV)</code> so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I’ll cover this in a later class).</p>
+<p>For this course, I suggest that you make a folder somewhere on your computer called “IntroToR”. We will use this as the <code>working directory</code> for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items <strong>Session → Set Working Directory → Choose Directory</strong>.</p>
+<p>You can also using the <code>setwd</code> function to do this, if you know where your files are stored (the <em>file path</em>). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\). In windows you also need to define the drive (e.g. C:).</p>
+<p>So, to set the working directory in Apple OSX you would use something like this (obviously, you need to put <em>your</em> path!):</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="an-r-refresher.html#cb90-1" aria-hidden="true"></a><span class="kw">setwd</span>(<span class="st">&quot;/Users/orj/Desktop/IntroToR&quot;</span>)</span></code></pre></div>
+<p>While in Windows the equivalent command would be something like this (both of the following should work):</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="an-r-refresher.html#cb91-1" aria-hidden="true"></a><span class="kw">setwd</span>(<span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">orj</span><span class="ch">\\</span><span class="st">Desktop</span><span class="ch">\\</span><span class="st">IntroToR&quot;</span>)</span>
+<span id="cb91-2"><a href="an-r-refresher.html#cb91-2" aria-hidden="true"></a><span class="kw">setwd</span>(<span class="st">&quot;C:/Users/orj/Desktop/IntroToR&quot;</span>)</span></code></pre></div>
+<p>Typing the path in can be annoying but there are ways to speed it up. In Windows you can copy paths from the Windows Explorer location/address bar, or you can hold down the Shift key as you right-click the file, and then choose Copy As Path.</p>
+<p>On a Mac you can copy file paths from Finder: Select your file/folder, Right click, Press the option key (on my keyboard this is the <code>alt</code> key) and click “Copy X as Pathname”</p>
+<p>I can check what the current working directory is using the <code>getwd</code> function:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="an-r-refresher.html#cb92-1" aria-hidden="true"></a><span class="kw">getwd</span>()</span></code></pre></div>
+<p>It is good practice to keep your files well-organised. I recommend that you create a folder in your working directory called <code>CourseData</code> (or similar). Store your data files in this folder.</p>
+<p>On the Blackboard site for BB852 I have put a link to a Dropbox folder containing data files for use in the course. In there you will find a file called “<code>carnivora.csv</code>”. Download this to your new <code>CourseData</code> folder.</p>
+<p>You can now import this file into R using the <code>read.csv</code> function. The specification of the argument <code>header = TRUE</code> signifies that the first row of our CSV file contains the column names. Note that your file path will be different to mine:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="an-r-refresher.html#cb93-1" aria-hidden="true"></a>carni &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/carnivora.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>The <code>stringsAsFactors</code> argument tells R to treat text-type data (technically known as “character <strong>strings</strong>”) as a special kind of data called <strong>factors</strong>. Essentially, factors are “categorical data” where the data can take a limited number of discrete values. For example, “treatmentA”, “treatmentB”, “treatmentC”. Although this may seem a little esoteric right now, it is important to ensure that your data is recognised by R in the correct way. In <strong>most</strong> cases, your text-type data will be factor data, so it is usually safe to set <code>stringsAsFactors = TRUE</code>.</p>
+<div class="do-something">
+<p>
+<strong>Tip:</strong> RStudio also has a point-and-click “Wizard” to help import data. Look for “Import Dataset” in the top-right pane.
+</p>
+</div>
+</div>
+<div id="inspecting-the-data" class="section level2" number="3.9">
+<h2><span class="header-section-number">3.9</span> Inspecting the data</h2>
+<p>We can get some basic information on your imported data (e.g. the <code>carni</code> data frame) using the <code>summary</code> function, but also the <code>dim</code> and <code>nrow/ncol</code> functions:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="an-r-refresher.html#cb94-1" aria-hidden="true"></a><span class="kw">summary</span>(carni)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="an-r-refresher.html#cb95-1" aria-hidden="true"></a><span class="kw">dim</span>(carni)</span></code></pre></div>
+<pre><code>## [1] 112  17</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="an-r-refresher.html#cb97-1" aria-hidden="true"></a><span class="kw">nrow</span>(carni)</span></code></pre></div>
+<pre><code>## [1] 112</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="an-r-refresher.html#cb99-1" aria-hidden="true"></a><span class="kw">ncol</span>(carni)</span></code></pre></div>
+<pre><code>## [1] 17</code></pre>
+<p>We can find the names of the columns of a data frame with the <code>names</code> function:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="an-r-refresher.html#cb101-1" aria-hidden="true"></a><span class="kw">names</span>(carni)</span></code></pre></div>
+<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;     &quot;FW&quot;         
+##  [7] &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;          &quot;GL&quot;          &quot;BW&quot;         
+## [13] &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;          &quot;AM&quot;          &quot;IB&quot;</code></pre>
+<p>The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
+SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).</p>
+<p>You can refer to the sub-parts of a <code>data.frame</code> (the columns) using the <code>$</code> syntax:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="an-r-refresher.html#cb103-1" aria-hidden="true"></a><span class="kw">summary</span>(carni<span class="op">$</span>FW)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.050   1.245   3.400  18.099  10.363 320.000</code></pre>
+</div>
+<div id="classes-in-r" class="section level2" number="3.10">
+<h2><span class="header-section-number">3.10</span> “Classes” in R</h2>
+<p>I have already mentioned the different object types in R (e.g. vectors and data frames). The object types are technically known as “classes”. You can find out what “class” an object is by using the <code>class</code> function:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="an-r-refresher.html#cb105-1" aria-hidden="true"></a><span class="kw">class</span>(carni)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<p>In this case, the data frame is, unsurprisingly, of class “data.frame”. However, the vectors that compose the data frame also have classes. There are several classes of vectors including “integer” (whole numbers), “numeric” (real numbers), “factor” (categorical variables) and “logical” (true/false values).</p>
+<p>I expect you have heard of the first two data types, but “factor” might be puzzling. Factors are defined as variables which can take on a <em>limited</em> number of different values. They are often referred to as <code>categorical variables</code>. For example, in the carnivore dataset, the taxonomic variables are factors. The different values that a factor can take are known as <code>levels</code> and you can check on the levels of a vector with the <code>levels</code> function.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="an-r-refresher.html#cb107-1" aria-hidden="true"></a><span class="kw">class</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="an-r-refresher.html#cb109-1" aria-hidden="true"></a><span class="kw">levels</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
+<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot;  &quot;Procyonidae&quot;
+## [7] &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
+</div>
+<div id="tables-and-summary-statistics" class="section level2" number="3.11">
+<h2><span class="header-section-number">3.11</span> Tables and summary statistics</h2>
+<p>For vectors of class “factor” you can use the <code>table</code> function to give the counts for each level:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="an-r-refresher.html#cb111-1" aria-hidden="true"></a><span class="kw">table</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
+<pre><code>## 
+##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
+##           1          18          19           4          30           4           4          32</code></pre>
+<p>You can use the function <code>tapply</code> (“table apply”), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument <code>mean</code>:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="an-r-refresher.html#cb113-1" aria-hidden="true"></a><span class="kw">tapply</span>(carni<span class="op">$</span>FW, carni<span class="op">$</span>Family, mean)</span></code></pre></div>
+<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
+##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500  198.250000    2.672813</code></pre>
+</div>
+<div id="plotting-data" class="section level2" number="3.12">
+<h2><span class="header-section-number">3.12</span> Plotting data</h2>
+<p>Basic plots can be made using the <code>plot</code> command. For example, let’s have a look at the relationship between log gestation length and log female body weight (see Figure , below):</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="an-r-refresher.html#cb115-1" aria-hidden="true"></a><span class="kw">plot</span>(<span class="kw">log</span>(carni<span class="op">$</span>FW), <span class="kw">log</span>(carni<span class="op">$</span>GL))</span></code></pre></div>
+<div class="figure"><span id="fig:basicplot"></span>
+<img src="BB852_files/figure-html/basicplot-1.png" alt="A simple scatter plot" width="672" />
+<p class="caption">
+Figure 3.1: A simple scatter plot
+</p>
+</div>
+</div>
+<div id="r-packages" class="section level2" number="3.13">
+<h2><span class="header-section-number">3.13</span> R Packages</h2>
+<p>R packages are collections of software that add capabilities to “base R”. In this course we use several packages including <code>dplyr</code>, which adds functionality for manipulating data, <code>ggplot2</code> which helps us make pretty plots and <code>magrittr</code> which adds tools to allow more “elegant” programming. Packages need to be installed using <code>install.packages</code> command before they can be used. You only need to install them once.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="an-r-refresher.html#cb116-1" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb116-2"><a href="an-r-refresher.html#cb116-2" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb116-3"><a href="an-r-refresher.html#cb116-3" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;magrittr&quot;</span>)</span></code></pre></div>
+<p>To use the packages you need to load them with the <code>library</code> command, like this:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="an-r-refresher.html#cb117-1" aria-hidden="true"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb117-2"><a href="an-r-refresher.html#cb117-2" aria-hidden="true"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb117-3"><a href="an-r-refresher.html#cb117-3" aria-hidden="true"></a><span class="kw">library</span>(magrittr)</span></code></pre></div>
+<p>We will be using these packages a lot, and you will need to remember to load them every session. It is therefore useful to add those <code>library</code> commands to the top of every script you write.</p>
+<!-- Try the following -->
+<!-- ------------------------- -->
+<!-- _Make sure you can do the following things successfully. If in doubt please ask for help!_ -->
+<!-- Q1. Make a table of the number of species in each Family of the Superfamily *Caniformia*. -->
+<!-- Q2. Using the carnivore data set, produce a box plot featuring female weight (FW) for the *Canidae*, *Felidae* and *Ursidae* together on the same plot. Hint: you will need to use `subset` and `droplevels` before plotting. -->
+<!-- Q3. Using the carnivore data set, make a table showing the average (mean) birth weight (BW) for Families in Superfamily *Feliformia*. Hint: Use `subset`, `droplevels` and `tapply`. -->
+<!-- Q4. Plot the relationship between log female weight (FW) and litter size (LS) in the *Mustelidae*. -->
+<!-- Q5. Identify the largest and smallest (by female weight (FW)) species in the *Viverridae* family. What are their brain sizes (FB)? Hint: use subset and the `which.min`/`which.max` functions (use help), and maybe square brackets [ ]. -->
+</div>
+<div id="exercise-californian-bird-diversity" class="section level2" number="3.14">
+<h2><span class="header-section-number">3.14</span> Exercise: Californian bird diversity</h2>
+<p>In the 1950s-1970s there was rapid growth in the number of houses being built in California, with suburbs sprawling out into the new sites in the countryside. What effect would this have on local bird communities?</p>
+<p>Surveys on bird abundances were carried out in several locations near Oakland, California.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest housing developments as the baseline pre-development condition.</p>
+<p>Think about what you might expect to happen to bird species diversity through time in a newly developing suburb.</p>
+<div id="the-data" class="section level3" number="3.14.1">
+<h3><span class="header-section-number">3.14.1</span> The data</h3>
+<p>The relevant data file is called <code>suburbanBirds.csv</code>. This file contains data on bird abundances surveyed in 1975. The columns of the data are <code>Name</code> (name of the suburb), <code>Year</code> (the year that the suburb was built), <code>HabitatIndex</code> (an index of habitat quality, related to tree height, garden maturity etc.), <code>nIndividuals</code> (number of individual birds seen in a standard survey) and <code>nSpecies</code> (number of species seen in a standard survey).</p>
+<p>Additional surveys found an average species richness of 3.5 in nearby undisturbed habitats of grassland savanna.</p>
+</div>
+<div id="try-the-following" class="section level3" number="3.14.2">
+<h3><span class="header-section-number">3.14.2</span> Try the following</h3>
+<ol style="list-style-type: decimal">
+<li><p>First import the data. Check that the columns look as they should (use <code>summary</code> or <code>str</code> functions).</p></li>
+<li><p>What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)</p></li>
+<li><p>How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)</p></li>
+<li><p>Plot the relationship between <code>Year</code> and <code>nSpecies</code> as a scatter plot using base-R graphics (using the <code>plot</code> function).</p></li>
+<li><p>The pattern might be easier to see if you could replace <code>YearBuilt</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>df$Age &lt;- 1975 - Year)</code>). Re-plot your results.</p></li>
+<li><p>What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?</p></li>
+<li><p>Export your plots and paste them into a Word Document.</p></li>
+<li><p>If you get this far, try plotting the other variables in the dataset.</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+
+
+
+</div>
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>Vale, T. R., &amp; Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.<a href="an-r-refresher.html#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="schedule.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-wrangling-with-dplyr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jonesor/BB852_Book/edit/master/0_01-gettingAcquainted.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["BB852.pdf"],
+"toc": {
+"collapse": "section"
+},
+"split_by": "section"
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
