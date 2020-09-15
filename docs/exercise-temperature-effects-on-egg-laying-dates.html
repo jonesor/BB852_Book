@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-09" />
+<meta name="date" content="2020-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,6 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>6</b> Combining data sets</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-join"><i class="fa fa-check"></i><b>6.1</b> Using <code>join</code></a></li>
+<li class="chapter" data-level="6.2" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-pivot_longer"><i class="fa fa-check"></i><b>6.2</b> Using <code>pivot_longer</code></a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="exercise-temperature-effects-on-egg-laying-dates.html"><a href="exercise-temperature-effects-on-egg-laying-dates.html"><i class="fa fa-check"></i><b>7</b> Exercise: Temperature effects on egg laying dates</a></li>
 <li class="part"><span><b>II Data visualisation</b></span></li>
@@ -371,12 +372,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You are provided with two data sets: one on the birds and another on weather. You will need to process these using tools in the <code>dplyr</code> package, and combine them (using <code>left_join</code>) for analysis.</p>
 <p>The first data set, <code>eggDates.csv</code>, is data from the SDU birds project. The data are arranged in columns where each column is a year and each row is a nest. The data in each column is the day of the year that the first egg in the nest was laid.</p>
 <p>These data do NOT fulfill the “tidy data” standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.</p>
-<p>You will need to use <code>gather</code> to fix this issue so that you produce a version of the data with three columns - <code>nestNumber</code>, <code>Year</code> and <code>dayNumber</code>.</p>
+<p>You will need to use <code>pivot_wider</code> to fix this issue so that you produce a version of the data with three columns - <code>nestNumber</code>, <code>Year</code> and <code>dayNumber</code>.</p>
 <p>The second dataset, <code>AarslevTemperature.csv</code>, is a weather dataset from Årslev near Odense. This dataset includes daily temperatures records for several years. You will need to <code>summarise</code> this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.</p>
 <p>To answer the question, you will need to join these data sets together.</p>
 <ol style="list-style-type: decimal">
 <li><p>Import the data and take a look at it with <code>head</code> or <code>str</code>.</p></li>
-<li><p>Use <code>gather</code> to reformat the data. This might take a bit of trial and error - don’t give up!</p></li>
+<li><p>Use <code>pivot_wider</code> to reformat the data. This might take a bit of trial and error - don’t give up!</p></li>
 </ol>
 <p>Maybe this will help: The first argument in the gather command indicates what the columns in the main data represent (i.e. here the column represents “Year”). The second argument is the name you would give to the actual data (i.e. “day”, in this case). The final argument then tells the function which columns of the data are not to be rearranged (i.e. “boxNumber” in this case).</p>
 <p>You should end up with a dataset with three columns as described above.</p>

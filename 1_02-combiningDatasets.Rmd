@@ -103,6 +103,59 @@ plot(x$Red.List.status,x$logMaturity,ylab="Maturity")
 
 What can we see? If you focus on the median values, it looks like there is a weak positive relationship between this life history trait and threat status: animals with slower life histories tend to be more threatened.
 
+## Using `pivot_longer`
+
+Sometimes data are not arranged in a way that make them easy to use in R. For example, data could be arranged so that the column headings are themselves data (e.g. treatments, sex of individuals).
+
+To illustrate this I will use a data set on heights of men and women.
+
+```{r, eval = TRUE,echo = FALSE}
+temp <- data.frame(place = rep(c("London", "Bristol"),each =15),heightMale = round(rnorm(30,175,4)),heightFemale = round(rnorm(30,160,4)))
+write.csv(temp,file = "CourseData/heights.csv",row.names = FALSE)
+```
+
+```{r}
+heights <- read.csv("CourseData/heights.csv") 
+```
+Let's take a look:
+
+```{r}
+heights
+```
+
+I would like to make a boxplot, but it is not possible to easily do it with the data arranged in this format. What I need to do is "unpack" or rearrange the data to add another column for sex. This will make the data frame twice as long, and less wide.
+
+There is a convenient function called `pivot_longer` in the `tidyr` package that will do this for you. 
+You can "pipe" data into the funtion, then tell it which columns you would like to move, and then give it the name of the new column that contains data that **was** in the column heading, and the name of the column containing the data. 
+
+```{r}
+newHeights <- heights %>% 
+  pivot_longer(cols = c(heightMale,heightFemale),names_to = c("Sex"),values_to = "Height")
+
+newHeights
+```
+
+We are nearly done. But this is not perfect because the names in the `Sex` column are not right. We can fix this in a couple ways. Here's one easy way using the function `gsub`. The `gsub` function ("**g**eneral **sub**stution) finds text and replaces it with other text. In this case we want to find "height" and replace it with nothing ("").
+
+So we can now complete the job with a `mutate` command, and make sure it is recognised as a categorical variable (a `factor`, like this:
+
+```{r}
+newHeights <- heights %>% 
+  pivot_longer(cols = c(heightMale,heightFemale),names_to = c("Sex"),values_to = "Height") %>% 
+  mutate(Sex = gsub(pattern = "height",replacement = "",x = Sex)) %>% 
+  mutate(Sex = as.factor(Sex))
+
+newHeights
+```
+
+Now we can plot those data more easily
+
+```{r}
+plot(newHeights$Sex,newHeights$Height)
+```
+
+This data manipulation is useful surprisingly often.
+
 # Exercise: Temperature effects on egg laying dates
 
 Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: *is egg laying date associated with spring temperature?* The idea here is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change. 
@@ -113,7 +166,7 @@ The first data set, `eggDates.csv`, is data from the SDU birds project. The data
 
 These data do NOT fulfill the "tidy data" standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.
 
-You will need to use `gather` to fix this issue so that you produce a version of the data with three columns - `nestNumber`, `Year` and `dayNumber`.
+You will need to use `pivot_wider` to fix this issue so that you produce a version of the data with three columns - `nestNumber`, `Year` and `dayNumber`.
 
 The second dataset, `AarslevTemperature.csv`, is a weather dataset from Årslev near Odense. This dataset includes daily temperatures records for several years. You will need to `summarise` this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.
 
@@ -123,7 +176,7 @@ To answer the question, you will need to join these data sets together.
 1. Import the data and take a look at it  with `head` or `str`.
 
 
-2. Use `gather` to reformat the data. This might take a bit of trial and error - don't give up! 
+2. Use `pivot_wider` to reformat the data. This might take a bit of trial and error - don't give up! 
 
 Maybe this will help: The first argument in the gather command indicates what the columns in the main data represent (i.e. here the column represents "Year"). The second argument is the name you would give to the actual data (i.e. "day", in this case). The final argument then tells the function which columns of the data are not to be rearranged (i.e. "boxNumber" in this case).
 
