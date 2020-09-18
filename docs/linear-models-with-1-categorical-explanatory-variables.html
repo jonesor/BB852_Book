@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-17" />
+<meta name="date" content="2020-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -420,7 +420,7 @@ Figure 16.2: The effect of diet protein content and genotype on adult size of an
 <p>Then we can look at diagnostic plots, as with ANOVA etc.:</p>
 <div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="linear-models-with-1-categorical-explanatory-variables.html#cb452-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
 <span id="cb452-2"><a href="linear-models-with-1-categorical-explanatory-variables.html#cb452-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-309-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-311-1.png" width="672" /></p>
 <p>These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots) now any major outliers.</p>
 </div>
 <div id="summarising-the-model-anova" class="section level2" number="16.2">
@@ -568,7 +568,7 @@ ggplot(fishPersonality,aes(x = colouration,y = spawning,fill=personality))+
   geom_boxplot()
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-315-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-317-1.png" width="672" />
 --></li>
 <li>Fit an ANOVA model using <code>lm</code>.
 <!--
@@ -625,11 +625,16 @@ summary(mod_A)
 ## -61.625 -23.344  -5.375  26.313  60.125 
 ## 
 ## Coefficients:
-##                                           Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)                                 218.50      13.29  16.435  6.5e-16 ***
-## personalityReactive                         -53.88      18.80  -2.865  0.00781 ** 
-## colourationHomogenous                        60.87      18.80   3.238  0.00309 ** 
-## personalityReactive:colourationHomogenous    45.38      26.59   1.707  0.09898 .  
+##                                           Estimate Std. Error t value Pr(>|t|)
+## (Intercept)                                 218.50      13.29  16.435  6.5e-16
+## personalityReactive                         -53.88      18.80  -2.865  0.00781
+## colourationHomogenous                        60.87      18.80   3.238  0.00309
+## personalityReactive:colourationHomogenous    45.38      26.59   1.707  0.09898
+##                                              
+## (Intercept)                               ***
+## personalityReactive                       ** 
+## colourationHomogenous                     ** 
+## personalityReactive:colourationHomogenous .  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
