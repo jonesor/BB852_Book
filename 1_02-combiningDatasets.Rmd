@@ -110,6 +110,7 @@ Sometimes data are not arranged in a way that make them easy to use in R. For ex
 To illustrate this I will use a data set on heights of men and women.
 
 ```{r, eval = TRUE,echo = FALSE}
+set.seed(1234)
 temp <- data.frame(place = rep(c("London", "Bristol"),each =15),heightMale = round(rnorm(30,175,4)),heightFemale = round(rnorm(30,160,4)))
 write.csv(temp,file = "CourseData/heights.csv",row.names = FALSE)
 ```
