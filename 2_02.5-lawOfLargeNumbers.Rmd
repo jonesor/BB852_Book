@@ -1,0 +1,88 @@
+## The law of large numbers
+
+
+The **law of large numbers** is one of the most important ideas in probability. It states that *As sample grows large, the sample mean converges to the population mean*. In other words, as sample size increases, you get a better idea what the true value of the mean is. 
+
+In this section you will demonstrate this law using coin tosses or dice throws. Since it is tiresome to toss coins hundreds of times it is convenient to simulate the data using **R**. Conceptually, what we are trying to do here is treat the dice rolling/coin tossing as experiments where the aim is to find the probability of getting a head/tail, or a particular number on the dice. It is useful to use dice and coins because we are pretty sure that we know what the "true" answer is: the probability of throwing a 1 on a fair dice is 1/6, while the probability of throwing a head/tail with a flipped coin is 0.5.
+
+### Coin flipping
+
+Here's how to simulate a coin toss in R.
+
+
+```{r echo=-1}
+set.seed(20)
+coinToss <- c("Heads","Tails")
+sample(coinToss,1)
+```
+
+And here is how to simulate 6 coin tosses and make a table of the results. Note, we must use the `replace = TRUE` argument. Please ask if you don't understand why this is necessary.
+
+```{r echo=-1}
+set.seed(25)
+result <- sample(coinToss,6,replace = TRUE)
+table(result)
+```
+
+We can "wrap" the `table` function with the `as.data.frame` to turn the data into a data frame that works with `ggplot` You'll probably get different results than me because this is a random process:
+
+```{r echo=-1, fig.cap=('Barplot of 6 simulated coin tosses')}
+set.seed(2)
+result <- data.frame(result = sample(coinToss,6,replace = TRUE))
+
+ggplot(result,aes(x = result)) + 
+  geom_bar()
+```
+
+
+```{block, type="do-something"}
+Try this several times with small sample sizes (e.g. 4, 6, 8) and see what happens to the proportions of heads/tails. Think about what the expected outome should be. What do you notice?
+
+Now increase the sample size (e.g. to 20, 50, 100) and see what happens to the proportions of heads/tails. What do you notice?
+```
+
+
+
+### Virtual dice
+
+
+Let's try the same kind of thing with the roll of (virtual) dice.
+
+Here's how to do one roll of the dice:
+
+```{r echo=-1, results='asis'}
+set.seed(123)
+diceRoll <- 1:6
+sample(diceRoll,1)
+```
+
+Here's how to do 6 rolls of the dice:
+
+```{r echo=-1}
+set.seed(123)
+result <- sample(diceRoll,6,replace = TRUE)
+table(result)
+```
+
+Your table will probably look different to this, because it is a random process. You may notice that some numbers in the table are missing if some numbers were never rolled by our virtual dice. 
+
+Now I try doing 90 rolls of the dice. I can set a value for `n` (the number of rolls), and I can also plot a horizontal line at the theoretically expected value of n/6; in this case that is 15. 
+
+Before proceeding, can you see why the expected value is n/6?:
+
+```{r echo=-1,fig.cap=('Barplot of 90 simulated dice throws')}
+set.seed(2)
+n <- 90
+result <- data.frame(result = sample(diceRoll,n,replace = TRUE))
+
+ggplot(result,aes(x = result)) + 
+  geom_bar() + 
+  geom_abline(intercept = n/6,slope = 0)
+```
+
+```{block, type="do-something"}
+
+Try adjusting the code to simulate dice rolls with small (say, 30) and large (say, 600, or 6000, or 9000) samples. Observe what happens to the proportions, and compare them to the expected value.
+
+You will notice that what would be considered a good sample size for the coin flipping (i.e. it recovers the true probability of 0.5 reasonably well) is not adequate for getting a good estimate of the probabilities for the dice. This is because of the different number of possibilities: as the range of possible outcomes increases, the sample size requirements increase.
+```

@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-28" />
+<meta name="date" content="2020-09-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -241,6 +241,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-distributions"><i class="fa fa-check"></i><b>9.3</b> Comparing normal distributions</a></li>
 <li class="chapter" data-level="9.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#poisson-distribution"><i class="fa fa-check"></i><b>9.4</b> Poisson distribution</a></li>
 <li class="chapter" data-level="9.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>9.5</b> Comparing normal and Poisson distributions</a></li>
+<li class="chapter" data-level="9.6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#the-law-of-large-numbers"><i class="fa fa-check"></i><b>9.6</b> The law of large numbers</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#coin-flipping"><i class="fa fa-check"></i><b>9.6.1</b> Coin flipping</a></li>
+<li class="chapter" data-level="9.6.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#virtual-dice"><i class="fa fa-check"></i><b>9.6.2</b> Virtual dice</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="customising-your-plots.html"><a href="customising-your-plots.html"><i class="fa fa-check"></i><b>10</b> Customising your plots</a>
 <ul>
@@ -394,8 +399,7 @@ R has functions for generating random numbers from different kinds of distributi
 <p>The <code>rnorm</code> function has three arguments. The first argument is simply the number of values you want to generate. Then, the second and third arguments specify the the mean and standard deviation values of the distribution (i.e. where the distribution is centered and how spread out it is).</p>
 <p>The following command will produce 6 numbers from a distribution with a mean value of 5 and a standard deviation of 2.</p>
 <div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="distributions-and-summarising-data.html#cb252-1" aria-hidden="true"></a><span class="kw">rnorm</span>(<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## [1] 0.8860899 5.9511727 0.4674129 6.2696362 3.0969106
-## [6] 5.3058671</code></pre>
+<pre><code>## [1] 0.8860899 5.9511727 0.4674129 6.2696362 3.0969106 5.3058671</code></pre>
 <div class="do-something">
 <p>
 Try changing the values of the arguments to alter the number of values you generate, and to alter the mean and standard deviation.
@@ -561,6 +565,81 @@ Try changing the arguments in the <code>rnorm</code> and <code>rpois</code> comm
 <p><img src="BB852_files/figure-html/unnamed-chunk-169-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer then the other) and cannot be &lt;0. Which graph to you prefer? (there’s no right answer!)</p>
 
+</div>
+<div id="the-law-of-large-numbers" class="section level2" number="9.6">
+<h2><span class="header-section-number">9.6</span> The law of large numbers</h2>
+<p>The <strong>law of large numbers</strong> is one of the most important ideas in probability. It states that <em>As sample grows large, the sample mean converges to the population mean</em>. In other words, as sample size increases, you get a better idea what the true value of the mean is.</p>
+<p>In this section you will demonstrate this law using coin tosses or dice throws. Since it is tiresome to toss coins hundreds of times it is convenient to simulate the data using <strong>R</strong>. Conceptually, what we are trying to do here is treat the dice rolling/coin tossing as experiments where the aim is to find the probability of getting a head/tail, or a particular number on the dice. It is useful to use dice and coins because we are pretty sure that we know what the “true” answer is: the probability of throwing a 1 on a fair dice is 1/6, while the probability of throwing a head/tail with a flipped coin is 0.5.</p>
+<div id="coin-flipping" class="section level3" number="9.6.1">
+<h3><span class="header-section-number">9.6.1</span> Coin flipping</h3>
+<p>Here’s how to simulate a coin toss in R.</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="distributions-and-summarising-data.html#cb278-1" aria-hidden="true"></a>coinToss &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Heads&quot;</span>,<span class="st">&quot;Tails&quot;</span>)</span>
+<span id="cb278-2"><a href="distributions-and-summarising-data.html#cb278-2" aria-hidden="true"></a><span class="kw">sample</span>(coinToss,<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Tails&quot;</code></pre>
+<p>And here is how to simulate 6 coin tosses and make a table of the results. Note, we must use the <code>replace = TRUE</code> argument. Please ask if you don’t understand why this is necessary.</p>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="distributions-and-summarising-data.html#cb280-1" aria-hidden="true"></a>result &lt;-<span class="st"> </span><span class="kw">sample</span>(coinToss,<span class="dv">6</span>,<span class="dt">replace =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb280-2"><a href="distributions-and-summarising-data.html#cb280-2" aria-hidden="true"></a><span class="kw">table</span>(result)</span></code></pre></div>
+<pre><code>## result
+## Heads Tails 
+##     4     2</code></pre>
+<p>We can “wrap” the <code>table</code> function with the <code>as.data.frame</code> to turn the data into a data frame that works with <code>ggplot</code> You’ll probably get different results than me because this is a random process:</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="distributions-and-summarising-data.html#cb282-1" aria-hidden="true"></a>result &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">result =</span> <span class="kw">sample</span>(coinToss,<span class="dv">6</span>,<span class="dt">replace =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb282-2"><a href="distributions-and-summarising-data.html#cb282-2" aria-hidden="true"></a></span>
+<span id="cb282-3"><a href="distributions-and-summarising-data.html#cb282-3" aria-hidden="true"></a><span class="kw">ggplot</span>(result,<span class="kw">aes</span>(<span class="dt">x =</span> result)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb282-4"><a href="distributions-and-summarising-data.html#cb282-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-173"></span>
+<img src="BB852_files/figure-html/unnamed-chunk-173-1.png" alt="Barplot of 6 simulated coin tosses" width="672" />
+<p class="caption">
+Figure 9.1: Barplot of 6 simulated coin tosses
+</p>
+</div>
+<div class="do-something">
+<p>
+Try this several times with small sample sizes (e.g. 4, 6, 8) and see what happens to the proportions of heads/tails. Think about what the expected outome should be. What do you notice?
+</p>
+<p>
+Now increase the sample size (e.g. to 20, 50, 100) and see what happens to the proportions of heads/tails. What do you notice?
+</p>
+</div>
+</div>
+<div id="virtual-dice" class="section level3" number="9.6.2">
+<h3><span class="header-section-number">9.6.2</span> Virtual dice</h3>
+<p>Let’s try the same kind of thing with the roll of (virtual) dice.</p>
+<p>Here’s how to do one roll of the dice:</p>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="distributions-and-summarising-data.html#cb283-1" aria-hidden="true"></a>diceRoll &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span></span>
+<span id="cb283-2"><a href="distributions-and-summarising-data.html#cb283-2" aria-hidden="true"></a><span class="kw">sample</span>(diceRoll,<span class="dv">1</span>)</span></code></pre></div>
+<p>[1] 3</p>
+<p>Here’s how to do 6 rolls of the dice:</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="distributions-and-summarising-data.html#cb284-1" aria-hidden="true"></a>result &lt;-<span class="st"> </span><span class="kw">sample</span>(diceRoll,<span class="dv">6</span>,<span class="dt">replace =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb284-2"><a href="distributions-and-summarising-data.html#cb284-2" aria-hidden="true"></a><span class="kw">table</span>(result)</span></code></pre></div>
+<pre><code>## result
+## 2 3 6 
+## 2 2 2</code></pre>
+<p>Your table will probably look different to this, because it is a random process. You may notice that some numbers in the table are missing if some numbers were never rolled by our virtual dice.</p>
+<p>Now I try doing 90 rolls of the dice. I can set a value for <code>n</code> (the number of rolls), and I can also plot a horizontal line at the theoretically expected value of n/6; in this case that is 15.</p>
+<p>Before proceeding, can you see why the expected value is n/6?:</p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="distributions-and-summarising-data.html#cb286-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">90</span></span>
+<span id="cb286-2"><a href="distributions-and-summarising-data.html#cb286-2" aria-hidden="true"></a>result &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">result =</span> <span class="kw">sample</span>(diceRoll,n,<span class="dt">replace =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb286-3"><a href="distributions-and-summarising-data.html#cb286-3" aria-hidden="true"></a></span>
+<span id="cb286-4"><a href="distributions-and-summarising-data.html#cb286-4" aria-hidden="true"></a><span class="kw">ggplot</span>(result,<span class="kw">aes</span>(<span class="dt">x =</span> result)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb286-5"><a href="distributions-and-summarising-data.html#cb286-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb286-6"><a href="distributions-and-summarising-data.html#cb286-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> n<span class="op">/</span><span class="dv">6</span>,<span class="dt">slope =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-177"></span>
+<img src="BB852_files/figure-html/unnamed-chunk-177-1.png" alt="Barplot of 90 simulated dice throws" width="672" />
+<p class="caption">
+Figure 9.2: Barplot of 90 simulated dice throws
+</p>
+</div>
+<div class="do-something">
+<p>
+Try adjusting the code to simulate dice rolls with small (say, 30) and large (say, 600, or 6000, or 9000) samples. Observe what happens to the proportions, and compare them to the expected value.
+</p>
+<p>
+You will notice that what would be considered a good sample size for the coin flipping (i.e. it recovers the true probability of 0.5 reasonably well) is not adequate for getting a good estimate of the probabilities for the dice. This is because of the different number of possibilities: as the range of possible outcomes increases, the sample size requirements increase.
+</p>
+</div>
+
+</div>
 </div>
 </div>
             </section>
