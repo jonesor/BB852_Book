@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-20" />
+<meta name="date" content="2020-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -419,13 +419,13 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </div>
 <p>We can simulate a distribution of measurements from this distribution using the <code>rnorm</code> function. This draws <code>n</code> numbers from a theoretical normal distribution with a particular <code>mean</code> and standard deviation (<code>sd</code>). For example:</p>
 <div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="power-analysis-by-simulation.html#cb518-1" aria-hidden="true"></a>(control &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">12</span>, <span class="dt">sd =</span> <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>##  [1]  8.378803 12.832288 15.253324  4.962907 13.287374 13.518168 10.275780
-##  [8] 10.360104 10.306644  9.329887</code></pre>
+<pre><code>##  [1]  8.378803 12.832288 15.253324  4.962907 13.287374
+##  [6] 13.518168 10.275780 10.360104 10.306644  9.329887</code></pre>
 <p>Because this is a random process your results will be different (and they will be different each time you run the code).</p>
 <p>Suppose that other studies on a different species has shown that a high protein diet leads to a 20% increase in size. This means that we expect our treatment group to have a body length of 12 <span class="math inline">\(\times\)</span> 1.2 = 14.4mm. If we assume the standard deviation will be the same, we can simulate a distribution for a high protein treatment group in the same way as for the control group:</p>
 <div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="power-analysis-by-simulation.html#cb520-1" aria-hidden="true"></a>(treatment &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>,<span class="dt">mean =</span><span class="fl">14.4</span>,<span class="dt">sd =</span> <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>##  [1] 12.96842 11.40484 12.07124 14.59338 17.27848 14.06914 12.86697 11.66641
-##  [9] 11.88848 21.64751</code></pre>
+<pre><code>##  [1] 12.96842 11.40484 12.07124 14.59338 17.27848
+##  [6] 14.06914 12.86697 11.66641 11.88848 21.64751</code></pre>
 <p>Now we have two simulated samples, and we can conduct a t-test on those samples and store the result:</p>
 <div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="power-analysis-by-simulation.html#cb522-1" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">t.test</span>(control,treatment)</span></code></pre></div>
 <p>We can print this result to the screen like this:</p>
@@ -458,7 +458,8 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 <span id="cb528-2"><a href="power-analysis-by-simulation.html#cb528-2" aria-hidden="true"></a>  <span class="kw">t.test</span>(<span class="kw">rnorm</span>(sampleSize,controlMean,sdValue),</span>
 <span id="cb528-3"><a href="power-analysis-by-simulation.html#cb528-3" aria-hidden="true"></a>         <span class="kw">rnorm</span>(sampleSize,treatmentMean,sdValue))<span class="op">$</span>p.value</span>
 <span id="cb528-4"><a href="power-analysis-by-simulation.html#cb528-4" aria-hidden="true"></a>)</span></code></pre></div>
-<pre><code>## [1] 0.248412775 0.023369962 0.765183387 0.001161126 0.006412789</code></pre>
+<pre><code>## [1] 0.248412775 0.023369962 0.765183387 0.001161126
+## [5] 0.006412789</code></pre>
 <p>Let’s repeat the t-test 1000 times so we can get a good idea of the number of times that the test correctly detects that there is a difference between the two groups.</p>
 <p>I don’t want to print 1000 p-values to the screen so I will collect them in a vector called <code>powerResults</code>.</p>
 <div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="power-analysis-by-simulation.html#cb530-1" aria-hidden="true"></a>powerResults &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>,</span>

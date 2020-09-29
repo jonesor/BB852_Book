@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-20" />
+<meta name="date" content="2020-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -440,7 +440,8 @@ Figure 13.2: Diagnostic plots for the ANOVA model. This looks great.
 ## method     2 4065.2 2032.59  28.413 4.699e-07 ***
 ## Residuals 24 1716.9   71.54                      
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This gives some numbers (degrees of freedom, sum of squares, mean squares). These are the important values that go into calculating an <em>F value</em> (also called an F-statistic). We will not worry about these details now, except to say that large F-statistics mean that we are more certain that there is a difference between the groups (and that the p-value is smaller).</p>
 <p>In this case, the F-value is 28.413.</p>
 <p>As with the t-test, R compares this value to a theoretical distribution (a “table”), based on <em>two</em> degrees of freedom. The first one is number of groups minus one, i.e. 2.000 in this case. The second one is the overall sample size, minus the number of groups, i.e. 24.000, in this case.</p>
@@ -467,7 +468,8 @@ Figure 13.2: Diagnostic plots for the ANOVA model. This looks great.
 ## methodHIP     28.900      3.987   7.248 1.73e-07 ***
 ## methodIES      7.300      3.987   1.831   0.0796 .  
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 8.458 on 24 degrees of freedom
 ## Multiple R-squared:  0.7031,	Adjusted R-squared:  0.6783 
@@ -512,7 +514,8 @@ Journal of Food Engineering, Vol. 121, pp. 112-117.
 ## method     2 4065.2 2032.59  28.413 4.699e-07 ***
 ## Residuals 24 1716.9   71.54                      
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb396-1" aria-hidden="true"></a><span class="kw">summary</span>(foam_mod2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -528,7 +531,8 @@ Journal of Food Engineering, Vol. 121, pp. 112-117.
 ## methodBM     -28.900      3.987  -7.248 1.73e-07 ***
 ## methodIES    -21.600      3.987  -5.417 1.45e-05 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 8.458 on 24 degrees of freedom
 ## Multiple R-squared:  0.7031,	Adjusted R-squared:  0.6783 
@@ -762,7 +766,8 @@ anova(apple_mod)
 ## spacing    2  35801 17900.3  9.3851 0.0002003 ***
 ## Residuals 89 169750  1907.3                      
 ## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 -->
 <ol start="7" style="list-style-type: decimal">
@@ -789,7 +794,8 @@ summary(apple_mod)
 ## spacing10     35.924     11.073   3.244 0.001659 ** 
 ## spacing14     44.107     10.966   4.022 0.000121 ***
 ## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 43.67 on 89 degrees of freedom
 ##   (28 observations deleted due to missingness)

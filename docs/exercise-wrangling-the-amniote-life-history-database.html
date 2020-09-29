@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-20" />
+<meta name="date" content="2020-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -398,7 +398,7 @@ The relevant columns are the taxonomic variables (<code>class</code>, <code>spec
 Use <code>mutate</code> and <code>paste</code> to convert the <code>species</code> column to a <em>Genus_species</em> by pasting the data in <code>genus</code> and <code>species</code> together. To see how this works, try out the following command, <code>paste(1:3, 4:6)</code>. After you have created the new column, remove the <code>genus</code> column (using <code>select</code> and <code>-genus</code>).</p></li>
 <li><p>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</p></li>
 <li><p>Do the same thing but this time find the shortest lived species.</p></li>
-<li><p>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>rm.na = TRUE</code> argument.</p></li>
+<li><p>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>rm.rm = TRUE</code> argument.</p></li>
 <li><p>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</p></li>
 <li><p>Use <code>mutate</code> to create new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that makes the relationship more linear, and easier to “read”.</p></li>
 <li><p>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</p></li>
@@ -475,60 +475,81 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb173-2"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb173-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">species =</span> <span class="kw">paste</span>(genus,species)) <span class="op">%&gt;%</span></span>
 <span id="cb173-3"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb173-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>genus)</span>
 <span id="cb173-4"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb173-4" aria-hidden="true"></a><span class="kw">head</span>(x)</span></code></pre></div>
-<pre><code>##   class               species longevity_y adult_body_mass_g
-## 1  Aves Accipiter albogularis          NA           251.500
-## 2  Aves      Accipiter badius          NA           140.000
-## 3  Aves     Accipiter bicolor          NA           345.000
-## 4  Aves  Accipiter brachyurus          NA           142.000
-## 5  Aves    Accipiter brevipes          NA           203.500
-## 6  Aves Accipiter castanilius          NA           159.375
-##   litter_or_clutch_size_n litters_or_clutches_per_y
-## 1                      NA                        NA
-## 2                    3.25                         1
-## 3                    2.70                        NA
-## 4                      NA                        NA
-## 5                    4.00                         1
-## 6                      NA                        NA</code></pre>
+<pre><code>##   class               species longevity_y
+## 1  Aves Accipiter albogularis          NA
+## 2  Aves      Accipiter badius          NA
+## 3  Aves     Accipiter bicolor          NA
+## 4  Aves  Accipiter brachyurus          NA
+## 5  Aves    Accipiter brevipes          NA
+## 6  Aves Accipiter castanilius          NA
+##   adult_body_mass_g litter_or_clutch_size_n
+## 1           251.500                      NA
+## 2           140.000                    3.25
+## 3           345.000                    2.70
+## 4           142.000                      NA
+## 5           203.500                    4.00
+## 6           159.375                      NA
+##   litters_or_clutches_per_y
+## 1                        NA
+## 2                         1
+## 3                        NA
+## 4                        NA
+## 5                         1
+## 6                        NA</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</li>
 </ol>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb175-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>longevity_y)</span>
 <span id="cb175-2"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb175-2" aria-hidden="true"></a><span class="kw">head</span>(x)</span></code></pre></div>
-<pre><code>##      class                 species longevity_y adult_body_mass_g
-## 1 Reptilia Chelonoidis duncanensis       177.0                NA
-## 2 Reptilia  Aldabrachelys gigantea       152.0            117200
-## 3 Reptilia          Testudo graeca       127.0              1430
-## 4 Mammalia            Homo sapiens       122.5             62035
-## 5 Mammalia   Balaenoptera physalus        95.0          38800000
-## 6 Mammalia            Orcinus orca        90.0           4300000
-##   litter_or_clutch_size_n litters_or_clutches_per_y
-## 1                      NA                        NA
-## 2                    13.5                  2.000000
-## 3                     5.0                  3.200993
-## 4                     1.0                  0.485000
-## 5                     1.0                  0.400000
-## 6                     1.0                  0.210000</code></pre>
+<pre><code>##      class                 species longevity_y
+## 1 Reptilia Chelonoidis duncanensis       177.0
+## 2 Reptilia  Aldabrachelys gigantea       152.0
+## 3 Reptilia          Testudo graeca       127.0
+## 4 Mammalia            Homo sapiens       122.5
+## 5 Mammalia   Balaenoptera physalus        95.0
+## 6 Mammalia            Orcinus orca        90.0
+##   adult_body_mass_g litter_or_clutch_size_n
+## 1                NA                      NA
+## 2            117200                    13.5
+## 3              1430                     5.0
+## 4             62035                     1.0
+## 5          38800000                     1.0
+## 6           4300000                     1.0
+##   litters_or_clutches_per_y
+## 1                        NA
+## 2                  2.000000
+## 3                  3.200993
+## 4                  0.485000
+## 5                  0.400000
+## 6                  0.210000</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Do the same thing but this time find the shortest lived species.</li>
 </ol>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb177-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(longevity_y)</span>
 <span id="cb177-2"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb177-2" aria-hidden="true"></a><span class="kw">head</span>(x)</span></code></pre></div>
-<pre><code>##      class              species longevity_y adult_body_mass_g
-## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875
-## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000
-## 3 Mammalia Allactaga balikunica  0.08333333                NA
-## 4 Mammalia    Allactaga bullata  0.08333333                NA
-## 5 Mammalia       Geomys pinetis  0.08333333           195.750
-## 6 Mammalia          Mus sorella  0.08333333            12.535
-##   litter_or_clutch_size_n litters_or_clutches_per_y
-## 1                    1.59                     7.150
-## 2                    1.50                        NA
-## 3                    2.52                        NA
-## 4                    2.52                        NA
-## 5                    1.77                     1.865
-## 6                    5.20                     3.000</code></pre>
+<pre><code>##      class              species longevity_y
+## 1 Mammalia    Lepus nigricollis  0.08333333
+## 2 Mammalia  Notoryctes caurinus  0.08333333
+## 3 Mammalia Allactaga balikunica  0.08333333
+## 4 Mammalia    Allactaga bullata  0.08333333
+## 5 Mammalia       Geomys pinetis  0.08333333
+## 6 Mammalia          Mus sorella  0.08333333
+##   adult_body_mass_g litter_or_clutch_size_n
+## 1          2196.875                    1.59
+## 2            34.000                    1.50
+## 3                NA                    2.52
+## 4                NA                    2.52
+## 5           195.750                    1.77
+## 6            12.535                    5.20
+##   litters_or_clutches_per_y
+## 1                     7.150
+## 2                        NA
+## 3                        NA
+## 4                        NA
+## 5                     1.865
+## 6                     3.000</code></pre>
 <ol start="6" style="list-style-type: decimal">
-<li>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>rm.na = TRUE</code> argument.</li>
+<li>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>na.rm = TRUE</code> argument.</li>
 </ol>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb179-1" aria-hidden="true"></a>x <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb179-2"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb179-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span></span>

@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-20" />
+<meta name="date" content="2020-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -507,7 +507,8 @@ Try modifying the commands to make sure you know what the commands are doing.
 <pre><code>## [1]  1  6 18  4 35 54</code></pre>
 <p>If the length of the vectors match, we can also multiply (or add/subtract/divide etc.) multiple vectors:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="an-r-refresher.html#cb52-1" aria-hidden="true"></a>A <span class="op">/</span><span class="st"> </span>B</span></code></pre></div>
-<pre><code>## [1] 1.0000000 0.6666667 0.5000000 4.0000000 0.7142857 0.1111111</code></pre>
+<pre><code>## [1] 1.0000000 0.6666667 0.5000000 4.0000000 0.7142857
+## [6] 0.1111111</code></pre>
 </div>
 <div id="missing-values-infinity-and-non-numbers" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Missing values, infinity and “non-numbers”</h2>
@@ -629,9 +630,11 @@ Try modifying the commands to make sure you know what the commands are doing.
 <pre><code>## [1] 17</code></pre>
 <p>We can find the names of the columns of a data frame with the <code>names</code> function:</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="an-r-refresher.html#cb101-1" aria-hidden="true"></a><span class="kw">names</span>(carni)</span></code></pre></div>
-<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;    
-##  [6] &quot;FW&quot;          &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;         
-## [11] &quot;GL&quot;          &quot;BW&quot;          &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;         
+<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;     
+##  [4] &quot;Genus&quot;       &quot;Species&quot;     &quot;FW&quot;         
+##  [7] &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;         
+## [10] &quot;LS&quot;          &quot;GL&quot;          &quot;BW&quot;         
+## [13] &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;         
 ## [16] &quot;AM&quot;          &quot;IB&quot;</code></pre>
 <p>The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
 SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).</p>
@@ -650,24 +653,25 @@ SW = Average body weight of adult male and adult female (kg), FB = Female brain 
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="an-r-refresher.html#cb107-1" aria-hidden="true"></a><span class="kw">class</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="an-r-refresher.html#cb109-1" aria-hidden="true"></a><span class="kw">levels</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
-<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot; 
-## [6] &quot;Procyonidae&quot; &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
+<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;    
+## [4] &quot;Hyaenidae&quot;   &quot;Mustelidae&quot;  &quot;Procyonidae&quot;
+## [7] &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
 </div>
 <div id="tables-and-summary-statistics" class="section level2" number="3.11">
 <h2><span class="header-section-number">3.11</span> Tables and summary statistics</h2>
 <p>For vectors of class “factor” you can use the <code>table</code> function to give the counts for each level:</p>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="an-r-refresher.html#cb111-1" aria-hidden="true"></a><span class="kw">table</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
 <pre><code>## 
-##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
-##           1          18          19           4          30           4 
-##     Ursidae  Viverridae 
-##           4          32</code></pre>
+##   Ailuridae     Canidae     Felidae   Hyaenidae 
+##           1          18          19           4 
+##  Mustelidae Procyonidae     Ursidae  Viverridae 
+##          30           4           4          32</code></pre>
 <p>You can use the function <code>tapply</code> (“table apply”), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument <code>mean</code>:</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="an-r-refresher.html#cb113-1" aria-hidden="true"></a><span class="kw">tapply</span>(carni<span class="op">$</span>FW, carni<span class="op">$</span>Family, mean)</span></code></pre></div>
-<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
-##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500 
-##     Ursidae  Viverridae 
-##  198.250000    2.672813</code></pre>
+<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae 
+##  120.000000    9.050000   31.432105   33.540000 
+##  Mustelidae Procyonidae     Ursidae  Viverridae 
+##    3.989000    3.642500  198.250000    2.672813</code></pre>
 </div>
 <div id="plotting-data" class="section level2" number="3.12">
 <h2><span class="header-section-number">3.12</span> Plotting data</h2>

@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-20" />
+<meta name="date" content="2020-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -431,13 +431,19 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
-##                  Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
-## HandWidth         1 1038.46 1038.46 40.8621 7.576e-07 ***
-## Gender            1  369.46  369.46 14.5378 0.0007246 ***
-## HandWidth:Gender  1    4.89    4.89  0.1922 0.6645538    
-## Residuals        27  686.17   25.41                      
+##                  Df  Sum Sq Mean Sq F value    Pr(&gt;F)
+## HandWidth         1 1038.46 1038.46 40.8621 7.576e-07
+## Gender            1  369.46  369.46 14.5378 0.0007246
+## HandWidth:Gender  1    4.89    4.89  0.1922 0.6645538
+## Residuals        27  686.17   25.41                  
+##                     
+## HandWidth        ***
+## Gender           ***
+## HandWidth:Gender    
+## Residuals           
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This type of <em>sequential sum of squares</em> Analysis of Variance table should be getting fairly familiar to you now, but let’s unpack what this means. There are four rows in the summary table - one for each of the terms in the model (<code>HandWidth</code>, <code>Gender</code> and <code>HandWidth:Gender</code>), and one for the <code>Residuals</code> (the unexplained variation that remains after fitting the model). The table includes degrees of freedom (<code>Df</code>), sum of squares (<code>Sum Sq</code>), mean sum of squares (<code>Mean Sq</code>) and the associated F and p-values (<code>F value</code> and <code>Pr(&gt;F)</code>.</p>
 <p>You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by a model that includes a common slope for both genders (1038.46). Then it tells us that an <em>additional</em> bit of variation (369.46) is captured if we allow the intercepts to vary with gender. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the genders (4.89). Finally, there is a bit of unexplained variation left over (Residuals) (25.41). So you can see that hand width explains most variation, followed by gender, followed by the interaction between them.</p>
 <p>You would report from this table something like this:</p>
@@ -458,13 +464,19 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 ## -9.480 -4.096  1.845  3.195  7.821 
 ## 
 ## Coefficients:
-##                      Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)          154.9285    10.3206  15.012 1.26e-14 ***
-## HandWidth              1.7667     1.2707   1.390    0.176    
-## GenderMale             1.3710    18.4712   0.074    0.941    
-## HandWidth:GenderMale   0.8839     2.0160   0.438    0.665    
+##                      Estimate Std. Error t value
+## (Intercept)          154.9285    10.3206  15.012
+## HandWidth              1.7667     1.2707   1.390
+## GenderMale             1.3710    18.4712   0.074
+## HandWidth:GenderMale   0.8839     2.0160   0.438
+##                      Pr(&gt;|t|)    
+## (Intercept)          1.26e-14 ***
+## HandWidth               0.176    
+## GenderMale              0.941    
+## HandWidth:GenderMale    0.665    
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 5.041 on 27 degrees of freedom
 ## Multiple R-squared:  0.6731,	Adjusted R-squared:  0.6368 
@@ -499,7 +511,8 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 ## Gender     1  369.46  369.46  14.970 0.0005963 ***
 ## Residuals 28  691.05   24.68                      
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now all the terms in the model are significant.</p>
 <div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb443-1" aria-hidden="true"></a><span class="kw">summary</span>(mod_B)</span></code></pre></div>
 <pre><code>## 
@@ -516,7 +529,8 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 ## HandWidth     2.1179     0.9722   2.179 0.037945 *  
 ## GenderMale    9.3971     2.4288   3.869 0.000596 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 4.968 on 28 degrees of freedom
 ## Multiple R-squared:  0.6708,	Adjusted R-squared:  0.6472 

@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-20" />
+<meta name="date" content="2020-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -427,7 +427,8 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 ## NULL                      99     166.84              
 ## weight  1   44.124        98     122.72 3.082e-11 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This summary table tells us that the single explanatory variable (<code>weight</code>) is fantastically important (p-value is very small indeed).</p>
 <p>We can then ask for the coefficient summary using <code>summary</code>.</p>
 <div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="generalised-linear-models.html#cb466-1" aria-hidden="true"></a><span class="kw">summary</span>(mod1)</span></code></pre></div>
@@ -444,7 +445,8 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 ## (Intercept) -0.74981    0.31107  -2.410   0.0159 *  
 ## weight       0.63239    0.09502   6.655 2.83e-11 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for poisson family taken to be 1)
 ## 
@@ -513,7 +515,8 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 ## NULL                        93     149.48           
 ## Distance  1   2.8408        92     146.64   0.0919 .
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The ANOVA table tells us that there is no significant effect of the Distance variable. In other words a model that includes the <code>Distance</code> term does not explain significantly more variation than the <code>NULL</code> model that includes no terms and instead assumes that variation in cancer incidence is simply caused by random variation.</p>
 <p>We needn’t go further with this model, but go ahead and plot the model in any case (just for practice).</p>
 <div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="generalised-linear-models.html#cb474-1" aria-hidden="true"></a><span class="kw">summary</span>(mod1)</span></code></pre></div>
@@ -530,7 +533,8 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 ## (Intercept)  0.186865   0.188728   0.990   0.3221  
 ## Distance    -0.006138   0.003667  -1.674   0.0941 .
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for poisson family taken to be 1)
 ## 
@@ -613,7 +617,8 @@ anova(mod_A,test="Chi")
 ## NULL                    19     36.672              
 ## Age   1   11.511        18     25.161 0.0006917 ***
 ## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 --></p></li>
 <li><p>Obtain the <code>summary</code> table. What does this tell you?
@@ -637,7 +642,8 @@ summary(mod_A)
 ## (Intercept)  0.09531    0.30151   0.316   0.7519   
 ## AgeChild     1.09861    0.34815   3.156   0.0016 **
 ## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for poisson family taken to be 1)
 ## 

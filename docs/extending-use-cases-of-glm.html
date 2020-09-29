@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-20" />
+<meta name="date" content="2020-09-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -434,7 +434,8 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 ## NULL                       947     955.38              
 ## Distance  1    137.8       946     817.58 &lt; 2.2e-16 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>We get more useful information from the coefficient <code>summary</code> of the model. This gives the intercept and slope of the model <strong>on the scale of the linear predictor</strong> (see the figure above).</p>
 <div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="extending-use-cases-of-glm.html#cb482-1" aria-hidden="true"></a><span class="kw">summary</span>(nflMod)</span></code></pre></div>
 <pre><code>## 
@@ -450,7 +451,8 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 ## (Intercept)  5.68958    0.45021   12.64   &lt;2e-16 ***
 ## Distance    -0.13118    0.01263  -10.38   &lt;2e-16 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
@@ -559,7 +561,8 @@ summary(model1)
 ## area          0.5807     0.2478   2.344  0.01909 * 
 ## isolation    -1.3719     0.4769  -2.877  0.00401 **
 ## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  
+## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
@@ -639,11 +642,15 @@ lines(newData$isolation,newData$fit,col="red")
 ## Terms added sequentially (first to last)
 ## 
 ## 
-##             Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
-## NULL                            6     70.353              
-## Temperature  1   61.869         5      8.484 3.671e-15 ***
+##             Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)
+## NULL                            6     70.353          
+## Temperature  1   61.869         5      8.484 3.671e-15
+##                
+## NULL           
+## Temperature ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now for the coefficients:</p>
 <div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="extending-use-cases-of-glm.html#cb500-1" aria-hidden="true"></a><span class="kw">summary</span>(modA)</span></code></pre></div>
 <pre><code>## 
@@ -651,15 +658,18 @@ lines(newData$isolation,newData$fit,col="red")
 ## glm(formula = y ~ Temperature, family = binomial, data = hawksbill)
 ## 
 ## Deviance Residuals: 
-##       1        2        3        4        5        6        7  
-## -0.2010  -0.8013   1.7632  -1.6999  -0.4885   0.8010   0.9607  
+##       1        2        3        4        5        6  
+## -0.2010  -0.8013   1.7632  -1.6999  -0.4885   0.8010  
+##       7  
+##  0.9607  
 ## 
 ## Coefficients:
 ##              Estimate Std. Error z value Pr(&gt;|z|)    
 ## (Intercept) -111.7200    22.4260  -4.982 6.30e-07 ***
 ## Temperature    3.7754     0.7625   4.951 7.37e-07 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
@@ -758,11 +768,15 @@ We now create a (tiny) <code>data.frame</code> for the parental status (smoker =
 ## Terms added sequentially (first to last)
 ## 
 ## 
-##             Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
-## NULL                            1     29.121              
-## parentSmoke  1   29.121         0      0.000 6.801e-08 ***
+##             Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)
+## NULL                            1     29.121          
+## parentSmoke  1   29.121         0      0.000 6.801e-08
+##                
+## NULL           
+## parentSmoke ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This tells us that the status of the parents (whether they smoke or not) is highly significant: it explains a lot of the pattern that we see in the data.</p>
 <p>We can find out what this pattern is by examining the <code>summary</code> table.</p>
 <div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="extending-use-cases-of-glm.html#cb512-1" aria-hidden="true"></a><span class="kw">summary</span>(smokeMod)</span></code></pre></div>
@@ -774,11 +788,15 @@ We now create a (tiny) <code>data.frame</code> for the parental status (smoker =
 ## [1]  0  0
 ## 
 ## Coefficients:
-##                  Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)      -1.82661    0.07858 -23.244  &lt; 2e-16 ***
-## parentSmoke1_yes  0.45918    0.08782   5.228 1.71e-07 ***
+##                  Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)      -1.82661    0.07858 -23.244  &lt; 2e-16
+## parentSmoke1_yes  0.45918    0.08782   5.228 1.71e-07
+##                     
+## (Intercept)      ***
+## parentSmoke1_yes ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
@@ -804,9 +822,12 @@ First we calculate the fitted values and 95% confidence intervals on the scale o
 <span id="cb515-7"><a href="extending-use-cases-of-glm.html#cb515-7" aria-hidden="true"></a>         <span class="dt">ymin=</span> <span class="kw">inverseFunction</span>(lowerCI_LP),</span>
 <span id="cb515-8"><a href="extending-use-cases-of-glm.html#cb515-8" aria-hidden="true"></a>         <span class="dt">ymax =</span> <span class="kw">inverseFunction</span>(upperCI_LP))</span>
 <span id="cb515-9"><a href="extending-use-cases-of-glm.html#cb515-9" aria-hidden="true"></a>smoke</span></code></pre></div>
-<pre><code>##   parentSmoke   prob_LP lowerCI_LP upperCI_LP      prob      ymin      ymax
-## 1       1_yes -1.367429  -1.444287  -1.290570 0.2030356 0.1908823 0.2157563
-## 2        0_no -1.826606  -1.980629  -1.672583 0.1386431 0.1212518 0.1580801</code></pre>
+<pre><code>##   parentSmoke   prob_LP lowerCI_LP upperCI_LP      prob
+## 1       1_yes -1.367429  -1.444287  -1.290570 0.2030356
+## 2        0_no -1.826606  -1.980629  -1.672583 0.1386431
+##        ymin      ymax
+## 1 0.1908823 0.2157563
+## 2 0.1212518 0.1580801</code></pre>
 <p>This table shows us that the probability of the students smoking is 0.2030 (95% CI = 0.191-0.216) for children of smokers, and 0.139 (95% CI = 0.121-0.158) for children of non-smokers. We can plot this using <code>ggplot</code> like this.</p>
 <div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="extending-use-cases-of-glm.html#cb517-1" aria-hidden="true"></a><span class="kw">ggplot</span>(smoke,<span class="kw">aes</span>(<span class="dt">x=</span>parentSmoke,<span class="dt">y =</span> prob,<span class="dt">ymin =</span> ymin,<span class="dt">ymax=</span>ymax))<span class="op">+</span></span>
 <span id="cb517-2"><a href="extending-use-cases-of-glm.html#cb517-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></span>
