@@ -129,10 +129,10 @@ rn <- data.frame(d1 = rnorm(500,5,2),d2 = rnorm(500,8,1))
 summary(rn)
 ```
 
-The summaries (above) show that the mean and the width of the distributions vary, but we should always plot our data. So lets make a plot in `ggplot`. In the dataset I created I have the data arranged by columns side-by-side, but `ggplot` needs the values to be arranged in a single column, and the identifier of the sample ID in a second column. I can use the function `gather` to rearrange the data into the required format.
+The summaries (above) show that the mean and the width of the distributions vary, but we should always plot our data. So lets make a plot in `ggplot`. In the dataset I created I have the data arranged by columns side-by-side, but `ggplot` needs the values to be arranged in a single column, and the identifier of the sample ID in a second column. I can use the function `pivot_longer` to rearrange the data into the required format.
 
 ```{r,message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
-rn <- gather(rn,key = "sampleID",value = "value") #rearrange data
+rn <- pivot_longer(rn,cols= c(d1,d2), names_to = "sampleID", values_to = "value") #rearrange data
 
 #Plot histograms using "identity", and make them transparent
 ggplot(rn,aes(x = value,fill=sampleID)) +
@@ -238,7 +238,8 @@ To get a better feel for how these two distributions differ, lets use the same a
 ```{r,fig.height=3, fig.width = 4,fig.align='center'}
 rn <- data.frame(normDist = rnorm(500,2,2),poisDist = rpois(500,2.4))
 summary(rn)
-rn <- gather(rn,key = "sampleID",value = "value") #rearrange data
+
+rn <- pivot_longer(rn,cols= c(d1,d2), names_to = "sampleID", values_to = "value") #rearrange data
 
 #Plot histograms using "identity", and make them transparent
 ggplot(rn,aes(x = value,fill=sampleID)) +

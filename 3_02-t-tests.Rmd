@@ -394,7 +394,7 @@ A study was carried out looking at the effect of cognitive behavioural therapy o
 
 The data is called `anorexiaCBT.csv`
 
-The data are in "wide format". You may wish to convert it to "long format" depending on how you use the data. You can do that with the `gather` function, which rearranges the data:
+The data are in "wide format". You may wish to convert it to "long format" depending on how you use the data. You can do that with the `pivot_longer` function, which rearranges the data:
 
 ```{r,echo=FALSE,message=FALSE}
 anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv",header=TRUE)
@@ -402,7 +402,7 @@ anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv",header=TRUE)
 
 ```{r}
 anorexiaCBT_long <- anorexiaCBT %>% 
-  gather("week","weight",-Subject)
+  pivot_longer(cols = starts_with("Week"),names_to = "time",values_to = "weight")
 ```
 1) Plot the data (e.g. with an interaction plot like Figure 5 in the t-tests PDF)
 
