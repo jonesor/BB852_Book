@@ -403,8 +403,8 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </p>
 </div>
 <p>Import the data and look at it.</p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb388-1" aria-hidden="true"></a>espresso &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/espresso.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb388-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb388-2" aria-hidden="true"></a><span class="kw">head</span>(espresso)</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb386-1" aria-hidden="true"></a>espresso &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/espresso.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb386-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb386-2" aria-hidden="true"></a><span class="kw">head</span>(espresso)</span></code></pre></div>
 <pre><code>##   foamIndx method
 ## 1    36.64     BM
 ## 2    39.65     BM
@@ -412,9 +412,9 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 ## 4    35.96     BM
 ## 5    38.52     BM
 ## 6    21.02     BM</code></pre>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb390-1" aria-hidden="true"></a>(<span class="kw">ggplot</span>(espresso,<span class="kw">aes</span>(<span class="dt">x=</span>method,<span class="dt">y=</span>foamIndx)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb390-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb390-2" aria-hidden="true"></a><span class="kw">geom_boxplot</span>()<span class="op">+</span></span>
-<span id="cb390-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb390-3" aria-hidden="true"></a><span class="kw">geom_jitter</span>(<span class="dt">width=</span><span class="fl">0.2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb388-1" aria-hidden="true"></a>(<span class="kw">ggplot</span>(espresso,<span class="kw">aes</span>(<span class="dt">x=</span>method,<span class="dt">y=</span>foamIndx)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb388-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb388-2" aria-hidden="true"></a><span class="kw">geom_boxplot</span>()<span class="op">+</span></span>
+<span id="cb388-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb388-3" aria-hidden="true"></a><span class="kw">geom_jitter</span>(<span class="dt">width=</span><span class="fl">0.2</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:coffee"></span>
 <img src="BB852_files/figure-html/coffee-1.png" alt="A box and whisker plot, with jittered points, for the espresso foam data." width="384" />
 <p class="caption">
@@ -423,10 +423,10 @@ Figure 13.1: A box and whisker plot, with jittered points, for the espresso foam
 </div>
 <p>You can see that the categorical explanatory variable (“method”) defines the three treatment groups and has the three levels representing the different coffee types: BM, HIP and IES.</p>
 <p>Let’s first fit the ANOVA using R. One way ANOVAs are fitted using the <code>lm</code> function (<code>lm</code> stands for “linear model” - yes, an ANOVA is a type of linear model).</p>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb391-1" aria-hidden="true"></a>foam_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(foamIndx <span class="op">~</span><span class="st"> </span>method, <span class="dt">data =</span> espresso)</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb389-1" aria-hidden="true"></a>foam_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(foamIndx <span class="op">~</span><span class="st"> </span>method, <span class="dt">data =</span> espresso)</span></code></pre></div>
 <p>Before proceeding, we need to check the assumptions of the model. This can be done visually using the <code>autoplot</code> function in the <code>ggfortify</code> package. If you don’t have the package installed, install it now (<code>install.packages("ggfortify"</code>)).</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb392-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
-<span id="cb392-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb392-2" aria-hidden="true"></a><span class="kw">autoplot</span>(foam_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb390-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
+<span id="cb390-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb390-2" aria-hidden="true"></a><span class="kw">autoplot</span>(foam_mod)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:diagnostic"></span>
 <img src="BB852_files/figure-html/diagnostic-1.png" alt="Diagnostic plots for the ANOVA model. This looks great." width="480" />
 <p class="caption">
@@ -437,7 +437,7 @@ Figure 13.2: Diagnostic plots for the ANOVA model. This looks great.
 <p>Trust me, everything here looks great.</p>
 <p>Now let’s evaluate our ANOVA model. We do this using two functions: <code>anova</code> and <code>summary</code> (it sounds strange, but yes we do use a function called <code>anova</code> on our ANOVA model).</p>
 <p>First, the <code>anova</code>. This gives us the following summary:</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb393-1" aria-hidden="true"></a><span class="kw">anova</span>(foam_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb391-1" aria-hidden="true"></a><span class="kw">anova</span>(foam_mod)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: foamIndx
@@ -457,7 +457,7 @@ Figure 13.2: Diagnostic plots for the ANOVA model. This looks great.
 <p>This model output doesn’t tell us <em>where</em> those differences are, nor does it tell us what the estimated mean values of foaminess are for the three groups: what are the effects? We need to dig further into the model to get to these details.</p>
 <p>There are several ways to do this and we’ll look at one of them.</p>
 <p>We do this using the <code>summary</code> function.</p>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb395-1" aria-hidden="true"></a><span class="kw">summary</span>(foam_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb393-1" aria-hidden="true"></a><span class="kw">summary</span>(foam_mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = foamIndx ~ method, data = espresso)
@@ -479,9 +479,9 @@ Figure 13.2: Diagnostic plots for the ANOVA model. This looks great.
 ## F-statistic: 28.41 on 2 and 24 DF,  p-value: 4.699e-07</code></pre>
 <p>To properly interpret this output you need to understand something called “treatment contrasts”. Essentially, contrasts define how model coefficients (the estimates made by the model) are presented in R outputs.</p>
 <p>They are a bit hard to wrap your head aroudn and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use <code>group_by</code> and <code>summarise</code> to calculate the means for your the levels of your explanatory variable.</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb397-1" aria-hidden="true"></a>espresso <span class="op">%&gt;%</span></span>
-<span id="cb397-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb397-2" aria-hidden="true"></a><span class="kw">group_by</span>(method) <span class="op">%&gt;%</span></span>
-<span id="cb397-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb397-3" aria-hidden="true"></a><span class="kw">summarise</span>(<span class="dt">gp_mean =</span> <span class="kw">mean</span>(foamIndx))</span></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb395-1" aria-hidden="true"></a>espresso <span class="op">%&gt;%</span></span>
+<span id="cb395-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb395-2" aria-hidden="true"></a><span class="kw">group_by</span>(method) <span class="op">%&gt;%</span></span>
+<span id="cb395-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb395-3" aria-hidden="true"></a><span class="kw">summarise</span>(<span class="dt">gp_mean =</span> <span class="kw">mean</span>(foamIndx))</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   method gp_mean
 ##   &lt;fct&gt;    &lt;dbl&gt;
@@ -499,17 +499,17 @@ Journal of Food Engineering, Vol. 121, pp. 112-117.
 <p>Likewise, the t-values and p-values, are evaluating <em>differences between the focal group and this baseline</em>. Thus in this case, the comparisons (the “contrasts”) are between the intercept (BM) and the second level (HIP), and the intercept (BM) and the third level (IES). There is no formal statistical comparison between HIP and IES.</p>
 <p>You can see that it is very important to understand the levels of your explanatory variable, and how these relate to the summary outputs of the model. It can be useful to use the function <code>relevel</code> to manipulate the explanatory variable to make sure that the output gives you the comparisons you are interested in. Another simple trick would be to always ensure that your reference group (e.g. “control”) comes first alphabetically and is therefore selected by R as the intercept (reference point).</p>
 <p>For example, we can <code>relevel</code> the method variable so that the levels are re-ordered as HIP, BM, then IES so that the comparisons are between zero-HIP, HIP-BM and HIP-IES. (make sure that you understand this before proceeding).</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb399-1" aria-hidden="true"></a><span class="co">#This is what the original data looks like:</span></span>
-<span id="cb399-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb399-2" aria-hidden="true"></a><span class="kw">levels</span>(espresso<span class="op">$</span>method)</span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb397-1" aria-hidden="true"></a><span class="co">#This is what the original data looks like:</span></span>
+<span id="cb397-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb397-2" aria-hidden="true"></a><span class="kw">levels</span>(espresso<span class="op">$</span>method)</span></code></pre></div>
 <pre><code>## [1] &quot;BM&quot;  &quot;HIP&quot; &quot;IES&quot;</code></pre>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb401-1" aria-hidden="true"></a><span class="co">#releveling changes this by changing the reference.</span></span>
-<span id="cb401-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb401-2" aria-hidden="true"></a>espresso_<span class="dv">2</span> &lt;-<span class="st"> </span>espresso <span class="op">%&gt;%</span></span>
-<span id="cb401-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb401-3" aria-hidden="true"></a><span class="kw">mutate</span>(<span class="dt">method =</span> <span class="kw">relevel</span>(method,<span class="dt">ref =</span> <span class="st">&quot;HIP&quot;</span>))</span>
-<span id="cb401-4"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb401-4" aria-hidden="true"></a><span class="kw">levels</span>(espresso_<span class="dv">2</span><span class="op">$</span>method)</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb399-1" aria-hidden="true"></a><span class="co">#releveling changes this by changing the reference.</span></span>
+<span id="cb399-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb399-2" aria-hidden="true"></a>espresso_<span class="dv">2</span> &lt;-<span class="st"> </span>espresso <span class="op">%&gt;%</span></span>
+<span id="cb399-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb399-3" aria-hidden="true"></a><span class="kw">mutate</span>(<span class="dt">method =</span> <span class="kw">relevel</span>(method,<span class="dt">ref =</span> <span class="st">&quot;HIP&quot;</span>))</span>
+<span id="cb399-4"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb399-4" aria-hidden="true"></a><span class="kw">levels</span>(espresso_<span class="dv">2</span><span class="op">$</span>method)</span></code></pre></div>
 <pre><code>## [1] &quot;HIP&quot; &quot;BM&quot;  &quot;IES&quot;</code></pre>
 <p>Now we can refit the model with this modified data set and see what difference that made:</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb403-1" aria-hidden="true"></a>foam_mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(foamIndx <span class="op">~</span><span class="st"> </span>method, <span class="dt">data =</span> espresso_<span class="dv">2</span>)</span>
-<span id="cb403-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb403-2" aria-hidden="true"></a><span class="kw">anova</span>(foam_mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb401-1" aria-hidden="true"></a>foam_mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(foamIndx <span class="op">~</span><span class="st"> </span>method, <span class="dt">data =</span> espresso_<span class="dv">2</span>)</span>
+<span id="cb401-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb401-2" aria-hidden="true"></a><span class="kw">anova</span>(foam_mod2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: foamIndx
@@ -518,7 +518,7 @@ Journal of Food Engineering, Vol. 121, pp. 112-117.
 ## Residuals 24 1716.9   71.54                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb405-1" aria-hidden="true"></a><span class="kw">summary</span>(foam_mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb403-1" aria-hidden="true"></a><span class="kw">summary</span>(foam_mod2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = foamIndx ~ method, data = espresso_2)
@@ -551,11 +551,11 @@ Figure 13.3: Comparison illustrating the difference between ANOVA models using (
 <div id="tukeys-honestly-significant-difference-hsd" class="section level3" number="13.2.2">
 <h3><span class="header-section-number">13.2.2</span> Tukey’s Honestly Significant Difference (HSD)</h3>
 <p>An alternative way to approach these comparisons between groups is to use something called a <strong>post-hoc multiple comparison test</strong>. The words “post-hoc” mean “after the event” – i.e. after the ANOVA in this case – while the “multiple comparison” refers to the (potentially many) pairwise comparisons that you would like to make with an ANOVA. One of the most widely used post-hoc tests is called Tukey’s Honestly Significant Difference (Tukey HSD) test. There is a convenient R package called <code>agricolae</code> that will do these for you.</p>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb407-1" aria-hidden="true"></a><span class="co">#You only need to do this once!</span></span>
-<span id="cb407-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb407-2" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;agricolae&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb405-1" aria-hidden="true"></a><span class="co">#You only need to do this once!</span></span>
+<span id="cb405-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb405-2" aria-hidden="true"></a><span class="kw">install.packages</span>(<span class="st">&quot;agricolae&quot;</span>)</span></code></pre></div>
 <p>When you have the package installed, you can load it (using <code>library</code>). Then you can run the Tukey HSD test using the function <code>HSD.test</code>. The first argument for the function is the name of the model, followed by the name of the variable you are comparing (in this case <code>method</code>) and finally <code>console = TRUE</code> tells the function to print the output to your computer screen.</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb408-1" aria-hidden="true"></a><span class="kw">library</span>(agricolae)</span>
-<span id="cb408-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb408-2" aria-hidden="true"></a><span class="kw">HSD.test</span>(foam_mod2, <span class="st">&quot;method&quot;</span>, <span class="dt">console=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb406-1" aria-hidden="true"></a><span class="kw">library</span>(agricolae)</span>
+<span id="cb406-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb406-2" aria-hidden="true"></a><span class="kw">HSD.test</span>(foam_mod2, <span class="st">&quot;method&quot;</span>, <span class="dt">console=</span><span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ## Study: foam_mod2 ~ &quot;method&quot;
 ## 
@@ -607,21 +607,21 @@ Figure 13.4: The relative size of the squared residual errors from the overall m
 <p>In the following I will show how these calculations can be done “by hand” in R. The purpose of showing you this is to demonstrate exactly how the <code>lm</code> model that you fitted above works, and prove to yourself that it is not rocket science… you will never need to do this in real life, because you have the wonderful <code>lm</code> function.</p>
 <p>Here goes…</p>
 <p>First, calculate the total sum of squares:</p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb410-1" aria-hidden="true"></a>(<span class="dt">SSTotal =</span> <span class="kw">sum</span>((overallMean<span class="op">-</span>espresso<span class="op">$</span>foamIndx)<span class="op">^</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb408-1" aria-hidden="true"></a>(<span class="dt">SSTotal =</span> <span class="kw">sum</span>((overallMean<span class="op">-</span>espresso<span class="op">$</span>foamIndx)<span class="op">^</span><span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## [1] 5782.099</code></pre>
 <p>Now calculate the group-specific means:</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-1" aria-hidden="true"></a>(groupMeans&lt;-espresso <span class="op">%&gt;%</span></span>
-<span id="cb412-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-2" aria-hidden="true"></a><span class="kw">group_by</span>(method) <span class="op">%&gt;%</span></span>
-<span id="cb412-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-3" aria-hidden="true"></a><span class="kw">summarise</span>(<span class="dt">groupMean =</span> <span class="kw">mean</span>(foamIndx)) <span class="op">%&gt;%</span></span>
-<span id="cb412-4"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-4" aria-hidden="true"></a><span class="kw">pull</span>(groupMean))</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb410-1" aria-hidden="true"></a>(groupMeans&lt;-espresso <span class="op">%&gt;%</span></span>
+<span id="cb410-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb410-2" aria-hidden="true"></a><span class="kw">group_by</span>(method) <span class="op">%&gt;%</span></span>
+<span id="cb410-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb410-3" aria-hidden="true"></a><span class="kw">summarise</span>(<span class="dt">groupMean =</span> <span class="kw">mean</span>(foamIndx)) <span class="op">%&gt;%</span></span>
+<span id="cb410-4"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb410-4" aria-hidden="true"></a><span class="kw">pull</span>(groupMean))</span></code></pre></div>
 <pre><code>## [1] 32.4 61.3 39.7</code></pre>
 <p>Now add those group-specific mean values to the dataset using <code>left_join</code> so that you can calculate the group-specific errors.</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-1" aria-hidden="true"></a>espresso &lt;-<span class="st"> </span><span class="kw">left_join</span>(espresso,espresso <span class="op">%&gt;%</span></span>
-<span id="cb414-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-2" aria-hidden="true"></a><span class="st">                        </span><span class="kw">group_by</span>(method) <span class="op">%&gt;%</span></span>
-<span id="cb414-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-3" aria-hidden="true"></a><span class="st">                        </span><span class="kw">summarise</span>(<span class="dt">groupMean =</span> <span class="kw">mean</span>(foamIndx))) <span class="op">%&gt;%</span></span>
-<span id="cb414-4"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">groupSS =</span> (foamIndx <span class="op">-</span><span class="st"> </span>groupMean)<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb414-5"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-5" aria-hidden="true"></a></span>
-<span id="cb414-6"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-6" aria-hidden="true"></a><span class="kw">head</span>(espresso)</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-1" aria-hidden="true"></a>espresso &lt;-<span class="st"> </span><span class="kw">left_join</span>(espresso,espresso <span class="op">%&gt;%</span></span>
+<span id="cb412-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-2" aria-hidden="true"></a><span class="st">                        </span><span class="kw">group_by</span>(method) <span class="op">%&gt;%</span></span>
+<span id="cb412-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-3" aria-hidden="true"></a><span class="st">                        </span><span class="kw">summarise</span>(<span class="dt">groupMean =</span> <span class="kw">mean</span>(foamIndx))) <span class="op">%&gt;%</span></span>
+<span id="cb412-4"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">groupSS =</span> (foamIndx <span class="op">-</span><span class="st"> </span>groupMean)<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb412-5"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-5" aria-hidden="true"></a></span>
+<span id="cb412-6"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb412-6" aria-hidden="true"></a><span class="kw">head</span>(espresso)</span></code></pre></div>
 <pre><code>##   foamIndx method groupMean  groupSS
 ## 1    36.64     BM      32.4  17.9776
 ## 2    39.65     BM      32.4  52.5625
@@ -630,25 +630,25 @@ Figure 13.4: The relative size of the squared residual errors from the overall m
 ## 5    38.52     BM      32.4  37.4544
 ## 6    21.02     BM      32.4 129.5044</code></pre>
 <p>Then, to calculate the errors:</p>
-<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb416-1" aria-hidden="true"></a>(SSError &lt;-<span class="st"> </span>espresso <span class="op">%&gt;%</span></span>
-<span id="cb416-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb416-2" aria-hidden="true"></a><span class="kw">summarise</span>(<span class="kw">sum</span>(groupSS)) <span class="op">%&gt;%</span></span>
-<span id="cb416-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb416-3" aria-hidden="true"></a><span class="kw">pull</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-1" aria-hidden="true"></a>(SSError &lt;-<span class="st"> </span>espresso <span class="op">%&gt;%</span></span>
+<span id="cb414-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-2" aria-hidden="true"></a><span class="kw">summarise</span>(<span class="kw">sum</span>(groupSS)) <span class="op">%&gt;%</span></span>
+<span id="cb414-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb414-3" aria-hidden="true"></a><span class="kw">pull</span>())</span></code></pre></div>
 <pre><code>## [1] 1716.919</code></pre>
 <p>From there, you can calculate the <strong>Treatment Sum of Squares</strong></p>
-<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb418-1" aria-hidden="true"></a>(SSTreatment &lt;-<span class="st"> </span>SSTotal <span class="op">-</span><span class="st"> </span>SSError)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb416-1" aria-hidden="true"></a>(SSTreatment &lt;-<span class="st"> </span>SSTotal <span class="op">-</span><span class="st"> </span>SSError)</span></code></pre></div>
 <pre><code>## [1] 4065.18</code></pre>
 <p>So far, so good - but we can’t just look at the ratio of SSTreatment/SSError, because sum of square errors always increase with sample size. We can account for this by dividing</p>
 <p>We need to take account of sample size (degrees of freedom) by dividing these sum of squares by the degrees of freedom to give us variances. There are 3 treatment groups and 9 samples per group. Therefore there are 2 degrees of freedom for the treatment, and 8 degrees of freedom per each of the three treatments, giving a total of 8*3 = 24 error degrees of freedom.</p>
 <p>Now we need to correct for degrees of freedom, which will give us variances.</p>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb420-1" aria-hidden="true"></a>(meanSSTreatment &lt;-<span class="st"> </span>SSTreatment<span class="op">/</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb418-1" aria-hidden="true"></a>(meanSSTreatment &lt;-<span class="st"> </span>SSTreatment<span class="op">/</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 2032.59</code></pre>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb422-1" aria-hidden="true"></a>(meanSSError &lt;-<span class="st"> </span>SSError<span class="op">/</span><span class="dv">24</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb420-1" aria-hidden="true"></a>(meanSSError &lt;-<span class="st"> </span>SSError<span class="op">/</span><span class="dv">24</span>)</span></code></pre></div>
 <pre><code>## [1] 71.5383</code></pre>
 <p>The F-statistic is then the ratio of these values.</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb424-1" aria-hidden="true"></a>(Fstat &lt;-<span class="st"> </span>meanSSTreatment<span class="op">/</span>meanSSError)</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb422-1" aria-hidden="true"></a>(Fstat &lt;-<span class="st"> </span>meanSSTreatment<span class="op">/</span>meanSSError)</span></code></pre></div>
 <pre><code>## [1] 28.41261</code></pre>
 <p>We can “look up” the p-value associated with this F-statistic using the <code>pf</code> function (<code>pf</code> stands for probability of f) like this:</p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb426-1" aria-hidden="true"></a><span class="dv">1</span><span class="op">-</span><span class="kw">pf</span>(Fstat,<span class="dt">df1=</span><span class="dv">2</span>,<span class="dt">df2=</span><span class="dv">24</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb424-1" aria-hidden="true"></a><span class="dv">1</span><span class="op">-</span><span class="kw">pf</span>(Fstat,<span class="dt">df1=</span><span class="dv">2</span>,<span class="dt">df2=</span><span class="dv">24</span>)</span></code></pre></div>
 <pre><code>## [1] 4.698636e-07</code></pre>
 <p>As you can see, the method is a bit laborious and time consuming but it is conceptually fairly straightforward - it all hinges on the ratio of variation due to treatment effect vs. overall variation. Signal and noise.</p>
 <!-- the following is some code to make a plot with shuffled data as an illustration of how the ANOVA works --->
@@ -727,7 +727,7 @@ ggplot(apples,aes(x = spacing,y = yield)) +
   ylab("Yield (kg per tree)")
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-280-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-282-1.png" width="672" />
 -->
 <ol start="4" style="list-style-type: decimal">
 <li>Fit an ANOVA model using <code>lm</code>.</li>
@@ -748,7 +748,7 @@ library(ggfortify)
 autoplot(apple_mod)
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-282-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-284-1.png" width="672" />
 -->
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>anova</code> to get the ANOVA summary.</li>

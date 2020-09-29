@@ -398,7 +398,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li><p>When you have imported the data, use <code>dim</code> to check the dimensions of the whole data frame (you should see that there are 36 columns and 21322 rows). Use <code>names</code> to look at the names of all columns in the data in <code>amniote</code>.</p></li>
 <li><p>We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use <code>select</code> to pick relevant columns of the dataset and discard the others. Call the new data frame <code>x</code>.
-The relevant columns are the taxonomic variables (<code>class</code>, <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</p></li>
+The relevant columns are the taxonomic variables (<code>class</code>, <code>genus</code> &amp; <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</p></li>
 <li><p>Take a look at the first few entries in the <code>species</code> column. You will see that it is only the <em>epithet</em>, the second part of the <em>Genus_species</em> name, that is given.<br />
 Use <code>mutate</code> and <code>paste</code> to convert the <code>species</code> column to a <em>Genus_species</em> by pasting the data in <code>genus</code> and <code>species</code> together. To see how this works, try out the following command, <code>paste(1:3, 4:6)</code>. After you have created the new column, remove the <code>genus</code> column (using <code>select</code> and <code>-genus</code>).</p></li>
 <li><p>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</p></li>
@@ -428,15 +428,18 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb168-1" aria-hidden="true"></a><span class="kw">dim</span>(amniote)</span></code></pre></div>
 <pre><code>## [1] 21322    36</code></pre>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb170-1" aria-hidden="true"></a><span class="kw">names</span>(amniote)</span></code></pre></div>
-<pre><code>##  [1] &quot;class&quot;                                 &quot;order&quot;                                 &quot;family&quot;                                &quot;genus&quot;                                
-##  [5] &quot;species&quot;                               &quot;subspecies&quot;                            &quot;common_name&quot;                           &quot;female_maturity_d&quot;                    
-##  [9] &quot;litter_or_clutch_size_n&quot;               &quot;litters_or_clutches_per_y&quot;             &quot;adult_body_mass_g&quot;                     &quot;maximum_longevity_y&quot;                  
-## [13] &quot;gestation_d&quot;                           &quot;weaning_d&quot;                             &quot;birth_or_hatching_weight_g&quot;            &quot;weaning_weight_g&quot;                     
-## [17] &quot;egg_mass_g&quot;                            &quot;incubation_d&quot;                          &quot;fledging_age_d&quot;                        &quot;longevity_y&quot;                          
-## [21] &quot;male_maturity_d&quot;                       &quot;inter_litter_or_interbirth_interval_y&quot; &quot;female_body_mass_g&quot;                    &quot;male_body_mass_g&quot;                     
-## [25] &quot;no_sex_body_mass_g&quot;                    &quot;egg_width_mm&quot;                          &quot;egg_length_mm&quot;                         &quot;fledging_mass_g&quot;                      
-## [29] &quot;adult_svl_cm&quot;                          &quot;male_svl_cm&quot;                           &quot;female_svl_cm&quot;                         &quot;birth_or_hatching_svl_cm&quot;             
-## [33] &quot;female_svl_at_maturity_cm&quot;             &quot;female_body_mass_at_maturity_g&quot;        &quot;no_sex_svl_cm&quot;                         &quot;no_sex_maturity_d&quot;</code></pre>
+<pre><code>##  [1] &quot;class&quot;                                 &quot;order&quot;                                 &quot;family&quot;                               
+##  [4] &quot;genus&quot;                                 &quot;species&quot;                               &quot;subspecies&quot;                           
+##  [7] &quot;common_name&quot;                           &quot;female_maturity_d&quot;                     &quot;litter_or_clutch_size_n&quot;              
+## [10] &quot;litters_or_clutches_per_y&quot;             &quot;adult_body_mass_g&quot;                     &quot;maximum_longevity_y&quot;                  
+## [13] &quot;gestation_d&quot;                           &quot;weaning_d&quot;                             &quot;birth_or_hatching_weight_g&quot;           
+## [16] &quot;weaning_weight_g&quot;                      &quot;egg_mass_g&quot;                            &quot;incubation_d&quot;                         
+## [19] &quot;fledging_age_d&quot;                        &quot;longevity_y&quot;                           &quot;male_maturity_d&quot;                      
+## [22] &quot;inter_litter_or_interbirth_interval_y&quot; &quot;female_body_mass_g&quot;                    &quot;male_body_mass_g&quot;                     
+## [25] &quot;no_sex_body_mass_g&quot;                    &quot;egg_width_mm&quot;                          &quot;egg_length_mm&quot;                        
+## [28] &quot;fledging_mass_g&quot;                       &quot;adult_svl_cm&quot;                          &quot;male_svl_cm&quot;                          
+## [31] &quot;female_svl_cm&quot;                         &quot;birth_or_hatching_svl_cm&quot;              &quot;female_svl_at_maturity_cm&quot;            
+## [34] &quot;female_body_mass_at_maturity_g&quot;        &quot;no_sex_svl_cm&quot;                         &quot;no_sex_maturity_d&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use <code>select</code> to pick relevent columns of the dataset and discard the others. Call the new data frame <code>x</code>.
 The relevant columns are the taxonomic variables (<code>class</code>, <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</li>
@@ -502,7 +505,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <li>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</li>
 </ol>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb181-1" aria-hidden="true"></a><span class="kw">plot</span>(x<span class="op">$</span>adult_body_mass_g,x<span class="op">$</span>longevity_y)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
 <ol start="8" style="list-style-type: decimal">
 <li>Use <code>mutate</code> to create a new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that makes the relationship more linear, and easier to “read”.</li>
 </ol>
@@ -511,7 +514,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb182-3"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb182-3" aria-hidden="true"></a>         <span class="dt">logLongevity =</span> <span class="kw">log</span>(longevity_y))</span>
 <span id="cb182-4"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb182-4" aria-hidden="true"></a></span>
 <span id="cb182-5"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb182-5" aria-hidden="true"></a><span class="kw">plot</span>(x<span class="op">$</span>logMass,x<span class="op">$</span>logLongevity)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
 <ol start="9" style="list-style-type: decimal">
 <li>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</li>
 </ol>
@@ -519,7 +522,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb183-2"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb183-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">logOffspring =</span> <span class="kw">log</span>(litter_or_clutch_size_n <span class="op">*</span><span class="st"> </span>litters_or_clutches_per_y))</span>
 <span id="cb183-3"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb183-3" aria-hidden="true"></a></span>
 <span id="cb183-4"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb183-4" aria-hidden="true"></a><span class="kw">plot</span>(x<span class="op">$</span>logOffspring,x<span class="op">$</span>logLongevity)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
 <ol start="10" style="list-style-type: decimal">
 <li>To answer the final question (differences between taxonomic classes) you could now use <code>filter</code> to subset to particular classes and repeat the plot to see whether the relationships holds universally.</li>
 </ol>
@@ -528,19 +531,19 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb184-3"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb184-3" aria-hidden="true"></a></span>
 <span id="cb184-4"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb184-4" aria-hidden="true"></a><span class="kw">plot</span>(aves<span class="op">$</span>logOffspring,aves<span class="op">$</span>logLongevity)</span>
 <span id="cb184-5"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb184-5" aria-hidden="true"></a><span class="kw">title</span>(<span class="st">&quot;Aves&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb185-1" aria-hidden="true"></a>mammalia &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span></span>
 <span id="cb185-2"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb185-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(class <span class="op">==</span><span class="st"> &quot;Mammalia&quot;</span>)</span>
 <span id="cb185-3"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb185-3" aria-hidden="true"></a></span>
 <span id="cb185-4"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb185-4" aria-hidden="true"></a><span class="kw">plot</span>(mammalia<span class="op">$</span>logOffspring,mammalia<span class="op">$</span>logLongevity)</span>
 <span id="cb185-5"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb185-5" aria-hidden="true"></a><span class="kw">title</span>(<span class="st">&quot;Mammalia&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
 <div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb186-1" aria-hidden="true"></a>reptilia &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span></span>
 <span id="cb186-2"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb186-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(class <span class="op">==</span><span class="st"> &quot;Reptilia&quot;</span>)</span>
 <span id="cb186-3"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb186-3" aria-hidden="true"></a></span>
 <span id="cb186-4"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb186-4" aria-hidden="true"></a><span class="kw">plot</span>(reptilia<span class="op">$</span>logOffspring,reptilia<span class="op">$</span>logLongevity)</span>
 <span id="cb186-5"><a href="exercise-wrangling-the-amniote-life-history-database.html#cb186-5" aria-hidden="true"></a><span class="kw">title</span>(<span class="st">&quot;Reptilia&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
 
 </div>
 </div>

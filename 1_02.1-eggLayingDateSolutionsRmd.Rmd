@@ -57,17 +57,21 @@ head(eggDates)
 
 Maybe this will help: The first argument in the `pivot_longer` command (`cols`) tells R which columns contain the data you are interested in (in this case, these are `y2013`,`y2014` etc). Then the `names_to` argument tells R what you want to name the new column from this data (in this case, `Year`). Then, the `values_to` argument tells R what the data column should be called (e.g. `Day`). In addition, there is a useful argument called `names_prefix` that will remove the part of the column name  (e.g. the `y` of `y2013`)
 
+You should also make sure that the `Year` column is recognised as being a numeric variable rather than a character string. You can do this by adding a command using `mutate` and `as.numeric`, like this `mutate(Year = as.numeric(Year))`
+
 You should end up with a dataset with three columns as described above.
 ```{r}
 eggDates %>% 
-pivot_longer(cols = c(y2013,y2014,y2016,y2017,y2018,y2019),names_to = c("Year"),values_to = "Day",names_prefix = "y")
+  pivot_longer(cols = c(y2013,y2014,y2016,y2017,y2018,y2019),names_to = c("Year"),values_to = "Day",names_prefix = "y") %>% 
+  mutate(Year = as.numeric(Year))
 ```
 
 There is, in fact, a slightly easier way to do this with a "helper function", `starts_with`. This picks out all columns that start with particular text.
 
 ```{r}
 eggDates %>% 
-pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day",names_prefix = "y")
+  pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day",names_prefix = "y") %>% 
+  mutate(Year = as.numeric(Year))
 ```
 
 
@@ -76,6 +80,7 @@ pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day",name
 ```{r}
 eggDates %>% 
   pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day",names_prefix = "y") %>% 
+  mutate(Year = as.numeric(Year)) %>% 
   group_by(Year) %>% 
   summarise(meanEggDate = mean(Day,na.rm = TRUE))
 ```
@@ -85,6 +90,7 @@ You should now remember to create a new object to hold the result of this sequen
 ```{r}
 meanEggDates <- eggDates %>% 
   pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day",names_prefix = "y") %>% 
+  mutate(Year = as.numeric(Year)) %>% 
   group_by(Year) %>% 
   summarise(meanEggDate = mean(Day,na.rm = TRUE))
 ```

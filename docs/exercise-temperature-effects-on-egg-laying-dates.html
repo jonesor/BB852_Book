@@ -397,10 +397,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Import the data and take a look at it with <code>head</code> or <code>str</code>.</p></li>
 <li><p>Use <code>pivot_wider</code> to reformat the data. This might take a bit of trial and error - don’t give up!</p></li>
 </ol>
-<p>Maybe this will help: The first argument in the gather command indicates what the columns in the main data represent (i.e. here the column represents “Year”). The second argument is the name you would give to the actual data (i.e. “day”, in this case). The final argument then tells the function which columns of the data are not to be rearranged (i.e. “boxNumber” in this case).</p>
+<p>Maybe this will help: The first argument in the <code>pivot_longer</code> command (<code>cols</code>) tells R which columns contain the data you are interested in (in this case, these are <code>y2013</code>,<code>y2014</code> etc). Then the <code>names_to</code> argument tells R what you want to name the new column from this data (in this case, <code>Year</code>). Then, the <code>values_to</code> argument tells R what the data column should be called (e.g. <code>Day</code>). In addition, there is a useful argument called <code>names_prefix</code> that will remove the part of the column name (e.g. the <code>y</code> of <code>y2013</code>)</p>
+<p>You should also make sure that the <code>Year</code> column is recognised as being a numeric variable rather than a character string. You can do this by adding a command using <code>mutate</code> and <code>as.numeric</code>, like this <code>mutate(Year = as.numeric(Year))</code></p>
 <p>You should end up with a dataset with three columns as described above.</p>
 <ol start="3" style="list-style-type: decimal">
-<li><p>Ensure that year is coded as numeric variable using <code>mutate</code>. [Hint, you can use the command <code>as.numeric</code>, but first remove the “y” in the name using <code>gsub</code>].</p></li>
 <li><p>Calculate the mean egg date per year using <code>summarise</code> (remember to <code>group_by</code> the year first). Take a look at the data.</p></li>
 <li><p>Import the weather data and take a look at it with <code>head</code> or <code>str</code>.</p></li>
 <li><p>Use <code>filter</code> subset to the months of interest (February-April) and then <code>summarise</code> the data to calculate the mean temperature in this period (remember to <code>group_by</code> year). Look at the data. You should end up with a dataset with two columns - <code>year</code> and <code>meanSpringTemp</code>.</p></li>
@@ -428,48 +428,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="2" style="list-style-type: decimal">
 <li>Use <code>pivot_longer</code> to reformat the data. This might take a bit of trial and error - don’t give up!</li>
 </ol>
-<p>Maybe this will help: The first argument in the gather command indicates what the columns in the main data represent (i.e. here the column represents “Year”). The second argument is the name you would give to the actual data (i.e. “day”, in this case). The final argument then tells the function which columns of the data are not to be rearranged (i.e. “boxNumber” in this case).</p>
+<p>Maybe this will help: The first argument in the <code>pivot_longer</code> command (<code>cols</code>) tells R which columns contain the data you are interested in (in this case, these are <code>y2013</code>,<code>y2014</code> etc). Then the <code>names_to</code> argument tells R what you want to name the new column from this data (in this case, <code>Year</code>). Then, the <code>values_to</code> argument tells R what the data column should be called (e.g. <code>Day</code>). In addition, there is a useful argument called <code>names_prefix</code> that will remove the part of the column name (e.g. the <code>y</code> of <code>y2013</code>)</p>
+<p>You should also make sure that the <code>Year</code> column is recognised as being a numeric variable rather than a character string. You can do this by adding a command using <code>mutate</code> and <code>as.numeric</code>, like this <code>mutate(Year = as.numeric(Year))</code></p>
 <p>You should end up with a dataset with three columns as described above.</p>
 <div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb216-1" aria-hidden="true"></a>eggDates <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb216-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb216-2" aria-hidden="true"></a><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(y2013,y2014,y2016,y2017,y2018,y2019),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 600 x 3
-##    boxNumber Year    Day
-##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-##  1         1 y2013   116
-##  2         1 y2014   103
-##  3         1 y2016    NA
-##  4         1 y2017   107
-##  5         1 y2018   111
-##  6         1 y2019    NA
-##  7         2 y2013    NA
-##  8         2 y2014    NA
-##  9         2 y2016    NA
-## 10         2 y2017   114
-## # … with 590 more rows</code></pre>
-<p>There is, in fact, an easier way to do this with a “helper function”, <code>starts_with</code>.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb218-1" aria-hidden="true"></a>eggDates <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb218-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb218-2" aria-hidden="true"></a><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 600 x 3
-##    boxNumber Year    Day
-##        &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-##  1         1 y2013   116
-##  2         1 y2014   103
-##  3         1 y2016    NA
-##  4         1 y2017   107
-##  5         1 y2018   111
-##  6         1 y2019    NA
-##  7         2 y2013    NA
-##  8         2 y2014    NA
-##  9         2 y2016    NA
-## 10         2 y2017   114
-## # … with 590 more rows</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>Ensure that year is coded as numeric variable using <code>mutate</code>. [Hint, you can use the command <code>as.numeric</code>, but first remove the “y” in the name using <code>gsub</code>].</li>
-</ol>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-1" aria-hidden="true"></a>eggDates <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb220-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb220-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">gsub</span>(<span class="dt">pattern =</span> <span class="st">&quot;y&quot;</span>,<span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>, <span class="dt">x =</span> Year)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb220-4"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">as.numeric</span>(Year))</span></code></pre></div>
+<span id="cb216-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb216-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(y2013,y2014,y2016,y2017,y2018,y2019),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>,<span class="dt">names_prefix =</span> <span class="st">&quot;y&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb216-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb216-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">as.numeric</span>(Year))</span></code></pre></div>
 <pre><code>## # A tibble: 600 x 3
 ##    boxNumber  Year   Day
 ##        &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
@@ -484,15 +448,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9         2  2016    NA
 ## 10         2  2017   114
 ## # … with 590 more rows</code></pre>
-<ol start="4" style="list-style-type: decimal">
+<p>There is, in fact, a slightly easier way to do this with a “helper function”, <code>starts_with</code>. This picks out all columns that start with particular text.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb218-1" aria-hidden="true"></a>eggDates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb218-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb218-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>,<span class="dt">names_prefix =</span> <span class="st">&quot;y&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb218-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb218-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">as.numeric</span>(Year))</span></code></pre></div>
+<pre><code>## # A tibble: 600 x 3
+##    boxNumber  Year   Day
+##        &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
+##  1         1  2013   116
+##  2         1  2014   103
+##  3         1  2016    NA
+##  4         1  2017   107
+##  5         1  2018   111
+##  6         1  2019    NA
+##  7         2  2013    NA
+##  8         2  2014    NA
+##  9         2  2016    NA
+## 10         2  2017   114
+## # … with 590 more rows</code></pre>
+<ol start="3" style="list-style-type: decimal">
 <li>Calculate the mean egg date per year using <code>summarise</code> (remember to <code>group_by</code> the year first). Take a look at the data.</li>
 </ol>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-1" aria-hidden="true"></a>eggDates <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb222-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb222-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">gsub</span>(<span class="dt">pattern =</span> <span class="st">&quot;y&quot;</span>,<span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>, <span class="dt">x =</span> Year)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb222-4"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">as.numeric</span>(Year)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb222-5"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(Year) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb222-6"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanEggDate =</span> <span class="kw">mean</span>(Day,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-1" aria-hidden="true"></a>eggDates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb220-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>,<span class="dt">names_prefix =</span> <span class="st">&quot;y&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb220-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">as.numeric</span>(Year)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb220-4"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(Year) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb220-5"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb220-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanEggDate =</span> <span class="kw">mean</span>(Day,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##    Year meanEggDate
 ##   &lt;dbl&gt;       &lt;dbl&gt;
@@ -503,27 +484,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5  2018        117.
 ## 6  2019        111.</code></pre>
 <p>You should now remember to create a new object to hold the result of this sequence of pipes.</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-1" aria-hidden="true"></a>meanEggDates &lt;-<span class="st"> </span>eggDates <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb224-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb224-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">gsub</span>(<span class="dt">pattern =</span> <span class="st">&quot;y&quot;</span>,<span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>, <span class="dt">x =</span> Year)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb224-4"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">as.numeric</span>(Year)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb224-5"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(Year) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb224-6"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanEggDate =</span> <span class="kw">mean</span>(Day,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-1" aria-hidden="true"></a>meanEggDates &lt;-<span class="st"> </span>eggDates <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb222-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;y&quot;</span>),<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;Year&quot;</span>),<span class="dt">values_to =</span> <span class="st">&quot;Day&quot;</span>,<span class="dt">names_prefix =</span> <span class="st">&quot;y&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb222-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Year =</span> <span class="kw">as.numeric</span>(Year)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb222-4"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(Year) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb222-5"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb222-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanEggDate =</span> <span class="kw">mean</span>(Day,<span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 </div>
 <div id="preparing-the-weather-data" class="section level3" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> Preparing the weather data</h3>
-<ol start="5" style="list-style-type: decimal">
+<ol start="4" style="list-style-type: decimal">
 <li>Import the weather data and take a look at it with <code>head</code> or <code>str</code>.</li>
 </ol>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb225-1" aria-hidden="true"></a>weather &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/AarslevTemperature.csv&quot;</span>)</span></code></pre></div>
-<ol start="6" style="list-style-type: decimal">
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb223-1" aria-hidden="true"></a>weather &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/AarslevTemperature.csv&quot;</span>)</span></code></pre></div>
+<ol start="5" style="list-style-type: decimal">
 <li>Use <code>filter</code> subset to the months of interest (February-April) and then <code>summarise</code> the data to calculate the mean temperature in this period (remember to <code>group_by</code> year). Look at the data. You should end up with a dataset with two columns - <code>year</code> and <code>meanSpringTemp</code>.</li>
 </ol>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb226-1" aria-hidden="true"></a>weather &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span></span>
-<span id="cb226-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb226-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(MONTH <span class="op">%in%</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">4</span>) <span class="op">%&gt;%</span></span>
-<span id="cb226-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb226-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(YEAR) <span class="op">%&gt;%</span></span>
-<span id="cb226-4"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb226-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanAprilTemp =</span> <span class="kw">mean</span>(TEMP))</span>
-<span id="cb226-5"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb226-5" aria-hidden="true"></a>weather</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-1" aria-hidden="true"></a>weather &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span></span>
+<span id="cb224-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(MONTH <span class="op">%in%</span><span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">4</span>) <span class="op">%&gt;%</span></span>
+<span id="cb224-3"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(YEAR) <span class="op">%&gt;%</span></span>
+<span id="cb224-4"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanAprilTemp =</span> <span class="kw">mean</span>(TEMP))</span>
+<span id="cb224-5"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb224-5" aria-hidden="true"></a>weather</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 2
 ##    YEAR meanAprilTemp
 ##   &lt;int&gt;         &lt;dbl&gt;
@@ -538,11 +518,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="joining-the-two-datasets" class="section level3" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Joining the two datasets</h3>
-<ol start="7" style="list-style-type: decimal">
+<ol start="6" style="list-style-type: decimal">
 <li>Join the two datasets together using <code>left_join</code>. You should now have a dataset with columns <code>nestNumber</code>, <code>Year</code>, <code>dayNumber</code> and <code>meanAprilTemp</code></li>
 </ol>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb228-1" aria-hidden="true"></a>joinedData &lt;-<span class="st"> </span><span class="kw">left_join</span>(meanEggDates,weather,<span class="kw">c</span>(<span class="st">&quot;Year&quot;</span> =<span class="st"> &quot;YEAR&quot;</span>))</span>
-<span id="cb228-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb228-2" aria-hidden="true"></a><span class="kw">head</span>(joinedData)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb226-1" aria-hidden="true"></a>joinedData &lt;-<span class="st"> </span><span class="kw">left_join</span>(meanEggDates,weather,<span class="kw">c</span>(<span class="st">&quot;Year&quot;</span> =<span class="st"> &quot;YEAR&quot;</span>))</span>
+<span id="cb226-2"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb226-2" aria-hidden="true"></a><span class="kw">head</span>(joinedData)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##    Year meanEggDate meanAprilTemp
 ##   &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
@@ -555,11 +535,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="plot-the-data" class="section level3" number="7.1.4">
 <h3><span class="header-section-number">7.1.4</span> Plot the data</h3>
-<ol start="8" style="list-style-type: decimal">
+<ol start="7" style="list-style-type: decimal">
 <li>plot a graph of <code>meanAprilTemp</code> on the x-axis and <code>dayNumber</code> on the y-axis.</li>
 </ol>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb230-1" aria-hidden="true"></a><span class="kw">plot</span>(joinedData<span class="op">$</span>meanAprilTemp,joinedData<span class="op">$</span>meanEggDate)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="exercise-temperature-effects-on-egg-laying-dates.html#cb228-1" aria-hidden="true"></a><span class="kw">plot</span>(joinedData<span class="op">$</span>meanAprilTemp,joinedData<span class="op">$</span>meanEggDate)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
 <p>Now you should be able to answer the question we started with: is laying date associated with spring temperatures.</p>
 
 </div>

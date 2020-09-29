@@ -239,7 +239,7 @@ To get a better feel for how these two distributions differ, lets use the same a
 rn <- data.frame(normDist = rnorm(500,2,2),poisDist = rpois(500,2.4))
 summary(rn)
 
-rn <- pivot_longer(rn,cols= c(d1,d2), names_to = "sampleID", values_to = "value") #rearrange data
+rn <- pivot_longer(rn,cols= c(normDist,poisDist), names_to = "sampleID", values_to = "value") #rearrange data
 
 #Plot histograms using "identity", and make them transparent
 ggplot(rn,aes(x = value,fill=sampleID)) +
