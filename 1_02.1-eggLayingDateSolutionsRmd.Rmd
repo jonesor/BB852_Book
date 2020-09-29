@@ -55,38 +55,27 @@ head(eggDates)
 
 2. Use `pivot_longer` to reformat the data. This might take a bit of trial and error - don't give up! 
 
-Maybe this will help: The first argument in the gather command indicates what the columns in the main data represent (i.e. here the column represents "Year"). The second argument is the name you would give to the actual data (i.e. "day", in this case). The final argument then tells the function which columns of the data are not to be rearranged (i.e. "boxNumber" in this case).
+Maybe this will help: The first argument in the `pivot_longer` command (`cols`) tells R which columns contain the data you are interested in (in this case, these are `y2013`,`y2014` etc). Then the `names_to` argument tells R what you want to name the new column from this data (in this case, `Year`). Then, the `values_to` argument tells R what the data column should be called (e.g. `Day`). In addition, there is a useful argument called `names_prefix` that will remove the part of the column name  (e.g. the `y` of `y2013`)
 
 You should end up with a dataset with three columns as described above.
 ```{r}
 eggDates %>% 
-pivot_longer(cols = c(y2013,y2014,y2016,y2017,y2018,y2019),names_to = c("Year"),values_to = "Day")
+pivot_longer(cols = c(y2013,y2014,y2016,y2017,y2018,y2019),names_to = c("Year"),values_to = "Day",names_prefix = "y")
 ```
 
-There is, in fact, an easier way to do this with a "helper function", `starts_with`.
+There is, in fact, a slightly easier way to do this with a "helper function", `starts_with`. This picks out all columns that start with particular text.
 
 ```{r}
 eggDates %>% 
-pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day")
+pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day",names_prefix = "y")
 ```
 
 
-3. Ensure that year is coded as numeric variable using `mutate`. [Hint, you can use the command `as.numeric`, but first remove the "y" in the name using `gsub`].
+3. Calculate the mean egg date per year using `summarise` (remember to `group_by` the year first). Take a look at the data.
 
 ```{r}
 eggDates %>% 
-  pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day") %>% 
-  mutate(Year = gsub(pattern = "y",replacement = "", x = Year)) %>% 
-  mutate(Year = as.numeric(Year))
-```
-
-4. Calculate the mean egg date per year using `summarise` (remember to `group_by` the year first). Take a look at the data.
-
-```{r}
-eggDates %>% 
-  pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day") %>% 
-  mutate(Year = gsub(pattern = "y",replacement = "", x = Year)) %>% 
-  mutate(Year = as.numeric(Year)) %>% 
+  pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day",names_prefix = "y") %>% 
   group_by(Year) %>% 
   summarise(meanEggDate = mean(Day,na.rm = TRUE))
 ```
@@ -95,9 +84,7 @@ You should now remember to create a new object to hold the result of this sequen
 
 ```{r}
 meanEggDates <- eggDates %>% 
-  pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day") %>% 
-  mutate(Year = gsub(pattern = "y",replacement = "", x = Year)) %>% 
-  mutate(Year = as.numeric(Year)) %>% 
+  pivot_longer(cols = starts_with("y"),names_to = c("Year"),values_to = "Day",names_prefix = "y") %>% 
   group_by(Year) %>% 
   summarise(meanEggDate = mean(Day,na.rm = TRUE))
 ```
@@ -105,13 +92,13 @@ meanEggDates <- eggDates %>%
 ### Preparing the weather data
 
 
-5. Import the weather data and take a look at it with `head` or `str`.
+4. Import the weather data and take a look at it with `head` or `str`.
 
 ```{r}
 weather <- read.csv("CourseData/AarslevTemperature.csv")
 ```
 
-6. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `year` and `meanSpringTemp`. 
+5. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `year` and `meanSpringTemp`. 
 
 ```{r}
 weather <- weather %>%
@@ -123,7 +110,7 @@ weather
 
 ### Joining the two datasets
 
-7. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
+6. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
 
 ```{r}
 joinedData <- left_join(meanEggDates,weather,c("Year" = "YEAR"))
@@ -133,7 +120,7 @@ head(joinedData)
 
 ### Plot the data
 
-8. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
+7. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
 
 ```{r}
 plot(joinedData$meanAprilTemp,joinedData$meanEggDate)
