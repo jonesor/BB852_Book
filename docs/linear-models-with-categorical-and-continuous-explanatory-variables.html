@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-30" />
+<meta name="date" content="2020-10-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -388,7 +388,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 15</span> Linear models with categorical and continuous explanatory variables</h1>
 <p>In the previous chapter we looked at linear models where there is a continuous response variable and two categorical explanatory variables (we call this type of linear model two-way ANOVA). In this chapter we will look at linear models where the explanatory variables are both continuous and categorical. You can think of these as a kind of cross between ANOVA and linear regression. These type of models are often given the name “<em>ANCOVA</em>” or <em>Analysis of Covariance</em>.</p>
 <p>In a simple case, you might be interested in a model with a continuous response variable (e.g. height) and continuous and a categorical explanatory variables (e.g. hand width and gender). The categorical variable may have any number of levels, but the simplest case is with two (e.g. gender with male and female levels).</p>
-<p>Some of these different possible outcomes of this type of analysis are illustrated in Figure . We might see that neither of the two explanatory variables has a significant effect. We might see that one of them does but not the other one. We might see an interaction effect (where the effect of one variable (e.g. hand width) depends on the other (e.g gender). We might also see an interaction effect but no main effect.</p>
+<p>Some of these different possible outcomes of this type of analysis are illustrated in Figure @ref{fig:possibilities}. We might see that neither of the two explanatory variables has a significant effect. We might see that one of them does but not the other one. We might see an interaction effect (where the effect of one variable (e.g. hand width) depends on the other (e.g gender). We might also see an interaction effect but no main effect.</p>
 <div class="figure" style="text-align: center"><span id="fig:ANCOVApossibilities"></span>
 <img src="BB852_files/figure-html/ANCOVApossibilities-1.png" alt="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not)." width="960" />
 <p class="caption">
@@ -404,7 +404,7 @@ Figure 15.1: Some potential results of the experiment. There may be a significan
 Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot</code> packages, and to set your working directory correctly.
 </p>
 </div>
-<p>We’ll begin by plotting the data (Figure ).</p>
+<p>We’ll begin by plotting the data (Figure @ref{fig:exampleANCOVA}).</p>
 <div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb435-1" aria-hidden="true"></a>classData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>)</span>
 <span id="cb435-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb435-2" aria-hidden="true"></a>(A&lt;-<span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height,<span class="dt">colour =</span> Gender)) <span class="op">+</span></span>
 <span id="cb435-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb435-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
@@ -437,10 +437,10 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 ## 
 ## Response: Height
 ##                  Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
-## HandWidth         1 1038.46 1038.46 40.8621 7.576e-07 ***
-## Gender            1  369.46  369.46 14.5378 0.0007246 ***
-## HandWidth:Gender  1    4.89    4.89  0.1922 0.6645538    
-## Residuals        27  686.17   25.41                      
+## HandWidth         1    4.07    4.07  0.1075    0.7444    
+## Gender            1 3019.49 3019.49 79.8027 7.415e-12 ***
+## HandWidth:Gender  1   27.90   27.90  0.7373    0.3947    
+## Residuals        49 1854.01   37.84                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This type of <em>sequential sum of squares</em> Analysis of Variance table should be getting fairly familiar to you now, but let’s unpack what this means. There are four rows in the summary table - one for each of the terms in the model (<code>HandWidth</code>, <code>Gender</code> and <code>HandWidth:Gender</code>), and one for the <code>Residuals</code> (the unexplained variation that remains after fitting the model). The table includes degrees of freedom (<code>Df</code>), sum of squares (<code>Sum Sq</code>), mean sum of squares (<code>Mean Sq</code>) and the associated F and p-values (<code>F value</code> and <code>Pr(&gt;F)</code>.</p>
@@ -459,21 +459,22 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 ##     data = classData)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -9.480 -4.096  1.845  3.195  7.821 
+##      Min       1Q   Median       3Q      Max 
+## -11.7981  -4.9121  -0.9305   4.2535  15.6277 
 ## 
 ## Coefficients:
 ##                      Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)          154.9285    10.3206  15.012 1.26e-14 ***
-## HandWidth              1.7667     1.2707   1.390    0.176    
-## GenderMale             1.3710    18.4712   0.074    0.941    
-## HandWidth:GenderMale   0.8839     2.0160   0.438    0.665    
+## (Intercept)          170.2180     2.8492  59.742  &lt; 2e-16 ***
+## HandWidth             -0.1839     0.2977  -0.618  0.53951    
+## GenderMale            21.8191     7.6653   2.846  0.00644 ** 
+## HandWidth:GenderMale  -0.6677     0.7776  -0.859  0.39471    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 5.041 on 27 degrees of freedom
-## Multiple R-squared:  0.6731,	Adjusted R-squared:  0.6368 
-## F-statistic: 18.53 on 3 and 27 DF,  p-value: 9.892e-07</code></pre>
+## Residual standard error: 6.151 on 49 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.6221,	Adjusted R-squared:  0.5989 
+## F-statistic: 26.88 on 3 and 49 DF,  p-value: 2.008e-10</code></pre>
 <p>This summary table gives the coefficients of the statistical model, their standard errors, and the t-test results of whether the estimate is greater than 0. This is the same as the <code>summary</code> tables given for ANOVA and linear regression.</p>
 <p>In the ANOVA <code>summary</code> tables, the estimates were given in relation to the <em>reference level</em> – the <code>(Intercept)</code> and these ANCOVA <code>summary</code> tables are no difference. Interpreting is best done with reference to the graph of the data and fitted model outputs (the graph above).</p>
 <p>The reference level (the <code>(Intercept)</code>) is the intercept for the line for the first level of the categorical variable (Females, in this case). Here the model estimates that the intercept for Females is at 154.9 (i.e. if you extended the line out to the left it would eventually cross the y-axis at this point). The next coefficient <code>HandWidth</code> is the slope of this Female line (1.7667). Then we have <code>GenderMale</code>: this coefficient is the difference in intercept between the Female and Male lines. This is followed by the intercept for the interaction term <code>HandWidth:GenderMale</code>: this is the difference between slopes for the two genders.</p>
@@ -499,10 +500,10 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
-##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
-## HandWidth  1 1038.46 1038.46  42.076 4.992e-07 ***
-## Gender     1  369.46  369.46  14.970 0.0005963 ***
-## Residuals 28  691.05   24.68                      
+##           Df  Sum Sq Mean Sq F value   Pr(&gt;F)    
+## HandWidth  1    4.07    4.07  0.1081   0.7437    
+## Gender     1 3019.49 3019.49 80.2242 5.72e-12 ***
+## Residuals 50 1881.91   37.64                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now all the terms in the model are significant.</p>
@@ -512,20 +513,21 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 ## lm(formula = Height ~ HandWidth + Gender, data = classData)
 ## 
 ## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -9.613 -3.797  1.446  3.203  8.210 
+##     Min      1Q  Median      3Q     Max 
+## -11.089  -4.230  -1.684   4.176  16.051 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 152.0964     7.9323  19.174  &lt; 2e-16 ***
-## HandWidth     2.1179     0.9722   2.179 0.037945 *  
-## GenderMale    9.3971     2.4288   3.869 0.000596 ***
+## (Intercept) 171.0787     2.6600  64.314  &lt; 2e-16 ***
+## HandWidth    -0.2818     0.2743  -1.027    0.309    
+## GenderMale   15.4059     1.7200   8.957 5.72e-12 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 4.968 on 28 degrees of freedom
-## Multiple R-squared:  0.6708,	Adjusted R-squared:  0.6472 
-## F-statistic: 28.52 on 2 and 28 DF,  p-value: 1.758e-07</code></pre>
+## Residual standard error: 6.135 on 50 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.6164,	Adjusted R-squared:  0.601 
+## F-statistic: 40.17 on 2 and 50 DF,  p-value: 3.962e-11</code></pre>
 <p>The coefficient summary now gives us a two intercept estimates (152.0964 for females and 152.0964 + 2.1179 = 154.2143 for males) and single estimate for a slope that applies to both genders (2.1179).</p>
 <p>Unfortunately, the handy <code>geom_smooth</code> function cannot handle this simpler model! We must take a slightly different, and sadly mode complicated approach:</p>
 <p>What we need to do is <strong>predict</strong> using the model what the height will be under different conditions. Think of this as “plugging values into an equation”.</p>
@@ -542,10 +544,10 @@ Figure 15.2: ANCOVA on hand width vs. height data in males and females
 <div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb454-1" aria-hidden="true"></a>predictData<span class="op">$</span>Height &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_B,<span class="dt">newdata =</span> predictData)</span>
 <span id="cb454-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb454-2" aria-hidden="true"></a>predictData</span></code></pre></div>
 <pre><code>##   HandWidth Gender   Height
-## 1       6.5   Male 175.2598
-## 2      11.0   Male 184.7902
-## 3       6.5 Female 165.8626
-## 4      11.0 Female 175.3931</code></pre>
+## 1       6.5   Male 184.6531
+## 2      11.0   Male 183.3851
+## 3       6.5 Female 169.2471
+## 4      11.0 Female 167.9792</code></pre>
 <p>Now we can add lines for these predicted values to our plot. We do this using the <code>geom_smooth</code> function as before, but this time we use the arguments <code>data = predictData</code> to tell R to use the new data, and <code>stat = "identity"</code> and to ensure that we plot the data rather than fitting any model.</p>
 <p>You may wish to add an error ribbon to these lines. We will cover this in a later class (but see pages 159-164 in the GSWR textbook).</p>
 <div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb456-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height,<span class="dt">colour =</span> Gender)) <span class="op">+</span></span>

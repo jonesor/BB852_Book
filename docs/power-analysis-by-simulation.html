@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-09-30" />
+<meta name="date" content="2020-10-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -424,7 +424,8 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </div>
 <p>We can simulate a distribution of measurements from this distribution using the <code>rnorm</code> function. This draws <code>n</code> numbers from a theoretical normal distribution with a particular <code>mean</code> and standard deviation (<code>sd</code>). For example:</p>
 <div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="power-analysis-by-simulation.html#cb525-1" aria-hidden="true"></a>(control &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">12</span>, <span class="dt">sd =</span> <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>##  [1]  8.378803 12.832288 15.253324  4.962907 13.287374 13.518168 10.275780 10.360104 10.306644  9.329887</code></pre>
+<pre><code>##  [1]  8.378803 12.832288 15.253324  4.962907 13.287374 13.518168 10.275780 10.360104 10.306644
+## [10]  9.329887</code></pre>
 <p>Because this is a random process your results will be different (and they will be different each time you run the code).</p>
 <p>Suppose that other studies on a different species has shown that a high protein diet leads to a 20% increase in size. This means that we expect our treatment group to have a body length of 12 <span class="math inline">\(\times\)</span> 1.2 = 14.4mm. If we assume the standard deviation will be the same, we can simulate a distribution for a high protein treatment group in the same way as for the control group:</p>
 <div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="power-analysis-by-simulation.html#cb527-1" aria-hidden="true"></a>(treatment &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>,<span class="dt">mean =</span><span class="fl">14.4</span>,<span class="dt">sd =</span> <span class="dv">3</span>))</span></code></pre></div>
