@@ -4,7 +4,7 @@ In the one-way ANOVA we covered in the previous chapter we were interested in un
 
 The two-way ANOVA is an extension of one-way ANOVA that allows you to investigate the effect of **two** categorical variables. This can be useful in an experimental context. 
 
-For example, one might have run an experiment investigating in the effect of two types of diet (*lowProtein* and *highProtein*), and genotype (*gt1* and *gt2*), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possible outcomes are illustrated in Figure \@ref{fig:possibilities}. the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
+For example, one might have run an experiment investigating in the effect of two types of diet (*lowProtein* and *highProtein*), and genotype (*gt1* and *gt2*), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possible outcomes are illustrated in Figure \@ref(fig:possibilities). the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
 
 
 ```{r possibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
@@ -118,7 +118,7 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 ```
 
 
-First, import the `insectDiet.csv` data and plot it, to produce a plot like in Figure \@ref{fig:dietAndGenotype}. From looking at the graph in Figure \@ref{fig:dietAndGenotype} you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a  high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the *difference* in size between the insects raised on the different diets) is larger for genotype 1 than it is for genotype 2. But are these differences statistically meaningful?
+First, import the `insectDiet.csv` data and plot it, to produce a plot like in Figure \@ref(fig:dietAndGenotype). From looking at the graph in Figure \@ref(fig:dietAndGenotype) you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a  high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the *difference* in size between the insects raised on the different diets) is larger for genotype 1 than it is for genotype 2. But are these differences statistically meaningful?
 
 
 
