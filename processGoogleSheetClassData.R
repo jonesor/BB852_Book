@@ -26,4 +26,4 @@ classData <- classData %>%
   select(Year,everything(),-Timestamp)
 
 #Write to course data folder
-write.csv(x = classData,file = "CourseData/classData.csv")
+write.csv(x = classData,file = "CourseData/classData.csv",row.names = FALSE)
