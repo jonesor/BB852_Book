@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-11-06" />
+<meta name="date" content="2020-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -390,7 +390,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="distributions" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Distributions</h2>
 <p>A statistical distribution is a description of the relative number of times (the <em>frequency</em>) possible outcomes will occur if repeated samples were to be taken. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, statistical analyses often assume a normal distribution. The normal distribution is symmetrical (centered on the mean) and 68% of observations fall within 1 standard deviation (s.d.), and 95% of observations fall within 2 s.d..</p>
-<p><img src="BB852_files/figure-html/unnamed-chunk-160-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-147-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>We will use R to simulate some distributions, and explore these to get a feel for them.
 R has functions for generating random numbers from different kinds of distributions. For example, the function <code>rnorm</code> will generate numbers from a normal distribution and <code>rpois</code> will generate numbers from a Poisson distribution.</p>
 </div>
@@ -419,7 +419,7 @@ Try changing the values of the arguments to alter the number of values you gener
 <span id="cb254-2"><a href="distributions-and-summarising-data.html#cb254-2" aria-hidden="true"></a>(p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rn,<span class="kw">aes</span>(<span class="dt">x=</span>d1)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb254-3"><a href="distributions-and-summarising-data.html#cb254-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>()</span>
 <span id="cb254-4"><a href="distributions-and-summarising-data.html#cb254-4" aria-hidden="true"></a>  )</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-164-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-151-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>We can calculate the mean and standard deviation using <code>summarise</code> (along with other estimates of “spread”). The mean and standard deviation values will be close (but not identical) to the values you set when you generated the distribution.</p>
 <p><em>Note that here I put a set of parentheses around the code to both display the result AND save the result in an object called <code>sv</code></em></p>
 <div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="distributions-and-summarising-data.html#cb255-1" aria-hidden="true"></a>(sv &lt;-<span class="st"> </span>rn <span class="op">%&gt;%</span><span class="st"> </span></span>
@@ -436,14 +436,14 @@ Try changing the values of the arguments to alter the number of values you gener
 <span id="cb257-3"><a href="distributions-and-summarising-data.html#cb257-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> sv<span class="op">$</span>meanEst<span class="op">+</span>sv<span class="op">$</span>sdEst, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="co">#upperSD</span></span>
 <span id="cb257-4"><a href="distributions-and-summarising-data.html#cb257-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> sv<span class="op">$</span>meanEst<span class="op">-</span>sv<span class="op">$</span>sdEst, <span class="dt">size=</span><span class="dv">1</span>) <span class="co">#lowerSD</span></span>
 <span id="cb257-5"><a href="distributions-and-summarising-data.html#cb257-5" aria-hidden="true"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-166-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-153-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>We can compare these with the true values (the values we set when we generated the data), by adding them to the plot in a different colour (mean=5, sd=2).</p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="distributions-and-summarising-data.html#cb258-1" aria-hidden="true"></a>(p3 &lt;-<span class="st"> </span>p2 <span class="op">+</span><span class="st"> </span></span>
 <span id="cb258-2"><a href="distributions-and-summarising-data.html#cb258-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">5</span>, <span class="dt">size=</span><span class="dv">2</span>, <span class="dt">colour=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co">#mean</span></span>
 <span id="cb258-3"><a href="distributions-and-summarising-data.html#cb258-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">5</span><span class="op">+</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span>,<span class="dt">colour=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co">#upperSD</span></span>
 <span id="cb258-4"><a href="distributions-and-summarising-data.html#cb258-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">5-2</span>, <span class="dt">size=</span><span class="dv">1</span>,<span class="dt">colour=</span><span class="st">&quot;red&quot;</span>) <span class="co">#lowerSD</span></span>
 <span id="cb258-5"><a href="distributions-and-summarising-data.html#cb258-5" aria-hidden="true"></a> ) </span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-167-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-154-1.png" width="384" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
 Try repeating these plots with data that has different sample sizes. For example, use sample sizes of 5000, 250, 100, 50, 10. What do you notice? You should notice that for smaller sample sizes, the true distribution is not captured very well.
@@ -475,7 +475,7 @@ Try adding lines for the standard error of the mean to one of your histograms.
 <span id="cb261-3"><a href="distributions-and-summarising-data.html#cb261-3" aria-hidden="true"></a><span class="co">#Plot histograms using &quot;identity&quot;, and make them transparent</span></span>
 <span id="cb261-4"><a href="distributions-and-summarising-data.html#cb261-4" aria-hidden="true"></a><span class="kw">ggplot</span>(rn,<span class="kw">aes</span>(<span class="dt">x =</span> value,<span class="dt">fill=</span>sampleID)) <span class="op">+</span></span>
 <span id="cb261-5"><a href="distributions-and-summarising-data.html#cb261-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-171-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-158-1.png" width="384" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
 Try changing the distributions and re-plotting them (you can change the number of samples, the mean values and the standard deviations).
@@ -485,7 +485,7 @@ Try changing the distributions and re-plotting them (you can change the number o
 <div id="poisson-distribution" class="section level2" number="9.4">
 <h2><span class="header-section-number">9.4</span> Poisson distribution</h2>
 <p>The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the “<code>lambda</code>” parameter. Small values of lambda give more skewed distributions.</p>
-<p><img src="BB852_files/figure-html/unnamed-chunk-173-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-160-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>Let’s generate and plot some Poisson distributed data.</p>
 <div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="distributions-and-summarising-data.html#cb262-1" aria-hidden="true"></a>rp &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">d1 =</span> <span class="kw">rpois</span>(<span class="dv">500</span>,<span class="fl">2.4</span>))</span>
 <span id="cb262-2"><a href="distributions-and-summarising-data.html#cb262-2" aria-hidden="true"></a><span class="kw">summary</span>(rp) <span class="co">#Take a look</span></span></code></pre></div>
@@ -500,7 +500,7 @@ Try changing the distributions and re-plotting them (you can change the number o
 <span id="cb264-2"><a href="distributions-and-summarising-data.html#cb264-2" aria-hidden="true"></a>(p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(rp,<span class="kw">aes</span>(<span class="dt">x=</span>d1)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb264-3"><a href="distributions-and-summarising-data.html#cb264-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="co"># we know the bins will be 1</span></span>
 <span id="cb264-4"><a href="distributions-and-summarising-data.html#cb264-4" aria-hidden="true"></a>  )</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-174-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-161-1.png" width="384" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
 Try changing the value of lambda and look at how the shape changes.
@@ -518,7 +518,7 @@ Try changing the value of lambda and look at how the shape changes.
 <span id="cb267-2"><a href="distributions-and-summarising-data.html#cb267-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> sv<span class="op">$</span>meanEst, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="co">#mean</span></span>
 <span id="cb267-3"><a href="distributions-and-summarising-data.html#cb267-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> sv<span class="op">$</span>meanEst<span class="op">+</span><span class="dv">2</span><span class="op">*</span>sv<span class="op">$</span>sdEst, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="co">#upper2SD</span></span>
 <span id="cb267-4"><a href="distributions-and-summarising-data.html#cb267-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> sv<span class="op">$</span>meanEst<span class="dv">-2</span><span class="op">*</span>sv<span class="op">$</span>sdEst, <span class="dt">size=</span><span class="dv">1</span>) <span class="co">#lower2SD</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-177-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-164-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>This looks like a TERRIBLE fit: The mean is not close to the most common value in the data set and the lower limit of the standard deviation indicates we should expect some negative values - this is impossible for Poisson data. The reason for this is that mean and standard deviation, and therefore standard error, are intended for normally distributed data. When the data come from other distributions we must take another approach.</p>
 <p>So how should we summarise this data?</p>
 <p>One approach is to report the median as a measure of “central tendency” instead of the mean, and to report “quantiles” of the data along with the range (i.e. minimum and maximum). Quantiles are simply the cut points that divide the data into parts. For example, the 25% quantile is the point where (if the data were arranged in order) one quarter of the values would fall below; the 50% quantile would mark the middle of the data (= the median); the 75% quantile would be the point when three-quarters of the data are below. You can calculate those things using <code>dplyr</code>’s <code>summarise</code>. However, you can also simply use the base R <code>summary</code> command.</p>
@@ -553,7 +553,7 @@ Try changing the value of lambda and look at how the shape changes.
 <span id="cb274-3"><a href="distributions-and-summarising-data.html#cb274-3" aria-hidden="true"></a><span class="co">#Plot histograms using &quot;identity&quot;, and make them transparent</span></span>
 <span id="cb274-4"><a href="distributions-and-summarising-data.html#cb274-4" aria-hidden="true"></a><span class="kw">ggplot</span>(rn,<span class="kw">aes</span>(<span class="dt">x =</span> value,<span class="dt">fill=</span>sampleID)) <span class="op">+</span></span>
 <span id="cb274-5"><a href="distributions-and-summarising-data.html#cb274-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>,<span class="dt">binwidth =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-179-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-166-1.png" width="384" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
 Try changing the arguments in the <code>rnorm</code> and <code>rpois</code> commands to change the distributions.
@@ -562,7 +562,7 @@ Try changing the arguments in the <code>rnorm</code> and <code>rpois</code> comm
 <p>Finally, let’s take another view of these data and look at them using box plots. Box plots are a handy alternative to histograms and many people prefer them.</p>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="distributions-and-summarising-data.html#cb275-1" aria-hidden="true"></a><span class="kw">ggplot</span>(rn,<span class="kw">aes</span>(<span class="dt">x=</span>sampleID, <span class="dt">y =</span> value,<span class="dt">fill=</span>sampleID)) <span class="op">+</span></span>
 <span id="cb275-2"><a href="distributions-and-summarising-data.html#cb275-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-181-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-168-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer then the other) and cannot be &lt;0. Which graph to you prefer? (there’s no right answer!)</p>
 
 </div>
@@ -587,8 +587,8 @@ Try changing the arguments in the <code>rnorm</code> and <code>rpois</code> comm
 <span id="cb280-2"><a href="distributions-and-summarising-data.html#cb280-2" aria-hidden="true"></a></span>
 <span id="cb280-3"><a href="distributions-and-summarising-data.html#cb280-3" aria-hidden="true"></a><span class="kw">ggplot</span>(result,<span class="kw">aes</span>(<span class="dt">x =</span> result)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb280-4"><a href="distributions-and-summarising-data.html#cb280-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-185"></span>
-<img src="BB852_files/figure-html/unnamed-chunk-185-1.png" alt="Barplot of 6 simulated coin tosses" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-172"></span>
+<img src="BB852_files/figure-html/unnamed-chunk-172-1.png" alt="Barplot of 6 simulated coin tosses" width="672" />
 <p class="caption">
 Figure 9.1: Barplot of 6 simulated coin tosses
 </p>
@@ -624,8 +624,8 @@ Now increase the sample size (e.g. to 20, 50, 100) and see what happens to the 
 <span id="cb284-4"><a href="distributions-and-summarising-data.html#cb284-4" aria-hidden="true"></a><span class="kw">ggplot</span>(result,<span class="kw">aes</span>(<span class="dt">x =</span> result)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb284-5"><a href="distributions-and-summarising-data.html#cb284-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span><span class="st"> </span></span>
 <span id="cb284-6"><a href="distributions-and-summarising-data.html#cb284-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> n<span class="op">/</span><span class="dv">6</span>,<span class="dt">slope =</span> <span class="dv">0</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-189"></span>
-<img src="BB852_files/figure-html/unnamed-chunk-189-1.png" alt="Barplot of 90 simulated dice throws" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-176"></span>
+<img src="BB852_files/figure-html/unnamed-chunk-176-1.png" alt="Barplot of 90 simulated dice throws" width="672" />
 <p class="caption">
 Figure 9.2: Barplot of 90 simulated dice throws
 </p>

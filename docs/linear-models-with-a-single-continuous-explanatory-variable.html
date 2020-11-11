@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-11-06" />
+<meta name="date" content="2020-11-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -447,25 +447,26 @@ Figure 14.4: (A) the total variation around the overall mean Height value (B) th
 </div>
 <div id="worked-example-height-hand-width-relationship" class="section level2" number="14.4">
 <h2><span class="header-section-number">14.4</span> Worked example: height-hand width relationship</h2>
-<p>Let’s now use R to fit a linear regression model to estimate the relationship between hand width and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene.</p>
+<p>Let’s now use R to fit a linear regression model to estimate the relationship between hand width and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene. I am restricting my analysis to 2019 data, but you could do it for any year (or all years, but you might need to first get rid of some outliers using <code>filter</code>).</p>
 <div class="do-something">
 <p>
 Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot</code> packages, and to set your working directory correctly.
 </p>
 </div>
 <p>First, load the data:</p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb426-1" aria-hidden="true"></a>classData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb426-1" aria-hidden="true"></a>classData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb426-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb426-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>)</span></code></pre></div>
 <p>We should then plot the data to make sure it looks OK.</p>
 <div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb427-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x=</span>HandWidth,<span class="dt">y=</span>Height)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb427-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb427-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-302-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-289-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>This looks OK, and the relationship looks fairly linear. Now we can fit a model using the <code>lm</code> function (same as for ANOVA!).<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></p>
 <p>The response variable is always the one we would like to predict, in this case <code>Height</code>. The explanatory variable (sometimes called the predictor) is <code>HandWidth</code>. These are added to the model using a formula where they are separated with the <code>~</code> (“tilde”) symbol: <code>Height ~ HandWidth</code>. In the model expression, we also need to tell R where the data are using the <code>data =</code> argument. We can save the model as an R object by naming it e.g. <code>mod_A &lt;-</code>.</p>
 <div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb428-1" aria-hidden="true"></a>mod_A &lt;-<span class="st"> </span><span class="kw">lm</span>(Height <span class="op">~</span><span class="st"> </span>HandWidth, <span class="dt">data =</span> classData)</span></code></pre></div>
 <p>Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the <code>autoplot</code> function in the <code>ggfortify</code> package (you may need to install and/or load the package).</p>
 <div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb429-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
 <span id="cb429-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb429-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-304-1.png" width="480" style="display: block; margin: auto;" />
+<p><img src="BB852_files/figure-html/unnamed-chunk-291-1.png" width="480" style="display: block; margin: auto;" />
 These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows “leverage” which is a measure of how much influence individual data points have on the model. Outliers will have large leverage and can mess up your model. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.</p>
 <p>Now that we are satisfied that the model doesn’t violate the assumptions we can dig into the model to see what it is telling us.</p>
 <p>To test the (slightly boring) slope hypothesis we use the <code>anova</code> function (again, this is the same as with the ANOVA).</p>
@@ -473,13 +474,15 @@ These diagnostic plots allow you to check that the assumptions of the model are 
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
-##           Df Sum Sq Mean Sq F value Pr(&gt;F)
-## HandWidth  1    4.1   4.067  0.0423 0.8378
-## Residuals 51 4901.4  96.106</code></pre>
+##           Df  Sum Sq Mean Sq F value Pr(&gt;F)  
+## HandWidth  1  343.86  343.86  6.0059 0.0201 *
+## Residuals 31 1774.86   57.25                 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>When you run this function, you get a summary table that looks exactly like the one you got with an ANOVA. There are degrees of freedom (<code>Df</code>), Sums of Squares (<code>Sum Sq</code>), Mean Sums of Squares (<code>Mean Sq</code>) and the <code>F value</code> and p-value (<code>Pr(&gt;F)</code>).
-The most important parts of this table are the F value (0.0423) and the p-value (0.83783421): as described above, large F values lead to small p-values. This tells us that it is VERY unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand width)</p>
+The most important parts of this table are the F value (6.0059) and the p-value (0.02009856): as described above, large F values lead to small p-values. This tells us that it is VERY unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand width)</p>
 <p>We could report the results of this hypothesis test like this:
-<em>There was a statistically significant association between hand width and height (F = 0.0423, d.f. = 1,51, p &lt; 0.001)</em></p>
+<em>There was a statistically significant association between hand width and height (F = 6.0059, d.f. = 1,31, p &lt; 0.001)</em></p>
 <p>Now we can dig deeper by asking for a <code>summary</code> of the model.</p>
 <div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb432-1" aria-hidden="true"></a><span class="kw">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
@@ -487,20 +490,19 @@ The most important parts of this table are the F value (0.0423) and the p-value 
 ## lm(formula = Height ~ HandWidth, data = classData)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -15.800  -8.062  -1.151   5.867  24.849 
+##      Min       1Q   Median       3Q      Max 
+## -13.2276  -6.9886  -0.2276   5.3158  15.2064 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 174.34918    4.21035  41.410   &lt;2e-16 ***
-## HandWidth     0.08913    0.43325   0.206    0.838    
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  161.052      5.878  27.398   &lt;2e-16 ***
+## HandWidth      1.522      0.621   2.451   0.0201 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 9.803 on 51 degrees of freedom
-##   (2 observations deleted due to missingness)
-## Multiple R-squared:  0.0008291,	Adjusted R-squared:  -0.01876 
-## F-statistic: 0.04232 on 1 and 51 DF,  p-value: 0.8378</code></pre>
+## Residual standard error: 7.567 on 31 degrees of freedom
+## Multiple R-squared:  0.1623,	Adjusted R-squared:  0.1353 
+## F-statistic: 6.006 on 1 and 31 DF,  p-value: 0.0201</code></pre>
 <p>This summary has a lot of information. First we see <code>Call</code> which reminds us what the formula we have used to fit the model. Then there is some summary information about the residuals. Ideally these should be fairly balanced around 0 (i.e. the <code>Min</code> value should be negative but with the same magnitude as <code>Max</code>). If they are <strong>wildly</strong> different, then you might want to check the data or model. In this case they look OK.</p>
 <p>Then we get to the important part of the table - the <code>Coefficients</code>. This lists the coefficients of the model and shows first the <code>Intercept</code> and then the slope, which is given by the name of the explanatory variable (<code>HandWidth</code> here). For each coefficient we get the <code>Estimate</code> of its value, and the uncertainty in that estimate (the standard error (`Std. Error)).</p>
 <p>These estimates and errors are each followed by a <code>t value</code> and a p-value (<code>Pr(&gt;|t|</code>)). These values provide a test of whether the slope/intercept is different from zero. In this case they both are. The t-tests are indeed doing t-tests of these estimates, in the same way that a regular t-test works, so that the significance depends on the ratio between signal (the estimate) and the noise (the standard error). This is illustrated for the coefficient estimates for our model in Figure <a href="linear-models-with-a-single-continuous-explanatory-variable.html#fig:coefPlot">14.5</a>.</p>
@@ -510,11 +512,11 @@ The most important parts of this table are the F value (0.0423) and the p-value 
 Figure 14.5: Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.
 </p>
 </div>
-<p>The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the <span class="math inline">\(\epsilon\)</span> term in the equations at the start of this chapter). Then we are told what the <span class="math inline">\(R^2\)</span> value is 0.0008. The adjusted <span class="math inline">\(R^2\)</span> is for use in multiple regression models, where there are many explanatory variables and should not be used for this simple regression model. So what does <span class="math inline">\(R^2\)</span> actually mean?</p>
+<p>The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the <span class="math inline">\(\epsilon\)</span> term in the equations at the start of this chapter). Then we are told what the <span class="math inline">\(R^2\)</span> value is 0.1623. The adjusted <span class="math inline">\(R^2\)</span> is for use in multiple regression models, where there are many explanatory variables and should not be used for this simple regression model. So what does <span class="math inline">\(R^2\)</span> actually mean?</p>
 <p><span class="math inline">\(R^2\)</span> is the square of the correlation coefficient <span class="math inline">\(r\)</span> and is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the <span class="math inline">\(R^2\)</span> value would be 1. This idea is illustrated in Figure <a href="linear-models-with-a-single-continuous-explanatory-variable.html#fig:rSquared">14.6</a>.</p>
 <p>We could describe the model like this:</p>
-<p><em>There is a statistically significant association between hand width and height (F = 0.0423, d.f. = 1,51, p &lt; 0.001) The equation of the fitted model is: Height = 0.09(<span class="math inline">\(\pm\)</span> 0.43) <span class="math inline">\(\times\)</span> HandWidth + 174.35(<span class="math inline">\(\pm\)</span> 4.21). The model explains 0% of the variation in height (<span class="math inline">\(R^2\)</span> = 0.001).</em></p>
-<p>… or maybe, <em>The model, which explained 0% of the variation in height, showed that the slope of the relationship between hand width and height is 0.09 <span class="math inline">\(\pm\)</span> 0.43 which is significantly greater than 0 (t = 41.41, p &lt; 0.01)</em></p>
+<p><em>There is a statistically significant association between hand width and height (F = 6.0059, d.f. = 1,31, p &lt; 0.001) The equation of the fitted model is: Height = 1.52(<span class="math inline">\(\pm\)</span> 0.62) <span class="math inline">\(\times\)</span> HandWidth + 161.05(<span class="math inline">\(\pm\)</span> 5.88). The model explains 16% of the variation in height (<span class="math inline">\(R^2\)</span> = 0.162).</em></p>
+<p>… or maybe, <em>The model, which explained 16% of the variation in height, showed that the slope of the relationship between hand width and height is 1.52 <span class="math inline">\(\pm\)</span> 0.62 which is significantly greater than 0 (t = 27.40, p &lt; 0.01)</em></p>
 <div class="figure" style="text-align: center"><span id="fig:rSquared"></span>
 <img src="BB852_files/figure-html/rSquared-1.png" alt="An illustration of different R-squared values." width="384" />
 <p class="caption">
@@ -525,7 +527,7 @@ Figure 14.6: An illustration of different R-squared values.
 <div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height)) <span class="op">+</span></span>
 <span id="cb434-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
 <span id="cb434-3"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-307-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-294-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p><strong>Question:</strong> If police find the 9.8cm wide hand print at a crime scene, what is your best guess of the height of the person involved?</p>
 <!--
 predict(mod_A,list(HandWidth = 9.8))
@@ -572,7 +574,7 @@ head(chirps)
   geom_point())
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-310-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-297-1.png" width="672" />
 --></p></li>
 <li><p>Fit a linear regression model with <code>lm</code>
 <!--
@@ -589,7 +591,7 @@ library(ggfortify)
 autoplot(chirp_mod)
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-312-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-299-1.png" width="672" />
 --></p></li>
 <li><p>Use <code>anova</code> to figure out if the effect of temperature is statistically significant.
 <!--
@@ -649,7 +651,7 @@ summary(chirp_mod)
 A + geom_smooth(method="lm")
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-315-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-302-1.png" width="672" />
 -->
 <ol start="10" style="list-style-type: decimal">
 <li>Can I use cricket chirp frequency as a kind of thermometer?</li>
