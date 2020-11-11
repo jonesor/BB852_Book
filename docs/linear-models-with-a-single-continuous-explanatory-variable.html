@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -458,14 +458,14 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 <p>We should then plot the data to make sure it looks OK.</p>
 <div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb427-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x=</span>HandWidth,<span class="dt">y=</span>Height)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb427-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb427-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-289-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-302-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>This looks OK, and the relationship looks fairly linear. Now we can fit a model using the <code>lm</code> function (same as for ANOVA!).<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></p>
 <p>The response variable is always the one we would like to predict, in this case <code>Height</code>. The explanatory variable (sometimes called the predictor) is <code>HandWidth</code>. These are added to the model using a formula where they are separated with the <code>~</code> (“tilde”) symbol: <code>Height ~ HandWidth</code>. In the model expression, we also need to tell R where the data are using the <code>data =</code> argument. We can save the model as an R object by naming it e.g. <code>mod_A &lt;-</code>.</p>
 <div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb428-1" aria-hidden="true"></a>mod_A &lt;-<span class="st"> </span><span class="kw">lm</span>(Height <span class="op">~</span><span class="st"> </span>HandWidth, <span class="dt">data =</span> classData)</span></code></pre></div>
 <p>Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the <code>autoplot</code> function in the <code>ggfortify</code> package (you may need to install and/or load the package).</p>
 <div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb429-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
 <span id="cb429-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb429-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-291-1.png" width="480" style="display: block; margin: auto;" />
+<p><img src="BB852_files/figure-html/unnamed-chunk-304-1.png" width="480" style="display: block; margin: auto;" />
 These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows “leverage” which is a measure of how much influence individual data points have on the model. Outliers will have large leverage and can mess up your model. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.</p>
 <p>Now that we are satisfied that the model doesn’t violate the assumptions we can dig into the model to see what it is telling us.</p>
 <p>To test the (slightly boring) slope hypothesis we use the <code>anova</code> function (again, this is the same as with the ANOVA).</p>
@@ -525,7 +525,7 @@ Figure 14.6: An illustration of different R-squared values.
 <div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height)) <span class="op">+</span></span>
 <span id="cb434-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
 <span id="cb434-3"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-294-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-307-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p><strong>Question:</strong> If police find the 9.8cm wide hand print at a crime scene, what is your best guess of the height of the person involved?</p>
 <!--
 predict(mod_A,list(HandWidth = 9.8))
@@ -572,7 +572,7 @@ head(chirps)
   geom_point())
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-297-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-310-1.png" width="672" />
 --></p></li>
 <li><p>Fit a linear regression model with <code>lm</code>
 <!--
@@ -589,7 +589,7 @@ library(ggfortify)
 autoplot(chirp_mod)
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-299-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-312-1.png" width="672" />
 --></p></li>
 <li><p>Use <code>anova</code> to figure out if the effect of temperature is statistically significant.
 <!--
@@ -649,7 +649,7 @@ summary(chirp_mod)
 A + geom_smooth(method="lm")
 ```
 
-<img src="BB852_files/figure-html/unnamed-chunk-302-1.png" width="672" />
+<img src="BB852_files/figure-html/unnamed-chunk-315-1.png" width="672" />
 -->
 <ol start="10" style="list-style-type: decimal">
 <li>Can I use cricket chirp frequency as a kind of thermometer?</li>

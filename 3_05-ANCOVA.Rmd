@@ -104,7 +104,9 @@ We'll begin by plotting the data (Figure \@ref(fig:exampleANCOVA)).
 
 
 ```{r exampleANCOVA, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="ANCOVA on hand width vs. height data in males and females", fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv")
+classData <- read.csv("CourseData/classData.csv") %>% 
+  filter(Year == 2019)
+
 (A<-ggplot(classData,aes(x = HandWidth,y = Height,colour = Gender)) +
   geom_point() + 
   geom_smooth(method ="lm",se = FALSE)) #This shows the ANCOVA model 

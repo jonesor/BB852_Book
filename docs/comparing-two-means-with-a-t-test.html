@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -588,8 +588,8 @@ Figure 12.3: A two-sample t-test.
 <p><span class="math display">\[t = \frac{\bar{x_1}-\bar{x_2}} {s/ \sqrt{n}}\]</span>
 So far so good… let’s push on and use R to do some statistics.</p>
 <p>In this example, we can revisit the class data and ask the question, <em>Is the reaction time of males different than that of females?</em> The null hypothesis for this question is that there is no difference in mean reaction times between the two groups. The alternative hypothesis is that there <strong>is</strong> a difference in the mean reaction time between the two groups.</p>
-<p>Import the data in the usual way, and subset it to the right year.</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="comparing-two-means-with-a-t-test.html#cb375-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>)</span></code></pre></div>
+<p>Import the data in the usual way, and subset it to the right year (in the example below I am using 2019 data).</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="comparing-two-means-with-a-t-test.html#cb375-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>) </span></code></pre></div>
 <p>Then look at the data. Here I do this using a box plot with jittered points (a nice way of plotting data with small sample sizes) (Figure <a href="#fig:reactionData"><strong>??</strong></a>). From the Figure <a href="#fig:reactionData"><strong>??</strong></a> it looks like males have a faster reaction time than females, but there is a lot of variation. We need to apply the t-test in a similar way to above.</p>
 <div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="comparing-two-means-with-a-t-test.html#cb376-1" aria-hidden="true"></a><span class="kw">ggplot</span>(x,<span class="kw">aes</span>(<span class="dt">x=</span>Gender,<span class="dt">y=</span>Reaction)) <span class="op">+</span></span>
 <span id="cb376-2"><a href="comparing-two-means-with-a-t-test.html#cb376-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></span>
@@ -600,16 +600,16 @@ So far so good… let’s push on and use R to do some statistics.</p>
 ## 	Welch Two Sample t-test
 ## 
 ## data:  Reaction by Gender
-## t = 2.3766, df = 46.302, p-value = 0.02166
+## t = 1.9655, df = 30.528, p-value = 0.05851
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  0.00899568 0.10844345
+##  -0.001716093  0.091311649
 ## sample estimates:
 ## mean in group Female   mean in group Male 
-##            0.3489500            0.2902304</code></pre>
+##            0.3483778            0.3035800</code></pre>
 <p>This output first tells us that we are using something called a “Welch Two Sample t-test”. This is a form of the two-sample t-test that relaxes the assumption that the variance in the two groups is the same. This is a good thing. Although it <em>is</em> possible to fit a t-test with equal variances, I recommend that you stick with the default Welch’s test and <strong>not</strong> make this limiting assumption.</p>
-<p>Then we are told the t-statistic (2.377), the degrees of freedom (46.302) and the p-value (0.022). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are <em>not</em> faster than females. We could write report this something like this:</p>
-<p>“<em>Although females had a slightly slower reaction time than males (0.349 seconds compared to 0.290 seconds), this difference was not statistically significant (Welch t-test: t= 2.377, d.f.= 46.302), p=0.022).</em>”</p>
+<p>Then we are told the t-statistic (1.965), the degrees of freedom (30.528) and the p-value (0.059). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are <em>not</em> faster than females. We could write report this something like this:</p>
+<p>“<em>Although females had a slightly slower reaction time than males (0.348 seconds compared to 0.304 seconds), this difference was not statistically significant (Welch t-test: t= 1.965, d.f.= 30.528), p=0.059).</em>”</p>
 <p>Note: With a t-test that <em>did</em> assume equal variances in the two groups, the d.f. is calculated as the sample size - 2 (the number of groups). You can do this by adding the argument “<code>var.equal = TRUE</code>” to the t-test command. With the Welch test, the appropriate degrees of freedom are estimated by looking at the sample sizes and variances in the two groups. The details of this are beyond the scope of this course.</p>
 </div>
 <div id="t-tests-are-linear-models" class="section level2" number="12.7">
@@ -640,9 +640,9 @@ So far so good… let’s push on and use R to do some statistics.</p>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Reaction
-##           Df  Sum Sq  Mean Sq F value  Pr(&gt;F)  
-## Gender     1 0.04614 0.046140  4.5454 0.03766 *
-## Residuals 53 0.53800 0.010151                  
+##           Df  Sum Sq   Mean Sq F value  Pr(&gt;F)  
+## Gender     1 0.01642 0.0164196  3.6482 0.06542 .
+## Residuals 31 0.13952 0.0045008                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="comparing-two-means-with-a-t-test.html#cb383-1" aria-hidden="true"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
@@ -652,18 +652,18 @@ So far so good… let’s push on and use R to do some statistics.</p>
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -0.10375 -0.05349 -0.02523  0.03001  0.57105 
+## -0.08938 -0.04558 -0.01258  0.03662  0.22542 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.34895    0.01781  19.592   &lt;2e-16 ***
-## GenderMale  -0.05872    0.02754  -2.132   0.0377 *  
+## (Intercept)  0.34838    0.01581   22.03   &lt;2e-16 ***
+## GenderMale  -0.04480    0.02345   -1.91   0.0654 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.1008 on 53 degrees of freedom
-## Multiple R-squared:  0.07899,	Adjusted R-squared:  0.06161 
-## F-statistic: 4.545 on 1 and 53 DF,  p-value: 0.03766</code></pre>
+## Residual standard error: 0.06709 on 31 degrees of freedom
+## Multiple R-squared:  0.1053,	Adjusted R-squared:  0.07643 
+## F-statistic: 3.648 on 1 and 31 DF,  p-value: 0.06542</code></pre>
 </div>
 <div id="exercise-sex-differences-in-fine-motor-skills" class="section level2" number="12.8">
 <h2><span class="header-section-number">12.8</span> Exercise: Sex differences in fine motor skills</h2>

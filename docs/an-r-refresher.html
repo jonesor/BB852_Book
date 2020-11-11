@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-10-08" />
+<meta name="date" content="2020-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -634,9 +634,11 @@ Try modifying the commands to make sure you know what the commands are doing.
 <pre><code>## [1] 17</code></pre>
 <p>We can find the names of the columns of a data frame with the <code>names</code> function:</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="an-r-refresher.html#cb101-1" aria-hidden="true"></a><span class="kw">names</span>(carni)</span></code></pre></div>
-<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;     &quot;FW&quot;         
-##  [7] &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;          &quot;GL&quot;          &quot;BW&quot;         
-## [13] &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;          &quot;AM&quot;          &quot;IB&quot;</code></pre>
+<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;      
+##  [5] &quot;Species&quot;     &quot;FW&quot;          &quot;SW&quot;          &quot;FB&quot;         
+##  [9] &quot;SB&quot;          &quot;LS&quot;          &quot;GL&quot;          &quot;BW&quot;         
+## [13] &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;          &quot;AM&quot;         
+## [17] &quot;IB&quot;</code></pre>
 <p>The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
 SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).</p>
 <p>You can refer to the sub-parts of a <code>data.frame</code> (the columns) using the <code>$</code> syntax:</p>
@@ -654,20 +656,24 @@ SW = Average body weight of adult male and adult female (kg), FB = Female brain 
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="an-r-refresher.html#cb107-1" aria-hidden="true"></a><span class="kw">class</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="an-r-refresher.html#cb109-1" aria-hidden="true"></a><span class="kw">levels</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
-<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot;  &quot;Procyonidae&quot;
-## [7] &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
+<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;  
+## [5] &quot;Mustelidae&quot;  &quot;Procyonidae&quot; &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
 </div>
 <div id="tables-and-summary-statistics" class="section level2" number="3.11">
 <h2><span class="header-section-number">3.11</span> Tables and summary statistics</h2>
 <p>For vectors of class “factor” you can use the <code>table</code> function to give the counts for each level:</p>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="an-r-refresher.html#cb111-1" aria-hidden="true"></a><span class="kw">table</span>(carni<span class="op">$</span>Family)</span></code></pre></div>
 <pre><code>## 
-##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
-##           1          18          19           4          30           4           4          32</code></pre>
+##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae 
+##           1          18          19           4          30 
+## Procyonidae     Ursidae  Viverridae 
+##           4           4          32</code></pre>
 <p>You can use the function <code>tapply</code> (“table apply”), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument <code>mean</code>:</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="an-r-refresher.html#cb113-1" aria-hidden="true"></a><span class="kw">tapply</span>(carni<span class="op">$</span>FW, carni<span class="op">$</span>Family, mean)</span></code></pre></div>
-<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
-##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500  198.250000    2.672813</code></pre>
+<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae 
+##  120.000000    9.050000   31.432105   33.540000    3.989000 
+## Procyonidae     Ursidae  Viverridae 
+##    3.642500  198.250000    2.672813</code></pre>
 </div>
 <div id="plotting-data" class="section level2" number="3.12">
 <h2><span class="header-section-number">3.12</span> Plotting data</h2>
@@ -748,11 +754,11 @@ Figure 3.1: A simple scatter plot
 <pre><code>## [1] 1</code></pre>
 <p><em>4. Plot the relationship between <code>Year</code> and <code>nSpecies</code> as a scatterplot using base-R graphics (using the <code>plot</code> function).</em></p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="an-r-refresher.html#cb133-1" aria-hidden="true"></a><span class="kw">plot</span>(df<span class="op">$</span>Year,df<span class="op">$</span>nSpecies)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
 <p><em>5. The patern might be easier to see if you could replace <code>YearBuilt</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>df$Age &lt;- 1975 - Year)</code>). Replot your results.</em></p>
 <div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="an-r-refresher.html#cb134-1" aria-hidden="true"></a>df<span class="op">$</span>Age &lt;-<span class="st"> </span><span class="dv">1975</span><span class="op">-</span>df<span class="op">$</span>Year</span>
 <span id="cb134-2"><a href="an-r-refresher.html#cb134-2" aria-hidden="true"></a><span class="kw">plot</span>(df<span class="op">$</span>Age,df<span class="op">$</span>nSpecies)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 <p><em>6. What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?</em></p>
 <p>If you recall that the average species richness pre-development was about 3.5 species, the data show that suburban development is actually good for bird species. This could be surprising, but a possible explanation is that the gardens, parks, trees etc. that come with development represent additional habitats that would not normally be there. Therefore, these areas attract new species.</p>
 <p><em>7. Export your plots and paste them into a Word Document.</em></p>
