@@ -82,6 +82,45 @@ You are welcome to contact us with any problems/questions (but please put a litt
 
 ## Acknowledgements
 
-These materials are inspired by the excellent textbook, "Getting Started With R"^[Beckerman, Childs & Petchey (2017) *Getting Started With R*. Oxford University Press (2nd edition)], which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" ([https://dzchilds.github.io/stats-for-bio/]).
+These materials are inspired by the excellent textbook, "Getting Started With R"^[Beckerman, Childs & Petchey (2017) *Getting Started With R*. Oxford University Press (2nd edition)], which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" ([https://dzchilds.github.io/stats-for-bio/]). For your convenience, the datasets for the Beckerman et al. book are available at this course's data Dropbox link (above), in a folder called "GSWR_datasets".
 
+
+```{r which datasets imported, echo = FALSE, message=FALSE}
+rmdFiles <- list.files(pattern = "*.Rmd")
+
+dataSetsUsed <- NULL
+
+for (i in 1:length(rmdFiles)){
+  x1 <- readLines(rmdFiles[i])
+  csvLines <- grep("[_A-Za-z0-9]+\\.csv",x1)
+  dataSetsUsed <- append(dataSetsUsed,x1[csvLines])
+}
+
+dataSetsUsed<-unique(dataSetsUsed)
+
+library(stringr)
+dataSetsUsed <- unlist(str_extract_all(dataSetsUsed, "([A-Za-z0-9_]+\\.csv)")) %>% 
+  sort() %>% 
+  unique()
+dataSetsUsed <- data.frame(name = c(dataSetsUsed,"GSWR_datasets")) %>% 
+  filter(!name %in% c("write.csv","read.csv","dataSetsUsed.csv","dataSetsMissing.csv"))
+
+write.csv(x = dataSetsUsed,file = "dataSetsUsed.csv",row.names = FALSE)
+
+#list.files
+currentFiles <- list.files(path = "CourseData/")
+delFiles <- paste0("CourseData/",currentFiles[which(!currentFiles %in% dataSetsUsed$name)])
+delFiles
+
+#Missing files
+missingFiles <- dataSetsUsed$name[!dataSetsUsed$name %in% currentFiles]
+dataSetsMissing <- data.frame(name = missingFiles) %>% 
+  filter(!name %in% c("SDUweather.csv"))
+write.csv(x = dataSetsMissing,file = "dataSetsMissing.csv",row.names = FALSE)
+
+#Remove files that are not mentioned in the course.
+if(!delFiles[1] == "CourseData/"){
+file.remove(delFiles)
+}
+```
 

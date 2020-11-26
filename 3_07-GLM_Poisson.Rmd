@@ -124,11 +124,11 @@ Results: *The GLM showed that maternal weight was significantly associated with 
 
 This data show counts of prostate cancer and distance from a nuclear processing plant. Lets take a look at the data.
 
-Let's first import the data and use summary to examine it by plotting  it:
+Let's first import the data (`cancer.csv`) and use summary to examine it by plotting  it:
 
 First we can see that there are no negative count values.
 
-```{r  echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r  echo=TRUE ,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 cancer <- read.csv("CourseData/cancer.csv")
 
 ggplot(cancer,aes(x = Distance,y = Cancers))+

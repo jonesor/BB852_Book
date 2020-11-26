@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-11-11" />
+<meta name="date" content="2020-11-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -364,6 +364,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.3" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#non-linear-regression"><i class="fa fa-check"></i><b>20.3</b> Non-linear regression</a></li>
 <li class="chapter" data-level="20.4" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#nested-or-blocked-study-designs"><i class="fa fa-check"></i><b>20.4</b> Nested or blocked study designs</a></li>
 </ul></li>
+<li class="part"><span><b>V Exam</b></span></li>
+<li class="chapter" data-level="21" data-path="exam-2020.html"><a href="exam-2020.html"><i class="fa fa-check"></i><b>21</b> Exam 2020</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -454,23 +456,23 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </p>
 </div>
 <p>First, load the data:</p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb426-1" aria-hidden="true"></a>classData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb426-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb426-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb428-1" aria-hidden="true"></a>classData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb428-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb428-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>)</span></code></pre></div>
 <p>We should then plot the data to make sure it looks OK.</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb427-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x=</span>HandWidth,<span class="dt">y=</span>Height)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb427-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb427-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb429-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x=</span>HandWidth,<span class="dt">y=</span>Height)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb429-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb429-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-289-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>This looks OK, and the relationship looks fairly linear. Now we can fit a model using the <code>lm</code> function (same as for ANOVA!).<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></p>
 <p>The response variable is always the one we would like to predict, in this case <code>Height</code>. The explanatory variable (sometimes called the predictor) is <code>HandWidth</code>. These are added to the model using a formula where they are separated with the <code>~</code> (“tilde”) symbol: <code>Height ~ HandWidth</code>. In the model expression, we also need to tell R where the data are using the <code>data =</code> argument. We can save the model as an R object by naming it e.g. <code>mod_A &lt;-</code>.</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb428-1" aria-hidden="true"></a>mod_A &lt;-<span class="st"> </span><span class="kw">lm</span>(Height <span class="op">~</span><span class="st"> </span>HandWidth, <span class="dt">data =</span> classData)</span></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb430-1" aria-hidden="true"></a>mod_A &lt;-<span class="st"> </span><span class="kw">lm</span>(Height <span class="op">~</span><span class="st"> </span>HandWidth, <span class="dt">data =</span> classData)</span></code></pre></div>
 <p>Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the <code>autoplot</code> function in the <code>ggfortify</code> package (you may need to install and/or load the package).</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb429-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
-<span id="cb429-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb429-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb431-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
+<span id="cb431-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb431-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-291-1.png" width="480" style="display: block; margin: auto;" />
 These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows “leverage” which is a measure of how much influence individual data points have on the model. Outliers will have large leverage and can mess up your model. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.</p>
 <p>Now that we are satisfied that the model doesn’t violate the assumptions we can dig into the model to see what it is telling us.</p>
 <p>To test the (slightly boring) slope hypothesis we use the <code>anova</code> function (again, this is the same as with the ANOVA).</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb430-1" aria-hidden="true"></a><span class="kw">anova</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb432-1" aria-hidden="true"></a><span class="kw">anova</span>(mod_A)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
@@ -484,7 +486,7 @@ The most important parts of this table are the F value (6.0059) and the p-value 
 <p>We could report the results of this hypothesis test like this:
 <em>There was a statistically significant association between hand width and height (F = 6.0059, d.f. = 1,31, p &lt; 0.001)</em></p>
 <p>Now we can dig deeper by asking for a <code>summary</code> of the model.</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb432-1" aria-hidden="true"></a><span class="kw">summary</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-1" aria-hidden="true"></a><span class="kw">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Height ~ HandWidth, data = classData)
@@ -524,9 +526,9 @@ Figure 14.6: An illustration of different R-squared values.
 </p>
 </div>
 <p>A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The <code>ggplot2</code> package has a neat and simple function called <code>geom_smooth</code> which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use <code>method = "lm"</code>. This will plot the fitted regression model, and will add, by default" a shaded “ribbon” which represents the so called “95% confidence interval” for the fitted values. These are 2 time the standard error.</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height)) <span class="op">+</span></span>
-<span id="cb434-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
-<span id="cb434-3"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb434-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb436-1" aria-hidden="true"></a><span class="kw">ggplot</span>(classData,<span class="kw">aes</span>(<span class="dt">x =</span> HandWidth,<span class="dt">y =</span> Height)) <span class="op">+</span></span>
+<span id="cb436-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb436-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb436-3"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb436-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-294-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p><strong>Question:</strong> If police find the 9.8cm wide hand print at a crime scene, what is your best guess of the height of the person involved?</p>
 <!--

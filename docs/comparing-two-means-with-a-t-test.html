@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-11-11" />
+<meta name="date" content="2020-11-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -364,6 +364,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.3" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#non-linear-regression"><i class="fa fa-check"></i><b>20.3</b> Non-linear regression</a></li>
 <li class="chapter" data-level="20.4" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#nested-or-blocked-study-designs"><i class="fa fa-check"></i><b>20.4</b> Nested or blocked study designs</a></li>
 </ul></li>
+<li class="part"><span><b>V Exam</b></span></li>
+<li class="chapter" data-level="21" data-path="exam-2020.html"><a href="exam-2020.html"><i class="fa fa-check"></i><b>21</b> Exam 2020</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -420,12 +422,12 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </p>
 </div>
 <p>Firstly, lets load some data. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="comparing-two-means-with-a-t-test.html#cb351-1" aria-hidden="true"></a>pollution &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mgm3 =</span> <span class="kw">c</span>(<span class="dv">105</span>, <span class="dv">196</span>, <span class="dv">226</span>, <span class="dv">81</span>, <span class="dv">156</span>, <span class="dv">201</span>, <span class="dv">142</span>, <span class="dv">149</span>, <span class="dv">191</span>, <span class="dv">192</span>,</span>
-<span id="cb351-2"><a href="comparing-two-means-with-a-t-test.html#cb351-2" aria-hidden="true"></a>                                <span class="dv">178</span>, <span class="dv">185</span>, <span class="dv">231</span>, <span class="dv">76</span>, <span class="dv">207</span>, <span class="dv">138</span>, <span class="dv">146</span>, <span class="dv">175</span>, <span class="dv">114</span>, <span class="dv">155</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="comparing-two-means-with-a-t-test.html#cb353-1" aria-hidden="true"></a>pollution &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mgm3 =</span> <span class="kw">c</span>(<span class="dv">105</span>, <span class="dv">196</span>, <span class="dv">226</span>, <span class="dv">81</span>, <span class="dv">156</span>, <span class="dv">201</span>, <span class="dv">142</span>, <span class="dv">149</span>, <span class="dv">191</span>, <span class="dv">192</span>,</span>
+<span id="cb353-2"><a href="comparing-two-means-with-a-t-test.html#cb353-2" aria-hidden="true"></a>                                <span class="dv">178</span>, <span class="dv">185</span>, <span class="dv">231</span>, <span class="dv">76</span>, <span class="dv">207</span>, <span class="dv">138</span>, <span class="dv">146</span>, <span class="dv">175</span>, <span class="dv">114</span>, <span class="dv">155</span>))</span></code></pre></div>
 <p>First I plot the data (Figure <a href="comparing-two-means-with-a-t-test.html#fig:pollution">12.1</a>). One reason for doing this is to check that the data look approximately normally distributed. These data are slightly left-skewed but they are close enough.</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="comparing-two-means-with-a-t-test.html#cb352-1" aria-hidden="true"></a><span class="kw">ggplot</span>(pollution,<span class="kw">aes</span>(<span class="dt">x=</span>mgm3))<span class="op">+</span></span>
-<span id="cb352-2"><a href="comparing-two-means-with-a-t-test.html#cb352-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">8</span>) <span class="op">+</span></span>
-<span id="cb352-3"><a href="comparing-two-means-with-a-t-test.html#cb352-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="comparing-two-means-with-a-t-test.html#cb354-1" aria-hidden="true"></a><span class="kw">ggplot</span>(pollution,<span class="kw">aes</span>(<span class="dt">x=</span>mgm3))<span class="op">+</span></span>
+<span id="cb354-2"><a href="comparing-two-means-with-a-t-test.html#cb354-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">8</span>) <span class="op">+</span></span>
+<span id="cb354-3"><a href="comparing-two-means-with-a-t-test.html#cb354-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">100</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:pollution"></span>
 <img src="BB852_files/figure-html/pollution-1.png" alt="Histogram of the pollution data." width="384" />
 <p class="caption">
@@ -433,7 +435,7 @@ Figure 12.1: Histogram of the pollution data.
 </p>
 </div>
 <p>Now we can run a t-test in R like this. The command is simple - the first two arguments are the data (<code>x</code>) and the the fixed value you are comparing the data to. The final argument defines the alternative hypothesis. This can take values of “<code>two.sided</code>”, “<code>less</code>” or “<code>greater</code>” (the default is <code>two.sided</code>). In this example, the alternative hypothesis is that the mean of our sample is greater than the threshold of 100.</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="comparing-two-means-with-a-t-test.html#cb353-1" aria-hidden="true"></a><span class="kw">t.test</span>(<span class="dt">x =</span> pollution<span class="op">$</span>mgm3, <span class="dt">mu =</span> <span class="dv">100</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="comparing-two-means-with-a-t-test.html#cb355-1" aria-hidden="true"></a><span class="kw">t.test</span>(<span class="dt">x =</span> pollution<span class="op">$</span>mgm3, <span class="dt">mu =</span> <span class="dv">100</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## 	One Sample t-test
 ## 
@@ -453,21 +455,21 @@ Figure 12.1: Histogram of the pollution data.
 <p>At this point, to ensure that you understand where the t-statistic comes from we will calculate the t-statistic using the equation from above. The purpose of this is to illustrate that this is not brain surgery - it all hinges on a straightforward comparison between signal (the difference between mean and threshold in this case) and noise (the variation, or standard error of the mean).</p>
 <p>To do this we first need to know the mean value and the threshold (the signal: <span class="math inline">\(\bar{x} - \mu_{0}\)</span>). We can then divide that by the standard error of the mean (the noise: <span class="math inline">\(s/ \sqrt{n}\)</span>)</p>
 <p>Here goes… I first create a vector (<code>x</code>) of the values to save typing. Then I show how to calculate <code>mean</code> and standard error, before dividing the “signal” by the “noise”.</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="comparing-two-means-with-a-t-test.html#cb355-1" aria-hidden="true"></a><span class="co">#First create a vector of the values</span></span>
-<span id="cb355-2"><a href="comparing-two-means-with-a-t-test.html#cb355-2" aria-hidden="true"></a>x &lt;-<span class="st"> </span>pollution<span class="op">$</span>mgm3</span>
-<span id="cb355-3"><a href="comparing-two-means-with-a-t-test.html#cb355-3" aria-hidden="true"></a></span>
-<span id="cb355-4"><a href="comparing-two-means-with-a-t-test.html#cb355-4" aria-hidden="true"></a><span class="co">#mean</span></span>
-<span id="cb355-5"><a href="comparing-two-means-with-a-t-test.html#cb355-5" aria-hidden="true"></a><span class="kw">mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="comparing-two-means-with-a-t-test.html#cb357-1" aria-hidden="true"></a><span class="co">#First create a vector of the values</span></span>
+<span id="cb357-2"><a href="comparing-two-means-with-a-t-test.html#cb357-2" aria-hidden="true"></a>x &lt;-<span class="st"> </span>pollution<span class="op">$</span>mgm3</span>
+<span id="cb357-3"><a href="comparing-two-means-with-a-t-test.html#cb357-3" aria-hidden="true"></a></span>
+<span id="cb357-4"><a href="comparing-two-means-with-a-t-test.html#cb357-4" aria-hidden="true"></a><span class="co">#mean</span></span>
+<span id="cb357-5"><a href="comparing-two-means-with-a-t-test.html#cb357-5" aria-hidden="true"></a><span class="kw">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] 162.2</code></pre>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="comparing-two-means-with-a-t-test.html#cb357-1" aria-hidden="true"></a><span class="co">#standard error of the mean</span></span>
-<span id="cb357-2"><a href="comparing-two-means-with-a-t-test.html#cb357-2" aria-hidden="true"></a><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(x))</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="comparing-two-means-with-a-t-test.html#cb359-1" aria-hidden="true"></a><span class="co">#standard error of the mean</span></span>
+<span id="cb359-2"><a href="comparing-two-means-with-a-t-test.html#cb359-2" aria-hidden="true"></a><span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(x))</span></code></pre></div>
 <pre><code>## [1] 9.900718</code></pre>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="comparing-two-means-with-a-t-test.html#cb359-1" aria-hidden="true"></a><span class="co">#Putting it all together</span></span>
-<span id="cb359-2"><a href="comparing-two-means-with-a-t-test.html#cb359-2" aria-hidden="true"></a>(<span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">100</span>) <span class="op">/</span><span class="st"> </span>(<span class="kw">sd</span>(x) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">length</span>(x)))</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="comparing-two-means-with-a-t-test.html#cb361-1" aria-hidden="true"></a><span class="co">#Putting it all together</span></span>
+<span id="cb361-2"><a href="comparing-two-means-with-a-t-test.html#cb361-2" aria-hidden="true"></a>(<span class="kw">mean</span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">100</span>) <span class="op">/</span><span class="st"> </span>(<span class="kw">sd</span>(x) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">length</span>(x)))</span></code></pre></div>
 <pre><code>## [1] 6.282373</code></pre>
 <p>This matches exactly with the t-statistic above!</p>
 <p>One can obtain a p-value from a given t-statistic and degrees of freedom like this for a t-test like the one fitted above (the d.f. is the sample size minus one for a one-sample t-test):</p>
-<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="comparing-two-means-with-a-t-test.html#cb361-1" aria-hidden="true"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="fl">6.282373</span>, <span class="dv">19</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="comparing-two-means-with-a-t-test.html#cb363-1" aria-hidden="true"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(<span class="fl">6.282373</span>, <span class="dv">19</span>)</span></code></pre></div>
 <pre><code>## [1] 2.477945e-06</code></pre>
 <p>Again, this matches the value from the <code>t.test</code> function above.</p>
 </div>
@@ -478,8 +480,8 @@ Figure 12.1: Histogram of the pollution data.
 <p>Here’s a simple example. Anthropologists studied tool use in women from the indigenous Machinguenga of Peru<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. They estimated the amount of cassava obtained in kg/hour using either a wooden tool (a broken bow) or a metal machete. The study focused on 5 women who were randomly assigned to groups to use the wooden tool then the machete (or vice versa).</p>
 <p>The anthropologists hypothesised that using different tools led to different harvesting efficiency. The null hypothesis is that there is no difference between the two groups and that a woman was equally efficient at foraging using either tool. The alternative hypothesis was that there is a difference between the two tools. (NOTE - this could also be formulated as a directional hypothesis e.g. with the expectation that machete is more efficient than the bow.)</p>
 <p>First let’s import and look at the data. Make sure you understand it. A plot will be fairly useless to tell if the data are normally distributed, so we will simply have to assume that they are. In fact, t-tests are famously robust to non-normality.</p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="comparing-two-means-with-a-t-test.html#cb363-1" aria-hidden="true"></a>toolUse &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/toolUse.csv&quot;</span>)</span>
-<span id="cb363-2"><a href="comparing-two-means-with-a-t-test.html#cb363-2" aria-hidden="true"></a>toolUse</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="comparing-two-means-with-a-t-test.html#cb365-1" aria-hidden="true"></a>toolUse &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/toolUse.csv&quot;</span>)</span>
+<span id="cb365-2"><a href="comparing-two-means-with-a-t-test.html#cb365-2" aria-hidden="true"></a>toolUse</span></code></pre></div>
 <pre><code>##    subjectID    tool amount
 ## 1          1 machete    119
 ## 2          1     bow     39
@@ -492,11 +494,11 @@ Figure 12.1: Histogram of the pollution data.
 ## 9          5 machete    137
 ## 10         5     bow     60</code></pre>
 <p>We should now plot our data (Figure <a href="comparing-two-means-with-a-t-test.html#fig:toolData">12.2</a>). A nice way of doing this for paired data is to plot points with lines joining the pairs. This way, the slope of the lines is a striking visual indication of the effect.</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="comparing-two-means-with-a-t-test.html#cb365-1" aria-hidden="true"></a><span class="kw">ggplot</span>(toolUse,<span class="kw">aes</span>(<span class="dt">x=</span>tool,<span class="dt">y=</span>amount,<span class="dt">group=</span>subjectID)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb365-2"><a href="comparing-two-means-with-a-t-test.html#cb365-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span></span>
-<span id="cb365-3"><a href="comparing-two-means-with-a-t-test.html#cb365-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb365-4"><a href="comparing-two-means-with-a-t-test.html#cb365-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Tool used&quot;</span>) <span class="op">+</span></span>
-<span id="cb365-5"><a href="comparing-two-means-with-a-t-test.html#cb365-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Casava harvested (kg/hr)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="comparing-two-means-with-a-t-test.html#cb367-1" aria-hidden="true"></a><span class="kw">ggplot</span>(toolUse,<span class="kw">aes</span>(<span class="dt">x=</span>tool,<span class="dt">y=</span>amount,<span class="dt">group=</span>subjectID)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb367-2"><a href="comparing-two-means-with-a-t-test.html#cb367-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span></span>
+<span id="cb367-3"><a href="comparing-two-means-with-a-t-test.html#cb367-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb367-4"><a href="comparing-two-means-with-a-t-test.html#cb367-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Tool used&quot;</span>) <span class="op">+</span></span>
+<span id="cb367-5"><a href="comparing-two-means-with-a-t-test.html#cb367-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Casava harvested (kg/hr)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:toolData"></span>
 <img src="BB852_files/figure-html/toolData-1.png" alt="An interaction plot for the tool use data" width="432" />
 <p class="caption">
@@ -504,9 +506,9 @@ Figure 12.2: An interaction plot for the tool use data
 </p>
 </div>
 <p>We can also look at the mean values and standard deviations:</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="comparing-two-means-with-a-t-test.html#cb366-1" aria-hidden="true"></a>toolUse <span class="op">%&gt;%</span></span>
-<span id="cb366-2"><a href="comparing-two-means-with-a-t-test.html#cb366-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(tool) <span class="op">%&gt;%</span></span>
-<span id="cb366-3"><a href="comparing-two-means-with-a-t-test.html#cb366-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanAmount =</span> <span class="kw">mean</span>(amount),<span class="dt">sdAmount =</span> <span class="kw">sd</span>(amount))</span></code></pre></div>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="comparing-two-means-with-a-t-test.html#cb368-1" aria-hidden="true"></a>toolUse <span class="op">%&gt;%</span></span>
+<span id="cb368-2"><a href="comparing-two-means-with-a-t-test.html#cb368-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(tool) <span class="op">%&gt;%</span></span>
+<span id="cb368-3"><a href="comparing-two-means-with-a-t-test.html#cb368-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">meanAmount =</span> <span class="kw">mean</span>(amount),<span class="dt">sdAmount =</span> <span class="kw">sd</span>(amount))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   tool    meanAmount sdAmount
 ##   &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;
@@ -514,10 +516,10 @@ Figure 12.2: An interaction plot for the tool use data
 ## 2 machete      168.      55.6</code></pre>
 <p>Now lets do a paired t-test to compare the means using the two tools. There are several ways to do a paired t-test. The first is to use a model formula in the command. The formula takes the form <code>measurements ~ group</code>. You must also specify the name of the <code>data.frame</code> and that the data are paired (<code>paired = TRUE</code>).</p>
 <p><strong>IMPORTANT:</strong> it is very important that the pairs are grouped together in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use <code>arrange</code> to sort the data by first the pairing variable (in this case, <code>subjectID</code>), and then the explanatory variable (the variable that defines the group - in this case, <code>tool</code>.</p>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="comparing-two-means-with-a-t-test.html#cb368-1" aria-hidden="true"></a>toolUse &lt;-<span class="st"> </span>toolUse <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb368-2"><a href="comparing-two-means-with-a-t-test.html#cb368-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(subjectID, tool)</span>
-<span id="cb368-3"><a href="comparing-two-means-with-a-t-test.html#cb368-3" aria-hidden="true"></a></span>
-<span id="cb368-4"><a href="comparing-two-means-with-a-t-test.html#cb368-4" aria-hidden="true"></a><span class="kw">t.test</span>(amount <span class="op">~</span><span class="st"> </span>tool, <span class="dt">data =</span> toolUse, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="comparing-two-means-with-a-t-test.html#cb370-1" aria-hidden="true"></a>toolUse &lt;-<span class="st"> </span>toolUse <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb370-2"><a href="comparing-two-means-with-a-t-test.html#cb370-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(subjectID, tool)</span>
+<span id="cb370-3"><a href="comparing-two-means-with-a-t-test.html#cb370-3" aria-hidden="true"></a></span>
+<span id="cb370-4"><a href="comparing-two-means-with-a-t-test.html#cb370-4" aria-hidden="true"></a><span class="kw">t.test</span>(amount <span class="op">~</span><span class="st"> </span>tool, <span class="dt">data =</span> toolUse, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ## 	Paired t-test
 ## 
@@ -530,15 +532,15 @@ Figure 12.2: An interaction plot for the tool use data
 ## mean of the differences 
 ##                   -85.4</code></pre>
 <p>An alternative way is to give the two samples separately in the <code>t.test</code> command. To do this you will need to create two vectors containing the data from the two groups like this, using the <code>dplyr</code> command <code>pull</code> to extract the variable along with <code>filter</code> to subset the data:</p>
-<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="comparing-two-means-with-a-t-test.html#cb370-1" aria-hidden="true"></a>A &lt;-<span class="st"> </span>toolUse <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb370-2"><a href="comparing-two-means-with-a-t-test.html#cb370-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(tool <span class="op">==</span><span class="st"> &quot;machete&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb370-3"><a href="comparing-two-means-with-a-t-test.html#cb370-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(amount)</span>
-<span id="cb370-4"><a href="comparing-two-means-with-a-t-test.html#cb370-4" aria-hidden="true"></a></span>
-<span id="cb370-5"><a href="comparing-two-means-with-a-t-test.html#cb370-5" aria-hidden="true"></a>B &lt;-<span class="st"> </span>toolUse <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb370-6"><a href="comparing-two-means-with-a-t-test.html#cb370-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(tool <span class="op">==</span><span class="st"> &quot;bow&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb370-7"><a href="comparing-two-means-with-a-t-test.html#cb370-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(amount)</span>
-<span id="cb370-8"><a href="comparing-two-means-with-a-t-test.html#cb370-8" aria-hidden="true"></a></span>
-<span id="cb370-9"><a href="comparing-two-means-with-a-t-test.html#cb370-9" aria-hidden="true"></a><span class="kw">t.test</span>(A, B, <span class="dt">data =</span> toolUse, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="comparing-two-means-with-a-t-test.html#cb372-1" aria-hidden="true"></a>A &lt;-<span class="st"> </span>toolUse <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb372-2"><a href="comparing-two-means-with-a-t-test.html#cb372-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(tool <span class="op">==</span><span class="st"> &quot;machete&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb372-3"><a href="comparing-two-means-with-a-t-test.html#cb372-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(amount)</span>
+<span id="cb372-4"><a href="comparing-two-means-with-a-t-test.html#cb372-4" aria-hidden="true"></a></span>
+<span id="cb372-5"><a href="comparing-two-means-with-a-t-test.html#cb372-5" aria-hidden="true"></a>B &lt;-<span class="st"> </span>toolUse <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb372-6"><a href="comparing-two-means-with-a-t-test.html#cb372-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(tool <span class="op">==</span><span class="st"> &quot;bow&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb372-7"><a href="comparing-two-means-with-a-t-test.html#cb372-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(amount)</span>
+<span id="cb372-8"><a href="comparing-two-means-with-a-t-test.html#cb372-8" aria-hidden="true"></a></span>
+<span id="cb372-9"><a href="comparing-two-means-with-a-t-test.html#cb372-9" aria-hidden="true"></a><span class="kw">t.test</span>(A, B, <span class="dt">data =</span> toolUse, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ## 	Paired t-test
 ## 
@@ -557,9 +559,9 @@ Figure 12.2: An interaction plot for the tool use data
 <h2><span class="header-section-number">12.5</span> A paired t-test is a one-sample test.</h2>
 <p>A paired t-test is the same as a one-sample t-test really. Here’s proof.</p>
 <p>First we need to calculate the difference between the two measures</p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="comparing-two-means-with-a-t-test.html#cb372-1" aria-hidden="true"></a>difference &lt;-<span class="st"> </span>A <span class="op">-</span><span class="st"> </span>B</span></code></pre></div>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="comparing-two-means-with-a-t-test.html#cb374-1" aria-hidden="true"></a>difference &lt;-<span class="st"> </span>A <span class="op">-</span><span class="st"> </span>B</span></code></pre></div>
 <p>Then we can fit the one-sample t-test from above, with the <code>mu</code> set as 0 (because the null hypothesis is that there is no difference between the groups). Compare this result with the paired t-test above.</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="comparing-two-means-with-a-t-test.html#cb373-1" aria-hidden="true"></a><span class="kw">t.test</span>(<span class="dt">x =</span> difference, <span class="dt">mu =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="comparing-two-means-with-a-t-test.html#cb375-1" aria-hidden="true"></a><span class="kw">t.test</span>(<span class="dt">x =</span> difference, <span class="dt">mu =</span> <span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## 
 ## 	One Sample t-test
 ## 
@@ -589,13 +591,13 @@ Figure 12.3: A two-sample t-test.
 So far so good… let’s push on and use R to do some statistics.</p>
 <p>In this example, we can revisit the class data and ask the question, <em>Is the reaction time of males different than that of females?</em> The null hypothesis for this question is that there is no difference in mean reaction times between the two groups. The alternative hypothesis is that there <strong>is</strong> a difference in the mean reaction time between the two groups.</p>
 <p>Import the data in the usual way, and subset it to the right year (in the example below I am using 2019 data).</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="comparing-two-means-with-a-t-test.html#cb375-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="comparing-two-means-with-a-t-test.html#cb377-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>) </span></code></pre></div>
 <p>Then look at the data. Here I do this using a box plot with jittered points (a nice way of plotting data with small sample sizes) (Figure <a href="#fig:reactionData"><strong>??</strong></a>). From the Figure <a href="#fig:reactionData"><strong>??</strong></a> it looks like males have a faster reaction time than females, but there is a lot of variation. We need to apply the t-test in a similar way to above.</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="comparing-two-means-with-a-t-test.html#cb376-1" aria-hidden="true"></a><span class="kw">ggplot</span>(x,<span class="kw">aes</span>(<span class="dt">x=</span>Gender,<span class="dt">y=</span>Reaction)) <span class="op">+</span></span>
-<span id="cb376-2"><a href="comparing-two-means-with-a-t-test.html#cb376-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></span>
-<span id="cb376-3"><a href="comparing-two-means-with-a-t-test.html#cb376-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">col=</span><span class="st">&quot;grey60&quot;</span>,<span class="dt">width=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="comparing-two-means-with-a-t-test.html#cb378-1" aria-hidden="true"></a><span class="kw">ggplot</span>(x,<span class="kw">aes</span>(<span class="dt">x=</span>Gender,<span class="dt">y=</span>Reaction)) <span class="op">+</span></span>
+<span id="cb378-2"><a href="comparing-two-means-with-a-t-test.html#cb378-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb378-3"><a href="comparing-two-means-with-a-t-test.html#cb378-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">col=</span><span class="st">&quot;grey60&quot;</span>,<span class="dt">width=</span><span class="fl">0.2</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/reactionData-1.png" width="384" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="comparing-two-means-with-a-t-test.html#cb377-1" aria-hidden="true"></a><span class="kw">t.test</span>(Reaction <span class="op">~</span><span class="st"> </span>Gender, <span class="dt">data =</span> x,<span class="dt">var.equal=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="comparing-two-means-with-a-t-test.html#cb379-1" aria-hidden="true"></a><span class="kw">t.test</span>(Reaction <span class="op">~</span><span class="st"> </span>Gender, <span class="dt">data =</span> x,<span class="dt">var.equal=</span>F)</span></code></pre></div>
 <pre><code>## 
 ## 	Welch Two Sample t-test
 ## 
@@ -615,8 +617,8 @@ So far so good… let’s push on and use R to do some statistics.</p>
 <div id="t-tests-are-linear-models" class="section level2" number="12.7">
 <h2><span class="header-section-number">12.7</span> t-tests are linear models</h2>
 <p>It is also possible to formulate t-tests as linear models (using the <code>lm</code> function). To do this with the paired t-test you would specify a model that estimates an intercept. In R you can do this by writing the formula as <code>x ~ 1</code>. So, for the tool use example you can write the code like this:</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="comparing-two-means-with-a-t-test.html#cb379-1" aria-hidden="true"></a>mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(difference <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb379-2"><a href="comparing-two-means-with-a-t-test.html#cb379-2" aria-hidden="true"></a><span class="kw">summary</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="comparing-two-means-with-a-t-test.html#cb381-1" aria-hidden="true"></a>mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(difference <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb381-2"><a href="comparing-two-means-with-a-t-test.html#cb381-2" aria-hidden="true"></a><span class="kw">summary</span>(mod1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = difference ~ 1)
@@ -635,8 +637,8 @@ So far so good… let’s push on and use R to do some statistics.</p>
 <p>If you look at the summary will notice that the estimate of the intercept (the average difference between the two pairs), the degrees of freedom and the t-value and the p-value are all the same as the value reported when using <code>t.test</code>.</p>
 <p>In fact, all of the t-tests, and ANOVA (below) are kinds linear models and can be also fitted with <code>lm</code>.</p>
 <p>Here is the paired t-test investigating gender differences in reaction time. You can see that the test statistics and coefficients match those obtained from <code>t.test</code>.</p>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="comparing-two-means-with-a-t-test.html#cb381-1" aria-hidden="true"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(Reaction <span class="op">~</span><span class="st"> </span>Gender, <span class="dt">data =</span> x)</span>
-<span id="cb381-2"><a href="comparing-two-means-with-a-t-test.html#cb381-2" aria-hidden="true"></a><span class="kw">anova</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="comparing-two-means-with-a-t-test.html#cb383-1" aria-hidden="true"></a>mod &lt;-<span class="st"> </span><span class="kw">lm</span>(Reaction <span class="op">~</span><span class="st"> </span>Gender, <span class="dt">data =</span> x)</span>
+<span id="cb383-2"><a href="comparing-two-means-with-a-t-test.html#cb383-2" aria-hidden="true"></a><span class="kw">anova</span>(mod)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Reaction
@@ -645,7 +647,7 @@ So far so good… let’s push on and use R to do some statistics.</p>
 ## Residuals 31 0.13952 0.0045008                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="comparing-two-means-with-a-t-test.html#cb383-1" aria-hidden="true"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="comparing-two-means-with-a-t-test.html#cb385-1" aria-hidden="true"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Reaction ~ Gender, data = x)
@@ -681,8 +683,8 @@ So far so good… let’s push on and use R to do some statistics.</p>
 <p>A study was carried out looking at the effect of cognitive behavioural therapy on weight of people with anorexia. Weight was measured in week 1 and again in week 8. Use a paired t-test to assess whether the treatment is effective.</p>
 <p>The data is called <code>anorexiaCBT.csv</code></p>
 <p>The data are in “wide format”. You may wish to convert it to “long format” depending on how you use the data. You can do that with the <code>pivot_longer</code> function, which rearranges the data:</p>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="comparing-two-means-with-a-t-test.html#cb385-1" aria-hidden="true"></a>anorexiaCBT_long &lt;-<span class="st"> </span>anorexiaCBT <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb385-2"><a href="comparing-two-means-with-a-t-test.html#cb385-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;Week&quot;</span>),<span class="dt">names_to =</span> <span class="st">&quot;time&quot;</span>,<span class="dt">values_to =</span> <span class="st">&quot;weight&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="comparing-two-means-with-a-t-test.html#cb387-1" aria-hidden="true"></a>anorexiaCBT_long &lt;-<span class="st"> </span>anorexiaCBT <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb387-2"><a href="comparing-two-means-with-a-t-test.html#cb387-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&quot;Week&quot;</span>),<span class="dt">names_to =</span> <span class="st">&quot;time&quot;</span>,<span class="dt">values_to =</span> <span class="st">&quot;weight&quot;</span>)</span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li><p>Plot the data (e.g. with an interaction plot like Figure 5 in the t-tests PDF)</p></li>
 <li><p>Formulate a null and alternative hypothesis.</p></li>
@@ -701,7 +703,7 @@ Try re-fitting some of these tests as randomisation tests (or analyse the random
 </li>
 <li>
 <p>
-Try answering the question - “<em>are people who prefer dogs taller than those who prefer cats?</em>” using the <code>courseData.csv</code>. Can you think of any problems with this analysis?
+Try answering the question - “<em>are people who prefer dogs taller than those who prefer cats?</em>” using the <code>classData.csv</code>. Can you think of any problems with this analysis?
 </p>
 </li>
 </ol>
