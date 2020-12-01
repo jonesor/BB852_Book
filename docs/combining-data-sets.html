@@ -416,47 +416,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb152-7"><a href="combining-data-sets.html#cb152-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">na.omit</span>()</span></code></pre></div>
 <p>Let’s take a quick look at what we have:</p>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="combining-data-sets.html#cb153-1" aria-hidden="true"></a><span class="kw">head</span>(mammal)</span></code></pre></div>
-<pre><code>##                      species female_maturity_d
-## 20         Echinops telfairi         278.42000
-## 22    Hemicentetes nigriceps          48.57000
-## 23 Hemicentetes semispinosus          46.19892
-## 27         Microgale dobsoni         669.59200
-## 40        Microgale talazaci         639.00000
-## 47           Setifer setosus         198.00000
-##    logMaturity
-## 20    5.629131
-## 22    3.883006
-## 23    3.832956
-## 27    6.506669
-## 40    6.459904
-## 47    5.288267</code></pre>
+<pre><code>##                      species female_maturity_d logMaturity
+## 20         Echinops telfairi         278.42000    5.629131
+## 22    Hemicentetes nigriceps          48.57000    3.883006
+## 23 Hemicentetes semispinosus          46.19892    3.832956
+## 27         Microgale dobsoni         669.59200    6.506669
+## 40        Microgale talazaci         639.00000    6.459904
+## 47           Setifer setosus         198.00000    5.288267</code></pre>
 <p>Looks good. Now let’s import the IUCN Red List data.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="combining-data-sets.html#cb155-1" aria-hidden="true"></a>redlist &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/MammalRedList.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at that.</p>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="combining-data-sets.html#cb156-1" aria-hidden="true"></a><span class="kw">names</span>(redlist)</span></code></pre></div>
-<pre><code>##  [1] &quot;Species.ID&quot;               
-##  [2] &quot;Kingdom&quot;                  
-##  [3] &quot;Phylum&quot;                   
-##  [4] &quot;Class&quot;                    
-##  [5] &quot;Order&quot;                    
-##  [6] &quot;Family&quot;                   
-##  [7] &quot;Genus&quot;                    
-##  [8] &quot;Species&quot;                  
-##  [9] &quot;Authority&quot;                
-## [10] &quot;Infraspecific.rank&quot;       
-## [11] &quot;Infraspecific.name&quot;       
-## [12] &quot;Infraspecific.authority&quot;  
-## [13] &quot;Stock.subpopulation&quot;      
-## [14] &quot;Synonyms&quot;                 
-## [15] &quot;Common.names..Eng.&quot;       
-## [16] &quot;Common.names..Fre.&quot;       
-## [17] &quot;Common.names..Spa.&quot;       
-## [18] &quot;Red.List.status&quot;          
-## [19] &quot;Red.List.criteria&quot;        
-## [20] &quot;Red.List.criteria.version&quot;
-## [21] &quot;Year.assessed&quot;            
-## [22] &quot;Population.trend&quot;         
-## [23] &quot;Petitioned&quot;</code></pre>
+<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                   
+##  [4] &quot;Class&quot;                     &quot;Order&quot;                     &quot;Family&quot;                   
+##  [7] &quot;Genus&quot;                     &quot;Species&quot;                   &quot;Authority&quot;                
+## [10] &quot;Infraspecific.rank&quot;        &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;  
+## [13] &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;       
+## [16] &quot;Common.names..Fre.&quot;        &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;          
+## [19] &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot; &quot;Year.assessed&quot;            
+## [22] &quot;Population.trend&quot;          &quot;Petitioned&quot;</code></pre>
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="combining-data-sets.html#cb158-1" aria-hidden="true"></a><span class="kw">unique</span>(redlist<span class="op">$</span>Red.List.status)</span></code></pre></div>
 <pre><code>## [1] &quot;DD&quot; &quot;LC&quot; &quot;CR&quot; &quot;NT&quot; &quot;EN&quot; &quot;VU&quot; &quot;EX&quot; &quot;EW&quot;</code></pre>
 <p>There’s a lot of information there but what we really need is simply the Latin binomial (for which we need <code>genus</code> and <code>species</code>) and the threat status <code>Red.List.status</code>.</p>
@@ -479,37 +457,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="combining-data-sets.html#cb162-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">left_join</span>(mammal,redlist,<span class="dt">by =</span> <span class="st">&quot;species&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at what we have now:</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="combining-data-sets.html#cb163-1" aria-hidden="true"></a><span class="kw">head</span>(x)</span></code></pre></div>
-<pre><code>##                     species female_maturity_d
-## 1         Echinops telfairi         278.42000
-## 2    Hemicentetes nigriceps          48.57000
-## 3 Hemicentetes semispinosus          46.19892
-## 4         Microgale dobsoni         669.59200
-## 5        Microgale talazaci         639.00000
-## 6           Setifer setosus         198.00000
-##   logMaturity Red.List.status
-## 1    5.629131              LC
-## 2    3.883006              LC
-## 3    3.832956              LC
-## 4    6.506669              LC
-## 5    6.459904              LC
-## 6    5.288267              LC</code></pre>
+<pre><code>##                     species female_maturity_d logMaturity Red.List.status
+## 1         Echinops telfairi         278.42000    5.629131              LC
+## 2    Hemicentetes nigriceps          48.57000    3.883006              LC
+## 3 Hemicentetes semispinosus          46.19892    3.832956              LC
+## 4         Microgale dobsoni         669.59200    6.506669              LC
+## 5        Microgale talazaci         639.00000    6.459904              LC
+## 6           Setifer setosus         198.00000    5.288267              LC</code></pre>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="combining-data-sets.html#cb165-1" aria-hidden="true"></a><span class="kw">summary</span>(x)</span></code></pre></div>
-<pre><code>##    species          female_maturity_d
-##  Length:2000        Min.   :  23.81  
-##  Class :character   1st Qu.: 121.53  
-##  Mode  :character   Median : 344.12  
-##                     Mean   : 574.92  
-##                     3rd Qu.: 696.38  
-##                     Max.   :6391.56  
-##                                      
-##   logMaturity    Red.List.status
-##  Min.   :3.170   LC     :1219   
-##  1st Qu.:4.800   VU     : 176   
-##  Median :5.841   EN     : 168   
-##  Mean   :5.745   NT     : 114   
-##  3rd Qu.:6.546   CR     :  66   
-##  Max.   :8.763   (Other):  10   
-##                  NA&#39;s   : 247</code></pre>
+<pre><code>##    species          female_maturity_d  logMaturity    Red.List.status
+##  Length:2000        Min.   :  23.81   Min.   :3.170   LC     :1219   
+##  Class :character   1st Qu.: 121.53   1st Qu.:4.800   VU     : 176   
+##  Mode  :character   Median : 344.12   Median :5.841   EN     : 168   
+##                     Mean   : 574.92   Mean   :5.745   NT     : 114   
+##                     3rd Qu.: 696.38   3rd Qu.:6.546   CR     :  66   
+##                     Max.   :6391.56   Max.   :8.763   (Other):  10   
+##                                                       NA&#39;s   : 247</code></pre>
 <p>You can see that there are 247 missing values for the Red List status. These are either species that have not yet been assessed, or maybe where there are mismatches in the species names between the two databases. We will ignore this problem today.</p>
 <p>Before plotting, I will also use <code>filter</code> remove species that are extinct (status = “EX” and “EW”). To do this I use the <code>%in%</code> argument to allow me to match a vector of variables. Because I want to NOT match them I negate the match using <code>!</code>.</p>
 <p>I then ensure that those levels are removed from the variable using <code>droplevels</code>.</p>

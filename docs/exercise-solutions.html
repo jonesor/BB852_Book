@@ -454,42 +454,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="exercise-solutions.html#cb512-1" aria-hidden="true"></a><span class="kw">dim</span>(amniote)</span></code></pre></div>
 <pre><code>## [1] 21322    36</code></pre>
 <div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="exercise-solutions.html#cb514-1" aria-hidden="true"></a><span class="kw">names</span>(amniote)</span></code></pre></div>
-<pre><code>##  [1] &quot;class&quot;                                
-##  [2] &quot;order&quot;                                
-##  [3] &quot;family&quot;                               
-##  [4] &quot;genus&quot;                                
-##  [5] &quot;species&quot;                              
-##  [6] &quot;subspecies&quot;                           
-##  [7] &quot;common_name&quot;                          
-##  [8] &quot;female_maturity_d&quot;                    
-##  [9] &quot;litter_or_clutch_size_n&quot;              
-## [10] &quot;litters_or_clutches_per_y&quot;            
-## [11] &quot;adult_body_mass_g&quot;                    
-## [12] &quot;maximum_longevity_y&quot;                  
-## [13] &quot;gestation_d&quot;                          
-## [14] &quot;weaning_d&quot;                            
-## [15] &quot;birth_or_hatching_weight_g&quot;           
-## [16] &quot;weaning_weight_g&quot;                     
-## [17] &quot;egg_mass_g&quot;                           
-## [18] &quot;incubation_d&quot;                         
-## [19] &quot;fledging_age_d&quot;                       
-## [20] &quot;longevity_y&quot;                          
-## [21] &quot;male_maturity_d&quot;                      
-## [22] &quot;inter_litter_or_interbirth_interval_y&quot;
-## [23] &quot;female_body_mass_g&quot;                   
-## [24] &quot;male_body_mass_g&quot;                     
-## [25] &quot;no_sex_body_mass_g&quot;                   
-## [26] &quot;egg_width_mm&quot;                         
-## [27] &quot;egg_length_mm&quot;                        
-## [28] &quot;fledging_mass_g&quot;                      
-## [29] &quot;adult_svl_cm&quot;                         
-## [30] &quot;male_svl_cm&quot;                          
-## [31] &quot;female_svl_cm&quot;                        
-## [32] &quot;birth_or_hatching_svl_cm&quot;             
-## [33] &quot;female_svl_at_maturity_cm&quot;            
-## [34] &quot;female_body_mass_at_maturity_g&quot;       
-## [35] &quot;no_sex_svl_cm&quot;                        
-## [36] &quot;no_sex_maturity_d&quot;</code></pre>
+<pre><code>##  [1] &quot;class&quot;                                 &quot;order&quot;                                
+##  [3] &quot;family&quot;                                &quot;genus&quot;                                
+##  [5] &quot;species&quot;                               &quot;subspecies&quot;                           
+##  [7] &quot;common_name&quot;                           &quot;female_maturity_d&quot;                    
+##  [9] &quot;litter_or_clutch_size_n&quot;               &quot;litters_or_clutches_per_y&quot;            
+## [11] &quot;adult_body_mass_g&quot;                     &quot;maximum_longevity_y&quot;                  
+## [13] &quot;gestation_d&quot;                           &quot;weaning_d&quot;                            
+## [15] &quot;birth_or_hatching_weight_g&quot;            &quot;weaning_weight_g&quot;                     
+## [17] &quot;egg_mass_g&quot;                            &quot;incubation_d&quot;                         
+## [19] &quot;fledging_age_d&quot;                        &quot;longevity_y&quot;                          
+## [21] &quot;male_maturity_d&quot;                       &quot;inter_litter_or_interbirth_interval_y&quot;
+## [23] &quot;female_body_mass_g&quot;                    &quot;male_body_mass_g&quot;                     
+## [25] &quot;no_sex_body_mass_g&quot;                    &quot;egg_width_mm&quot;                         
+## [27] &quot;egg_length_mm&quot;                         &quot;fledging_mass_g&quot;                      
+## [29] &quot;adult_svl_cm&quot;                          &quot;male_svl_cm&quot;                          
+## [31] &quot;female_svl_cm&quot;                         &quot;birth_or_hatching_svl_cm&quot;             
+## [33] &quot;female_svl_at_maturity_cm&quot;             &quot;female_body_mass_at_maturity_g&quot;       
+## [35] &quot;no_sex_svl_cm&quot;                         &quot;no_sex_maturity_d&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use <code>select</code> to pick relevent columns of the dataset and discard the others. Call the new data frame <code>x</code>.
 The relevant columns are the taxonomic variables (<code>class</code>, <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</li>
@@ -506,20 +488,13 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb517-2"><a href="exercise-solutions.html#cb517-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">species =</span> <span class="kw">paste</span>(genus,species)) <span class="op">%&gt;%</span></span>
 <span id="cb517-3"><a href="exercise-solutions.html#cb517-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>genus)</span>
 <span id="cb517-4"><a href="exercise-solutions.html#cb517-4" aria-hidden="true"></a><span class="kw">head</span>(x)</span></code></pre></div>
-<pre><code>##   class               species longevity_y
-## 1  Aves Accipiter albogularis          NA
-## 2  Aves      Accipiter badius          NA
-## 3  Aves     Accipiter bicolor          NA
-## 4  Aves  Accipiter brachyurus          NA
-## 5  Aves    Accipiter brevipes          NA
-## 6  Aves Accipiter castanilius          NA
-##   adult_body_mass_g litter_or_clutch_size_n
-## 1           251.500                      NA
-## 2           140.000                    3.25
-## 3           345.000                    2.70
-## 4           142.000                      NA
-## 5           203.500                    4.00
-## 6           159.375                      NA
+<pre><code>##   class               species longevity_y adult_body_mass_g litter_or_clutch_size_n
+## 1  Aves Accipiter albogularis          NA           251.500                      NA
+## 2  Aves      Accipiter badius          NA           140.000                    3.25
+## 3  Aves     Accipiter bicolor          NA           345.000                    2.70
+## 4  Aves  Accipiter brachyurus          NA           142.000                      NA
+## 5  Aves    Accipiter brevipes          NA           203.500                    4.00
+## 6  Aves Accipiter castanilius          NA           159.375                      NA
 ##   litters_or_clutches_per_y
 ## 1                        NA
 ## 2                         1
@@ -532,20 +507,13 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 </ol>
 <div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="exercise-solutions.html#cb519-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>longevity_y)</span>
 <span id="cb519-2"><a href="exercise-solutions.html#cb519-2" aria-hidden="true"></a><span class="kw">head</span>(x)</span></code></pre></div>
-<pre><code>##      class                 species longevity_y
-## 1 Reptilia Chelonoidis duncanensis       177.0
-## 2 Reptilia  Aldabrachelys gigantea       152.0
-## 3 Reptilia          Testudo graeca       127.0
-## 4 Mammalia            Homo sapiens       122.5
-## 5 Mammalia   Balaenoptera physalus        95.0
-## 6 Mammalia            Orcinus orca        90.0
-##   adult_body_mass_g litter_or_clutch_size_n
-## 1                NA                      NA
-## 2            117200                    13.5
-## 3              1430                     5.0
-## 4             62035                     1.0
-## 5          38800000                     1.0
-## 6           4300000                     1.0
+<pre><code>##      class                 species longevity_y adult_body_mass_g litter_or_clutch_size_n
+## 1 Reptilia Chelonoidis duncanensis       177.0                NA                      NA
+## 2 Reptilia  Aldabrachelys gigantea       152.0            117200                    13.5
+## 3 Reptilia          Testudo graeca       127.0              1430                     5.0
+## 4 Mammalia            Homo sapiens       122.5             62035                     1.0
+## 5 Mammalia   Balaenoptera physalus        95.0          38800000                     1.0
+## 6 Mammalia            Orcinus orca        90.0           4300000                     1.0
 ##   litters_or_clutches_per_y
 ## 1                        NA
 ## 2                  2.000000
@@ -558,20 +526,13 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 </ol>
 <div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="exercise-solutions.html#cb521-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(longevity_y)</span>
 <span id="cb521-2"><a href="exercise-solutions.html#cb521-2" aria-hidden="true"></a><span class="kw">head</span>(x)</span></code></pre></div>
-<pre><code>##      class              species longevity_y
-## 1 Mammalia    Lepus nigricollis  0.08333333
-## 2 Mammalia  Notoryctes caurinus  0.08333333
-## 3 Mammalia Allactaga balikunica  0.08333333
-## 4 Mammalia    Allactaga bullata  0.08333333
-## 5 Mammalia       Geomys pinetis  0.08333333
-## 6 Mammalia          Mus sorella  0.08333333
-##   adult_body_mass_g litter_or_clutch_size_n
-## 1          2196.875                    1.59
-## 2            34.000                    1.50
-## 3                NA                    2.52
-## 4                NA                    2.52
-## 5           195.750                    1.77
-## 6            12.535                    5.20
+<pre><code>##      class              species longevity_y adult_body_mass_g litter_or_clutch_size_n
+## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875                    1.59
+## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000                    1.50
+## 3 Mammalia Allactaga balikunica  0.08333333                NA                    2.52
+## 4 Mammalia    Allactaga bullata  0.08333333                NA                    2.52
+## 5 Mammalia       Geomys pinetis  0.08333333           195.750                    1.77
+## 6 Mammalia          Mus sorella  0.08333333            12.535                    5.20
 ##   litters_or_clutches_per_y
 ## 1                     7.150
 ## 2                        NA
@@ -842,15 +803,13 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb561-6"><a href="exercise-solutions.html#cb561-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(width)) <span class="op">%&gt;%</span></span>
 <span id="cb561-7"><a href="exercise-solutions.html#cb561-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span></span>
 <span id="cb561-8"><a href="exercise-solutions.html#cb561-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">diff</span>())</span></code></pre></div>
-<pre><code>##  [1]  0.9754196 -1.5436880  0.9368750  1.1783436
-##  [5] -0.3889855  1.4915964 -0.5619737  0.4558331
+<pre><code>##  [1]  0.9754196 -1.5436880  0.9368750  1.1783436 -0.3889855  1.4915964 -0.5619737  0.4558331
 ##  [9]  1.9645041 -2.4930715</code></pre>
 <div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="exercise-solutions.html#cb563-1" aria-hidden="true"></a><span class="co">#with tapply</span></span>
 <span id="cb563-2"><a href="exercise-solutions.html#cb563-2" aria-hidden="true"></a><span class="kw">replicate</span>(<span class="dv">10</span>,</span>
 <span id="cb563-3"><a href="exercise-solutions.html#cb563-3" aria-hidden="true"></a>          <span class="kw">diff</span>(<span class="kw">as.vector</span>(<span class="kw">tapply</span>(hercules<span class="op">$</span>width,<span class="kw">sample</span>(hercules<span class="op">$</span>sex),mean)))</span>
 <span id="cb563-4"><a href="exercise-solutions.html#cb563-4" aria-hidden="true"></a>)</span></code></pre></div>
-<pre><code>##  [1] -1.7472242 -0.7941490 -0.5730610  0.6233782
-##  [5]  1.1559533 -0.7226716  1.1273298 -0.0555329
+<pre><code>##  [1] -1.7472242 -0.7941490 -0.5730610  0.6233782  1.1559533 -0.7226716  1.1273298 -0.0555329
 ##  [9] -0.2148079 -0.6044714</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</li>
@@ -1060,8 +1019,7 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 ## spacing    2  35801 17900.3  9.3851 0.0002003 ***
 ## Residuals 89 169750  1907.3                      
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>You should see that there are differences among treatments. But where are those differences? Use <code>summary</code> on your model to find out.</li>
 </ol>
@@ -1075,17 +1033,12 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 ## -92.389 -30.577  -3.516  33.192 117.628 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  120.566      7.382  16.332  &lt; 2e-16
-## spacing10     35.924     11.073   3.244 0.001659
-## spacing14     44.107     10.966   4.022 0.000121
-##                
-## (Intercept) ***
-## spacing10   ** 
-## spacing14   ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  120.566      7.382  16.332  &lt; 2e-16 ***
+## spacing10     35.924     11.073   3.244 0.001659 ** 
+## spacing14     44.107     10.966   4.022 0.000121 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 43.67 on 89 degrees of freedom
 ##   (28 observations deleted due to missingness)
@@ -1143,17 +1096,12 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 ## -92.389 -30.577  -3.516  33.192 117.628 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)  156.489      8.253  18.961  &lt; 2e-16
-## spacing6     -35.924     11.073  -3.244  0.00166
-## spacing14      8.183     11.571   0.707  0.48128
-##                
-## (Intercept) ***
-## spacing6    ** 
-## spacing14      
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  156.489      8.253  18.961  &lt; 2e-16 ***
+## spacing6     -35.924     11.073  -3.244  0.00166 ** 
+## spacing14      8.183     11.571   0.707  0.48128    
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 43.67 on 89 degrees of freedom
 ##   (28 observations deleted due to missingness)
@@ -1205,15 +1153,11 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: chirps
-##              Df Sum Sq Mean Sq F value    Pr(&gt;F)
-## temperatureC  1 28.435 28.4348  29.248 0.0001195
-## Residuals    13 12.639  0.9722                  
-##                 
-## temperatureC ***
-## Residuals       
+##              Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## temperatureC  1 28.435 28.4348  29.248 0.0001195 ***
+## Residuals    13 12.639  0.9722                      
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <ol start="7" style="list-style-type: decimal">
 <li>Use <code>summary</code> to obtain information about the coefficients and <span class="math inline">\(R^2\)</span>-value.</li>
 </ol>
@@ -1227,15 +1171,11 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 ## -1.6181 -0.6154  0.0916  0.7669  1.5549 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   6.95531    1.79534   3.874 0.001918
-## temperatureC  0.36540    0.06756   5.408 0.000119
-##                 
-## (Intercept)  ** 
-## temperatureC ***
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   6.95531    1.79534   3.874 0.001918 ** 
+## temperatureC  0.36540    0.06756   5.408 0.000119 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.986 on 13 degrees of freedom
 ## Multiple R-squared:  0.6923,	Adjusted R-squared:  0.6686 
@@ -1280,19 +1220,13 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: spawning
-##                         Df Sum Sq Mean Sq F value
-## personality              1   7781    7781  5.5032
-## colouration              1  55862   55862 39.5074
-## personality:colouration  1   4118    4118  2.9123
-## Residuals               28  39591    1414        
-##                            Pr(&gt;F)    
-## personality               0.02629 *  
-## colouration             8.519e-07 ***
-## personality:colouration   0.09898 .  
-## Residuals                            
+##                         Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## personality              1   7781    7781  5.5032   0.02629 *  
+## colouration              1  55862   55862 39.5074 8.519e-07 ***
+## personality:colouration  1   4118    4118  2.9123   0.09898 .  
+## Residuals               28  39591    1414                      
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Get the coefficient summary (<code>summary</code>) and interpret the output.</li>
 </ol>
@@ -1307,34 +1241,13 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 ## -61.625 -23.344  -5.375  26.313  60.125 
 ## 
 ## Coefficients:
-##                                           Estimate
-## (Intercept)                                 218.50
-## personalityReactive                         -53.88
-## colourationHomogenous                        60.87
-## personalityReactive:colourationHomogenous    45.38
-##                                           Std. Error
-## (Intercept)                                    13.29
-## personalityReactive                            18.80
-## colourationHomogenous                          18.80
-## personalityReactive:colourationHomogenous      26.59
-##                                           t value
-## (Intercept)                                16.435
-## personalityReactive                        -2.865
-## colourationHomogenous                       3.238
-## personalityReactive:colourationHomogenous   1.707
-##                                           Pr(&gt;|t|)
-## (Intercept)                                6.5e-16
-## personalityReactive                        0.00781
-## colourationHomogenous                      0.00309
-## personalityReactive:colourationHomogenous  0.09898
-##                                              
-## (Intercept)                               ***
-## personalityReactive                       ** 
-## colourationHomogenous                     ** 
-## personalityReactive:colourationHomogenous .  
+##                                           Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                                 218.50      13.29  16.435  6.5e-16 ***
+## personalityReactive                         -53.88      18.80  -2.865  0.00781 ** 
+## colourationHomogenous                        60.87      18.80   3.238  0.00309 ** 
+## personalityReactive:colourationHomogenous    45.38      26.59   1.707  0.09898 .  
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 37.6 on 28 degrees of freedom
 ## Multiple R-squared:  0.6312,	Adjusted R-squared:  0.5917 
@@ -1426,8 +1339,7 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 ## NULL                    19     36.672              
 ## Age   1   11.511        18     25.161 0.0006917 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Obtain the <code>summary</code> table. What does this tell you?</li>
 </ol>
@@ -1445,8 +1357,7 @@ Try answering the question - “<em>are people who prefer dogs taller than those
 ## (Intercept)  0.09531    0.30151   0.316   0.7519   
 ## AgeChild     1.09861    0.34815   3.156   0.0016 **
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for poisson family taken to be 1)
 ## 

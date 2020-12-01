@@ -506,20 +506,13 @@ The SDU bird data are not suitable for this type of plot so we’ll use the data
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="visualising-data-with-ggplot.html#cb193-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>)</span></code></pre></div>
 <p>Take a look at the data to remind ourselves what it looks like</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="visualising-data-with-ggplot.html#cb194-1" aria-hidden="true"></a><span class="kw">head</span>(df)</span></code></pre></div>
-<pre><code>##          Name Year HabitatIndex nIndividuals
-## 1    Alamotos 1946         10.0           48
-## 2      Ramona 1946          9.5           30
-## 3      Verona 1947          9.5           38
-## 4 Valle Vista 1950          9.5           42
-## 5    La Gonda 1955         11.0           44
-## 6     Belgian 1956          9.0           27
-##   nSpecies
-## 1       12
-## 2       13
-## 3       15
-## 4       11
-## 5       13
-## 6       14</code></pre>
+<pre><code>##          Name Year HabitatIndex nIndividuals nSpecies
+## 1    Alamotos 1946         10.0           48       12
+## 2      Ramona 1946          9.5           30       13
+## 3      Verona 1947          9.5           38       15
+## 4 Valle Vista 1950          9.5           42       11
+## 5    La Gonda 1955         11.0           44       13
+## 6     Belgian 1956          9.0           27       14</code></pre>
 <p>These data show the result of standardised bird surveys at housing developments of different ages in California. The surveys were carried out in 1975, and the data includes the <code>Year</code> and number of individual birds seen <code>nIndividuals</code> and number of species seen <code>nSpecies</code>. The question being addressed is “How does the age of the housing development affect the number of species?”</p>
 <p>To investigate this we should first add a new variable for <code>Age</code> to the data set. We can do this using the <code>mutate</code> function from <code>dplyr</code>. This function creates new variables, for example by manipulating existing ones.</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="visualising-data-with-ggplot.html#cb196-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">mutate</span>(df,<span class="dt">Age =</span> <span class="dv">1975</span> <span class="op">-</span><span class="st"> </span>Year)</span></code></pre></div>

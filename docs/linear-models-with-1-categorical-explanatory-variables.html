@@ -444,19 +444,13 @@ Figure 15.2: The effect of diet protein content and genotype on adult size of an
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: lengthMM
-##               Df Sum Sq Mean Sq F value    Pr(&gt;F)
-## genotype       1 426.02  426.02  99.575 7.135e-13
-## diet           1 111.02  111.02  25.949 7.064e-06
-## genotype:diet  1  54.19   54.19  12.665 0.0009073
-## Residuals     44 188.25    4.28                  
-##                  
-## genotype      ***
-## diet          ***
-## genotype:diet ***
-## Residuals        
+##               Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## genotype       1 426.02  426.02  99.575 7.135e-13 ***
+## diet           1 111.02  111.02  25.949 7.064e-06 ***
+## genotype:diet  1  54.19   54.19  12.665 0.0009073 ***
+## Residuals     44 188.25    4.28                      
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This summary <code>Analysis of Variance Table</code> is similar to the ones you have already seen for one-way ANOVA and linear regression. It just has some extra rows because you have extra explanatory variables. It shows you the degrees of freedom for the different terms in the model (all 1, because they have two levels), the sum of squares (<code>Sum Sq</code>) and mean sum of squares (<code>Mean Sq</code>) and the associated <code>F value</code> and p-value (<code>Pr(&gt;F)</code>). Those F values are all large, leading to highly-significant p-values.</p>
 <p>This means that all of those terms in the model explain a significant proportion of the variation in insect length.</p>
 <p>But as you know, this summary table doesn’t tell you the direction of the effects. The obvious way to understand your data is to simply look at the plot you have already produced. You could also make an <strong>interaction plot</strong> which is a simplified version of the plot of the raw data.</p>
@@ -534,19 +528,13 @@ To answer that question we need to use a post-hoc test</p>
 ## -3.7500 -1.0417  0.1667  1.2500  5.1667 
 ## 
 ## Coefficients:
-##                            Estimate Std. Error
-## (Intercept)                 25.8333     0.5971
-## genotypegt2                 -8.0833     0.8444
-## dietlowProtein              -5.1667     0.8444
-## genotypegt2:dietlowProtein   4.2500     1.1942
-##                            t value Pr(&gt;|t|)    
-## (Intercept)                 43.264  &lt; 2e-16 ***
-## genotypegt2                 -9.572 2.53e-12 ***
-## dietlowProtein              -6.118 2.26e-07 ***
-## genotypegt2:dietlowProtein   3.559 0.000907 ***
+##                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                 25.8333     0.5971  43.264  &lt; 2e-16 ***
+## genotypegt2                 -8.0833     0.8444  -9.572 2.53e-12 ***
+## dietlowProtein              -5.1667     0.8444  -6.118 2.26e-07 ***
+## genotypegt2:dietlowProtein   4.2500     1.1942   3.559 0.000907 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 2.068 on 44 degrees of freedom
 ## Multiple R-squared:  0.7585,	Adjusted R-squared:  0.742 
@@ -623,19 +611,13 @@ anova(mod_A)
 ## Analysis of Variance Table
 ## 
 ## Response: spawning
-##                         Df Sum Sq Mean Sq F value
-## personality              1   7781    7781  5.5032
-## colouration              1  55862   55862 39.5074
-## personality:colouration  1   4118    4118  2.9123
-## Residuals               28  39591    1414        
-##                            Pr(>F)    
-## personality               0.02629 *  
-## colouration             8.519e-07 ***
-## personality:colouration   0.09898 .  
-## Residuals                            
+##                         Df Sum Sq Mean Sq F value    Pr(>F)    
+## personality              1   7781    7781  5.5032   0.02629 *  
+## colouration              1  55862   55862 39.5074 8.519e-07 ***
+## personality:colouration  1   4118    4118  2.9123   0.09898 .  
+## Residuals               28  39591    1414                      
 ## ---
-## Signif. codes:  
-## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 -->
 <ol start="6" style="list-style-type: decimal">
@@ -657,34 +639,13 @@ summary(mod_A)
 ## -61.625 -23.344  -5.375  26.313  60.125 
 ## 
 ## Coefficients:
-##                                           Estimate
-## (Intercept)                                 218.50
-## personalityReactive                         -53.88
-## colourationHomogenous                        60.87
-## personalityReactive:colourationHomogenous    45.38
-##                                           Std. Error
-## (Intercept)                                    13.29
-## personalityReactive                            18.80
-## colourationHomogenous                          18.80
-## personalityReactive:colourationHomogenous      26.59
-##                                           t value
-## (Intercept)                                16.435
-## personalityReactive                        -2.865
-## colourationHomogenous                       3.238
-## personalityReactive:colourationHomogenous   1.707
-##                                           Pr(>|t|)
-## (Intercept)                                6.5e-16
-## personalityReactive                        0.00781
-## colourationHomogenous                      0.00309
-## personalityReactive:colourationHomogenous  0.09898
-##                                              
-## (Intercept)                               ***
-## personalityReactive                       ** 
-## colourationHomogenous                     ** 
-## personalityReactive:colourationHomogenous .  
+##                                           Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)                                 218.50      13.29  16.435  6.5e-16 ***
+## personalityReactive                         -53.88      18.80  -2.865  0.00781 ** 
+## colourationHomogenous                        60.87      18.80   3.238  0.00309 ** 
+## personalityReactive:colourationHomogenous    45.38      26.59   1.707  0.09898 .  
 ## ---
-## Signif. codes:  
-## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 37.6 on 28 degrees of freedom
 ## Multiple R-squared:  0.6312,	Adjusted R-squared:  0.5917 
