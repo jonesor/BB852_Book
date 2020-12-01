@@ -1,14 +1,13 @@
 ## Exercise Solutions: Californian bird diversity
 
-
-*1. First import the data. Check that the columns look as they should. (e.g. use `summary` or `str` functions). Tip: use the "Wizard" in RStudio to guide you.*
+1. First import the data. Check that the columns look as they should. (e.g. use `summary` or `str` functions). Tip: use the "Wizard" in RStudio to guide you.
 
 ```{r}
 df <- read.csv("CourseData/suburbanBirds.csv")
 ```
 
 
-*2. What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)*
+2. What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)*
 
 ```{r}
 mean(df$nSpecies)
@@ -19,20 +18,20 @@ summary(df$nSpecies)
 ```
 
 
-*3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)*
+3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)
 
 ```{r}
 1975-min(df$Year)
 1975-max(df$Year)
 ```
 
-*4. Plot the relationship between `Year` and `nSpecies` as a scatterplot using base-R graphics (using the `plot` function).*
+4. Plot the relationship between `Year` and `nSpecies` as a scatterplot using base-R graphics (using the `plot` function).
 
 ```{r}
 plot(df$Year,df$nSpecies)
 ```
 
-*5. The patern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Replot your results.*
+5. The patern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Replot your results.
 
 ```{r}
 df$Age <- 1975-df$Year
@@ -40,12 +39,11 @@ plot(df$Age,df$nSpecies)
 ```
 
 
-*6. What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?*
+6. What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?
 
 If you recall that the average species richness pre-development was about 3.5 species, the data show that suburban development is actually good for bird species. This could be surprising, but a possible explanation is that the gardens, parks, trees etc. that come with development represent additional habitats that would not normally be there. Therefore, these areas attract new species.
 
-*7. Export your plots and paste them into a Word Document.*
+7. Export your plots and paste them into a Word Document.
 
 You can do this with several methods. My favourite *quick* method is to click the Export button > Copy to Clipboard, resize the plot so it looks nice, then click Copy Plot. Finally, paste into Word with Cntrl (or Cmd) + V.
 
-*8. If you get this far, try plotting the other variables in the dataset.*

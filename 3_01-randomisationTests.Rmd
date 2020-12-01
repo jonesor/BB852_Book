@@ -22,7 +22,8 @@ ch <-read.csv("CourseData/cholesterol.csv")
 
 Let's first take a look at the data by plotting it. I will first plot a boxplot first, and add the jittered points for clarity.
 
-```{r}
+```{r,echo = -1}
+set.seed(42)
 ggplot(ch,aes(x=Treatment,y=Cholesterol)) + 
       geom_boxplot()+
     geom_jitter(colour="grey",width=.1)

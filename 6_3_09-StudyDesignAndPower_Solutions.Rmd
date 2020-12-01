@@ -1,0 +1,29 @@
+## Exercise Solutions: Snails on the move
+
+Simulate a t-test-based analysis in R to figure out what sample size would result in 80% power.
+
+
+```{r}
+sampleSize <- 40 #vary this until power > 0.8
+result <- replicate(1000,
+          t.test(rnorm(sampleSize,mean  = 7.4,sd = 2.76), 
+                 rnorm(sampleSize,mean  = 7.4*1.25,sd = 2.76))$p.value)
+sum(result<0.05)/1000
+```
+
+You should find that you need a sample size of about 40 per group.
+
+## Exercise Solutions: Mouse lemur strength
+
+What difference in strength could you reliably detect (with power >80%) with these sample sizes?
+
+```{r}
+diff <- 185 #Vary this to give a difference to the 2nd group in the t-test
+result <- replicate(1000,
+          t.test(rnorm(25,mean  = 600,sd = 145), 
+                 rnorm(8,mean  = 600-diff,sd = 145))$p.value)
+sum(result<0.05)/1000
+```
+
+You should find that you could detect a difference of about 185g or a mean for old animals of 415g which is 70% of the young animals i.e. a 30% reduction.
+

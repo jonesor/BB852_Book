@@ -1,0 +1,83 @@
+## Exercise Solutions: Temperature effects on egg laying dates
+
+1. Import the data and take a look at it  with `head` or `str`.
+
+```{r, eval=TRUE}
+eggDates <- read.csv("CourseData/eggDates.csv")
+head(eggDates)
+```
+
+2. Use `pivot_longer` to reformat the data. This might take a bit of trial and error - don't give up! 
+
+Maybe this will help: The first argument in the `pivot_longer` command (`cols`) tells R which columns contain the data you are interested in (in this case, these are `y2013`,`y2014` etc). Then the `names_to` argument tells R what you want to name the new column from this data (in this case, `Year`). Then, the `values_to` argument tells R what the data column should be called (e.g. `Day`). In addition, there is a useful argument called `names_prefix` that will remove the part of the column name  (e.g. the `y` of `y2013`)
+
+You should also make sure that the `Year` column is recognised as being a numeric variable rather than a character string. You can do this by adding a command using `mutate` and `as.numeric`, like this `mutate(Year = as.numeric(Year))`
+
+You should end up with a dataset with three columns as described above.
+
+```{r}
+eggDates <- eggDates %>% pivot_longer(cols = starts_with("y"),names_to = "Year",values_to = "day")
+
+head(eggDates)
+```
+
+3. Ensure that year is coded as numeric variable using `mutate`. [Hint, you can use the command `as.numeric`, but first remove the "y" in the name using `gsub`].
+
+```{r}
+eggDates <- eggDates %>%
+  mutate(Year = gsub(pattern = "y",replacement = "", Year)) %>%
+  mutate(Year = as.numeric(Year))         
+head(eggDates)
+```
+
+4. Calculate the mean egg date per year using `summarise` (remember to `group_by` the year first). Take a look at the data.
+
+```{r}
+meanEgg <- eggDates %>%
+  group_by(Year) %>%
+  summarise(meanEggDate = mean(day,na.rm=TRUE))
+
+meanEgg
+```
+
+
+**Preparing the weather data**
+
+5. Import the weather data and take a look at it with `head` or `str`.
+
+```{r,eval=TRUE}
+weather <- read.csv("CourseData/AarslevTemperature.csv")
+str(weather)
+```
+
+6. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `YEAR` and `meanSpringTemp`. 
+
+```{r}
+weather <- weather %>%
+  filter(MONTH %in% 2:4) %>%
+  group_by(YEAR) %>%
+  summarise(meanAprilTemp = mean(TEMP))
+
+head(weather)
+```
+
+
+**Bringing it together**
+
+7. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
+
+```{r}
+joinedData <- left_join(meanEgg,weather,c("Year" = "YEAR"))
+head(joinedData)
+```
+
+
+**Plot the data**
+
+8. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
+
+```{r}
+plot(joinedData$meanAprilTemp,joinedData$meanEggDate)
+```
+
+Now you should be able to answer the question we started with: is laying date associated with spring temperatures? Yes, there looks to be a negative relationship between temperature and egg laying date.

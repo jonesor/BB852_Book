@@ -157,7 +157,44 @@ plot(newHeights$Sex,newHeights$Height)
 
 This data manipulation is useful surprisingly often.
 
-# Exercise: Temperature effects on egg laying dates
+## Exercise: Temperature effects on egg laying dates
+
+```{r prepare data, eval = TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+#Here I am preparing the data for the course
+sduBirds <- read.csv("CourseData/sduBirds.csv")
+
+#Process to get first egg date
+#First egg, data preparation ------------
+sduBirds %>%
+  mutate(nEggs = as.numeric(as.character(nEggs))) %>%
+  select(Timestamp,Year,Day,boxNumber,nEggs) %>%
+  filter(nEggs > 0) %>%
+  group_by(Year,boxNumber) %>%
+  filter(Day==min(Day)) %>%
+  ungroup()%>%
+  mutate(estimatedFirstEggDate = Day - nEggs, dummy=1) %>%
+  mutate(Year = as.factor(Year)) %>%
+  arrange(estimatedFirstEggDate)  %>%
+  arrange(Year)%>%
+  group_by(Year)%>%
+  mutate(cumulativeCount=cumsum(dummy)) %>% 
+  select(-dummy) %>%
+  ungroup() %>%
+  mutate(Year =as.numeric(as.character(Year))) %>%
+  select(boxNumber, Year, estimatedFirstEggDate) %>%
+  rename(firstEgg=estimatedFirstEggDate) %>%
+  arrange(boxNumber,Year) %>%
+  spread(Year,firstEgg) -> xx
+
+names(xx)[2:ncol(xx)] <- paste0("y",names(xx)[2:ncol(xx)])
+write.csv(xx,"CourseData/eggDates.csv",row.names = FALSE)
+
+#Prep weather
+weather <- read.csv("/Users/jones/Dropbox/_SDU_Birds/Data/SDUweather.csv") %>%
+  select(YEAR, MONTH, DAY, TEMP)
+
+write.csv(weather,"CourseData/AarslevTemperature.csv",row.names = FALSE)
+```
 
 Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: *is egg laying date associated with spring temperature?* The idea here is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change. 
 
@@ -176,8 +213,7 @@ To answer the question, you will need to join these data sets together.
 
 1. Import the data and take a look at it  with `head` or `str`.
 
-
-2. Use `pivot_wider` to reformat the data. This might take a bit of trial and error - don't give up! 
+2. Use `pivot_longer` to reformat the data. This might take a bit of trial and error - don't give up! 
 
 Maybe this will help: The first argument in the `pivot_longer` command (`cols`) tells R which columns contain the data you are interested in (in this case, these are `y2013`,`y2014` etc). Then the `names_to` argument tells R what you want to name the new column from this data (in this case, `Year`). Then, the `values_to` argument tells R what the data column should be called (e.g. `Day`). In addition, there is a useful argument called `names_prefix` that will remove the part of the column name  (e.g. the `y` of `y2013`)
 
@@ -188,15 +224,11 @@ You should end up with a dataset with three columns as described above.
 
 3. Calculate the mean egg date per year using `summarise` (remember to `group_by` the year first). Take a look at the data.
 
-
-
 4. Import the weather data and take a look at it with `head` or `str`.
-
 
 5. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `year` and `meanSpringTemp`. 
 
 6. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
-
 
 7. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
 

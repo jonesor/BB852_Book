@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 21 Bringing it together | BB852 - Data handling, visualisation and statistics</title>
+  <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 21 Bringing it together | BB852 - Data handling, visualisation and statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 21 Bringing it together | BB852 - Data handling, visualisation and statistics" />
+  
+  <meta name="twitter:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
+  
+
+<meta name="author" content="Owen R. Jones" />
+
+
+<meta name="date" content="2020-11-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exam-2020.html"/>
+
+<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.0.0/tabwid.js"></script>
+<style type="text/css">
+
+.warning-box {
+  border: 3px solid #e60000;
+  margin:  25px;
+  padding: 10px 10px 5px 10px;
+  border-radius: 6px 6px 6px 6px;
+}
+
+.advanced-box {
+  border: 3px solid #268bd2;
+  margin:  25px;
+  padding: 10px 10px 5px 10px;
+  border-radius: 6px 6px 6px 6px;
+}
+
+.do-something {
+  border: 3px solid #803e00;
+  margin:  25px;
+  padding: 10px 10px 5px 10px;
+  border-radius: 6px 6px 6px 6px;
+}
+
+</style>
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">BB852</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#data-wrangling"><i class="fa fa-check"></i><b>1.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-visualisation"><i class="fa fa-check"></i><b>1.2</b> Data visualisation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#statistics"><i class="fa fa-check"></i><b>1.3</b> Statistics</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.4</b> Data sources</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#your-instructors"><i class="fa fa-check"></i><b>1.5</b> Your instructors</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.6</b> Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i><b>2</b> Schedule</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="schedule.html"><a href="schedule.html#additional-recommended-reading"><i class="fa fa-check"></i><b>2.1</b> Additional recommended reading</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="an-r-refresher.html"><a href="an-r-refresher.html"><i class="fa fa-check"></i><b>3</b> An R refresher</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="an-r-refresher.html"><a href="an-r-refresher.html#getting-started-with-r"><i class="fa fa-check"></i><b>3.1</b> Getting started with R</a></li>
+<li class="chapter" data-level="3.2" data-path="an-r-refresher.html"><a href="an-r-refresher.html#getting-help"><i class="fa fa-check"></i><b>3.2</b> Getting help</a></li>
+<li class="chapter" data-level="3.3" data-path="an-r-refresher.html"><a href="an-r-refresher.html#r-as-a-fancy-calculator"><i class="fa fa-check"></i><b>3.3</b> R as a fancy calculator</a></li>
+<li class="chapter" data-level="3.4" data-path="an-r-refresher.html"><a href="an-r-refresher.html#objects-in-r"><i class="fa fa-check"></i><b>3.4</b> Objects in R</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="manipulating-objects.html"><a href="manipulating-objects.html"><i class="fa fa-check"></i><b>4</b> Manipulating objects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="manipulating-objects.html"><a href="manipulating-objects.html#missing-values-infinity-and-non-numbers"><i class="fa fa-check"></i><b>4.1</b> Missing values, infinity and “non-numbers”</a></li>
+<li class="chapter" data-level="4.2" data-path="manipulating-objects.html"><a href="manipulating-objects.html#basic-information-about-objects"><i class="fa fa-check"></i><b>4.2</b> Basic information about objects</a></li>
+<li class="chapter" data-level="4.3" data-path="manipulating-objects.html"><a href="manipulating-objects.html#data-frames"><i class="fa fa-check"></i><b>4.3</b> Data frames</a></li>
+<li class="chapter" data-level="4.4" data-path="manipulating-objects.html"><a href="manipulating-objects.html#organising-your-work"><i class="fa fa-check"></i><b>4.4</b> Organising your work</a></li>
+<li class="chapter" data-level="4.5" data-path="manipulating-objects.html"><a href="manipulating-objects.html#inspecting-the-data"><i class="fa fa-check"></i><b>4.5</b> Inspecting the data</a></li>
+<li class="chapter" data-level="4.6" data-path="manipulating-objects.html"><a href="manipulating-objects.html#classes-in-r"><i class="fa fa-check"></i><b>4.6</b> “Classes” in R</a></li>
+<li class="chapter" data-level="4.7" data-path="manipulating-objects.html"><a href="manipulating-objects.html#tables-and-summary-statistics"><i class="fa fa-check"></i><b>4.7</b> Tables and summary statistics</a></li>
+<li class="chapter" data-level="4.8" data-path="manipulating-objects.html"><a href="manipulating-objects.html#plotting-data"><i class="fa fa-check"></i><b>4.8</b> Plotting data</a></li>
+<li class="chapter" data-level="4.9" data-path="manipulating-objects.html"><a href="manipulating-objects.html#r-packages"><i class="fa fa-check"></i><b>4.9</b> R Packages</a></li>
+<li class="chapter" data-level="4.10" data-path="manipulating-objects.html"><a href="manipulating-objects.html#exercise-californian-bird-diversity"><i class="fa fa-check"></i><b>4.10</b> Exercise: Californian bird diversity</a>
+<ul>
+<li class="chapter" data-level="4.10.1" data-path="manipulating-objects.html"><a href="manipulating-objects.html#the-data"><i class="fa fa-check"></i><b>4.10.1</b> The data</a></li>
+<li class="chapter" data-level="4.10.2" data-path="manipulating-objects.html"><a href="manipulating-objects.html#try-the-following"><i class="fa fa-check"></i><b>4.10.2</b> Try the following</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Data Wrangling</b></span></li>
+<li class="chapter" data-level="5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>5</b> Data wrangling with <code>dplyr</code></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#select"><i class="fa fa-check"></i><b>5.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="5.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>5.2</b> <code>filter</code></a></li>
+<li class="chapter" data-level="5.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>5.3</b> <code>arrange</code></a></li>
+<li class="chapter" data-level="5.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>5.4</b> <code>summarise</code> and <code>group_by</code></a></li>
+<li class="chapter" data-level="5.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>5.5</b> Using pipes, saving data.</a></li>
+<li class="chapter" data-level="5.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercise-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>5.6</b> Exercise: Wrangling the Amniote Life History Database</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>6</b> Combining data sets</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-join"><i class="fa fa-check"></i><b>6.1</b> Using <code>join</code></a></li>
+<li class="chapter" data-level="6.2" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-pivot_longer"><i class="fa fa-check"></i><b>6.2</b> Using <code>pivot_longer</code></a></li>
+<li class="chapter" data-level="6.3" data-path="combining-data-sets.html"><a href="combining-data-sets.html#exercise-temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>6.3</b> Exercise: Temperature effects on egg laying dates</a></li>
+</ul></li>
+<li class="part"><span><b>II Data visualisation</b></span></li>
+<li class="chapter" data-level="7" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html"><i class="fa fa-check"></i><b>7</b> Visualising data with <code>ggplot</code></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#histograms"><i class="fa fa-check"></i><b>7.1</b> Histograms</a></li>
+<li class="chapter" data-level="7.2" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#facets---splitting-data-across-panels"><i class="fa fa-check"></i><b>7.2</b> “Facets” - splitting data across panels</a></li>
+<li class="chapter" data-level="7.3" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#box-plots"><i class="fa fa-check"></i><b>7.3</b> Box plots</a></li>
+<li class="chapter" data-level="7.4" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#lines-and-points"><i class="fa fa-check"></i><b>7.4</b> Lines and points</a></li>
+<li class="chapter" data-level="7.5" data-path="visualising-data-with-ggplot.html"><a href="visualising-data-with-ggplot.html#scatter-plots"><i class="fa fa-check"></i><b>7.5</b> Scatter plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html"><i class="fa fa-check"></i><b>8</b> Distributions and summarising data</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#distributions"><i class="fa fa-check"></i><b>8.1</b> Distributions</a></li>
+<li class="chapter" data-level="8.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#normal-distribution"><i class="fa fa-check"></i><b>8.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="8.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-distributions"><i class="fa fa-check"></i><b>8.3</b> Comparing normal distributions</a></li>
+<li class="chapter" data-level="8.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#poisson-distribution"><i class="fa fa-check"></i><b>8.4</b> Poisson distribution</a></li>
+<li class="chapter" data-level="8.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>8.5</b> Comparing normal and Poisson distributions</a></li>
+<li class="chapter" data-level="8.6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#the-law-of-large-numbers"><i class="fa fa-check"></i><b>8.6</b> The law of large numbers</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#coin-flipping"><i class="fa fa-check"></i><b>8.6.1</b> Coin flipping</a></li>
+<li class="chapter" data-level="8.6.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#virtual-dice"><i class="fa fa-check"></i><b>8.6.2</b> Virtual dice</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html"><i class="fa fa-check"></i><b>9</b> Pimping your plots</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#a-basic-plot"><i class="fa fa-check"></i><b>9.1</b> A basic plot</a></li>
+<li class="chapter" data-level="9.2" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#axis-limits"><i class="fa fa-check"></i><b>9.2</b> Axis limits</a></li>
+<li class="chapter" data-level="9.3" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#transforming-the-axis-log-scale"><i class="fa fa-check"></i><b>9.3</b> Transforming the axis (log scale)</a></li>
+<li class="chapter" data-level="9.4" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#changing-the-axis-tick-marks"><i class="fa fa-check"></i><b>9.4</b> Changing the axis tick marks</a></li>
+<li class="chapter" data-level="9.5" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#axis-labels"><i class="fa fa-check"></i><b>9.5</b> Axis labels</a></li>
+<li class="chapter" data-level="9.6" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#colours"><i class="fa fa-check"></i><b>9.6</b> Colours</a></li>
+<li class="chapter" data-level="9.7" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#themes"><i class="fa fa-check"></i><b>9.7</b> Themes</a></li>
+<li class="chapter" data-level="9.8" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#moving-the-legend"><i class="fa fa-check"></i><b>9.8</b> Moving the legend</a></li>
+<li class="chapter" data-level="9.9" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#combining-multiple-plots"><i class="fa fa-check"></i><b>9.9</b> Combining multiple plots</a></li>
+<li class="chapter" data-level="9.10" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#saving-your-plot"><i class="fa fa-check"></i><b>9.10</b> Saving your plot</a></li>
+<li class="chapter" data-level="9.11" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#final-word-on-plots"><i class="fa fa-check"></i><b>9.11</b> Final word on plots</a></li>
+</ul></li>
+<li class="part"><span><b>III Statistics</b></span></li>
+<li class="chapter" data-level="10" data-path="randomisation-tests.html"><a href="randomisation-tests.html"><i class="fa fa-check"></i><b>10</b> Randomisation Tests</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#randomisation-test-in-r"><i class="fa fa-check"></i><b>10.1</b> Randomisation test in R</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#calculate-the-observed-difference"><i class="fa fa-check"></i><b>10.1.1</b> Calculate the observed difference</a></li>
+<li class="chapter" data-level="10.1.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution"><i class="fa fa-check"></i><b>10.1.2</b> Null distribution</a></li>
+<li class="chapter" data-level="10.1.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-significance"><i class="fa fa-check"></i><b>10.1.3</b> Testing significance</a></li>
+<li class="chapter" data-level="10.1.4" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-the-hypothesis"><i class="fa fa-check"></i><b>10.1.4</b> Testing the hypothesis</a></li>
+<li class="chapter" data-level="10.1.5" data-path="randomisation-tests.html"><a href="randomisation-tests.html#writing-it-up"><i class="fa fa-check"></i><b>10.1.5</b> Writing it up</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#paired-randomisation-tests"><i class="fa fa-check"></i><b>10.2</b> Paired Randomisation Tests</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-randomisation-test"><i class="fa fa-check"></i><b>10.2.1</b> The randomisation test</a></li>
+<li class="chapter" data-level="10.2.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution-1"><i class="fa fa-check"></i><b>10.2.2</b> Null distribution</a></li>
+<li class="chapter" data-level="10.2.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-formal-hypothesis-test"><i class="fa fa-check"></i><b>10.2.3</b> The formal hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#exercise-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>10.3</b> Exercise: Sexual selection in Hercules beetles</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html"><i class="fa fa-check"></i><b>11</b> Comparing two means with a t-test</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#some-theory"><i class="fa fa-check"></i><b>11.1</b> Some theory</a></li>
+<li class="chapter" data-level="11.2" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#one-sample-t-test"><i class="fa fa-check"></i><b>11.2</b> One sample t-test</a></li>
+<li class="chapter" data-level="11.3" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#doing-it-by-hand---where-does-the-t-statistic-come-from"><i class="fa fa-check"></i><b>11.3</b> Doing it “by hand” - where does the t-statistic come from?</a></li>
+<li class="chapter" data-level="11.4" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#paired-t-test"><i class="fa fa-check"></i><b>11.4</b> Paired t-test</a></li>
+<li class="chapter" data-level="11.5" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#a-paired-t-test-is-a-one-sample-test."><i class="fa fa-check"></i><b>11.5</b> A paired t-test is a one-sample test.</a></li>
+<li class="chapter" data-level="11.6" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#two-sample-t-test"><i class="fa fa-check"></i><b>11.6</b> Two sample t-test</a></li>
+<li class="chapter" data-level="11.7" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#t-tests-are-linear-models"><i class="fa fa-check"></i><b>11.7</b> t-tests are linear models</a></li>
+<li class="chapter" data-level="11.8" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>11.8</b> Exercise: Sex differences in fine motor skills</a></li>
+<li class="chapter" data-level="11.9" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-therapy-for-anorexia"><i class="fa fa-check"></i><b>11.9</b> Exercise: Therapy for anorexia</a></li>
+<li class="chapter" data-level="11.10" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>11.10</b> Exercise: Compare t-tests with randomisation tests</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html"><i class="fa fa-check"></i><b>12</b> Linear models with a single categorical explanatory variable</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#one-way-anova"><i class="fa fa-check"></i><b>12.1</b> One-way ANOVA</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#fitting-an-anova-in-r"><i class="fa fa-check"></i><b>12.2</b> Fitting an ANOVA in R</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>12.2.1</b> Where are the differences?</a></li>
+<li class="chapter" data-level="12.2.2" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>12.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>12.3</b> ANOVA calculation “by hand”.</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>12.4</b> Exercise: Apple tree crop yield</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>13</b> Linear models with a single continuous explanatory variable</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#some-theory"><i class="fa fa-check"></i><b>13.1</b> Some theory</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#evaluating-a-hypothesis-with-a-linear-regression-model"><i class="fa fa-check"></i><b>13.2</b> Evaluating a hypothesis with a linear regression model</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#assumptions"><i class="fa fa-check"></i><b>13.3</b> Assumptions</a></li>
+<li class="chapter" data-level="13.4" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#worked-example-height-hand-width-relationship"><i class="fa fa-check"></i><b>13.4</b> Worked example: height-hand width relationship</a></li>
+<li class="chapter" data-level="13.5" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#exercise-chirping-crickets"><i class="fa fa-check"></i><b>13.5</b> Exercise: Chirping crickets</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html"><i class="fa fa-check"></i><b>14</b> Linear models with categorical and continuous explanatory variables</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#the-height-hand-width-example."><i class="fa fa-check"></i><b>14.1</b> The height ~ hand width example.</a></li>
+<li class="chapter" data-level="14.2" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#summarising-with-anova"><i class="fa fa-check"></i><b>14.2</b> Summarising with <code>anova</code></a></li>
+<li class="chapter" data-level="14.3" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#the-summary-of-coefficients-summary"><i class="fa fa-check"></i><b>14.3</b> The summary of coefficients (<code>summary</code>)</a></li>
+<li class="chapter" data-level="14.4" data-path="linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#simplifying-the-model"><i class="fa fa-check"></i><b>14.4</b> Simplifying the model</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html"><i class="fa fa-check"></i><b>15</b> Linear models with &gt;1 categorical explanatory variables</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html#fitting-a-two-way-anova-model"><i class="fa fa-check"></i><b>15.1</b> Fitting a two-way ANOVA model</a></li>
+<li class="chapter" data-level="15.2" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-anova"><i class="fa fa-check"></i><b>15.2</b> Summarising the model (<code>anova</code>)</a></li>
+<li class="chapter" data-level="15.3" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-summary"><i class="fa fa-check"></i><b>15.3</b> Summarising the model (<code>summary</code>)</a></li>
+<li class="chapter" data-level="15.4" data-path="linear-models-with-1-categorical-explanatory-variables.html"><a href="linear-models-with-1-categorical-explanatory-variables.html#exercise-fish-behaviour"><i class="fa fa-check"></i><b>15.4</b> Exercise: Fish behaviour</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html"><i class="fa fa-check"></i><b>16</b> Generalised linear models</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#count-data-with-poisson-errors."><i class="fa fa-check"></i><b>16.1</b> Count data with Poisson errors.</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-number-of-offspring-in-foxes."><i class="fa fa-check"></i><b>16.1.1</b> Example: Number of offspring in foxes.</a></li>
+<li class="chapter" data-level="16.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>16.1.2</b> Example: Cancer clusters</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>16.2</b> Exercise: Maze runner</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>17</b> Extending use cases of GLM</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#binomial-response-data"><i class="fa fa-check"></i><b>17.1</b> Binomial response data</a></li>
+<li class="chapter" data-level="17.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-nfl-field-goals"><i class="fa fa-check"></i><b>17.2</b> Example: NFL field goals</a></li>
+<li class="chapter" data-level="17.3" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-sex-ratio-in-turtles"><i class="fa fa-check"></i><b>17.3</b> Example: Sex ratio in turtles</a></li>
+<li class="chapter" data-level="17.4" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-smoking"><i class="fa fa-check"></i><b>17.4</b> Example: Smoking</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html"><i class="fa fa-check"></i><b>18</b> Power analysis by simulation</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#type-i-and-ii-errors-and-statistical-power"><i class="fa fa-check"></i><b>18.1</b> Type I and II errors and statistical power</a></li>
+<li class="chapter" data-level="18.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#what-determines-statistical-power"><i class="fa fa-check"></i><b>18.2</b> What determines statistical power?</a></li>
+<li class="chapter" data-level="18.3" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#an-example-of-calculating-statistical-power."><i class="fa fa-check"></i><b>18.3</b> An example of calculating statistical power.</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#the-simulation"><i class="fa fa-check"></i><b>18.3.1</b> The simulation</a></li>
+<li class="chapter" data-level="18.3.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#some-questions-for-you-to-address"><i class="fa fa-check"></i><b>18.3.2</b> Some questions for you to address:</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#summary"><i class="fa fa-check"></i><b>18.4</b> Summary</a></li>
+<li class="chapter" data-level="18.5" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#extending-the-simulation-optional-advanced"><i class="fa fa-check"></i><b>18.5</b> Extending the simulation (optional, advanced)</a></li>
+<li class="chapter" data-level="18.6" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-1-snails-on-the-move"><i class="fa fa-check"></i><b>18.6</b> Exercise 1: Snails on the move</a></li>
+<li class="chapter" data-level="18.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>18.7</b> Exercise 2: Mouse lemur strength</a></li>
+</ul></li>
+<li class="part"><span><b>IV Coming soon(ish)</b></span></li>
+<li class="chapter" data-level="19" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html"><i class="fa fa-check"></i><b>19</b> Coming soon (maybe)!</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#multivariate-statistics"><i class="fa fa-check"></i><b>19.1</b> Multivariate statistics</a></li>
+<li class="chapter" data-level="19.2" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#transforming-variables"><i class="fa fa-check"></i><b>19.2</b> Transforming variables</a></li>
+<li class="chapter" data-level="19.3" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#non-linear-regression"><i class="fa fa-check"></i><b>19.3</b> Non-linear regression</a></li>
+<li class="chapter" data-level="19.4" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#nested-or-blocked-study-designs"><i class="fa fa-check"></i><b>19.4</b> Nested or blocked study designs</a></li>
+</ul></li>
+<li class="part"><span><b>V Exam</b></span></li>
+<li class="chapter" data-level="20" data-path="exam-2020.html"><a href="exam-2020.html"><i class="fa fa-check"></i><b>20</b> Exam 2020</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="exam-2020.html"><a href="exam-2020.html#exercise-solutions-californian-bird-diversity"><i class="fa fa-check"></i><b>20.1</b> Exercise Solutions: Californian bird diversity</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path=""><a href="#part-exercise-solutions"><i class="fa fa-check"></i>(PART) Exercise Solutions</a>
+<ul>
+<li class="chapter" data-level="20.2" data-path="exam-2020.html"><a href="exam-2020.html#exercise-solutions-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>20.2</b> Exercise Solutions: Wrangling the Amniote Life History Database</a></li>
+<li class="chapter" data-level="20.3" data-path="exam-2020.html"><a href="exam-2020.html#exercise-solutions-temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>20.3</b> Exercise Solutions: Temperature effects on egg laying dates</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="bringing-it-together.html"><a href="bringing-it-together.html"><i class="fa fa-check"></i><b>21</b> Bringing it together</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="bringing-it-together.html"><a href="bringing-it-together.html#exercise-solutions-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>21.1</b> Exercise Solutions: Sexual selection in Hercules beetles</a></li>
+<li class="chapter" data-level="21.2" data-path="bringing-it-together.html"><a href="bringing-it-together.html#exercise-solutions-apple-tree-crop-yield"><i class="fa fa-check"></i><b>21.2</b> Exercise solutions: Apple tree crop yield</a></li>
+<li class="chapter" data-level="21.3" data-path="bringing-it-together.html"><a href="bringing-it-together.html#exercise-solutions-chirping-crickets"><i class="fa fa-check"></i><b>21.3</b> Exercise solutions: Chirping crickets</a></li>
+<li class="chapter" data-level="21.4" data-path="bringing-it-together.html"><a href="bringing-it-together.html#exercise-solutions-fish-behaviour"><i class="fa fa-check"></i><b>21.4</b> Exercise Solutions: Fish behaviour</a></li>
+<li class="chapter" data-level="21.5" data-path="bringing-it-together.html"><a href="bringing-it-together.html#exercise-solutions-maze-runner"><i class="fa fa-check"></i><b>21.5</b> Exercise Solutions: Maze runner</a></li>
+<li class="chapter" data-level="21.6" data-path="bringing-it-together.html"><a href="bringing-it-together.html#exercise-1-solution-snails-on-the-move"><i class="fa fa-check"></i><b>21.6</b> Exercise 1 Solution: Snails on the move</a></li>
+<li class="chapter" data-level="21.7" data-path="bringing-it-together.html"><a href="bringing-it-together.html#exercise-2-solution-mouse-lemur-strength"><i class="fa fa-check"></i><b>21.7</b> Exercise 2 Solution: Mouse lemur strength</a></li>
+</ul></li>
+<li class="part"><span><b>VI Solutions</b></span></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">BB852 - Data handling, visualisation and statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bringing-it-together" class="section level1" number="21">
+<h1><span class="header-section-number">Chapter 21</span> Bringing it together</h1>
+<ol start="7" style="list-style-type: decimal">
+<li>Join the two datasets together using <code>left_join</code>. You should now have a dataset with columns <code>nestNumber</code>, <code>Year</code>, <code>dayNumber</code> and <code>meanAprilTemp</code></li>
+</ol>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="bringing-it-together.html#cb543-1" aria-hidden="true"></a>joinedData &lt;-<span class="st"> </span><span class="kw">left_join</span>(meanEgg,weather,<span class="kw">c</span>(<span class="st">&quot;Year&quot;</span> =<span class="st"> &quot;YEAR&quot;</span>))</span>
+<span id="cb543-2"><a href="bringing-it-together.html#cb543-2" aria-hidden="true"></a><span class="kw">head</span>(joinedData)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##    Year meanEggDate meanAprilTemp
+##   &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
+## 1  2013        125.          1.60
+## 2  2014        108.          6.03
+## 3  2016        115.          4.50
+## 4  2017        112.          4.77
+## 5  2018        117.          3.07
+## 6  2019        111.          6.12</code></pre>
+<p><strong>Plot the data</strong></p>
+<ol start="8" style="list-style-type: decimal">
+<li>plot a graph of <code>meanAprilTemp</code> on the x-axis and <code>dayNumber</code> on the y-axis.</li>
+</ol>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="bringing-it-together.html#cb545-1" aria-hidden="true"></a><span class="kw">plot</span>(joinedData<span class="op">$</span>meanAprilTemp,joinedData<span class="op">$</span>meanEggDate)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-423-1.png" width="672" /></p>
+<p>Now you should be able to answer the question we started with: is laying date associated with spring temperatures? Yes, there looks to be a negative relationship between temperature and egg laying date.</p>
+
+<div id="exercise-solutions-sexual-selection-in-hercules-beetles" class="section level2" number="21.1">
+<h2><span class="header-section-number">21.1</span> Exercise Solutions: Sexual selection in Hercules beetles</h2>
+<ol style="list-style-type: decimal">
+<li>What is your null hypothesis?</li>
+</ol>
+<p><em>Null Hypothesis - There is no difference in the widths of the species.</em></p>
+<ol start="2" style="list-style-type: decimal">
+<li>What is your alternative hypothesis?</li>
+</ol>
+<p><em>Alternative Hypothesis - Males have larger widths than females.</em></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Import the data.</li>
+</ol>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="bringing-it-together.html#cb546-1" aria-hidden="true"></a>hercules &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/herculesBeetle.csv&quot;</span>)</span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li>Calculate the mean for each sex (either using <code>tapply</code> or using <code>dplyr</code> tools)</li>
+</ol>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="bringing-it-together.html#cb547-1" aria-hidden="true"></a><span class="co">#With dplyr</span></span>
+<span id="cb547-2"><a href="bringing-it-together.html#cb547-2" aria-hidden="true"></a>hercules <span class="op">%&gt;%</span></span>
+<span id="cb547-3"><a href="bringing-it-together.html#cb547-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(sex) <span class="op">%&gt;%</span></span>
+<span id="cb547-4"><a href="bringing-it-together.html#cb547-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(width))</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   sex     mean
+##   &lt;chr&gt;  &lt;dbl&gt;
+## 1 Female  15.0
+## 2 Male    17.4</code></pre>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="bringing-it-together.html#cb549-1" aria-hidden="true"></a><span class="co">#with tapply</span></span>
+<span id="cb549-2"><a href="bringing-it-together.html#cb549-2" aria-hidden="true"></a><span class="kw">tapply</span>(hercules<span class="op">$</span>width,hercules<span class="op">$</span>sex,mean)</span></code></pre></div>
+<pre><code>##   Female     Male 
+## 15.02825 17.36568</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Plot the data as a histogram.</li>
+</ol>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="bringing-it-together.html#cb551-1" aria-hidden="true"></a><span class="co"># Let&#39;s look at the male and female data</span></span>
+<span id="cb551-2"><a href="bringing-it-together.html#cb551-2" aria-hidden="true"></a>(plot1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(hercules, <span class="kw">aes</span>(<span class="dt">x =</span> width, <span class="dt">fill =</span> sex)) <span class="op">+</span></span>
+<span id="cb551-3"><a href="bringing-it-together.html#cb551-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>,<span class="dt">alpha=</span>.<span class="dv">7</span>))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-427-1.png" width="672" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li>Add vertical lines to the plot to indicate the mean values.</li>
+</ol>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="bringing-it-together.html#cb552-1" aria-hidden="true"></a>hercules <span class="op">%&gt;%</span></span>
+<span id="cb552-2"><a href="bringing-it-together.html#cb552-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(sex) <span class="op">%&gt;%</span></span>
+<span id="cb552-3"><a href="bringing-it-together.html#cb552-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(width)) <span class="op">%&gt;%</span></span>
+<span id="cb552-4"><a href="bringing-it-together.html#cb552-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(mean) -&gt;<span class="st"> </span>meanVals</span>
+<span id="cb552-5"><a href="bringing-it-together.html#cb552-5" aria-hidden="true"></a></span>
+<span id="cb552-6"><a href="bringing-it-together.html#cb552-6" aria-hidden="true"></a>plot1 <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>meanVals,<span class="dt">colour=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-428-1.png" width="672" /></p>
+<ol start="7" style="list-style-type: decimal">
+<li>Now calculate the difference between the mean values using <code>dplyr</code> tools, or <code>tapply</code>.</li>
+</ol>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="bringing-it-together.html#cb553-1" aria-hidden="true"></a><span class="co">#with dplyr</span></span>
+<span id="cb553-2"><a href="bringing-it-together.html#cb553-2" aria-hidden="true"></a>hercules <span class="op">%&gt;%</span></span>
+<span id="cb553-3"><a href="bringing-it-together.html#cb553-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(sex) <span class="op">%&gt;%</span></span>
+<span id="cb553-4"><a href="bringing-it-together.html#cb553-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(width)) <span class="op">%&gt;%</span></span>
+<span id="cb553-5"><a href="bringing-it-together.html#cb553-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span></span>
+<span id="cb553-6"><a href="bringing-it-together.html#cb553-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">diff</span>() -&gt;<span class="st"> </span>observedDiff</span>
+<span id="cb553-7"><a href="bringing-it-together.html#cb553-7" aria-hidden="true"></a>observedDiff</span></code></pre></div>
+<pre><code>## [1] 2.337433</code></pre>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="bringing-it-together.html#cb555-1" aria-hidden="true"></a><span class="co">#with tapply</span></span>
+<span id="cb555-2"><a href="bringing-it-together.html#cb555-2" aria-hidden="true"></a><span class="kw">diff</span>(<span class="kw">as.vector</span>(<span class="kw">tapply</span>(hercules<span class="op">$</span>width,hercules<span class="op">$</span>sex,mean)))</span></code></pre></div>
+<pre><code>## [1] 2.337433</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Use <code>sample</code> to randomise the sex column of the data, and recalculate the difference between the mean.</li>
+</ol>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="bringing-it-together.html#cb557-1" aria-hidden="true"></a><span class="co">#with dplyr</span></span>
+<span id="cb557-2"><a href="bringing-it-together.html#cb557-2" aria-hidden="true"></a>hercules <span class="op">%&gt;%</span></span>
+<span id="cb557-3"><a href="bringing-it-together.html#cb557-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sex =</span> <span class="kw">sample</span>(sex)) <span class="op">%&gt;%</span></span>
+<span id="cb557-4"><a href="bringing-it-together.html#cb557-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(sex) <span class="op">%&gt;%</span></span>
+<span id="cb557-5"><a href="bringing-it-together.html#cb557-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(width)) <span class="op">%&gt;%</span></span>
+<span id="cb557-6"><a href="bringing-it-together.html#cb557-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span></span>
+<span id="cb557-7"><a href="bringing-it-together.html#cb557-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">diff</span>()</span></code></pre></div>
+<pre><code>## [1] -0.3453301</code></pre>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="bringing-it-together.html#cb559-1" aria-hidden="true"></a><span class="co">#with tapply</span></span>
+<span id="cb559-2"><a href="bringing-it-together.html#cb559-2" aria-hidden="true"></a><span class="kw">diff</span>(<span class="kw">as.vector</span>(<span class="kw">tapply</span>(hercules<span class="op">$</span>width,<span class="kw">sample</span>(hercules<span class="op">$</span>sex),mean)))</span></code></pre></div>
+<pre><code>## [1] -0.9985928</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Use <code>replicate</code> to repeat this 10 times (to ensure that you code works).</li>
+</ol>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="bringing-it-together.html#cb561-1" aria-hidden="true"></a><span class="co">#with dplyr</span></span>
+<span id="cb561-2"><a href="bringing-it-together.html#cb561-2" aria-hidden="true"></a><span class="kw">replicate</span>(<span class="dv">10</span>,</span>
+<span id="cb561-3"><a href="bringing-it-together.html#cb561-3" aria-hidden="true"></a>  hercules <span class="op">%&gt;%</span></span>
+<span id="cb561-4"><a href="bringing-it-together.html#cb561-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sex =</span> <span class="kw">sample</span>(sex)) <span class="op">%&gt;%</span></span>
+<span id="cb561-5"><a href="bringing-it-together.html#cb561-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(sex) <span class="op">%&gt;%</span></span>
+<span id="cb561-6"><a href="bringing-it-together.html#cb561-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(width)) <span class="op">%&gt;%</span></span>
+<span id="cb561-7"><a href="bringing-it-together.html#cb561-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span></span>
+<span id="cb561-8"><a href="bringing-it-together.html#cb561-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">diff</span>())</span></code></pre></div>
+<pre><code>##  [1]  0.9754196 -1.5436880  0.9368750  1.1783436 -0.3889855  1.4915964 -0.5619737  0.4558331  1.9645041 -2.4930715</code></pre>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="bringing-it-together.html#cb563-1" aria-hidden="true"></a><span class="co">#with tapply</span></span>
+<span id="cb563-2"><a href="bringing-it-together.html#cb563-2" aria-hidden="true"></a><span class="kw">replicate</span>(<span class="dv">10</span>,</span>
+<span id="cb563-3"><a href="bringing-it-together.html#cb563-3" aria-hidden="true"></a>          <span class="kw">diff</span>(<span class="kw">as.vector</span>(<span class="kw">tapply</span>(hercules<span class="op">$</span>width,<span class="kw">sample</span>(hercules<span class="op">$</span>sex),mean)))</span>
+<span id="cb563-4"><a href="bringing-it-together.html#cb563-4" aria-hidden="true"></a>)</span></code></pre></div>
+<pre><code>##  [1] -1.7472242 -0.7941490 -0.5730610  0.6233782  1.1559533 -0.7226716  1.1273298 -0.0555329 -0.2148079 -0.6044714</code></pre>
+<ol start="10" style="list-style-type: decimal">
+<li>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</li>
+</ol>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="bringing-it-together.html#cb565-1" aria-hidden="true"></a><span class="co">#with dplyr</span></span>
+<span id="cb565-2"><a href="bringing-it-together.html#cb565-2" aria-hidden="true"></a>diffs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">diffs =</span> </span>
+<span id="cb565-3"><a href="bringing-it-together.html#cb565-3" aria-hidden="true"></a>                      <span class="kw">replicate</span>(<span class="dv">1000</span>,</span>
+<span id="cb565-4"><a href="bringing-it-together.html#cb565-4" aria-hidden="true"></a>                                hercules <span class="op">%&gt;%</span></span>
+<span id="cb565-5"><a href="bringing-it-together.html#cb565-5" aria-hidden="true"></a><span class="st">                                  </span><span class="kw">mutate</span>(<span class="dt">sex =</span> <span class="kw">sample</span>(sex)) <span class="op">%&gt;%</span></span>
+<span id="cb565-6"><a href="bringing-it-together.html#cb565-6" aria-hidden="true"></a><span class="st">                                  </span><span class="kw">group_by</span>(sex) <span class="op">%&gt;%</span></span>
+<span id="cb565-7"><a href="bringing-it-together.html#cb565-7" aria-hidden="true"></a><span class="st">                                  </span><span class="kw">summarise</span>(<span class="dt">mean=</span><span class="kw">mean</span>(width)) <span class="op">%&gt;%</span></span>
+<span id="cb565-8"><a href="bringing-it-together.html#cb565-8" aria-hidden="true"></a><span class="st">                                  </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span></span>
+<span id="cb565-9"><a href="bringing-it-together.html#cb565-9" aria-hidden="true"></a><span class="st">                                  </span><span class="kw">diff</span>()))</span>
+<span id="cb565-10"><a href="bringing-it-together.html#cb565-10" aria-hidden="true"></a></span>
+<span id="cb565-11"><a href="bringing-it-together.html#cb565-11" aria-hidden="true"></a><span class="co">#with tapply</span></span>
+<span id="cb565-12"><a href="bringing-it-together.html#cb565-12" aria-hidden="true"></a>diffs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">diffs =</span></span>
+<span id="cb565-13"><a href="bringing-it-together.html#cb565-13" aria-hidden="true"></a>                      <span class="kw">replicate</span>(<span class="dv">1000</span>,</span>
+<span id="cb565-14"><a href="bringing-it-together.html#cb565-14" aria-hidden="true"></a>                                <span class="kw">diff</span>(<span class="kw">as.vector</span>(</span>
+<span id="cb565-15"><a href="bringing-it-together.html#cb565-15" aria-hidden="true"></a>                                  <span class="kw">tapply</span>(hercules<span class="op">$</span>width, <span class="kw">sample</span>(hercules<span class="op">$</span>sex), mean)</span>
+<span id="cb565-16"><a href="bringing-it-together.html#cb565-16" aria-hidden="true"></a>                                ))))</span></code></pre></div>
+<ol start="11" style="list-style-type: decimal">
+<li>Use <code>ggplot</code> to plot the null distribution you have just created, and add the observed difference.</li>
+</ol>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="bringing-it-together.html#cb566-1" aria-hidden="true"></a><span class="kw">ggplot</span>(diffs,<span class="kw">aes</span>(<span class="dt">x=</span>diffs))<span class="op">+</span></span>
+<span id="cb566-2"><a href="bringing-it-together.html#cb566-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span></span>
+<span id="cb566-3"><a href="bringing-it-together.html#cb566-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> observedDiff)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-433-1.png" width="672" /></p>
+<ol start="12" style="list-style-type: decimal">
+<li>Obtain the p-value for the hypothesis test described above. (1) how many of the observed differences are greater than or equal to the shuffled differences in the null distribution. (2) what is this expressed as a proportion of the number of replicates.</li>
+</ol>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="bringing-it-together.html#cb567-1" aria-hidden="true"></a><span class="kw">sum</span>(observedDiff<span class="op">&gt;=</span>diffs<span class="op">$</span>diffs)</span></code></pre></div>
+<pre><code>## [1] 994</code></pre>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="bringing-it-together.html#cb569-1" aria-hidden="true"></a><span class="kw">sum</span>(observedDiff<span class="op">&gt;=</span>diffs<span class="op">$</span>diffs)<span class="op">/</span><span class="dv">1000</span></span></code></pre></div>
+<pre><code>## [1] 0.994</code></pre>
+<ol start="13" style="list-style-type: decimal">
+<li>Summarise your result as in a report. Describe the method, followed by the result and conclusion.</li>
+</ol>
+<p><em>“I used a randomisation test to estimate the significance of the observed difference of 2.337 (mean values: female=17.366; male = 15.028) in mean widths of the sexes. To do this I generated a null distribution of differences between sexes using 1000 replicates. I found that only 994 of the differences in the null distribution were as extreme as the observed difference. Thus the p-value is 0.994: I therefore reject the null hypothesis that there is no difference between the sexes and accept the alternative hypothesis that males are significantly larger than females.”</em></p>
+
+</div>
+<div id="exercise-solutions-apple-tree-crop-yield" class="section level2" number="21.2">
+<h2><span class="header-section-number">21.2</span> Exercise solutions: Apple tree crop yield</h2>
+<p>Import the data (<code>apples.csv</code>) and analyse it using the techniques you have learned in the ANOVA lecture, and the previous worksheet, to answer the question “What is the effect of tree spacing on apple yields?”</p>
+<ol style="list-style-type: decimal">
+<li>Import and look at the data (e.g. <code>summary</code> or <code>str</code> or <code>head</code>)</li>
+</ol>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="bringing-it-together.html#cb571-1" aria-hidden="true"></a>apples &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/apples.csv&quot;</span>)</span>
+<span id="cb571-2"><a href="bringing-it-together.html#cb571-2" aria-hidden="true"></a><span class="kw">summary</span>(apples)</span></code></pre></div>
+<pre><code>##     spacing       yield      
+##  Min.   : 6   Min.   : 64.1  
+##  1st Qu.: 6   1st Qu.:108.2  
+##  Median :10   Median :147.1  
+##  Mean   :10   Mean   :145.4  
+##  3rd Qu.:14   3rd Qu.:176.5  
+##  Max.   :14   Max.   :282.3  
+##               NA&#39;s   :28</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Ensure that the explanatory variable (<code>spacing</code>) is defined as a categorical variable (i.e. a “factor”, in R-speak). You can use <code>mutate</code> and <code>as.factor</code> functions for this.</li>
+</ol>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="bringing-it-together.html#cb573-1" aria-hidden="true"></a>apples &lt;-<span class="st"> </span>apples <span class="op">%&gt;%</span></span>
+<span id="cb573-2"><a href="bringing-it-together.html#cb573-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">spacing =</span> <span class="kw">as.factor</span>(spacing))</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Plot the data using <code>ggplot</code> (a box plot with (optionally) added jittered points would be good).</li>
+</ol>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="bringing-it-together.html#cb574-1" aria-hidden="true"></a><span class="kw">ggplot</span>(apples,<span class="kw">aes</span>(<span class="dt">x =</span> spacing,<span class="dt">y =</span> yield)) <span class="op">+</span></span>
+<span id="cb574-2"><a href="bringing-it-together.html#cb574-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb574-3"><a href="bringing-it-together.html#cb574-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width=</span><span class="fl">0.2</span>) <span class="op">+</span></span>
+<span id="cb574-4"><a href="bringing-it-together.html#cb574-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Yield (kg per tree)&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-438-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Fit an ANOVA model using <code>lm</code>.</li>
+</ol>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="bringing-it-together.html#cb575-1" aria-hidden="true"></a>apple_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(yield<span class="op">~</span>spacing,<span class="dt">data =</span> apples)</span></code></pre></div>
+<ol start="5" style="list-style-type: decimal">
+<li>Check the model using a diagnostic plot (i.e. using <code>autoplot</code> from the <code>ggfortify</code> package).</li>
+</ol>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="bringing-it-together.html#cb576-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
+<span id="cb576-2"><a href="bringing-it-together.html#cb576-2" aria-hidden="true"></a><span class="kw">autoplot</span>(apple_mod)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-440-1.png" width="672" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li>Use <code>anova</code> to get the ANOVA summary.</li>
+</ol>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="bringing-it-together.html#cb577-1" aria-hidden="true"></a><span class="kw">anova</span>(apple_mod)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: yield
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## spacing    2  35801 17900.3  9.3851 0.0002003 ***
+## Residuals 89 169750  1907.3                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>You should see that there are differences among treatments. But where are those differences? Use <code>summary</code> on your model to find out.</li>
+</ol>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="bringing-it-together.html#cb579-1" aria-hidden="true"></a><span class="kw">summary</span>(apple_mod)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ spacing, data = apples)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -92.389 -30.577  -3.516  33.192 117.628 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  120.566      7.382  16.332  &lt; 2e-16 ***
+## spacing10     35.924     11.073   3.244 0.001659 ** 
+## spacing14     44.107     10.966   4.022 0.000121 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 43.67 on 89 degrees of freedom
+##   (28 observations deleted due to missingness)
+## Multiple R-squared:  0.1742,	Adjusted R-squared:  0.1556 
+## F-statistic: 9.385 on 2 and 89 DF,  p-value: 0.0002003</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Use a Tukey test to make all the pairwise comparisons among the treatments.</li>
+</ol>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="bringing-it-together.html#cb581-1" aria-hidden="true"></a><span class="kw">library</span>(agricolae)</span>
+<span id="cb581-2"><a href="bringing-it-together.html#cb581-2" aria-hidden="true"></a><span class="kw">HSD.test</span>(apple_mod,<span class="st">&quot;spacing&quot;</span>,<span class="dt">console=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+## Study: apple_mod ~ &quot;spacing&quot;
+## 
+## HSD Test for yield 
+## 
+## Mean Square Error:  1907.304 
+## 
+## spacing,  means
+## 
+##       yield      std  r  Min   Max
+## 10 156.4893 45.60411 28 64.1 248.6
+## 14 164.6724 50.41401 29 72.3 282.3
+## 6  120.5657 35.32755 35 66.4 185.5
+## 
+## Alpha: 0.05 ; DF Error: 89 
+## Critical Value of Studentized Range: 3.370849 
+## 
+## Groups according to probability of means differences and alpha level( 0.05 )
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##       yield groups
+## 14 164.6724      a
+## 10 156.4893      a
+## 6  120.5657      b</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>Write a few sentences that summarise your findings. What biological processes do you think drive the effects that you have detected?</li>
+</ol>
+<p><em>There was a significant effect of spacing on apple yields (Figure XX, ANOVA: F = 9.385, d.f. = 2 and 89, p = 0.0002). </em></p>
+<p>Then: <em>The pairwise comparisons in the ANOVA model showed that means of the 6 and 10 foot spacing treatment were significantly different (t= 3.244, p = 0.0017), as were those of 6 and 14 (t=4.022, p = 0.0001), but the 10 foot - 14 foot comparison showed no significant difference (t= 0.707, p= 0.4813)<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>.</em></p>
+<p>Or, more simply: <em>The 6-10ft and 6-14ft comparisons showed signifcant differences (Tukey HSD: p&lt;0.05), but the 10-14ft comparison showed no significant difference (Tukey HSD: p&gt;0.05)</em></p>
+<ol start="10" style="list-style-type: decimal">
+<li>Optional. Instead of using a Tukey test, use the alternative “relevel” approach to make the missing comparison.</li>
+</ol>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="bringing-it-together.html#cb583-1" aria-hidden="true"></a>apples2 &lt;-<span class="st"> </span>apples <span class="op">%&gt;%</span></span>
+<span id="cb583-2"><a href="bringing-it-together.html#cb583-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">spacing =</span> <span class="kw">relevel</span>(spacing,<span class="dt">ref =</span> <span class="st">&quot;10&quot;</span>))</span>
+<span id="cb583-3"><a href="bringing-it-together.html#cb583-3" aria-hidden="true"></a>apple_mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(yield<span class="op">~</span>spacing,<span class="dt">data =</span> apples2)</span>
+<span id="cb583-4"><a href="bringing-it-together.html#cb583-4" aria-hidden="true"></a><span class="kw">summary</span>(apple_mod2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yield ~ spacing, data = apples2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -92.389 -30.577  -3.516  33.192 117.628 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  156.489      8.253  18.961  &lt; 2e-16 ***
+## spacing6     -35.924     11.073  -3.244  0.00166 ** 
+## spacing14      8.183     11.571   0.707  0.48128    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 43.67 on 89 degrees of freedom
+##   (28 observations deleted due to missingness)
+## Multiple R-squared:  0.1742,	Adjusted R-squared:  0.1556 
+## F-statistic: 9.385 on 2 and 89 DF,  p-value: 0.0002003</code></pre>
+<hr />
+<p>If you get this far, try using the ANOVA approach on one of the previous t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the <code>t.test</code> function or the ANOVA approach with <code>lm</code>.</p>
+
+</div>
+<div id="exercise-solutions-chirping-crickets" class="section level2" number="21.3">
+<h2><span class="header-section-number">21.3</span> Exercise solutions: Chirping crickets</h2>
+<ol style="list-style-type: decimal">
+<li>Import the data</li>
+</ol>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="bringing-it-together.html#cb585-1" aria-hidden="true"></a>chirps &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/chirps.csv&quot;</span>)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Use <code>mutate</code> to convert Fahrenheit to Celsius (Google it)</li>
+</ol>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="bringing-it-together.html#cb586-1" aria-hidden="true"></a>chirps &lt;-<span class="st"> </span>chirps <span class="op">%&gt;%</span></span>
+<span id="cb586-2"><a href="bringing-it-together.html#cb586-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temperatureC =</span> (temperature<span class="dv">-32</span>)<span class="op">*</span>(<span class="dv">5</span><span class="op">/</span><span class="dv">9</span>))</span>
+<span id="cb586-3"><a href="bringing-it-together.html#cb586-3" aria-hidden="true"></a><span class="kw">head</span>(chirps)</span></code></pre></div>
+<pre><code>##   chirps temperature temperatureC
+## 1   20.0        88.6     31.44444
+## 2   16.0        71.6     22.00000
+## 3   19.8        93.3     34.05556
+## 4   18.4        84.3     29.05556
+## 5   17.1        80.6     27.00000
+## 6   15.5        75.2     24.00000</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Plot the data</li>
+</ol>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="bringing-it-together.html#cb588-1" aria-hidden="true"></a>(A&lt;-<span class="kw">ggplot</span>(chirps,<span class="kw">aes</span>(<span class="dt">x=</span> temperatureC,<span class="dt">y =</span> chirps)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb588-2"><a href="bringing-it-together.html#cb588-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>())</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-449-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Fit a linear regression model with <code>lm</code></li>
+</ol>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="bringing-it-together.html#cb589-1" aria-hidden="true"></a>chirp_mod &lt;-<span class="st"> </span><span class="kw">lm</span>(chirps <span class="op">~</span><span class="st"> </span>temperatureC, <span class="dt">data =</span> chirps)</span></code></pre></div>
+<ol start="5" style="list-style-type: decimal">
+<li>Look at diagnostic plots to evaluate the model</li>
+</ol>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="bringing-it-together.html#cb590-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
+<span id="cb590-2"><a href="bringing-it-together.html#cb590-2" aria-hidden="true"></a><span class="kw">autoplot</span>(chirp_mod)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-451-1.png" width="672" /></p>
+<ol start="6" style="list-style-type: decimal">
+<li>Use <code>anova</code> to figure out if the effect of temperature is statistically significant.</li>
+</ol>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="bringing-it-together.html#cb591-1" aria-hidden="true"></a><span class="kw">anova</span>(chirp_mod)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: chirps
+##              Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## temperatureC  1 28.435 28.4348  29.248 0.0001195 ***
+## Residuals    13 12.639  0.9722                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Use <code>summary</code> to obtain information about the coefficients and <span class="math inline">\(R^2\)</span>-value.</li>
+</ol>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="bringing-it-together.html#cb593-1" aria-hidden="true"></a><span class="kw">summary</span>(chirp_mod)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = chirps ~ temperatureC, data = chirps)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.6181 -0.6154  0.0916  0.7669  1.5549 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   6.95531    1.79534   3.874 0.001918 ** 
+## temperatureC  0.36540    0.06756   5.408 0.000119 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.986 on 13 degrees of freedom
+## Multiple R-squared:  0.6923,	Adjusted R-squared:  0.6686 
+## F-statistic: 29.25 on 1 and 13 DF,  p-value: 0.0001195</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Summarise the model in words.</li>
+</ol>
+<p><em>There is a statistically significant association between temperature and chirp frequency (F = 29.2482, d.f. = 1,13, p &lt; 0.001) The equation of the fitted model is: Chirp Freq = 6.96(<span class="math inline">\(\pm\)</span> 1.80) <span class="math inline">\(\times\)</span> Temp + 0.37(<span class="math inline">\(\pm\)</span> 0.07). The model explains 69% of the variation in chirp frequency (<span class="math inline">\(R^2\)</span> = 0.692).</em></p>
+<ol start="9" style="list-style-type: decimal">
+<li>Add model fit line to the plot.</li>
+</ol>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="bringing-it-together.html#cb595-1" aria-hidden="true"></a>A <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-454-1.png" width="672" /></p>
+<ol start="10" style="list-style-type: decimal">
+<li>Can I use cricket chirp frequency as a kind of thermometer?</li>
+</ol>
+<p>Yes, using the equation from the model</p>
+
+</div>
+<div id="exercise-solutions-fish-behaviour" class="section level2" number="21.4">
+<h2><span class="header-section-number">21.4</span> Exercise Solutions: Fish behaviour</h2>
+<ol style="list-style-type: decimal">
+<li>Import the data set, <code>fishPersonality.csv</code></li>
+</ol>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="bringing-it-together.html#cb596-1" aria-hidden="true"></a>fishPersonality &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/fishPersonality.csv&quot;</span>)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Plot the data (e.g. as a box plot)</li>
+</ol>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="bringing-it-together.html#cb597-1" aria-hidden="true"></a><span class="kw">ggplot</span>(fishPersonality,<span class="kw">aes</span>(<span class="dt">x =</span> colouration,<span class="dt">y =</span> spawning,<span class="dt">fill=</span>personality))<span class="op">+</span></span>
+<span id="cb597-2"><a href="bringing-it-together.html#cb597-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-457-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Fit an ANOVA model using <code>lm</code>.</li>
+</ol>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="bringing-it-together.html#cb598-1" aria-hidden="true"></a>mod_A &lt;-<span class="st"> </span><span class="kw">lm</span>(spawning <span class="op">~</span><span class="st"> </span>personality<span class="op">+</span>colouration <span class="op">+</span><span class="st"> </span>personality<span class="op">:</span>colouration,</span>
+<span id="cb598-2"><a href="bringing-it-together.html#cb598-2" aria-hidden="true"></a>            <span class="dt">data =</span> fishPersonality)</span></code></pre></div>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Look at diagnostic plots from this model (<code>autoplot</code>)</p></li>
+<li><p>Use <code>anova</code> to get an Analysis of Variance summary table, and interpret the results.</p></li>
+</ol>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="bringing-it-together.html#cb599-1" aria-hidden="true"></a><span class="kw">anova</span>(mod_A)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: spawning
+##                         Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## personality              1   7781    7781  5.5032   0.02629 *  
+## colouration              1  55862   55862 39.5074 8.519e-07 ***
+## personality:colouration  1   4118    4118  2.9123   0.09898 .  
+## Residuals               28  39591    1414                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Get the coefficient summary (<code>summary</code>) and interpret the output.</li>
+</ol>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="bringing-it-together.html#cb601-1" aria-hidden="true"></a><span class="kw">summary</span>(mod_A)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = spawning ~ personality + colouration + personality:colouration, 
+##     data = fishPersonality)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -61.625 -23.344  -5.375  26.313  60.125 
+## 
+## Coefficients:
+##                                           Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                                 218.50      13.29  16.435  6.5e-16 ***
+## personalityReactive                         -53.88      18.80  -2.865  0.00781 ** 
+## colourationHomogenous                        60.87      18.80   3.238  0.00309 ** 
+## personalityReactive:colourationHomogenous    45.38      26.59   1.707  0.09898 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 37.6 on 28 degrees of freedom
+## Multiple R-squared:  0.6312,	Adjusted R-squared:  0.5917 
+## F-statistic: 15.97 on 3 and 28 DF,  p-value: 3.021e-06</code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>Do post-hoc Tukey tests (e.g. using <code>HSD.test</code> from the <code>agricolae</code> package). Interpret the results.</li>
+</ol>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="bringing-it-together.html#cb603-1" aria-hidden="true"></a><span class="kw">library</span>(agricolae)</span>
+<span id="cb603-2"><a href="bringing-it-together.html#cb603-2" aria-hidden="true"></a><span class="kw">HSD.test</span>(mod_A, <span class="kw">c</span>(<span class="st">&quot;personality&quot;</span>,<span class="st">&quot;colouration&quot;</span>), <span class="dt">console=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+## Study: mod_A ~ c(&quot;personality&quot;, &quot;colouration&quot;)
+## 
+## HSD Test for spawning 
+## 
+## Mean Square Error:  1413.951 
+## 
+## personality:colouration,  means
+## 
+##                        spawning      std r Min Max
+## Proactive:Heterogenous  218.500 34.92850 8 161 268
+## Proactive:Homogenous    279.375 40.40133 8 219 339
+## Reactive:Heterogenous   164.625 39.86383 8 103 220
+## Reactive:Homogenous     270.875 34.84840 8 233 331
+## 
+## Alpha: 0.05 ; DF Error: 28 
+## Critical Value of Studentized Range: 3.861244 
+## 
+## Minimun Significant Difference: 51.33332 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##                        spawning groups
+## Proactive:Homogenous    279.375      a
+## Reactive:Homogenous     270.875      a
+## Proactive:Heterogenous  218.500      b
+## Reactive:Heterogenous   164.625      c</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Sum up your findings with reference to the initial research questions.</li>
+</ol>
+<ul>
+<li>Homogenous coloured fish seem to do better than heterogenous ones overall (from the plot)</li>
+<li>The anova table shows that personality, colouration and the interaction between them are all important variables (p &lt;0.05); Personality seems to be more important than colouration overall (based on p-values)</li>
+<li>The Tukey test table shows that - (1) Personality is associated with spawning, but only for heterogenous coloured fish. (2) In the heterogenous coloured fish the proactive fish spawn significantly more than the reactive ones. (3) In the homogenous coloured fish there is no significant difference between the personalities.</li>
+</ul>
+
+</div>
+<div id="exercise-solutions-maze-runner" class="section level2" number="21.5">
+<h2><span class="header-section-number">21.5</span> Exercise Solutions: Maze runner</h2>
+<ol style="list-style-type: decimal">
+<li>Import the data and graph it (<code>geom_boxplot</code>). Try adding the points to the <code>ggplot</code> using the new (to you) function <code>geom_dotplot(binaxis = "y", stackdir = "center")</code>.</li>
+</ol>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="bringing-it-together.html#cb605-1" aria-hidden="true"></a>maze &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/maze.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb605-2"><a href="bringing-it-together.html#cb605-2" aria-hidden="true"></a><span class="kw">head</span>(maze)</span></code></pre></div>
+<pre><code>##     Age nErrors
+## 1 Child       2
+## 2 Child       4
+## 3 Child       2
+## 4 Child       5
+## 5 Child       6
+## 6 Child       0</code></pre>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="bringing-it-together.html#cb607-1" aria-hidden="true"></a>(A&lt;-<span class="kw">ggplot</span>(maze,<span class="kw">aes</span>(<span class="dt">x =</span> Age,<span class="dt">y =</span> nErrors)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb607-2"><a href="bringing-it-together.html#cb607-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb607-3"><a href="bringing-it-together.html#cb607-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binaxis =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">stackdir =</span> <span class="st">&quot;center&quot;</span>))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-463-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Fit an appropriate GLM.</li>
+</ol>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="bringing-it-together.html#cb608-1" aria-hidden="true"></a>mod_A&lt;-<span class="kw">glm</span>(nErrors<span class="op">~</span>Age,<span class="dt">data =</span> maze,<span class="dt">family =</span> poisson)</span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
+<li>Examine the diagnostic plots of the model (<code>autoplot</code>).</li>
+</ol>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="bringing-it-together.html#cb609-1" aria-hidden="true"></a><span class="kw">library</span>(ggfortify)</span>
+<span id="cb609-2"><a href="bringing-it-together.html#cb609-2" aria-hidden="true"></a><span class="kw">autoplot</span>(mod_A)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-465-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>Get the analysis of variance (deviance) table (<code>anova</code>). What does this tell you?</li>
+</ol>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="bringing-it-together.html#cb610-1" aria-hidden="true"></a><span class="kw">anova</span>(mod_A,<span class="dt">test=</span><span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model: poisson, link: log
+## 
+## Response: nErrors
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##      Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
+## NULL                    19     36.672              
+## Age   1   11.511        18     25.161 0.0006917 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Obtain the <code>summary</code> table. What does this tell you?</li>
+</ol>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="bringing-it-together.html#cb612-1" aria-hidden="true"></a><span class="kw">summary</span>(mod_A)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = nErrors ~ Age, family = poisson, data = maze)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.5690  -0.9503  -0.1323   0.7940   1.4899  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)  0.09531    0.30151   0.316   0.7519   
+## AgeChild     1.09861    0.34815   3.156   0.0016 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 36.672  on 19  degrees of freedom
+## Residual deviance: 25.161  on 18  degrees of freedom
+## AIC: 71.845
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Use the coefficient information in the <code>summary</code> table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations “by hand”, or using the <code>predict</code> function. Ask for help if you get stuck.</li>
+</ol>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="bringing-it-together.html#cb614-1" aria-hidden="true"></a>newData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Age =</span> <span class="kw">c</span>(<span class="st">&quot;Child&quot;</span>,<span class="st">&quot;Adult&quot;</span>))</span>
+<span id="cb614-2"><a href="bringing-it-together.html#cb614-2" aria-hidden="true"></a>pv &lt;-<span class="st"> </span><span class="kw">predict</span>(mod_A,newData,<span class="dt">se.fit =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb614-3"><a href="bringing-it-together.html#cb614-3" aria-hidden="true"></a></span>
+<span id="cb614-4"><a href="bringing-it-together.html#cb614-4" aria-hidden="true"></a>newData &lt;-<span class="st"> </span>newData <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb614-5"><a href="bringing-it-together.html#cb614-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nErrors_LP =</span> pv<span class="op">$</span>fit) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb614-6"><a href="bringing-it-together.html#cb614-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lowerCI_LP =</span> pv<span class="op">$</span>fit <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span><span class="op">*</span>pv<span class="op">$</span>se.fit) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb614-7"><a href="bringing-it-together.html#cb614-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upperCI_LP =</span> pv<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span><span class="op">*</span>pv<span class="op">$</span>se.fit) </span>
+<span id="cb614-8"><a href="bringing-it-together.html#cb614-8" aria-hidden="true"></a></span>
+<span id="cb614-9"><a href="bringing-it-together.html#cb614-9" aria-hidden="true"></a>inverseFunction &lt;-<span class="st"> </span><span class="kw">family</span>(mod_A)<span class="op">$</span>linkinv</span>
+<span id="cb614-10"><a href="bringing-it-together.html#cb614-10" aria-hidden="true"></a></span>
+<span id="cb614-11"><a href="bringing-it-together.html#cb614-11" aria-hidden="true"></a>newData &lt;-<span class="st"> </span>newData <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb614-12"><a href="bringing-it-together.html#cb614-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nErrors =</span> <span class="kw">inverseFunction</span>(nErrors_LP)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb614-13"><a href="bringing-it-together.html#cb614-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lowerCI =</span> <span class="kw">inverseFunction</span>(lowerCI_LP)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb614-14"><a href="bringing-it-together.html#cb614-14" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upperCI =</span> <span class="kw">inverseFunction</span>(upperCI_LP)) </span>
+<span id="cb614-15"><a href="bringing-it-together.html#cb614-15" aria-hidden="true"></a>  </span>
+<span id="cb614-16"><a href="bringing-it-together.html#cb614-16" aria-hidden="true"></a></span>
+<span id="cb614-17"><a href="bringing-it-together.html#cb614-17" aria-hidden="true"></a>A <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> newData,<span class="kw">aes</span>(<span class="dt">x =</span> Age,<span class="dt">y =</span> nErrors),<span class="dt">colour=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb614-18"><a href="bringing-it-together.html#cb614-18" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> newData,<span class="kw">aes</span>(<span class="dt">x=</span>Age,<span class="dt">xend=</span>Age,<span class="dt">y=</span>lowerCI,<span class="dt">yend=</span>upperCI),<span class="dt">colour=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-468-1.png" width="672" /></p>
+
+</div>
+<div id="exercise-1-solution-snails-on-the-move" class="section level2" number="21.6">
+<h2><span class="header-section-number">21.6</span> Exercise 1 Solution: Snails on the move</h2>
+<p>Simulate a t-test-based analysis in R to figure out what sample size would result in 80% power.</p>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="bringing-it-together.html#cb615-1" aria-hidden="true"></a>sampleSize &lt;-<span class="st"> </span><span class="dv">40</span> <span class="co">#vary this until power &gt; 0.8</span></span>
+<span id="cb615-2"><a href="bringing-it-together.html#cb615-2" aria-hidden="true"></a>result &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>,</span>
+<span id="cb615-3"><a href="bringing-it-together.html#cb615-3" aria-hidden="true"></a>          <span class="kw">t.test</span>(<span class="kw">rnorm</span>(sampleSize,<span class="dt">mean  =</span> <span class="fl">7.4</span>,<span class="dt">sd =</span> <span class="fl">2.76</span>), </span>
+<span id="cb615-4"><a href="bringing-it-together.html#cb615-4" aria-hidden="true"></a>                 <span class="kw">rnorm</span>(sampleSize,<span class="dt">mean  =</span> <span class="fl">7.4</span><span class="op">*</span><span class="fl">1.25</span>,<span class="dt">sd =</span> <span class="fl">2.76</span>))<span class="op">$</span>p.value)</span>
+<span id="cb615-5"><a href="bringing-it-together.html#cb615-5" aria-hidden="true"></a><span class="kw">sum</span>(result<span class="op">&lt;</span><span class="fl">0.05</span>)<span class="op">/</span><span class="dv">1000</span></span></code></pre></div>
+<pre><code>## [1] 0.85</code></pre>
+<p>You should find that you need a sample size of about 40 per group.</p>
+</div>
+<div id="exercise-2-solution-mouse-lemur-strength" class="section level2" number="21.7">
+<h2><span class="header-section-number">21.7</span> Exercise 2 Solution: Mouse lemur strength</h2>
+<p>What difference in strength could you reliably detect (with power &gt;80%) with these sample sizes?</p>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="bringing-it-together.html#cb617-1" aria-hidden="true"></a>diff &lt;-<span class="st"> </span><span class="dv">185</span> <span class="co">#Vary this to give a difference to the 2nd group in the t-test</span></span>
+<span id="cb617-2"><a href="bringing-it-together.html#cb617-2" aria-hidden="true"></a>result &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>,</span>
+<span id="cb617-3"><a href="bringing-it-together.html#cb617-3" aria-hidden="true"></a>          <span class="kw">t.test</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>,<span class="dt">mean  =</span> <span class="dv">600</span>,<span class="dt">sd =</span> <span class="dv">145</span>), </span>
+<span id="cb617-4"><a href="bringing-it-together.html#cb617-4" aria-hidden="true"></a>                 <span class="kw">rnorm</span>(<span class="dv">8</span>,<span class="dt">mean  =</span> <span class="dv">600</span><span class="op">-</span>diff,<span class="dt">sd =</span> <span class="dv">145</span>))<span class="op">$</span>p.value)</span>
+<span id="cb617-5"><a href="bringing-it-together.html#cb617-5" aria-hidden="true"></a><span class="kw">sum</span>(result<span class="op">&lt;</span><span class="fl">0.05</span>)<span class="op">/</span><span class="dv">1000</span></span></code></pre></div>
+<pre><code>## [1] 0.818</code></pre>
+<p>You should find that you could detect a difference of about 185g or a mean for old animals of 415g which is 70% of the young animals i.e. a 30% reduction.</p>
+
+</div>
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="18">
+<li id="fn18"><p>These values come from the <code>summary</code> tables for the ANOVA model, and the releveled ANOVA model<a href="bringing-it-together.html#fnref18" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exam-2020.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/jonesor/BB852_Book/edit/master/6_1_02-combiningDatasets_Solutions.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["BB852.pdf"],
+"toc": {
+"collapse": "section"
+},
+"split_by": "section"
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
