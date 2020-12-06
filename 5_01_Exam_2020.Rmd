@@ -45,7 +45,7 @@ b) Produce a table showing the minimum, maximum, mean and median number of fires
 c) Produce a graph using box plots to show the distribution of the number of fires per month in the Amazon (i.e. month on x-axis, number of fires on y-axis).
 
 
-```{r echo = FALSE, eval = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 amazon <- read.csv("CourseData/amazon.csv")
 
 #C
@@ -80,13 +80,13 @@ a) plot the data (e.g. with a box plot)
 
 b) carry out a randomisation test to determine if there is a significant difference in the colour intensity in the two habitats. Write (i) a brief method description and (ii) a summary of the results. 
 
-```{r echo = FALSE, eval = TRUE,cache=TRUE}
+```{r, echo = FALSE, eval = TRUE,cache=TRUE}
 set.seed(42)
 coral <- data.frame(habitat = rep(c("mesophotic","shallow"),each = 10),intensity = c(rnorm(10,160,50),rnorm(10,90,50)))
 write.csv(coral,file = "CourseData/coral.csv",row.names = FALSE)
 ```
 
-```{r echo = FALSE, evel = FALSE}
+```{r, echo = FALSE, evel = FALSE}
 
 
 ```
@@ -114,7 +114,7 @@ b) Conduct a power analysis based on the pilot study data to estimate the number
 
 c) Briefly describe a simple proposed experiment design to test the new seaweed fertiliser.
 
-```{r echo = FALSE, eval = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 
 ```
 
@@ -128,7 +128,7 @@ The dataset `roundabouts.csv` shows the results of a study carried out in an urb
 
 Use an appropriate statistical model to explore the relationship between area and species richness. Does this relationship differ depending on habitat complexity?
 
-```{r echo = FALSE, eval = TRUE}
+```{r, echo = FALSE, eval = TRUE}
 #Generate dataset
 set.seed(1234)
 sampleSize = 20
@@ -156,7 +156,7 @@ b) Fit a suitable statistical model to estimate the statistical relationship bet
 
 c) Produce a plot that shows (in addition to the raw data points) the fitted values produced by your model and the uncertainty in those estimates. 
 
-```{r echo = FALSE, eval = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 
 ```
 

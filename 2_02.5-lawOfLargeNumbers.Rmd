@@ -50,7 +50,7 @@ Let's try the same kind of thing with the roll of (virtual) dice.
 
 Here's how to do one roll of the dice:
 
-```{r echo=-1, results='asis',cache = TRUE}
+```{r, echo=-1, results='asis',cache = TRUE}
 set.seed(123)
 diceRoll <- 1:6
 sample(diceRoll,1)
@@ -58,7 +58,7 @@ sample(diceRoll,1)
 
 Here's how to do 6 rolls of the dice:
 
-```{r echo=-1,cache = TRUE}
+```{r, echo=-1,cache = TRUE}
 set.seed(123)
 result <- sample(diceRoll,6,replace = TRUE)
 table(result)
@@ -70,7 +70,7 @@ Now I try doing 90 rolls of the dice. I can set a value for `n` (the number of r
 
 Before proceeding, can you see why the expected value is n/6?:
 
-```{r echo=-1,fig.cap=('Barplot of 90 simulated dice throws'),cache = TRUE}
+```{r, echo=-1,fig.cap=('Barplot of 90 simulated dice throws'),cache = TRUE}
 set.seed(2)
 n <- 90
 result <- data.frame(result = sample(diceRoll,n,replace = TRUE))

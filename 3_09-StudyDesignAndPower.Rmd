@@ -95,7 +95,7 @@ sampleSize <- 10
 
 Now we can "wrap" a `t.test` on simulated control and treatment data sets within a `replicate` function like this. Take some time to study this part of the script - it is important that you understand what it is doing. In this case the replicate command is telling R to repeat the t-test 5 times.
 
-```{r,echo-1,cache=TRUE}
+```{r, echo=-1, cache=TRUE}
 set.seed(123)
 replicate(5,
   t.test(rnorm(sampleSize,controlMean,sdValue),
@@ -107,7 +107,7 @@ Let's repeat the t-test 1000 times so we can get a good idea of the number of ti
 
 I don't want to print 1000 p-values to the screen so I will collect them in a vector called `powerResults`.
 
-```{r,echo-1,cache=TRUE}
+```{r,echo=-1,cache=TRUE}
 set.seed(123)
 powerResults <- replicate(1000,
                           t.test(rnorm(sampleSize,controlMean,sdValue),
@@ -124,7 +124,7 @@ So in this case, `r sum(powerResults<0.05)` of the 1000 tests were correct. The 
 
 We can ask what sample size do we need to get a better power, e.g. 90%, by increasing sample size incrementally. For example, here I increase sample size to 15: 
 
-```{r,echo-1,cache=TRUE}
+```{r,echo=-1,cache=TRUE}
 set.seed(123)
 controlMean <- 12
 treatmentMean <- 14.4
@@ -168,7 +168,7 @@ One can extend the simulation to cover a range of sample sizes (or differences b
 
 I illustrate this below by varying sample size between 5 and 40.
 
-```{r,echo-1,cache=TRUE}
+```{r,echo=-1,cache=TRUE}
 set.seed(123)
 
 # Set up a data frame for the simulation results
@@ -207,7 +207,7 @@ For your masters project you hypothesise that the boring snail will cover more d
 **Simulate a t-test-based analysis in R to figure out what sample size would result in 80% power.**
 
 <!--
-```{r,echo-1,cache=TRUE}
+```{r,echo = -1,cache=TRUE}
 set.seed(123)
 sampleSize <- 40 #vary this until power > 0.8
 result <- replicate(1000,
@@ -231,7 +231,7 @@ A research institute has agreed to you carrying out this study for your masters 
 
 <!--
 
-```{r,echo-1,cache=TRUE}
+```{r,echo =-1,cache=TRUE}
 set.seed(123)
 diff <- 185 #Vary this to give a difference to the 2nd group in the t-test
 result <- replicate(1000,

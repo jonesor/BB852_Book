@@ -29,7 +29,7 @@ t.test(Precision~Gender, data = classData)
 ```
 
 4) Write a sentence or two describing the results.
-```{r echo = FALSE}
+```{r, echo = FALSE}
 x <- t.test(Precision~Gender, data = classData)
 ```
 There was no significant difference in mean precision between the two genders (t-test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = `r sprintf(x$conf.int[1], fmt = '%#.3f')`-`r sprintf(x$conf.int[2], fmt = '%#.3f')`). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.

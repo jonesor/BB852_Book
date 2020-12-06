@@ -16,13 +16,13 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 
 Import the data, called `cholesterol.csv`. 
 
-```{r data real,echo=TRUE}
+```{r, echo=TRUE}
 ch <-read.csv("CourseData/cholesterol.csv")
 ```
 
 Let's first take a look at the data by plotting it. I will first plot a boxplot first, and add the jittered points for clarity.
 
-```{r,echo = -1,cache=TRUE}
+```{r, echo = -1, cache=TRUE}
 set.seed(42)
 ggplot(ch,aes(x=Treatment,y=Cholesterol)) + 
       geom_boxplot()+
@@ -70,7 +70,7 @@ Now we ask, what would the world look like if our null hypothesis was *true*. To
 
 Let's try that one time:
 
-```{r,warning=FALSE, cache=TRUE,echo = -1}
+```{r, warning=FALSE, cache=TRUE, echo = -1}
 set.seed(666)
 
 ch %>%
@@ -88,7 +88,7 @@ Doing this one time is not much help though - we need to repeat this many times.
 We can do this easily in R using the function `replicate` which simply a kind of wrapper that tells R to repeat a command `n` times and then pass the result to a vector.
 Let's try it first 10 times to see how it works:
 
-```{r, warning=FALSE, cache=TRUE,echo=-1}
+```{r, warning=FALSE, cache=TRUE, echo=-1}
 set.seed(42)
 replicate(10,
             ch %>%
@@ -105,7 +105,7 @@ You can see that the `replicate` command simply does the sampling-recalculation 
 In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a `data.frame` called `shuffledData`. This data frame initially has a variable called `rep` which consists of the numbers 1-1000. I then use `mutate` to add the 1000 shuffled differences. 
 
 
-```{r replicate, warning=FALSE, cache=TRUE,echo = -1}
+```{r replicate, warning=FALSE, cache=TRUE, echo = -1}
 set.seed(43)
 shuffledData <- data.frame(rep = 1:1000) %>%
   mutate(shuffledDiffs = replicate(1000,
@@ -118,11 +118,28 @@ shuffledData <- data.frame(rep = 1:1000) %>%
             ))
 ```
 
+
+```{block, type="do-something"}
+
+When you use `summarise`, R will give you a message like this:
+
+`summarise() ungrouping output (override with .groups argument)`
+
+This can be annoying, particularly if you are using randomisation tests and summarising hundreds of times. Thankfully, you can turn off this behaviour by setting one of the `dplyr` options like this:
+
+
+`options(dplyr.summarise.inform = FALSE)`
+
+
+I suggest to put this code at the beginning of your script if the messages annoy you!
+
+```
+
 ### Testing significance
 
 Before formally testing the hypothesis it is useful to visualise what we have created in a histogram. I can use `ggplot` to do this, to create a plot called `p1`. Note that by putting the command in brackets R will both create the plot object, and print it to the screen. Note that because the shuffling of the data is random process your graph will look slightly different to mine.
 
-```{r,message = FALSE}
+```{r, message = FALSE}
 (p1<-ggplot(shuffledData,aes(x=shuffledDiffs)) + 
   geom_histogram() + 
   theme_minimal()+
@@ -131,7 +148,7 @@ Before formally testing the hypothesis it is useful to visualise what we have cr
 
 You can now add your observed difference (calculated above) to this plot like this:
 
-```{r,message=FALSE}
+```{r, message=FALSE}
 p1 + geom_vline(xintercept = observedDiff)
 ```
 
@@ -178,7 +195,7 @@ head(an)
 
 We should *always* plot the data. So here goes.
 
-```{r,message=FALSE}
+```{r, message=FALSE}
 (p1<-ggplot(an,aes(x=weight,fill=time)) +
    geom_histogram(position = "identity", alpha=.7)
  )
@@ -186,14 +203,14 @@ We should *always* plot the data. So here goes.
 
 Another useful way to plot this data is to use an **interaction plot**. In these plots the matched pairs (grouped by `Subject`) are joined together with lines. You can plot one like this:
 
-```{r,message=FALSE}
+```{r, message=FALSE}
 (p2<-ggplot(an,aes(x=time,y=weight,group=Subject)) +
    geom_point() + 
    geom_line(size=1, alpha=0.5)
  )
 ```
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 an2 <- an %>% group_by(Subject) %>% mutate(time = sample(time))
 p2.shuffled <-ggplot(an2,aes(x=time,y=weight,group=Subject)) +
    geom_point() + 
@@ -229,7 +246,7 @@ The logic of this test is that if the experimental treatment has no effect on we
 
 Therefore, to carry out this test, we can permute the SIGN of the change in weight (i.e. we randomly flip values from positive to negative and vice versa). We can do this by multiplying by 1 or -1, randomly.
 
-```{r,echo =-1,cache = TRUE}
+```{r, echo =-1, cache = TRUE}
 set.seed(123)
 head(an)
 
@@ -246,7 +263,7 @@ head(anShuffled)
 
 We need to calculate the mean of this shuffled vector. We can do this by `pull` to get the vector, and then `mean`.
 
-```{r,echo = -1,cache = TRUE}
+```{r, echo = -1, cache = TRUE}
 set.seed(42)
 an %>%
   mutate(sign = sample(c(1,-1),size = nrow(an),replace = TRUE)) %>%
@@ -257,7 +274,7 @@ an %>%
 
 Now we will build a null distribution of changes in weight by repeating this 1000 times. We can do this using the `replicate` function to "wrap" around the function, passing the result into a data frame. We can then compare this null distribution to the observed change.
 
-```{r, cache=TRUE,echo=-1}
+```{r, cache=TRUE, echo=-1}
 set.seed(42)
 nullDist = data.frame(change =
                         replicate(1000,an %>%
@@ -271,14 +288,14 @@ nullDist = data.frame(change =
 
 ### Null distribution
 
-```{r,message=FALSE}
+```{r, message=FALSE}
 (nullDistPlot <- ggplot(nullDist,aes(x=change)) +
   geom_histogram())
 ```
 
 We can add the observed change as a line to this:
 
-```{r,message=FALSE}
+```{r, message=FALSE}
 nullDistPlot + geom_vline(xintercept = obsChange)
 ```
 

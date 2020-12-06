@@ -17,7 +17,7 @@ The aim of the GLM is usually to estimate probability of "success" (e.g. surviva
 
 The link function used for a binomial GLM is usually the *logit* transformation, and therefore another name for this type of regression is **logistic regression**. The logit transformation linearises an S-shaped curve and therefore allows a linear regression line to be fitted from data that follows this pattern. The function is $y = log(\frac{p}{1-p})$, where $p$ is the probability or proportion. The inverse logit (the anti-logit) is $p = \frac{exp(y)}{exp(y)+1}$.
 
-```{r echo=FALSE,fig.width=7,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=FALSE,fig.width=7,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 datBinom <- data.frame(x = 1:10) %>% 
   mutate(tValue = seq(-6,6,length.out=10)) %>% 
   mutate(prob = exp(tValue)/(exp(tValue)+1))
@@ -61,7 +61,7 @@ NFL <- read.csv("CourseData/NFLfieldgoal.csv") %>%
 
 Next, plot the data with `ggplot` (`geom_jitter` would be a good option, but you might like to adjust the `height` and `alpha` arguments. e.g. `geom_jitter(height = 0.05,alpha = 0.5)`). You can see that the data is distributed in two bands with 1 representing success and 0 representing failure.
 
-```{r echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
+```{r, echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 set.seed(12)
 (A<-ggplot(NFL,aes(x = Distance,y = Success)) + 
   geom_jitter(height = 0.05, alpha = 0.5))
@@ -75,7 +75,7 @@ nflMod <- glm(Success ~ Distance, data = NFL, family = binomial)
 
 As usual, we should look at the model diagnostics. These look pretty bad. One reason that these diagnostics (e.g. the QQ plot) can look bad is when we are missing important variables in the model. In this case, for example, the distribution could look "off" because we don't include important information on other aspects of the game (e.g. was the team winning or losing at the time? how many minutes until the end of the game? how experienced is the player?). We can be fairly sure that `binomial` is the most appropriate variance structure because of the nature of the 0/1 data so let's stick with it for now!
 
-```{r echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
 library(ggfortify)
 autoplot(nflMod)
 ```
@@ -102,7 +102,7 @@ $y =\frac{1}{1+exp(-(\beta_0 + \beta_1 x))}$, or $probability =\frac{1}{1+exp(-(
 
 Let's make sure that works by creating a set of predicted data from this equation and plotting it onto the graph:
 
-```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 d1 <- data.frame(x = 10:50) %>% 
   mutate(y = 1/(1+exp(-(5.690 - 0.131 *x))))
 A + 
@@ -148,7 +148,7 @@ newDat <- newDat %>%
 
 Now we can finally plot the model predictions and the 95% confidence intervals for them. 
 
-```{r echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
+```{r, echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 set.seed(42)
 #The plot and ribbon
 (A <- ggplot(NFL,aes(x= Distance,y=Success)) + 
@@ -232,7 +232,7 @@ hawksbill <- hawksbill %>%
 
 Let's plot that data. We can use the trick of telling R to plot the points different sizes depending on the sample size (using the `size =` argument):
 
-```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 (A<-ggplot(hawksbill,aes(x = Temperature,y = propFemale,size = Total))+
   geom_point())
 ```
@@ -252,7 +252,7 @@ modA <- glm(y ~ Temperature,data=hawksbill,family = binomial)
 
 As ever, we should take a quick look at the model diagnostic plots - these look OK.
 
-```{r echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
 library(ggfortify)
 autoplot(modA)
 ```
@@ -303,7 +303,7 @@ newDat <- newDat %>%
 
 We can add these values to the plot like this:
 
-```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 #The plot and ribbon
 (A<-ggplot(hawksbill,aes(x = Temperature,y = propFemale, size = Total))+
   geom_ribbon(data = newDat,aes(x =Temperature,ymin=ymin,ymax=ymax),

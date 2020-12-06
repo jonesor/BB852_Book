@@ -46,13 +46,13 @@ ggplot(fox, aes(x=weight,y=noffspring)) +
 The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).
 
 
-```{r }
+```{r}
 mod1 <- glm(noffspring ~ weight, data = fox, family = poisson)
 ```
 
 After fitting the model it is a good idea to look at the model diagnostics, using `autoplot` from the `ggfortify` package.
 
-```{r echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
 library(ggfortify)
 autoplot(mod1)
 ```
@@ -102,7 +102,7 @@ head(newData)
 This looks OK. Now we can plot the data and add a the model fit line, and a "ribbon" representing the errors (the 95% confidence interval for the line).
 
 
-```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 (A <- ggplot(fox,aes(x= weight,y=noffspring)) + 
   geom_ribbon(data = newData,aes(x =weight,ymin=ymin,ymax=ymax),fill="grey75")+
   geom_point()+
@@ -139,13 +139,13 @@ Again, you will notice that the data are formed into horizontal rows of integer 
 
 Let's fit a Generalised Linear Model to find out. As before will assume that the error is Poisson (that they variance increases directly in proportion to the mean), and we will use the standard log link to ensure that we don't predict negative values:
 
-```{r }
+```{r}
 mod1 <- glm(Cancers ~ Distance, data = cancer, family = poisson)
 ```
 
 Next, plot the diagnostic plots.
 
-```{r echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
 autoplot(mod1)
 ```
 
