@@ -102,7 +102,7 @@ head(newData)
 This looks OK. Now we can plot the data and add a the model fit line, and a "ribbon" representing the errors (the 95% confidence interval for the line).
 
 
-```{r echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 (A <- ggplot(fox,aes(x= weight,y=noffspring)) + 
   geom_ribbon(data = newData,aes(x =weight,ymin=ymin,ymax=ymax),fill="grey75")+
   geom_point()+
@@ -174,19 +174,15 @@ In an experiment, researchers studied the ability of children and adults to navi
 
 In this example, you will be fitting a GLM equivalent of a t-test that is appropriate for count data. 
 
-```{r,eval = FALSE,echo=FALSE}
+```{r,eval = FALSE,echo=FALSE,cache=TRUE}
 #Create maze data
-
-<!--
 set.seed(123)
 maze <- data.frame(Age = rep(c("Child","Adult"),each = 10)) %>% 
   mutate(nErrors = c(rpois(10,3),rpois(10,1)))
 write.csv(x=maze,file ="/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/CourseData/maze.csv",row.names=FALSE)
-
 ```
 
 1) Import the data and graph it (`geom_boxplot`). Try adding the points to the `ggplot` using the new (to you) function `geom_dotplot(binaxis = "y", stackdir = "center")`.
-
 <!--
 ```{r}
 maze <- read.csv("CourseData/maze.csv", stringsAsFactors = TRUE)

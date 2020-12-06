@@ -2,7 +2,7 @@
 
 In this course we will be learning how manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every conceivable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.
 
-Before proceeding you will need to ensure you have a recent version of **R** installed on your computer (the current version is 4.0.3).
+Before proceeding you will need to ensure you have a recent version of **R** installed on your computer (the version I am using right now is `r paste0(R.Version()$major,".",R.Version()$minor)`).
 
 ```{block, type="do-something"}
 **Do this:** Check your R version, and/or install R on your own computer now.
@@ -127,9 +127,13 @@ E <- rep(c("Male","Female"),each = 3)
 G <- rep(c("Male","Female"),c(2,4))
 ```
 
+
+
+
 ```{block, type="do-something"}
 Try modifying the commands to make sure you know what the commands are doing.
 ```
+
 
 
 # Manipulating objects
@@ -242,6 +246,51 @@ mydata[1,2]
 subset(mydata,sex == "Female")
 ```
 
+## Classes in R
+
+Every objects you create, or import into R, has a "type" called a `class`. You can ask what class an object has using the `class` function.
+
+For example, the vectors you created above have types.
+
+```{r}
+class(height)
+class(sex)
+class(mydata)
+```
+
+You can find out the class of all columns in a `data.frame` by asking for a summary with `str`. For example, in this example, there are two numeric columns (`num`) and a character column (`chr`).
+
+```{r}
+str(mydata)
+```
+
+There's another special class of vector called `factor`. In the small dataset above (`mydata`), sex is registered by R to be a `character` vector. For some functionality this is perfectly fine, but for others you will need to convert the data into a factor.
+
+For example, this code, to make a box plot, will not work:
+
+```{r, eval = FALSE}
+plot(mydata$sex,mydata$age)
+```
+
+But this code will work fine:
+
+```{r, eval = TRUE}
+plot(as.factor(mydata$sex),mydata$age)
+```
+
+Of course it might be easier to convert it to be a factor in the data frame itself, like this:
+
+```{r}
+mydata$sex <- as.factor(mydata$sex)
+str(mydata) # You can see that it is now registered as a factor
+plot(mydata$sex,mydata$age)
+```
+
+
+```{block, type="do-something"}
+If you are getting strange results from your code it is a good idea to check the structure of the data. Are the classes what they should be?
+```
+
 ## Organising your work
 
 It would be incredibly tedious to enter real data into **R** by typing it in!
@@ -280,7 +329,7 @@ getwd()
 
 It is good practice to keep your files well-organised. I recommend that you create a folder in your working directory called `CourseData` (or similar). Store your data files in this folder. 
 
-On the Blackboard site for BB852 I have put a link to a Dropbox folder containing data files for use in the course. In there you will find a file called "`carnivora.csv`". Download this to your new `CourseData` folder. 
+I have put all the data for the course into a Dropbox folder - see the link in Chapter 1. In there you will find a file called "`carnivora.csv`". Download this to your new `CourseData` folder. 
 
 You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the first row of our CSV file contains the column names. Note that your file path will be different to mine:
 

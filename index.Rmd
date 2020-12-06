@@ -110,7 +110,6 @@ write.csv(x = dataSetsUsed,file = "dataSetsUsed.csv",row.names = FALSE)
 #list.files
 currentFiles <- list.files(path = "CourseData/")
 delFiles <- paste0("CourseData/",currentFiles[which(!currentFiles %in% dataSetsUsed$name)])
-delFiles
 
 #Missing files
 missingFiles <- dataSetsUsed$name[!dataSetsUsed$name %in% currentFiles]

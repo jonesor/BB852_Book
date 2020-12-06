@@ -325,7 +325,7 @@ x <- read.csv("CourseData/classData.csv") %>% filter(Year == 2019)
 
 Then look at the data. Here I do this using a box plot with jittered points (a nice way of plotting data with small sample sizes) (Figure \@ref(fig:reactionData)). From  Figure \@ref(fig:reactionData) it looks like males have a faster reaction time than females, but there is a lot of variation. We need to apply the t-test in a similar way to above.
 
-```{r reactionData, fig.width=4,fig.height=3,fig.align='center',fig.cap="Reaction time of both sexes", fig.pos="ht", echo = -1}
+```{r reactionData, fig.width=4,fig.height=3,fig.align='center',fig.cap="Reaction time of both sexes", fig.pos="ht", echo = -1,cache=TRUE}
 set.seed(42)
 ggplot(x,aes(x=Gender,y=Reaction)) +
   geom_boxplot() + 

@@ -22,7 +22,7 @@ ch <-read.csv("CourseData/cholesterol.csv")
 
 Let's first take a look at the data by plotting it. I will first plot a boxplot first, and add the jittered points for clarity.
 
-```{r,echo = -1}
+```{r,echo = -1,cache=TRUE}
 set.seed(42)
 ggplot(ch,aes(x=Treatment,y=Cholesterol)) + 
       geom_boxplot()+
@@ -69,11 +69,10 @@ This is a complicated set of commands. To make sure that you understand it, try 
 Now we ask, what would the world look like if our null hypothesis was *true*. To do this we can disassociate the treatment group variable from the measured cholesterol values. We do this using by using the `mutate` function to replace the `Treatment` variable with a shuffled version of itself with the `sample` function. 
 
 Let's try that one time:
-```{r set seed,echo=FALSE}
-set.seed(666)
-```
 
-```{r,warning=FALSE, cache=TRUE}
+```{r,warning=FALSE, cache=TRUE,echo = -1}
+set.seed(666)
+
 ch %>%
   mutate(Treatment = sample(Treatment)) %>% #shuffle the Treatment data
   group_by(Treatment) %>%
@@ -89,7 +88,8 @@ Doing this one time is not much help though - we need to repeat this many times.
 We can do this easily in R using the function `replicate` which simply a kind of wrapper that tells R to repeat a command `n` times and then pass the result to a vector.
 Let's try it first 10 times to see how it works:
 
-```{r, warning=FALSE, cache=TRUE}
+```{r, warning=FALSE, cache=TRUE,echo=-1}
+set.seed(42)
 replicate(10,
             ch %>%
             mutate(Treatment = sample(Treatment)) %>%
@@ -105,7 +105,8 @@ You can see that the `replicate` command simply does the sampling-recalculation 
 In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a `data.frame` called `shuffledData`. This data frame initially has a variable called `rep` which consists of the numbers 1-1000. I then use `mutate` to add the 1000 shuffled differences. 
 
 
-```{r replicate, warning=FALSE, cache=TRUE}
+```{r replicate, warning=FALSE, cache=TRUE,echo = -1}
+set.seed(43)
 shuffledData <- data.frame(rep = 1:1000) %>%
   mutate(shuffledDiffs = replicate(1000,
             ch %>%
@@ -228,7 +229,8 @@ The logic of this test is that if the experimental treatment has no effect on we
 
 Therefore, to carry out this test, we can permute the SIGN of the change in weight (i.e. we randomly flip values from positive to negative and vice versa). We can do this by multiplying by 1 or -1, randomly.
 
-```{r}
+```{r,echo =-1,cache = TRUE}
+set.seed(123)
 head(an)
 
 anShuffled <- an %>%
@@ -244,7 +246,8 @@ head(anShuffled)
 
 We need to calculate the mean of this shuffled vector. We can do this by `pull` to get the vector, and then `mean`.
 
-```{r}
+```{r,echo = -1,cache = TRUE}
+set.seed(42)
 an %>%
   mutate(sign = sample(c(1,-1),size = nrow(an),replace = TRUE)) %>%
   mutate(shuffledChange = change * sign) %>%
@@ -254,7 +257,8 @@ an %>%
 
 Now we will build a null distribution of changes in weight by repeating this 1000 times. We can do this using the `replicate` function to "wrap" around the function, passing the result into a data frame. We can then compare this null distribution to the observed change.
 
-```{r, cache=TRUE}
+```{r, cache=TRUE,echo=-1}
+set.seed(42)
 nullDist = data.frame(change =
                         replicate(1000,an %>%
                                     mutate(sign = sample(c(1,-1),size = nrow(an),replace = TRUE)) %>%

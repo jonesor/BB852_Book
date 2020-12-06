@@ -61,7 +61,7 @@ NFL <- read.csv("CourseData/NFLfieldgoal.csv") %>%
 
 Next, plot the data with `ggplot` (`geom_jitter` would be a good option, but you might like to adjust the `height` and `alpha` arguments. e.g. `geom_jitter(height = 0.05,alpha = 0.5)`). You can see that the data is distributed in two bands with 1 representing success and 0 representing failure.
 
-```{r echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 set.seed(12)
 (A<-ggplot(NFL,aes(x = Distance,y = Success)) + 
   geom_jitter(height = 0.05, alpha = 0.5))
@@ -148,7 +148,7 @@ newDat <- newDat %>%
 
 Now we can finally plot the model predictions and the 95% confidence intervals for them. 
 
-```{r echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 set.seed(42)
 #The plot and ribbon
 (A <- ggplot(NFL,aes(x= Distance,y=Success)) + 

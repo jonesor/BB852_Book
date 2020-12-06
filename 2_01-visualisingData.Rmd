@@ -105,7 +105,7 @@ ggplot(df, aes(x = species, y = clutchSize)) +
 
 Some researchers argue that it is a good idea to add the data as points to these plots as "full disclosure" of what the underlying data look like. These can be added with a `geom_jitter` layer (jitter is random noise added in this case to the horizontal axis). You should set `width` and `alpha` arguments to make it look nice.
 
-```{r,echo = -1}
+```{r,echo = -1,cache = TRUE}
 set.seed(42)
 ggplot(df, aes(x = species, y = clutchSize)) +
   geom_boxplot() + 

@@ -9,7 +9,7 @@ The answer is to use a one-way analysis of variance (ANOVA). Conceptually, this 
 The one-way ANOVA is illustrated below with two cases (Figure \@ref(fig:anova_vis)). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether *at least one* of the groups is different from the others.
 
 
-```{r anova_vis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht"}
+```{r anova_vis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
 
 d1<-c(40,10)
 d2<-c(45,10)
@@ -58,7 +58,7 @@ A+ggtitle("A") + B+ggtitle("B")
 
 
 
-```{r, echo = FALSE,fig.show="hide"}
+```{r, echo = FALSE,fig.show="hide",cache=TRUE}
 #Makes boxplot version of the above for presentation
 set.seed(124)
 dfA <- data.frame(x = rep(LETTERS[1:3],each = 30),
@@ -98,7 +98,7 @@ espresso <- read.csv("CourseData/espresso.csv", stringsAsFactors = TRUE)
 head(espresso)
 ```
 
-```{r coffee,echo=-1,fig.width=4,fig.height=3,fig.align='center', fig.cap="A box and whisker plot, with jittered points, for the espresso foam data."}
+```{r coffee,echo=-1,fig.width=4,fig.height=3,fig.align='center', fig.cap="A box and whisker plot, with jittered points, for the espresso foam data.",cache=TRUE}
 set.seed(43)
 (ggplot(espresso,aes(x=method,y=foamIndx)) + 
 geom_boxplot()+
@@ -212,7 +212,7 @@ summary(foam_mod2)
 Now the coefficients in the model summary look different, but the model is actually the same. Compare the two graphs in Figure \@ref(fig:differentReferences) - can you see the differences/similarities?
 
 
-```{r differentReferences, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set."}
+```{r differentReferences, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.",cache=TRUE}
 set.seed(31)
 
 temp <- data.frame(level = names(foam_mod$coefficients),

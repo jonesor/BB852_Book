@@ -51,7 +51,7 @@ The following command will produce 6 numbers from a distribution with a mean val
 set.seed(3542)
 ```
 
-```{r}
+```{r,cache = TRUE}
 rnorm(6,5,2)
 ```
 
@@ -61,7 +61,8 @@ Try changing the values of the arguments to alter the number of values you gener
 
 Let's use this to generate a larger data frame, and then place markers for the various measures of "spread" onto a plot. *Note that here I put a set of parentheses around the plot code to both display the result AND save the plot as an R object called `p1`*
 
-```{r, message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
+```{r, message=FALSE, fig.height=3, fig.width = 4,fig.align='center',cache = TRUE,echo = -1}
+set.seed(42)
 rn <- data.frame(d1 = rnorm(500,5,2))
 summary(rn) #Take a look
 
@@ -124,7 +125,8 @@ Because normal distributions all have the same shape, it can be hard to grasp th
 
 Let's use `rnorm` to generate a larger data frame with two sets of numbers from different distributions: (d1: mean = 5, sd = 2; d2: mean = 8, sd = 1). 
 
-```{r, message=FALSE}
+```{r, message=FALSE,cache = TRUE,echo = -1}
+set.seed(42)
 rn <- data.frame(d1 = rnorm(500,5,2),d2 = rnorm(500,8,1))
 summary(rn)
 ```
@@ -149,6 +151,7 @@ Try changing the distributions and re-plotting them (you can change the number o
 The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the "`lambda`" parameter. Small values of lambda give more skewed distributions.
 
 ```{r, echo=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
+set.seed(42)
 poissonData <- data.frame(x = seq(0,10,1)) %>% 
   mutate(dens = dpois(x ,lambda = 2))
 
@@ -179,7 +182,8 @@ L2+ggtitle("lambda = 2")+L5 + ggtitle("lambda = 5")
 Let's generate and plot some Poisson distributed data.
 
 
-```{r, message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
+```{r, message=FALSE, fig.height=3, fig.width = 4,fig.align='center',cache = TRUE,echo = -1}
+set.seed(23)
 rp <- data.frame(d1 = rpois(500,2.4))
 summary(rp) #Take a look
 
@@ -235,7 +239,8 @@ summary(rp$d1)
 
 To get a better feel for how these two distributions differ, lets use the same approach we used above to plot two distributions together.
 
-```{r,fig.height=3, fig.width = 4,fig.align='center'}
+```{r,fig.height=3, fig.width = 4,fig.align='center',echo=-1,cache = TRUE}
+set.seed(42)
 rn <- data.frame(normDist = rnorm(500,2,2),poisDist = rpois(500,2.4))
 summary(rn)
 

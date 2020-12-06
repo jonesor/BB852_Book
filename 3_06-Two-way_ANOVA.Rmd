@@ -92,7 +92,7 @@ Fa<- ggplot(fakeData %>%
 In the model we aim to quantify these effects, and ask if they are statistically significant (i.e. if the effect sizes are >0). We divide the effects of the explanatory variables into two types: **main effects** and **interaction effects**. The main effects are the overall effect of the explanatory variables (genotype and diet in this case) while the interaction effect allows us to ask whether one main effect *depends on another*. In this case we are asking whether *the effect of diet depends on genotype (and vice versa)*. Make sure that you understand this important concept.
 
 
-```{r dataPrep, echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r dataPrep, echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 
 #Simulate some data.
 set.seed(9724)
@@ -267,7 +267,7 @@ The research questions are: *What is the relative influence of colour pattern an
 
 
 
-```{r generateFishData, eval = FALSE, echo = FALSE,message=FALSE}
+```{r generateFishData, eval = FALSE, echo = FALSE,message=FALSE,cache=TRUE}
 set.seed(123)
 meanSEM<-expand.grid(personality = c("Proactive","Reactive"), colouration = c("Homogeneous","Heterogeneous")) %>% 
   mutate(spawningMean = c(270,260,240,170),spawningSEM = rep(40,4))
