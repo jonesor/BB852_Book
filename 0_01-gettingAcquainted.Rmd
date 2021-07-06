@@ -66,11 +66,11 @@ In RStudio, the help results will appear in the lower right hand area.
 R features the usual arithmetic operations for addition, subtraction, division, multiplication: 
 
 ```{r}
-4+3 
-9-12
-6/3
-7*3
-(2*7)+2-0.4
+4 + 3
+9 - 12
+6 / 3
+7 * 3
+(2 * 7) + 2 - 0.4
 ```
 
 R also has commands for square root (`sqrt`), raising to powers (\^), taking the absolute value (`abs`), and rounding (`round`), natural log (`log`), anti-log (`exp`), log to base-10 (`log10`):
@@ -79,7 +79,7 @@ R also has commands for square root (`sqrt`), raising to powers (\^), taking the
 sqrt(945)
 3^5
 abs(-23.4)
-round(2.35425,digits=2)
+round(2.35425, digits = 2)
 log(1.2)
 exp(1)
 log10(6)
@@ -87,12 +87,12 @@ log10(6)
 Another thing you can do is evaluate TRUE/FALSE conditions:
 
 ```{r}
-3<10
-5>7
-5==5
-6!=5
-3 %in% c(1,2,3,4,5)
-6 %in% c(1,2,3,4,5)
+3 < 10
+5 > 7
+5 == 5
+6 != 5
+3 %in% c(1, 2, 3, 4, 5)
+6 %in% c(1, 2, 3, 4, 5)
 ```
 
 ## Objects in R
@@ -120,11 +120,11 @@ There are several ways to create vectors in R. For example, you can make vectors
 Try the following:
 ```{r}
 A <- 1:5
-B <- c(1,3,6,1,7,9)
-C <- seq(1,12,2)
-D <- seq(1,5,0.1)
-E <- rep(c("Male","Female"),each = 3)
-G <- rep(c("Male","Female"),c(2,4))
+B <- c(1, 3, 6, 1, 7, 9)
+C <- seq(1, 12, 2)
+D <- seq(1, 5, 0.1)
+E <- rep(c("Male", "Female"), each = 3)
+G <- rep(c("Male", "Female"), c(2, 4))
 ```
 
 
@@ -144,21 +144,21 @@ For example, we can use the basic arithmetic functions (`*`, `+`, `/`,`-`) on a 
 
 ```{r}
 B
-B*3
-B-2
+B * 3
+B - 2
 ```
 
 You can *concatenate* entire vectors together using the `c` function. E.g. concatenating the vectors `A` and `B` from above:
 
 ```{r}
-c(A,B)  
+c(A, B)
 ```
 
 
 Other manipulations are also done "element-by-element". For example, here we multiply the first element of B by 1, the second by 2, the 3rd by 3 and so on...:
 
 ```{r}
-B * c(1,2,3,4,5,6)
+B * c(1, 2, 3, 4, 5, 6)
 ```
 If the length of the vectors match, we can also multiply (or add/subtract/divide etc.) multiple vectors:
 
@@ -175,25 +175,25 @@ By convention, *missing values* in R are coded by the value "NA". The way that p
 For example, if we asked for the mean value of a vector of numbers with an NA value, it will fail:
 
 ```{r}
-mean(c(1,3,6,1,7,9,NA))
+mean(c(1, 3, 6, 1, 7, 9, NA))
 ```
 
 In this case you need to specify that any NA values should be removed before calculating the mean:
 ```{r}
-mean(c(1,3,6,1,7,9,NA),na.rm=TRUE)
+mean(c(1, 3, 6, 1, 7, 9, NA), na.rm = TRUE)
 ```
 
 Calculations can sometimes lead to answers that are plus, or minus, infinity. These values are represented in R by `Inf` or `-Inf`:
 
 ```{r}
-5/0
--4/0
+5 / 0
+-4 / 0
 ```
 
 Other calculations lead to answers that are not numbers, and these are represented by `NaN` in R:
 ```{r}
-0/0
-Inf-Inf
+0 / 0
+Inf - Inf
 ```
 
 
@@ -240,10 +240,10 @@ str(mydata)
 Data frames can be subsetted using the square brackets `[]`, or `subset` functions. With the square brackets, the first number specifies the row number, while the second number specifies the column number:
 
 ```{r}
-mydata[1,]
-mydata[,2]
-mydata[1,2]
-subset(mydata,sex == "Female")
+mydata[1, ]
+mydata[, 2]
+mydata[1, 2]
+subset(mydata, sex == "Female")
 ```
 
 ## Classes in R
@@ -269,13 +269,13 @@ There's another special class of vector called `factor`. In the small dataset ab
 For example, this code, to make a box plot, will not work:
 
 ```{r, eval = FALSE}
-plot(mydata$sex,mydata$age)
+plot(mydata$sex, mydata$age)
 ```
 
 But this code will work fine:
 
 ```{r, eval = TRUE}
-plot(as.factor(mydata$sex),mydata$age)
+plot(as.factor(mydata$sex), mydata$age)
 ```
 
 Of course it might be easier to convert it to be a factor in the data frame itself, like this:
@@ -283,7 +283,7 @@ Of course it might be easier to convert it to be a factor in the data frame itse
 ```{r}
 mydata$sex <- as.factor(mydata$sex)
 str(mydata) # You can see that it is now registered as a factor
-plot(mydata$sex,mydata$age)
+plot(mydata$sex, mydata$age)
 ```
 
 
@@ -483,7 +483,3 @@ Additional surveys found an average species richness of 3.5 in nearby undisturbe
 7. Export your plots and paste them into a Word Document.
 
 8. If you get this far, try plotting the other variables in the dataset.
-
-
-
-
