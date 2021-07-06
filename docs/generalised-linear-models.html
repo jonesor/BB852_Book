@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Generalised linear models | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Generalised linear models | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-12-06" />
+<meta name="date" content="2021-07-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="linear-models-with-1-categorical-explanatory-variables.html"/>
 <link rel="next" href="extending-use-cases-of-glm.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,35 +51,9 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<script src="libs/tabwid-1.0.0/tabwid.js"></script>
-<style type="text/css">
-
-.warning-box {
-  border: 3px solid #e60000;
-  margin:  25px;
-  padding: 10px 10px 5px 10px;
-  border-radius: 6px 6px 6px 6px;
-}
-
-.advanced-box {
-  border: 3px solid #268bd2;
-  margin:  25px;
-  padding: 10px 10px 5px 10px;
-  border-radius: 6px 6px 6px 6px;
-}
-
-.do-something {
-  border: 3px solid #803e00;
-  margin:  25px;
-  padding: 10px 10px 5px 10px;
-  border-radius: 6px 6px 6px 6px;
-}
-
-</style>
-
-
-
 
 
 <style type="text/css">
@@ -145,6 +119,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -302,12 +277,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.2.1" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>13.2.1</b> Where are the differences?</a></li>
 <li class="chapter" data-level="13.2.2" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>13.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>13.3</b> ANOVA calculation “by hand”.</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>13.3</b> ANOVA calculation “by hand.”</a></li>
 <li class="chapter" data-level="13.4" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>13.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>14</b> Linear models with a single continuous explanatory variable</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#some-theory"><i class="fa fa-check"></i><b>14.1</b> Some theory</a></li>
+<li class="chapter" data-level="14.1" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#some-theory-1"><i class="fa fa-check"></i><b>14.1</b> Some theory</a></li>
 <li class="chapter" data-level="14.2" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#evaluating-a-hypothesis-with-a-linear-regression-model"><i class="fa fa-check"></i><b>14.2</b> Evaluating a hypothesis with a linear regression model</a></li>
 <li class="chapter" data-level="14.3" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#assumptions"><i class="fa fa-check"></i><b>14.3</b> Assumptions</a></li>
 <li class="chapter" data-level="14.4" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#worked-example-height-hand-width-relationship"><i class="fa fa-check"></i><b>14.4</b> Worked example: height-hand width relationship</a></li>
@@ -357,33 +332,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="19.6" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-1-snails-on-the-move"><i class="fa fa-check"></i><b>19.6</b> Exercise 1: Snails on the move</a></li>
 <li class="chapter" data-level="19.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>19.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
-<li class="part"><span><b>IV Coming soon(ish)</b></span></li>
-<li class="chapter" data-level="20" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html"><i class="fa fa-check"></i><b>20</b> Coming soon (maybe)!</a>
+<li class="part"><span><b>IV Exam</b></span></li>
+<li class="chapter" data-level="20" data-path="exam-2020.html"><a href="exam-2020.html"><i class="fa fa-check"></i><b>20</b> Exam 2020</a></li>
+<li class="part"><span><b>V Solutions</b></span></li>
+<li class="chapter" data-level="21" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>21</b> Exercise Solutions</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#diagnostic-plots"><i class="fa fa-check"></i><b>20.1</b> Diagnostic plots</a></li>
-<li class="chapter" data-level="20.2" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#multivariate-statistics"><i class="fa fa-check"></i><b>20.2</b> Multivariate statistics</a></li>
-<li class="chapter" data-level="20.3" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#transforming-variables"><i class="fa fa-check"></i><b>20.3</b> Transforming variables</a></li>
-<li class="chapter" data-level="20.4" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#non-linear-regression"><i class="fa fa-check"></i><b>20.4</b> Non-linear regression</a></li>
-<li class="chapter" data-level="20.5" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#nested-or-blocked-study-designs"><i class="fa fa-check"></i><b>20.5</b> Nested or blocked study designs</a></li>
-</ul></li>
-<li class="part"><span><b>V Exam</b></span></li>
-<li class="chapter" data-level="21" data-path="exam-2020.html"><a href="exam-2020.html"><i class="fa fa-check"></i><b>21</b> Exam 2020</a></li>
-<li class="part"><span><b>VI Solutions</b></span></li>
-<li class="chapter" data-level="22" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>22</b> Exercise Solutions</a>
-<ul>
-<li class="chapter" data-level="22.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-californian-bird-diversity"><i class="fa fa-check"></i><b>22.1</b> Exercise Solutions: Californian bird diversity</a></li>
-<li class="chapter" data-level="22.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>22.2</b> Exercise Solutions: Wrangling the Amniote Life History Database</a></li>
-<li class="chapter" data-level="22.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>22.3</b> Exercise Solutions: Temperature effects on egg laying dates</a></li>
-<li class="chapter" data-level="22.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>22.4</b> Exercise Solutions: Sexual selection in Hercules beetles</a></li>
-<li class="chapter" data-level="22.5" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>22.5</b> Exercise: Sex differences in fine motor skills</a></li>
-<li class="chapter" data-level="22.6" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-therapy-for-anorexia"><i class="fa fa-check"></i><b>22.6</b> Exercise: Therapy for anorexia</a></li>
-<li class="chapter" data-level="22.7" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>22.7</b> Exercise: Compare t-tests with randomisation tests</a></li>
-<li class="chapter" data-level="22.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-apple-tree-crop-yield"><i class="fa fa-check"></i><b>22.8</b> Exercise Solutions: Apple tree crop yield</a></li>
-<li class="chapter" data-level="22.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-chirping-crickets"><i class="fa fa-check"></i><b>22.9</b> Exercise Solutions: Chirping crickets</a></li>
-<li class="chapter" data-level="22.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-fish-behaviour"><i class="fa fa-check"></i><b>22.10</b> Exercise Solutions: Fish behaviour</a></li>
-<li class="chapter" data-level="22.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-maze-runner"><i class="fa fa-check"></i><b>22.11</b> Exercise Solutions: Maze runner</a></li>
-<li class="chapter" data-level="22.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-snails-on-the-move"><i class="fa fa-check"></i><b>22.12</b> Exercise Solutions: Snails on the move</a></li>
-<li class="chapter" data-level="22.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.13</b> Exercise Solutions: Mouse lemur strength</a></li>
+<li class="chapter" data-level="21.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-californian-bird-diversity"><i class="fa fa-check"></i><b>21.1</b> Exercise Solutions: Californian bird diversity</a></li>
+<li class="chapter" data-level="21.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>21.2</b> Exercise Solutions: Wrangling the Amniote Life History Database</a></li>
+<li class="chapter" data-level="21.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>21.3</b> Exercise Solutions: Temperature effects on egg laying dates</a></li>
+<li class="chapter" data-level="21.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>21.4</b> Exercise Solutions: Sexual selection in Hercules beetles</a></li>
+<li class="chapter" data-level="21.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-sex-differences-in-fine-motor-skills-1"><i class="fa fa-check"></i><b>21.5</b> Exercise: Sex differences in fine motor skills</a></li>
+<li class="chapter" data-level="21.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-therapy-for-anorexia-1"><i class="fa fa-check"></i><b>21.6</b> Exercise: Therapy for anorexia</a></li>
+<li class="chapter" data-level="21.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-compare-t-tests-with-randomisation-tests-1"><i class="fa fa-check"></i><b>21.7</b> Exercise: Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="21.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-apple-tree-crop-yield"><i class="fa fa-check"></i><b>21.8</b> Exercise Solutions: Apple tree crop yield</a></li>
+<li class="chapter" data-level="21.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-chirping-crickets"><i class="fa fa-check"></i><b>21.9</b> Exercise Solutions: Chirping crickets</a></li>
+<li class="chapter" data-level="21.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-fish-behaviour"><i class="fa fa-check"></i><b>21.10</b> Exercise Solutions: Fish behaviour</a></li>
+<li class="chapter" data-level="21.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-maze-runner"><i class="fa fa-check"></i><b>21.11</b> Exercise Solutions: Maze runner</a></li>
+<li class="chapter" data-level="21.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-snails-on-the-move"><i class="fa fa-check"></i><b>21.12</b> Exercise Solutions: Snails on the move</a></li>
+<li class="chapter" data-level="21.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-mouse-lemur-strength"><i class="fa fa-check"></i><b>21.13</b> Exercise Solutions: Mouse lemur strength</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -435,11 +401,12 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-312-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="generalised-linear-models.html#cb432-1" aria-hidden="true"></a>mod1 &lt;-<span class="st"> </span><span class="kw">glm</span>(noffspring <span class="op">~</span><span class="st"> </span>weight, <span class="dt">data =</span> fox, <span class="dt">family =</span> poisson)</span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="generalised-linear-models.html#cb432-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(noffspring <span class="sc">~</span> weight, <span class="at">data =</span> fox, <span class="at">family =</span> poisson)</span></code></pre></div>
 <p>After fitting the model it is a good idea to look at the model diagnostics, using <code>autoplot</code> from the <code>ggfortify</code> package.</p>
 <p><img src="BB852_files/figure-html/unnamed-chunk-314-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>These diagnostic plots are, basically, the same as the ones you saw for <code>lm</code> models. There is one difference and that is that the plots use something called standardised <em>deviance</em> residuals instead of just standardised residuals. These are transformed versions of the residuals that will look <em>normal</em> (in the statistical sense) if the family of hte GLM is appropriate. So, if “poisson” is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.</p>
 <p>Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using the <code>test = "F"</code> or <code>test = "Chi"</code>. For Poisson and binomial GLMs the chi-squared test is most appropriate while for Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="generalised-linear-models.html#cb433-1" aria-hidden="true"></a><span class="kw">anova</span>(mod1,<span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="generalised-linear-models.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1,<span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model: poisson, link: log
@@ -456,7 +423,7 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This summary table tells us that the single explanatory variable (<code>weight</code>) is fantastically important (p-value is very small indeed).</p>
 <p>We can then ask for the coefficient summary using <code>summary</code>.</p>
-<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="generalised-linear-models.html#cb435-1" aria-hidden="true"></a><span class="kw">summary</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="generalised-linear-models.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = noffspring ~ weight, family = poisson, data = fox)
@@ -486,19 +453,19 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 </div>
 <p>The model coefficients and their standard errors are given on the scale of the linear predictor. They tell us that there is a significant association between the weight of the fox mother and the number of offspring she will produce: larger foxes produce more offspring. Because the coefficients are given on the scale of the linear predictor rather than on the real scale it is useful to plot predictions of the model to visualise the relationship.</p>
 <p>To do that we must (1) tell the model what to predict <code>from</code> i.e. we must provide a suitable sequence of numbers to predict from using <code>seq</code>, (2) use the <code>predict</code> function to predict values (<code>fit</code>) from the model. We use the argument <code>type = "response"</code> to tell the function that we want the predictions on the back-transformed (real) scale rather than on the scale of the linear predictor. We add the argument <code>se.fit = TRUE</code> to tell the function to give us the standard error estimates of the fit. The <code>se.fit</code> values are added or subtracted from the fit to obtain the plus/minus standard errors. We can multiply these by 1.96 to get the 95% confidence intervals of the fitted values.</p>
-<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="generalised-linear-models.html#cb437-1" aria-hidden="true"></a><span class="co">#Vector to predict from</span></span>
-<span id="cb437-2"><a href="generalised-linear-models.html#cb437-2" aria-hidden="true"></a>newData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">weight =</span> <span class="kw">seq</span>(<span class="fl">1.7</span>,<span class="fl">4.4</span>,<span class="fl">0.01</span>))</span>
-<span id="cb437-3"><a href="generalised-linear-models.html#cb437-3" aria-hidden="true"></a></span>
-<span id="cb437-4"><a href="generalised-linear-models.html#cb437-4" aria-hidden="true"></a><span class="co">#Predicted values (and SE)</span></span>
-<span id="cb437-5"><a href="generalised-linear-models.html#cb437-5" aria-hidden="true"></a>predVals &lt;-<span class="st"> </span><span class="kw">predict</span>(mod1,newData,<span class="dt">type=</span><span class="st">&quot;response&quot;</span>,<span class="dt">se.fit =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb437-6"><a href="generalised-linear-models.html#cb437-6" aria-hidden="true"></a></span>
-<span id="cb437-7"><a href="generalised-linear-models.html#cb437-7" aria-hidden="true"></a><span class="co">#Create new data for the predicted fit line</span></span>
-<span id="cb437-8"><a href="generalised-linear-models.html#cb437-8" aria-hidden="true"></a>newData &lt;-<span class="st"> </span>newData <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb437-9"><a href="generalised-linear-models.html#cb437-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">noffspring =</span> predVals<span class="op">$</span>fit) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb437-10"><a href="generalised-linear-models.html#cb437-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ymin =</span> predVals<span class="op">$</span>fit <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span><span class="op">*</span>predVals<span class="op">$</span>se.fit) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb437-11"><a href="generalised-linear-models.html#cb437-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ymax =</span> predVals<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span><span class="op">*</span>predVals<span class="op">$</span>se.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="generalised-linear-models.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Vector to predict from</span></span>
+<span id="cb437-2"><a href="generalised-linear-models.html#cb437-2" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">weight =</span> <span class="fu">seq</span>(<span class="fl">1.7</span>,<span class="fl">4.4</span>,<span class="fl">0.01</span>))</span>
+<span id="cb437-3"><a href="generalised-linear-models.html#cb437-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb437-4"><a href="generalised-linear-models.html#cb437-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Predicted values (and SE)</span></span>
+<span id="cb437-5"><a href="generalised-linear-models.html#cb437-5" aria-hidden="true" tabindex="-1"></a>predVals <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1,newData,<span class="at">type=</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb437-6"><a href="generalised-linear-models.html#cb437-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb437-7"><a href="generalised-linear-models.html#cb437-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new data for the predicted fit line</span></span>
+<span id="cb437-8"><a href="generalised-linear-models.html#cb437-8" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span> </span>
+<span id="cb437-9"><a href="generalised-linear-models.html#cb437-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">noffspring =</span> predVals<span class="sc">$</span>fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb437-10"><a href="generalised-linear-models.html#cb437-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ymin =</span> predVals<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>predVals<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb437-11"><a href="generalised-linear-models.html#cb437-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ymax =</span> predVals<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>predVals<span class="sc">$</span>se.fit)</span></code></pre></div>
 <p>Take a look at this data to make sure it looks OK.</p>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalised-linear-models.html#cb438-1" aria-hidden="true"></a><span class="kw">head</span>(newData)</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalised-linear-models.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(newData)</span></code></pre></div>
 <pre><code>##   weight noffspring      ymin     ymax
 ## 1   1.70   1.384392 0.9649333 1.803850
 ## 2   1.71   1.393174 0.9734837 1.812865
@@ -507,33 +474,33 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 ## 5   1.74   1.419858 0.9995426 1.840173
 ## 6   1.75   1.428865 1.0083663 1.849364</code></pre>
 <p>This looks OK. Now we can plot the data and add a the model fit line, and a “ribbon” representing the errors (the 95% confidence interval for the line).</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="generalised-linear-models.html#cb440-1" aria-hidden="true"></a>(A &lt;-<span class="st"> </span><span class="kw">ggplot</span>(fox,<span class="kw">aes</span>(<span class="dt">x=</span> weight,<span class="dt">y=</span>noffspring)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb440-2"><a href="generalised-linear-models.html#cb440-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="dt">data =</span> newData,<span class="kw">aes</span>(<span class="dt">x =</span>weight,<span class="dt">ymin=</span>ymin,<span class="dt">ymax=</span>ymax),<span class="dt">fill=</span><span class="st">&quot;grey75&quot;</span>)<span class="op">+</span></span>
-<span id="cb440-3"><a href="generalised-linear-models.html#cb440-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></span>
-<span id="cb440-4"><a href="generalised-linear-models.html#cb440-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data =</span> newData,<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="generalised-linear-models.html#cb440-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fox,<span class="fu">aes</span>(<span class="at">x=</span> weight,<span class="at">y=</span>noffspring)) <span class="sc">+</span> </span>
+<span id="cb440-2"><a href="generalised-linear-models.html#cb440-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newData,<span class="fu">aes</span>(<span class="at">x =</span>weight,<span class="at">ymin=</span>ymin,<span class="at">ymax=</span>ymax),<span class="at">fill=</span><span class="st">&quot;grey75&quot;</span>)<span class="sc">+</span></span>
+<span id="cb440-3"><a href="generalised-linear-models.html#cb440-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb440-4"><a href="generalised-linear-models.html#cb440-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> newData,<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-320-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>So we could summarise this something like this:</p>
 <p>Methods: <em>I modelled the association between mother’s weight and number of pups produced using a generalised linear model with a log link and Poisson error structure. This is appropriate because the data are count data (number of pups) that are bounded at 0 with increasing variance with increased maternal weight.</em></p>
-<p>Results: <em>The GLM showed that maternal weight was significantly associated with the number of pups produced (GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p &lt;0.001). The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63<span class="math inline">\(\times\)</span>MotherWeight (see Figure XXX)</em></p>
+<p>Results: <em>The GLM showed that maternal weight was significantly associated with the number of pups produced (GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p &lt;0.001). The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63 <span class="math inline">\(\times\)</span> MotherWeight (see Figure XXX)</em></p>
 </div>
 <div id="example-cancer-clusters" class="section level3" number="17.1.2">
 <h3><span class="header-section-number">17.1.2</span> Example: Cancer clusters</h3>
 <p>This data show counts of prostate cancer and distance from a nuclear processing plant. Lets take a look at the data.</p>
 <p>Let’s first import the data (<code>cancer.csv</code>) and use summary to examine it by plotting it:</p>
 <p>First we can see that there are no negative count values.</p>
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalised-linear-models.html#cb441-1" aria-hidden="true"></a>cancer &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/cancer.csv&quot;</span>)</span>
-<span id="cb441-2"><a href="generalised-linear-models.html#cb441-2" aria-hidden="true"></a></span>
-<span id="cb441-3"><a href="generalised-linear-models.html#cb441-3" aria-hidden="true"></a><span class="kw">ggplot</span>(cancer,<span class="kw">aes</span>(<span class="dt">x =</span> Distance,<span class="dt">y =</span> Cancers))<span class="op">+</span></span>
-<span id="cb441-4"><a href="generalised-linear-models.html#cb441-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalised-linear-models.html#cb441-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/cancer.csv&quot;</span>)</span>
+<span id="cb441-2"><a href="generalised-linear-models.html#cb441-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb441-3"><a href="generalised-linear-models.html#cb441-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer,<span class="fu">aes</span>(<span class="at">x =</span> Distance,<span class="at">y =</span> Cancers))<span class="sc">+</span></span>
+<span id="cb441-4"><a href="generalised-linear-models.html#cb441-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-321-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Again, you will notice that the data are formed into horizontal rows of integer response values. There are lots of zero values at all distances, but the biggest cluster (6 cases), is very close to the plant. But is there a relationship between the distance from the nuclear plant and the number of cancers?</p>
 <p>Let’s fit a Generalised Linear Model to find out. As before will assume that the error is Poisson (that they variance increases directly in proportion to the mean), and we will use the standard log link to ensure that we don’t predict negative values:</p>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalised-linear-models.html#cb442-1" aria-hidden="true"></a>mod1 &lt;-<span class="st"> </span><span class="kw">glm</span>(Cancers <span class="op">~</span><span class="st"> </span>Distance, <span class="dt">data =</span> cancer, <span class="dt">family =</span> poisson)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalised-linear-models.html#cb442-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Cancers <span class="sc">~</span> Distance, <span class="at">data =</span> cancer, <span class="at">family =</span> poisson)</span></code></pre></div>
 <p>Next, plot the diagnostic plots.</p>
 <p><img src="BB852_files/figure-html/unnamed-chunk-323-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>These look a bit dodgy, but we’ll stick with it for the moment.</p>
 <p>Next ask for the Analysis of Variance table.</p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalised-linear-models.html#cb443-1" aria-hidden="true"></a><span class="kw">anova</span>(mod1,<span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalised-linear-models.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1,<span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model: poisson, link: log
@@ -550,7 +517,7 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The ANOVA table tells us that there is no significant effect of the Distance variable. In other words a model that includes the <code>Distance</code> term does not explain significantly more variation than the <code>NULL</code> model that includes no terms and instead assumes that variation in cancer incidence is simply caused by random variation.</p>
 <p>We needn’t go further with this model, but go ahead and plot the model in any case (just for practice).</p>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalised-linear-models.html#cb445-1" aria-hidden="true"></a><span class="kw">summary</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalised-linear-models.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Cancers ~ Distance, family = poisson, data = cancer)
@@ -680,7 +647,7 @@ summary(mod_A)
 ## Number of Fisher Scoring iterations: 5
 ```
 --></p></li>
-<li><p>Use the coefficient information in the <code>summary</code> table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations “by hand”, or using the <code>predict</code> function. Ask for help if you get stuck.
+<li><p>Use the coefficient information in the <code>summary</code> table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations “by hand,” or using the <code>predict</code> function. Ask for help if you get stuck.
 <!--
 
 ```r
@@ -739,6 +706,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

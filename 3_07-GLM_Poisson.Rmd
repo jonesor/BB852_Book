@@ -52,11 +52,12 @@ mod1 <- glm(noffspring ~ weight, data = fox, family = poisson)
 
 After fitting the model it is a good idea to look at the model diagnostics, using `autoplot` from the `ggfortify` package.
 
-```{r, echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(mod1)
 ```
 
+These diagnostic plots are, basically, the same as the ones you saw for `lm` models. There is one difference and that is that the plots use something called standardised *deviance* residuals instead of just standardised residuals. These are transformed versions of the residuals that will look *normal* (in the statistical sense) if the family of hte GLM is appropriate. So, if "poisson" is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.
 
 Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using the `test = "F"` or `test = "Chi"`.  For Poisson and binomial GLMs the chi-squared test is most appropriate while for  Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
 
@@ -115,7 +116,7 @@ So we could summarise this something like this:
 
 Methods: *I modelled the association between mother's weight and number of pups produced using a generalised linear model with a log link and Poisson error structure. This is appropriate because the data are count data (number of pups) that are bounded at 0 with increasing variance with increased maternal weight.*
 
-Results: *The GLM showed that maternal weight was significantly associated with the number of pups produced (GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63$\times$MotherWeight (see Figure XXX)*
+Results: *The GLM showed that maternal weight was significantly associated with the number of pups produced (GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63 $\times$ MotherWeight (see Figure XXX)*
 
 
 

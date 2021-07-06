@@ -18,24 +18,24 @@ The aim of the GLM is usually to estimate probability of "success" (e.g. surviva
 The link function used for a binomial GLM is usually the *logit* transformation, and therefore another name for this type of regression is **logistic regression**. The logit transformation linearises an S-shaped curve and therefore allows a linear regression line to be fitted from data that follows this pattern. The function is $y = log(\frac{p}{1-p})$, where $p$ is the probability or proportion. The inverse logit (the anti-logit) is $p = \frac{exp(y)}{exp(y)+1}$.
 
 ```{r, echo=FALSE,fig.width=7,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
-datBinom <- data.frame(x = 1:10) %>% 
-  mutate(tValue = seq(-6,6,length.out=10)) %>% 
-  mutate(prob = exp(tValue)/(exp(tValue)+1))
+datBinom <- data.frame(x = 1:10) %>%
+  mutate(tValue = seq(-6, 6, length.out = 10)) %>%
+  mutate(prob = exp(tValue) / (exp(tValue) + 1))
 
 
-A <- ggplot(datBinom,aes(x = x,y = prob))+
-  geom_point()+
-  geom_line()+
-  ylab("Probability")+
+A <- ggplot(datBinom, aes(x = x, y = prob)) +
+  geom_point() +
+  geom_line() +
+  ylab("Probability") +
   ggtitle("A - probability of event")
 
-B <- ggplot(datBinom,aes(x = x,y = tValue))+
-  geom_point()+
-  geom_line()+
-  ylab("Probability on logit scale")+
+B <- ggplot(datBinom, aes(x = x, y = tValue)) +
+  geom_point() +
+  geom_line() +
+  ylab("Probability on logit scale") +
   ggtitle("B - logit transformed probability")
 
-A + B         
+A + B
 ```
 
 We **could** linearise the data and then fit an ordinary linear model using `lm` but (like with the Poisson regression) the other assumption of the ordinary linear model, homoscedasticity, would cause problems. With S-shaped binomial relationships the expected variance is small at the two ends of the range and large in the middle of the range. This contrasts strongly with the constant variance assumption of ordinary linear models. Therefore it is wise to account for this using a Generalised Linear Model that explicitly accounts for this variance structure.
@@ -55,7 +55,7 @@ Our aim is to estimate how the probability of success changes with distance from
 First, import the data and convert the distance from yards to meters. 
 
 ```{r}
-NFL <- read.csv("CourseData/NFLfieldgoal.csv") %>% 
+NFL <- read.csv("CourseData/NFLfieldgoal.csv") %>%
   mutate(Distance = Distance * 0.9144)
 ```
 
@@ -63,7 +63,7 @@ Next, plot the data with `ggplot` (`geom_jitter` would be a good option, but you
 
 ```{r, echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 set.seed(12)
-(A<-ggplot(NFL,aes(x = Distance,y = Success)) + 
+(A <- ggplot(NFL, aes(x = Distance, y = Success)) +
   geom_jitter(height = 0.05, alpha = 0.5))
 ```
 
@@ -75,7 +75,7 @@ nflMod <- glm(Success ~ Distance, data = NFL, family = binomial)
 
 As usual, we should look at the model diagnostics. These look pretty bad. One reason that these diagnostics (e.g. the QQ plot) can look bad is when we are missing important variables in the model. In this case, for example, the distribution could look "off" because we don't include important information on other aspects of the game (e.g. was the team winning or losing at the time? how many minutes until the end of the game? how experienced is the player?). We can be fairly sure that `binomial` is the most appropriate variance structure because of the nature of the 0/1 data so let's stick with it for now!
 
-```{r, echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r, echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(nflMod)
 ```
@@ -103,10 +103,10 @@ $y =\frac{1}{1+exp(-(\beta_0 + \beta_1 x))}$, or $probability =\frac{1}{1+exp(-(
 Let's make sure that works by creating a set of predicted data from this equation and plotting it onto the graph:
 
 ```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
-d1 <- data.frame(x = 10:50) %>% 
-  mutate(y = 1/(1+exp(-(5.690 - 0.131 *x))))
-A + 
-  geom_line(data = d1,aes(x,y),colour="red")
+d1 <- data.frame(x = 10:50) %>%
+  mutate(y = 1 / (1 + exp(-(5.690 - 0.131 * x))))
+A +
+  geom_line(data = d1, aes(x, y), colour = "red")
 ```
 
 Rather than using the equation, there is an easier way by using the **R**'s `predict` function. We will use `predict` to get the predicted probability of success across the range of distances that we provide as a new data frame that we are here calling `newDat`. We will also predict the 95% Confidence Interval (CI) for these estimates. We will use these data to add the CI ribbon and line to the plot.
@@ -120,50 +120,54 @@ Remember that the model, and the predicted values from it, are expressed on the 
 First we obtain the predictions and CI on the scale of the linear predictor (logit scale). We calculate 95% CI from the standard errors simply by multiplying by 1.96.
 
 ```{r}
-#Dataset to predict FROM
-newDat  <- data.frame(Distance = 14:52) 
+# Dataset to predict FROM
+newDat <- data.frame(Distance = 14:52)
 
-#Get predictions from the model
-pv <- predict(nflMod, newdata = newDat,se.fit = TRUE)
+# Get predictions from the model
+pv <- predict(nflMod, newdata = newDat, se.fit = TRUE)
 
-#Add those predictions to newDat
-newDat <- newDat %>%  
-  mutate(Success_LP = pv$fit) %>% 
-  mutate(lowerCI_LP = pv$fit - 1.96*pv$se.fit) %>% 
-  mutate(upperCI_LP = pv$fit + 1.96*pv$se.fit)
+# Add those predictions to newDat
+newDat <- newDat %>%
+  mutate(Success_LP = pv$fit) %>%
+  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) %>%
+  mutate(upperCI_LP = pv$fit + 1.96 * pv$se.fit)
 ```
 
 Now we can first obtain the inverse link from the model object `family(nflMod)$linkinv`, and use that to backtransform the data onto the natural scale ready for plotting.
 
 ```{r}
-#Get the inverse link function
-inverseFunction <-family(nflMod)$linkinv
+# Get the inverse link function
+inverseFunction <- family(nflMod)$linkinv
 
-#transform predicted data to the natural scale
-newDat <- newDat %>% 
-  mutate(Success = inverseFunction(Success_LP),
-         ymin= inverseFunction(lowerCI_LP),
-         ymax = inverseFunction(upperCI_LP))
+# transform predicted data to the natural scale
+newDat <- newDat %>%
+  mutate(
+    Success = inverseFunction(Success_LP),
+    ymin = inverseFunction(lowerCI_LP),
+    ymax = inverseFunction(upperCI_LP)
+  )
 ```
 
 Now we can finally plot the model predictions and the 95% confidence intervals for them. 
 
 ```{r, echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 set.seed(42)
-#The plot and ribbon
-(A <- ggplot(NFL,aes(x= Distance,y=Success)) + 
-    geom_ribbon(data = newDat,aes(x =Distance,ymin=ymin,ymax=ymax),
-                fill="grey75",alpha = 0.5)+
-    geom_smooth(data = newDat,stat="identity")+
-    geom_jitter(height = 0.05,alpha = 0.5))
+# The plot and ribbon
+(A <- ggplot(NFL, aes(x = Distance, y = Success)) +
+  geom_ribbon(
+    data = newDat, aes(x = Distance, ymin = ymin, ymax = ymax),
+    fill = "grey75", alpha = 0.5
+  ) +
+  geom_smooth(data = newDat, stat = "identity") +
+  geom_jitter(height = 0.05, alpha = 0.5))
 ```
 So, at what distance does the probability of success fall to just 50%? You could read this directly from the plot as "approximately 44m". Alternatively, you could obtain the value from the `newDat` dataset you created above with predictions from the model, by filtering it. This confirms the probability of success reaches 0.5 somewhere between 43-44m.
 
 ```{r}
-newDat %>% 
-  filter(Success < 0.55) %>% 
-  filter(Success > 0.45) %>% 
-  select(Distance,Success)
+newDat %>%
+  filter(Success < 0.55) %>%
+  filter(Success > 0.45) %>%
+  select(Distance, Success)
 ```
 
 <!--
@@ -182,7 +186,7 @@ str(island)
 In this case there are two explanatory variables and we are therefore going to fit a *multiple regression* model with two variables using the GLM framework. 
 
 ```{r }
-model1 <- glm(incidence ~ area+isolation, data = island, family = binomial)
+model1 <- glm(incidence ~ area + isolation, data = island, family = binomial)
 summary(model1)
 ```
 
@@ -196,16 +200,16 @@ modeli <- glm(incidence ~ isolation, data = island, family = binomial)
 Then we can plot the two relationships in graphs side-by-side using the same approach as above. In these plots the fitted values (the modelled line) can be interpreted as a probability.
 
 ```{r }
-par(mfrow=c(1,2))
-plot(island$area,island$incidence)
-newData <- data.frame(area = seq(0,9,0.01))
-newData$fit <- predict(modela,newData,type="response")
-lines(newData$area,newData$fit,col="red")
+par(mfrow = c(1, 2))
+plot(island$area, island$incidence)
+newData <- data.frame(area = seq(0, 9, 0.01))
+newData$fit <- predict(modela, newData, type = "response")
+lines(newData$area, newData$fit, col = "red")
 
-plot(island$isolation,island$incidence)
-newData <- data.frame(isolation = seq(0,10,0.01))
-newData$fit <- predict(modeli,newData,type="response")
-lines(newData$isolation,newData$fit,col="red")
+plot(island$isolation, island$incidence)
+newData <- data.frame(isolation = seq(0, 10, 0.01))
+newData$fit <- predict(modeli, newData, type = "response")
+lines(newData$isolation, newData$fit, col = "red")
 ```
 -->
 
@@ -226,14 +230,14 @@ hawksbill
 We are interested in sex ratio which we can calculate as the proportion of the population that is female (i.e. number of females divided by total number).
 
 ```{r}
-hawksbill <- hawksbill %>% 
-  mutate(propFemale = Nfemale/(Nmale+Nfemale))
+hawksbill <- hawksbill %>%
+  mutate(propFemale = Nfemale / (Nmale + Nfemale))
 ```
 
 Let's plot that data. We can use the trick of telling R to plot the points different sizes depending on the sample size (using the `size =` argument):
 
 ```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
-(A<-ggplot(hawksbill,aes(x = Temperature,y = propFemale,size = Total))+
+(A <- ggplot(hawksbill, aes(x = Temperature, y = propFemale, size = Total)) +
   geom_point())
 ```
 
@@ -242,12 +246,12 @@ You can see that the proportion of females increases with temperature. Let's fit
 Instead we can bind the data into a two column matrix using `cbind`. The first column is our "success" and the second column is our "failure". If we put `females` in the first column the model will predict "probability of being female", which is what we want. This two-column approach provides the model with the sample size which it can use to weight the regression appropriately.
 
 ```{r}
-y <- cbind(hawksbill$Nfemale,hawksbill$Nmale)
+y <- cbind(hawksbill$Nfemale, hawksbill$Nmale)
 ```
 
 Now lets fit the model.
 ```{r}
-modA <- glm(y ~ Temperature,data=hawksbill,family = binomial)
+modA <- glm(y ~ Temperature, data = hawksbill, family = binomial)
 ```
 
 As ever, we should take a quick look at the model diagnostic plots - these look OK.
@@ -260,7 +264,7 @@ autoplot(modA)
 Now we can look at the anova table. This will tell us what we already know - there is a strong effect of temperature on sex ratio.
 
 ```{r}
-anova(modA,test="Chi")
+anova(modA, test = "Chi")
 ```
 
 
@@ -275,41 +279,47 @@ This table gives us the coefficients for the formula of our relationship. We cou
 It is perhaps more useful to plot the model fit onto the plot. First we need to create a data frame to predict from:
 
 ```{r}
-newDat <- data.frame(Temperature = seq(27.9,30.4,0.1))
+newDat <- data.frame(Temperature = seq(27.9, 30.4, 0.1))
 ```
 
 Now we can predict the values (and 95% CI) on the scale of the linear predictor (logit).
 
 ```{r}
-pv<-predict(modA,newDat,se.fit = TRUE)
-newDat <- newDat %>% 
-  mutate(propFemale_LP = pv$fit,
-         lowerCI_LP = pv$fit - 1.96*pv$se.fit,
-         upperCI_LP = pv$fit + 1.96*pv$se.fit)
+pv <- predict(modA, newDat, se.fit = TRUE)
+newDat <- newDat %>%
+  mutate(
+    propFemale_LP = pv$fit,
+    lowerCI_LP = pv$fit - 1.96 * pv$se.fit,
+    upperCI_LP = pv$fit + 1.96 * pv$se.fit
+  )
 ```
 
 Now we can use the inverse link function to backtransform to the natural probability scale.
 
 ```{r}
-#Get the inverse link function
-inverseFunction <-family(modA)$linkinv
+# Get the inverse link function
+inverseFunction <- family(modA)$linkinv
 
-#transform predicted data to the natural scale
-newDat <- newDat %>% 
-  mutate(propFemale = inverseFunction(propFemale_LP),
-         ymin= inverseFunction(lowerCI_LP),
-         ymax = inverseFunction(upperCI_LP))
+# transform predicted data to the natural scale
+newDat <- newDat %>%
+  mutate(
+    propFemale = inverseFunction(propFemale_LP),
+    ymin = inverseFunction(lowerCI_LP),
+    ymax = inverseFunction(upperCI_LP)
+  )
 ```
 
 We can add these values to the plot like this:
 
 ```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
-#The plot and ribbon
-(A<-ggplot(hawksbill,aes(x = Temperature,y = propFemale, size = Total))+
-  geom_ribbon(data = newDat,aes(x =Temperature,ymin=ymin,ymax=ymax),
-                fill="grey75",alpha = 0.5,inherit.aes=FALSE)+
-    geom_smooth(data = newDat,aes(x = Temperature,y=propFemale),stat="identity",inherit.aes=FALSE)+
- geom_point())
+# The plot and ribbon
+(A <- ggplot(hawksbill, aes(x = Temperature, y = propFemale, size = Total)) +
+  geom_ribbon(
+    data = newDat, aes(x = Temperature, ymin = ymin, ymax = ymax),
+    fill = "grey75", alpha = 0.5, inherit.aes = FALSE
+  ) +
+  geom_smooth(data = newDat, aes(x = Temperature, y = propFemale), stat = "identity", inherit.aes = FALSE) +
+  geom_point())
 ```
 
 Can you give read off the graph the approximate estimated temperature at which sex ratio is 50:50? 
@@ -341,7 +351,7 @@ But is this a significant difference? That is what we are trying to find out usi
 To do this, we can turn these data into a two column matrix of success (yes - smoker) and failure (no - non-smoker). 
 
 ```{r}
-y <- cbind("1_yes" = c(816,188),"0_no" = c(3203,1168))
+y <- cbind("1_yes" = c(816, 188), "0_no" = c(3203, 1168))
 y
 ```
 
@@ -349,13 +359,13 @@ So we can see "success" on the left and "failure" on the right".
 We now create a (tiny) `data.frame` for the parental status (smoker = "1_yes", non-smoker = "0_no").
 
 ```{r}
-smoke <- data.frame(parentSmoke = c("1_yes","0_no"))
+smoke <- data.frame(parentSmoke = c("1_yes", "0_no"))
 ```
 
 Now we can fit the model. Pause now and think about what the NULL hypothesis is here. It is that parental smoking does not have any influence on whether the child smokes, and that the probability that the student smokes is unrelated to parental smoking. 
 
 ```{r}
-smokeMod <- glm(y~parentSmoke,data = smoke,family=binomial)
+smokeMod <- glm(y ~ parentSmoke, data = smoke, family = binomial)
 ```
 
 With such a small dataset, diagnostic plots will not tell us anything useful so there's no point in doing them for this case.
@@ -363,7 +373,7 @@ With such a small dataset, diagnostic plots will not tell us anything useful so 
 As usual, we first ask for the (Analysis of Deviance table using `anova`.
 
 ```{r}
-anova(smokeMod,test="Chi")
+anova(smokeMod, test = "Chi")
 ```
 This tells us that the status of the parents (whether they smoke or not) is highly significant: it explains a lot of the pattern that we see in the data.
 
@@ -377,30 +387,34 @@ This shows us the estimates on the logit scale. We can use `predict` to get a se
 First we calculate the fitted values and 95% confidence intervals on the scale of the linear predictor (logit):
 
 ```{r}
-pv<-predict(smokeMod,smoke,se.fit = TRUE)
-smoke <- smoke %>% 
-  mutate(prob_LP = pv$fit,
-         lowerCI_LP = pv$fit - 1.96*pv$se.fit,
-         upperCI_LP = pv$fit + 1.96*pv$se.fit)
+pv <- predict(smokeMod, smoke, se.fit = TRUE)
+smoke <- smoke %>%
+  mutate(
+    prob_LP = pv$fit,
+    lowerCI_LP = pv$fit - 1.96 * pv$se.fit,
+    upperCI_LP = pv$fit + 1.96 * pv$se.fit
+  )
 ```
 Then we can backtransform these values to the probability scale using the inverse link function:
 ```{r}
 
-#Get the inverse link function
-inverseFunction <-family(smokeMod)$linkinv
+# Get the inverse link function
+inverseFunction <- family(smokeMod)$linkinv
 
-#transform predicted data to the natural scale
-smoke <- smoke %>% 
-  mutate(prob = inverseFunction(prob_LP),
-         ymin= inverseFunction(lowerCI_LP),
-         ymax = inverseFunction(upperCI_LP))
+# transform predicted data to the natural scale
+smoke <- smoke %>%
+  mutate(
+    prob = inverseFunction(prob_LP),
+    ymin = inverseFunction(lowerCI_LP),
+    ymax = inverseFunction(upperCI_LP)
+  )
 smoke
 ```
 
 This table shows us that the probability of the students smoking is 0.2030 (95% CI = 0.191-0.216) for children of smokers, and 0.139 (95% CI = 0.121-0.158) for children of non-smokers. We can plot this using `ggplot` like this.
 
 ```{r}
-ggplot(smoke,aes(x=parentSmoke,y = prob,ymin = ymin,ymax=ymax))+
-  geom_point()+
-  geom_segment(aes(xend = parentSmoke,y = ymin,yend = ymax))
+ggplot(smoke, aes(x = parentSmoke, y = prob, ymin = ymin, ymax = ymax)) +
+  geom_point() +
+  geom_segment(aes(xend = parentSmoke, y = ymin, yend = ymax))
 ```

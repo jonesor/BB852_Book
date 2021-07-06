@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Data wrangling with dplyr | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Data wrangling with dplyr | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2020-12-06" />
+<meta name="date" content="2021-07-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="tips-and-tricks.html"/>
 <link rel="next" href="combining-data-sets.html"/>
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,35 +51,9 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<script src="libs/tabwid-1.0.0/tabwid.js"></script>
-<style type="text/css">
-
-.warning-box {
-  border: 3px solid #e60000;
-  margin:  25px;
-  padding: 10px 10px 5px 10px;
-  border-radius: 6px 6px 6px 6px;
-}
-
-.advanced-box {
-  border: 3px solid #268bd2;
-  margin:  25px;
-  padding: 10px 10px 5px 10px;
-  border-radius: 6px 6px 6px 6px;
-}
-
-.do-something {
-  border: 3px solid #803e00;
-  margin:  25px;
-  padding: 10px 10px 5px 10px;
-  border-radius: 6px 6px 6px 6px;
-}
-
-</style>
-
-
-
 
 
 <style type="text/css">
@@ -145,6 +119,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -302,12 +277,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.2.1" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>13.2.1</b> Where are the differences?</a></li>
 <li class="chapter" data-level="13.2.2" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>13.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>13.3</b> ANOVA calculation “by hand”.</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>13.3</b> ANOVA calculation “by hand.”</a></li>
 <li class="chapter" data-level="13.4" data-path="linear-models-with-a-single-categorical-explanatory-variable.html"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>13.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>14</b> Linear models with a single continuous explanatory variable</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#some-theory"><i class="fa fa-check"></i><b>14.1</b> Some theory</a></li>
+<li class="chapter" data-level="14.1" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#some-theory-1"><i class="fa fa-check"></i><b>14.1</b> Some theory</a></li>
 <li class="chapter" data-level="14.2" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#evaluating-a-hypothesis-with-a-linear-regression-model"><i class="fa fa-check"></i><b>14.2</b> Evaluating a hypothesis with a linear regression model</a></li>
 <li class="chapter" data-level="14.3" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#assumptions"><i class="fa fa-check"></i><b>14.3</b> Assumptions</a></li>
 <li class="chapter" data-level="14.4" data-path="linear-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#worked-example-height-hand-width-relationship"><i class="fa fa-check"></i><b>14.4</b> Worked example: height-hand width relationship</a></li>
@@ -357,33 +332,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="19.6" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-1-snails-on-the-move"><i class="fa fa-check"></i><b>19.6</b> Exercise 1: Snails on the move</a></li>
 <li class="chapter" data-level="19.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>19.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
-<li class="part"><span><b>IV Coming soon(ish)</b></span></li>
-<li class="chapter" data-level="20" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html"><i class="fa fa-check"></i><b>20</b> Coming soon (maybe)!</a>
+<li class="part"><span><b>IV Exam</b></span></li>
+<li class="chapter" data-level="20" data-path="exam-2020.html"><a href="exam-2020.html"><i class="fa fa-check"></i><b>20</b> Exam 2020</a></li>
+<li class="part"><span><b>V Solutions</b></span></li>
+<li class="chapter" data-level="21" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>21</b> Exercise Solutions</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#diagnostic-plots"><i class="fa fa-check"></i><b>20.1</b> Diagnostic plots</a></li>
-<li class="chapter" data-level="20.2" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#multivariate-statistics"><i class="fa fa-check"></i><b>20.2</b> Multivariate statistics</a></li>
-<li class="chapter" data-level="20.3" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#transforming-variables"><i class="fa fa-check"></i><b>20.3</b> Transforming variables</a></li>
-<li class="chapter" data-level="20.4" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#non-linear-regression"><i class="fa fa-check"></i><b>20.4</b> Non-linear regression</a></li>
-<li class="chapter" data-level="20.5" data-path="coming-soon-maybe.html"><a href="coming-soon-maybe.html#nested-or-blocked-study-designs"><i class="fa fa-check"></i><b>20.5</b> Nested or blocked study designs</a></li>
-</ul></li>
-<li class="part"><span><b>V Exam</b></span></li>
-<li class="chapter" data-level="21" data-path="exam-2020.html"><a href="exam-2020.html"><i class="fa fa-check"></i><b>21</b> Exam 2020</a></li>
-<li class="part"><span><b>VI Solutions</b></span></li>
-<li class="chapter" data-level="22" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>22</b> Exercise Solutions</a>
-<ul>
-<li class="chapter" data-level="22.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-californian-bird-diversity"><i class="fa fa-check"></i><b>22.1</b> Exercise Solutions: Californian bird diversity</a></li>
-<li class="chapter" data-level="22.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>22.2</b> Exercise Solutions: Wrangling the Amniote Life History Database</a></li>
-<li class="chapter" data-level="22.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>22.3</b> Exercise Solutions: Temperature effects on egg laying dates</a></li>
-<li class="chapter" data-level="22.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>22.4</b> Exercise Solutions: Sexual selection in Hercules beetles</a></li>
-<li class="chapter" data-level="22.5" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>22.5</b> Exercise: Sex differences in fine motor skills</a></li>
-<li class="chapter" data-level="22.6" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-therapy-for-anorexia"><i class="fa fa-check"></i><b>22.6</b> Exercise: Therapy for anorexia</a></li>
-<li class="chapter" data-level="22.7" data-path="comparing-two-means-with-a-t-test.html"><a href="comparing-two-means-with-a-t-test.html#exercise-compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>22.7</b> Exercise: Compare t-tests with randomisation tests</a></li>
-<li class="chapter" data-level="22.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-apple-tree-crop-yield"><i class="fa fa-check"></i><b>22.8</b> Exercise Solutions: Apple tree crop yield</a></li>
-<li class="chapter" data-level="22.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-chirping-crickets"><i class="fa fa-check"></i><b>22.9</b> Exercise Solutions: Chirping crickets</a></li>
-<li class="chapter" data-level="22.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-fish-behaviour"><i class="fa fa-check"></i><b>22.10</b> Exercise Solutions: Fish behaviour</a></li>
-<li class="chapter" data-level="22.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-maze-runner"><i class="fa fa-check"></i><b>22.11</b> Exercise Solutions: Maze runner</a></li>
-<li class="chapter" data-level="22.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-snails-on-the-move"><i class="fa fa-check"></i><b>22.12</b> Exercise Solutions: Snails on the move</a></li>
-<li class="chapter" data-level="22.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.13</b> Exercise Solutions: Mouse lemur strength</a></li>
+<li class="chapter" data-level="21.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-californian-bird-diversity"><i class="fa fa-check"></i><b>21.1</b> Exercise Solutions: Californian bird diversity</a></li>
+<li class="chapter" data-level="21.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>21.2</b> Exercise Solutions: Wrangling the Amniote Life History Database</a></li>
+<li class="chapter" data-level="21.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>21.3</b> Exercise Solutions: Temperature effects on egg laying dates</a></li>
+<li class="chapter" data-level="21.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>21.4</b> Exercise Solutions: Sexual selection in Hercules beetles</a></li>
+<li class="chapter" data-level="21.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-sex-differences-in-fine-motor-skills-1"><i class="fa fa-check"></i><b>21.5</b> Exercise: Sex differences in fine motor skills</a></li>
+<li class="chapter" data-level="21.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-therapy-for-anorexia-1"><i class="fa fa-check"></i><b>21.6</b> Exercise: Therapy for anorexia</a></li>
+<li class="chapter" data-level="21.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-compare-t-tests-with-randomisation-tests-1"><i class="fa fa-check"></i><b>21.7</b> Exercise: Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="21.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-apple-tree-crop-yield"><i class="fa fa-check"></i><b>21.8</b> Exercise Solutions: Apple tree crop yield</a></li>
+<li class="chapter" data-level="21.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-chirping-crickets"><i class="fa fa-check"></i><b>21.9</b> Exercise Solutions: Chirping crickets</a></li>
+<li class="chapter" data-level="21.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-fish-behaviour"><i class="fa fa-check"></i><b>21.10</b> Exercise Solutions: Fish behaviour</a></li>
+<li class="chapter" data-level="21.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-maze-runner"><i class="fa fa-check"></i><b>21.11</b> Exercise Solutions: Maze runner</a></li>
+<li class="chapter" data-level="21.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-snails-on-the-move"><i class="fa fa-check"></i><b>21.12</b> Exercise Solutions: Snails on the move</a></li>
+<li class="chapter" data-level="21.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#exercise-solutions-mouse-lemur-strength"><i class="fa fa-check"></i><b>21.13</b> Exercise Solutions: Mouse lemur strength</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -410,8 +376,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This chapter focuses on using the package <code>dplyr</code>, which is designed to make working with data in R easier.
 The package has several key “workhorse” functions, sometimes called <strong>verbs</strong>. These are: <code>filter</code>, <code>select</code>, <code>mutate</code>, <code>arrange</code> and <code>summarise</code>. I covered these in the lecture, and they are also discussed in the textbook. This chapter guides you through worked examples to illustrate their use.</p>
 <p>We will also be using <strong>pipes</strong> from the <code>magrittr</code> package. These are implemented using the command <code>%&gt;%</code>.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="data-wrangling-with-dplyr.html#cb132-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
-<span id="cb132-2"><a href="data-wrangling-with-dplyr.html#cb132-2" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;magrittr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="data-wrangling-with-dplyr.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb132-2"><a href="data-wrangling-with-dplyr.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;magrittr&quot;</span>)</span></code></pre></div>
 <p>To get to know <code>dplyr</code> and its functions we’ll use a data set
 collected from the university campus at University of Southern Denmark (SDU) The SDU bird project follows the fate of mainly great tits (musvit) and blue tits (blåmejse) in about 100 nest boxes in the woods around the main SDU campus.</p>
 <p>We will address two questions concerning clutch size (the number of eggs laid into the nest) -</p>
@@ -423,9 +389,9 @@ collected from the university campus at University of Southern Denmark (SDU) The
 <p>Let’s import the data and take a look at it. Make sure your data looks OK before moving on.
 You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data etc.), and set it (with <code>setwd</code>)).
 See the earlier material for how to do this, or ask for help.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="data-wrangling-with-dplyr.html#cb133-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/sduBirds.csv&quot;</span>)</span>
-<span id="cb133-2"><a href="data-wrangling-with-dplyr.html#cb133-2" aria-hidden="true"></a><span class="kw">str</span>(df)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:	9357 obs. of  15 variables:
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="data-wrangling-with-dplyr.html#cb133-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/sduBirds.csv&quot;</span>)</span>
+<span id="cb133-2"><a href="data-wrangling-with-dplyr.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    9357 obs. of  15 variables:
 ##  $ Timestamp  : chr  &quot;2013-05-14&quot; &quot;2013-05-03&quot; &quot;2013-06-25&quot; &quot;2013-06-18&quot; ...
 ##  $ Year       : int  2013 2013 2013 2013 2013 2013 2013 2013 2013 2013 ...
 ##  $ Day        : int  134 123 176 169 112 112 116 183 143 107 ...
@@ -444,8 +410,8 @@ See the earlier material for how to do this, or ask for help.</p>
 <div id="select" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> <code>select</code></h2>
 <p>From the <code>str</code> summary (above) you can see that there are many columns in the data set and we only need some of them. Let’s <code>select</code> only the columns that we need for our calculations to make things a bit easier to handle. We need the <code>species</code>, <code>Year</code>, <code>Day</code>, <code>boxNumber</code> and <code>nEggs</code>:</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="data-wrangling-with-dplyr.html#cb135-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">select</span>(df, species, Year, Day, boxNumber, nEggs)</span>
-<span id="cb135-2"><a href="data-wrangling-with-dplyr.html#cb135-2" aria-hidden="true"></a><span class="kw">head</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="data-wrangling-with-dplyr.html#cb135-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">select</span>(df, species, Year, Day, boxNumber, nEggs)</span>
+<span id="cb135-2"><a href="data-wrangling-with-dplyr.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
 <pre><code>##   species Year Day boxNumber nEggs
 ## 1      BT 2013 134         1    12
 ## 2      BT 2013 123         1     8
@@ -456,7 +422,7 @@ See the earlier material for how to do this, or ask for help.</p>
 <p>The output of <code>head</code> shows you the first few rows of the data set. You can see that each row represents a visit of a researcher to a particular nest. The researcher records the bird species if it is known (GT = Great tit, BT = Blue tit, NH = Nuthatch etc.), and then records the number of eggs, number of chicks, activity of the adults and so on. We need to convert this huge dataset into one which contains clutch size for each nest, for each year of the study.</p>
 <p>The information given by <code>str</code> (above) shows that there are data on species other than our target species. We are only interested in the great tits and blue tits so we can first filter the others out using the <code>species</code> variable.</p>
 <p>We can check what the make up of this part of the data is using the <code>table</code> function which will count up all of the entries.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="data-wrangling-with-dplyr.html#cb137-1" aria-hidden="true"></a><span class="kw">table</span>(df<span class="op">$</span>species)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="data-wrangling-with-dplyr.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>species)</span></code></pre></div>
 <pre><code>## 
 ##   BT   GT   MT   NH   WR 
 ##  992 4612   73   31    5</code></pre>
@@ -464,14 +430,14 @@ See the earlier material for how to do this, or ask for help.</p>
 <div id="filter" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> <code>filter</code></h2>
 <p>Now let’s filter this data and double check that this has worked:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-wrangling-with-dplyr.html#cb139-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">filter</span>(df,species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;GT&quot;</span>,<span class="st">&quot;BT&quot;</span>))</span>
-<span id="cb139-2"><a href="data-wrangling-with-dplyr.html#cb139-2" aria-hidden="true"></a><span class="kw">table</span>(df<span class="op">$</span>species)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-wrangling-with-dplyr.html#cb139-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">filter</span>(df,species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GT&quot;</span>,<span class="st">&quot;BT&quot;</span>))</span>
+<span id="cb139-2"><a href="data-wrangling-with-dplyr.html#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>species)</span></code></pre></div>
 <pre><code>## 
 ##   BT   GT 
 ##  992 4612</code></pre>
 <p>You will notice that all the levels of the variable are retained. This is not a problem, and can usually be ignored. You can also tidy this up using the <code>droplevels</code> function, which removes all unused factor levels.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="data-wrangling-with-dplyr.html#cb141-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">droplevels</span>(df)</span>
-<span id="cb141-2"><a href="data-wrangling-with-dplyr.html#cb141-2" aria-hidden="true"></a><span class="kw">table</span>(df<span class="op">$</span>species)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="data-wrangling-with-dplyr.html#cb141-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(df)</span>
+<span id="cb141-2"><a href="data-wrangling-with-dplyr.html#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df<span class="sc">$</span>species)</span></code></pre></div>
 <pre><code>## 
 ##   BT   GT 
 ##  992 4612</code></pre>
@@ -479,12 +445,12 @@ See the earlier material for how to do this, or ask for help.</p>
 <div id="arrange" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> <code>arrange</code></h2>
 <p>Recall that the data are records of visits to each nest a few times per week. To ensure that the data are in time order I can first <code>arrange</code> by first <code>Year</code> and then <code>Day</code>. To illustrate this we can make a temporary data set (called <code>temp</code>) to look at a particular nest in a particular year to get a record of the progress for that particular nest, and then plot it (this is an ugly plot and we will learn how to make beautiful ones soon):</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="data-wrangling-with-dplyr.html#cb143-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">arrange</span>(df,Year,Day)</span>
-<span id="cb143-2"><a href="data-wrangling-with-dplyr.html#cb143-2" aria-hidden="true"></a></span>
-<span id="cb143-3"><a href="data-wrangling-with-dplyr.html#cb143-3" aria-hidden="true"></a>temp &lt;-<span class="st"> </span><span class="kw">filter</span>(df,boxNumber <span class="op">==</span><span class="st"> </span><span class="dv">1</span>,Year <span class="op">==</span><span class="st"> </span><span class="dv">2014</span>)</span>
-<span id="cb143-4"><a href="data-wrangling-with-dplyr.html#cb143-4" aria-hidden="true"></a><span class="kw">max</span>(temp<span class="op">$</span>nEggs) <span class="co"># get the max value</span></span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="data-wrangling-with-dplyr.html#cb143-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">arrange</span>(df,Year,Day)</span>
+<span id="cb143-2"><a href="data-wrangling-with-dplyr.html#cb143-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-3"><a href="data-wrangling-with-dplyr.html#cb143-3" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">filter</span>(df,boxNumber <span class="sc">==</span> <span class="dv">1</span>,Year <span class="sc">==</span> <span class="dv">2014</span>)</span>
+<span id="cb143-4"><a href="data-wrangling-with-dplyr.html#cb143-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(temp<span class="sc">$</span>nEggs) <span class="co"># get the max value</span></span></code></pre></div>
 <pre><code>## [1] 12</code></pre>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="data-wrangling-with-dplyr.html#cb145-1" aria-hidden="true"></a><span class="kw">plot</span>(temp<span class="op">$</span>Day,temp<span class="op">$</span>nEggs,<span class="dt">type=</span><span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="data-wrangling-with-dplyr.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp<span class="sc">$</span>Day,temp<span class="sc">$</span>nEggs,<span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 <p>Eggs are usually laid one per day, and the clutch size is the maximum number of eggs reached for each nest box. In this case, the clutch size is 12 eggs. The rapid decline in number of eggs after this peak value shows when the eggs have hatched and the researcher finds chicks instead of eggs!</p>
 </div>
@@ -494,53 +460,61 @@ See the earlier material for how to do this, or ask for help.</p>
 <p>Instead, we will use the <code>dplyr</code> function, <code>summarise</code>, to do this by asking for the maximum value of <code>nEggs</code>. To make this work we need to first use the <code>group_by</code> function tell R to group the data by the variables we are interested in. If we don’t do this we just get the overall maximum. We can ungroup the data using the <code>ungroup</code> function.</p>
 <p>Because there are missing data (<code>NA</code> values) we need to specify <code>na.rm = TRUE</code> in the argument.</p>
 <p>So first, let’s get the max per species, just to illustrate how this works:</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-wrangling-with-dplyr.html#cb146-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">group_by</span>(df,species)</span>
-<span id="cb146-2"><a href="data-wrangling-with-dplyr.html#cb146-2" aria-hidden="true"></a><span class="kw">summarise</span>(df,<span class="dt">clutchSize =</span> <span class="kw">max</span>(nEggs,<span class="dt">na.rm=</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-wrangling-with-dplyr.html#cb146-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">group_by</span>(df,species)</span>
+<span id="cb146-2"><a href="data-wrangling-with-dplyr.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(df,<span class="at">clutchSize =</span> <span class="fu">max</span>(nEggs,<span class="at">na.rm=</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   species clutchSize
 ##   &lt;chr&gt;        &lt;int&gt;
 ## 1 BT              14
 ## 2 GT              14</code></pre>
 <p>We can see how the data are grouped by asking for a summary:</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-wrangling-with-dplyr.html#cb148-1" aria-hidden="true"></a><span class="kw">summary</span>(df)</span></code></pre></div>
-<pre><code>##    species               Year           Day          boxNumber          nEggs       
-##  Length:5604        Min.   :2013   Min.   : 60.0   Min.   :  1.00   Min.   : 0.000  
-##  Class :character   1st Qu.:2014   1st Qu.:116.0   1st Qu.: 29.75   1st Qu.: 0.000  
-##  Mode  :character   Median :2014   Median :133.0   Median : 57.00   Median : 0.000  
-##                     Mean   :2015   Mean   :133.2   Mean   : 55.83   Mean   : 2.326  
-##                     3rd Qu.:2017   3rd Qu.:148.0   3rd Qu.: 85.00   3rd Qu.: 4.000  
-##                     Max.   :2019   Max.   :212.0   Max.   :101.00   Max.   :14.000  
-##                                                                     NA&#39;s   :613</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-wrangling-with-dplyr.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div>
+<pre><code>##    species               Year           Day          boxNumber     
+##  Length:5604        Min.   :2013   Min.   : 60.0   Min.   :  1.00  
+##  Class :character   1st Qu.:2014   1st Qu.:116.0   1st Qu.: 29.75  
+##  Mode  :character   Median :2014   Median :133.0   Median : 57.00  
+##                     Mean   :2015   Mean   :133.2   Mean   : 55.83  
+##                     3rd Qu.:2017   3rd Qu.:148.0   3rd Qu.: 85.00  
+##                     Max.   :2019   Max.   :212.0   Max.   :101.00  
+##                                                                    
+##      nEggs       
+##  Min.   : 0.000  
+##  1st Qu.: 0.000  
+##  Median : 0.000  
+##  Mean   : 2.326  
+##  3rd Qu.: 4.000  
+##  Max.   :14.000  
+##  NA&#39;s   :613</code></pre>
 <p>We can ungroup the data again like this:</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="data-wrangling-with-dplyr.html#cb150-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">ungroup</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="data-wrangling-with-dplyr.html#cb150-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">ungroup</span>(df)</span></code></pre></div>
 <p>So both species lay the same maximum number of eggs, but maybe this is just caused by outliers for one of the species. We’ll need to dig deeper.</p>
 <p>How can we calculate the average? We cannot simply ask for the <code>mean</code> because the data run through time following the development in each nest. We need to calculate the maximum <code>nEggs</code> for each nest, and then calculate the average of those. We can do this in two steps.</p>
 <p>We first calculate the clutch size for each box for each species in each year:</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="data-wrangling-with-dplyr.html#cb151-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">group_by</span>(df, species, Year, boxNumber)</span>
-<span id="cb151-2"><a href="data-wrangling-with-dplyr.html#cb151-2" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">summarise</span>(df, <span class="dt">clutchSize =</span> <span class="kw">max</span>(nEggs,<span class="dt">na.rm=</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="data-wrangling-with-dplyr.html#cb151-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">group_by</span>(df, species, Year, boxNumber)</span>
+<span id="cb151-2"><a href="data-wrangling-with-dplyr.html#cb151-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">summarise</span>(df, <span class="at">clutchSize =</span> <span class="fu">max</span>(nEggs,<span class="at">na.rm=</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p>Let’s first look at all the clutch size data:</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="data-wrangling-with-dplyr.html#cb152-1" aria-hidden="true"></a><span class="kw">hist</span>(df<span class="op">$</span>clutchSize)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="data-wrangling-with-dplyr.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>clutchSize)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
 <p>You can see here that there are a lot of zero values. This is because nests were recorded even if they did not attempt to lay eggs. We should remove these from our data using <code>filter</code> again:</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="data-wrangling-with-dplyr.html#cb153-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">filter</span>(df, clutchSize <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</span>
-<span id="cb153-2"><a href="data-wrangling-with-dplyr.html#cb153-2" aria-hidden="true"></a><span class="kw">hist</span>(df<span class="op">$</span>clutchSize)</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="data-wrangling-with-dplyr.html#cb153-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">filter</span>(df, clutchSize <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb153-2"><a href="data-wrangling-with-dplyr.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>clutchSize)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 <p>That looks better.
 Now we can plot them again but this time split apart the species (again - this plot is ugly and we’ll learn to plot nicer ones soon).</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="data-wrangling-with-dplyr.html#cb154-1" aria-hidden="true"></a><span class="kw">plot</span>(<span class="kw">as.factor</span>(df<span class="op">$</span>species),df<span class="op">$</span>clutchSize)</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="data-wrangling-with-dplyr.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(df<span class="sc">$</span>species),df<span class="sc">$</span>clutchSize)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 <p>From these distributions it looks like the average clutch size is greater in the blue tit. We can use <code>summarise</code> to calculate the means.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="data-wrangling-with-dplyr.html#cb155-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">group_by</span>(df,species)</span>
-<span id="cb155-2"><a href="data-wrangling-with-dplyr.html#cb155-2" aria-hidden="true"></a><span class="kw">summarise</span>(df, <span class="dt">mean =</span> <span class="kw">mean</span>(clutchSize),<span class="dt">sd =</span> <span class="kw">sd</span>(clutchSize))</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="data-wrangling-with-dplyr.html#cb155-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">group_by</span>(df,species)</span>
+<span id="cb155-2"><a href="data-wrangling-with-dplyr.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(df, <span class="at">mean =</span> <span class="fu">mean</span>(clutchSize),<span class="at">sd =</span> <span class="fu">sd</span>(clutchSize))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
 ##   species  mean    sd
 ##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ## 1 BT       9.64  2.64
 ## 2 GT       7.89  2.19</code></pre>
 <p>Lets now turn to the other question - how does the clutch size vary with year?</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="data-wrangling-with-dplyr.html#cb157-1" aria-hidden="true"></a>df &lt;-<span class="st"> </span><span class="kw">group_by</span>(df,species,Year)</span>
-<span id="cb157-2"><a href="data-wrangling-with-dplyr.html#cb157-2" aria-hidden="true"></a>df2 &lt;-<span class="st"> </span><span class="kw">summarise</span>(df, <span class="dt">meanClutchSize =</span> <span class="kw">mean</span>(clutchSize))</span>
-<span id="cb157-3"><a href="data-wrangling-with-dplyr.html#cb157-3" aria-hidden="true"></a><span class="kw">head</span>(df2)</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="data-wrangling-with-dplyr.html#cb157-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">group_by</span>(df,species,Year)</span>
+<span id="cb157-2"><a href="data-wrangling-with-dplyr.html#cb157-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">summarise</span>(df, <span class="at">meanClutchSize =</span> <span class="fu">mean</span>(clutchSize))</span>
+<span id="cb157-3"><a href="data-wrangling-with-dplyr.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df2)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ## # Groups:   species [1]
 ##   species  Year meanClutchSize
@@ -552,10 +526,10 @@ Now we can plot them again but this time split apart the species (again - this p
 ## 5 BT       2018          10.1 
 ## 6 BT       2019          11</code></pre>
 <p>We can plot this by first making a plot for blue tits, and then adding the points for great tits. I have used the <code>pch</code> argument to use filled circles for the great tits:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="data-wrangling-with-dplyr.html#cb159-1" aria-hidden="true"></a><span class="kw">plot</span>(df2<span class="op">$</span>Year[df2<span class="op">$</span>species <span class="op">==</span><span class="st"> &quot;BT&quot;</span>],df2<span class="op">$</span>meanClutchSize[df2<span class="op">$</span>species <span class="op">==</span><span class="st"> &quot;BT&quot;</span>],<span class="dt">type=</span><span class="st">&quot;b&quot;</span>,</span>
-<span id="cb159-2"><a href="data-wrangling-with-dplyr.html#cb159-2" aria-hidden="true"></a>     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">12</span>),<span class="dt">xlab=</span><span class="st">&quot;Year&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Clutch Size&quot;</span>)</span>
-<span id="cb159-3"><a href="data-wrangling-with-dplyr.html#cb159-3" aria-hidden="true"></a><span class="kw">points</span>(df2<span class="op">$</span>Year[df2<span class="op">$</span>species <span class="op">==</span><span class="st"> &quot;GT&quot;</span>],df2<span class="op">$</span>meanClutchSize[df2<span class="op">$</span>species <span class="op">==</span><span class="st"> &quot;GT&quot;</span>],</span>
-<span id="cb159-4"><a href="data-wrangling-with-dplyr.html#cb159-4" aria-hidden="true"></a>       <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="data-wrangling-with-dplyr.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df2<span class="sc">$</span>Year[df2<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;BT&quot;</span>],df2<span class="sc">$</span>meanClutchSize[df2<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;BT&quot;</span>],<span class="at">type=</span><span class="st">&quot;b&quot;</span>,</span>
+<span id="cb159-2"><a href="data-wrangling-with-dplyr.html#cb159-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">12</span>),<span class="at">xlab=</span><span class="st">&quot;Year&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Clutch Size&quot;</span>)</span>
+<span id="cb159-3"><a href="data-wrangling-with-dplyr.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(df2<span class="sc">$</span>Year[df2<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;GT&quot;</span>],df2<span class="sc">$</span>meanClutchSize[df2<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;GT&quot;</span>],</span>
+<span id="cb159-4"><a href="data-wrangling-with-dplyr.html#cb159-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
 <p>So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have large clutch sizes than great tits.</p>
 </div>
@@ -564,16 +538,16 @@ Now we can plot them again but this time split apart the species (again - this p
 <p>I have walked you through a step-by-step data manipulation. During that process you made made (and replaced) new data sets at each step. In practice this can be done more smoothly using <em>pipes</em> (<code>%&gt;%</code>) to pass the result of one function into the next, and the next, and the next…</p>
 <p>You’ll get some more practice with this as we go on.
 Below I show how do do this to create a clutch size data set from the raw data (note that your file path will differ from mine):</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="data-wrangling-with-dplyr.html#cb160-1" aria-hidden="true"></a><span class="co">#Import and process data using pipes</span></span>
-<span id="cb160-2"><a href="data-wrangling-with-dplyr.html#cb160-2" aria-hidden="true"></a>SDUClutchSize &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/sduBirds.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb160-3"><a href="data-wrangling-with-dplyr.html#cb160-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;GT&quot;</span>,<span class="st">&quot;BT&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#include only GT and BT</span></span>
-<span id="cb160-4"><a href="data-wrangling-with-dplyr.html#cb160-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">droplevels</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#drop unwanted factor levels</span></span>
-<span id="cb160-5"><a href="data-wrangling-with-dplyr.html#cb160-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(species, Year, Day, boxNumber, nEggs) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#select columns needed</span></span>
-<span id="cb160-6"><a href="data-wrangling-with-dplyr.html#cb160-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">group_by</span>(species, Year, boxNumber) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#group data</span></span>
-<span id="cb160-7"><a href="data-wrangling-with-dplyr.html#cb160-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">clutchSize =</span> <span class="kw">max</span>(nEggs,<span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#calculate clutch size (max eggs)</span></span>
-<span id="cb160-8"><a href="data-wrangling-with-dplyr.html#cb160-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(clutchSize <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</span>
-<span id="cb160-9"><a href="data-wrangling-with-dplyr.html#cb160-9" aria-hidden="true"></a></span>
-<span id="cb160-10"><a href="data-wrangling-with-dplyr.html#cb160-10" aria-hidden="true"></a><span class="kw">head</span>(SDUClutchSize)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="data-wrangling-with-dplyr.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import and process data using pipes</span></span>
+<span id="cb160-2"><a href="data-wrangling-with-dplyr.html#cb160-2" aria-hidden="true" tabindex="-1"></a>SDUClutchSize <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/sduBirds.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb160-3"><a href="data-wrangling-with-dplyr.html#cb160-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GT&quot;</span>,<span class="st">&quot;BT&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co">#include only GT and BT</span></span>
+<span id="cb160-4"><a href="data-wrangling-with-dplyr.html#cb160-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>() <span class="sc">%&gt;%</span> <span class="co">#drop unwanted factor levels</span></span>
+<span id="cb160-5"><a href="data-wrangling-with-dplyr.html#cb160-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, Year, Day, boxNumber, nEggs) <span class="sc">%&gt;%</span> <span class="co">#select columns needed</span></span>
+<span id="cb160-6"><a href="data-wrangling-with-dplyr.html#cb160-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, Year, boxNumber) <span class="sc">%&gt;%</span> <span class="co">#group data</span></span>
+<span id="cb160-7"><a href="data-wrangling-with-dplyr.html#cb160-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">clutchSize =</span> <span class="fu">max</span>(nEggs,<span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="co">#calculate clutch size (max eggs)</span></span>
+<span id="cb160-8"><a href="data-wrangling-with-dplyr.html#cb160-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(clutchSize <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb160-9"><a href="data-wrangling-with-dplyr.html#cb160-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-10"><a href="data-wrangling-with-dplyr.html#cb160-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(SDUClutchSize)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ## # Groups:   species, Year [1]
 ##   species  Year boxNumber clutchSize
@@ -585,7 +559,7 @@ Below I show how do do this to create a clutch size data set from the raw data (
 ## 5 BT       2013        35         10
 ## 6 BT       2013        37          8</code></pre>
 <p>You can save this out using the <code>write.csv</code> function. You will need to set the argument <code>row.names = FALSE</code> to stop the data including row names.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="data-wrangling-with-dplyr.html#cb162-1" aria-hidden="true"></a><span class="kw">write.csv</span>(<span class="dt">x =</span> SDUClutchSize,<span class="dt">file =</span> <span class="st">&quot;CourseData/SDUClutchSize.csv&quot;</span>,<span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="data-wrangling-with-dplyr.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="at">x =</span> SDUClutchSize,<span class="at">file =</span> <span class="st">&quot;CourseData/SDUClutchSize.csv&quot;</span>,<span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="exercise-wrangling-the-amniote-life-history-database" class="section level2" number="6.6">
 <h2><span class="header-section-number">6.6</span> Exercise: Wrangling the Amniote Life History Database</h2>
@@ -595,8 +569,8 @@ Below I show how do do this to create a clutch size data set from the raw data (
 (2) is there a positive relationship between body mass and life span? [<em>do big species live longer than small ones?</em>];
 (3) is there a trade-off between reproductive effort and life span? [<em>do species that reproduce a lot have short lives, so there is a negative relationship between reproduction and life span?</em>];
 (4) is this trade-off universal across all Classes? [<em>does the trade-off exist in birds, reptiles and amphibians?</em>]</p>
-<p>The database is in a file called <code>Amniote_Database_Aug_2015.csv</code> in the course data folder. The missing values (which are normally coded as <code>NA</code> in R) are coded as “<code>-999</code>”. The easiest way to take care of this is to specify this when we import the data using the <code>na.strings</code> argument of the <code>read.csv</code> function. Thus we can import the data like this:</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="data-wrangling-with-dplyr.html#cb163-1" aria-hidden="true"></a>amniote &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;CourseData/Amniote_Database_Aug_2015.csv&quot;</span>,<span class="dt">na.strings =</span> <span class="st">&quot;-999&quot;</span>)</span></code></pre></div>
+<p>The database is in a file called <code>Amniote_Database_Aug_2015.csv</code> in the course data folder. The missing values (which are normally coded as <code>NA</code> in R) are coded as “<code>-999</code>.” The easiest way to take care of this is to specify this when we import the data using the <code>na.strings</code> argument of the <code>read.csv</code> function. Thus we can import the data like this:</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="data-wrangling-with-dplyr.html#cb163-1" aria-hidden="true" tabindex="-1"></a>amniote <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/Amniote_Database_Aug_2015.csv&quot;</span>,<span class="at">na.strings =</span> <span class="st">&quot;-999&quot;</span>)</span></code></pre></div>
 <p>Let’s make a start…</p>
 <ol style="list-style-type: decimal">
 <li><p>When you have imported the data, use <code>dim</code> to check the dimensions of the whole data frame (you should see that there are 36 columns and 21322 rows). Use <code>names</code> to look at the names of all columns in the data in <code>amniote</code>.</p></li>
@@ -608,7 +582,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <li><p>Do the same thing but this time find the shortest lived species.</p></li>
 <li><p>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>rm.rm = TRUE</code> argument.</p></li>
 <li><p>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</p></li>
-<li><p>Use <code>mutate</code> to create new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that makes the relationship more linear, and easier to “read”.</p></li>
+<li><p>Use <code>mutate</code> to create new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that makes the relationship more linear, and easier to “read.”</p></li>
 <li><p>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</p></li>
 <li><p>To answer the final question (differences between taxonomic classes) you could now use <code>filter</code> to subset to particular classes and repeat the plot to see whether the relationships holds universally.</p></li>
 </ol>
@@ -651,6 +625,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

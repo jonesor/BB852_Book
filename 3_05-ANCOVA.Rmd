@@ -132,7 +132,7 @@ mod_A <- lm(Height ~ HandWidth + Gender + HandWidth:Gender, data = classData)
 
 The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size.  Nevertheless, lets keep with good habits:
 
-```{r}
+```{r,message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(mod_A)
 ```

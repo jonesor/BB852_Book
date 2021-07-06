@@ -16,13 +16,13 @@ hercules <- read.csv("CourseData/herculesBeetle.csv")
 4. Calculate the mean for each sex (either using `tapply` or using `dplyr` tools)
 
 ```{r}
-#With dplyr
+# With dplyr
 hercules %>%
   group_by(sex) %>%
-  summarise(mean=mean(width))
+  summarise(mean = mean(width))
 
-#with tapply
-tapply(hercules$width,hercules$sex,mean)
+# with tapply
+tapply(hercules$width, hercules$sex, mean)
 ```
 
 5. Plot the data as a histogram.
@@ -30,7 +30,7 @@ tapply(hercules$width,hercules$sex,mean)
 ```{r,message=FALSE}
 # Let's look at the male and female data
 (plot1 <- ggplot(hercules, aes(x = width, fill = sex)) +
-    geom_histogram(position = "identity",alpha=.7))
+  geom_histogram(position = "identity", alpha = .7))
 ```
 
 6. Add vertical lines to the plot to indicate the mean values.
@@ -38,89 +38,97 @@ tapply(hercules$width,hercules$sex,mean)
 ```{r,message=FALSE}
 hercules %>%
   group_by(sex) %>%
-  summarise(mean=mean(width)) %>%
+  summarise(mean = mean(width)) %>%
   pull(mean) -> meanVals
 
-plot1 + geom_vline(xintercept=meanVals,colour=c("red","blue"))
+plot1 + geom_vline(xintercept = meanVals, colour = c("red", "blue"))
 ```
 
 7. Now calculate the difference between the mean values using `dplyr` tools, or `tapply`.
 
 ```{r}
 
-#with dplyr
+# with dplyr
 hercules %>%
   group_by(sex) %>%
-  summarise(mean=mean(width)) %>%
+  summarise(mean = mean(width)) %>%
   pull(mean) %>%
   diff() -> observedDiff
 observedDiff
 
-#with tapply
-diff(as.vector(tapply(hercules$width,hercules$sex,mean)))
+# with tapply
+diff(as.vector(tapply(hercules$width, hercules$sex, mean)))
 ```
 
 8. Use `sample` to randomise the sex column of the data, and recalculate the difference between the mean.
 
 ```{r}
-#with dplyr
+# with dplyr
 hercules %>%
   mutate(sex = sample(sex)) %>%
   group_by(sex) %>%
-  summarise(mean=mean(width)) %>%
+  summarise(mean = mean(width)) %>%
   pull(mean) %>%
   diff()
 
-#with tapply
-diff(as.vector(tapply(hercules$width,sample(hercules$sex),mean)))
-
+# with tapply
+diff(as.vector(tapply(hercules$width, sample(hercules$sex), mean)))
 ```
 
 9. Use `replicate` to repeat this 10 times (to ensure that you code works).
 
 ```{r}
-#with dplyr
-replicate(10,
+# with dplyr
+replicate(
+  10,
   hercules %>%
-  mutate(sex = sample(sex)) %>%
-  group_by(sex) %>%
-  summarise(mean=mean(width)) %>%
-  pull(mean) %>%
-  diff())
-
-#with tapply
-replicate(10,
-          diff(as.vector(tapply(hercules$width,sample(hercules$sex),mean)))
+    mutate(sex = sample(sex)) %>%
+    group_by(sex) %>%
+    summarise(mean = mean(width)) %>%
+    pull(mean) %>%
+    diff()
 )
 
+# with tapply
+replicate(
+  10,
+  diff(as.vector(tapply(hercules$width, sample(hercules$sex), mean)))
+)
 ```
 
 10. When your code is working, use `replicate` again, but this time with 1000 replicates and pass the results into a data frame.
 
 ```{r}
-#with dplyr
-diffs <- data.frame(diffs = 
-                      replicate(1000,
-                                hercules %>%
-                                  mutate(sex = sample(sex)) %>%
-                                  group_by(sex) %>%
-                                  summarise(mean=mean(width)) %>%
-                                  pull(mean) %>%
-                                  diff()))
+# with dplyr
+diffs <- data.frame(
+  diffs =
+    replicate(
+      1000,
+      hercules %>%
+        mutate(sex = sample(sex)) %>%
+        group_by(sex) %>%
+        summarise(mean = mean(width)) %>%
+        pull(mean) %>%
+        diff()
+    )
+)
 
-#with tapply
-diffs <- data.frame(diffs =
-                      replicate(1000,
-                                diff(as.vector(
-                                  tapply(hercules$width, sample(hercules$sex), mean)
-                                ))))
-
+# with tapply
+diffs <- data.frame(
+  diffs =
+    replicate(
+      1000,
+      diff(as.vector(
+        tapply(hercules$width, sample(hercules$sex), mean)
+      ))
+    )
+)
 ```
 
 11. Use `ggplot` to plot the null distribution you have just created, and add the observed difference.
 
 ```{r,message=FALSE}
-ggplot(diffs,aes(x=diffs))+
+ggplot(diffs, aes(x = diffs)) +
   geom_histogram() +
   geom_vline(xintercept = observedDiff)
 ```
@@ -128,8 +136,8 @@ ggplot(diffs,aes(x=diffs))+
 12. Obtain the p-value for the hypothesis test described above. (1) how many of the observed differences are greater than or equal to the shuffled differences in the null distribution. (2) what is this expressed as a proportion of the number of replicates.
 
 ```{r}
-sum(observedDiff>=diffs$diffs)
-sum(observedDiff>=diffs$diffs)/1000
+sum(observedDiff >= diffs$diffs)
+sum(observedDiff >= diffs$diffs) / 1000
 ```
 
 13. Summarise your result as in a report. Describe the method, followed by the result and conclusion.

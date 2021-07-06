@@ -6,10 +6,10 @@ The answer is to use a one-way analysis of variance (ANOVA). Conceptually, this 
 
 ## One-way ANOVA 
 
-The one-way ANOVA is illustrated below with two cases (Figure \@ref(fig:anova_vis)). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether *at least one* of the groups is different from the others.
+The one-way ANOVA is illustrated below with two cases (Figure \@ref(fig:anovaVis)). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether *at least one* of the groups is different from the others.
 
 
-```{r anova_vis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
+```{r anovaVis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
 
 d1<-c(40,10)
 d2<-c(45,10)
@@ -115,7 +115,7 @@ foam_mod <- lm(foamIndx ~ method, data = espresso)
 
 Before proceeding, we need to check the assumptions of the model. This can be done visually using the `autoplot` function in the `ggfortify` package. If you don't have the package installed, install it now (`install.packages("ggfortify"`)). 
 
-```{r diagnostic,echo=TRUE,fig.width=5,fig.height=4,fig.align='center', fig.cap="Diagnostic plots for the ANOVA model. This looks great."}
+```{r diagnostic,echo=TRUE,fig.width=5,fig.height=4,fig.align='center', fig.cap="Diagnostic plots for the ANOVA model. This looks great.",message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(foam_mod)
 ```

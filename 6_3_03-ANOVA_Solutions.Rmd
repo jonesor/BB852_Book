@@ -22,9 +22,9 @@ apples <- apples %>%
 
 ```{r, echo = -1,cache=TRUE}
 set.seed(42)
-ggplot(apples,aes(x = spacing,y = yield)) +
-  geom_boxplot() + 
-  geom_jitter(width=0.2) +
+ggplot(apples, aes(x = spacing, y = yield)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2) +
   ylab("Yield (kg per tree)")
 ```
 
@@ -32,12 +32,12 @@ ggplot(apples,aes(x = spacing,y = yield)) +
 
 
 ```{r}
-apple_mod <- lm(yield~spacing,data = apples)
+apple_mod <- lm(yield ~ spacing, data = apples)
 ```
 
 5. Check the model using a diagnostic plot (i.e. using `autoplot` from the `ggfortify` package).
 
-```{r}
+```{r,message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(apple_mod)
 ```
@@ -59,7 +59,7 @@ summary(apple_mod)
 
 ```{r}
 library(agricolae)
-HSD.test(apple_mod,"spacing",console=TRUE)
+HSD.test(apple_mod, "spacing", console = TRUE)
 ```
 
 
@@ -79,8 +79,8 @@ Or, more simply: *The 6-10ft and 6-14ft comparisons showed signifcant difference
 
 ```{r}
 apples2 <- apples %>%
-  mutate(spacing = relevel(spacing,ref = "10"))
-apple_mod2 <- lm(yield~spacing,data = apples2)
+  mutate(spacing = relevel(spacing, ref = "10"))
+apple_mod2 <- lm(yield ~ spacing, data = apples2)
 summary(apple_mod2)
 ```
 

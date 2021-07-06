@@ -9,15 +9,16 @@ fishPersonality <- read.csv("CourseData/fishPersonality.csv")
 2. Plot the data (e.g. as a box plot)
 
 ```{r}
-ggplot(fishPersonality,aes(x = colouration,y = spawning,fill=personality))+
+ggplot(fishPersonality, aes(x = colouration, y = spawning, fill = personality)) +
   geom_boxplot()
 ```
 
 3. Fit an ANOVA model using `lm`.
 
 ```{r}
-mod_A <- lm(spawning ~ personality+colouration + personality:colouration,
-            data = fishPersonality)
+mod_A <- lm(spawning ~ personality + colouration + personality:colouration,
+  data = fishPersonality
+)
 ```
 
 4. Look at diagnostic plots from this model (`autoplot`)
@@ -39,7 +40,7 @@ summary(mod_A)
 
 ```{r}
 library(agricolae)
-HSD.test(mod_A, c("personality","colouration"), console=TRUE)
+HSD.test(mod_A, c("personality", "colouration"), console = TRUE)
 ```
 
 
@@ -49,6 +50,3 @@ HSD.test(mod_A, c("personality","colouration"), console=TRUE)
 * Homogenous coloured fish seem to do better than heterogenous ones overall (from the plot)
 * The anova table shows that personality, colouration and the interaction between them are all important variables (p <0.05); Personality seems to be more important than colouration overall (based on p-values)
 * The Tukey test table shows that -  (1) Personality is associated with spawning, but only for heterogenous coloured fish. (2) In the heterogenous coloured fish the proactive fish spawn significantly more than the reactive ones. (3) In the homogenous coloured fish there is no significant difference between the personalities.
-
-
-
