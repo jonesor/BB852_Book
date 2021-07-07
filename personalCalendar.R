@@ -4,7 +4,7 @@ require(dplyr)
 require(calendar)
 require(lubridate)
 
-savingsTimeSwitch <- with_tz(lubridate::as_datetime("2020-10-25 03:00:00"),"Europe/Copenhagen")
+savingsTimeSwitch <- with_tz(lubridate::as_datetime("2021-10-31 03:00:00"),"Europe/Copenhagen")
 
 courseCal <- ic_read("bb852.ics") %>% 
   arrange(DTSTART) %>% 

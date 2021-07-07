@@ -36,13 +36,13 @@ curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101
 # Last sunday in October, 0300, CEST -> CET,
 # So the time offset moves from +2 to +1
 
-savingsTimeSwitch <- with_tz(lubridate::as_datetime("2020-10-25 03:00:00"), "Europe/Copenhagen")
+savingsTimeSwitch <- with_tz(lubridate::as_datetime("2021-10-31 03:00:00"), "Europe/Copenhagen")
 
 courseCal <- ic_read("bb852.ics") %>%
   arrange(DTSTART) %>%
   mutate(Session = row_number()) %>%
   mutate(savingsT = DTSTART < savingsTimeSwitch) %>%
-  mutate(offsetT = if_else(savingsT == TRUE, 3, 2)) %>%
+  mutate(offsetT = if_else(savingsT == TRUE, 2, 1)) %>%
   # Check this every year!
   mutate(DTSTART2 = DTSTART + hours(offsetT)) %>%
   mutate(DTEND2 = DTEND + hours(offsetT)) %>%
