@@ -5,12 +5,12 @@ Linear regression models, at their simplest, are a method of estimating the line
 The aim of linear regression is to (1) determine if there is a meaningful statistical relationship between the explanatory variable(s) and the response variable, and (2) to quantify those relationships by estimating the characteristics of those relationships. These characteristics include the slope and intercepts of fitted models, and the amount of variation explained by variables in the model.
 
 ```{r exampleRegression, echo=FALSE,fig.width=3,fig.height=3,fig.align='center',fig.cap="A linear regression model fitted through data points.", fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>% 
+classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
-ggplot(classData,aes(x=HandWidth,y=Height)) + 
+ggplot(classData, aes(x = HandWidth, y = Height)) +
   geom_point() +
-  geom_smooth(se=FALSE,method = "lm")
+  geom_smooth(se = FALSE, method = "lm")
 ```
 
 
@@ -21,60 +21,67 @@ To understand linear regression models it is important to know that the equation
 
 
 ```{r lineEquation, echo=FALSE,fig.width=7,fig.height=3,fig.align='center',fig.cap="The equation of straight lines.", fig.pos = "ht"}
-#An example showing regression equation
-a1 = 2; b1 = 1
+# An example showing regression equation
+a1 <- 2
+b1 <- 1
 
-df_reg <- data.frame(x = c(0,4,5,7)) %>%
-mutate(y = a1 * x + b1)
+df_reg <- data.frame(x = c(0, 4, 5, 7)) %>%
+  mutate(y = a1 * x + b1)
 
-A <- ggplot(df_reg)+
-  geom_segment(aes(x=x[1],y=y[1],xend=x[4],yend=y[4]),colour = "#b20000") +
-  geom_hline(yintercept = 0,colour="grey60")+
-  geom_vline(xintercept = 0,colour="grey60") + 
-  #geom_vline(xintercept = df_reg$x[2],colour="grey60") + 
-  geom_hline(yintercept = b1,linetype="dashed",colour="grey40") + 
-  geom_segment(aes(x=x[2],y=y[2],xend=x[3],yend=y[2]),linetype="dashed",colour="grey40")+
-  geom_segment(aes(x=x[3],y=y[3],xend=x[3],yend=y[2]),linetype="dashed",colour="grey40")+
-  geom_text(aes(x=mean(x[2:3]),y=y[2]-.5,label="1"))+
-  geom_text(aes(x=mean(x[3]+.1),y=mean(y[2:3]),label=paste0(a1," (slope)"),hjust="left")) +
-  xlab("x") + 
+A <- ggplot(df_reg) +
+  geom_segment(aes(x = x[1], y = y[1], xend = x[4], yend = y[4]), colour = "#b20000") +
+  geom_hline(yintercept = 0, colour = "grey60") +
+  geom_vline(xintercept = 0, colour = "grey60") +
+  # geom_vline(xintercept = df_reg$x[2],colour="grey60") +
+  geom_hline(yintercept = b1, linetype = "dashed", colour = "grey40") +
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3], yend = y[2]), linetype = "dashed", colour = "grey40") +
+  geom_segment(aes(x = x[3], y = y[3], xend = x[3], yend = y[2]), linetype = "dashed", colour = "grey40") +
+  geom_text(aes(x = mean(x[2:3]), y = y[2] - .5, label = "1")) +
+  geom_text(aes(x = mean(x[3] + .1), y = mean(y[2:3]), label = paste0(a1, " (slope)"), hjust = "left")) +
+  xlab("x") +
   ylab("y") +
-  geom_text(aes(x=1,y=13,label="y = ax + b",hjust="left")) +
-  geom_text(aes(x=1,y=12,label=paste0("y = ",a1,"x + ",b1),hjust="left")) +
-  geom_text(aes(x=.5,y=b1/2,label=paste(b1,"(intercept)"),hjust="left")) +
-  geom_segment(aes(x=.3,y=0,xend=.3,yend=b1),
-               arrow=arrow(angle = 30, length = unit(.1, "cm"),
-                                                        ends = "both", type = "open"),colour="grey40")+
+  geom_text(aes(x = 1, y = 13, label = "y = ax + b", hjust = "left")) +
+  geom_text(aes(x = 1, y = 12, label = paste0("y = ", a1, "x + ", b1), hjust = "left")) +
+  geom_text(aes(x = .5, y = b1 / 2, label = paste(b1, "(intercept)"), hjust = "left")) +
+  geom_segment(aes(x = .3, y = 0, xend = .3, yend = b1),
+    arrow = arrow(
+      angle = 30, length = unit(.1, "cm"),
+      ends = "both", type = "open"
+    ), colour = "grey40"
+  ) +
   NULL
 
-a2 = -2.3; b2 = 11
+a2 <- -2.3
+b2 <- 11
 
-df_reg <- data.frame(x = c(0,4,5,7)) %>%
+df_reg <- data.frame(x = c(0, 4, 5, 7)) %>%
   mutate(y = a2 * x + b2)
 
-B <- ggplot(df_reg)+
-  geom_segment(aes(x=x[1],y=y[1],xend=x[4],yend=y[4]),colour = "#b20000") + 
-  geom_hline(yintercept = 0,colour="grey60")+
-  geom_vline(xintercept = 0,colour="grey60") + 
-  #geom_vline(xintercept = df_reg$x[2],colour="grey60") + 
-  geom_hline(yintercept = b2,linetype="dashed",colour="grey40") + 
-  geom_segment(aes(x=x[2],y=y[2],xend=x[3],yend=y[2]),linetype="dashed",colour="grey40")+
-  geom_segment(aes(x=x[3],y=y[3],xend=x[3],yend=y[2]),linetype="dashed",colour="grey40")+
-  geom_text(aes(x=mean(x[2:3]),y=y[2]+.5,label="1"))+
-  geom_text(aes(x=mean(x[3]+.1),y=mean(y[2:3]),label=paste0(a2," (slope)"),hjust="left")) +
-  xlab("x") + 
+B <- ggplot(df_reg) +
+  geom_segment(aes(x = x[1], y = y[1], xend = x[4], yend = y[4]), colour = "#b20000") +
+  geom_hline(yintercept = 0, colour = "grey60") +
+  geom_vline(xintercept = 0, colour = "grey60") +
+  # geom_vline(xintercept = df_reg$x[2],colour="grey60") +
+  geom_hline(yintercept = b2, linetype = "dashed", colour = "grey40") +
+  geom_segment(aes(x = x[2], y = y[2], xend = x[3], yend = y[2]), linetype = "dashed", colour = "grey40") +
+  geom_segment(aes(x = x[3], y = y[3], xend = x[3], yend = y[2]), linetype = "dashed", colour = "grey40") +
+  geom_text(aes(x = mean(x[2:3]), y = y[2] + .5, label = "1")) +
+  geom_text(aes(x = mean(x[3] + .1), y = mean(y[2:3]), label = paste0(a2, " (slope)"), hjust = "left")) +
+  xlab("x") +
   ylab("y") +
-  geom_text(aes(x=1,y=13,label="y = ax + b",hjust="left")) +
-  geom_text(aes(x=1,y=12,label=paste0("y = ",a2,"x + ",b2),hjust="left")) +
-  geom_text(aes(x=.5,y=b2/2,label=paste(b2,"(intercept)"),hjust="left")) +
-  geom_segment(aes(x=.3,y=0,xend=.3,yend=b2),
-               arrow=arrow(angle = 30, length = unit(.1, "cm"),
-                           ends = "both", type = "open"),colour="grey40")+
+  geom_text(aes(x = 1, y = 13, label = "y = ax + b", hjust = "left")) +
+  geom_text(aes(x = 1, y = 12, label = paste0("y = ", a2, "x + ", b2), hjust = "left")) +
+  geom_text(aes(x = .5, y = b2 / 2, label = paste(b2, "(intercept)"), hjust = "left")) +
+  geom_segment(aes(x = .3, y = 0, xend = .3, yend = b2),
+    arrow = arrow(
+      angle = 30, length = unit(.1, "cm"),
+      ends = "both", type = "open"
+    ), colour = "grey40"
+  ) +
   NULL
 
-#plot the results
+# plot the results
 A + B
-
 ```
 
 When looking at data points on a graph, unless all of the data points are arranged perfectly along a straight line, there will be some distance between the points and the line. These distances, measured parallel to the vertical axis, are called residuals (you have encountered them before in this course). These residuals represent the variation left after fitting the line (a linear model) through the data. Because we want to fit a model that explains as much variation as possible, it is intuitive that we should wish to minimise this residual variation. 
@@ -82,69 +89,85 @@ When looking at data points on a graph, unless all of the data points are arrang
 One way of doing this is by minimising the sum of squares of the residuals (again, you have come across this concept a few times before). In other words, we add up the squares of each of the residuals. We square the values, rather than simply adding up the residuals themselves because we want to ensure that the positive and negative values don't cancel each other out (a square of a negative number is positive). This method is called **least squares** regression and is illustrated in Figure \@ref(fig:leastSquares): Which is the best fitting line?
 
 ```{r leastSquares, echo=FALSE,fig.width=4.8,fig.height=4,fig.align='center',fig.cap="Residuals and least squares: which is the best fitting line?",fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>% 
-  filter(Year ==2019)
-  
-#Black thread least squares
-slopeCoef <-    c( 6.10, 4.66, -1, 0.00)
-interceptCoef <-c(125, 134,  185 ,175) 
+classData <- read.csv("CourseData/classData.csv") %>%
+  filter(Year == 2019)
 
-residualData <- classData %>% 
-  select(Height,HandWidth) %>%
+# Black thread least squares
+slopeCoef <- c(6.10, 4.66, -1, 0.00)
+interceptCoef <- c(125, 134, 185, 175)
+
+residualData <- classData %>%
+  select(Height, HandWidth) %>%
   mutate(Height_Pred = (slopeCoef[1] * HandWidth) + interceptCoef[1])
 
-A<-ggplot(residualData,aes(x=HandWidth,y=Height,xend = HandWidth,yend = Height_Pred)) + 
-  geom_segment(col="grey75") + 
+A <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+  geom_segment(col = "grey75") +
   geom_point() +
- geom_segment(aes(x = min(HandWidth),
-                   xend = max(HandWidth),
-                   y = (slopeCoef[1] * min(HandWidth)) + interceptCoef[1],
-                   yend = (slopeCoef[1] * max(HandWidth)) + interceptCoef[1]),inherit.aes = FALSE,colour = "#b20000") + ylim(158,195) + 
-  ggtitle(paste0("A) slope:  ",slopeCoef[1],"; int: ",interceptCoef[1])) + theme_minimal()
+  geom_segment(aes(
+    x = min(HandWidth),
+    xend = max(HandWidth),
+    y = (slopeCoef[1] * min(HandWidth)) + interceptCoef[1],
+    yend = (slopeCoef[1] * max(HandWidth)) + interceptCoef[1]
+  ), inherit.aes = FALSE, colour = "#b20000") +
+  ylim(158, 195) +
+  ggtitle(paste0("A) slope:  ", slopeCoef[1], "; int: ", interceptCoef[1])) +
+  theme_minimal()
 
 
-residualData <- classData %>% 
-  select(Height,HandWidth) %>%
+residualData <- classData %>%
+  select(Height, HandWidth) %>%
   mutate(Height_Pred = (slopeCoef[2] * HandWidth) + interceptCoef[2])
 
-B<-ggplot(residualData,aes(x=HandWidth,y=Height,xend = HandWidth,yend = Height_Pred)) + 
-  geom_segment(col="grey75") + 
+B <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+  geom_segment(col = "grey75") +
   geom_point() +
- geom_segment(aes(x = min(HandWidth),
-                   xend = max(HandWidth),
-                   y = (slopeCoef[2] * min(HandWidth)) + interceptCoef[2],
-                   yend = (slopeCoef[2] * max(HandWidth)) + interceptCoef[2]),inherit.aes = FALSE,colour = "#b20000") + ylim(158,195) + 
-  ggtitle(paste0("B) slope:  ",slopeCoef[2],"; int: ",interceptCoef[2])) + theme_minimal()
+  geom_segment(aes(
+    x = min(HandWidth),
+    xend = max(HandWidth),
+    y = (slopeCoef[2] * min(HandWidth)) + interceptCoef[2],
+    yend = (slopeCoef[2] * max(HandWidth)) + interceptCoef[2]
+  ), inherit.aes = FALSE, colour = "#b20000") +
+  ylim(158, 195) +
+  ggtitle(paste0("B) slope:  ", slopeCoef[2], "; int: ", interceptCoef[2])) +
+  theme_minimal()
 
-residualData <- classData %>% 
-  select(Height,HandWidth) %>%
+residualData <- classData %>%
+  select(Height, HandWidth) %>%
   mutate(Height_Pred = (slopeCoef[3] * HandWidth) + interceptCoef[3])
 
-C<-ggplot(residualData,aes(x=HandWidth,y=Height,xend = HandWidth,yend = Height_Pred)) + 
-  geom_segment(col="grey75") + 
+C <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+  geom_segment(col = "grey75") +
   geom_point() +
-  geom_segment(aes(x = min(HandWidth),
-                   xend = max(HandWidth),
-                   y = (slopeCoef[3] * min(HandWidth)) + interceptCoef[3],
-                   yend = (slopeCoef[3] * max(HandWidth)) + interceptCoef[3]),inherit.aes = FALSE,colour = "#b20000") + ylim(158,195) + 
-  ggtitle(paste0("C) slope:  ",slopeCoef[3],"; int: ",interceptCoef[3])) + theme_minimal()
+  geom_segment(aes(
+    x = min(HandWidth),
+    xend = max(HandWidth),
+    y = (slopeCoef[3] * min(HandWidth)) + interceptCoef[3],
+    yend = (slopeCoef[3] * max(HandWidth)) + interceptCoef[3]
+  ), inherit.aes = FALSE, colour = "#b20000") +
+  ylim(158, 195) +
+  ggtitle(paste0("C) slope:  ", slopeCoef[3], "; int: ", interceptCoef[3])) +
+  theme_minimal()
 
-residualData <- classData %>% 
-  select(Height,HandWidth) %>%
+residualData <- classData %>%
+  select(Height, HandWidth) %>%
   mutate(Height_Pred = (slopeCoef[4] * HandWidth) + interceptCoef[4])
 
-D<-ggplot(residualData,aes(x=HandWidth,y=Height,xend = HandWidth,yend = Height_Pred)) + 
-  geom_segment(col="grey75") + 
+D <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+  geom_segment(col = "grey75") +
   geom_point() +
-  geom_segment(aes(x = min(HandWidth),
-                   xend = max(HandWidth),
-                   y = (slopeCoef[4] * min(HandWidth)) + interceptCoef[4],
-                   yend = (slopeCoef[4] * max(HandWidth)) + interceptCoef[4]),inherit.aes = FALSE,colour = "#b20000") + ylim(158,195) + 
-  ggtitle(paste0("D) slope:  ",slopeCoef[4],"; int: ",interceptCoef[4])) + theme_minimal()
+  geom_segment(aes(
+    x = min(HandWidth),
+    xend = max(HandWidth),
+    y = (slopeCoef[4] * min(HandWidth)) + interceptCoef[4],
+    yend = (slopeCoef[4] * max(HandWidth)) + interceptCoef[4]
+  ), inherit.aes = FALSE, colour = "#b20000") +
+  ylim(158, 195) +
+  ggtitle(paste0("D) slope:  ", slopeCoef[4], "; int: ", interceptCoef[4])) +
+  theme_minimal()
 
 
-#plot the results
-(A+B)/(C+D)
+# plot the results
+(A + B) / (C + D)
 ```
 
 In fact, these residuals represent "error" caused by factors including measurement error, random variation, variation caused by unmeasured factors etc. This error term is given the label, $\epsilon$. Thus we can write the model equation as:
@@ -191,45 +214,48 @@ If the *explained variance* (mESS) is large compared to the *residual error vari
 
 ```{r slopeHypo, echo=FALSE,fig.width=8,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
 
-classData <- read.csv("CourseData/classData.csv") %>% 
+classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
 
 model <- lm(Height ~ HandWidth, data = classData)
 
-slopeCoefTotal <-    0
+slopeCoefTotal <- 0
 interceptCoefTotal <- mean(classData$Height)
 
-residualDataTotal <- classData %>% 
-  select(Height,HandWidth) %>%
+residualDataTotal <- classData %>%
+  select(Height, HandWidth) %>%
   mutate(Height_Pred = (slopeCoefTotal * HandWidth) + interceptCoefTotal)
 
-A<-ggplot(residualDataTotal,aes(x=HandWidth,y=Height,xend = HandWidth,yend = Height_Pred)) + 
-  geom_segment(col="grey75") + 
+A <- ggplot(residualDataTotal, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+  geom_segment(col = "grey75") +
   geom_point() +
-  geom_segment(aes(x = min(HandWidth),
-                   xend = max(HandWidth),
-                   y = (slopeCoefTotal * min(HandWidth)) + interceptCoefTotal,
-                   yend = (slopeCoefTotal * max(HandWidth)) + interceptCoefTotal),inherit.aes = FALSE,colour = "#b20000")
+  geom_segment(aes(
+    x = min(HandWidth),
+    xend = max(HandWidth),
+    y = (slopeCoefTotal * min(HandWidth)) + interceptCoefTotal,
+    yend = (slopeCoefTotal * max(HandWidth)) + interceptCoefTotal
+  ), inherit.aes = FALSE, colour = "#b20000")
 
 
-slopeCoefError <-    model$coef[2]
-interceptCoefError <-model$coef[1]
+slopeCoefError <- model$coef[2]
+interceptCoefError <- model$coef[1]
 
-residualDataError <- classData %>% 
-  select(Height,HandWidth) %>%
+residualDataError <- classData %>%
+  select(Height, HandWidth) %>%
   mutate(Height_Pred = (slopeCoefError * HandWidth) + interceptCoefError)
 
-B<-ggplot(residualDataError,aes(x=HandWidth,y=Height,xend = HandWidth,yend = Height_Pred)) + 
-  geom_segment(col="grey75") + 
+B <- ggplot(residualDataError, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+  geom_segment(col = "grey75") +
   geom_point() +
-  geom_segment(aes(x = min(HandWidth),
-                   xend = max(HandWidth),
-                   y = (slopeCoefError * min(HandWidth)) + interceptCoefError,
-                   yend = (slopeCoefError * max(HandWidth)) + interceptCoefError),inherit.aes = FALSE,colour = "#b20000")
+  geom_segment(aes(
+    x = min(HandWidth),
+    xend = max(HandWidth),
+    y = (slopeCoefError * min(HandWidth)) + interceptCoefError,
+    yend = (slopeCoefError * max(HandWidth)) + interceptCoefError
+  ), inherit.aes = FALSE, colour = "#b20000")
 
-A+ggtitle("A - total errors") + B+ggtitle("A - residual errors")
-
+A + ggtitle("A - total errors") + B + ggtitle("A - residual errors")
 ```
 
 
@@ -250,14 +276,14 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 First, load the data:
 ```{r}
 
-classData <- read.csv("CourseData/classData.csv") %>% 
+classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 ```
 
 We should then plot the data to make sure it looks OK.
 
 ```{r fig.width=4.5,fig.height=3.5,fig.align='center', fig.pos = "ht"}
-ggplot(classData,aes(x=HandWidth,y=Height)) + 
+ggplot(classData, aes(x = HandWidth, y = Height)) +
   geom_point()
 ```
 
@@ -308,46 +334,51 @@ These estimates and errors are each followed by a `t value` and a p-value (`Pr(>
 
 ```{r coefPlot, echo=FALSE,fig.width=6,fig.height=3,fig.align='center',fig.cap="Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.", fig.pos = "ht"}
 
-classData <- read.csv("CourseData/classData.csv") %>% 
+classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
-#ggplot(classData,aes(x=Height,y=HandWidth)) + 
+# ggplot(classData,aes(x=Height,y=HandWidth)) +
 #  geom_point() +
 #  geom_smooth(method="lm")
 
-mod <- lm(Height~HandWidth,data=classData)
-#summary(mod)
+mod <- lm(Height ~ HandWidth, data = classData)
+# summary(mod)
 
-int<-summary(mod)$coefficients[1,1:2]
-slope<-summary(mod)$coefficients[2,1:2]
+int <- summary(mod)$coefficients[1, 1:2]
+slope <- summary(mod)$coefficients[2, 1:2]
 
 interceptPlot <- ggplot(data = data.frame(x = c(-10, 180)), aes(x)) +
-    stat_function(fun = dnorm, n = 101, args = list(mean = int[1], sd = int[2])) + ylab("Probability density") + 
-    xlab("Intercept value") +
-    scale_y_continuous(breaks = NULL) + 
-    geom_vline(xintercept = int[1], linetype="dashed",col="red") +
-    geom_segment(data = data.frame(y=.002,yend=.002,x=0,xend=int[1]),
-                 aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")))+
-    geom_vline(xintercept = 0, linetype="dashed",colour="black") +
-    #theme_minimal()+
-  ggtitle("Intercept coefficient")+
-    NULL
+  stat_function(fun = dnorm, n = 101, args = list(mean = int[1], sd = int[2])) +
+  ylab("Probability density") +
+  xlab("Intercept value") +
+  scale_y_continuous(breaks = NULL) +
+  geom_vline(xintercept = int[1], linetype = "dashed", col = "red") +
+  geom_segment(
+    data = data.frame(y = .002, yend = .002, x = 0, xend = int[1]),
+    aes(x = x, xend = xend, y = y, yend = yend), arrow = arrow(ends = "both", length = unit(0.1, "inches"))
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "black") +
+  # theme_minimal()+
+  ggtitle("Intercept coefficient") +
+  NULL
 
 slopePlot <- ggplot(data = data.frame(x = c(-.1, 9)), aes(x)) +
-    stat_function(fun = dnorm, n = 101, args = list(mean = slope[1], sd = slope[2])) + ylab("Probability density") + 
-    xlab("Slope value") +
-    scale_y_continuous(breaks = NULL) + 
-    geom_vline(xintercept = slope[1], linetype="dashed",col="red") +
-    geom_segment(data = data.frame(y=.02,yend=.02,x=0,xend=slope[1]),
-                 aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches"))) +
-    geom_vline(xintercept = 0, linetype="dashed",colour="black") +
-    #theme_minimal()+
-  ggtitle("Slope coefficient")+
-    NULL
+  stat_function(fun = dnorm, n = 101, args = list(mean = slope[1], sd = slope[2])) +
+  ylab("Probability density") +
+  xlab("Slope value") +
+  scale_y_continuous(breaks = NULL) +
+  geom_vline(xintercept = slope[1], linetype = "dashed", col = "red") +
+  geom_segment(
+    data = data.frame(y = .02, yend = .02, x = 0, xend = slope[1]),
+    aes(x = x, xend = xend, y = y, yend = yend), arrow = arrow(ends = "both", length = unit(0.1, "inches"))
+  ) +
+  geom_vline(xintercept = 0, linetype = "dashed", colour = "black") +
+  # theme_minimal()+
+  ggtitle("Slope coefficient") +
+  NULL
 
-#plot results
-slopePlot+interceptPlot
-
+# plot results
+slopePlot + interceptPlot
 ```
 
 
@@ -365,67 +396,67 @@ We could describe the model like this:
 ```{r rSquared, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}
 set.seed(7645)
 
-df1 <- data.frame(x = runif(30,1,10)) %>%
-  mutate(y = (x * 1.5 + 0)+rnorm(30,0,0.05))
-z<-summary(lm(y~x,data=df1))
-cval <- cor(df1$x,df1$y)
-R2<-z$r.squared
+df1 <- data.frame(x = runif(30, 1, 10)) %>%
+  mutate(y = (x * 1.5 + 0) + rnorm(30, 0, 0.05))
+z <- summary(lm(y ~ x, data = df1))
+cval <- cor(df1$x, df1$y)
+R2 <- z$r.squared
 
-A<-ggplot(df1,aes(x,y))+
-  geom_point()+
-  geom_smooth(method = "lm", fullrange = FALSE) + 
-  theme_minimal()+
-  ggtitle(paste0("R-sq = ",formatC(R2, digits = 2, format = "f"))) +
+A <- ggplot(df1, aes(x, y)) +
+  geom_point() +
+  geom_smooth(method = "lm", fullrange = FALSE) +
+  theme_minimal() +
+  ggtitle(paste0("R-sq = ", formatC(R2, digits = 2, format = "f"))) +
   NULL
-    
-df1 <- data.frame(x = runif(30,1,10)) %>%
-  mutate(y = (x * 1.5 + 0)+rnorm(30,0,1))
-z<-summary(lm(y~x,data=df1))
-cval <- cor(df1$x,df1$y)
-R2<-z$r.squared
 
-B<-ggplot(df1,aes(x,y))+
-    geom_point()+
-    geom_smooth(method = "lm", fullrange = FALSE) + 
-    theme_minimal()+
-    ggtitle(paste0("R-sq = ",formatC(R2, digits = 2, format = "f")))+
-    NULL
+df1 <- data.frame(x = runif(30, 1, 10)) %>%
+  mutate(y = (x * 1.5 + 0) + rnorm(30, 0, 1))
+z <- summary(lm(y ~ x, data = df1))
+cval <- cor(df1$x, df1$y)
+R2 <- z$r.squared
 
-df1 <- data.frame(x = runif(30,1,10)) %>%
-  mutate(y = (x * 1.5 + 0)+rnorm(30,0,3))
-z<-summary(lm(y~x,data=df1))
-cval <- cor(df1$x,df1$y)
-R2<-z$r.squared
+B <- ggplot(df1, aes(x, y)) +
+  geom_point() +
+  geom_smooth(method = "lm", fullrange = FALSE) +
+  theme_minimal() +
+  ggtitle(paste0("R-sq = ", formatC(R2, digits = 2, format = "f"))) +
+  NULL
 
-C<-ggplot(df1,aes(x,y))+
-    geom_point()+
-    geom_smooth(method = "lm", fullrange = FALSE) + 
-    theme_minimal()+
-    ggtitle(paste0("R-sq = ",formatC(R2, digits = 2, format = "f"))) +
-    NULL
+df1 <- data.frame(x = runif(30, 1, 10)) %>%
+  mutate(y = (x * 1.5 + 0) + rnorm(30, 0, 3))
+z <- summary(lm(y ~ x, data = df1))
+cval <- cor(df1$x, df1$y)
+R2 <- z$r.squared
+
+C <- ggplot(df1, aes(x, y)) +
+  geom_point() +
+  geom_smooth(method = "lm", fullrange = FALSE) +
+  theme_minimal() +
+  ggtitle(paste0("R-sq = ", formatC(R2, digits = 2, format = "f"))) +
+  NULL
 
 
-df1 <- data.frame(x = runif(30,1,10)) %>%
-  mutate(y = (x * 1.5 + 0)+rnorm(30,0,8))
-z<-summary(lm(y~x,data=df1))
-cval <- cor(df1$x,df1$y)
-R2<-z$r.squared
+df1 <- data.frame(x = runif(30, 1, 10)) %>%
+  mutate(y = (x * 1.5 + 0) + rnorm(30, 0, 8))
+z <- summary(lm(y ~ x, data = df1))
+cval <- cor(df1$x, df1$y)
+R2 <- z$r.squared
 
-D<-ggplot(df1,aes(x,y))+
-    geom_point()+
-    geom_smooth(method = "lm", fullrange = FALSE) + 
-    theme_minimal()+
-    ggtitle(paste0("R-sq = ",formatC(R2, digits = 2, format = "f"))) +
-    NULL
+D <- ggplot(df1, aes(x, y)) +
+  geom_point() +
+  geom_smooth(method = "lm", fullrange = FALSE) +
+  theme_minimal() +
+  ggtitle(paste0("R-sq = ", formatC(R2, digits = 2, format = "f"))) +
+  NULL
 
-(A+B)/(C+D)
+(A + B) / (C + D)
 ```
 
 A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The `ggplot2` package has a neat and simple function called `geom_smooth` which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use `method = "lm"`. This will plot the fitted regression model, and will add, by default" a shaded "ribbon" which represents the so called "95% confidence interval" for the fitted values. These are 2 time the standard error.
 
 ```{r, fig.width=4.5,fig.height=3.5,fig.align='center', fig.pos = 'ht'}
-ggplot(classData,aes(x = HandWidth,y = Height)) +
-  geom_point() + 
+ggplot(classData, aes(x = HandWidth, y = Height)) +
+  geom_point() +
   geom_smooth(method = "lm")
 ```
 
@@ -458,7 +489,7 @@ chirps <- read.csv("CourseData/chirps.csv")
 <!--
 ```{r}
 chirps <- chirps %>%
-  mutate(temperatureC = (temperature-32)*(5/9))
+  mutate(temperatureC = (temperature - 32) * (5 / 9))
 head(chirps)
 ```
 -->
@@ -466,7 +497,7 @@ head(chirps)
 3) Plot the data
 <!--
 ```{r}
-(A<-ggplot(chirps,aes(x= temperatureC,y = chirps)) + 
+(A <- ggplot(chirps, aes(x = temperatureC, y = chirps)) +
   geom_point())
 ```
 -->
@@ -503,7 +534,7 @@ summary(chirp_mod)
 
 <!--
 ```{r}
-A + geom_smooth(method="lm")
+A + geom_smooth(method = "lm")
 ```
 -->
 10) Can I use cricket chirp frequency as a kind of thermometer?

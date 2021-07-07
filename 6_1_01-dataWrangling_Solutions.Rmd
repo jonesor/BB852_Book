@@ -3,7 +3,7 @@
 1. When you have imported the data, use `dim` to check the dimensions of the whole data frame (you should see that there are `r ncol(amniote)` columns and `r nrow(amniote)` rows). Use `names` to look at the names of all columns in the data in `amniote`.
 
 ```{r}
-amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv",na.strings = "-999")
+amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv", na.strings = "-999")
 ```
 
 ```{r}
@@ -17,9 +17,11 @@ The relevant columns are the taxonomic variables (`class`, `species`) and `longe
 
 ```{r}
 x <- amniote %>%
-  select(class,genus,species,
-         longevity_y, adult_body_mass_g,
-         litter_or_clutch_size_n,litters_or_clutches_per_y )
+  select(
+    class, genus, species,
+    longevity_y, adult_body_mass_g,
+    litter_or_clutch_size_n, litters_or_clutches_per_y
+  )
 ```
 
 3. Take a look at the first few entries in the `species` column. You will see that it is only the *epithet*, the second part of the *Genus_species* name, that is given.  
@@ -27,8 +29,8 @@ Use `mutate` and `paste` to convert the `species` column to a *Genus_species* by
 
 
 ```{r}
-x <- x %>% 
-  mutate(species = paste(genus,species)) %>%
+x <- x %>%
+  mutate(species = paste(genus, species)) %>%
   select(-genus)
 head(x)
 ```
@@ -50,27 +52,31 @@ head(x)
 6. Use `summarise` and `group_by` to make a table summarising `min`, `median` and `max` life spans (`longevity_y`) for the three taxonomic classes in the database. Remember that you need to tell R to remove the `NA` values using a `na.rm = TRUE` argument.
 
 ```{r}
-x %>% 
+x %>%
   group_by(class) %>%
-  summarise(min = min(longevity_y,na.rm = TRUE),
-            median = median(longevity_y,na.rm = TRUE),
-            max = max(longevity_y,na.rm = TRUE))
+  summarise(
+    min = min(longevity_y, na.rm = TRUE),
+    median = median(longevity_y, na.rm = TRUE),
+    max = max(longevity_y, na.rm = TRUE)
+  )
 ```
 
 7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
 
 ```{r}
-plot(x$adult_body_mass_g,x$longevity_y)
+plot(x$adult_body_mass_g, x$longevity_y)
 ```
 
 8. Use `mutate` to create a new `log`-transformed variables, `logMass` and `logLongevity`. Use these to make a "log-log" plot. You should see that makes the relationship more linear, and easier to "read".
 
 ```{r}
 x <- x %>%
-  mutate(logMass = log(adult_body_mass_g),
-         logLongevity = log(longevity_y))
+  mutate(
+    logMass = log(adult_body_mass_g),
+    logLongevity = log(longevity_y)
+  )
 
-plot(x$logMass,x$logLongevity)
+plot(x$logMass, x$logLongevity)
 ```
 
 9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot `logOffspring` vs. `logLongevity`.
@@ -79,7 +85,7 @@ plot(x$logMass,x$logLongevity)
 x <- x %>%
   mutate(logOffspring = log(litter_or_clutch_size_n * litters_or_clutches_per_y))
 
-plot(x$logOffspring,x$logLongevity)
+plot(x$logOffspring, x$logLongevity)
 ```
 
 10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationships holds universally. 
@@ -88,7 +94,7 @@ plot(x$logOffspring,x$logLongevity)
 aves <- x %>%
   filter(class == "Aves")
 
-plot(aves$logOffspring,aves$logLongevity)
+plot(aves$logOffspring, aves$logLongevity)
 title("Aves")
 ```
 
@@ -96,7 +102,7 @@ title("Aves")
 mammalia <- x %>%
   filter(class == "Mammalia")
 
-plot(mammalia$logOffspring,mammalia$logLongevity)
+plot(mammalia$logOffspring, mammalia$logLongevity)
 title("Mammalia")
 ```
 
@@ -104,6 +110,6 @@ title("Mammalia")
 reptilia <- x %>%
   filter(class == "Reptilia")
 
-plot(reptilia$logOffspring,reptilia$logLongevity)
+plot(reptilia$logOffspring, reptilia$logLongevity)
 title("Reptilia")
 ```

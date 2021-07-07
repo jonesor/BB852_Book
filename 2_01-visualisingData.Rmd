@@ -40,8 +40,8 @@ ggplot(df, aes(x = clutchSize)) +
 We know that we have two species here and we would like to compare them. This is done within the aesthetic argument. The default is that the bars for different categories are stacked on top of each other. This is good in some cases, but probably not here.
 
 ```{r}
-ggplot(df, aes(x = clutchSize,fill = species)) +
-  geom_histogram(binwidth = 1,position = "dodge")
+ggplot(df, aes(x = clutchSize, fill = species)) +
+  geom_histogram(binwidth = 1, position = "dodge")
 ```
 
 You can immediately see that there are far fewer blue tit nests than great tit ones. But you can also see that the center of mass for blue tits is further to the right than great tits.
@@ -51,14 +51,14 @@ To make it easier to compare distributions with very different counts, we can pu
 
 ```{r}
 ggplot(df, aes(x = clutchSize, fill = species, stat(density))) +
-  geom_histogram(binwidth = 1,position = "dodge")
+  geom_histogram(binwidth = 1, position = "dodge")
 ```
 
 An alternative approach would be to overlay the two sets of bars (using `position = "identity"`) and set the colours to be slightly transparent (using `alpha = 0.7`) so that you can see the overlapping region clearly. 
 
 ```{r}
 ggplot(df, aes(x = clutchSize, fill = species, stat(density))) +
-  geom_histogram(binwidth = 1,position = "identity",alpha=0.7)
+  geom_histogram(binwidth = 1, position = "identity", alpha = 0.7)
 ```
 
 It is very clear from this plot that blue tits tend to have bigger clutch sizes than great tits. Is this difference *statistically significant*? We will look at testing this in a future class - for now we will be satisfied with our visualisation.
@@ -70,16 +70,16 @@ You should recall that there were several years of data represented here.
 
 ```{r}
 ggplot(df, aes(x = clutchSize, fill = species, stat(density))) +
-  geom_histogram(binwidth = 1,position = "identity",alpha=0.7) + 
-  facet_grid(.~Year)
+  geom_histogram(binwidth = 1, position = "identity", alpha = 0.7) +
+  facet_grid(. ~ Year)
 ```
 
 You could split the data up by species in a similar way, as yet another way of visualising the difference between species:
 
 ```{r}
 ggplot(df, aes(x = clutchSize)) +
-  geom_histogram(binwidth = 1) + 
-  facet_grid(species~.)
+  geom_histogram(binwidth = 1) +
+  facet_grid(species ~ .)
 ```
 
 ```{block, type="do-something"}
@@ -99,7 +99,7 @@ The categorical variable is normally placed on the x-axis so is placed as `x` in
 
 ```{r}
 ggplot(df, aes(x = species, y = clutchSize)) +
-         geom_boxplot()
+  geom_boxplot()
 ```
 
 
@@ -108,9 +108,8 @@ Some researchers argue that it is a good idea to add the data as points to these
 ```{r,echo = -1,cache = TRUE}
 set.seed(42)
 ggplot(df, aes(x = species, y = clutchSize)) +
-  geom_boxplot() + 
-  geom_jitter(width = .2, alpha = 0.5, colour="black",fill="black")
-  
+  geom_boxplot() +
+  geom_jitter(width = .2, alpha = 0.5, colour = "black", fill = "black")
 ```
 
 ```{block, type="do-something"}
@@ -126,9 +125,9 @@ First we will use `summarise` to create a dataset with the mean clutch size. We'
 
 
 ```{r}
-GTclutch <- df %>% 
+GTclutch <- df %>%
   filter(species == "GT") %>%
-  group_by(Year) %>% 
+  group_by(Year) %>%
   summarise(meanClutchSize = mean(clutchSize))
 ```
 
@@ -136,15 +135,15 @@ Then you can plot this like this.
 
 ```{r}
 ggplot(GTclutch, aes(x = Year, y = meanClutchSize)) +
-         geom_line()
+  geom_line()
 ```
 
 I think this looks OK, but we should add both species. I'll first need to produce a mean clutch size dataset that includes both species.
 
 
 ```{r}
-meanClutch <- df %>% 
-  group_by(species,Year) %>% 
+meanClutch <- df %>%
+  group_by(species, Year) %>%
   summarise(meanClutchSize = mean(clutchSize))
 ```
 
@@ -152,19 +151,18 @@ Now I can do the plot again. The only difference to the command is that I need t
 
 ```{r}
 ggplot(meanClutch, aes(x = Year, y = meanClutchSize, colour = species)) +
-         geom_line()
+  geom_line()
 ```
 
 I can improve on this by (1) changing the y axis limits (using `ylim`) so that it goes through the full range of my data (0 - 14); (2) adding points (using a `geom_point` layer) where my actual data values are; (3) adding a nicely formatted axis label (using `ylab`); adding a title (`ggtitle`)
 
 ```{r}
 ggplot(meanClutch, aes(x = Year, y = meanClutchSize, colour = species)) +
-  geom_line() + 
+  geom_line() +
   geom_point() +
-  ylim(0,14) + 
+  ylim(0, 14) +
   ylab("Mean clutch size") +
   ggtitle("Clutch size data from SDU Campus")
-  
 ```
 
 ## Scatter plots
@@ -187,19 +185,19 @@ These data show the result of standardised bird surveys at housing developments 
 To investigate this we should first add a new variable for `Age` to the data set. We can do this using the `mutate` function from `dplyr`. This function creates new variables, for example by manipulating existing ones.
 
 ```{r}
-df <- mutate(df,Age = 1975 - Year)
+df <- mutate(df, Age = 1975 - Year)
 ```
 
 When we have created this variable we can plot the data. For aesthetic reasons I also would like to set the limits on the y-axis to go extend to zero, and I would like to include proper labels on the axes.
 
 ```{r}
-ggplot(df, aes(x = Age,y = nSpecies)) + 
-  geom_point() + 
-  ylim(0,15) + 
-  xlab("Age of development") + ylab("Bird species richness")
+ggplot(df, aes(x = Age, y = nSpecies)) +
+  geom_point() +
+  ylim(0, 15) +
+  xlab("Age of development") +
+  ylab("Bird species richness")
 ```
 
 This shows very clearly that older developments have more species, but it also appears to show that there is an asymptote around 13 species.
 
 Compare this plot to the one you made with base graphics in a previous class.
-

@@ -11,72 +11,77 @@ The one-way ANOVA is illustrated below with two cases (Figure \@ref(fig:anovaVis
 
 ```{r anovaVis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
 
-d1<-c(40,10)
-d2<-c(45,10)
-d3<-c(50,10)
+d1 <- c(40, 10)
+d2 <- c(45, 10)
+d3 <- c(50, 10)
 
 A <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
-  stat_function(fun = dnorm, n = 101, args = list(mean = d1[1], sd = d1[2]),colour = "#007F00") + 
-  stat_function(fun = dnorm, n = 101, args = list(mean = d2[1], sd = d2[2]),colour="red") + 
-  stat_function(fun = dnorm, n = 101, args = list(mean = d3[1], sd = d3[2]),colour="blue") + 
-  ylab("Probability density") + 
+  stat_function(fun = dnorm, n = 101, args = list(mean = d1[1], sd = d1[2]), colour = "#007F00") +
+  stat_function(fun = dnorm, n = 101, args = list(mean = d2[1], sd = d2[2]), colour = "red") +
+  stat_function(fun = dnorm, n = 101, args = list(mean = d3[1], sd = d3[2]), colour = "blue") +
+  ylab("Probability density") +
   xlab("y") +
-  scale_y_continuous(breaks = NULL) + 
-  #geom_segment(data = data.frame(y=.002,yend=.002,x=d1[1],xend=d2[1]),
+  scale_y_continuous(breaks = NULL) +
+  # geom_segment(data = data.frame(y=.002,yend=.002,x=d1[1],xend=d2[1]),
   #             aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="black") +
-  #geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
+  # geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
   #            aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="red")+
-  geom_vline(xintercept = d1[1], linetype="dashed",colour="#007F00") +
-  geom_vline(xintercept = d2[1], linetype="dashed",colour="red") +
-  geom_vline(xintercept = d3[1], linetype="dashed",colour="blue") +
-  #theme_minimal()+
+  geom_vline(xintercept = d1[1], linetype = "dashed", colour = "#007F00") +
+  geom_vline(xintercept = d2[1], linetype = "dashed", colour = "red") +
+  geom_vline(xintercept = d3[1], linetype = "dashed", colour = "blue") +
+  # theme_minimal()+
   NULL
 
-d1<-c(40,10)
-d2<-c(45,10)
-d3<-c(80,10)
+d1 <- c(40, 10)
+d2 <- c(45, 10)
+d3 <- c(80, 10)
 
 B <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
-  stat_function(fun = dnorm, n = 101, args = list(mean = d1[1], sd = d1[2]),colour = "#007F00") + 
-  stat_function(fun = dnorm, n = 101, args = list(mean = d2[1], sd = d2[2]),colour="red") + 
-  stat_function(fun = dnorm, n = 101, args = list(mean = d3[1], sd = d3[2]),colour="blue") + 
-  ylab("Probability density") + 
+  stat_function(fun = dnorm, n = 101, args = list(mean = d1[1], sd = d1[2]), colour = "#007F00") +
+  stat_function(fun = dnorm, n = 101, args = list(mean = d2[1], sd = d2[2]), colour = "red") +
+  stat_function(fun = dnorm, n = 101, args = list(mean = d3[1], sd = d3[2]), colour = "blue") +
+  ylab("Probability density") +
   xlab("y") +
-  scale_y_continuous(breaks = NULL) + 
-  #geom_segment(data = data.frame(y=.002,yend=.002,x=d1[1],xend=d2[1]),
+  scale_y_continuous(breaks = NULL) +
+  # geom_segment(data = data.frame(y=.002,yend=.002,x=d1[1],xend=d2[1]),
   #             aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="black") +
-  #geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
+  # geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
   #            aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="red")+
-  geom_vline(xintercept = d1[1], linetype="dashed",colour="#007F00") +
-  geom_vline(xintercept = d2[1], linetype="dashed",colour="red") +
-  geom_vline(xintercept = d3[1], linetype="dashed",colour="blue") +
-  #theme_minimal()+
+  geom_vline(xintercept = d1[1], linetype = "dashed", colour = "#007F00") +
+  geom_vline(xintercept = d2[1], linetype = "dashed", colour = "red") +
+  geom_vline(xintercept = d3[1], linetype = "dashed", colour = "blue") +
+  # theme_minimal()+
   NULL
 
-A+ggtitle("A") + B+ggtitle("B")
+A + ggtitle("A") + B + ggtitle("B")
 ```
 
 
 
 ```{r, echo = FALSE,fig.show="hide",cache=TRUE}
-#Makes boxplot version of the above for presentation
+# Makes boxplot version of the above for presentation
 set.seed(124)
-dfA <- data.frame(x = rep(LETTERS[1:3],each = 30),
-                  y = c(rnorm(30,40,10),rnorm(30,45,10),rnorm(30,50,10)))
+dfA <- data.frame(
+  x = rep(LETTERS[1:3], each = 30),
+  y = c(rnorm(30, 40, 10), rnorm(30, 45, 10), rnorm(30, 50, 10))
+)
 
-A<-ggplot(dfA, aes(x = x,y =y)) +
-  geom_boxplot() + 
-  ggtitle("A") + ylim(20,100)
+A <- ggplot(dfA, aes(x = x, y = y)) +
+  geom_boxplot() +
+  ggtitle("A") +
+  ylim(20, 100)
 
-dfB <- data.frame(x = rep(LETTERS[1:3],each = 30),
-                  y = c(rnorm(30,40,10),rnorm(30,45,10),rnorm(30,80,10)))
+dfB <- data.frame(
+  x = rep(LETTERS[1:3], each = 30),
+  y = c(rnorm(30, 40, 10), rnorm(30, 45, 10), rnorm(30, 80, 10))
+)
 
-B<-ggplot(dfB, aes(x = x,y =y)) +
-  geom_boxplot() + 
-  ggtitle("B")+ ylim(20,100)
+B <- ggplot(dfB, aes(x = x, y = y)) +
+  geom_boxplot() +
+  ggtitle("B") +
+  ylim(20, 100)
 
-A+B
-
+A + B
 ```
 
 After figuring out if at least one of the groups is significantly different from the others it is often enough to examine plots (or summary statistics) to see where the differences are (e.g. which group(s) are different from each other). In other cases it might be necessary to do follow up *post-hoc multiple comparison* tests. We will come to those later.
@@ -100,9 +105,9 @@ head(espresso)
 
 ```{r coffee,echo=-1,fig.width=4,fig.height=3,fig.align='center', fig.cap="A box and whisker plot, with jittered points, for the espresso foam data.",cache=TRUE}
 set.seed(43)
-(ggplot(espresso,aes(x=method,y=foamIndx)) + 
-geom_boxplot()+
-geom_jitter(width=0.2))
+(ggplot(espresso, aes(x = method, y = foamIndx)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2))
 ```
 
 You can see that the categorical explanatory variable ("method") defines the three treatment groups and has the three levels representing the different coffee types: BM, HIP and IES.
@@ -133,7 +138,7 @@ anova(foam_mod)
 ```
 
 ```{r, echo=FALSE}
-x<-anova(foam_mod)
+x <- anova(foam_mod)
 ```
 
 This gives some numbers (degrees of freedom, sum of squares, mean squares). These are the important values that go into calculating an *F value* (also called an F-statistic). We will not worry about these details now, except to say that large F-statistics mean that we are more certain that there is a difference between the groups (and that the p-value is smaller).
@@ -167,8 +172,8 @@ They are a bit hard to wrap your head aroudn and I STRONGLY recommend that you a
 
 ```{r}
 espresso %>%
-group_by(method) %>%
-summarise(gp_mean = mean(foamIndx))
+  group_by(method) %>%
+  summarise(gp_mean = mean(foamIndx))
 ```
 
 
@@ -192,12 +197,12 @@ You can see that it is very important to understand the levels of your explanato
 For example, we can `relevel` the method variable so that the levels are re-ordered as HIP, BM, then IES so that the comparisons are between zero-HIP, HIP-BM and HIP-IES. (make sure that you understand this before proceeding).
 
 ```{r}
-#This is what the original data looks like:
+# This is what the original data looks like:
 levels(espresso$method)
 
-#releveling changes this by changing the reference.
+# releveling changes this by changing the reference.
 espresso_2 <- espresso %>%
-mutate(method = relevel(method,ref = "HIP"))
+  mutate(method = relevel(method, ref = "HIP"))
 levels(espresso_2$method)
 ```
 
@@ -215,45 +220,53 @@ Now the coefficients in the model summary look different, but the model is actua
 ```{r differentReferences, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.",cache=TRUE}
 set.seed(31)
 
-temp <- data.frame(level = names(foam_mod$coefficients),
-levelNum = 1:3,
-coef = foam_mod$coefficients) %>%
-mutate(value = c(coef[1],coef[2:3]  +coef[1]))
+temp <- data.frame(
+  level = names(foam_mod$coefficients),
+  levelNum = 1:3,
+  coef = foam_mod$coefficients
+) %>%
+  mutate(value = c(coef[1], coef[2:3] + coef[1]))
 
-A<- ggplot(espresso,aes(x=method,y=foamIndx)) + 
-geom_jitter(width=0.2,colour = "grey45") + 
-geom_point(data = temp, 
-mapping = aes(x = levelNum,y= value),inherit.aes=F,colour="red") + 
-geom_segment(data = temp,mapping = aes(x=1,y=0,xend=1,yend = value[1]),arrow = arrow(length = unit(0.2,"cm"))) + 
-geom_hline(yintercept = temp$value[1],linetype="dashed",colour = "grey60")+
-geom_segment(data = temp,mapping = aes(x=2,y=value[1],xend=2,yend = value[2]),arrow = arrow(length = unit(0.2,"cm"))) + 
-geom_segment(data = temp,mapping = aes(x=3,y=value[1],xend=3,yend = value[3]),arrow = arrow(length = unit(0.2,"cm"))) + 
-geom_hline(yintercept = 0) +
-annotate("text", x = 1.3, y = temp$value[1]/2, label = temp$value[1])+
-annotate("text", x = 2.3, y = sum(temp$value[1:2])/2, label = temp$coef[2])+
-annotate("text", x = 3.3, y = sum(temp$value[c(1,3)])/2, label = formatC(temp$coef[3], digits = 1, format = "f"))+
-ylim(0,75)  
+A <- ggplot(espresso, aes(x = method, y = foamIndx)) +
+  geom_jitter(width = 0.2, colour = "grey45") +
+  geom_point(
+    data = temp,
+    mapping = aes(x = levelNum, y = value), inherit.aes = F, colour = "red"
+  ) +
+  geom_segment(data = temp, mapping = aes(x = 1, y = 0, xend = 1, yend = value[1]), arrow = arrow(length = unit(0.2, "cm"))) +
+  geom_hline(yintercept = temp$value[1], linetype = "dashed", colour = "grey60") +
+  geom_segment(data = temp, mapping = aes(x = 2, y = value[1], xend = 2, yend = value[2]), arrow = arrow(length = unit(0.2, "cm"))) +
+  geom_segment(data = temp, mapping = aes(x = 3, y = value[1], xend = 3, yend = value[3]), arrow = arrow(length = unit(0.2, "cm"))) +
+  geom_hline(yintercept = 0) +
+  annotate("text", x = 1.3, y = temp$value[1] / 2, label = temp$value[1]) +
+  annotate("text", x = 2.3, y = sum(temp$value[1:2]) / 2, label = temp$coef[2]) +
+  annotate("text", x = 3.3, y = sum(temp$value[c(1, 3)]) / 2, label = formatC(temp$coef[3], digits = 1, format = "f")) +
+  ylim(0, 75)
 
-temp <- data.frame(level = names(foam_mod2$coefficients),
-levelNum = 1:3,
-coef = foam_mod2$coefficients) %>%
-mutate(value = c(coef[1],coef[2:3]  +coef[1]))
+temp <- data.frame(
+  level = names(foam_mod2$coefficients),
+  levelNum = 1:3,
+  coef = foam_mod2$coefficients
+) %>%
+  mutate(value = c(coef[1], coef[2:3] + coef[1]))
 
-B<-ggplot(espresso_2,aes(x=method,y=foamIndx)) + 
-geom_jitter(width=0.2,colour = "grey45") + 
-geom_point(data = temp, 
-mapping = aes(x = levelNum,y= value),inherit.aes=F,colour="red") + 
-geom_segment(data = temp,mapping = aes(x=1,y=0,xend=1,yend = value[1]),arrow = arrow(length = unit(0.2,"cm"))) + 
-geom_hline(yintercept = temp$value[1],linetype="dashed",colour = "grey60")+
-geom_segment(data = temp,mapping = aes(x=2,y=value[1],xend=2,yend = value[2]),arrow = arrow(length = unit(0.2,"cm"))) + 
-geom_segment(data = temp,mapping = aes(x=3,y=value[1],xend=3,yend = value[3]),arrow = arrow(length = unit(0.2,"cm"))) + 
-geom_hline(yintercept = 0) +
-annotate("text", x = 1.3, y = temp$value[1]/2, label = temp$value[1])+
-annotate("text", x = 2.3, y = sum(temp$value[1:2])/2, label = temp$coef[2])+
-annotate("text", x = 3.3, y = sum(temp$value[c(1,3)])/2, label = formatC(temp$coef[3], digits = 1, format = "f"))+
-ylim(0,75)  
+B <- ggplot(espresso_2, aes(x = method, y = foamIndx)) +
+  geom_jitter(width = 0.2, colour = "grey45") +
+  geom_point(
+    data = temp,
+    mapping = aes(x = levelNum, y = value), inherit.aes = F, colour = "red"
+  ) +
+  geom_segment(data = temp, mapping = aes(x = 1, y = 0, xend = 1, yend = value[1]), arrow = arrow(length = unit(0.2, "cm"))) +
+  geom_hline(yintercept = temp$value[1], linetype = "dashed", colour = "grey60") +
+  geom_segment(data = temp, mapping = aes(x = 2, y = value[1], xend = 2, yend = value[2]), arrow = arrow(length = unit(0.2, "cm"))) +
+  geom_segment(data = temp, mapping = aes(x = 3, y = value[1], xend = 3, yend = value[3]), arrow = arrow(length = unit(0.2, "cm"))) +
+  geom_hline(yintercept = 0) +
+  annotate("text", x = 1.3, y = temp$value[1] / 2, label = temp$value[1]) +
+  annotate("text", x = 2.3, y = sum(temp$value[1:2]) / 2, label = temp$coef[2]) +
+  annotate("text", x = 3.3, y = sum(temp$value[c(1, 3)]) / 2, label = formatC(temp$coef[3], digits = 1, format = "f")) +
+  ylim(0, 75)
 
-A+ggtitle("A - default,\nBM reference") + B+ggtitle("B - releveled,\nHIP reference")
+A + ggtitle("A - default,\nBM reference") + B + ggtitle("B - releveled,\nHIP reference")
 ```
 
 
@@ -266,14 +279,14 @@ e.g. *The foam index varied significantly among groups (ANOVA: F = `r formatC(x$
 An alternative way to approach these comparisons between groups is to use something called a **post-hoc multiple comparison test**. The words "post-hoc" mean "after the event" -- i.e. after the ANOVA in this case -- while the "multiple comparison" refers to the (potentially many) pairwise comparisons that you would like to make with an ANOVA. One of the most widely used post-hoc tests is called Tukey’s Honestly Significant Difference (Tukey HSD) test. There is a convenient R package called `agricolae` that will do these for you.
 
 ```{r eval=FALSE}
-#You only need to do this once!
+# You only need to do this once!
 install.packages("agricolae")
 ```
 When you have the package installed, you can load it (using `library`). Then you can run the Tukey HSD test using the function `HSD.test`. The first argument for the function is the name of the model, followed by the name of the variable you are comparing (in this case `method`) and finally `console = TRUE` tells the function to print the output to your computer screen.
 
 ```{r}
 library(agricolae)
-HSD.test(foam_mod2, "method", console=TRUE)
+HSD.test(foam_mod2, "method", console = TRUE)
 ```
 
 The output is long-winded, and the main thing to look at is the part at the end. The key to understanding this is actually written in the output, "`Treatments with the same letter are not significantly different`". 
@@ -303,41 +316,41 @@ If that doesn't make sense yet, picture the case where the treatment-specific me
 ```{r ANOVAbyhand, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
 
 overallMean <- espresso %>%
-summarise(overallMean = mean(foamIndx)) %>%
-pull()
+  summarise(overallMean = mean(foamIndx)) %>%
+  pull()
 
-#Add index and group means to the data
-espressoAugmented <- left_join(espresso,
-espresso %>%
-group_by(method) %>%
-summarise(groupMean = mean(foamIndx))) %>% 
-mutate(n = 1:n())
-
-
-#Plot A = total sum of squares (residuals from overall mean)
-SSTotalPlot <- ggplot(espressoAugmented,aes(x=n,y=foamIndx,colour=method)) +
-geom_segment(aes(xend = n, yend = overallMean),alpha=0.4) +
-geom_point() + 
-geom_hline(yintercept = overallMean) + 
-xlab("Index")+
-NULL
+# Add index and group means to the data
+espressoAugmented <- left_join(
+  espresso,
+  espresso %>%
+    group_by(method) %>%
+    summarise(groupMean = mean(foamIndx))
+) %>%
+  mutate(n = 1:n())
 
 
-#Plot B = error sum of squares (residuals from group means)
-SSErrorPlot <- ggplot(espressoAugmented,aes(x=n,y=foamIndx,colour=method)) +
-geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(xend = n, yend = groupMean,colour = method),alpha=0.4) +
-geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(xend = n, yend = groupMean,colour = method),alpha=0.4) +
-geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(xend = n, yend = groupMean,colour = method),alpha=0.4) +
-geom_point() + 
-geom_segment(data = espressoAugmented %>% filter(method == "BM"),aes(x = min(n),y=mean(foamIndx),xend=max(n),yend=mean(foamIndx))) +
-geom_segment(data = espressoAugmented %>% filter(method == "HIP"),aes(x = min(n),y=mean(foamIndx),xend=max(n),yend=mean(foamIndx))) +
-geom_segment(data = espressoAugmented %>% filter(method == "IES"),aes(x = min(n),y=mean(foamIndx),xend=max(n),yend=mean(foamIndx))) +
-xlab("Index")+
-NULL
+# Plot A = total sum of squares (residuals from overall mean)
+SSTotalPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = method)) +
+  geom_segment(aes(xend = n, yend = overallMean), alpha = 0.4) +
+  geom_point() +
+  geom_hline(yintercept = overallMean) +
+  xlab("Index") +
+  NULL
+
+
+# Plot B = error sum of squares (residuals from group means)
+SSErrorPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = method)) +
+  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_point() +
+  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  xlab("Index") +
+  NULL
 
 SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError")
-
-
 ```
 
 
@@ -348,24 +361,24 @@ Here goes...
 First, calculate the total sum of squares:
 
 ```{r}
-(SSTotal = sum((overallMean-espresso$foamIndx)^2))
+(SSTotal <- sum((overallMean - espresso$foamIndx)^2))
 ```
 
 Now calculate the group-specific means:
 
 ```{r}
-(groupMeans<-espresso %>%
-group_by(method) %>%
-summarise(groupMean = mean(foamIndx)) %>%
-pull(groupMean))
+(groupMeans <- espresso %>%
+  group_by(method) %>%
+  summarise(groupMean = mean(foamIndx)) %>%
+  pull(groupMean))
 ```
 
 Now add those group-specific mean values to the dataset using `left_join` so that you can calculate the group-specific errors.
 
 ```{r}
-espresso <- left_join(espresso,espresso %>%
-                        group_by(method) %>%
-                        summarise(groupMean = mean(foamIndx))) %>%
+espresso <- left_join(espresso, espresso %>%
+  group_by(method) %>%
+  summarise(groupMean = mean(foamIndx))) %>%
   mutate(groupSS = (foamIndx - groupMean)^2)
 
 head(espresso)
@@ -375,8 +388,8 @@ Then, to calculate the errors:
 
 ```{r}
 (SSError <- espresso %>%
-summarise(sum(groupSS)) %>%
-pull())
+  summarise(sum(groupSS)) %>%
+  pull())
 ```
 
 
@@ -394,20 +407,20 @@ We need to take account of sample size (degrees of freedom) by dividing these su
 Now we need to correct for degrees of freedom, which will give us variances.
 
 ```{r}
-(meanSSTreatment <- SSTreatment/2)
-(meanSSError <- SSError/24)
+(meanSSTreatment <- SSTreatment / 2)
+(meanSSError <- SSError / 24)
 ```
 
 The F-statistic is then the ratio of these values.
 
 ```{r}
-(Fstat <- meanSSTreatment/meanSSError)
+(Fstat <- meanSSTreatment / meanSSError)
 ```
 
 We can "look up" the p-value associated with this F-statistic using the `pf` function (`pf` stands for probability of f) like this:
 
 ```{r}
-1-pf(Fstat,df1=2,df2=24)
+1 - pf(Fstat, df1 = 2, df2 = 24)
 ```
 
 As you can see, the method is a bit laborious and time consuming but it is conceptually fairly straightforward - it all hinges on the ratio of variation due to treatment effect vs. overall variation. Signal and noise.
@@ -423,47 +436,48 @@ overallMean <- espressoShuffled %>%
   summarise(overallMean = mean(foamIndx)) %>%
   pull()
 
-#Add index and group means to the data
-espressoAugmented <- left_join(espressoShuffled,
-                               espressoShuffled %>%
-                                 group_by(method) %>%
-                                 summarise(groupMean = mean(foamIndx))) %>% 
+# Add index and group means to the data
+espressoAugmented <- left_join(
+  espressoShuffled,
+  espressoShuffled %>%
+    group_by(method) %>%
+    summarise(groupMean = mean(foamIndx))
+) %>%
   mutate(n = 1:n())
 
 
-#Plot A = total sum of squares (residuals from overall mean)
-SSTotalPlot <- ggplot(espressoAugmented,aes(x=n,y=foamIndx,colour=method)) +
-  geom_segment(aes(xend = n, yend = overallMean),alpha=0.4) +
-  geom_point() + 
-  geom_hline(yintercept = overallMean) + 
-  xlab("Index")+
+# Plot A = total sum of squares (residuals from overall mean)
+SSTotalPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = method)) +
+  geom_segment(aes(xend = n, yend = overallMean), alpha = 0.4) +
+  geom_point() +
+  geom_hline(yintercept = overallMean) +
+  xlab("Index") +
   NULL
 
 
-#Plot B = error sum of squares (residuals from group means)
-SSErrorPlot <- ggplot(espressoAugmented,aes(x=n,y=foamIndx,colour=method)) +
-  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(xend = n, yend = groupMean,colour = method),alpha=0.4) +
-  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(xend = n, yend = groupMean,colour = method),alpha=0.4) +
-  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(xend = n, yend = groupMean,colour = method),alpha=0.4) +
-  geom_point() + 
-  geom_segment(data = espressoAugmented %>% filter(method == "BM"),aes(x = min(n),y=mean(foamIndx),xend=max(n),yend=mean(foamIndx))) +
-  geom_segment(data = espressoAugmented %>% filter(method == "HIP"),aes(x = min(n),y=mean(foamIndx),xend=max(n),yend=mean(foamIndx))) +
-  geom_segment(data = espressoAugmented %>% filter(method == "IES"),aes(x = min(n),y=mean(foamIndx),xend=max(n),yend=mean(foamIndx))) +
-  xlab("Index")+
+# Plot B = error sum of squares (residuals from group means)
+SSErrorPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = method)) +
+  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_point() +
+  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  xlab("Index") +
   NULL
 
 xx <- SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError")
-
 ```
 
 ## Exercise: Apple tree crop yield
 
 <!-- to produce the dataset
 ```{r}
-#require(agridat)
-#apples <- agridat::archbold.apple %>%
+# require(agridat)
+# apples <- agridat::archbold.apple %>%
 #  select(spacing,yield)
-#write.csv(file= "CourseData/apples.csv",x = apples,row.names = FALSE)
+# write.csv(file= "CourseData/apples.csv",x = apples,row.names = FALSE)
 ```
 -->
 
@@ -501,9 +515,9 @@ apples <- apples %>%
 
 <!--
 ```{r}
-ggplot(apples,aes(x = spacing,y = yield)) +
-  geom_boxplot() + 
-  geom_jitter(width=0.2) +
+ggplot(apples, aes(x = spacing, y = yield)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2) +
   ylab("Yield (kg per tree)")
 ```
 -->
@@ -512,7 +526,7 @@ ggplot(apples,aes(x = spacing,y = yield)) +
 
 <!--
 ```{r}
-apple_mod <- lm(yield~spacing,data = apples)
+apple_mod <- lm(yield ~ spacing, data = apples)
 ```
 -->
 
@@ -546,7 +560,7 @@ summary(apple_mod)
 <!--
 ```{r}
 library(agricolae)
-HSD.test(apple_mod,"spacing",console=TRUE)
+HSD.test(apple_mod, "spacing", console = TRUE)
 ```
 -->
 
@@ -558,4 +572,3 @@ HSD.test(apple_mod,"spacing",console=TRUE)
 ```{block, type="do-something"}
 If you get this far, try using the ANOVA approach on one of the previous t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the `t.test` function or the ANOVA approach with `lm`.
 ```
-

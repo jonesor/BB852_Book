@@ -16,7 +16,7 @@ You should also make sure that the `Year` column is recognised as being a numeri
 You should end up with a dataset with three columns as described above.
 
 ```{r}
-eggDates <- eggDates %>% pivot_longer(cols = starts_with("y"),names_to = "Year",values_to = "day")
+eggDates <- eggDates %>% pivot_longer(cols = starts_with("y"), names_to = "Year", values_to = "day")
 
 head(eggDates)
 ```
@@ -25,8 +25,8 @@ head(eggDates)
 
 ```{r}
 eggDates <- eggDates %>%
-  mutate(Year = gsub(pattern = "y",replacement = "", Year)) %>%
-  mutate(Year = as.numeric(Year))         
+  mutate(Year = gsub(pattern = "y", replacement = "", Year)) %>%
+  mutate(Year = as.numeric(Year))
 head(eggDates)
 ```
 
@@ -35,7 +35,7 @@ head(eggDates)
 ```{r}
 meanEgg <- eggDates %>%
   group_by(Year) %>%
-  summarise(meanEggDate = mean(day,na.rm=TRUE))
+  summarise(meanEggDate = mean(day, na.rm = TRUE))
 
 meanEgg
 ```
@@ -67,7 +67,7 @@ head(weather)
 7. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
 
 ```{r}
-joinedData <- left_join(meanEgg,weather,c("Year" = "YEAR"))
+joinedData <- left_join(meanEgg, weather, c("Year" = "YEAR"))
 head(joinedData)
 ```
 
@@ -77,7 +77,7 @@ head(joinedData)
 8. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
 
 ```{r}
-plot(joinedData$meanAprilTemp,joinedData$meanEggDate)
+plot(joinedData$meanAprilTemp, joinedData$meanEggDate)
 ```
 
 Now you should be able to answer the question we started with: is laying date associated with spring temperatures? Yes, there looks to be a negative relationship between temperature and egg laying date.

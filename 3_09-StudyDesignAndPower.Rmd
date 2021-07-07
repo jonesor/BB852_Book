@@ -57,13 +57,13 @@ Suppose that other studies on a different species has shown that a high protein 
 
 ```{r,echo = -1,cache=TRUE}
 set.seed(142)
-(treatment <- rnorm(n = 10,mean = 14.4,sd = 3))
+(treatment <- rnorm(n = 10, mean = 14.4, sd = 3))
 ```
 
 Now we have two simulated samples, and we can conduct a t-test on those samples and store the result:
 
 ```{r}
-res <- t.test(control,treatment)
+res <- t.test(control, treatment)
 ```
 
 We can print this result to the screen like this:
@@ -97,9 +97,12 @@ Now we can "wrap" a `t.test` on simulated control and treatment data sets within
 
 ```{r, echo=-1, cache=TRUE}
 set.seed(123)
-replicate(5,
-  t.test(rnorm(sampleSize,controlMean,sdValue),
-         rnorm(sampleSize,treatmentMean,sdValue))$p.value
+replicate(
+  5,
+  t.test(
+    rnorm(sampleSize, controlMean, sdValue),
+    rnorm(sampleSize, treatmentMean, sdValue)
+  )$p.value
 )
 ```
 
@@ -109,15 +112,19 @@ I don't want to print 1000 p-values to the screen so I will collect them in a ve
 
 ```{r,echo=-1,cache=TRUE}
 set.seed(123)
-powerResults <- replicate(1000,
-                          t.test(rnorm(sampleSize,controlMean,sdValue),
-                                 rnorm(sampleSize,treatmentMean,sdValue))$p.value)
+powerResults <- replicate(
+  1000,
+  t.test(
+    rnorm(sampleSize, controlMean, sdValue),
+    rnorm(sampleSize, treatmentMean, sdValue)
+  )$p.value
+)
 ```
 
 I can now ask how many of the p-values stored in `powerResults` were less than 0.05.
 
 ```{r}
-sum(powerResults<0.05)
+sum(powerResults < 0.05)
 ```
 
 So in this case, `r sum(powerResults<0.05)` of the 1000 tests were correct. The statistical power can be calculated by turning this into a percentage - i.e. Power = `r (sum(powerResults<0.05)/1000)*100`%.
@@ -129,14 +136,17 @@ set.seed(123)
 controlMean <- 12
 treatmentMean <- 14.4
 sdValue <- 3
-sampleSize <- 15 #Increased
+sampleSize <- 15 # Increased
 
-powerResults <- replicate(1000,
-                          t.test(rnorm(sampleSize,controlMean,sdValue),
-                                 rnorm(sampleSize,treatmentMean,sdValue))$p.value)
+powerResults <- replicate(
+  1000,
+  t.test(
+    rnorm(sampleSize, controlMean, sdValue),
+    rnorm(sampleSize, treatmentMean, sdValue)
+  )$p.value
+)
 
-(sum(powerResults<0.05)/1000)*100
-
+(sum(powerResults < 0.05) / 1000) * 100
 ```
 
 The power has increased to `r (sum(powerResults<0.05)/1000)*100`%.
@@ -180,22 +190,27 @@ treatmentMean <- 14.4
 sdValue <- 3
 
 # Function to do the t-test
-pwr <- function(n){sum(replicate(1000,
-                            t.test(rnorm(n,controlMean,sdValue),
-                                   rnorm(n,treatmentMean,sdValue))$p.value)<0.05)/1000}
+pwr <- function(n) {
+  sum(replicate(
+    1000,
+    t.test(
+      rnorm(n, controlMean, sdValue),
+      rnorm(n, treatmentMean, sdValue)
+    )$p.value
+  ) < 0.05) / 1000
+}
 
 # map_dbl applying the function for every value of simulData$sampleSize
-simulData$Power <- purrr::map_dbl(simulData$sampleSize,pwr)
-
+simulData$Power <- purrr::map_dbl(simulData$sampleSize, pwr)
 ```
 These results can then be graphed with `ggplot`.
 
 ```{r}
-#Plot the output
-ggplot(simulData,aes(x = sampleSize,y = Power)) + 
-  geom_point() + 
-  geom_line() + 
-  geom_hline(yintercept = 0.8,linetype="dashed")
+# Plot the output
+ggplot(simulData, aes(x = sampleSize, y = Power)) +
+  geom_point() +
+  geom_line() +
+  geom_hline(yintercept = 0.8, linetype = "dashed")
 ```
 
 ## Exercise 1: Snails on the move
@@ -209,11 +224,15 @@ For your masters project you hypothesise that the boring snail will cover more d
 <!--
 ```{r,echo = -1,cache=TRUE}
 set.seed(123)
-sampleSize <- 40 #vary this until power > 0.8
-result <- replicate(1000,
-          t.test(rnorm(sampleSize,mean  = 7.4,sd = 2.76), 
-                 rnorm(sampleSize,mean  = 7.4*1.25,sd = 2.76))$p.value)
-sum(result<0.05)/1000
+sampleSize <- 40 # vary this until power > 0.8
+result <- replicate(
+  1000,
+  t.test(
+    rnorm(sampleSize, mean = 7.4, sd = 2.76),
+    rnorm(sampleSize, mean = 7.4 * 1.25, sd = 2.76)
+  )$p.value
+)
+sum(result < 0.05) / 1000
 
 # You should find that you need a sample size of about 40 per group
 ```
@@ -233,11 +252,15 @@ A research institute has agreed to you carrying out this study for your masters 
 
 ```{r,echo =-1,cache=TRUE}
 set.seed(123)
-diff <- 185 #Vary this to give a difference to the 2nd group in the t-test
-result <- replicate(1000,
-          t.test(rnorm(25,mean  = 600,sd = 145), 
-                 rnorm(8,mean  = 600-diff,sd = 145))$p.value)
-sum(result<0.05)/1000
+diff <- 185 # Vary this to give a difference to the 2nd group in the t-test
+result <- replicate(
+  1000,
+  t.test(
+    rnorm(25, mean = 600, sd = 145),
+    rnorm(8, mean = 600 - diff, sd = 145)
+  )$p.value
+)
+sum(result < 0.05) / 1000
 
 # You should find that you could detect a difference of about 185g
 # or a mean for old animals of 415g which is 70% of the young animals
@@ -245,20 +268,3 @@ sum(result<0.05)/1000
 ```
 
 -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

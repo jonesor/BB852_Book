@@ -17,16 +17,16 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 Import the data, called `cholesterol.csv`. 
 
 ```{r, echo=TRUE}
-ch <-read.csv("CourseData/cholesterol.csv")
+ch <- read.csv("CourseData/cholesterol.csv")
 ```
 
 Let's first take a look at the data by plotting it. I will first plot a boxplot first, and add the jittered points for clarity.
 
 ```{r, echo = -1, cache=TRUE}
 set.seed(42)
-ggplot(ch,aes(x=Treatment,y=Cholesterol)) + 
-      geom_boxplot()+
-    geom_jitter(colour="grey",width=.1)
+ggplot(ch, aes(x = Treatment, y = Cholesterol)) +
+  geom_boxplot() +
+  geom_jitter(colour = "grey", width = .1)
 ```
 
 It looks like there might be a difference between the groups.
@@ -39,8 +39,8 @@ The *alternative hypothesis* is that the mean of the drug group should be less t
 There are a few ways of doing this. In base-R you can use the function `tapply` ("table apply"), followed by `diff` ("difference").
 
 ```{r}
-tapply(ch$Cholesterol,ch$Treatment,mean)
-diff(tapply(ch$Cholesterol,ch$Treatment,mean))
+tapply(ch$Cholesterol, ch$Treatment, mean)
+diff(tapply(ch$Cholesterol, ch$Treatment, mean))
 ```
 
 Because we are focusing on learning `dplyr`, you can also calculate the means like like this:
@@ -74,7 +74,8 @@ Let's try that one time:
 set.seed(666)
 
 ch %>%
-  mutate(Treatment = sample(Treatment)) %>% #shuffle the Treatment data
+  mutate(Treatment = sample(Treatment)) %>%
+  # shuffle the Treatment data
   group_by(Treatment) %>%
   summarise(mean = mean(Cholesterol)) %>%
   pull(mean) %>%
@@ -90,13 +91,14 @@ Let's try it first 10 times to see how it works:
 
 ```{r, warning=FALSE, cache=TRUE, echo=-1}
 set.seed(42)
-replicate(10,
-            ch %>%
-            mutate(Treatment = sample(Treatment)) %>%
-            group_by(Treatment) %>%
-            summarise(mean = mean(Cholesterol)) %>%
-            pull(mean) %>%
-            diff()
+replicate(
+  10,
+  ch %>%
+    mutate(Treatment = sample(Treatment)) %>%
+    group_by(Treatment) %>%
+    summarise(mean = mean(Cholesterol)) %>%
+    pull(mean) %>%
+    diff()
 )
 ```
 
@@ -108,14 +110,15 @@ In the commands below I create 1000 replicates of the shuffled differences. I wa
 ```{r replicate, warning=FALSE, cache=TRUE, echo = -1}
 set.seed(43)
 shuffledData <- data.frame(rep = 1:1000) %>%
-  mutate(shuffledDiffs = replicate(1000,
-            ch %>%
-            mutate(Treatment = sample(Treatment)) %>%
-            group_by(Treatment) %>%
-            summarise(mean = mean(Cholesterol)) %>%
-            pull(mean) %>%
-            diff()
-            ))
+  mutate(shuffledDiffs = replicate(
+    1000,
+    ch %>%
+      mutate(Treatment = sample(Treatment)) %>%
+      group_by(Treatment) %>%
+      summarise(mean = mean(Cholesterol)) %>%
+      pull(mean) %>%
+      diff()
+  ))
 ```
 
 
@@ -140,9 +143,9 @@ I suggest to put this code at the beginning of your script if the messages annoy
 Before formally testing the hypothesis it is useful to visualise what we have created in a histogram. I can use `ggplot` to do this, to create a plot called `p1`. Note that by putting the command in brackets R will both create the plot object, and print it to the screen. Note that because the shuffling of the data is random process your graph will look slightly different to mine.
 
 ```{r, message = FALSE}
-(p1<-ggplot(shuffledData,aes(x=shuffledDiffs)) + 
-  geom_histogram() + 
-  theme_minimal()+
+(p1 <- ggplot(shuffledData, aes(x = shuffledDiffs)) +
+  geom_histogram() +
+  theme_minimal() +
   xlab("Drug mean - Control mean"))
 ```
 
@@ -158,7 +161,7 @@ Recall that the alternative hypothesis is that the observed difference (control 
 You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.
 
 ```{r}
-table(shuffledData$shuffledDiffs<=observedDiff)
+table(shuffledData$shuffledDiffs <= observedDiff)
 ```
 So that is `r sum(shuffledData$shuffledDiffs<=observedDiff)` of the shuffled values that are equal to or less than the observed difference. The p-value is then simply `r sum(shuffledData$shuffledDiffs<=observedDiff)`/1000 = `r sum(shuffledData$shuffledDiffs<=observedDiff)/1000`. 
 
@@ -180,7 +183,7 @@ The paired randomisation test is a one-sample randomisation test where the distr
 I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. Everitt collected data on weights of people before and after therapy. These data are in the file `anorexiaCBT.csv`
 
 ```{r}
-#Remember to set your working directory first
+# Remember to set your working directory first
 an <- read.csv("CourseData/anorexiaCBT.csv")
 head(an)
 ```
@@ -188,33 +191,35 @@ head(an)
 These data are arranged in a so-called "wide" format. To make plotting and analysis data need to be rearranged into a tidy "long" format so that each observation is on a row. We can do this using the `pivot_longer` function:
 
 ```{r}
-an <- an %>% 
-  pivot_longer(cols = starts_with("Week"),names_to = "time",values_to = "weight")
+an <- an %>%
+  pivot_longer(cols = starts_with("Week"), names_to = "time", values_to = "weight")
 head(an)
 ```
 
 We should *always* plot the data. So here goes.
 
 ```{r, message=FALSE}
-(p1<-ggplot(an,aes(x=weight,fill=time)) +
-   geom_histogram(position = "identity", alpha=.7)
- )
+(p1 <- ggplot(an, aes(x = weight, fill = time)) +
+  geom_histogram(position = "identity", alpha = .7)
+)
 ```
 
 Another useful way to plot this data is to use an **interaction plot**. In these plots the matched pairs (grouped by `Subject`) are joined together with lines. You can plot one like this:
 
 ```{r, message=FALSE}
-(p2<-ggplot(an,aes(x=time,y=weight,group=Subject)) +
-   geom_point() + 
-   geom_line(size=1, alpha=0.5)
- )
+(p2 <- ggplot(an, aes(x = time, y = weight, group = Subject)) +
+  geom_point() +
+  geom_line(size = 1, alpha = 0.5)
+)
 ```
 
 ```{r, echo=FALSE}
-an2 <- an %>% group_by(Subject) %>% mutate(time = sample(time))
-p2.shuffled <-ggplot(an2,aes(x=time,y=weight,group=Subject)) +
-   geom_point() + 
-   geom_line(size=1, alpha=0.5)
+an2 <- an %>%
+  group_by(Subject) %>%
+  mutate(time = sample(time))
+p2.shuffled <- ggplot(an2, aes(x = time, y = weight, group = Subject)) +
+  geom_point() +
+  geom_line(size = 1, alpha = 0.5)
 ```
 
 
@@ -223,8 +228,8 @@ What we are interested in is whether there has been a change in weight of the su
 The starting point for the analysis is to calculate the observed change in weight.
 
 ```{r, warning=FALSE}
-an <- an %>% 
-  group_by(Subject) %>% 
+an <- an %>%
+  group_by(Subject) %>%
   summarise(change = diff(weight))
 ```
 You have created a dataset that looks like this:
@@ -251,7 +256,7 @@ set.seed(123)
 head(an)
 
 anShuffled <- an %>%
-  mutate(sign = sample(c(1,-1),size = nrow(an),replace = TRUE)) %>%
+  mutate(sign = sample(c(1, -1), size = nrow(an), replace = TRUE)) %>%
   mutate(shuffledChange = change * sign)
 ```
 
@@ -266,7 +271,7 @@ We need to calculate the mean of this shuffled vector. We can do this by `pull` 
 ```{r, echo = -1, cache = TRUE}
 set.seed(42)
 an %>%
-  mutate(sign = sample(c(1,-1),size = nrow(an),replace = TRUE)) %>%
+  mutate(sign = sample(c(1, -1), size = nrow(an), replace = TRUE)) %>%
   mutate(shuffledChange = change * sign) %>%
   pull(shuffledChange) %>%
   mean()
@@ -276,12 +281,14 @@ Now we will build a null distribution of changes in weight by repeating this 100
 
 ```{r, cache=TRUE, echo=-1}
 set.seed(42)
-nullDist = data.frame(change =
-                        replicate(1000,an %>%
-                                    mutate(sign = sample(c(1,-1),size = nrow(an),replace = TRUE)) %>%
-                                    mutate(shuffledChange = change * sign) %>%
-                                    pull(shuffledChange) %>%
-                                    mean())) 
+nullDist <- data.frame(
+  change =
+    replicate(1000, an %>%
+      mutate(sign = sample(c(1, -1), size = nrow(an), replace = TRUE)) %>%
+      mutate(shuffledChange = change * sign) %>%
+      pull(shuffledChange) %>%
+      mean())
+)
 ```
 
 
@@ -289,7 +296,7 @@ nullDist = data.frame(change =
 ### Null distribution
 
 ```{r, message=FALSE}
-(nullDistPlot <- ggplot(nullDist,aes(x=change)) +
+(nullDistPlot <- ggplot(nullDist, aes(x = change)) +
   geom_histogram())
 ```
 
@@ -304,7 +311,7 @@ nullDistPlot + geom_vline(xintercept = obsChange)
 The formal test of significance then works by asking how many of the null distribution replicates are as extreme as the observed change. 
 
 ```{r}
-table(nullDist$change>=obsChange)
+table(nullDist$change >= obsChange)
 ```
 So we can see that `r table(nullDist$change>=obsChange)[2]` of `r sum(table(nullDist$change>=obsChange))` replicates were greater than or equal to the observed change. This translates to a p-value of `r table(nullDist$change>=obsChange)[2]/sum(table(nullDist$change>=obsChange))`. We can therefore say that the observed change in weight after CBT was significantly greater than what we would expect from chance.
 
@@ -346,10 +353,3 @@ The data are called `herculesBeetle.csv` and can be found via the course data Dr
 12. Obtain the p-value for the hypothesis test described above. (1) how many of the observed differences are greater than or equal to the shuffled differences in the null distribution. (2) what is this expressed as a proportion of the number of replicates.
 
 13. Summarise your result as in a report. Describe the method, followed by the result and conclusion.
-
-
-
-
-
-
-

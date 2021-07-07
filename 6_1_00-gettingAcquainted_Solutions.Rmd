@@ -21,21 +21,21 @@ summary(df$nSpecies)
 3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)
 
 ```{r}
-1975-min(df$Year)
-1975-max(df$Year)
+1975 - min(df$Year)
+1975 - max(df$Year)
 ```
 
 4. Plot the relationship between `Year` and `nSpecies` as a scatterplot using base-R graphics (using the `plot` function).
 
 ```{r}
-plot(df$Year,df$nSpecies)
+plot(df$Year, df$nSpecies)
 ```
 
 5. The patern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Replot your results.
 
 ```{r}
-df$Age <- 1975-df$Year
-plot(df$Age,df$nSpecies)
+df$Age <- 1975 - df$Year
+plot(df$Age, df$nSpecies)
 ```
 
 
@@ -46,4 +46,3 @@ If you recall that the average species richness pre-development was about 3.5 sp
 7. Export your plots and paste them into a Word Document.
 
 You can do this with several methods. My favourite *quick* method is to click the Export button > Copy to Clipboard, resize the plot so it looks nice, then click Copy Plot. Finally, paste into Word with Cntrl (or Cmd) + V.
-

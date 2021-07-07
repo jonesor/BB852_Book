@@ -8,83 +8,92 @@ Some of these different possible outcomes of this type of analysis are illustrat
 
 ```{r ANCOVApossibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
 
-fakeData <- expand.grid(contVar = c(1,5),categVar = c("A","B"))
+fakeData <- expand.grid(contVar = c(1, 5), categVar = c("A", "B"))
 
-#No effect of contVar nor categVar
-A<- ggplot(fakeData %>% 
-         mutate(y = c(5,5,5.1,5.1)),
-       aes(x =contVar,y = y, group=categVar,colour=categVar)) + 
-    geom_line(size=2) +
-    ylim(0,10)+
-  ggtitle("A) cont = N; categ = N; int = N")+
-  theme(axis.text.x = element_blank()) + 
-  theme(axis.text.y = element_blank()) + 
+# No effect of contVar nor categVar
+A <- ggplot(
+  fakeData %>%
+    mutate(y = c(5, 5, 5.1, 5.1)),
+  aes(x = contVar, y = y, group = categVar, colour = categVar)
+) +
+  geom_line(size = 2) +
+  ylim(0, 10) +
+  ggtitle("A) cont = N; categ = N; int = N") +
+  theme(axis.text.x = element_blank()) +
+  theme(axis.text.y = element_blank()) +
   NULL
 
-#Effect of contVar but not categVar
-B<- ggplot(fakeData %>% 
-              mutate(y = c(2.5,7.5,2.6,7.6)),
-            aes(x =contVar,y = y, group=categVar,colour=categVar)) + 
-    geom_line(size=2) +
-    ylim(0,10)+
-  ggtitle("B) cont = Y; categ = N; int = N")+
-  theme(axis.text.x = element_blank()) + 
-  theme(axis.text.y = element_blank()) + 
-  NULL
-
-
-#No effect of contVar but effect of categVar
-C<- ggplot(fakeData %>% 
-              mutate(y = c(2.5,2.5,7.6,7.6)),
-            aes(x =contVar,y = y, group=categVar,colour=categVar)) + 
-    geom_line(size=2) +
-    ylim(0,10)+
-  ggtitle("C) cont = N; categ = Y; int = N")+
-  theme(axis.text.x = element_blank()) + 
-  theme(axis.text.y = element_blank()) + 
+# Effect of contVar but not categVar
+B <- ggplot(
+  fakeData %>%
+    mutate(y = c(2.5, 7.5, 2.6, 7.6)),
+  aes(x = contVar, y = y, group = categVar, colour = categVar)
+) +
+  geom_line(size = 2) +
+  ylim(0, 10) +
+  ggtitle("B) cont = Y; categ = N; int = N") +
+  theme(axis.text.x = element_blank()) +
+  theme(axis.text.y = element_blank()) +
   NULL
 
 
-#No effect of contVar or categVar, but interaction effect
-D<- ggplot(fakeData %>% 
-              mutate(y = c(7.6,2.5,2.5,7.6)),
-            aes(x =contVar,y = y, group=categVar,colour=categVar)) + 
-    geom_line(size=2) +
-    ylim(0,10)+
-  ggtitle("D) cont = N; categ = N; int = Y")+
-  theme(axis.text.x = element_blank()) + 
-  theme(axis.text.y = element_blank()) + 
+# No effect of contVar but effect of categVar
+C <- ggplot(
+  fakeData %>%
+    mutate(y = c(2.5, 2.5, 7.6, 7.6)),
+  aes(x = contVar, y = y, group = categVar, colour = categVar)
+) +
+  geom_line(size = 2) +
+  ylim(0, 10) +
+  ggtitle("C) cont = N; categ = Y; int = N") +
+  theme(axis.text.x = element_blank()) +
+  theme(axis.text.y = element_blank()) +
   NULL
 
 
-#Effect of both contVar and categVar, AND interaction effect
-E<- ggplot(fakeData %>% 
-              mutate(y = c(2.6,9.5,2.5,5.0)),
-            aes(x =contVar,y = y, group=categVar,colour=categVar)) + 
-    geom_line(size=2) +
-    ylim(0,10)+
-  ggtitle("E) cont = Y; categ = Y; int = Y")+
-  theme(axis.text.x = element_blank()) + 
-  theme(axis.text.y = element_blank()) + 
+# No effect of contVar or categVar, but interaction effect
+D <- ggplot(
+  fakeData %>%
+    mutate(y = c(7.6, 2.5, 2.5, 7.6)),
+  aes(x = contVar, y = y, group = categVar, colour = categVar)
+) +
+  geom_line(size = 2) +
+  ylim(0, 10) +
+  ggtitle("D) cont = N; categ = N; int = Y") +
+  theme(axis.text.x = element_blank()) +
+  theme(axis.text.y = element_blank()) +
   NULL
 
 
-#Effect of both contVar and categVar, AND interaction effect
-Fa<- ggplot(fakeData %>% 
-              mutate(y = c(2.5,5.0,2.6,9.5)),
-            aes(x =contVar,y = y, group=categVar,colour=categVar)) + 
-    geom_line(size=2) +
-    ylim(0,10)+
-  ggtitle("F) cont = Y; categ = Y; int = Y")+
-  theme(axis.text.x = element_blank()) + 
-  theme(axis.text.y = element_blank()) + 
+# Effect of both contVar and categVar, AND interaction effect
+E <- ggplot(
+  fakeData %>%
+    mutate(y = c(2.6, 9.5, 2.5, 5.0)),
+  aes(x = contVar, y = y, group = categVar, colour = categVar)
+) +
+  geom_line(size = 2) +
+  ylim(0, 10) +
+  ggtitle("E) cont = Y; categ = Y; int = Y") +
+  theme(axis.text.x = element_blank()) +
+  theme(axis.text.y = element_blank()) +
   NULL
 
-#Plot the graphs using patchwork
-(A + B + C)/(D + E + Fa)
 
+# Effect of both contVar and categVar, AND interaction effect
+Fa <- ggplot(
+  fakeData %>%
+    mutate(y = c(2.5, 5.0, 2.6, 9.5)),
+  aes(x = contVar, y = y, group = categVar, colour = categVar)
+) +
+  geom_line(size = 2) +
+  ylim(0, 10) +
+  ggtitle("F) cont = Y; categ = Y; int = Y") +
+  theme(axis.text.x = element_blank()) +
+  theme(axis.text.y = element_blank()) +
+  NULL
 
-
+# Plot the graphs using patchwork
+(A + B + C) / (D + E + Fa)
 ```
 
 
@@ -104,13 +113,13 @@ We'll begin by plotting the data (Figure \@ref(fig:exampleANCOVA)).
 
 
 ```{r exampleANCOVA, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="ANCOVA on hand width vs. height data in males and females", fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>% 
+classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
-(A<-ggplot(classData,aes(x = HandWidth,y = Height,colour = Gender)) +
-  geom_point() + 
-  geom_smooth(method ="lm",se = FALSE)) #This shows the ANCOVA model 
-                                       #before we have even fit it!
+(A <- ggplot(classData, aes(x = HandWidth, y = Height, colour = Gender)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)) # This shows the ANCOVA model
+# before we have even fit it!
 ```
 
 
@@ -155,7 +164,7 @@ You can interpret the mean sum of squares column in terms of the amount of varia
 You would report from this table something like this:
 
 ```{r, echo=FALSE}
-x<- mod_A
+x <- mod_A
 ```
 
 Hand width and gender both explain a significant amount of the variation in height (ANCOVA - Handwidth: F =`r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = 1 and `r x$Df[4]`, p<0.001; Gender: `r formatC(x$"F value"[2], digits = 3, format = "f")`, d.f. = 1 and `r x$Df[4]`, p<0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand width and height are not significantly different (ANCOVA - `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = 1 and `r x$Df[4]`, p = `r formatC(x$"Pr(>F)"[3], digits = 3,format = "f")`.
@@ -188,8 +197,8 @@ We could add these equations to our reporting of the results.
 You could check these by using `geom_abline` to add lines with those equations to the plot (just as a "sanity check").
 
 ```{r, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht"}
-A + 
-  geom_abline(intercept = 155.27, slope = 1.75) + 
+A +
+  geom_abline(intercept = 155.27, slope = 1.75) +
   geom_abline(intercept = 171.26, slope = 1.09)
 ```
 
@@ -230,14 +239,14 @@ We want to predict heights across the range of hand widths (from 6.5cm to 11cm),
 We do this by creating a "fake" dataset to predict from using the useful function `expand.grid`. This function takes inputs from columns of data and "expands" them to ensure that all possible combinations are included.
 
 ```{r}
-predictData <- expand.grid(HandWidth = c(6.5,11),Gender = c("Male","Female"))
+predictData <- expand.grid(HandWidth = c(6.5, 11), Gender = c("Male", "Female"))
 predictData
 ```
 
 Now we can use these values to `predict` what the heights will be for those particular combinations of values. The arguments for the `predict` function are the model name, then `newdata = ` to give the function the data that you want to predict from. Here we can use the function to add the models predicted fitted value (`fit`) to the `predictData` object we just created.
 
 ```{r}
-predictData$Height <- predict(mod_B,newdata = predictData)
+predictData$Height <- predict(mod_B, newdata = predictData)
 predictData
 ```
 
@@ -247,14 +256,9 @@ You may wish to add an error ribbon to these lines. We will cover this in a late
 
 
 ```{r,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht"}
-ggplot(classData,aes(x = HandWidth,y = Height,colour = Gender)) +
-  geom_point() + 
-  geom_smooth(data = predictData,stat="identity")           
+ggplot(classData, aes(x = HandWidth, y = Height, colour = Gender)) +
+  geom_point() +
+  geom_smooth(data = predictData, stat = "identity")
 ```
 
 We could report this in the usual way but first saying something like: *"The interaction term was not significant (F = xxxx, d.f. 1 and xx, p = XXX) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender ... "*
-
-
-
-
-

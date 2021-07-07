@@ -16,7 +16,7 @@ Let's start with the  "Amniote Life History Database" ^[https://esajournals.onli
 
 
 ```{r}
-amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv",na.strings = "-999")
+amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv", na.strings = "-999")
 ```
 
 We can filter on the taxonomic `class` to subset to only mammals. Then, to address our question, we want data on generation time for mammals. Generation time is often measured as the average age at which females reproduce so we can get close to that with `female_maturity_d`. We will first `select` these columns, along with `genus` and `species`. We can combine these two taxonomic variables using `mutate` and `paste` to get our Latin binomial species name.
@@ -27,8 +27,10 @@ Finally, we can use `na.omit` to get rid of entries with missing values (which w
 
 ```{r}
 mammal <- amniote %>%
-  filter(class == "Mammalia") %>% #get the mammals only
-  select(genus, species, female_maturity_d) %>% #get useful columns 
+  filter(class == "Mammalia") %>%
+  # get the mammals only
+  select(genus, species, female_maturity_d) %>%
+  # get useful columns
   mutate(species = paste(genus, species)) %>%
   select(-genus) %>%
   mutate(logMaturity = log(female_maturity_d)) %>%
@@ -62,10 +64,11 @@ R treats categorical variables (`factor` variables) as alphabetical, but in this
 
 ```{r}
 redlist <- redlist %>%
-  mutate(species = paste(Genus, Species))%>%
+  mutate(species = paste(Genus, Species)) %>%
   select(species, Red.List.status) %>%
-  mutate(Red.List.status = factor(Red.List.status, 
-                                  levels = c("LC","NT","VU","EN","CR","EW","EX")))
+  mutate(Red.List.status = factor(Red.List.status,
+    levels = c("LC", "NT", "VU", "EN", "CR", "EW", "EX")
+  ))
 
 head(redlist)
 ```
@@ -73,7 +76,7 @@ head(redlist)
 Now we can combine this with the life history data from above using `left_join`. 
 
 ```{r}
-x <- left_join(mammal,redlist,by = "species")
+x <- left_join(mammal, redlist, by = "species")
 ```
 
 Let's take a look at what we have now:
@@ -91,14 +94,14 @@ I  then ensure that those levels are removed from the variable using `droplevels
 
 ```{r}
 x <- x %>%
-  filter(!Red.List.status %in% c("EX","EW")) %>%
+  filter(!Red.List.status %in% c("EX", "EW")) %>%
   droplevels()
 ```
 
 Let's now plot the data to answer the question.
 
 ```{r}
-plot(x$Red.List.status,x$logMaturity,ylab="Maturity")
+plot(x$Red.List.status, x$logMaturity, ylab = "Maturity")
 ```
 
 What can we see? If you focus on the median values, it looks like there is a weak positive relationship between this life history trait and threat status: animals with slower life histories tend to be more threatened.
@@ -111,12 +114,12 @@ To illustrate this I will use a data set on heights of men and women.
 
 ```{r, eval = TRUE,echo = FALSE,cache = TRUE}
 set.seed(1234)
-temp <- data.frame(place = rep(c("London", "Bristol"),each =15),heightMale = round(rnorm(30,175,4)),heightFemale = round(rnorm(30,160,4)))
-write.csv(temp,file = "CourseData/heights.csv",row.names = FALSE)
+temp <- data.frame(place = rep(c("London", "Bristol"), each = 15), heightMale = round(rnorm(30, 175, 4)), heightFemale = round(rnorm(30, 160, 4)))
+write.csv(temp, file = "CourseData/heights.csv", row.names = FALSE)
 ```
 
 ```{r}
-heights <- read.csv("CourseData/heights.csv") 
+heights <- read.csv("CourseData/heights.csv")
 ```
 Let's take a look:
 
@@ -130,8 +133,8 @@ There is a convenient function called `pivot_longer` in the `tidyr` package that
 You can "pipe" data into the funtion, then tell it which columns you would like to move, and then give it the name of the new column that contains data that **was** in the column heading, and the name of the column containing the data. 
 
 ```{r}
-newHeights <- heights %>% 
-  pivot_longer(cols = c(heightMale,heightFemale),names_to = c("Sex"),values_to = "Height")
+newHeights <- heights %>%
+  pivot_longer(cols = c(heightMale, heightFemale), names_to = c("Sex"), values_to = "Height")
 
 newHeights
 ```
@@ -141,9 +144,9 @@ We are nearly done. But this is not perfect because the names in the `Sex` colum
 So we can now complete the job with a `mutate` command, and make sure it is recognised as a categorical variable (a `factor`, like this:
 
 ```{r}
-newHeights <- heights %>% 
-  pivot_longer(cols = c(heightMale,heightFemale),names_to = c("Sex"),values_to = "Height") %>% 
-  mutate(Sex = gsub(pattern = "height",replacement = "",x = Sex)) %>% 
+newHeights <- heights %>%
+  pivot_longer(cols = c(heightMale, heightFemale), names_to = c("Sex"), values_to = "Height") %>%
+  mutate(Sex = gsub(pattern = "height", replacement = "", x = Sex)) %>%
   mutate(Sex = as.factor(Sex))
 
 newHeights
@@ -152,7 +155,7 @@ newHeights
 Now we can plot those data more easily
 
 ```{r}
-plot(newHeights$Sex,newHeights$Height)
+plot(newHeights$Sex, newHeights$Height)
 ```
 
 This data manipulation is useful surprisingly often.
@@ -160,40 +163,40 @@ This data manipulation is useful surprisingly often.
 ## Exercise: Temperature effects on egg laying dates
 
 ```{r prepare data, eval = TRUE, echo=FALSE, warning=FALSE, message=FALSE}
-#Here I am preparing the data for the course
+# Here I am preparing the data for the course
 sduBirds <- read.csv("CourseData/sduBirds.csv")
 
-#Process to get first egg date
-#First egg, data preparation ------------
+# Process to get first egg date
+# First egg, data preparation ------------
 sduBirds %>%
   mutate(nEggs = as.numeric(as.character(nEggs))) %>%
-  select(Timestamp,Year,Day,boxNumber,nEggs) %>%
+  select(Timestamp, Year, Day, boxNumber, nEggs) %>%
   filter(nEggs > 0) %>%
-  group_by(Year,boxNumber) %>%
-  filter(Day==min(Day)) %>%
-  ungroup()%>%
-  mutate(estimatedFirstEggDate = Day - nEggs, dummy=1) %>%
+  group_by(Year, boxNumber) %>%
+  filter(Day == min(Day)) %>%
+  ungroup() %>%
+  mutate(estimatedFirstEggDate = Day - nEggs, dummy = 1) %>%
   mutate(Year = as.factor(Year)) %>%
-  arrange(estimatedFirstEggDate)  %>%
-  arrange(Year)%>%
-  group_by(Year)%>%
-  mutate(cumulativeCount=cumsum(dummy)) %>% 
+  arrange(estimatedFirstEggDate) %>%
+  arrange(Year) %>%
+  group_by(Year) %>%
+  mutate(cumulativeCount = cumsum(dummy)) %>%
   select(-dummy) %>%
   ungroup() %>%
-  mutate(Year =as.numeric(as.character(Year))) %>%
+  mutate(Year = as.numeric(as.character(Year))) %>%
   select(boxNumber, Year, estimatedFirstEggDate) %>%
-  rename(firstEgg=estimatedFirstEggDate) %>%
-  arrange(boxNumber,Year) %>%
-  spread(Year,firstEgg) -> xx
+  rename(firstEgg = estimatedFirstEggDate) %>%
+  arrange(boxNumber, Year) %>%
+  spread(Year, firstEgg) -> xx
 
-names(xx)[2:ncol(xx)] <- paste0("y",names(xx)[2:ncol(xx)])
-write.csv(xx,"CourseData/eggDates.csv",row.names = FALSE)
+names(xx)[2:ncol(xx)] <- paste0("y", names(xx)[2:ncol(xx)])
+write.csv(xx, "CourseData/eggDates.csv", row.names = FALSE)
 
-#Prep weather
+# Prep weather
 weather <- read.csv("/Users/jones/Dropbox/_SDU_Birds/Data/SDUweather.csv") %>%
   select(YEAR, MONTH, DAY, TEMP)
 
-write.csv(weather,"CourseData/AarslevTemperature.csv",row.names = FALSE)
+write.csv(weather, "CourseData/AarslevTemperature.csv", row.names = FALSE)
 ```
 
 Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: *is egg laying date associated with spring temperature?* The idea here is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change. 
@@ -233,5 +236,3 @@ You should end up with a dataset with three columns as described above.
 7. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
 
 Now you should be able to answer the question we started with: is laying date associated with spring temperatures.
-
-

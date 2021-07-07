@@ -10,8 +10,8 @@ Carry out a two-sample t-test.
 set.seed(12)
 classData <- read.csv("CourseData/classData.csv")
 
-ggplot(classData,aes(x = Gender,y = Precision))+
-  geom_boxplot()+
+ggplot(classData, aes(x = Gender, y = Precision)) +
+  geom_boxplot() +
   geom_jitter(width = 0.2)
 ```
 
@@ -25,12 +25,12 @@ Alternative hypothesis - there is a significant difference between male and fema
 
 
 ```{r}
-t.test(Precision~Gender, data = classData)
+t.test(Precision ~ Gender, data = classData)
 ```
 
 4) Write a sentence or two describing the results.
 ```{r, echo = FALSE}
-x <- t.test(Precision~Gender, data = classData)
+x <- t.test(Precision ~ Gender, data = classData)
 ```
 There was no significant difference in mean precision between the two genders (t-test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = `r sprintf(x$conf.int[1], fmt = '%#.3f')`-`r sprintf(x$conf.int[2], fmt = '%#.3f')`). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.
 
@@ -46,15 +46,15 @@ The data are in "wide format". You may wish to convert it to "long format" depen
 1) Plot the data (e.g. with an interaction plot like Figure \@ref(fig:toolData))
 
 ```{r,echo=TRUE,message=FALSE}
-anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv",header=TRUE)
+anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv", header = TRUE)
 
-anorexiaCBT_long <- anorexiaCBT %>% 
-  pivot_longer(cols = starts_with("Week"),names_to = "time",values_to = "weight")
+anorexiaCBT_long <- anorexiaCBT %>%
+  pivot_longer(cols = starts_with("Week"), names_to = "time", values_to = "weight")
 ```
 
 ```{r}
-ggplot(anorexiaCBT_long,aes(x=time,y=weight,group=Subject)) + 
-  geom_line()+
+ggplot(anorexiaCBT_long, aes(x = time, y = weight, group = Subject)) +
+  geom_line() +
   geom_point() +
   xlab("Time") +
   ylab("Weight (kg)")
@@ -72,13 +72,13 @@ Alternative Hypothesis = There is a significant change in weight between the two
 The method here depends on whether you use the "long" data or not:
 
 ```{r}
-t.test(anorexiaCBT$Week01,anorexiaCBT$Week08,paired = TRUE)
+t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
 ```
 
 or
 
 ```{r}
-anorexiaCBT_long <- anorexiaCBT_long %>% 
+anorexiaCBT_long <- anorexiaCBT_long %>%
   arrange(Subject, time)
 
 t.test(weight ~ time, data = anorexiaCBT_long, paired = TRUE)
@@ -88,7 +88,7 @@ t.test(weight ~ time, data = anorexiaCBT_long, paired = TRUE)
 4) Write a couple of sentences to report your result.
 
 ```{r}
-x <- t.test(anorexiaCBT$Week01,anorexiaCBT$Week08,paired = TRUE)
+x <- t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
 ```
 
 There was a significant difference in weight of `r sprintf(x$estimate, fmt= '%#.3f')`kg between week 1 and week 8 (t.test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between weeks was between `r sprintf(x$conf.int[1], fmt = '%#.3f')` and `r sprintf(x$conf.int[2], fmt = '%#.3f')`. Therefore, I reject the null hypotheses, that the difference is due to chance alone, and accept the alternative hypothesis.
@@ -104,5 +104,3 @@ They should give approximately the same results.
 ```
 
 The problem with the analysis is that it is "confounded". That is to say, gender is correlated with height, so you would not be sure whether any difference you found would be due to height, or gender.
-
-

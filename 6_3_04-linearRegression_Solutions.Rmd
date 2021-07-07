@@ -10,14 +10,14 @@ chirps <- read.csv("CourseData/chirps.csv")
 
 ```{r}
 chirps <- chirps %>%
-  mutate(temperatureC = (temperature-32)*(5/9))
+  mutate(temperatureC = (temperature - 32) * (5 / 9))
 head(chirps)
 ```
 
 3. Plot the data
 
 ```{r}
-(A<-ggplot(chirps,aes(x= temperatureC,y = chirps)) + 
+(A <- ggplot(chirps, aes(x = temperatureC, y = chirps)) +
   geom_point())
 ```
 
@@ -53,7 +53,7 @@ summary(chirp_mod)
 9. Add model fit line to the plot.
 
 ```{r}
-A + geom_smooth(method="lm")
+A + geom_smooth(method = "lm")
 ```
 
 10. Can I use cricket chirp frequency as a kind of thermometer?

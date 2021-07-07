@@ -8,83 +8,91 @@ For example, one might have run an experiment investigating in the effect of two
 
 
 ```{r possibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
-fakeData <- expand.grid(diet = c("lowP","highP"),genotype = c("gt1","gt2"))
+fakeData <- expand.grid(diet = c("lowP", "highP"), genotype = c("gt1", "gt2"))
 
 
 
-#No effect of diet nor genotype
-A<- ggplot(fakeData %>% 
-         mutate(lengthMM = c(5,5,5,5)),
-       aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+# No effect of diet nor genotype
+A <- ggplot(
+  fakeData %>%
+    mutate(lengthMM = c(5, 5, 5, 5)),
+  aes(x = genotype, y = lengthMM, fill = diet, group = diet)
+) +
   geom_col(position = position_dodge()) +
-  ylim(0,9) + 
-  geom_point(position = position_dodge(width = 1)) + 
-  theme(axis.text.y = element_blank()) + 
+  ylim(0, 9) +
+  geom_point(position = position_dodge(width = 1)) +
+  theme(axis.text.y = element_blank()) +
   ggtitle("A) diet N; gt: N; int: N")
 
-#Genotype significant, not diet
-B<- ggplot(fakeData %>% 
-         mutate(lengthMM = c(5,5,8,8)),
-       aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+# Genotype significant, not diet
+B <- ggplot(
+  fakeData %>%
+    mutate(lengthMM = c(5, 5, 8, 8)),
+  aes(x = genotype, y = lengthMM, fill = diet, group = diet)
+) +
   geom_col(position = position_dodge()) +
-  ylim(0,9) + 
-  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
-  geom_point(position = position_dodge(width = 1)) + 
-  theme(axis.text.y = element_blank()) + 
+  ylim(0, 9) +
+  geom_line(position = position_dodge(width = 1), linetype = "dashed") +
+  geom_point(position = position_dodge(width = 1)) +
+  theme(axis.text.y = element_blank()) +
   ggtitle("B) diet N; gt: Y; int: N")
 
-#Diet significant, not genotype
-C<- ggplot(fakeData %>% 
-         mutate(lengthMM = c(5,8,5,8)),
-       aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+# Diet significant, not genotype
+C <- ggplot(
+  fakeData %>%
+    mutate(lengthMM = c(5, 8, 5, 8)),
+  aes(x = genotype, y = lengthMM, fill = diet, group = diet)
+) +
   geom_col(position = position_dodge()) +
-  ylim(0,9) + 
-  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
-  geom_point(position = position_dodge(width = 1)) + 
-  theme(axis.text.y = element_blank()) + 
+  ylim(0, 9) +
+  geom_line(position = position_dodge(width = 1), linetype = "dashed") +
+  geom_point(position = position_dodge(width = 1)) +
+  theme(axis.text.y = element_blank()) +
   ggtitle("C) diet Y; gt: N; int: N")
 
 
 
-#Diet significant, genotype significant
-#No interaction
+# Diet significant, genotype significant
+# No interaction
 
-D<- ggplot(fakeData %>% 
-         mutate(lengthMM = c(3,4,7,8)),
-       aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+D <- ggplot(
+  fakeData %>%
+    mutate(lengthMM = c(3, 4, 7, 8)),
+  aes(x = genotype, y = lengthMM, fill = diet, group = diet)
+) +
   geom_col(position = position_dodge(1)) +
-  ylim(0,9) + 
-  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
-  geom_point(position = position_dodge(width = 1)) + 
-  theme(axis.text.y = element_blank())  + 
+  ylim(0, 9) +
+  geom_line(position = position_dodge(width = 1), linetype = "dashed") +
+  geom_point(position = position_dodge(width = 1)) +
+  theme(axis.text.y = element_blank()) +
   ggtitle("D) diet Y; gt: Y; int: N")
 
 
-#Diet significant, genotype  significant
-#Significant interaction
+# Diet significant, genotype  significant
+# Significant interaction
 
-E<- ggplot(fakeData %>% 
-         mutate(lengthMM = c(3,4,5,8)),aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+E <- ggplot(fakeData %>%
+  mutate(lengthMM = c(3, 4, 5, 8)), aes(x = genotype, y = lengthMM, fill = diet, group = diet)) +
   geom_col(position = position_dodge(1)) +
-  ylim(0,9) + 
-  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
-  geom_point(position = position_dodge(width = 1)) + 
-    theme(axis.text.y = element_blank()) + 
+  ylim(0, 9) +
+  geom_line(position = position_dodge(width = 1), linetype = "dashed") +
+  geom_point(position = position_dodge(width = 1)) +
+  theme(axis.text.y = element_blank()) +
   ggtitle("E) diet Y; gt: Y; int: Y")
 
-#Diet not significant, genotype not significant
-#Significant interaction
+# Diet not significant, genotype not significant
+# Significant interaction
 
-Fa<- ggplot(fakeData %>% 
-             mutate(lengthMM = c(3,6,6,3)),aes(x =genotype,y = lengthMM,fill = diet, group=diet)) + 
+Fa <- ggplot(fakeData %>%
+  mutate(lengthMM = c(3, 6, 6, 3)), aes(x = genotype, y = lengthMM, fill = diet, group = diet)) +
   geom_col(position = position_dodge(1)) +
-  ylim(0,9) + 
-  geom_line(position = position_dodge(width = 1),linetype="dashed") + 
-  geom_point(position = position_dodge(width = 1)) + 
-  theme(axis.text.y = element_blank()) + 
+  ylim(0, 9) +
+  geom_line(position = position_dodge(width = 1), linetype = "dashed") +
+  geom_point(position = position_dodge(width = 1)) +
+  theme(axis.text.y = element_blank()) +
   ggtitle("E) diet N; gt: N; int: Y")
 
-(A+B+C)/(D+E+Fa)
+(A + B + C) / (D + E + Fa)
 ```
 
 
@@ -94,15 +102,15 @@ In the model we aim to quantify these effects, and ask if they are statistically
 
 ```{r dataPrep, echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 
-#Simulate some data.
+# Simulate some data.
 set.seed(9724)
-myData <- expand.grid(replicate = 1:12,diet = c("lowProtein","highProtein"),genotype = c("gt1","gt2")) %>%
-  left_join(expand.grid(diet = c("lowProtein","highProtein"),genotype = c("gt1","gt2")) %>%
-              mutate(meanSize = c(20,26,16,17.5),semSize = c(2.5,2.5,2,2))) %>%
-  mutate(lengthMM = round(rnorm(48,meanSize,semSize)),2) %>%
-  select(diet,genotype,lengthMM)
+myData <- expand.grid(replicate = 1:12, diet = c("lowProtein", "highProtein"), genotype = c("gt1", "gt2")) %>%
+  left_join(expand.grid(diet = c("lowProtein", "highProtein"), genotype = c("gt1", "gt2")) %>%
+    mutate(meanSize = c(20, 26, 16, 17.5), semSize = c(2.5, 2.5, 2, 2))) %>%
+  mutate(lengthMM = round(rnorm(48, meanSize, semSize)), 2) %>%
+  select(diet, genotype, lengthMM)
 
-write.csv(myData,"CourseData/insectDiet.csv",row.names = FALSE)
+write.csv(myData, "CourseData/insectDiet.csv", row.names = FALSE)
 rm(myData)
 ```
 
@@ -126,9 +134,9 @@ First, import the `insectDiet.csv` data and plot it, to produce a plot like in F
 ```{r dietAndGenotype,eval=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,fig.cap="The effect of diet protein content and genotype on adult size of an insect species"}
 insectDiet <- read.csv("CourseData/insectDiet.csv")
 
-ggplot(insectDiet,aes(x = genotype,y = lengthMM,fill=diet)) +
+ggplot(insectDiet, aes(x = genotype, y = lengthMM, fill = diet)) +
   geom_boxplot() +
-  xlab("Genotype")+
+  xlab("Genotype") +
   ylab("Length (mm)")
 ```
 
@@ -173,10 +181,10 @@ To do this you first need to create a summary table using `dplyr` tools `summari
 
 
 ```{r}
-insectDiet_means <- 
-  insectDiet %>% 
+insectDiet_means <-
+  insectDiet %>%
   group_by(genotype, diet) %>% # <- remember to group by *both* factors
-  summarise(MeanLength = mean(lengthMM),SELength = sd(lengthMM)/sqrt(n()))
+  summarise(MeanLength = mean(lengthMM), SELength = sd(lengthMM) / sqrt(n()))
 insectDiet_means
 ```
 
@@ -184,9 +192,11 @@ Then you can make a simple plot of this information by plotting points, and line
 
 ```{r interactionPlot,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
 
-(A<-ggplot(insectDiet_means, 
-       aes(x = genotype, y = MeanLength, colour = diet, group = diet)) +
-  geom_point(size = 4) + 
+(A <- ggplot(
+  insectDiet_means,
+  aes(x = genotype, y = MeanLength, colour = diet, group = diet)
+) +
+  geom_point(size = 4) +
   geom_line())
 ```
 
@@ -194,11 +204,15 @@ You could add error bars to the points by adding a line defining the `ymin` and 
 
 ```{r errorBars,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
 
-ggplot(insectDiet_means, 
-       aes(x = genotype, y = MeanLength, colour = diet, group = diet,
-           ymin = MeanLength - SELength, ymax = MeanLength + SELength)) +
-  geom_point(size = 4) + 
-  geom_line() + 
+ggplot(
+  insectDiet_means,
+  aes(
+    x = genotype, y = MeanLength, colour = diet, group = diet,
+    ymin = MeanLength - SELength, ymax = MeanLength + SELength
+  )
+) +
+  geom_point(size = 4) +
+  geom_line() +
   geom_errorbar(width = 0.1)
 ```
 
@@ -269,16 +283,16 @@ The research questions are: *What is the relative influence of colour pattern an
 
 ```{r generateFishData, eval = FALSE, echo = FALSE,message=FALSE,cache=TRUE}
 set.seed(123)
-meanSEM<-expand.grid(personality = c("Proactive","Reactive"), colouration = c("Homogeneous","Heterogeneous")) %>% 
-  mutate(spawningMean = c(270,260,240,170),spawningSEM = rep(40,4))
+meanSEM <- expand.grid(personality = c("Proactive", "Reactive"), colouration = c("Homogeneous", "Heterogeneous")) %>%
+  mutate(spawningMean = c(270, 260, 240, 170), spawningSEM = rep(40, 4))
 
-sampleSize = 8
-fishPersonality<-expand.grid(ID = 1:sampleSize, personality = c("Proactive","Reactive"), colouration = c("Homogeneous","Heterogeneous")) %>% 
+sampleSize <- 8
+fishPersonality <- expand.grid(ID = 1:sampleSize, personality = c("Proactive", "Reactive"), colouration = c("Homogeneous", "Heterogeneous")) %>%
   left_join(meanSEM) %>%
-  mutate(spawning = round(rnorm(sampleSize*4,spawningMean,spawningSEM))) %>%
-  select(personality,colouration,spawning)
+  mutate(spawning = round(rnorm(sampleSize * 4, spawningMean, spawningSEM))) %>%
+  select(personality, colouration, spawning)
 
-write.csv(fishPersonality,"CourseData/fishPersonality.csv",row.names = FALSE)
+write.csv(fishPersonality, "CourseData/fishPersonality.csv", row.names = FALSE)
 rm(fishPersonality)
 ```
 
@@ -294,15 +308,16 @@ fishPersonality <- read.csv("CourseData/fishPersonality.csv")
 2) Plot the data (e.g. as a box plot)
 <!--
 ```{r}
-ggplot(fishPersonality,aes(x = colouration,y = spawning,fill=personality))+
+ggplot(fishPersonality, aes(x = colouration, y = spawning, fill = personality)) +
   geom_boxplot()
 ```
 -->
 3) Fit an ANOVA model using `lm`.
 <!--
 ```{r}
-mod_A <- lm(spawning ~ personality+colouration + personality:colouration,
-            data = fishPersonality)
+mod_A <- lm(spawning ~ personality + colouration + personality:colouration,
+  data = fishPersonality
+)
 ```
 -->
 4) Look at diagnostic plots from this model (`autoplot`)
@@ -329,7 +344,7 @@ summary(mod_A)
 <!--
 ```{r}
 library(agricolae)
-HSD.test(mod_A, c("personality","colouration"), console=TRUE)
+HSD.test(mod_A, c("personality", "colouration"), console = TRUE)
 ```
 -->
 
@@ -340,5 +355,3 @@ HSD.test(mod_A, c("personality","colouration"), console=TRUE)
 * The anova table shows that personality, colouration and the interaction between them are all important variables (p <0.05); Personality seems to be more important than colouration overall (based on p-values)
 * The Tukey test table shows that -  (1) Personality is associated with spawning, but only for heterogenous coloured fish. (2) In the heterogenous coloured fish the proactive fish spawn significantly more than the reactive ones. (3) In the homogenous coloured fish there is no significant difference between the personalities.
 -->
-
-
