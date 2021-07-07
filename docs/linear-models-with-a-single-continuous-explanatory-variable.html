@@ -180,11 +180,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.1" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#appearance"><i class="fa fa-check"></i><b>6.1</b> Appearance</a></li>
 <li class="chapter" data-level="6.2" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#shortcuts"><i class="fa fa-check"></i><b>6.2</b> Shortcuts</a></li>
-<li class="chapter" data-level="6.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>6.3</b> The plots pane</a></li>
-<li class="chapter" data-level="6.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>6.4</b> Tables</a></li>
-<li class="chapter" data-level="6.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>6.5</b> Importing data from text files</a></li>
-<li class="chapter" data-level="6.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>6.6</b> Importing data from Excel</a></li>
-<li class="chapter" data-level="6.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>6.7</b> Numbers</a></li>
+<li class="chapter" data-level="6.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#code-style"><i class="fa fa-check"></i><b>6.3</b> Code style</a></li>
+<li class="chapter" data-level="6.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>6.4</b> The plots pane</a></li>
+<li class="chapter" data-level="6.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables</a></li>
+<li class="chapter" data-level="6.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>6.6</b> Importing data from text files</a></li>
+<li class="chapter" data-level="6.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>6.7</b> Importing data from Excel</a></li>
+<li class="chapter" data-level="6.8" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>6.8</b> Numbers</a></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -413,7 +414,7 @@ Figure 15.3: Residuals and least squares: which is the best fitting line?
 <p>The following example, where we focus on the relationship between hand width and height, is one of these “boring” cases: we already know there is a relationship. Nevertheless, we’ll use this example because it helps us understand how this hypothesis test works.</p>
 <p>The aim of this section is to give you some intuition on how the hypothesis test works.</p>
 <p>We can address the slope hypothesis by calculating an F-value in a similar way to how we used them in ANOVA. Recall that F-values are ratios of variances. To understand how these work in the context of a linear regression we need to think clearly about the slope hypothesis: The <strong>null hypothesis</strong> is that the slope is <strong>not</strong> significantly different to 0 (that the data can be explained by random variation). The <strong>alternative hypothesis</strong> is that the slope is significantly different from 0.</p>
-<p>The first step in evaluating these hypotheses is to calculate what the <strong>total sum of squares</strong><a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> is when the null hypothesis is true (Figure <a href="linear-models-with-a-single-continuous-explanatory-variable.html#fig:slopeHypo">15.4</a>A) - this value is the total variation that the model is trying to explain.</p>
+<p>The first step in evaluating these hypotheses is to calculate what the <strong>total sum of squares</strong><a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> is when the null hypothesis is true (Figure <a href="linear-models-with-a-single-continuous-explanatory-variable.html#fig:slopeHypo">15.4</a>A) - this value is the total variation that the model is trying to explain.</p>
 <p>Then we fit our model using least squares and figure out what the <strong>residual sum of squares</strong> is from this model (Figure <a href="linear-models-with-a-single-continuous-explanatory-variable.html#fig:slopeHypo">15.4</a>B). This is the amount of variation left after the model has explained <em>some</em> of the total variation - it is sometimes called <em>residual error</em>, or simply <em>error</em>.</p>
 <p>The difference between these two values is the <strong>explained sum of squares</strong>, which measures the amount of variation in <span class="math inline">\(y\)</span> explained by variation in <span class="math inline">\(x\)</span>. The rationale for this is that the model is trying to explain total variation. After fitting the model there will always be some unexplained variation (“<em>residual error</em>”) left. If we can estimate total variation and unexplained variation, then the amount of variation explained can be calculated with a simple subtraction:</p>
 <p><span class="math display">\[Total = Explained + Residual\]</span>
@@ -431,7 +432,7 @@ Figure 15.4: (A) the total variation around the overall mean Height value (B) th
 </div>
 <div id="assumptions" class="section level2" number="15.3">
 <h2><span class="header-section-number">15.3</span> Assumptions</h2>
-<p>These models have similar assumptions to the other linear models<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>. These are (1) that the relationship between the variables is linear (hence the name); (2) that the data are continuous variables; (3) that the observations are randomly sampled; (4) that the errors in the model (the “residuals”) can be described by a normal distribution; and (5) and that the errors are “homoscedastic” (that they are constant through the range of the data). You can evaluate these things by looking at diagnostic plots after you have fitted the model. See page 112-113 in GSWR for a nice explanation.</p>
+<p>These models have similar assumptions to the other linear models<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>. These are (1) that the relationship between the variables is linear (hence the name); (2) that the data are continuous variables; (3) that the observations are randomly sampled; (4) that the errors in the model (the “residuals”) can be described by a normal distribution; and (5) and that the errors are “homoscedastic” (that they are constant through the range of the data). You can evaluate these things by looking at diagnostic plots after you have fitted the model. See page 112-113 in GSWR for a nice explanation.</p>
 </div>
 <div id="worked-example-height-hand-width-relationship" class="section level2" number="15.4">
 <h2><span class="header-section-number">15.4</span> Worked example: height-hand width relationship</h2>
@@ -442,23 +443,23 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </p>
 </div>
 <p>First, load the data:</p>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb389-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb389-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb389-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb388-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb388-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb388-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>)</span></code></pre></div>
 <p>We should then plot the data to make sure it looks OK.</p>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
-<span id="cb390-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb390-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
+<span id="cb389-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb389-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-259-1.png" width="432" style="display: block; margin: auto;" /></p>
-<p>This looks OK, and the relationship looks fairly linear. Now we can fit a model using the <code>lm</code> function (same as for ANOVA!).<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></p>
+<p>This looks OK, and the relationship looks fairly linear. Now we can fit a model using the <code>lm</code> function (same as for ANOVA!).<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></p>
 <p>The response variable is always the one we would like to predict, in this case <code>Height</code>. The explanatory variable (sometimes called the predictor) is <code>HandWidth</code>. These are added to the model using a formula where they are separated with the <code>~</code> (“tilde”) symbol: <code>Height ~ HandWidth</code>. In the model expression, we also need to tell R where the data are using the <code>data =</code> argument. We can save the model as an R object by naming it e.g. <code>mod_A &lt;-</code>.</p>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb391-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth, <span class="at">data =</span> classData)</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb390-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth, <span class="at">data =</span> classData)</span></code></pre></div>
 <p>Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the <code>autoplot</code> function in the <code>ggfortify</code> package (you may need to install and/or load the package).</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb392-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb392-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb391-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb391-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-261-1.png" width="480" style="display: block; margin: auto;" />
 These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows “leverage” which is a measure of how much influence individual data points have on the model. Outliers will have large leverage and can mess up your model. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.</p>
 <p>Now that we are satisfied that the model doesn’t violate the assumptions we can dig into the model to see what it is telling us.</p>
 <p>To test the (slightly boring) slope hypothesis we use the <code>anova</code> function (again, this is the same as with the ANOVA).</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb393-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
@@ -472,7 +473,7 @@ The most important parts of this table are the F value (6.0059) and the p-value 
 <p>We could report the results of this hypothesis test like this:
 <em>There was a statistically significant association between hand width and height (F = 6.0059, d.f. = 1,31, p &lt; 0.001)</em></p>
 <p>Now we can dig deeper by asking for a <code>summary</code> of the model.</p>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb395-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Height ~ HandWidth, data = classData)
@@ -512,9 +513,9 @@ Figure 15.6: An illustration of different R-squared values.
 </p>
 </div>
 <p>A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The <code>ggplot2</code> package has a neat and simple function called <code>geom_smooth</code> which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use <code>method = "lm"</code>. This will plot the fitted regression model, and will add, by default" a shaded “ribbon” which represents the so called “95% confidence interval” for the fitted values. These are 2 time the standard error.</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb397-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
-<span id="cb397-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb397-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb397-3"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb397-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb396-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
+<span id="cb396-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb396-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb396-3"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb396-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-264-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p><strong>Question:</strong> If police find the 9.8cm wide hand print at a crime scene, what is your best guess of the height of the person involved?</p>
 </div>
@@ -541,10 +542,10 @@ Figure 15.6: An illustration of different R-squared values.
 </div>
 <div class="footnotes">
 <hr />
-<ol start="10">
-<li id="fn10"><p>sum of squares is simply a way to estimate variation.<a href="linear-models-with-a-single-continuous-explanatory-variable.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>t-tests, ANOVA and linear regression are all types of linear model, mathematically<a href="linear-models-with-a-single-continuous-explanatory-variable.html#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p>R knows that this is a linear regression rather than an ANOVA because the explanatory variable is numeric rather than categorical - smart!.<a href="linear-models-with-a-single-continuous-explanatory-variable.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<ol start="11">
+<li id="fn11"><p>sum of squares is simply a way to estimate variation.<a href="linear-models-with-a-single-continuous-explanatory-variable.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>t-tests, ANOVA and linear regression are all types of linear model, mathematically<a href="linear-models-with-a-single-continuous-explanatory-variable.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>R knows that this is a linear regression rather than an ANOVA because the explanatory variable is numeric rather than categorical - smart!.<a href="linear-models-with-a-single-continuous-explanatory-variable.html#fnref13" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

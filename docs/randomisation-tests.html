@@ -180,11 +180,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.1" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#appearance"><i class="fa fa-check"></i><b>6.1</b> Appearance</a></li>
 <li class="chapter" data-level="6.2" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#shortcuts"><i class="fa fa-check"></i><b>6.2</b> Shortcuts</a></li>
-<li class="chapter" data-level="6.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>6.3</b> The plots pane</a></li>
-<li class="chapter" data-level="6.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>6.4</b> Tables</a></li>
-<li class="chapter" data-level="6.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>6.5</b> Importing data from text files</a></li>
-<li class="chapter" data-level="6.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>6.6</b> Importing data from Excel</a></li>
-<li class="chapter" data-level="6.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>6.7</b> Numbers</a></li>
+<li class="chapter" data-level="6.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#code-style"><i class="fa fa-check"></i><b>6.3</b> Code style</a></li>
+<li class="chapter" data-level="6.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>6.4</b> The plots pane</a></li>
+<li class="chapter" data-level="6.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables</a></li>
+<li class="chapter" data-level="6.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>6.6</b> Importing data from text files</a></li>
+<li class="chapter" data-level="6.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>6.7</b> Importing data from Excel</a></li>
+<li class="chapter" data-level="6.8" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>6.8</b> Numbers</a></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -386,11 +387,11 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </p>
 </div>
 <p>Import the data, called <code>cholesterol.csv</code>.</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="randomisation-tests.html#cb273-1" aria-hidden="true" tabindex="-1"></a>ch <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/cholesterol.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="randomisation-tests.html#cb272-1" aria-hidden="true" tabindex="-1"></a>ch <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/cholesterol.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s first take a look at the data by plotting it. I will first plot a boxplot first, and add the jittered points for clarity.</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="randomisation-tests.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ch, <span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> Cholesterol)) <span class="sc">+</span></span>
-<span id="cb274-2"><a href="randomisation-tests.html#cb274-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb274-3"><a href="randomisation-tests.html#cb274-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">colour =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">width =</span> .<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="randomisation-tests.html#cb273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ch, <span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> Cholesterol)) <span class="sc">+</span></span>
+<span id="cb273-2"><a href="randomisation-tests.html#cb273-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb273-3"><a href="randomisation-tests.html#cb273-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">colour =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">width =</span> .<span class="dv">1</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
 <p>It looks like there might be a difference between the groups.
 Now let’s consider our test statistic and our hypotheses. Our test statistic is the difference in mean cholesterol levels between the two groups: mean of control group minus the mean of the drug group.
@@ -399,16 +400,16 @@ The <em>alternative hypothesis</em> is that the mean of the drug group should be
 <div id="calculate-the-observed-difference" class="section level3" number="12.1.1">
 <h3><span class="header-section-number">12.1.1</span> Calculate the observed difference</h3>
 <p>There are a few ways of doing this. In base-R you can use the function <code>tapply</code> (“table apply”), followed by <code>diff</code> (“difference”).</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="randomisation-tests.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(ch<span class="sc">$</span>Cholesterol, ch<span class="sc">$</span>Treatment, mean)</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="randomisation-tests.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(ch<span class="sc">$</span>Cholesterol, ch<span class="sc">$</span>Treatment, mean)</span></code></pre></div>
 <pre><code>##  Control     Drug 
 ## 205.6667 185.5000</code></pre>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="randomisation-tests.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">tapply</span>(ch<span class="sc">$</span>Cholesterol, ch<span class="sc">$</span>Treatment, mean))</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="randomisation-tests.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">tapply</span>(ch<span class="sc">$</span>Cholesterol, ch<span class="sc">$</span>Treatment, mean))</span></code></pre></div>
 <pre><code>##      Drug 
 ## -20.16667</code></pre>
 <p>Because we are focusing on learning <code>dplyr</code>, you can also calculate the means like like this:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="randomisation-tests.html#cb279-1" aria-hidden="true" tabindex="-1"></a>ch <span class="sc">%&gt;%</span> <span class="co"># ch is the cholesterol data</span></span>
-<span id="cb279-2"><a href="randomisation-tests.html#cb279-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span> <span class="co"># group the data by treatment</span></span>
-<span id="cb279-3"><a href="randomisation-tests.html#cb279-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="co"># calculate means</span></span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="randomisation-tests.html#cb278-1" aria-hidden="true" tabindex="-1"></a>ch <span class="sc">%&gt;%</span> <span class="co"># ch is the cholesterol data</span></span>
+<span id="cb278-2"><a href="randomisation-tests.html#cb278-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span> <span class="co"># group the data by treatment</span></span>
+<span id="cb278-3"><a href="randomisation-tests.html#cb278-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="co"># calculate means</span></span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   Treatment  mean
 ##   &lt;chr&gt;     &lt;dbl&gt;
@@ -416,52 +417,52 @@ The <em>alternative hypothesis</em> is that the mean of the drug group should be
 ## 2 Drug       186.</code></pre>
 <p>Here the pipes (<code>%&gt;%</code>) are passing the result of each function on as input to the next.
 You can use further commands, <code>pull</code> to get the <code>mean</code> vector from the summary table, and then use <code>diff</code> to calculate the difference between the groups, before passing that to a value called “<code>observedDiff</code>.”</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="randomisation-tests.html#cb281-1" aria-hidden="true" tabindex="-1"></a>observedDiff <span class="ot">&lt;-</span> ch <span class="sc">%&gt;%</span></span>
-<span id="cb281-2"><a href="randomisation-tests.html#cb281-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span> <span class="co"># group the data by treatment</span></span>
-<span id="cb281-3"><a href="randomisation-tests.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="sc">%&gt;%</span> <span class="co"># calculate means</span></span>
-<span id="cb281-4"><a href="randomisation-tests.html#cb281-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span> <span class="co"># extract the mean vector</span></span>
-<span id="cb281-5"><a href="randomisation-tests.html#cb281-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="randomisation-tests.html#cb280-1" aria-hidden="true" tabindex="-1"></a>observedDiff <span class="ot">&lt;-</span> ch <span class="sc">%&gt;%</span></span>
+<span id="cb280-2"><a href="randomisation-tests.html#cb280-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span> <span class="co"># group the data by treatment</span></span>
+<span id="cb280-3"><a href="randomisation-tests.html#cb280-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="sc">%&gt;%</span> <span class="co"># calculate means</span></span>
+<span id="cb280-4"><a href="randomisation-tests.html#cb280-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span> <span class="co"># extract the mean vector</span></span>
+<span id="cb280-5"><a href="randomisation-tests.html#cb280-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code></pre></div>
 <p>This is a complicated set of commands. To make sure that you understand it, try running it bit-by-bit to see what is going on.</p>
 </div>
 <div id="null-distribution" class="section level3" number="12.1.2">
 <h3><span class="header-section-number">12.1.2</span> Null distribution</h3>
 <p>Now we ask, what would the world look like if our null hypothesis was <em>true</em>. To do this we can disassociate the treatment group variable from the measured cholesterol values. We do this using by using the <code>mutate</code> function to replace the <code>Treatment</code> variable with a shuffled version of itself with the <code>sample</code> function.</p>
 <p>Let’s try that one time:</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="randomisation-tests.html#cb282-1" aria-hidden="true" tabindex="-1"></a>ch <span class="sc">%&gt;%</span></span>
-<span id="cb282-2"><a href="randomisation-tests.html#cb282-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">sample</span>(Treatment)) <span class="sc">%&gt;%</span></span>
-<span id="cb282-3"><a href="randomisation-tests.html#cb282-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shuffle the Treatment data</span></span>
-<span id="cb282-4"><a href="randomisation-tests.html#cb282-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span></span>
-<span id="cb282-5"><a href="randomisation-tests.html#cb282-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="sc">%&gt;%</span></span>
-<span id="cb282-6"><a href="randomisation-tests.html#cb282-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
-<span id="cb282-7"><a href="randomisation-tests.html#cb282-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="randomisation-tests.html#cb281-1" aria-hidden="true" tabindex="-1"></a>ch <span class="sc">%&gt;%</span></span>
+<span id="cb281-2"><a href="randomisation-tests.html#cb281-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">sample</span>(Treatment)) <span class="sc">%&gt;%</span></span>
+<span id="cb281-3"><a href="randomisation-tests.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shuffle the Treatment data</span></span>
+<span id="cb281-4"><a href="randomisation-tests.html#cb281-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span></span>
+<span id="cb281-5"><a href="randomisation-tests.html#cb281-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="sc">%&gt;%</span></span>
+<span id="cb281-6"><a href="randomisation-tests.html#cb281-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
+<span id="cb281-7"><a href="randomisation-tests.html#cb281-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code></pre></div>
 <pre><code>## [1] -10.16667</code></pre>
 <p>In this instance, the difference with the shuffled <code>Treatment</code> values is 0.833, which is rather different from our observed difference of -20.1666667.</p>
 <p>Doing this one time is not much help though - we need to repeat this many times. I suggest that you do it 1000 times here, but some statisticians would suggest 5000 or even 10000 replicates.</p>
 <p>We can do this easily in R using the function <code>replicate</code> which simply a kind of wrapper that tells R to repeat a command <code>n</code> times and then pass the result to a vector.
 Let’s try it first 10 times to see how it works:</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="randomisation-tests.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
-<span id="cb284-2"><a href="randomisation-tests.html#cb284-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
-<span id="cb284-3"><a href="randomisation-tests.html#cb284-3" aria-hidden="true" tabindex="-1"></a>  ch <span class="sc">%&gt;%</span></span>
-<span id="cb284-4"><a href="randomisation-tests.html#cb284-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">sample</span>(Treatment)) <span class="sc">%&gt;%</span></span>
-<span id="cb284-5"><a href="randomisation-tests.html#cb284-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span></span>
-<span id="cb284-6"><a href="randomisation-tests.html#cb284-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="sc">%&gt;%</span></span>
-<span id="cb284-7"><a href="randomisation-tests.html#cb284-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
-<span id="cb284-8"><a href="randomisation-tests.html#cb284-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
-<span id="cb284-9"><a href="randomisation-tests.html#cb284-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="randomisation-tests.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
+<span id="cb283-2"><a href="randomisation-tests.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
+<span id="cb283-3"><a href="randomisation-tests.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  ch <span class="sc">%&gt;%</span></span>
+<span id="cb283-4"><a href="randomisation-tests.html#cb283-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">sample</span>(Treatment)) <span class="sc">%&gt;%</span></span>
+<span id="cb283-5"><a href="randomisation-tests.html#cb283-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span></span>
+<span id="cb283-6"><a href="randomisation-tests.html#cb283-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="sc">%&gt;%</span></span>
+<span id="cb283-7"><a href="randomisation-tests.html#cb283-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
+<span id="cb283-8"><a href="randomisation-tests.html#cb283-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
+<span id="cb283-9"><a href="randomisation-tests.html#cb283-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##  [1]  11.500000  -6.500000 -19.166667  -1.833333  -7.833333  21.166667
 ##  [7] -11.500000 -21.833333  28.833333  -5.833333</code></pre>
 <p>You can see that the <code>replicate</code> command simply does the sampling-recalculation of the mean 10 times.</p>
 <p>In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a <code>data.frame</code> called <code>shuffledData</code>. This data frame initially has a variable called <code>rep</code> which consists of the numbers 1-1000. I then use <code>mutate</code> to add the 1000 shuffled differences.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="randomisation-tests.html#cb286-1" aria-hidden="true" tabindex="-1"></a>shuffledData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rep =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb286-2"><a href="randomisation-tests.html#cb286-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledDiffs =</span> <span class="fu">replicate</span>(</span>
-<span id="cb286-3"><a href="randomisation-tests.html#cb286-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
-<span id="cb286-4"><a href="randomisation-tests.html#cb286-4" aria-hidden="true" tabindex="-1"></a>    ch <span class="sc">%&gt;%</span></span>
-<span id="cb286-5"><a href="randomisation-tests.html#cb286-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">sample</span>(Treatment)) <span class="sc">%&gt;%</span></span>
-<span id="cb286-6"><a href="randomisation-tests.html#cb286-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span></span>
-<span id="cb286-7"><a href="randomisation-tests.html#cb286-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="sc">%&gt;%</span></span>
-<span id="cb286-8"><a href="randomisation-tests.html#cb286-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
-<span id="cb286-9"><a href="randomisation-tests.html#cb286-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">diff</span>()</span>
-<span id="cb286-10"><a href="randomisation-tests.html#cb286-10" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="randomisation-tests.html#cb285-1" aria-hidden="true" tabindex="-1"></a>shuffledData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rep =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb285-2"><a href="randomisation-tests.html#cb285-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledDiffs =</span> <span class="fu">replicate</span>(</span>
+<span id="cb285-3"><a href="randomisation-tests.html#cb285-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
+<span id="cb285-4"><a href="randomisation-tests.html#cb285-4" aria-hidden="true" tabindex="-1"></a>    ch <span class="sc">%&gt;%</span></span>
+<span id="cb285-5"><a href="randomisation-tests.html#cb285-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Treatment =</span> <span class="fu">sample</span>(Treatment)) <span class="sc">%&gt;%</span></span>
+<span id="cb285-6"><a href="randomisation-tests.html#cb285-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(Treatment) <span class="sc">%&gt;%</span></span>
+<span id="cb285-7"><a href="randomisation-tests.html#cb285-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Cholesterol)) <span class="sc">%&gt;%</span></span>
+<span id="cb285-8"><a href="randomisation-tests.html#cb285-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
+<span id="cb285-9"><a href="randomisation-tests.html#cb285-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">diff</span>()</span>
+<span id="cb285-10"><a href="randomisation-tests.html#cb285-10" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 <div class="do-something">
 <p>
 When you use <code>summarise</code>, R will give you a message like this:
@@ -483,20 +484,20 @@ I suggest to put this code at the beginning of your script if the messages annoy
 <div id="testing-significance" class="section level3" number="12.1.3">
 <h3><span class="header-section-number">12.1.3</span> Testing significance</h3>
 <p>Before formally testing the hypothesis it is useful to visualise what we have created in a histogram. I can use <code>ggplot</code> to do this, to create a plot called <code>p1</code>. Note that by putting the command in brackets R will both create the plot object, and print it to the screen. Note that because the shuffling of the data is random process your graph will look slightly different to mine.</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="randomisation-tests.html#cb287-1" aria-hidden="true" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(shuffledData, <span class="fu">aes</span>(<span class="at">x =</span> shuffledDiffs)) <span class="sc">+</span></span>
-<span id="cb287-2"><a href="randomisation-tests.html#cb287-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb287-3"><a href="randomisation-tests.html#cb287-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb287-4"><a href="randomisation-tests.html#cb287-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Drug mean - Control mean&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="randomisation-tests.html#cb286-1" aria-hidden="true" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(shuffledData, <span class="fu">aes</span>(<span class="at">x =</span> shuffledDiffs)) <span class="sc">+</span></span>
+<span id="cb286-2"><a href="randomisation-tests.html#cb286-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb286-3"><a href="randomisation-tests.html#cb286-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb286-4"><a href="randomisation-tests.html#cb286-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Drug mean - Control mean&quot;</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
 <p>You can now add your observed difference (calculated above) to this plot like this:</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="randomisation-tests.html#cb288-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observedDiff)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="randomisation-tests.html#cb287-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observedDiff)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
 </div>
 <div id="testing-the-hypothesis" class="section level3" number="12.1.4">
 <h3><span class="header-section-number">12.1.4</span> Testing the hypothesis</h3>
 <p>Recall that the alternative hypothesis is that the observed difference (control mean-drug mean) will be less than 0.
 You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="randomisation-tests.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(shuffledData<span class="sc">$</span>shuffledDiffs <span class="sc">&lt;=</span> observedDiff)</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="randomisation-tests.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(shuffledData<span class="sc">$</span>shuffledDiffs <span class="sc">&lt;=</span> observedDiff)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##   977    23</code></pre>
@@ -514,9 +515,9 @@ You can see that there are few of the null distribution sample that are as extre
 <h2><span class="header-section-number">12.2</span> Paired Randomisation Tests</h2>
 <p>The paired randomisation test is a one-sample randomisation test where the distribution is tested against a value of 0 (i.e. where there is no difference between the two groups). Often, this distribution is the <strong>difference</strong> in measurements between two sets of measurements taken from the same individuals (or study sites) before and after some treatment has been applied.</p>
 <p>I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. Everitt collected data on weights of people before and after therapy. These data are in the file <code>anorexiaCBT.csv</code></p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="randomisation-tests.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remember to set your working directory first</span></span>
-<span id="cb291-2"><a href="randomisation-tests.html#cb291-2" aria-hidden="true" tabindex="-1"></a>an <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/anorexiaCBT.csv&quot;</span>)</span>
-<span id="cb291-3"><a href="randomisation-tests.html#cb291-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(an)</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="randomisation-tests.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remember to set your working directory first</span></span>
+<span id="cb290-2"><a href="randomisation-tests.html#cb290-2" aria-hidden="true" tabindex="-1"></a>an <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/anorexiaCBT.csv&quot;</span>)</span>
+<span id="cb290-3"><a href="randomisation-tests.html#cb290-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(an)</span></code></pre></div>
 <pre><code>##   Subject Week01 Week08
 ## 1       1   80.5   82.2
 ## 2       2   84.9   85.6
@@ -525,12 +526,12 @@ You can see that there are few of the null distribution sample that are as extre
 ## 5       5   79.9   76.4
 ## 6       6   88.7  103.6</code></pre>
 <p>These data are arranged in a so-called “wide” format. To make plotting and analysis data need to be rearranged into a tidy “long” format so that each observation is on a row. We can do this using the <code>pivot_longer</code> function:</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="randomisation-tests.html#cb293-1" aria-hidden="true" tabindex="-1"></a>an <span class="ot">&lt;-</span> an <span class="sc">%&gt;%</span></span>
-<span id="cb293-2"><a href="randomisation-tests.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb293-3"><a href="randomisation-tests.html#cb293-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;Week&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;time&quot;</span>,</span>
-<span id="cb293-4"><a href="randomisation-tests.html#cb293-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;weight&quot;</span></span>
-<span id="cb293-5"><a href="randomisation-tests.html#cb293-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb293-6"><a href="randomisation-tests.html#cb293-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(an)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="randomisation-tests.html#cb292-1" aria-hidden="true" tabindex="-1"></a>an <span class="ot">&lt;-</span> an <span class="sc">%&gt;%</span></span>
+<span id="cb292-2"><a href="randomisation-tests.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb292-3"><a href="randomisation-tests.html#cb292-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;Week&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;time&quot;</span>,</span>
+<span id="cb292-4"><a href="randomisation-tests.html#cb292-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;weight&quot;</span></span>
+<span id="cb292-5"><a href="randomisation-tests.html#cb292-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb292-6"><a href="randomisation-tests.html#cb292-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(an)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   Subject time   weight
 ##     &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;
@@ -541,23 +542,23 @@ You can see that there are few of the null distribution sample that are as extre
 ## 5       3 Week01   81.5
 ## 6       3 Week08   81.4</code></pre>
 <p>We should <em>always</em> plot the data. So here goes.</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="randomisation-tests.html#cb295-1" aria-hidden="true" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill =</span> time)) <span class="sc">+</span></span>
-<span id="cb295-2"><a href="randomisation-tests.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>)</span>
-<span id="cb295-3"><a href="randomisation-tests.html#cb295-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="randomisation-tests.html#cb294-1" aria-hidden="true" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill =</span> time)) <span class="sc">+</span></span>
+<span id="cb294-2"><a href="randomisation-tests.html#cb294-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>)</span>
+<span id="cb294-3"><a href="randomisation-tests.html#cb294-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
 <p>Another useful way to plot this data is to use an <strong>interaction plot</strong>. In these plots the matched pairs (grouped by <code>Subject</code>) are joined together with lines. You can plot one like this:</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="randomisation-tests.html#cb296-1" aria-hidden="true" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> weight, <span class="at">group =</span> Subject)) <span class="sc">+</span></span>
-<span id="cb296-2"><a href="randomisation-tests.html#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb296-3"><a href="randomisation-tests.html#cb296-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
-<span id="cb296-4"><a href="randomisation-tests.html#cb296-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="randomisation-tests.html#cb295-1" aria-hidden="true" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> weight, <span class="at">group =</span> Subject)) <span class="sc">+</span></span>
+<span id="cb295-2"><a href="randomisation-tests.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb295-3"><a href="randomisation-tests.html#cb295-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb295-4"><a href="randomisation-tests.html#cb295-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
 <p>What we are interested in is whether there has been a change in weight of the subjects after CBT. The null hypothesis is that there is zero change in weight. The alternative hypothesis is that weight has increased.</p>
 <p>The starting point for the analysis is to calculate the observed change in weight.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="randomisation-tests.html#cb297-1" aria-hidden="true" tabindex="-1"></a>an <span class="ot">&lt;-</span> an <span class="sc">%&gt;%</span></span>
-<span id="cb297-2"><a href="randomisation-tests.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Subject) <span class="sc">%&gt;%</span></span>
-<span id="cb297-3"><a href="randomisation-tests.html#cb297-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">change =</span> <span class="fu">diff</span>(weight))</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="randomisation-tests.html#cb296-1" aria-hidden="true" tabindex="-1"></a>an <span class="ot">&lt;-</span> an <span class="sc">%&gt;%</span></span>
+<span id="cb296-2"><a href="randomisation-tests.html#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Subject) <span class="sc">%&gt;%</span></span>
+<span id="cb296-3"><a href="randomisation-tests.html#cb296-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">change =</span> <span class="fu">diff</span>(weight))</span></code></pre></div>
 <p>You have created a dataset that looks like this:</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="randomisation-tests.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(an)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="randomisation-tests.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(an)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   Subject change
 ##     &lt;int&gt;  &lt;dbl&gt;
@@ -568,14 +569,14 @@ You can see that there are few of the null distribution sample that are as extre
 ## 5       5 -3.5  
 ## 6       6 14.9</code></pre>
 <p>And you can calculate the observed change like this:</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="randomisation-tests.html#cb300-1" aria-hidden="true" tabindex="-1"></a>obsChange <span class="ot">&lt;-</span> <span class="fu">mean</span>(an<span class="sc">$</span>change)</span>
-<span id="cb300-2"><a href="randomisation-tests.html#cb300-2" aria-hidden="true" tabindex="-1"></a>obsChange</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="randomisation-tests.html#cb299-1" aria-hidden="true" tabindex="-1"></a>obsChange <span class="ot">&lt;-</span> <span class="fu">mean</span>(an<span class="sc">$</span>change)</span>
+<span id="cb299-2"><a href="randomisation-tests.html#cb299-2" aria-hidden="true" tabindex="-1"></a>obsChange</span></code></pre></div>
 <pre><code>## [1] 3.006897</code></pre>
 <div id="the-randomisation-test" class="section level3" number="12.2.1">
 <h3><span class="header-section-number">12.2.1</span> The randomisation test</h3>
 <p>The logic of this test is that if the experimental treatment has no effect on weight, then the <em>Before</em> weight is just as likely to be larger than the <em>After</em> weight as it is to be smaller.</p>
 <p>Therefore, to carry out this test, we can permute the SIGN of the change in weight (i.e. we randomly flip values from positive to negative and vice versa). We can do this by multiplying by 1 or -1, randomly.</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="randomisation-tests.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(an)</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="randomisation-tests.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(an)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   Subject change
 ##     &lt;int&gt;  &lt;dbl&gt;
@@ -585,14 +586,14 @@ You can see that there are few of the null distribution sample that are as extre
 ## 4       4 -0.700
 ## 5       5 -3.5  
 ## 6       6 14.9</code></pre>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="randomisation-tests.html#cb304-1" aria-hidden="true" tabindex="-1"></a>anShuffled <span class="ot">&lt;-</span> an <span class="sc">%&gt;%</span></span>
-<span id="cb304-2"><a href="randomisation-tests.html#cb304-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sign =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb304-3"><a href="randomisation-tests.html#cb304-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">nrow</span>(an),</span>
-<span id="cb304-4"><a href="randomisation-tests.html#cb304-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> <span class="cn">TRUE</span></span>
-<span id="cb304-5"><a href="randomisation-tests.html#cb304-5" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb304-6"><a href="randomisation-tests.html#cb304-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledChange =</span> change <span class="sc">*</span> sign)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="randomisation-tests.html#cb303-1" aria-hidden="true" tabindex="-1"></a>anShuffled <span class="ot">&lt;-</span> an <span class="sc">%&gt;%</span></span>
+<span id="cb303-2"><a href="randomisation-tests.html#cb303-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sign =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb303-3"><a href="randomisation-tests.html#cb303-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">nrow</span>(an),</span>
+<span id="cb303-4"><a href="randomisation-tests.html#cb303-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> <span class="cn">TRUE</span></span>
+<span id="cb303-5"><a href="randomisation-tests.html#cb303-5" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb303-6"><a href="randomisation-tests.html#cb303-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledChange =</span> change <span class="sc">*</span> sign)</span></code></pre></div>
 <p>Let’s take a look at this new shuffled dataset:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="randomisation-tests.html#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(anShuffled)</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="randomisation-tests.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(anShuffled)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   Subject change  sign shuffledChange
 ##     &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;
@@ -603,41 +604,41 @@ You can see that there are few of the null distribution sample that are as extre
 ## 5       5 -3.5       1         -3.5  
 ## 6       6 14.9      -1        -14.9</code></pre>
 <p>We need to calculate the mean of this shuffled vector. We can do this by <code>pull</code> to get the vector, and then <code>mean</code>.</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="randomisation-tests.html#cb307-1" aria-hidden="true" tabindex="-1"></a>an <span class="sc">%&gt;%</span></span>
-<span id="cb307-2"><a href="randomisation-tests.html#cb307-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sign =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb307-3"><a href="randomisation-tests.html#cb307-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">nrow</span>(an),</span>
-<span id="cb307-4"><a href="randomisation-tests.html#cb307-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> <span class="cn">TRUE</span></span>
-<span id="cb307-5"><a href="randomisation-tests.html#cb307-5" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb307-6"><a href="randomisation-tests.html#cb307-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledChange =</span> change <span class="sc">*</span> sign) <span class="sc">%&gt;%</span></span>
-<span id="cb307-7"><a href="randomisation-tests.html#cb307-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(shuffledChange) <span class="sc">%&gt;%</span></span>
-<span id="cb307-8"><a href="randomisation-tests.html#cb307-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="randomisation-tests.html#cb306-1" aria-hidden="true" tabindex="-1"></a>an <span class="sc">%&gt;%</span></span>
+<span id="cb306-2"><a href="randomisation-tests.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sign =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb306-3"><a href="randomisation-tests.html#cb306-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">nrow</span>(an),</span>
+<span id="cb306-4"><a href="randomisation-tests.html#cb306-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> <span class="cn">TRUE</span></span>
+<span id="cb306-5"><a href="randomisation-tests.html#cb306-5" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb306-6"><a href="randomisation-tests.html#cb306-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledChange =</span> change <span class="sc">*</span> sign) <span class="sc">%&gt;%</span></span>
+<span id="cb306-7"><a href="randomisation-tests.html#cb306-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(shuffledChange) <span class="sc">%&gt;%</span></span>
+<span id="cb306-8"><a href="randomisation-tests.html#cb306-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>()</span></code></pre></div>
 <pre><code>## [1] 0.1517241</code></pre>
 <p>Now we will build a null distribution of changes in weight by repeating this 1000 times. We can do this using the <code>replicate</code> function to “wrap” around the function, passing the result into a data frame. We can then compare this null distribution to the observed change.</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="randomisation-tests.html#cb309-1" aria-hidden="true" tabindex="-1"></a>nullDist <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb309-2"><a href="randomisation-tests.html#cb309-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">change =</span></span>
-<span id="cb309-3"><a href="randomisation-tests.html#cb309-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replicate</span>(<span class="dv">1000</span>, an <span class="sc">%&gt;%</span></span>
-<span id="cb309-4"><a href="randomisation-tests.html#cb309-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">sign =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb309-5"><a href="randomisation-tests.html#cb309-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fu">nrow</span>(an),</span>
-<span id="cb309-6"><a href="randomisation-tests.html#cb309-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">replace =</span> <span class="cn">TRUE</span></span>
-<span id="cb309-7"><a href="randomisation-tests.html#cb309-7" aria-hidden="true" tabindex="-1"></a>      )) <span class="sc">%&gt;%</span></span>
-<span id="cb309-8"><a href="randomisation-tests.html#cb309-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">shuffledChange =</span> change <span class="sc">*</span> sign) <span class="sc">%&gt;%</span></span>
-<span id="cb309-9"><a href="randomisation-tests.html#cb309-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(shuffledChange) <span class="sc">%&gt;%</span></span>
-<span id="cb309-10"><a href="randomisation-tests.html#cb309-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mean</span>())</span>
-<span id="cb309-11"><a href="randomisation-tests.html#cb309-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="randomisation-tests.html#cb308-1" aria-hidden="true" tabindex="-1"></a>nullDist <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb308-2"><a href="randomisation-tests.html#cb308-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">change =</span></span>
+<span id="cb308-3"><a href="randomisation-tests.html#cb308-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replicate</span>(<span class="dv">1000</span>, an <span class="sc">%&gt;%</span></span>
+<span id="cb308-4"><a href="randomisation-tests.html#cb308-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">sign =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb308-5"><a href="randomisation-tests.html#cb308-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fu">nrow</span>(an),</span>
+<span id="cb308-6"><a href="randomisation-tests.html#cb308-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">replace =</span> <span class="cn">TRUE</span></span>
+<span id="cb308-7"><a href="randomisation-tests.html#cb308-7" aria-hidden="true" tabindex="-1"></a>      )) <span class="sc">%&gt;%</span></span>
+<span id="cb308-8"><a href="randomisation-tests.html#cb308-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">shuffledChange =</span> change <span class="sc">*</span> sign) <span class="sc">%&gt;%</span></span>
+<span id="cb308-9"><a href="randomisation-tests.html#cb308-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(shuffledChange) <span class="sc">%&gt;%</span></span>
+<span id="cb308-10"><a href="randomisation-tests.html#cb308-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mean</span>())</span>
+<span id="cb308-11"><a href="randomisation-tests.html#cb308-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="null-distribution-1" class="section level3" number="12.2.2">
 <h3><span class="header-section-number">12.2.2</span> Null distribution</h3>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="randomisation-tests.html#cb310-1" aria-hidden="true" tabindex="-1"></a>(nullDistPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nullDist, <span class="fu">aes</span>(<span class="at">x =</span> change)) <span class="sc">+</span></span>
-<span id="cb310-2"><a href="randomisation-tests.html#cb310-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="randomisation-tests.html#cb309-1" aria-hidden="true" tabindex="-1"></a>(nullDistPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nullDist, <span class="fu">aes</span>(<span class="at">x =</span> change)) <span class="sc">+</span></span>
+<span id="cb309-2"><a href="randomisation-tests.html#cb309-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>())</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-209-1.png" width="672" /></p>
 <p>We can add the observed change as a line to this:</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="randomisation-tests.html#cb311-1" aria-hidden="true" tabindex="-1"></a>nullDistPlot <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsChange)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="randomisation-tests.html#cb310-1" aria-hidden="true" tabindex="-1"></a>nullDistPlot <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsChange)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
 </div>
 <div id="the-formal-hypothesis-test" class="section level3" number="12.2.3">
 <h3><span class="header-section-number">12.2.3</span> The formal hypothesis test</h3>
 <p>The formal test of significance then works by asking how many of the null distribution replicates are as extreme as the observed change.</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="randomisation-tests.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nullDist<span class="sc">$</span>change <span class="sc">&gt;=</span> obsChange)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="randomisation-tests.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(nullDist<span class="sc">$</span>change <span class="sc">&gt;=</span> obsChange)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##   977    23</code></pre>
@@ -646,7 +647,7 @@ You can see that there are few of the null distribution sample that are as extre
 </div>
 <div id="exercise-sexual-selection-in-hercules-beetles" class="section level2" number="12.3">
 <h2><span class="header-section-number">12.3</span> Exercise: Sexual selection in Hercules beetles</h2>
-<p>A Hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> on width measurements in cm of a small sample of 20 individuals of each sex. Can you use your skills to report whether males are significantly larger than females.</p>
+<p>A Hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> on width measurements in cm of a small sample of 20 individuals of each sex. Can you use your skills to report whether males are significantly larger than females.</p>
 <p>The data are called <code>herculesBeetle.csv</code> and can be found via the course data Dropbox link.</p>
 <p><strong>Follow the following prompts to get to your answer:</strong></p>
 <ol style="list-style-type: decimal">
@@ -669,8 +670,8 @@ You can see that there are few of the null distribution sample that are as extre
 </div>
 <div class="footnotes">
 <hr />
-<ol start="8">
-<li id="fn8"><p>This example is from: <a href="https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html" class="uri">https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html</a><a href="randomisation-tests.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<ol start="9">
+<li id="fn9"><p>This example is from: <a href="https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html" class="uri">https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html</a><a href="randomisation-tests.html#fnref9" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

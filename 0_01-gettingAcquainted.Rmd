@@ -331,13 +331,16 @@ It is good practice to keep your files well-organised. I recommend that you crea
 
 I have put all the data for the course into a Dropbox folder - see the link in Chapter 1. In there you will find a file called "`carnivora.csv`". Download this to your new `CourseData` folder. 
 
-You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the first row of our CSV file contains the column names. Note that your file path will be different to mine:
+You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the first row of our CSV file contains the column names. Note that your file path will be different to mine^[A note here about code formatting: You can see that I have written the code over several lines. This is not strictly necessary, but (I think) it can make long commands easier to read. R doesn't "see" the new lines. The plot command could be in a single long line.]:
 
 ```{r}
-carni <- read.csv("CourseData/carnivora.csv", header = TRUE, stringsAsFactors = TRUE)
+carni <- read.csv("CourseData/carnivora.csv",
+  header = TRUE,
+  stringsAsFactors = TRUE
+)
 ```
 
-The `stringsAsFactors` argument tells R to treat text-type data (technically known as "character **strings**") as a special kind of data called **factors**. Essentially, factors are "categorical data" where the data can take a limited number of discrete values. For example, "treatmentA", "treatmentB", "treatmentC". Although this may seem a little esoteric right now, it is important to ensure that your data is recognised by R in the correct way. In **most** cases, your text-type data will be factor data, so it is usually safe to set `stringsAsFactors = TRUE`. 
+The `stringsAsFactors` argument tells R to treat text-type data (technically known as "character **strings**") as a special kind of data called **factors**. Essentially, factors are *categorical* data where the data can take a limited number of discrete values. For example, "treatmentA", "treatmentB", "treatmentC". Although this may seem a little esoteric right now, it is important to ensure that your data is recognised by R in the correct way. In **most** cases, your text-type data will be factor data, so it is usually safe to set `stringsAsFactors = TRUE`. 
 
 ```{block, type="do-something"}
 **Tip:** RStudio also has a point-and-click "Wizard" to help import data. Look for "Import Dataset" in the top-right pane. 

@@ -180,11 +180,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.1" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#appearance"><i class="fa fa-check"></i><b>6.1</b> Appearance</a></li>
 <li class="chapter" data-level="6.2" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#shortcuts"><i class="fa fa-check"></i><b>6.2</b> Shortcuts</a></li>
-<li class="chapter" data-level="6.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>6.3</b> The plots pane</a></li>
-<li class="chapter" data-level="6.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>6.4</b> Tables</a></li>
-<li class="chapter" data-level="6.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>6.5</b> Importing data from text files</a></li>
-<li class="chapter" data-level="6.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>6.6</b> Importing data from Excel</a></li>
-<li class="chapter" data-level="6.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>6.7</b> Numbers</a></li>
+<li class="chapter" data-level="6.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#code-style"><i class="fa fa-check"></i><b>6.3</b> Code style</a></li>
+<li class="chapter" data-level="6.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>6.4</b> The plots pane</a></li>
+<li class="chapter" data-level="6.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables</a></li>
+<li class="chapter" data-level="6.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>6.6</b> Importing data from text files</a></li>
+<li class="chapter" data-level="6.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>6.7</b> Importing data from Excel</a></li>
+<li class="chapter" data-level="6.8" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>6.8</b> Numbers</a></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -402,12 +403,12 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-289-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="generalised-linear-models.html#cb433-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(noffspring <span class="sc">~</span> weight, <span class="at">data =</span> fox, <span class="at">family =</span> poisson)</span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="generalised-linear-models.html#cb432-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(noffspring <span class="sc">~</span> weight, <span class="at">data =</span> fox, <span class="at">family =</span> poisson)</span></code></pre></div>
 <p>After fitting the model it is a good idea to look at the model diagnostics, using <code>autoplot</code> from the <code>ggfortify</code> package.</p>
 <p><img src="BB852_files/figure-html/unnamed-chunk-291-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>These diagnostic plots are, basically, the same as the ones you saw for <code>lm</code> models. There is one difference and that is that the plots use something called standardised <em>deviance</em> residuals instead of just standardised residuals. These are transformed versions of the residuals that will look <em>normal</em> (in the statistical sense) if the family of hte GLM is appropriate. So, if “poisson” is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.</p>
 <p>Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using the <code>test = "F"</code> or <code>test = "Chi"</code>. For Poisson and binomial GLMs the chi-squared test is most appropriate while for Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="generalised-linear-models.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="generalised-linear-models.html#cb433-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model: poisson, link: log
@@ -424,7 +425,7 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This summary table tells us that the single explanatory variable (<code>weight</code>) is fantastically important (p-value is very small indeed).</p>
 <p>We can then ask for the coefficient summary using <code>summary</code>.</p>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="generalised-linear-models.html#cb436-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="generalised-linear-models.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = noffspring ~ weight, family = poisson, data = fox)
@@ -454,22 +455,22 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 </div>
 <p>The model coefficients and their standard errors are given on the scale of the linear predictor. They tell us that there is a significant association between the weight of the fox mother and the number of offspring she will produce: larger foxes produce more offspring. Because the coefficients are given on the scale of the linear predictor rather than on the real scale it is useful to plot predictions of the model to visualise the relationship.</p>
 <p>To do that we must (1) tell the model what to predict <code>from</code> i.e. we must provide a suitable sequence of numbers to predict from using <code>seq</code>, (2) use the <code>predict</code> function to predict values (<code>fit</code>) from the model. We use the argument <code>type = "response"</code> to tell the function that we want the predictions on the back-transformed (real) scale rather than on the scale of the linear predictor. We add the argument <code>se.fit = TRUE</code> to tell the function to give us the standard error estimates of the fit. The <code>se.fit</code> values are added or subtracted from the fit to obtain the plus/minus standard errors. We can multiply these by 1.96 to get the 95% confidence intervals of the fitted values.</p>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalised-linear-models.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector to predict from</span></span>
-<span id="cb438-2"><a href="generalised-linear-models.html#cb438-2" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">weight =</span> <span class="fu">seq</span>(<span class="fl">1.7</span>, <span class="fl">4.4</span>, <span class="fl">0.01</span>))</span>
-<span id="cb438-3"><a href="generalised-linear-models.html#cb438-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb438-4"><a href="generalised-linear-models.html#cb438-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicted values (and SE)</span></span>
-<span id="cb438-5"><a href="generalised-linear-models.html#cb438-5" aria-hidden="true" tabindex="-1"></a>predVals <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, newData,</span>
-<span id="cb438-6"><a href="generalised-linear-models.html#cb438-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;response&quot;</span>,</span>
-<span id="cb438-7"><a href="generalised-linear-models.html#cb438-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span></span>
-<span id="cb438-8"><a href="generalised-linear-models.html#cb438-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb438-9"><a href="generalised-linear-models.html#cb438-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb438-10"><a href="generalised-linear-models.html#cb438-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new data for the predicted fit line</span></span>
-<span id="cb438-11"><a href="generalised-linear-models.html#cb438-11" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
-<span id="cb438-12"><a href="generalised-linear-models.html#cb438-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">noffspring =</span> predVals<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
-<span id="cb438-13"><a href="generalised-linear-models.html#cb438-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ymin =</span> predVals<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span></span>
-<span id="cb438-14"><a href="generalised-linear-models.html#cb438-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ymax =</span> predVals<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="generalised-linear-models.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector to predict from</span></span>
+<span id="cb437-2"><a href="generalised-linear-models.html#cb437-2" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">weight =</span> <span class="fu">seq</span>(<span class="fl">1.7</span>, <span class="fl">4.4</span>, <span class="fl">0.01</span>))</span>
+<span id="cb437-3"><a href="generalised-linear-models.html#cb437-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb437-4"><a href="generalised-linear-models.html#cb437-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicted values (and SE)</span></span>
+<span id="cb437-5"><a href="generalised-linear-models.html#cb437-5" aria-hidden="true" tabindex="-1"></a>predVals <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, newData,</span>
+<span id="cb437-6"><a href="generalised-linear-models.html#cb437-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;response&quot;</span>,</span>
+<span id="cb437-7"><a href="generalised-linear-models.html#cb437-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">se.fit =</span> <span class="cn">TRUE</span></span>
+<span id="cb437-8"><a href="generalised-linear-models.html#cb437-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb437-9"><a href="generalised-linear-models.html#cb437-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb437-10"><a href="generalised-linear-models.html#cb437-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new data for the predicted fit line</span></span>
+<span id="cb437-11"><a href="generalised-linear-models.html#cb437-11" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
+<span id="cb437-12"><a href="generalised-linear-models.html#cb437-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">noffspring =</span> predVals<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
+<span id="cb437-13"><a href="generalised-linear-models.html#cb437-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ymin =</span> predVals<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span></span>
+<span id="cb437-14"><a href="generalised-linear-models.html#cb437-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ymax =</span> predVals<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit)</span></code></pre></div>
 <p>Take a look at this data to make sure it looks OK.</p>
-<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="generalised-linear-models.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(newData)</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalised-linear-models.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(newData)</span></code></pre></div>
 <pre><code>##   weight noffspring      ymin     ymax
 ## 1   1.70   1.384392 0.9649333 1.803850
 ## 2   1.71   1.393174 0.9734837 1.812865
@@ -478,13 +479,13 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 ## 5   1.74   1.419858 0.9995426 1.840173
 ## 6   1.75   1.428865 1.0083663 1.849364</code></pre>
 <p>This looks OK. Now we can plot the data and add a the model fit line, and a “ribbon” representing the errors (the 95% confidence interval for the line).</p>
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalised-linear-models.html#cb441-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fox, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> noffspring)) <span class="sc">+</span></span>
-<span id="cb441-2"><a href="generalised-linear-models.html#cb441-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newData, <span class="fu">aes</span>(</span>
-<span id="cb441-3"><a href="generalised-linear-models.html#cb441-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> weight, <span class="at">ymin =</span> ymin,</span>
-<span id="cb441-4"><a href="generalised-linear-models.html#cb441-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> ymax</span>
-<span id="cb441-5"><a href="generalised-linear-models.html#cb441-5" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">fill =</span> <span class="st">&quot;grey75&quot;</span>) <span class="sc">+</span></span>
-<span id="cb441-6"><a href="generalised-linear-models.html#cb441-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb441-7"><a href="generalised-linear-models.html#cb441-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> newData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="generalised-linear-models.html#cb440-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fox, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> noffspring)) <span class="sc">+</span></span>
+<span id="cb440-2"><a href="generalised-linear-models.html#cb440-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newData, <span class="fu">aes</span>(</span>
+<span id="cb440-3"><a href="generalised-linear-models.html#cb440-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> weight, <span class="at">ymin =</span> ymin,</span>
+<span id="cb440-4"><a href="generalised-linear-models.html#cb440-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> ymax</span>
+<span id="cb440-5"><a href="generalised-linear-models.html#cb440-5" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">fill =</span> <span class="st">&quot;grey75&quot;</span>) <span class="sc">+</span></span>
+<span id="cb440-6"><a href="generalised-linear-models.html#cb440-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb440-7"><a href="generalised-linear-models.html#cb440-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> newData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-297-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>So we could summarise this something like this:</p>
 <p>Methods: <em>I modelled the association between mother’s weight and number of pups produced using a generalised linear model with a log link and Poisson error structure. This is appropriate because the data are count data (number of pups) that are bounded at 0 with increasing variance with increased maternal weight.</em></p>
@@ -495,19 +496,19 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 <p>This data show counts of prostate cancer and distance from a nuclear processing plant. Lets take a look at the data.</p>
 <p>Let’s first import the data (<code>cancer.csv</code>) and use summary to examine it by plotting it:</p>
 <p>First we can see that there are no negative count values.</p>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalised-linear-models.html#cb442-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/cancer.csv&quot;</span>)</span>
-<span id="cb442-2"><a href="generalised-linear-models.html#cb442-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb442-3"><a href="generalised-linear-models.html#cb442-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> Cancers)) <span class="sc">+</span></span>
-<span id="cb442-4"><a href="generalised-linear-models.html#cb442-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalised-linear-models.html#cb441-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/cancer.csv&quot;</span>)</span>
+<span id="cb441-2"><a href="generalised-linear-models.html#cb441-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb441-3"><a href="generalised-linear-models.html#cb441-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> Cancers)) <span class="sc">+</span></span>
+<span id="cb441-4"><a href="generalised-linear-models.html#cb441-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-298-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Again, you will notice that the data are formed into horizontal rows of integer response values. There are lots of zero values at all distances, but the biggest cluster (6 cases), is very close to the plant. But is there a relationship between the distance from the nuclear plant and the number of cancers?</p>
 <p>Let’s fit a Generalised Linear Model to find out. As before will assume that the error is Poisson (that they variance increases directly in proportion to the mean), and we will use the standard log link to ensure that we don’t predict negative values:</p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalised-linear-models.html#cb443-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Cancers <span class="sc">~</span> Distance, <span class="at">data =</span> cancer, <span class="at">family =</span> poisson)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalised-linear-models.html#cb442-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Cancers <span class="sc">~</span> Distance, <span class="at">data =</span> cancer, <span class="at">family =</span> poisson)</span></code></pre></div>
 <p>Next, plot the diagnostic plots.</p>
 <p><img src="BB852_files/figure-html/unnamed-chunk-300-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>These look a bit dodgy, but we’ll stick with it for the moment.</p>
 <p>Next ask for the Analysis of Variance table.</p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="generalised-linear-models.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalised-linear-models.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model: poisson, link: log
@@ -524,7 +525,7 @@ GLM model coefficients and predicted values, are expressed on the scale of the <
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The ANOVA table tells us that there is no significant effect of the Distance variable. In other words a model that includes the <code>Distance</code> term does not explain significantly more variation than the <code>NULL</code> model that includes no terms and instead assumes that variation in cancer incidence is simply caused by random variation.</p>
 <p>We needn’t go further with this model, but go ahead and plot the model in any case (just for practice).</p>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="generalised-linear-models.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalised-linear-models.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Cancers ~ Distance, family = poisson, data = cancer)

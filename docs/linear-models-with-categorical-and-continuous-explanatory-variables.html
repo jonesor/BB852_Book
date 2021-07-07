@@ -180,11 +180,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.1" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#appearance"><i class="fa fa-check"></i><b>6.1</b> Appearance</a></li>
 <li class="chapter" data-level="6.2" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#shortcuts"><i class="fa fa-check"></i><b>6.2</b> Shortcuts</a></li>
-<li class="chapter" data-level="6.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>6.3</b> The plots pane</a></li>
-<li class="chapter" data-level="6.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>6.4</b> Tables</a></li>
-<li class="chapter" data-level="6.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>6.5</b> Importing data from text files</a></li>
-<li class="chapter" data-level="6.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>6.6</b> Importing data from Excel</a></li>
-<li class="chapter" data-level="6.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>6.7</b> Numbers</a></li>
+<li class="chapter" data-level="6.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#code-style"><i class="fa fa-check"></i><b>6.3</b> Code style</a></li>
+<li class="chapter" data-level="6.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>6.4</b> The plots pane</a></li>
+<li class="chapter" data-level="6.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>6.5</b> Tables</a></li>
+<li class="chapter" data-level="6.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>6.6</b> Importing data from text files</a></li>
+<li class="chapter" data-level="6.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>6.7</b> Importing data from Excel</a></li>
+<li class="chapter" data-level="6.8" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>6.8</b> Numbers</a></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -393,42 +394,42 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 </p>
 </div>
 <p>We’ll begin by plotting the data (Figure <a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#fig:exampleANCOVA">16.2</a>).</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb398-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>)</span>
-<span id="cb398-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb398-4"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-4" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(</span>
-<span id="cb398-5"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> HandWidth, <span class="at">y =</span> Height,</span>
-<span id="cb398-6"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> Gender</span>
-<span id="cb398-7"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-7" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb398-8"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb398-9"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb397-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>)</span>
+<span id="cb397-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb397-4"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-4" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(</span>
+<span id="cb397-5"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> HandWidth, <span class="at">y =</span> Height,</span>
+<span id="cb397-6"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> Gender</span>
+<span id="cb397-7"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-7" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb397-8"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb397-9"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:exampleANCOVA"></span>
 <img src="BB852_files/figure-html/exampleANCOVA-1.png" alt="ANCOVA on hand width vs. height data in males and females" width="432" />
 <p class="caption">
 Figure 16.2: ANCOVA on hand width vs. height data in males and females
 </p>
 </div>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This shows the ANCOVA model</span></span>
-<span id="cb399-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="co"># before we have even fit it!</span></span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This shows the ANCOVA model</span></span>
+<span id="cb398-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb398-2" aria-hidden="true" tabindex="-1"></a><span class="co"># before we have even fit it!</span></span></code></pre></div>
 <p>You can see that our two continuous variables, <code>Height</code> (the response variable) and <code>HandWidth</code> (one of the explanatory variables) are associated: There is an overall positive relationship between <code>HandWidth</code> and <code>Height</code> You can also see that <code>Gender</code> (the categorical explanatory variable) is important: males tend to be taller than females for any given hand width. For example, a female with hand width of 9cm is ~172cm tall while a male would be about 180cm tall. This shows us that males have a higher <strong>intercept</strong> than females. There is also a <strong>slight</strong> difference in the slope of the relationship, with males having a slightly steeper slope than females. We already know that the overall relationship between hand width and height is significant (from the linear regression chapter). These new observations leave us with the following additional questions: (1) are the intercepts for males and females significantly different? (2) are the slopes for males and females significantly different (or would a model with a single slope, but different intercepts be better)?</p>
 <p>Now we can fit our model using the <code>lm</code> function. The model formula is <code>Height ~ HandWidth + Gender + HandWidth:Gender</code>. The <code>HandWidth</code> and <code>Gender</code> are the so called <strong>main effects</strong> while <code>HandWidth:Gender</code> represents the interaction between them (i.e. it is used to address the question “<em>does the effect of hand width differ between the sexes?</em>”). R knows that is fitting an ANCOVA type model rather than a two-way ANOVA because it knows the type of variables that it is dealing with. You can see this if you ask R to tell you what the <code>class</code> of the variables are:</p>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(classData<span class="sc">$</span>Gender)</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(classData<span class="sc">$</span>Gender)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(classData<span class="sc">$</span>HandWidth)</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(classData<span class="sc">$</span>HandWidth)</span></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender <span class="sc">+</span> HandWidth<span class="sc">:</span>Gender,</span>
-<span id="cb404-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> classData</span>
-<span id="cb404-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb403-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender <span class="sc">+</span> HandWidth<span class="sc">:</span>Gender,</span>
+<span id="cb403-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb403-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> classData</span>
+<span id="cb403-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb403-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size. Nevertheless, lets keep with good habits:</p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb405-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb405-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb404-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-269-1.png" width="672" /></p>
 <p>These look good. No evidence of non-normality in the residuals, no heteroscedasticity and no weird outliers.</p>
 </div>
 <div id="summarising-with-anova" class="section level2" number="16.2">
 <h2><span class="header-section-number">16.2</span> Summarising with <code>anova</code></h2>
 <p>Now we can get the <code>anova</code> table of our ANCOVA model (yes, I know that sounds strange).</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
@@ -448,7 +449,7 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 <div id="the-summary-of-coefficients-summary" class="section level2" number="16.3">
 <h2><span class="header-section-number">16.3</span> The summary of coefficients (<code>summary</code>)</h2>
 <p>To put some quantitative numbers on this description of the pattern we need to get the summary from R.</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Height ~ HandWidth + Gender + HandWidth:Gender, 
@@ -478,9 +479,9 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 <p>We could add these equations to our reporting of the results.</p>
 <p><em>Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller. The model fit for males is Height = 1.75<span class="math inline">\(\times\)</span>HandWidth + 155.27 and the fit for females is Height = 1.09<span class="math inline">\(\times\)</span>HandWidth + 171.26</em></p>
 <p>You could check these by using <code>geom_abline</code> to add lines with those equations to the plot (just as a “sanity check”).</p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb410-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span></span>
-<span id="cb410-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb410-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">155.27</span>, <span class="at">slope =</span> <span class="fl">1.75</span>) <span class="sc">+</span></span>
-<span id="cb410-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb410-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">171.26</span>, <span class="at">slope =</span> <span class="fl">1.09</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb409-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span></span>
+<span id="cb409-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb409-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">155.27</span>, <span class="at">slope =</span> <span class="fl">1.75</span>) <span class="sc">+</span></span>
+<span id="cb409-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb409-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fl">171.26</span>, <span class="at">slope =</span> <span class="fl">1.09</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-273-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>At the bottom of the <code>summary</code> output we are given the <span class="math inline">\(R^2\)</span> values. Because this model has several terms (i.e. variables) in it we should use the adjusted <span class="math inline">\(R^2\)</span> values. These have been corrected for the fact that the model has extra explanatory variables. So in this case, we could report that the model explains % of variation in Height (Adjusted <span class="math inline">\(R^2\)</span> = - not bad!</p>
 <p>So, to describe this <code>summary</code> table more generally - the coefficients can be slopes, intercepts, differences between slopes, and differences between intercepts. They are slopes and intercepts for the first level of the categorical variable, and for the subsequent levels they are differences. Piecing these together can be hard to figure out without reference to the plot of the data and model fits - another good reason to plot your data!</p>
@@ -490,8 +491,8 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 <p>Our results above showed that the interaction between the gender and hand width was not significant. Think about what that means? It means that the effect of hand width on height (the slope) does <strong>not</strong> depend on gender. Therefore, one can argue that we don’t need to have a model that estimates both slopes - we could have a simpler model with one slope for both genders.</p>
 <p>In fact, creating models that are as simple as possible to explain the observations is a useful goal that is captured by <strong>the law of parsimony</strong> or “<em>Occam’s razor</em>,” which essentially states that simple explanations for a phenomenon are favourable to complex explanations.</p>
 <p>Let’s refit the model without this non-significant interaction:</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb411-1" aria-hidden="true" tabindex="-1"></a>mod_B <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender, <span class="at">data =</span> classData)</span>
-<span id="cb411-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb411-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_B)</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb410-1" aria-hidden="true" tabindex="-1"></a>mod_B <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender, <span class="at">data =</span> classData)</span>
+<span id="cb410-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb410-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_B)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
@@ -502,7 +503,7 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now all the terms in the model are significant.</p>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_B)</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_B)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Height ~ HandWidth + Gender, data = classData)
@@ -527,19 +528,19 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 <p>What we need to do is <strong>predict</strong> using the model what the height will be under different conditions. Think of this as “plugging values into an equation.”</p>
 <p>We want to predict heights across the range of hand widths (from 6.5cm to 11cm), and we need to do this for males and females.</p>
 <p>We do this by creating a “fake” dataset to predict from using the useful function <code>expand.grid</code>. This function takes inputs from columns of data and “expands” them to ensure that all possible combinations are included.</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb415-1" aria-hidden="true" tabindex="-1"></a>predictData <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb415-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb415-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">HandWidth =</span> <span class="fu">c</span>(<span class="fl">6.5</span>, <span class="dv">11</span>),</span>
-<span id="cb415-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb415-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Gender =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)</span>
-<span id="cb415-4"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb415-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb415-5"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb415-5" aria-hidden="true" tabindex="-1"></a>predictData</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb414-1" aria-hidden="true" tabindex="-1"></a>predictData <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb414-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb414-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">HandWidth =</span> <span class="fu">c</span>(<span class="fl">6.5</span>, <span class="dv">11</span>),</span>
+<span id="cb414-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb414-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Gender =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)</span>
+<span id="cb414-4"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb414-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb414-5"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb414-5" aria-hidden="true" tabindex="-1"></a>predictData</span></code></pre></div>
 <pre><code>##   HandWidth Gender
 ## 1       6.5   Male
 ## 2      11.0   Male
 ## 3       6.5 Female
 ## 4      11.0 Female</code></pre>
 <p>Now we can use these values to <code>predict</code> what the heights will be for those particular combinations of values. The arguments for the <code>predict</code> function are the model name, then <code>newdata =</code> to give the function the data that you want to predict from. Here we can use the function to add the models predicted fitted value (<code>fit</code>) to the <code>predictData</code> object we just created.</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb417-1" aria-hidden="true" tabindex="-1"></a>predictData<span class="sc">$</span>Height <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_B, <span class="at">newdata =</span> predictData)</span>
-<span id="cb417-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb417-2" aria-hidden="true" tabindex="-1"></a>predictData</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb416-1" aria-hidden="true" tabindex="-1"></a>predictData<span class="sc">$</span>Height <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_B, <span class="at">newdata =</span> predictData)</span>
+<span id="cb416-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb416-2" aria-hidden="true" tabindex="-1"></a>predictData</span></code></pre></div>
 <pre><code>##   HandWidth Gender   Height
 ## 1       6.5   Male 181.0943
 ## 2      11.0   Male 182.0914
@@ -547,12 +548,12 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 ## 4      11.0 Female 169.9786</code></pre>
 <p>Now we can add lines for these predicted values to our plot. We do this using the <code>geom_smooth</code> function as before, but this time we use the arguments <code>data = predictData</code> to tell R to use the new data, and <code>stat = "identity"</code> and to ensure that we plot the data rather than fitting any model.</p>
 <p>You may wish to add an error ribbon to these lines. We will cover this in a later class (but see pages 159-164 in the GSWR textbook).</p>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(</span>
-<span id="cb419-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb419-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> HandWidth, <span class="at">y =</span> Height,</span>
-<span id="cb419-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb419-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> Gender</span>
-<span id="cb419-4"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb419-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb419-5"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb419-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb419-6"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb419-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> predictData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(</span>
+<span id="cb418-2"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb418-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> HandWidth, <span class="at">y =</span> Height,</span>
+<span id="cb418-3"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb418-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> Gender</span>
+<span id="cb418-4"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb418-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb418-5"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb418-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb418-6"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb418-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> predictData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-278-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>We could report this in the usual way but first saying something like: <em>“The interaction term was not significant (F = xxxx, d.f. 1 and xx, p = XXX) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender …”</em></p>
 
