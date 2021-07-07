@@ -26,7 +26,11 @@ system("cp -r ~/Dropbox/_SDU_Teaching/BB852/'Course Documents'/BB852_Schedule.xl
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 ```
 
-```{r, echo = FALSE, message=FALSE,warning=FALSE}
+```{r, echo = FALSE, message=FALSE,warning=FALSE, results = 'hide'}
+#Clean up old ics files
+ics_files <- list.files(pattern = "*.ics")
+file.remove(ics_files)
+
 curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e21/e21", destfile = "bb852.ics")
 
 # Last sunday in October, 0300, CEST -> CET,
