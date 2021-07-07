@@ -49,26 +49,38 @@ My general approach with communicating these methods and ideas is to teach using
 
 
 ```{block, type="do-something"}
-This book accompanies the course lectures. The general idea is that there will be a lecture, followed by computer work where you work  through the examples in the relevant chapter of this book. At the end of most chapters there are also exercises to test your new skills. It is very important that you do these to gradually build up your skill level and confidence.
+This book accompanies the course lectures. The general idea is that there will be a lecture, followed by computer work where you work through the examples in the relevant chapter of this book. At the end of most chapters there are also exercises to test your new skills. It is very important that you do these to gradually build up your skill level and confidence.
 ```
 
 ## Data sources
 
-This book uses numerous data sets in examples, most of which are real datasets obtained from published works, or collected by me.
+This book uses numerous data sets in examples, most of which are real data sets obtained from published works, or collected by me.
 
 The data sets can be found at the following link:
 https://www.dropbox.com/sh/z8iv9fl9l00bm0w/AAD1WjFwcrr1ERugpunp_YH-a?dl=0
 
+
 ## Your instructors
 
-You are welcome to contact us with any problems/questions (but please put a little effort in first).
+You are welcome to contact instructors with any problems/questions (but please put a little effort in first).
 
 *	[Owen Jones](https://portal.findresearcher.sdu.dk/en/persons/jones), Associate Professor, jones@biology.sdu.dk 
-*	[John Jackson](https://jjacksoneco.wordpress.com), Postdoc, johnja@biology.sdu.dk 
+
+## Expectations
+
+There are lectures and practical exercise sessions on the course. The exercise sessions are essential to understand the subject and I expect students to attend and actively participate in them. I also expect students to make every effort to keep up with the core reading (mainly the textbook chapters), and to ask questions where they don’t understand. The nature of the course is that it builds sequentially and therefore, if you miss classes or fall behind, it may be hard to catch up. If you don’t finish off exercises in class time you should finish them as homework.
+
+## Your feedback
+
+I aim to make this course useful and rewarding for you. I would really like your feedback on how the course is progressing so I can address any issues that come up as soon as possible. To help with this I have created a simple Google Form: ​https://forms.gle/wZhUfy35ZxEmomYt6​. You can use this to send me (Owen) comments (anonymously if you wish) at any time in the course. I promise to do my best to resolve any problems.
+
+## Assessment
+
+The final exam for the course will be a written project where you apply your new skills to analyse some interesting data and report your findings. This will be graded according to the 7-point scale. I will also run some mini-quizzes during the course (e.g. on Kahoot), but these do not count towards your exam.
 
 ## Acknowledgements
 
-These materials are inspired by the excellent textbook, "Getting Started With R"^[Beckerman, Childs & Petchey (2017) *Getting Started With R*. Oxford University Press (2nd edition)], which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" ([https://dzchilds.github.io/stats-for-bio/]). For your convenience, the datasets for the Beckerman et al. book are available at this course's data Dropbox link (above), in a folder called "GSWR_datasets".
+These materials are inspired by the excellent textbook, "Getting Started With R"^[Beckerman, Childs & Petchey (2017) *Getting Started With R*. Oxford University Press (2nd edition)], which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" ([https://dzchilds.github.io/stats-for-bio/]). For your convenience, the data sets for the Beckerman et al. book are available at this course's data Dropbox link (above), in a folder called "GSWR_datasets".
 
 
 ```{r which datasets imported, echo = FALSE, message=FALSE}
@@ -76,36 +88,35 @@ rmdFiles <- list.files(pattern = "*.Rmd")
 
 dataSetsUsed <- NULL
 
-for (i in 1:length(rmdFiles)){
+for (i in 1:length(rmdFiles)) {
   x1 <- readLines(rmdFiles[i])
-  csvLines <- grep("[_A-Za-z0-9]+\\.csv",x1)
-  dataSetsUsed <- append(dataSetsUsed,x1[csvLines])
+  csvLines <- grep("[_A-Za-z0-9]+\\.csv", x1)
+  dataSetsUsed <- append(dataSetsUsed, x1[csvLines])
 }
 
-dataSetsUsed<-unique(dataSetsUsed)
+dataSetsUsed <- unique(dataSetsUsed)
 
 library(stringr)
-dataSetsUsed <- unlist(str_extract_all(dataSetsUsed, "([A-Za-z0-9_]+\\.csv)")) %>% 
-  sort() %>% 
+dataSetsUsed <- unlist(str_extract_all(dataSetsUsed, "([A-Za-z0-9_]+\\.csv)")) %>%
+  sort() %>%
   unique()
-dataSetsUsed <- data.frame(name = c(dataSetsUsed,"GSWR_datasets")) %>% 
-  filter(!name %in% c("write.csv","read.csv","dataSetsUsed.csv","dataSetsMissing.csv"))
+dataSetsUsed <- data.frame(name = c(dataSetsUsed, "GSWR_datasets")) %>%
+  filter(!name %in% c("write.csv", "read.csv", "dataSetsUsed.csv", "dataSetsMissing.csv"))
 
-write.csv(x = dataSetsUsed,file = "dataSetsUsed.csv",row.names = FALSE)
+write.csv(x = dataSetsUsed, file = "dataSetsUsed.csv", row.names = FALSE)
 
-#list.files
+# list.files
 currentFiles <- list.files(path = "CourseData/")
-delFiles <- paste0("CourseData/",currentFiles[which(!currentFiles %in% dataSetsUsed$name)])
+delFiles <- paste0("CourseData/", currentFiles[which(!currentFiles %in% dataSetsUsed$name)])
 
-#Missing files
+# Missing files
 missingFiles <- dataSetsUsed$name[!dataSetsUsed$name %in% currentFiles]
-dataSetsMissing <- data.frame(name = missingFiles) %>% 
+dataSetsMissing <- data.frame(name = missingFiles) %>%
   filter(!name %in% c("SDUweather.csv"))
-write.csv(x = dataSetsMissing,file = "dataSetsMissing.csv",row.names = FALSE)
+write.csv(x = dataSetsMissing, file = "dataSetsMissing.csv", row.names = FALSE)
 
-#Remove files that are not mentioned in the course.
-if(!delFiles[1] == "CourseData/"){
-file.remove(delFiles)
+# Remove files that are not mentioned in the course.
+if (!delFiles[1] == "CourseData/") {
+  file.remove(delFiles)
 }
 ```
-
