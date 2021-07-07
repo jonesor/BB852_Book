@@ -34,7 +34,7 @@ x <- t.test(Precision ~ Gender, data = classData)
 ```
 There was no significant difference in mean precision between the two genders (t-test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = `r sprintf(x$conf.int[1], fmt = '%#.3f')`-`r sprintf(x$conf.int[2], fmt = '%#.3f')`). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.
 
-## Exercise: Therapy for anorexia
+## Therapy for anorexia
 
 A study was carried out looking at the effect of cognitive behavioural therapy on weight of people with anorexia. Weight was measured in week 1 and again in week 8. Use a paired t-test to assess whether the treatment is effective.
 
@@ -93,7 +93,7 @@ x <- t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
 
 There was a significant difference in weight of `r sprintf(x$estimate, fmt= '%#.3f')`kg between week 1 and week 8 (t.test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between weeks was between `r sprintf(x$conf.int[1], fmt = '%#.3f')` and `r sprintf(x$conf.int[2], fmt = '%#.3f')`. Therefore, I reject the null hypotheses, that the difference is due to chance alone, and accept the alternative hypothesis.
 
-## Exercise: Compare t-tests with randomisation tests
+## Compare t-tests with randomisation tests
 
 ```{block, type="do-something"}
 1. Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give the same results?
