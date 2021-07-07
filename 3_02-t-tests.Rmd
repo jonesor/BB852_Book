@@ -418,7 +418,10 @@ anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv", header = TRUE)
 
 ```{r}
 anorexiaCBT_long <- anorexiaCBT %>%
-  pivot_longer(cols = starts_with("Week"), names_to = "time", values_to = "weight")
+  pivot_longer(
+    cols = starts_with("Week"), names_to = "time",
+    values_to = "weight"
+  )
 ```
 1) Plot the data (e.g. with an interaction plot like Figure \@ref(fig:toolData))
 
