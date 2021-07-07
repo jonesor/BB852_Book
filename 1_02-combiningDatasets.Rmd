@@ -130,7 +130,7 @@ heights
 I would like to make a boxplot, but it is not possible to easily do it with the data arranged in this format. What I need to do is "unpack" or rearrange the data to add another column for sex. This will make the data frame twice as long, and less wide.
 
 There is a convenient function called `pivot_longer` in the `tidyr` package that will do this for you. 
-You can "pipe" data into the funtion, then tell it which columns you would like to move, and then give it the name of the new column that contains data that **was** in the column heading, and the name of the column containing the data. 
+You can "pipe" data into the function, then tell it which columns you would like to move, and then give it the name of the new column that contains data that **was** in the column heading, and the name of the column containing the data. 
 
 ```{r}
 newHeights <- heights %>%
@@ -205,7 +205,7 @@ You are provided with two data sets: one on the birds and another on weather. Yo
 
 The first data set, `eggDates.csv`, is data from the SDU birds project. The data are arranged in columns where each column is a year and each row is a nest. The data in each column is the day of the year that the first egg in the nest was laid.
 
-These data do NOT fulfill the "tidy data" standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.
+These data do NOT fulfil the "tidy data" standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.
 
 You will need to use `pivot_wider` to fix this issue so that you produce a version of the data with three columns - `nestNumber`, `Year` and `dayNumber`.
 
