@@ -58,7 +58,9 @@ __a) Produce a graph showing the the total number of fires per year through time
 # Import data
 amazon <- read.csv("CourseData/amazon.csv")
 amazon <- read.csv("CourseData/amazon.csv") %>%
-  mutate(number = ifelse(number >= 1000, 1 + (number - 1000) / 1000, number))
+  mutate(number = ifelse(number >= 1000,
+    1 + (number - 1000) / 1000, number
+  ))
 
 # A) MAKE GRAPH OF TOTAL FIRES PER YEAR.
 
@@ -80,21 +82,27 @@ __b) Produce a table showing the minimum, maximum, mean and median number of fir
 
 ```{r}
 # First filter to only include the "legally defined amazon"
-# Check that all are included in the result (you might need to check and fix "foreign" letters - a typical data cleaning task!)
-legalAmazonStates <- c("Acre", "Amapa", "Pará", "Amazonas", "Rondonia", "Roraima", "Mato Grosso", "Tocantins", "Maranhao")
+# Check that all are included in the result (you might need to
+# check and fix "foreign" letters - a typical data cleaning task!)
+legalAmazonStates <- c(
+  "Acre", "Amapa", "Pará", "Amazonas", "Rondonia",
+  "Roraima", "Mato Grosso", "Tocantins", "Maranhao"
+)
 
 legalAmazon <- amazon %>%
   filter(state %in% legalAmazonStates)
 
 
-# Next make a "look up" table to convert month name to a numeric value 1-12
+# Next make a "look up" table to convert month name
+# to a numeric value 1-12
 (monthLookup <- amazon %>%
   select(month) %>%
   unique() %>%
   mutate(month_numeric = 1:12))
 
 # Then use left_join to add the numeric month to the data
-# then group_by month and year, and summarise to get total number (i.e. sum for each month in each year for whole amazon)
+# then group_by month and year, and summarise to get total
+# number (i.e. sum for each month in each year for whole amazon)
 # Then group_by month again and calculate the min/mean/max etc.
 table1 <- legalAmazon %>%
   left_join(monthLookup) %>%
@@ -103,7 +111,10 @@ table1 <- legalAmazon %>%
   # total fires per month, per year
   group_by(month_numeric) %>%
   # group by month to get min/max/median per month
-  summarise(minimum = min(sumFires), mean = mean(sumFires), median = median(sumFires), maximum = max(sumFires))
+  summarise(
+    minimum = min(sumFires), mean = mean(sumFires),
+    median = median(sumFires), maximum = max(sumFires)
+  )
 
 table1
 ```
@@ -116,7 +127,10 @@ If you calculate the statistics "by state" as well as by year and month you end 
 table1 <- legalAmazon %>%
   left_join(monthLookup) %>%
   group_by(month_numeric) %>%
-  summarise(minimum = min(number), mean = mean(number), median = median(number), maximum = max(number))
+  summarise(
+    minimum = min(number), mean = mean(number),
+    median = median(number), maximum = max(number)
+  )
 
 table1
 ```
@@ -131,13 +145,18 @@ Here I am looking for a box plot of the number of fires per month in the Amazon 
 To check that you are on the right track you could look at the dimensions of the data frame you create - with 12 months per year and 20 years of data you can expect 240 rows of data (though perhaps not all years include all months of data). Nevertheless, it gives you a ballpark figure and if your dataset is not approximately this size, something has gone wrong!
 
 ```{r}
-# Use summarise to calculate the the total number of fires per month
-# In this case I use the legal amazon, but it is acceptable to look at the whole
-# data set. You need to make sure that you are using the numeric month.
+# Use summarise to calculate the the total number of
+# fires per month.
+# In this case I use the legal amazon, but it is acceptable
+# to look at the whole data set. You need to make sure that
+# you are using the numeric month.
 
-# Group by year and month to calculate the total number of fires in each year and month.
+# Group by year and month to calculate the total number of
+# fires in each year and month.
 
-# Create the dataset by filtering to legal amazon, adding numeric month, grouping by year and month and finally summarising.
+# Create the dataset by filtering to legal amazon, adding
+# numeric month, grouping by year and month and finally
+# summarising.
 amazon2 <- amazon %>%
   filter(state %in% legalAmazonStates) %>%
   left_join(monthLookup) %>%
@@ -281,7 +300,9 @@ c) Briefly describe a simple proposed experiment design to test the new seaweed 
 __a) Summarise the older study data to obtain mean and standard deviation.__
 
 ```{r}
-oilseed <- read.csv("CourseData/oilseed.csv", stringsAsFactors = TRUE)
+oilseed <- read.csv("CourseData/oilseed.csv",
+  stringsAsFactors = TRUE
+)
 
 (controlData <- oilseed %>%
   summarise(meanVal = mean(yield), sdVal = sd(yield)))
@@ -331,7 +352,8 @@ pwr <- function(n) {
   ) < 0.05) / 1000
 }
 
-# map_dbl applying the function for every value of simulData$sampleSize
+# map_dbl applying the function for every value of
+# simulData$sampleSize
 simulData$Power <- purrr::map_dbl(simulData$sampleSize, pwr)
 ```
 
@@ -400,9 +422,14 @@ c) Produce a plot that shows (in addition to the raw data points) the fitted val
 __a) Plot the data to show the relationship between the the number of species and the area of the "island". Colour code the points by whether the habitat type.__
 
 ```{r}
-roundabouts <- read.csv("CourseData/roundabouts.csv", stringsAsFactors = TRUE)
+roundabouts <- read.csv("CourseData/roundabouts.csv",
+  stringsAsFactors = TRUE
+)
 
-ggplot(roundabouts, aes(x = area, y = nSpecies, colour = habitatType)) +
+ggplot(roundabouts, aes(
+  x = area, y = nSpecies,
+  colour = habitatType
+)) +
   geom_point()
 ```
 
@@ -415,7 +442,10 @@ I could describe the methods like this:
 _I fitted a generalised linear model with Poisson errors to model how species richness is associated with survey area and habitat complexity. I included species richness as the response variable, and area and habitat complexity as explanatory variables. I used Poisson errors because these are count data and using an ordinary linear model could lead to estimates of negative species richness, and would not account for the fact that variance increases with the mean, which violates one of the assumptions of ordinary regression models. After fitting the model I examined the diagnostic plots of the model to check that the model was appropriate._
 
 ```{r,message=FALSE,warning=FALSE}
-mod1 <- glm(nSpecies ~ area * habitatType, family = "poisson", data = roundabouts)
+mod1 <- glm(nSpecies ~ area * habitatType,
+  family = "poisson",
+  data = roundabouts
+)
 autoplot(mod1)
 anova(mod1, test = "Chi")
 summary(mod1)
@@ -434,7 +464,10 @@ The main thing to remember here is that you need to back-transform from the scal
 
 ```{r}
 # Data set to predict from
-newData <- expand.grid(area = seq(0, 50, 0.1), habitatType = c("complex", "simple"))
+newData <- expand.grid(
+  area = seq(0, 50, 0.1),
+  habitatType = c("complex", "simple")
+)
 
 # Predicted values (and SE)
 pv <- predict(mod1, newData, se.fit = TRUE)
@@ -460,7 +493,10 @@ newData <- newData %>%
 Now we can add these to the plot:
 
 ```{r}
-ggplot(roundabouts, aes(x = area, y = nSpecies, colour = habitatType)) +
+ggplot(roundabouts, aes(
+  x = area, y = nSpecies,
+  colour = habitatType
+)) +
   geom_ribbon(data = newData, aes(
     x = area, ymin = ymin, ymax = ymax,
     fill = habitatType, alpha = 0.3

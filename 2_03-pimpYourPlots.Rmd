@@ -32,7 +32,10 @@ anage <- x %>%
     BMR = "Metabolic.rate..W."
   ) %>%
   select(Class, Order, Species, Mass, Longevity, BMR) %>%
-  filter(Class %in% c("Aves", "Amphibia", "Mammalia", "Reptilia")) %>%
+  filter(Class %in% c(
+    "Aves", "Amphibia",
+    "Mammalia", "Reptilia"
+  )) %>%
   droplevels() %>%
   # this removes unused "factor levels" e.g. "Insecta"
   mutate(
@@ -54,7 +57,7 @@ Now lets start with a basic plot. You will see a warning about removing rows wit
 
 ```{r, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (p1 <- ggplot(anage, aes(x = Mass, y = BMR, colour = Class)) +
-  geom_point(alpha = 0.3)) # use alpha argument to make points transparent
+  geom_point(alpha = 0.3)) # use alpha for transparent points
 ```
 
 ## Axis limits
@@ -132,7 +135,10 @@ With colour names...
 
 ```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 p3 +
-  scale_colour_manual(values = c("red", "green", "orange", "black"))
+  scale_colour_manual(values = c(
+    "red", "green",
+    "orange", "black"
+  ))
 ```
 
 
@@ -140,7 +146,10 @@ And with some hex codes...
 
 ```{r,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 p3 +
-  scale_colour_manual(values = c("#33FF6475", "#3368FF75", "#FF33CE75", "#FFCA3375"))
+  scale_colour_manual(values = c(
+    "#33FF6475", "#3368FF75", "#FF33CE75",
+    "#FFCA3375"
+  ))
 ```
 
 Another alternative is to use some of `ggplot`'s built in "palettes" of colour combinations. For example, there are several palettes called "`viridis`".
@@ -230,8 +239,14 @@ I will illustrate it by first making another plot, this time showing the relatio
 # PlotA (this is what you have already created above)
 plotA <- ggplot(anage, aes(x = Mass, y = BMR, colour = Class)) +
   geom_point(alpha = 0.5) +
-  scale_x_continuous(trans = "log", breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000)) +
-  scale_y_continuous(trans = "log", breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000)) +
+  scale_x_continuous(
+    trans = "log",
+    breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000)
+  ) +
+  scale_y_continuous(
+    trans = "log",
+    breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000)
+  ) +
   xlab("Adult body mass (kg)") +
   ylab("Basal metabolic rate (W)") +
   theme_minimal() +
@@ -240,10 +255,19 @@ plotA <- ggplot(anage, aes(x = Mass, y = BMR, colour = Class)) +
     legend.title = element_blank()
   )
 
-(plotB <- ggplot(anage, aes(x = Mass, y = BMRperKg, colour = Class)) +
+(plotB <- ggplot(anage, aes(
+  x = Mass, y = BMRperKg,
+  colour = Class
+)) +
   geom_point(alpha = 0.5) +
-  scale_x_continuous(trans = "log", breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000)) +
-  scale_y_continuous(trans = "log", breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10)) +
+  scale_x_continuous(
+    trans = "log",
+    breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000)
+  ) +
+  scale_y_continuous(
+    trans = "log",
+    breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10)
+  ) +
   xlab("Adult body mass (kg)") +
   ylab("Basal metabolic rate (W/kg)") +
   theme_minimal() +

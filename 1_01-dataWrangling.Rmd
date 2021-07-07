@@ -157,11 +157,13 @@ head(df2)
 We can plot this by first making a plot for blue tits, and then adding the points for great tits. I have used the `pch` argument to use filled circles for the great tits:
 
 ```{r}
-plot(df2$Year[df2$species == "BT"], df2$meanClutchSize[df2$species == "BT"],
+plot(df2$Year[df2$species == "BT"],
+  df2$meanClutchSize[df2$species == "BT"],
   type = "b",
   ylim = c(0, 12), xlab = "Year", ylab = "Clutch Size"
 )
-points(df2$Year[df2$species == "GT"], df2$meanClutchSize[df2$species == "GT"],
+points(df2$Year[df2$species == "GT"],
+  df2$meanClutchSize[df2$species == "GT"],
   pch = 16, type = "b"
 )
 ```
@@ -180,9 +182,9 @@ Below I show how do do this to create a clutch size data set from the raw data (
 SDUClutchSize <- read.csv("CourseData/sduBirds.csv") %>%
   filter(species %in% c("GT", "BT")) %>% # include only GT and BT
   droplevels() %>% # drop unwanted factor levels
-  select(species, Year, Day, boxNumber, nEggs) %>% # select columns needed
+  select(species, Year, Day, boxNumber, nEggs) %>% # select columns
   group_by(species, Year, boxNumber) %>% # group data
-  summarise(clutchSize = max(nEggs, na.rm = TRUE)) %>% # calculate clutch size (max eggs)
+  summarise(clutchSize = max(nEggs, na.rm = TRUE)) %>% # clutch size
   filter(clutchSize > 0)
 
 head(SDUClutchSize)
@@ -191,7 +193,8 @@ head(SDUClutchSize)
 You can save this out using the `write.csv` function. You will need to set the argument `row.names = FALSE` to stop the data including row names.
 
 ```{r}
-write.csv(x = SDUClutchSize, file = "CourseData/SDUClutchSize.csv", row.names = FALSE)
+write.csv(x = SDUClutchSize, file = "CourseData/SDUClutchSize.csv", 
+          row.names = FALSE)
 ```
 
 ## Exercise: Wrangling the Amniote Life History Database
@@ -208,7 +211,8 @@ The database is in a file called `Amniote_Database_Aug_2015.csv` in the course d
 
 
 ```{r}
-amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv", na.strings = "-999")
+amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv", 
+                    na.strings = "-999")
 ```
 
 Let's make a start...
@@ -237,8 +241,6 @@ Use `mutate` and `paste` to convert the `species` column to a *Genus_species* by
 
 
 9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot `logOffspring` vs. `logLongevity`.
-
-
 
 10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationships holds universally. 
 

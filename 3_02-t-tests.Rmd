@@ -354,7 +354,7 @@ temp <- t.test(Reaction ~ Gender, data = x)
 ```
 
 ```{r}
-t.test(Reaction ~ Gender, data = x, var.equal = F)
+t.test(Reaction ~ Gender, data = x, var.equal = FALSE)
 ```
 
 This output first tells us that we are using something called a "Welch Two Sample t-test". This is a form of the two-sample t-test that relaxes the assumption that the variance in the two groups is the same. This is a good thing. Although it *is* possible to fit a t-test with equal variances, I recommend that you stick with the default Welch's test and **not** make this limiting assumption. 

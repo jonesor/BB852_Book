@@ -103,8 +103,8 @@ Let's use the function `geom_vline` to add some markers to the plot from above t
 ```{r, message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 (p2 <- p1 +
   geom_vline(xintercept = sv$meanEst, size = 2) + # mean
-  geom_vline(xintercept = sv$meanEst + sv$sdEst, size = 1) + # upperSD
-  geom_vline(xintercept = sv$meanEst - sv$sdEst, size = 1) # lowerSD
+  geom_vline(xintercept = sv$meanEst + sv$sdEst, size = 1) + # high
+  geom_vline(xintercept = sv$meanEst - sv$sdEst, size = 1) # low
 )
 ```
 
@@ -113,8 +113,8 @@ We can compare these with the true values (the values we set when we generated t
 ```{r, message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 (p3 <- p2 +
   geom_vline(xintercept = 5, size = 2, colour = "red") + # mean
-  geom_vline(xintercept = 5 + 2, size = 1, colour = "red") + # upperSD
-  geom_vline(xintercept = 5 - 2, size = 1, colour = "red") # lowerSD
+  geom_vline(xintercept = 5 + 2, size = 1, colour = "red") + # high
+  geom_vline(xintercept = 5 - 2, size = 1, colour = "red") # low
 )
 ```
 
@@ -146,7 +146,10 @@ summary(rn)
 The summaries (above) show that the mean and the width of the distributions vary, but we should always plot our data. So lets make a plot in `ggplot`. In the dataset I created I have the data arranged by columns side-by-side, but `ggplot` needs the values to be arranged in a single column, and the identifier of the sample ID in a second column. I can use the function `pivot_longer` to rearrange the data into the required format.
 
 ```{r, message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
-rn <- pivot_longer(rn, cols = c(d1, d2), names_to = "sampleID", values_to = "value") # rearrange data
+rn <- pivot_longer(rn,
+  cols = c(d1, d2), names_to = "sampleID",
+  values_to = "value"
+) # rearrange data
 
 # Plot histograms using "identity", and make them transparent
 ggplot(rn, aes(x = value, fill = sampleID)) +
@@ -223,9 +226,9 @@ Now lets plot the mean and the 2 times the standard deviation on the graph. Reme
 
 ```{r, fig.height=3, fig.width = 4,fig.align='center'}
 p1 +
-  geom_vline(xintercept = sv$meanEst, size = 2) + # mean
-  geom_vline(xintercept = sv$meanEst + 2 * sv$sdEst, size = 1) + # upper2SD
-  geom_vline(xintercept = sv$meanEst - 2 * sv$sdEst, size = 1) # lower2SD
+  geom_vline(xintercept = sv$meanEst, size = 2) +
+  geom_vline(xintercept = sv$meanEst + 2 * sv$sdEst, size = 1) +
+  geom_vline(xintercept = sv$meanEst - 2 * sv$sdEst, size = 1)
 ```
 
 This looks like a TERRIBLE fit: The mean is not close to the most common value in the data set and the lower limit of the standard deviation indicates we should expect some negative values - this is impossible for Poisson data. The reason for this is that mean and standard deviation, and therefore standard error, are intended for normally distributed data. When the data come from other distributions we must take another approach.
@@ -255,10 +258,16 @@ To get a better feel for how these two distributions differ, lets use the same a
 
 ```{r, fig.height=3, fig.width = 4,fig.align='center',echo=-1,cache = TRUE}
 set.seed(42)
-rn <- data.frame(normDist = rnorm(500, 2, 2), poisDist = rpois(500, 2.4))
+rn <- data.frame(
+  normDist = rnorm(500, 2, 2),
+  poisDist = rpois(500, 2.4)
+)
 summary(rn)
 
-rn <- pivot_longer(rn, cols = c(normDist, poisDist), names_to = "sampleID", values_to = "value") # rearrange data
+rn <- pivot_longer(rn,
+  cols = c(normDist, poisDist),
+  names_to = "sampleID", values_to = "value"
+) # rearrange data
 
 # Plot histograms using "identity", and make them transparent
 ggplot(rn, aes(x = value, fill = sampleID)) +

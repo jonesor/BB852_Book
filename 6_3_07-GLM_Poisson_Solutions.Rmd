@@ -58,6 +58,12 @@ newData <- newData %>%
   mutate(upperCI = inverseFunction(upperCI_LP))
 
 
-A + geom_point(data = newData, aes(x = Age, y = nErrors), colour = "red") +
-  geom_segment(data = newData, aes(x = Age, xend = Age, y = lowerCI, yend = upperCI), colour = "red")
+A + geom_point(
+  data = newData, aes(x = Age, y = nErrors),
+  colour = "red"
+) +
+  geom_segment(data = newData, aes(
+    x = Age, xend = Age,
+    y = lowerCI, yend = upperCI
+  ), colour = "red")
 ```

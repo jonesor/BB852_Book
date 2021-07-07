@@ -170,49 +170,6 @@ newDat %>%
   select(Distance, Success)
 ```
 
-<!--
-## Example: Island bird species
-
-This example concerns the presence or absence on a set of islands of a particular species of bird. The response variable we are interested in is called "incidence" and a value of 1 means that the bird is present and breeding on the island, while a value of 0 means that the island has no breeding population there. The explanatory variable is the size of the island in $km^2$ and isolation (the distance of the island from the mainland in km).
-
-Lets take a look at the data.
-
-```{r }
-island <- read.csv("CourseData/isolation.csv")
-
-str(island)
-```
-
-In this case there are two explanatory variables and we are therefore going to fit a *multiple regression* model with two variables using the GLM framework. 
-
-```{r }
-model1 <- glm(incidence ~ area + isolation, data = island, family = binomial)
-summary(model1)
-```
-
-Looking at coefficients and standard errors (which are on the logit scale) we can see that area has a significant positive effect on the probability of occupation (larger islands are more likely to be occupied) and isolation has a strong negative effect (isolated islands are much less likely to be occupied). To visualise this we can plot the model fits through a scatter plot of the data. It is best to do this separately for each variable so first we must make two separate models, one for each of the variables.
-
-```{r }
-modela <- glm(incidence ~ area, data = island, family = binomial)
-modeli <- glm(incidence ~ isolation, data = island, family = binomial)
-```
-
-Then we can plot the two relationships in graphs side-by-side using the same approach as above. In these plots the fitted values (the modelled line) can be interpreted as a probability.
-
-```{r }
-par(mfrow = c(1, 2))
-plot(island$area, island$incidence)
-newData <- data.frame(area = seq(0, 9, 0.01))
-newData$fit <- predict(modela, newData, type = "response")
-lines(newData$area, newData$fit, col = "red")
-
-plot(island$isolation, island$incidence)
-newData <- data.frame(isolation = seq(0, 10, 0.01))
-newData$fit <- predict(modeli, newData, type = "response")
-lines(newData$isolation, newData$fit, col = "red")
-```
--->
-
 ## Example: Sex ratio in turtles
 
 In this example we will look at sex ratio of hawksbill turtles (*Eretmochelys imbricata*)^[data from: Godfrey et al. (1999) Can. J. Zool. 77: 1465–1473]. The data are counts of males and females in clutches of eggs incubated at different temperatures.
@@ -237,7 +194,10 @@ hawksbill <- hawksbill %>%
 Let's plot that data. We can use the trick of telling R to plot the points different sizes depending on the sample size (using the `size =` argument):
 
 ```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
-(A <- ggplot(hawksbill, aes(x = Temperature, y = propFemale, size = Total)) +
+(A <- ggplot(hawksbill, aes(
+  x = Temperature, y = propFemale,
+  size = Total
+)) +
   geom_point())
 ```
 
@@ -313,20 +273,26 @@ We can add these values to the plot like this:
 
 ```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 # The plot and ribbon
-(A <- ggplot(hawksbill, aes(x = Temperature, y = propFemale, size = Total)) +
+(A <- ggplot(hawksbill, aes(
+  x = Temperature, y = propFemale,
+  size = Total
+)) +
   geom_ribbon(
     data = newDat, aes(x = Temperature, ymin = ymin, ymax = ymax),
     fill = "grey75", alpha = 0.5, inherit.aes = FALSE
   ) +
-  geom_smooth(data = newDat, aes(x = Temperature, y = propFemale), stat = "identity", inherit.aes = FALSE) +
+  geom_smooth(
+    data = newDat, aes(x = Temperature, y = propFemale),
+    stat = "identity", inherit.aes = FALSE
+  ) +
   geom_point())
 ```
 
 Can you give read off the graph the approximate estimated temperature at which sex ratio is 50:50? 
 
 ```{block, type="do-something"}
-1. Try refitting the model using simply the proportion female (`propFemale`) data rather than the two-column (`cbind`) approach.
-2. Try writing up the result in the same way as shown for the NFL field goals example.
+Try refitting the model using simply the proportion female (`propFemale`) data rather than the two-column (`cbind`) approach.
+Then try writing up the result in the same way as shown for the NFL field goals example.
 ```
 
 ## Example: Smoking
@@ -414,7 +380,10 @@ smoke
 This table shows us that the probability of the students smoking is 0.2030 (95% CI = 0.191-0.216) for children of smokers, and 0.139 (95% CI = 0.121-0.158) for children of non-smokers. We can plot this using `ggplot` like this.
 
 ```{r}
-ggplot(smoke, aes(x = parentSmoke, y = prob, ymin = ymin, ymax = ymax)) +
+ggplot(smoke, aes(
+  x = parentSmoke, y = prob, ymin = ymin,
+  ymax = ymax
+)) +
   geom_point() +
   geom_segment(aes(xend = parentSmoke, y = ymin, yend = ymax))
 ```

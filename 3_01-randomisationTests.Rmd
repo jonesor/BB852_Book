@@ -192,7 +192,10 @@ These data are arranged in a so-called "wide" format. To make plotting and analy
 
 ```{r}
 an <- an %>%
-  pivot_longer(cols = starts_with("Week"), names_to = "time", values_to = "weight")
+  pivot_longer(
+    cols = starts_with("Week"), names_to = "time",
+    values_to = "weight"
+  )
 head(an)
 ```
 
@@ -256,7 +259,10 @@ set.seed(123)
 head(an)
 
 anShuffled <- an %>%
-  mutate(sign = sample(c(1, -1), size = nrow(an), replace = TRUE)) %>%
+  mutate(sign = sample(c(1, -1),
+    size = nrow(an),
+    replace = TRUE
+  )) %>%
   mutate(shuffledChange = change * sign)
 ```
 
@@ -271,7 +277,10 @@ We need to calculate the mean of this shuffled vector. We can do this by `pull` 
 ```{r, echo = -1, cache = TRUE}
 set.seed(42)
 an %>%
-  mutate(sign = sample(c(1, -1), size = nrow(an), replace = TRUE)) %>%
+  mutate(sign = sample(c(1, -1),
+    size = nrow(an),
+    replace = TRUE
+  )) %>%
   mutate(shuffledChange = change * sign) %>%
   pull(shuffledChange) %>%
   mean()
@@ -284,7 +293,10 @@ set.seed(42)
 nullDist <- data.frame(
   change =
     replicate(1000, an %>%
-      mutate(sign = sample(c(1, -1), size = nrow(an), replace = TRUE)) %>%
+      mutate(sign = sample(c(1, -1),
+        size = nrow(an),
+        replace = TRUE
+      )) %>%
       mutate(shuffledChange = change * sign) %>%
       pull(shuffledChange) %>%
       mean())

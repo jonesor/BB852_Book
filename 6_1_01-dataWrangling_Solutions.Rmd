@@ -3,7 +3,9 @@
 1. When you have imported the data, use `dim` to check the dimensions of the whole data frame (you should see that there are `r ncol(amniote)` columns and `r nrow(amniote)` rows). Use `names` to look at the names of all columns in the data in `amniote`.
 
 ```{r}
-amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv", na.strings = "-999")
+amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv",
+  na.strings = "-999"
+)
 ```
 
 ```{r}
@@ -83,7 +85,9 @@ plot(x$logMass, x$logLongevity)
 
 ```{r}
 x <- x %>%
-  mutate(logOffspring = log(litter_or_clutch_size_n * litters_or_clutches_per_y))
+  mutate(logOffspring = log(
+    litter_or_clutch_size_n * litters_or_clutches_per_y
+  ))
 
 plot(x$logOffspring, x$logLongevity)
 ```

@@ -92,7 +92,10 @@ replicate(
 # with tapply
 replicate(
   10,
-  diff(as.vector(tapply(hercules$width, sample(hercules$sex), mean)))
+  diff(as.vector(tapply(
+    hercules$width,
+    sample(hercules$sex), mean
+  )))
 )
 ```
 

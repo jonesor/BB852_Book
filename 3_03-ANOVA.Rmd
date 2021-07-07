@@ -99,7 +99,8 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 Import the data (`espresso.csv`) and look at it.
 
 ```{r}
-espresso <- read.csv("CourseData/espresso.csv", stringsAsFactors = TRUE)
+espresso <- read.csv("CourseData/espresso.csv", 
+                     stringsAsFactors = TRUE)
 head(espresso)
 ```
 
@@ -426,9 +427,9 @@ We can "look up" the p-value associated with this F-statistic using the `pf` fun
 As you can see, the method is a bit laborious and time consuming but it is conceptually fairly straightforward - it all hinges on the ratio of variation due to treatment effect vs. overall variation. Signal and noise.
 
 
-<!-- the following is some code to make a plot with shuffled data as an illustration of how the ANOVA works --->
-```{r, echo=FALSE}
 
+```{r, echo=FALSE}
+# the following is some code to make a plot with shuffled data as an illustration of how the ANOVA works
 espressoShuffled <- espresso %>%
   mutate(foamIndx = sample(foamIndx))
 
@@ -472,97 +473,27 @@ xx <- SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitl
 
 ## Exercise: Apple tree crop yield
 
-<!-- to produce the dataset
-```{r}
-# require(agridat)
-# apples <- agridat::archbold.apple %>%
-#  select(spacing,yield)
-# write.csv(file= "CourseData/apples.csv",x = apples,row.names = FALSE)
-```
--->
 
 An experiment was conducted to look at the effect of tree spacing on apple crop yield (total kg per tree of apples between 1975-1979) in different spacing conditions (i.e. distances between trees). There were 40 trees in each treatment group. The spacing was 6, 10 and 14 feet, and should be treated as a categorical variable. There may be some `NA` missing yield values.
 
 Import the data (`apples.csv`) and analyse it using the techniques you have learned in the ANOVA lecture, and the previous chapter, to answer the question "What is the effect of tree spacing on apple yields?"
 
-<!--
-```{r}
-apples <- read.csv("CourseData/apples.csv")
-summary(apples)
-```
--->
 
 1) Import and look at the data (e.g. `summary` or `str` or `head`)
 
-<!--
-```{r}
-apples <- read.csv("CourseData/apples.csv")
-summary(apples)
-```
--->
-
 2) Ensure that the explanatory variable (`spacing`) is defined as a categorical variable (i.e. a "factor", in R-speak). You can use `mutate` and `as.factor` functions for this.
-
-<!--
-```{r}
-apples <- apples %>%
-  mutate(spacing = as.factor(spacing))
-```
--->
-
 
 3) Plot the data using `ggplot` (a box plot with (optionally) added jittered points would be good).
 
-<!--
-```{r}
-ggplot(apples, aes(x = spacing, y = yield)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.2) +
-  ylab("Yield (kg per tree)")
-```
--->
-
 4) Fit an ANOVA model using `lm`. 
-
-<!--
-```{r}
-apple_mod <- lm(yield ~ spacing, data = apples)
-```
--->
 
 5) Check the model using a diagnostic plot (i.e. using `autoplot` from the `ggfortify` package).
 
-<!--
-```{r}
-library(ggfortify)
-autoplot(apple_mod)
-```
--->
-
 6) Use `anova` to get the ANOVA summary.
-
-<!--
-```{r}
-anova(apple_mod)
-```
--->
 
 7) You should see that there are differences among treatments. But where are those differences? Use `summary` on  your model to find out.
 
-<!--
-```{r}
-summary(apple_mod)
-```
--->
-
 8) Use a Tukey test to make all the pairwise comparisons among the treatments.
-
-<!--
-```{r}
-library(agricolae)
-HSD.test(apple_mod, "spacing", console = TRUE)
-```
--->
 
 9) Write a few sentences that summarise your findings. What biological processes do you think drive the effects that you have detected?
 

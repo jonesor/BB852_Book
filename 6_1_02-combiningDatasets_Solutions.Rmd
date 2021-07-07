@@ -16,7 +16,10 @@ You should also make sure that the `Year` column is recognised as being a numeri
 You should end up with a dataset with three columns as described above.
 
 ```{r}
-eggDates <- eggDates %>% pivot_longer(cols = starts_with("y"), names_to = "Year", values_to = "day")
+eggDates <- eggDates %>% pivot_longer(
+  cols = starts_with("y"),
+  names_to = "Year", values_to = "day"
+)
 
 head(eggDates)
 ```

@@ -16,7 +16,9 @@ Let's start with the  "Amniote Life History Database" ^[https://esajournals.onli
 
 
 ```{r}
-amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv", na.strings = "-999")
+amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv",
+  na.strings = "-999"
+)
 ```
 
 We can filter on the taxonomic `class` to subset to only mammals. Then, to address our question, we want data on generation time for mammals. Generation time is often measured as the average age at which females reproduce so we can get close to that with `female_maturity_d`. We will first `select` these columns, along with `genus` and `species`. We can combine these two taxonomic variables using `mutate` and `paste` to get our Latin binomial species name.
@@ -114,7 +116,10 @@ To illustrate this I will use a data set on heights of men and women.
 
 ```{r, eval = TRUE,echo = FALSE,cache = TRUE}
 set.seed(1234)
-temp <- data.frame(place = rep(c("London", "Bristol"), each = 15), heightMale = round(rnorm(30, 175, 4)), heightFemale = round(rnorm(30, 160, 4)))
+temp <- data.frame(
+  place = rep(c("London", "Bristol"), each = 15),
+  heightMale = round(rnorm(30, 175, 4)), heightFemale = round(rnorm(30, 160, 4))
+)
 write.csv(temp, file = "CourseData/heights.csv", row.names = FALSE)
 ```
 
@@ -134,7 +139,10 @@ You can "pipe" data into the function, then tell it which columns you would like
 
 ```{r}
 newHeights <- heights %>%
-  pivot_longer(cols = c(heightMale, heightFemale), names_to = c("Sex"), values_to = "Height")
+  pivot_longer(
+    cols = c(heightMale, heightFemale),
+    names_to = c("Sex"), values_to = "Height"
+  )
 
 newHeights
 ```
@@ -145,8 +153,14 @@ So we can now complete the job with a `mutate` command, and make sure it is reco
 
 ```{r}
 newHeights <- heights %>%
-  pivot_longer(cols = c(heightMale, heightFemale), names_to = c("Sex"), values_to = "Height") %>%
-  mutate(Sex = gsub(pattern = "height", replacement = "", x = Sex)) %>%
+  pivot_longer(
+    cols = c(heightMale, heightFemale),
+    names_to = c("Sex"), values_to = "Height"
+  ) %>%
+  mutate(Sex = gsub(
+    pattern = "height", replacement = "",
+    x = Sex
+  )) %>%
   mutate(Sex = as.factor(Sex))
 
 newHeights

@@ -46,14 +46,22 @@ The data are in "wide format". You may wish to convert it to "long format" depen
 1) Plot the data (e.g. with an interaction plot like Figure \@ref(fig:toolData))
 
 ```{r,echo=TRUE,message=FALSE}
-anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv", header = TRUE)
+anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv",
+  header = TRUE
+)
 
 anorexiaCBT_long <- anorexiaCBT %>%
-  pivot_longer(cols = starts_with("Week"), names_to = "time", values_to = "weight")
+  pivot_longer(
+    cols = starts_with("Week"), names_to = "time",
+    values_to = "weight"
+  )
 ```
 
 ```{r}
-ggplot(anorexiaCBT_long, aes(x = time, y = weight, group = Subject)) +
+ggplot(anorexiaCBT_long, aes(
+  x = time, y = weight,
+  group = Subject
+)) +
   geom_line() +
   geom_point() +
   xlab("Time") +
@@ -96,11 +104,9 @@ There was a significant difference in weight of `r sprintf(x$estimate, fmt= '%#.
 ## Compare t-tests with randomisation tests
 
 ```{block, type="do-something"}
-1. Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give the same results?
+Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give approximately the same results? 
 
-They should give approximately the same results.
-
-2. Try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `classData.csv`. Can you think of any problems with this analysis?
+Then try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `classData.csv`. Can you think of any problems with this analysis?
 ```
 
 The problem with the analysis is that it is "confounded". That is to say, gender is correlated with height, so you would not be sure whether any difference you found would be due to height, or gender.

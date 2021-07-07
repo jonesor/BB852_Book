@@ -70,7 +70,10 @@ You should recall that there were several years of data represented here.
 
 ```{r}
 ggplot(df, aes(x = clutchSize, fill = species, stat(density))) +
-  geom_histogram(binwidth = 1, position = "identity", alpha = 0.7) +
+  geom_histogram(
+    binwidth = 1, position = "identity",
+    alpha = 0.7
+  ) +
   facet_grid(. ~ Year)
 ```
 
@@ -150,14 +153,20 @@ meanClutch <- df %>%
 Now I can do the plot again. The only difference to the command is that I need to tell R that I want to colour the lines by species (`colour = species`).
 
 ```{r}
-ggplot(meanClutch, aes(x = Year, y = meanClutchSize, colour = species)) +
+ggplot(meanClutch, aes(
+  x = Year, y = meanClutchSize,
+  colour = species
+)) +
   geom_line()
 ```
 
 I can improve on this by (1) changing the y axis limits (using `ylim`) so that it goes through the full range of my data (0 - 14); (2) adding points (using a `geom_point` layer) where my actual data values are; (3) adding a nicely formatted axis label (using `ylab`); adding a title (`ggtitle`)
 
 ```{r}
-ggplot(meanClutch, aes(x = Year, y = meanClutchSize, colour = species)) +
+ggplot(meanClutch, aes(
+  x = Year, y = meanClutchSize,
+  colour = species
+)) +
   geom_line() +
   geom_point() +
   ylim(0, 14) +

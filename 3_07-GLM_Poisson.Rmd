@@ -86,7 +86,10 @@ To do that we must (1) tell the model what to predict `from` i.e. we must provid
 newData <- data.frame(weight = seq(1.7, 4.4, 0.01))
 
 # Predicted values (and SE)
-predVals <- predict(mod1, newData, type = "response", se.fit = TRUE)
+predVals <- predict(mod1, newData,
+  type = "response",
+  se.fit = TRUE
+)
 
 # Create new data for the predicted fit line
 newData <- newData %>%
@@ -105,7 +108,10 @@ This looks OK. Now we can plot the data and add a the model fit line, and a "rib
 
 ```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 (A <- ggplot(fox, aes(x = weight, y = noffspring)) +
-  geom_ribbon(data = newData, aes(x = weight, ymin = ymin, ymax = ymax), fill = "grey75") +
+  geom_ribbon(data = newData, aes(
+    x = weight, ymin = ymin,
+    ymax = ymax
+  ), fill = "grey75") +
   geom_point() +
   geom_smooth(data = newData, stat = "identity"))
 ```
@@ -183,62 +189,8 @@ write.csv(x = maze, file = "/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats C
 ```
 
 1) Import the data and graph it (`geom_boxplot`). Try adding the points to the `ggplot` using the new (to you) function `geom_dotplot(binaxis = "y", stackdir = "center")`.
-<!--
-```{r}
-maze <- read.csv("CourseData/maze.csv", stringsAsFactors = TRUE)
-head(maze)
-
-(A <- ggplot(maze, aes(x = Age, y = nErrors)) +
-  geom_boxplot() +
-  geom_dotplot(binaxis = "y", stackdir = "center"))
-```
--->
 2) Fit an appropriate GLM.
-<!--
-```{r}
-mod_A <- glm(nErrors ~ Age, data = maze, family = poisson)
-```
--->
 3) Examine the diagnostic plots of the model (`autoplot`).
-<!--
-```{r}
-library(ggfortify)
-autoplot(mod_A)
-```
--->
 4) Get the analysis of variance (deviance) table (`anova`). What does this tell you?
-<!--
-```{r}
-anova(mod_A, test = "Chi")
-```
--->
-
 5) Obtain the `summary` table. What does this tell you?
-<!--
-```{r}
-summary(mod_A)
-```
--->
 6) Use the coefficient information in the `summary` table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations "by hand", or using the `predict` function. Ask for help if you get stuck.
-<!--
-```{r}
-newData <- data.frame(Age = c("Child", "Adult"))
-pv <- predict(mod_A, newData, se.fit = TRUE)
-
-newData <- newData %>%
-  mutate(nErrors_LP = pv$fit) %>%
-  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) %>%
-  mutate(upperCI_LP = pv$fit + 1.96 * pv$se.fit)
-
-inverseFunction <- family(mod_A)$linkinv
-
-newData <- newData %>%
-  mutate(nErrors = inverseFunction(nErrors_LP)) %>%
-  mutate(lowerCI = inverseFunction(lowerCI_LP)) %>%
-  mutate(upperCI = inverseFunction(upperCI_LP))
-
-
-A + geom_point(data = newData, aes(x = Age, y = nErrors), colour = "red") +
-  geom_segment(data = newData, aes(x = Age, xend = Age, y = lowerCI, yend = upperCI), colour = "red")
-```
--->

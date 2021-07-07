@@ -9,16 +9,18 @@ fishPersonality <- read.csv("CourseData/fishPersonality.csv")
 2. Plot the data (e.g. as a box plot)
 
 ```{r}
-ggplot(fishPersonality, aes(x = colouration, y = spawning, fill = personality)) +
+ggplot(fishPersonality, aes(
+  x = colouration, y = spawning,
+  fill = personality
+)) +
   geom_boxplot()
 ```
 
 3. Fit an ANOVA model using `lm`.
 
 ```{r}
-mod_A <- lm(spawning ~ personality + colouration + personality:colouration,
-  data = fishPersonality
-)
+mod_A <- lm(spawning ~ personality + colouration +
+  personality:colouration, data = fishPersonality)
 ```
 
 4. Look at diagnostic plots from this model (`autoplot`)

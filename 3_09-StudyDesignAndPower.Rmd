@@ -8,7 +8,6 @@ In most cases we will already have some idea about what to expect when doing a s
 
 The basic idea of this approach is to simulate the experiment, by drawing random numbers from appropriate distributions, before actually carrying out the experiment. 
 
-
 ## Type I and II errors and statistical power
 
 Before setting out to run an experiment or an observational study is is natural to wonder "*how much work do I really need to do here?*" In other words, "*what sample size do I need in order to address the hypothesis?* 
@@ -200,7 +199,8 @@ pwr <- function(n) {
   ) < 0.05) / 1000
 }
 
-# map_dbl applying the function for every value of simulData$sampleSize
+# map_dbl applying the function for every value of 
+# simulData$sampleSize
 simulData$Power <- purrr::map_dbl(simulData$sampleSize, pwr)
 ```
 These results can then be graphed with `ggplot`.
@@ -221,22 +221,6 @@ For your masters project you hypothesise that the boring snail will cover more d
 
 **Simulate a t-test-based analysis in R to figure out what sample size would result in 80% power.**
 
-<!--
-```{r,echo = -1,cache=TRUE}
-set.seed(123)
-sampleSize <- 40 # vary this until power > 0.8
-result <- replicate(
-  1000,
-  t.test(
-    rnorm(sampleSize, mean = 7.4, sd = 2.76),
-    rnorm(sampleSize, mean = 7.4 * 1.25, sd = 2.76)
-  )$p.value
-)
-sum(result < 0.05) / 1000
-
-# You should find that you need a sample size of about 40 per group
-```
--->
 
 ## Exercise 2: Mouse lemur strength
 
@@ -248,23 +232,4 @@ A research institute has agreed to you carrying out this study for your masters 
 
 **What difference in strength could you reliably detect (with power >80%) with these sample sizes?**
 
-<!--
 
-```{r,echo =-1,cache=TRUE}
-set.seed(123)
-diff <- 185 # Vary this to give a difference to the 2nd group in the t-test
-result <- replicate(
-  1000,
-  t.test(
-    rnorm(25, mean = 600, sd = 145),
-    rnorm(8, mean = 600 - diff, sd = 145)
-  )$p.value
-)
-sum(result < 0.05) / 1000
-
-# You should find that you could detect a difference of about 185g
-# or a mean for old animals of 415g which is 70% of the young animals
-# i.e. a 30% reduction.
-```
-
--->
