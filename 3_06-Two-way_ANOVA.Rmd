@@ -7,7 +7,7 @@ The two-way ANOVA is an extension of one-way ANOVA that allows you to investigat
 For example, one might have run an experiment investigating in the effect of two types of diet (*lowProtein* and *highProtein*), and genotype (*gt1* and *gt2*), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possible outcomes are illustrated in Figure \@ref(fig:possibilities). the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
 
 
-```{r possibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
+```{r, possibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
 fakeData <- expand.grid(diet = c("lowP", "highP"), genotype = c("gt1", "gt2"))
 
 
@@ -100,7 +100,7 @@ Fa <- ggplot(fakeData %>%
 In the model we aim to quantify these effects, and ask if they are statistically significant (i.e. if the effect sizes are >0). We divide the effects of the explanatory variables into two types: **main effects** and **interaction effects**. The main effects are the overall effect of the explanatory variables (genotype and diet in this case) while the interaction effect allows us to ask whether one main effect *depends on another*. In this case we are asking whether *the effect of diet depends on genotype (and vice versa)*. Make sure that you understand this important concept.
 
 
-```{r dataPrep, echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
+```{r, dataPrep, echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 
 # Simulate some data.
 set.seed(9724)
@@ -131,7 +131,7 @@ First, import the `insectDiet.csv` data and plot it, to produce a plot like in F
 
 
 
-```{r dietAndGenotype,eval=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,fig.cap="The effect of diet protein content and genotype on adult size of an insect species"}
+```{r, dietAndGenotype,eval=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,fig.cap="The effect of diet protein content and genotype on adult size of an insect species"}
 insectDiet <- read.csv("CourseData/insectDiet.csv")
 
 ggplot(insectDiet, aes(x = genotype, y = lengthMM, fill = diet)) +
@@ -190,7 +190,7 @@ insectDiet_means
 
 Then you can make a simple plot of this information by plotting points, and lines joining them:
 
-```{r interactionPlot,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
+```{r, interactionPlot,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
 
 (A <- ggplot(
   insectDiet_means,
@@ -202,7 +202,7 @@ Then you can make a simple plot of this information by plotting points, and line
 
 You could add error bars to the points by adding a line defining the `ymin` and `ymax` values from the data summary like this:
 
-```{r errorBars,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
+```{r, errorBars,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
 
 ggplot(
   insectDiet_means,
@@ -281,7 +281,7 @@ The research questions are: *What is the relative influence of colour pattern an
 
 
 
-```{r generateFishData, eval = FALSE, echo = FALSE,message=FALSE,cache=TRUE}
+```{r, generateFishData, eval = FALSE, echo = FALSE,message=FALSE,cache=TRUE}
 set.seed(123)
 meanSEM <- expand.grid(personality = c("Proactive", "Reactive"), colouration = c("Homogeneous", "Heterogeneous")) %>%
   mutate(spawningMean = c(270, 260, 240, 170), spawningSEM = rep(40, 4))

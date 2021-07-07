@@ -107,7 +107,7 @@ You can see that the `replicate` command simply does the sampling-recalculation 
 In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a `data.frame` called `shuffledData`. This data frame initially has a variable called `rep` which consists of the numbers 1-1000. I then use `mutate` to add the 1000 shuffled differences. 
 
 
-```{r replicate, warning=FALSE, cache=TRUE, echo = -1}
+```{r, replicate, warning=FALSE, cache=TRUE, echo = -1}
 set.seed(43)
 shuffledData <- data.frame(rep = 1:1000) %>%
   mutate(shuffledDiffs = replicate(

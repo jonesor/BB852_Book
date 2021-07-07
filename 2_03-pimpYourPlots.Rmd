@@ -13,7 +13,7 @@ We will cover the following:
 
 For these examples I will use the dataset on animal life history, `Anage`. 
 
-```{r import data,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+```{r, import data,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 x <- read.csv("CourseData/anage_data.csv")
 ```
 You can remind yourself what this data looks like using commands like `summary`, `str` and `names`.
@@ -22,7 +22,7 @@ I will process the data a bit to make it easier to work with. One of the command
 
 I will also use `mutate` to (1) convert the Mass from grams to kilograms and (2) to make a new variable called "BMRperKg" which standardises metabolic rate by expressing it as rate per kilogram.
 
-```{r process data,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
+```{r, process data,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 
 anage <- x %>%
   mutate(Species = paste(Genus, Species)) %>%

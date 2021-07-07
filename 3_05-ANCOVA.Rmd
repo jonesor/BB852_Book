@@ -6,7 +6,7 @@ In a simple case, you might be interested in a model with a continuous response 
 
 Some of these different possible outcomes of this type of analysis are illustrated in Figure \@ref(fig:possibilities). We might see that neither of the two explanatory variables has a significant effect. We might see that one of them does but not the other one. We might see an interaction effect (where the effect of one variable (e.g. hand width) depends on the other (e.g gender). We might also see an interaction effect but no main effect.
 
-```{r ANCOVApossibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
+```{r, ANCOVApossibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
 
 fakeData <- expand.grid(contVar = c(1, 5), categVar = c("A", "B"))
 
@@ -112,7 +112,7 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 We'll begin by plotting the data (Figure \@ref(fig:exampleANCOVA)).
 
 
-```{r exampleANCOVA, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="ANCOVA on hand width vs. height data in males and females", fig.pos = "ht"}
+```{r, exampleANCOVA, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="ANCOVA on hand width vs. height data in males and females", fig.pos = "ht"}
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
