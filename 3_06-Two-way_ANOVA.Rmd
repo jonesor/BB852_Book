@@ -99,24 +99,6 @@ Fa <- ggplot(fakeData %>%
 
 In the model we aim to quantify these effects, and ask if they are statistically significant (i.e. if the effect sizes are >0). We divide the effects of the explanatory variables into two types: **main effects** and **interaction effects**. The main effects are the overall effect of the explanatory variables (genotype and diet in this case) while the interaction effect allows us to ask whether one main effect *depends on another*. In this case we are asking whether *the effect of diet depends on genotype (and vice versa)*. Make sure that you understand this important concept.
 
-
-```{r, dataPrep, echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
-
-# Simulate some data.
-set.seed(9724)
-myData <- expand.grid(replicate = 1:12, diet = c("lowProtein", "highProtein"), genotype = c("gt1", "gt2")) %>%
-  left_join(expand.grid(diet = c("lowProtein", "highProtein"), genotype = c("gt1", "gt2")) %>%
-    mutate(meanSize = c(20, 26, 16, 17.5), semSize = c(2.5, 2.5, 2, 2))) %>%
-  mutate(lengthMM = round(rnorm(48, meanSize, semSize)), 2) %>%
-  select(diet, genotype, lengthMM)
-
-write.csv(myData, "CourseData/insectDiet.csv", row.names = FALSE)
-rm(myData)
-```
-
-
-
-
 ## Fitting a two-way ANOVA model
 
 Let's use R to fit a two-way ANOVA model using data from the example I just described. As with one-way ANOVA, you can fit a two-way ANOVA model in R using `lm`. 
@@ -125,11 +107,7 @@ Let's use R to fit a two-way ANOVA model using data from the example I just desc
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
-
 First, import the `insectDiet.csv` data and plot it, to produce a plot like in Figure \@ref(fig:dietAndGenotype). From looking at the graph in Figure \@ref(fig:dietAndGenotype) you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a  high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the *difference* in size between the insects raised on the different diets) is larger for genotype 1 than it is for genotype 2. But are these differences statistically meaningful?
-
-
-
 
 ```{r, dietAndGenotype,eval=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,fig.cap="The effect of diet protein content and genotype on adult size of an insect species"}
 insectDiet <- read.csv("CourseData/insectDiet.csv")
@@ -139,7 +117,6 @@ ggplot(insectDiet, aes(x = genotype, y = lengthMM, fill = diet)) +
   xlab("Genotype") +
   ylab("Length (mm)")
 ```
-
 
 To address this question, we will fit a linear model (the two-way ANOVA) to estimate the effects of diet and genotype.
 
@@ -283,20 +260,6 @@ The research questions are: *What is the relative influence of colour pattern an
 
 
 
-```{r, generateFishData, eval = FALSE, echo = FALSE,message=FALSE,cache=TRUE}
-set.seed(123)
-meanSEM <- expand.grid(personality = c("Proactive", "Reactive"), colouration = c("Homogeneous", "Heterogeneous")) %>%
-  mutate(spawningMean = c(270, 260, 240, 170), spawningSEM = rep(40, 4))
-
-sampleSize <- 8
-fishPersonality <- expand.grid(ID = 1:sampleSize, personality = c("Proactive", "Reactive"), colouration = c("Homogeneous", "Heterogeneous")) %>%
-  left_join(meanSEM) %>%
-  mutate(spawning = round(rnorm(sampleSize * 4, spawningMean, spawningSEM))) %>%
-  select(personality, colouration, spawning)
-
-write.csv(fishPersonality, "CourseData/fishPersonality.csv", row.names = FALSE)
-rm(fishPersonality)
-```
 
 
 1) Import the data set, `fishPersonality.csv`

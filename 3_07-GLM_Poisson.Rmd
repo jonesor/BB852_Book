@@ -180,14 +180,6 @@ In an experiment, researchers studied the ability of children and adults to navi
 
 In this example, you will be fitting a GLM equivalent of a t-test that is appropriate for count data. 
 
-```{r,eval = FALSE,echo=FALSE,cache=TRUE}
-# Create maze data
-set.seed(123)
-maze <- data.frame(Age = rep(c("Child", "Adult"), each = 10)) %>%
-  mutate(nErrors = c(rpois(10, 3), rpois(10, 1)))
-write.csv(x = maze, file = "/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/CourseData/maze.csv", row.names = FALSE)
-```
-
 1) Import the data and graph it (`geom_boxplot`). Try adding the points to the `ggplot` using the new (to you) function `geom_dotplot(binaxis = "y", stackdir = "center")`.
 2) Fit an appropriate GLM.
 3) Examine the diagnostic plots of the model (`autoplot`).
