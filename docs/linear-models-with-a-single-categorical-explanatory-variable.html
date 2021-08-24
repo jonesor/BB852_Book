@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 Linear models with a single categorical explanatory variable | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 Linear models with a single categorical explanatory variable | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-07-08" />
+<meta name="date" content="2021-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 <link rel="prev" href="comparing-two-means-with-a-t-test.html"/>
 <link rel="next" href="linear-models-with-a-single-continuous-explanatory-variable.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -380,7 +380,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="one-way-anova" class="section level2" number="14.1">
 <h2><span class="header-section-number">14.1</span> One-way ANOVA</h2>
 <p>The one-way ANOVA is illustrated below with two cases (Figure <a href="linear-models-with-a-single-categorical-explanatory-variable.html#fig:anovaVis">14.1</a>). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether <em>at least one</em> of the groups is different from the others.</p>
-<div class="figure" style="text-align: left"><span id="fig:anovaVis"></span>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:anovaVis"></span>
 <img src="BB852_files/figure-html/anovaVis-1.png" alt="Visualising an ANOVA." width="672" />
 <p class="caption">
 Figure 14.1: Visualising an ANOVA.
@@ -410,7 +410,7 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 <div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb350-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(espresso, <span class="fu">aes</span>(<span class="at">x =</span> method, <span class="at">y =</span> foamIndx)) <span class="sc">+</span></span>
 <span id="cb350-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb350-3"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:coffee"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:coffee"></span>
 <img src="BB852_files/figure-html/coffee-1.png" alt="A box and whisker plot, with jittered points, for the espresso foam data." width="384" />
 <p class="caption">
 Figure 14.2: A box and whisker plot, with jittered points, for the espresso foam data.
@@ -422,7 +422,7 @@ Figure 14.2: A box and whisker plot, with jittered points, for the espresso foam
 <p>Before proceeding, we need to check the assumptions of the model. This can be done visually using the <code>autoplot</code> function in the <code>ggfortify</code> package. If you don’t have the package installed, install it now (<code>install.packages("ggfortify"</code>)).</p>
 <div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb352-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb352-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(foam_mod)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:diagnostic"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:diagnostic"></span>
 <img src="BB852_files/figure-html/diagnostic-1.png" alt="Diagnostic plots for the ANOVA model. This looks great." width="480" />
 <p class="caption">
 Figure 14.3: Diagnostic plots for the ANOVA model. This looks great.
@@ -534,7 +534,7 @@ Journal of Food Engineering, Vol. 121, pp. 112-117.
 ## Multiple R-squared:  0.7031, Adjusted R-squared:  0.6783 
 ## F-statistic: 28.41 on 2 and 24 DF,  p-value: 0.0000004699</code></pre>
 <p>Now the coefficients in the model summary look different, but the model is actually the same. Compare the two graphs in Figure <a href="linear-models-with-a-single-categorical-explanatory-variable.html#fig:differentReferences">14.4</a> - can you see the differences/similarities?</p>
-<div class="figure" style="text-align: center"><span id="fig:differentReferences"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:differentReferences"></span>
 <img src="BB852_files/figure-html/differentReferences-1.png" alt="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set." width="768" />
 <p class="caption">
 Figure 14.4: Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.
@@ -593,7 +593,7 @@ The following is an optional exercise designed to help you understand how ANOVA 
 <p>On the right hand side (Figure <a href="linear-models-with-a-single-categorical-explanatory-variable.html#fig:differentReferences">14.4</a>B) we see the same data points. However, this time the horizontal lines represent the treatment-specific mean values, and the vertical lines illustrate the errors from these mean values. Again we can sum up these as sum of squares, which we call the <em>Error Sum of Squares (SSError)</em>.</p>
 <p>The difference between those values is called the <em>Treatment Sum of Squares (SSTreatment)</em> and is the key to ANOVA - it represents the importance of the treatment: <span class="math display">\[SSTreatment = SSTotal - SSError\]</span>.</p>
 <p>If that doesn’t make sense yet, picture the case where the treatment-specific means are all very similar, and are therefore very close to the overall mean. Now the difference between the <em>Total Sum of Squares</em> and the <em>Error Sum of Squares</em> will be small. Sketch out a couple of examples with pen on paper if that helps. You should now see that you can investigate differences among means by looking at variation.</p>
-<div class="figure" style="text-align: center"><span id="fig:ANOVAbyhand"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ANOVAbyhand"></span>
 <img src="BB852_files/figure-html/ANOVAbyhand-1.png" alt="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the &quot;treatment sum of squares&quot;." width="768" />
 <p class="caption">
 Figure 14.5: The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the “treatment sum of squares.”
@@ -721,6 +721,10 @@ gitbook.start({
 "text": null
 },
 "download": ["BB852.pdf"],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "section"
 },

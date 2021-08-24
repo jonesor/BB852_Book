@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-07-08" />
+<meta name="date" content="2021-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 <link rel="prev" href="linear-models-with-categorical-and-continuous-explanatory-variables.html"/>
 <link rel="next" href="generalised-linear-models.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -378,7 +378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the one-way ANOVA we covered in the previous chapter we were interested in understanding the effect of a single categorical explanatory variable with two or more levels on a continuous response variable. Although the explanatory variable must be categorical (i.e. with discrete levels), it could represent a continuous variable. For example, the explanatory variable could be a two-level soil nutrient level (high or low), even though nutrient level is a continuous variable and one could measure the actual quantitative value of nutrients in mg/g.</p>
 <p>The two-way ANOVA is an extension of one-way ANOVA that allows you to investigate the effect of <strong>two</strong> categorical variables. This can be useful in an experimental context.</p>
 <p>For example, one might have run an experiment investigating in the effect of two types of diet (<em>lowProtein</em> and <em>highProtein</em>), and genotype (<em>gt1</em> and <em>gt2</em>), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possible outcomes are illustrated in Figure <a href="linear-models-with-1-categorical-explanatory-variables.html#fig:possibilities">17.1</a>. the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of <strong>interaction plot</strong>: where they are parallel, there is no interaction.</p>
-<div class="figure" style="text-align: center"><span id="fig:possibilities"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:possibilities"></span>
 <img src="BB852_files/figure-html/possibilities-1.png" alt="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not)." width="960" />
 <p class="caption">
 Figure 17.1: Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).
@@ -400,7 +400,7 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 <span id="cb419-4"><a href="linear-models-with-1-categorical-explanatory-variables.html#cb419-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb419-5"><a href="linear-models-with-1-categorical-explanatory-variables.html#cb419-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Genotype&quot;</span>) <span class="sc">+</span></span>
 <span id="cb419-6"><a href="linear-models-with-1-categorical-explanatory-variables.html#cb419-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Length (mm)&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:dietAndGenotype"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dietAndGenotype"></span>
 <img src="BB852_files/figure-html/dietAndGenotype-1.png" alt="The effect of diet protein content and genotype on adult size of an insect species" width="480" />
 <p class="caption">
 Figure 17.2: The effect of diet protein content and genotype on adult size of an insect species
@@ -615,6 +615,10 @@ gitbook.start({
 "text": null
 },
 "download": ["BB852.pdf"],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "section"
 },

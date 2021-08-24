@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 16 Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 16 Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-07-08" />
+<meta name="date" content="2021-08-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +33,8 @@
   
 <link rel="prev" href="linear-models-with-a-single-continuous-explanatory-variable.html"/>
 <link rel="next" href="linear-models-with-1-categorical-explanatory-variables.html"/>
-<script src="libs/header-attrs-2.7/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -378,7 +378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In the previous chapter we looked at linear models where there is a continuous response variable and two categorical explanatory variables (we call this type of linear model two-way ANOVA). In this chapter we will look at linear models where the explanatory variables are both continuous and categorical. You can think of these as a kind of cross between ANOVA and linear regression. These type of models are often given the name “<em>ANCOVA</em>” or <em>Analysis of Covariance</em>.</p>
 <p>In a simple case, you might be interested in a model with a continuous response variable (e.g. height) and continuous and a categorical explanatory variables (e.g. hand width and gender). The categorical variable may have any number of levels, but the simplest case is with two (e.g. gender with male and female levels).</p>
 <p>Some of these different possible outcomes of this type of analysis are illustrated in Figure <a href="linear-models-with-1-categorical-explanatory-variables.html#fig:possibilities">17.1</a>. We might see that neither of the two explanatory variables has a significant effect. We might see that one of them does but not the other one. We might see an interaction effect (where the effect of one variable (e.g. hand width) depends on the other (e.g gender). We might also see an interaction effect but no main effect.</p>
-<div class="figure" style="text-align: center"><span id="fig:ANCOVApossibilities"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ANCOVApossibilities"></span>
 <img src="BB852_files/figure-html/ANCOVApossibilities-1.png" alt="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not)." width="960" />
 <p class="caption">
 Figure 16.1: Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).
@@ -403,7 +403,7 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 <span id="cb397-7"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-7" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb397-8"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb397-9"><a href="linear-models-with-categorical-and-continuous-explanatory-variables.html#cb397-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:exampleANCOVA"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:exampleANCOVA"></span>
 <img src="BB852_files/figure-html/exampleANCOVA-1.png" alt="ANCOVA on hand width vs. height data in males and females" width="432" />
 <p class="caption">
 Figure 16.2: ANCOVA on hand width vs. height data in males and females
@@ -609,6 +609,10 @@ gitbook.start({
 "text": null
 },
 "download": ["BB852.pdf"],
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "section"
 },
