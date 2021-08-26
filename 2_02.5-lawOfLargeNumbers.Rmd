@@ -36,15 +36,14 @@ ggplot(result, aes(x = result)) +
 
 
 ```{block, type="do-something"}
-Try this several times with small sample sizes (e.g. 4, 6, 8) and see what happens to the proportions of heads/tails. Think about what the expected outome should be. What do you notice?
+Try this several times with small sample sizes (e.g. 4, 6, 8) and see what happens to the proportions of heads/tails. Think about what the expected outcome should be. What do you notice?
 
 Now increase the sample size (e.g. to 20, 50, 100) and see what happens to the proportions of heads/tails. What do you notice?
 ```
 
 
 
-### Virtual dice
-
+## Exercise: Virtual dice
 
 Let's try the same kind of thing with the roll of (virtual) dice.
 
@@ -56,33 +55,9 @@ diceRoll <- 1:6
 sample(diceRoll, 1)
 ```
 
-Here's how to do 6 rolls of the dice:
+1) Simulate 10 rolls of the dice, and make a table of results.
 
-```{r, echo=-1,cache = TRUE}
-set.seed(123)
-result <- sample(diceRoll, 6, replace = TRUE)
-table(result)
-```
+2) Now simulate 90 rolls of the dice, and plot the results as a bar plot using `geom_bar` in `ggplot`. Add a horizontal line using `geom_abline` to show the **expected** result based on what you know about probability.
 
-Your table will probably look different to this, because it is a random process. You may notice that some numbers in the table are missing if some numbers were never rolled by our virtual dice. 
+3) Try adjusting the code to simulate dice rolls with small (say, 30) and large (say, 600, or 6000, or 9000) samples. Observe what happens to the proportions, and compare them to the expected value. What does this tell you about the importance of sample size when trying to estimate real phenomena?
 
-Now I try doing 90 rolls of the dice. I can set a value for `n` (the number of rolls), and I can also plot a horizontal line at the theoretically expected value of n/6; in this case that is 15. 
-
-Before proceeding, can you see why the expected value is n/6?:
-
-```{r, echo=-1,fig.cap=('Barplot of 90 simulated dice throws'),cache = TRUE}
-set.seed(2)
-n <- 90
-result <- data.frame(result = sample(diceRoll, n, replace = TRUE))
-
-ggplot(result, aes(x = result)) +
-  geom_bar() +
-  geom_abline(intercept = n / 6, slope = 0)
-```
-
-```{block, type="do-something"}
-
-Try adjusting the code to simulate dice rolls with small (say, 30) and large (say, 600, or 6000, or 9000) samples. Observe what happens to the proportions, and compare them to the expected value.
-
-You will notice that what would be considered a good sample size for the coin flipping (i.e. it recovers the true probability of 0.5 reasonably well) is not adequate for getting a good estimate of the probabilities for the dice. This is because of the different number of possibilities: as the range of possible outcomes increases, the sample size requirements increase.
-```
