@@ -117,11 +117,14 @@ dataSetsUsed <- data.frame(name = c(dataSetsUsed, "GSWR_datasets")) %>%
 
 write.csv(x = dataSetsUsed, file = "dataSetsUsed.csv", row.names = FALSE)
 
-# list.files
+# list.files mentioned in course materials
 currentFiles <- list.files(path = "CourseData/")
 delFiles <- paste0("CourseData/", currentFiles[which(!currentFiles %in% dataSetsUsed$name)])
 
-# Missing files
+#Add extra files that should be there even though not mentioned in book text
+delFiles <- delFiles[!delFiles %in% c("CourseData/birds.csv")]
+
+# Missing files: mentioned in materials but not available
 missingFiles <- dataSetsUsed$name[!dataSetsUsed$name %in% currentFiles]
 dataSetsMissing <- data.frame(name = missingFiles) %>%
   filter(!name %in% c("SDUweather.csv"))
