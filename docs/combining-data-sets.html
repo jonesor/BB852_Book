@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-09-14" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -585,7 +585,7 @@ You can “pipe” data into the function, then tell it which columns you would 
 <p>You are provided with two data sets: one on the birds and another on weather. You will need to process these using tools in the <code>dplyr</code> package, and combine them (using <code>left_join</code>) for analysis.</p>
 <p>The first data set, <code>eggDates.csv</code>, is data from the SDU birds project. The data are arranged in columns where each column is a year and each row is a nest. The data in each column is the day of the year that the first egg in the nest was laid.</p>
 <p>These data do NOT fulfil the “tidy data” standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.</p>
-<p>You will need to use <code>pivot_wider</code> to fix this issue so that you produce a version of the data with three columns - <code>nestNumber</code>, <code>Year</code> and <code>dayNumber</code>.</p>
+<p>You will need to use <code>pivot_longer</code> to fix this issue so that you produce a version of the data with three columns - <code>nestNumber</code>, <code>Year</code> and <code>dayNumber</code>.</p>
 <p>The second dataset, <code>AarslevTemperature.csv</code>, is a weather dataset from Årslev near Odense. This dataset includes daily temperatures records for several years. You will need to <code>summarise</code> this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.</p>
 <p>To answer the question, you will need to join these data sets together.</p>
 <ol style="list-style-type: decimal">
