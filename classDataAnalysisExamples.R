@@ -7,6 +7,7 @@ options(dplyr.summarise.inform = FALSE)
 
 classData <- read.csv("CourseData/classData.csv")
 head(classData)
+tail(classData)
 
 # Are males taller than females?
 
