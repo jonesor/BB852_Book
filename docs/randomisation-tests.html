@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-09-28" />
+<meta name="date" content="2021-10-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -405,9 +405,9 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 <span id="cb270-3"><a href="randomisation-tests.html#cb270-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">colour =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">width =</span> .<span class="dv">1</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
 <p>It looks like there might be a difference between the groups.
-Now let’s consider our test statistic and our hypotheses. Our test statistic is the difference in mean cholesterol levels between the two groups: mean of control group minus the mean of the drug group.
-The <em>null hypothesis</em> is that there is no difference between these two groups (i.e. the difference should be close to 0)
-The <em>alternative hypothesis</em> is that the mean of the drug group should be less than the mean of the drug group. (i.e. mean of control group minus the mean of the drug group should be negative).</p>
+Now let’s consider our test statistic and our hypotheses. Our test statistic is the difference in mean cholesterol levels between the two groups: mean of control group minus the mean of the drug group.</p>
+<p>The <em>null hypothesis</em> is that there is no difference between these two groups (i.e. the difference should be close to 0).</p>
+<p>The <em>alternative hypothesis</em> is that the mean of the drug group should be less than the mean of the control group.</p>
 <div id="calculate-the-observed-difference" class="section level3" number="13.1.1">
 <h3><span class="header-section-number">13.1.1</span> Calculate the observed difference</h3>
 <p>There are a few ways of doing this. In base-R you can use the function <code>tapply</code> (“table apply”), followed by <code>diff</code> (“difference”).</p>
