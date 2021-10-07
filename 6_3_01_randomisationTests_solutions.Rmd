@@ -136,13 +136,13 @@ ggplot(diffs, aes(x = diffs)) +
   geom_vline(xintercept = observedDiff)
 ```
 
-12. Obtain the p-value for the hypothesis test described above. (1) how many of the observed differences are greater than or equal to the shuffled differences in the null distribution. (2) what is this expressed as a proportion of the number of replicates.
+12. Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.
 
 ```{r}
-sum(observedDiff >= diffs$diffs)
-sum(observedDiff >= diffs$diffs) / 1000
+sum(diffs$diffs >= observedDiff)
+sum(diffs$diffs >= observedDiff) / 1000
 ```
 
 13. Summarise your result as in a report. Describe the method, followed by the result and conclusion.
 
-*"I used a randomisation test to estimate the significance of the observed difference of `r format(observedDiff,digits= 3,nsmall=3)` (mean values: female=`r format(meanVals[2],digits= 3,nsmall=3)`;  male = `r format(meanVals[1],digits= 3,nsmall=3)`) in mean widths of the sexes. To do this I generated a null distribution of differences between sexes using 1000 replicates. I found that only `r sum(observedDiff>=diffs$diffs)` of the differences in the null distribution were as extreme as the observed difference. Thus the p-value is `r sum(observedDiff>=diffs$diffs)/1000`: I therefore reject the null hypothesis that there is no difference between the sexes and accept the alternative hypothesis that males are significantly larger than females."*
+*"I used a randomisation test to estimate the significance of the observed difference of `r format(observedDiff,digits= 3,nsmall=3)` (mean values: female=`r format(meanVals[2],digits= 3,nsmall=3)`;  male = `r format(meanVals[1],digits= 3,nsmall=3)`) in mean widths of the sexes. To do this I generated a null distribution of differences between sexes using 1000 replicates. I found that only `r sum(diffs$diffs >= observedDiff)` of the differences in the null distribution were as extreme as the observed difference. Thus the p-value is `r sum(diffs$diffs >= observedDiff)/1000`: I therefore reject the null hypothesis that there is no difference between the sexes and accept the alternative hypothesis that males are significantly larger than females."*

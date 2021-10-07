@@ -172,6 +172,7 @@ p1 + geom_vline(xintercept = observedDiff)
 ### Testing the hypothesis
 
 Recall that the alternative hypothesis is that the observed difference (control mean-drug mean) will be less than 0. 
+
 You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.
 
 ```{r}
@@ -187,7 +188,7 @@ We can report our findings something like this:
 
 "*To test whether effect of the drug at reducing cholesterol level is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means and the alternative hypothesis that the mean for the drug treatment is lower than the control treatment. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.*
 
-*The observed mean values of the control and treatment groups 205.667 and 185.500 respectively and the difference between them is therefore -20.167 (drug mean - control mean). Only 25 of the 1000 null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = 0.025)*"
+*The observed mean values of the control and treatment groups 205.667 and 185.500 respectively and the difference between them is therefore `r `-20.167 (drug mean - control mean). Only 25 of the 1000 null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = 0.025)*"
 
 
 ## Paired Randomisation Tests
@@ -376,6 +377,6 @@ The data are called `herculesBeetle.csv` and can be found via the course data Dr
 
 11. Use `ggplot` to plot the null distribution you have just created, and add the observed difference.
 
-12. Obtain the p-value for the hypothesis test described above. (1) how many of the observed differences are greater than or equal to the shuffled differences in the null distribution. (2) what is this expressed as a proportion of the number of replicates.
+12. Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.
 
 13. Summarise your result as in a report. Describe the method, followed by the result and conclusion.
