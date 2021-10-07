@@ -447,7 +447,7 @@ You can use further commands, <code>pull</code> to get the <code>mean</code> vec
 <span id="cb278-6"><a href="randomisation-tests.html#cb278-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb278-7"><a href="randomisation-tests.html#cb278-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code></pre></div>
 <pre><code>## [1] -10.16667</code></pre>
-<p>In this instance, the difference with the shuffled <code>Treatment</code> values is 0.833, which is rather different from our observed difference of -20.1666667.</p>
+<p>In this instance, the difference with the shuffled <code>Treatment</code> values of -10.167 is rather different from our observed difference of -20.1666667.</p>
 <p>Doing this one time is not much help though - we need to repeat this many times. I suggest that you do it 1000 times here, but some statisticians would suggest 5000 or even 10000 replicates.</p>
 <p>We can do this easily in R using the function <code>replicate</code> which simply a kind of wrapper that tells R to repeat a command <code>n</code> times and then pass the result to a vector.
 Let’s try it first 10 times to see how it works:</p>
@@ -499,10 +499,10 @@ I suggest to put this code at the beginning of your script if the messages annoy
 <span id="cb283-2"><a href="randomisation-tests.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb283-3"><a href="randomisation-tests.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb283-4"><a href="randomisation-tests.html#cb283-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Drug mean - Control mean&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
 <p>You can now add your observed difference (calculated above) to this plot like this:</p>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="randomisation-tests.html#cb284-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observedDiff)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-193-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
 </div>
 <div id="testing-the-hypothesis" class="section level3" number="13.1.4">
 <h3><span class="header-section-number">13.1.4</span> Testing the hypothesis</h3>
@@ -556,13 +556,13 @@ You can see that there are few of the null distribution sample that are as extre
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="randomisation-tests.html#cb291-1" aria-hidden="true" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill =</span> time)) <span class="sc">+</span></span>
 <span id="cb291-2"><a href="randomisation-tests.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>)</span>
 <span id="cb291-3"><a href="randomisation-tests.html#cb291-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
 <p>Another useful way to plot this data is to use an <strong>interaction plot</strong>. In these plots the matched pairs (grouped by <code>Subject</code>) are joined together with lines. You can plot one like this:</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="randomisation-tests.html#cb292-1" aria-hidden="true" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> weight, <span class="at">group =</span> Subject)) <span class="sc">+</span></span>
 <span id="cb292-2"><a href="randomisation-tests.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb292-3"><a href="randomisation-tests.html#cb292-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
 <span id="cb292-4"><a href="randomisation-tests.html#cb292-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
 <p>What we are interested in is whether there has been a change in weight of the subjects after CBT. The null hypothesis is that there is zero change in weight. The alternative hypothesis is that weight has increased.</p>
 <p>The starting point for the analysis is to calculate the observed change in weight.</p>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="randomisation-tests.html#cb293-1" aria-hidden="true" tabindex="-1"></a>an <span class="ot">&lt;-</span> an <span class="sc">%&gt;%</span></span>
@@ -641,10 +641,10 @@ You can see that there are few of the null distribution sample that are as extre
 <h3><span class="header-section-number">13.2.2</span> Null distribution</h3>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="randomisation-tests.html#cb306-1" aria-hidden="true" tabindex="-1"></a>(nullDistPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nullDist, <span class="fu">aes</span>(<span class="at">x =</span> change)) <span class="sc">+</span></span>
 <span id="cb306-2"><a href="randomisation-tests.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-207-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
 <p>We can add the observed change as a line to this:</p>
 <div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="randomisation-tests.html#cb307-1" aria-hidden="true" tabindex="-1"></a>nullDistPlot <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsChange)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-209-1.png" width="672" /></p>
 </div>
 <div id="the-formal-hypothesis-test" class="section level3" number="13.2.3">
 <h3><span class="header-section-number">13.2.3</span> The formal hypothesis test</h3>

@@ -84,7 +84,19 @@ ch %>%
   diff()
 ```
 
-In this instance, the difference with the shuffled `Treatment` values is 0.833, which is rather different from our observed difference of `r observedDiff`.
+```{r, warning=FALSE, cache=TRUE, echo = FALSE}
+set.seed(666)
+
+shuffDiff_temp <- ch %>%
+  mutate(Treatment = sample(Treatment)) %>%
+  # shuffle the Treatment data
+  group_by(Treatment) %>%
+  summarise(mean = mean(Cholesterol)) %>%
+  pull(mean) %>%
+  diff()
+```
+
+In this instance, the difference with the shuffled `Treatment` values of `r round(shuffDiff_temp,3)` is rather different from our observed difference of `r round(observedDiff,3)`.
 
 Doing this one time is not much help though - we need to repeat this many times. I suggest that you do it 1000 times here, but some statisticians would suggest 5000 or even 10000 replicates. 
 
