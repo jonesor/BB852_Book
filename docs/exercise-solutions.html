@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-10-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -919,16 +919,16 @@ Figure 23.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb616-3"><a href="exercise-solutions.html#cb616-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observedDiff)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-421-1.png" width="672" /></p>
 <ol start="12" style="list-style-type: decimal">
-<li>Obtain the p-value for the hypothesis test described above. (1) how many of the observed differences are greater than or equal to the shuffled differences in the null distribution. (2) what is this expressed as a proportion of the number of replicates.</li>
+<li>Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.</li>
 </ol>
-<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="exercise-solutions.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(observedDiff <span class="sc">&gt;=</span> diffs<span class="sc">$</span>diffs)</span></code></pre></div>
-<pre><code>## [1] 986</code></pre>
-<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="exercise-solutions.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(observedDiff <span class="sc">&gt;=</span> diffs<span class="sc">$</span>diffs) <span class="sc">/</span> <span class="dv">1000</span></span></code></pre></div>
-<pre><code>## [1] 0.986</code></pre>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="exercise-solutions.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(diffs<span class="sc">$</span>diffs <span class="sc">&gt;=</span> observedDiff)</span></code></pre></div>
+<pre><code>## [1] 14</code></pre>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="exercise-solutions.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(diffs<span class="sc">$</span>diffs <span class="sc">&gt;=</span> observedDiff) <span class="sc">/</span> <span class="dv">1000</span></span></code></pre></div>
+<pre><code>## [1] 0.014</code></pre>
 <ol start="13" style="list-style-type: decimal">
 <li>Summarise your result as in a report. Describe the method, followed by the result and conclusion.</li>
 </ol>
-<p><em>“I used a randomisation test to estimate the significance of the observed difference of 2.337 (mean values: female=17.366; male = 15.028) in mean widths of the sexes. To do this I generated a null distribution of differences between sexes using 1000 replicates. I found that only 986 of the differences in the null distribution were as extreme as the observed difference. Thus the p-value is 0.986: I therefore reject the null hypothesis that there is no difference between the sexes and accept the alternative hypothesis that males are significantly larger than females.”</em></p>
+<p><em>“I used a randomisation test to estimate the significance of the observed difference of 2.337 (mean values: female=17.366; male = 15.028) in mean widths of the sexes. To do this I generated a null distribution of differences between sexes using 1000 replicates. I found that only 14 of the differences in the null distribution were as extreme as the observed difference. Thus the p-value is 0.014: I therefore reject the null hypothesis that there is no difference between the sexes and accept the alternative hypothesis that males are significantly larger than females.”</em></p>
 
 </div>
 <div id="sex-differences-in-fine-motor-skills" class="section level2" number="23.6">

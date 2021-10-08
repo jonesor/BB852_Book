@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-04" />
+<meta name="date" content="2021-10-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -447,7 +447,7 @@ You can use further commands, <code>pull</code> to get the <code>mean</code> vec
 <span id="cb278-6"><a href="randomisation-tests.html#cb278-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb278-7"><a href="randomisation-tests.html#cb278-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code></pre></div>
 <pre><code>## [1] -10.16667</code></pre>
-<p>In this instance, the difference with the shuffled <code>Treatment</code> values of -10.167 is rather different from our observed difference of -20.1666667.</p>
+<p>In this instance, the difference with the shuffled <code>Treatment</code> values of -10.167 is rather different from our observed difference of -20.167.</p>
 <p>Doing this one time is not much help though - we need to repeat this many times. I suggest that you do it 1000 times here, but some statisticians would suggest 5000 or even 10000 replicates.</p>
 <p>We can do this easily in R using the function <code>replicate</code> which simply a kind of wrapper that tells R to repeat a command <code>n</code> times and then pass the result to a vector.
 Let’s try it first 10 times to see how it works:</p>
@@ -506,8 +506,8 @@ I suggest to put this code at the beginning of your script if the messages annoy
 </div>
 <div id="testing-the-hypothesis" class="section level3" number="13.1.4">
 <h3><span class="header-section-number">13.1.4</span> Testing the hypothesis</h3>
-<p>Recall that the alternative hypothesis is that the observed difference (control mean-drug mean) will be less than 0.
-You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.</p>
+<p>Recall that the alternative hypothesis is that the observed difference (control mean-drug mean) will be less than 0.</p>
+<p>You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.</p>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="randomisation-tests.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(shuffledData<span class="sc">$</span>shuffledDiffs <span class="sc">&lt;=</span> observedDiff)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
@@ -519,7 +519,7 @@ You can see that there are few of the null distribution sample that are as extre
 <h3><span class="header-section-number">13.1.5</span> Writing it up</h3>
 <p>We can report our findings something like this:</p>
 <p>"<em>To test whether effect of the drug at reducing cholesterol level is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means and the alternative hypothesis that the mean for the drug treatment is lower than the control treatment. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.</em></p>
-<p><em>The observed mean values of the control and treatment groups 205.667 and 185.500 respectively and the difference between them is therefore -20.167 (drug mean - control mean). Only 25 of the 1000 null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = 0.025)</em>"</p>
+<p><em>The observed mean values of the control and treatment groups 205.667 and 185.500 respectively and the difference between them is therefore <code>r</code>-20.167 (drug mean - control mean). Only 25 of the 1000 null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = 0.025)</em>"</p>
 </div>
 </div>
 <div id="paired-randomisation-tests" class="section level2" number="13.2">
@@ -673,7 +673,7 @@ You can see that there are few of the null distribution sample that are as extre
 <li><p>Use <code>replicate</code> to repeat this 10 times (to ensure that you code works).</p></li>
 <li><p>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</p></li>
 <li><p>Use <code>ggplot</code> to plot the null distribution you have just created, and add the observed difference.</p></li>
-<li><p>Obtain the p-value for the hypothesis test described above. (1) how many of the observed differences are greater than or equal to the shuffled differences in the null distribution. (2) what is this expressed as a proportion of the number of replicates.</p></li>
+<li><p>Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.</p></li>
 <li><p>Summarise your result as in a report. Describe the method, followed by the result and conclusion.</p></li>
 </ol>
 
