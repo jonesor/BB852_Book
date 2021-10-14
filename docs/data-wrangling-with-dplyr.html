@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-08" />
+<meta name="date" content="2021-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -464,7 +464,7 @@ See the earlier material for how to do this, or ask for help.</p>
 <span id="cb143-4"><a href="data-wrangling-with-dplyr.html#cb143-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(temp<span class="sc">$</span>nEggs) <span class="co"># get the max value</span></span></code></pre></div>
 <pre><code>## [1] 12</code></pre>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="data-wrangling-with-dplyr.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp<span class="sc">$</span>Day, temp<span class="sc">$</span>nEggs, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
 <p>Eggs are usually laid one per day, and the clutch size is the maximum number of eggs reached for each nest box. In this case, the clutch size is 12 eggs. The rapid decline in number of eggs after this peak value shows when the eggs have hatched and the researcher finds chicks instead of eggs!</p>
 </div>
 <div id="summarise-and-group_by" class="section level2" number="8.4">
@@ -507,15 +507,15 @@ See the earlier material for how to do this, or ask for help.</p>
 <span id="cb151-2"><a href="data-wrangling-with-dplyr.html#cb151-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">summarise</span>(df, <span class="at">clutchSize =</span> <span class="fu">max</span>(nEggs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p>Let’s first look at all the clutch size data:</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="data-wrangling-with-dplyr.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>clutchSize)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
 <p>You can see here that there are a lot of zero values. This is because nests were recorded even if they did not attempt to lay eggs. We should remove these from our data using <code>filter</code> again:</p>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="data-wrangling-with-dplyr.html#cb153-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">filter</span>(df, clutchSize <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb153-2"><a href="data-wrangling-with-dplyr.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>clutchSize)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
 <p>That looks better.
 Now we can plot them again but this time split apart the species (again - this plot is ugly and we’ll learn to plot nicer ones soon).</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="data-wrangling-with-dplyr.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(df<span class="sc">$</span>species), df<span class="sc">$</span>clutchSize)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
 <p>From these distributions it looks like the average clutch size is greater in the blue tit. We can use <code>summarise</code> to calculate the means.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="data-wrangling-with-dplyr.html#cb155-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">group_by</span>(df, species)</span>
 <span id="cb155-2"><a href="data-wrangling-with-dplyr.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(df, <span class="at">mean =</span> <span class="fu">mean</span>(clutchSize), <span class="at">sd =</span> <span class="fu">sd</span>(clutchSize))</span></code></pre></div>
@@ -548,7 +548,7 @@ Now we can plot them again but this time split apart the species (again - this p
 <span id="cb159-7"><a href="data-wrangling-with-dplyr.html#cb159-7" aria-hidden="true" tabindex="-1"></a>  df2<span class="sc">$</span>meanClutchSize[df2<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;GT&quot;</span>],</span>
 <span id="cb159-8"><a href="data-wrangling-with-dplyr.html#cb159-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span></span>
 <span id="cb159-9"><a href="data-wrangling-with-dplyr.html#cb159-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
 <p>So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have large clutch sizes than great tits.</p>
 </div>
 <div id="using-pipes-saving-data." class="section level2" number="8.5">

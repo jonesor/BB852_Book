@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-08" />
+<meta name="date" content="2021-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -436,13 +436,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  3rd Qu.: 24.45   3rd Qu.:   3.1370   3rd Qu.: 9.8686  
 ##  Max.   :211.00   Max.   :2336.5000   Max.   :45.7692  
 ##  NA&#39;s   :432      NA&#39;s   :2604        NA&#39;s   :2604</code></pre>
-<p><img src="BB852_files/figure-html/unnamed-chunk-155-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-157-1.png" width="480" style="display: block; margin: auto;" /></p>
 <div id="a-basic-plot" class="section level2" number="12.1">
 <h2><span class="header-section-number">12.1</span> A basic plot</h2>
 <p>Now lets start with a basic plot. You will see a warning about removing rows with missing values. This is just a warning to let you know that there are missing (<code>NA</code>) values in the data you are plotting.</p>
 <div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="pimping-your-plots.html#cb246-1" aria-hidden="true" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anage, <span class="fu">aes</span>(<span class="at">x =</span> Mass, <span class="at">y =</span> BMR, <span class="at">colour =</span> Class)) <span class="sc">+</span></span>
 <span id="cb246-2"><a href="pimping-your-plots.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>)) <span class="co"># use alpha for transparent points</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-156-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-158-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="axis-limits" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Axis limits</h2>
@@ -450,7 +450,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="pimping-your-plots.html#cb247-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span></span>
 <span id="cb247-2"><a href="pimping-your-plots.html#cb247-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">500</span>) <span class="sc">+</span></span>
 <span id="cb247-3"><a href="pimping-your-plots.html#cb247-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">300</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-157-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-159-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="transforming-the-axis-log-scale" class="section level2" number="12.3">
 <h2><span class="header-section-number">12.3</span> Transforming the axis (log scale)</h2>
@@ -459,8 +459,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="pimping-your-plots.html#cb248-1" aria-hidden="true" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
 <span id="cb248-2"><a href="pimping-your-plots.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="sc">+</span></span>
 <span id="cb248-3"><a href="pimping-your-plots.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-158-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p><img src="BB852_files/figure-html/unnamed-chunk-159-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-160-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-161-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="changing-the-axis-tick-marks" class="section level2" number="12.4">
 <h2><span class="header-section-number">12.4</span> Changing the axis tick marks</h2>
@@ -468,7 +468,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="pimping-your-plots.html#cb249-1" aria-hidden="true" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
 <span id="cb249-2"><a href="pimping-your-plots.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="sc">+</span></span>
 <span id="cb249-3"><a href="pimping-your-plots.html#cb249-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-160-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-162-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Using <code>summary(anage$Mass)</code> tells us that the range of data is from 0.001 to 3672. We could place tick marks anywhere on this axis, but let’s try 0.001,0.1, 1,10, 100, 1000.</p>
 <div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="pimping-your-plots.html#cb250-1" aria-hidden="true" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
 <span id="cb250-2"><a href="pimping-your-plots.html#cb250-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
@@ -480,7 +480,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb250-8"><a href="pimping-your-plots.html#cb250-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)</span>
 <span id="cb250-9"><a href="pimping-your-plots.html#cb250-9" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb250-10"><a href="pimping-your-plots.html#cb250-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-161-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-163-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="axis-labels" class="section level2" number="12.5">
 <h2><span class="header-section-number">12.5</span> Axis labels</h2>
@@ -489,7 +489,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb251-2"><a href="pimping-your-plots.html#cb251-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Adult body mass (kg)&quot;</span>) <span class="sc">+</span></span>
 <span id="cb251-3"><a href="pimping-your-plots.html#cb251-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Basal metabolic rate (W)&quot;</span>)</span>
 <span id="cb251-4"><a href="pimping-your-plots.html#cb251-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-162-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-164-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="colours" class="section level2" number="12.6">
 <h2><span class="header-section-number">12.6</span> Colours</h2>
@@ -501,18 +501,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb252-3"><a href="pimping-your-plots.html#cb252-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>,</span>
 <span id="cb252-4"><a href="pimping-your-plots.html#cb252-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;black&quot;</span></span>
 <span id="cb252-5"><a href="pimping-your-plots.html#cb252-5" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-163-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-165-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>And with some hex codes…</p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="pimping-your-plots.html#cb253-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb253-2"><a href="pimping-your-plots.html#cb253-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
 <span id="cb253-3"><a href="pimping-your-plots.html#cb253-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;#33FF6475&quot;</span>, <span class="st">&quot;#3368FF75&quot;</span>, <span class="st">&quot;#FF33CE75&quot;</span>,</span>
 <span id="cb253-4"><a href="pimping-your-plots.html#cb253-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;#FFCA3375&quot;</span></span>
 <span id="cb253-5"><a href="pimping-your-plots.html#cb253-5" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-164-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-166-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Another alternative is to use some of <code>ggplot</code>’s built in “palettes” of colour combinations. For example, there are several palettes called “<code>viridis</code>.”</p>
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="pimping-your-plots.html#cb254-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb254-2"><a href="pimping-your-plots.html#cb254-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;D&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-165-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-167-1.png" width="480" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
 Try using other <code>option</code> arguments <code>A</code>, <code>B</code>, <code>C</code> and <code>E</code>. Try also adding an argument for transparency <code>alpha = 0.5</code>.
@@ -521,11 +521,11 @@ Try using other <code>option</code> arguments <code>A</code>, <code>B</code>, <c
 <p>Here’s a couple more palettes. There’s one for shades of grey…</p>
 <div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="pimping-your-plots.html#cb255-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb255-2"><a href="pimping-your-plots.html#cb255-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_grey</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-167-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-169-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>There’s another one for various colour schemes, called “colour brewer.” Try using “RdGy,” “RdYlBu” and “Spectral” see <code>?scale_colour_brewer</code> for more options.</p>
 <div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="pimping-your-plots.html#cb256-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb256-2"><a href="pimping-your-plots.html#cb256-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;BrBG&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-168-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-170-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="themes" class="section level2" number="12.7">
 <h2><span class="header-section-number">12.7</span> Themes</h2>
@@ -534,24 +534,24 @@ Try using other <code>option</code> arguments <code>A</code>, <code>B</code>, <c
 <div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="pimping-your-plots.html#cb257-1" aria-hidden="true" tabindex="-1"></a>(p4 <span class="ot">&lt;-</span> p3 <span class="sc">+</span></span>
 <span id="cb257-2"><a href="pimping-your-plots.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
 <span id="cb257-3"><a href="pimping-your-plots.html#cb257-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-169-1.png" width="480" style="display: block; margin: auto;" />
+<p><img src="BB852_files/figure-html/unnamed-chunk-171-1.png" width="480" style="display: block; margin: auto;" />
 For more theme fun, you can install packages that include more themes. The best one is called <code>ggthemes</code> (remember that you only need to install the package once). Try <code>theme_economist()</code>, <code>theme_tufte()</code> and (ugh!) <code>theme_excel()</code>. You can see what other themes there in this package at <a href="https://jrnold.github.io/ggthemes/reference/index.html" class="uri">https://jrnold.github.io/ggthemes/reference/index.html</a> (some of them are really ugly in my opinion!).</p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="pimping-your-plots.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggthemes&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="pimping-your-plots.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
 <span id="cb259-2"><a href="pimping-your-plots.html#cb259-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb259-3"><a href="pimping-your-plots.html#cb259-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_economist</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-171-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-173-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>This package also includes some useful colour scales, including some for colour blind people.</p>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="pimping-your-plots.html#cb260-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb260-2"><a href="pimping-your-plots.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-172-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-174-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="moving-the-legend" class="section level2" number="12.8">
 <h2><span class="header-section-number">12.8</span> Moving the legend</h2>
 <p>By default, the legend is placed on the right. You can move it around by adding a <code>theme</code> argument to your plot commands. It can also be placed on the “<code>top</code>,” “<code>bottom</code>,” or “<code>left</code>.” You can also remove the legend altogether by using <code>legend.position = "none"</code>. You might also want to remove the legend title using the theme argument <code>legend.title = element_blank()</code>.</p>
 <div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="pimping-your-plots.html#cb261-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb261-2"><a href="pimping-your-plots.html#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-173-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-175-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="combining-multiple-plots" class="section level2" number="12.9">
 <h2><span class="header-section-number">12.9</span> Combining multiple plots</h2>
@@ -597,16 +597,16 @@ For more theme fun, you can install packages that include more themes. The best 
 <span id="cb264-35"><a href="pimping-your-plots.html#cb264-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb264-36"><a href="pimping-your-plots.html#cb264-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
 <span id="cb264-37"><a href="pimping-your-plots.html#cb264-37" aria-hidden="true" tabindex="-1"></a>) <span class="co"># This one is wrapped in brackets so that R shows it</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-176-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
 <p>Now I can combine these using the very simple syntax like this:</p>
 <div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="pimping-your-plots.html#cb265-1" aria-hidden="true" tabindex="-1"></a>plotA <span class="sc">+</span> plotB</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-177-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
 <p>I can add titles using the <code>ggtitle</code> command like this.</p>
 <div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="pimping-your-plots.html#cb266-1" aria-hidden="true" tabindex="-1"></a>plotA <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;A&quot;</span>) <span class="sc">+</span> plotB <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;B&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
 <p>You could place the sub-plots on top of each other like this.</p>
 <div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="pimping-your-plots.html#cb267-1" aria-hidden="true" tabindex="-1"></a>(plotA <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;A&quot;</span>)) <span class="sc">/</span> (plotB <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;B&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-179-1.png" width="384" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-181-1.png" width="384" /></p>
 </div>
 <div id="saving-your-plot" class="section level2" number="12.10">
 <h2><span class="header-section-number">12.10</span> Saving your plot</h2>

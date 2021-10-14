@@ -1,6 +1,8 @@
+require(tidyverse)
 # Set options:
 
 options(dplyr.summarise.inform = FALSE)
+
 
 
 # class data
@@ -8,6 +10,13 @@ options(dplyr.summarise.inform = FALSE)
 classData <- read.csv("CourseData/classData.csv")
 head(classData)
 tail(classData)
+
+
+ggplot(classData %>% filter(Year == 2019),aes(x = HandWidth,y = Height)) +
+  geom_point()
+
+ggplot(classData,aes(x = Precision,fill = Gender)) +
+  geom_histogram()
 
 # Are males taller than females?
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-08" />
+<meta name="date" content="2021-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -390,7 +390,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>One-sample t-test</li>
 <li>Paired t-test</li>
-<li>Two-sample t-test (“Welch t-test”)</li>
+<li>Two-sample t-test (“Welch’s t-test”)</li>
 </ul>
 <div id="some-theory" class="section level2" number="14.1">
 <h2><span class="header-section-number">14.1</span> Some theory</h2>
@@ -631,7 +631,7 @@ Figure 14.7: Reaction time of both sexes
 ##            0.3483778            0.3035800</code></pre>
 <p>This output first tells us that we are using something called a “Welch Two Sample t-test.” This is a form of the two-sample t-test that relaxes the assumption that the variance in the two groups is the same. This is a good thing. Although it <em>is</em> possible to fit a t-test with equal variances, I recommend that you stick with the default Welch’s test and <strong>not</strong> make this limiting assumption.</p>
 <p>Then we are told the t-statistic (1.965), the degrees of freedom (30.528) and the p-value (0.059). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are <em>not</em> faster than females. We could write report this something like this:</p>
-<p>“<em>Although females had a slightly slower reaction time than males (0.348 seconds compared to 0.304 seconds), this difference was not statistically significant (Welch t-test: t= 1.965, d.f.= 30.528), p=0.059).</em>”</p>
+<p>“<em>Although females had a slightly slower reaction time than males (0.348 seconds compared to 0.304 seconds), this difference was not statistically significant (Welch’s t-test: t= 1.965, d.f.= 30.528), p=0.059).</em>”</p>
 <p>Note: With a t-test that <em>did</em> assume equal variances in the two groups, the d.f. is calculated as the sample size - 2 (the number of groups). You can do this by adding the argument “<code>var.equal = TRUE</code>” to the t-test command. With the Welch test, the appropriate degrees of freedom are estimated by looking at the sample sizes and variances in the two groups. The details of this are beyond the scope of this course.</p>
 </div>
 <div id="t-tests-are-linear-models" class="section level2" number="14.7">

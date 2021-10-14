@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-08" />
+<meta name="date" content="2021-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -479,7 +479,7 @@ Reporting of methods and results should be written in the style of a scientific 
 <div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="an-example-of-a-past-exam-2020.html#cb507-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(amazon_YearlyFires, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n.fires)) <span class="sc">+</span></span>
 <span id="cb507-2"><a href="an-example-of-a-past-exam-2020.html#cb507-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb507-3"><a href="an-example-of-a-past-exam-2020.html#cb507-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-358-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-360-1.png" width="672" /></p>
 <p>You may have slightly different values if you used old data that had some fractional numbers (e.g. 1.543 is not “1 point 5” fires, but one thousand five hundred!). Well done those of you that spotted that issue. Don’t worry if you didn’t - you don’t lose points!</p>
 <p>Some of you may also have made plots that included ONLY data from the “legal amazon,” by filtering to those states only. Again, that is no problem if you did that.</p>
 <p><strong>b) Produce a table showing the minimum, maximum, mean and median number of fires per month in the legally-defined Amazon.</strong></p>
@@ -602,7 +602,7 @@ Reporting of methods and results should be written in the style of a scientific 
 <span id="cb516-3"><a href="an-example-of-a-past-exam-2020.html#cb516-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb516-4"><a href="an-example-of-a-past-exam-2020.html#cb516-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Month&quot;</span>) <span class="sc">+</span></span>
 <span id="cb516-5"><a href="an-example-of-a-past-exam-2020.html#cb516-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Total number of fires&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-361-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-363-1.png" width="672" /></p>
 <p>Common mistakes -
 Understanding how <code>group_by</code> and <code>summarise</code> work is key to answering this question.
 To ensure that the months are displayed in the correct order you need to use the <code>numeric</code> month. Failure to do that will cause the plot to be presented in alphabetical order (i.e. with December falling before January!). However, box plots require that the input variable is a <code>factor</code> so you also need to convert back to a <code>factor</code> before plotting.</p>
@@ -621,7 +621,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb517-3"><a href="an-example-of-a-past-exam-2020.html#cb517-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coral, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> intensity)) <span class="sc">+</span></span>
 <span id="cb517-4"><a href="an-example-of-a-past-exam-2020.html#cb517-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb517-5"><a href="an-example-of-a-past-exam-2020.html#cb517-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-362-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-364-1.png" width="672" /></p>
 <p><strong>b) carry out a randomisation test to determine if there is a significant difference in the colour intensity in the two habitats. Write (i) a brief method description and (ii) a summary of the results. </strong></p>
 <p>First we need to calculate the observed difference between the two habitats.</p>
 <p>You can get the mean values like this (there are other ways):</p>
@@ -658,7 +658,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb523-3"><a href="an-example-of-a-past-exam-2020.html#cb523-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb523-4"><a href="an-example-of-a-past-exam-2020.html#cb523-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Shuffled differences&quot;</span>) <span class="sc">+</span></span>
 <span id="cb523-5"><a href="an-example-of-a-past-exam-2020.html#cb523-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsDiff)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-366-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-368-1.png" width="672" /></p>
 <p>Now I can calculate the significance by asking how many of she shuffled differences were more extreme than the observed value.</p>
 <div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="an-example-of-a-past-exam-2020.html#cb524-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(shuffledData<span class="sc">$</span>shuffledDiffs <span class="sc">&lt;=</span> obsDiff)</span></code></pre></div>
 <pre><code>## 
@@ -733,7 +733,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb531-3"><a href="an-example-of-a-past-exam-2020.html#cb531-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb531-4"><a href="an-example-of-a-past-exam-2020.html#cb531-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb531-5"><a href="an-example-of-a-past-exam-2020.html#cb531-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.8</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-371-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
 <p>From this, it looks like a power of 80% is achieved with a sample size of about 16.</p>
 <p>Summing up:
 <em>My power analysis by simulation shows that a sample size of 16 per treatment group is required to detect a difference of 30% with 80% power.</em></p>
@@ -762,7 +762,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb532-7"><a href="an-example-of-a-past-exam-2020.html#cb532-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> habitatType</span>
 <span id="cb532-8"><a href="an-example-of-a-past-exam-2020.html#cb532-8" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb532-9"><a href="an-example-of-a-past-exam-2020.html#cb532-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-372-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-374-1.png" width="672" /></p>
 <p><strong>b) Fit a suitable statistical model to estimate the statistical relationship between area, habitat type, and species richness. Describe the method and then summarise the results produced by the model as if you were writing a report/thesis.</strong></p>
 <p>The key thing to remember here is that there are limits to counts of species. You can’t count &lt;0. Therefore, models that would allow the prediction of negative values may be problematic.
 Generalised Linear Models are designed for handling these kind of issues and, in this case, a Poisson model is most appropriate. This is an analogous situation to the example we looked at modelling the number of fox offspring in relation to mother’s weight.</p>
@@ -773,7 +773,7 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 <span id="cb533-3"><a href="an-example-of-a-past-exam-2020.html#cb533-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> roundabouts</span>
 <span id="cb533-4"><a href="an-example-of-a-past-exam-2020.html#cb533-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb533-5"><a href="an-example-of-a-past-exam-2020.html#cb533-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod1)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-375-1.png" width="672" /></p>
 <div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="an-example-of-a-past-exam-2020.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
@@ -861,7 +861,7 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 <span id="cb539-10"><a href="an-example-of-a-past-exam-2020.html#cb539-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb539-11"><a href="an-example-of-a-past-exam-2020.html#cb539-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">alpha =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># Remove the alpha legend</span></span>
 <span id="cb539-12"><a href="an-example-of-a-past-exam-2020.html#cb539-12" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-375-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-377-1.png" width="672" /></p>
 <hr />
 
 </div>

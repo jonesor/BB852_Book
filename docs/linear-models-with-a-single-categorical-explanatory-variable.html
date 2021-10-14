@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-08" />
+<meta name="date" content="2021-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -613,7 +613,8 @@ Figure 15.5: The relative size of the squared residual errors from the overall m
 <p>In the following I will show how these calculations can be done “by hand” in R. The purpose of showing you this is to demonstrate exactly how the <code>lm</code> model that you fitted above works, and prove to yourself that it is not rocket science… you will never need to do this in real life, because you have the wonderful <code>lm</code> function.</p>
 <p>Here goes…</p>
 <p>First, calculate the total sum of squares:</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb367-1" aria-hidden="true" tabindex="-1"></a>(SSTotal <span class="ot">&lt;-</span> <span class="fu">sum</span>((overallMean <span class="sc">-</span> espresso<span class="sc">$</span>foamIndx)<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb367-1" aria-hidden="true" tabindex="-1"></a>overallMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(espresso<span class="sc">$</span>foamIndx)</span>
+<span id="cb367-2"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb367-2" aria-hidden="true" tabindex="-1"></a>(SSTotal <span class="ot">&lt;-</span> <span class="fu">sum</span>((overallMean <span class="sc">-</span> espresso<span class="sc">$</span>foamIndx)<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## [1] 5782.099</code></pre>
 <p>Now calculate the group-specific means:</p>
 <div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="linear-models-with-a-single-categorical-explanatory-variable.html#cb369-1" aria-hidden="true" tabindex="-1"></a>(groupMeans <span class="ot">&lt;-</span> espresso <span class="sc">%&gt;%</span></span>

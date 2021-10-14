@@ -362,6 +362,7 @@ Here goes...
 First, calculate the total sum of squares:
 
 ```{r}
+overallMean <- mean(espresso$foamIndx)
 (SSTotal <- sum((overallMean - espresso$foamIndx)^2))
 ```
 
@@ -392,8 +393,6 @@ Then, to calculate the errors:
   summarise(sum(groupSS)) %>%
   pull())
 ```
-
-
 
 From there, you can calculate the **Treatment Sum of Squares**
 

@@ -127,7 +127,7 @@ classData <- read.csv("CourseData/classData.csv") %>%
 ```
 
 
-You can see that our two continuous variables, `Height` (the response variable) and `HandWidth` (one of the explanatory variables) are associated: There is an overall positive relationship between `HandWidth` and `Height` You can also see that `Gender` (the categorical explanatory variable) is important: males tend to be taller than females for any given hand width. For example, a female with hand width of 9cm is ~172cm tall while a male would be about 180cm tall. This shows us that males have a higher **intercept** than females. There is also a **slight** difference in the slope of the relationship, with males having a slightly steeper slope than females. We already know that the overall relationship between hand width and height is significant (from the linear regression chapter). These new observations leave us with the following additional questions: (1) are the intercepts for males and females significantly different? (2) are the slopes for males and females significantly different (or would a model with a single slope, but different intercepts be better)?
+This shows the results of the ANCOVA model before we have even fit it! You can see that our two continuous variables, `Height` (the response variable) and `HandWidth` (one of the explanatory variables) are associated: There is an overall positive relationship between `HandWidth` and `Height` You can also see that `Gender` (the categorical explanatory variable) is important: males tend to be taller than females for any given hand width. For example, a female with hand width of 9cm is ~172cm tall while a male would be about 180cm tall. This shows us that males have a higher **intercept** than females. There is also a **slight** difference in the slope of the relationship, with males having a slightly steeper slope than females. We already know that the overall relationship between hand width and height is significant (from the linear regression chapter). These new observations leave us with the following additional questions: (1) are the intercepts for males and females significantly different? (2) are the slopes for males and females significantly different (or would a model with a single slope, but different intercepts be better)?
 
 Now we can fit our model using the `lm` function. The model formula is `Height ~ HandWidth + Gender + HandWidth:Gender`. The `HandWidth` and `Gender` are the so called **main effects** while `HandWidth:Gender` represents the interaction between them (i.e. it is used to address the question "*does the effect of hand width differ between the sexes?*"). R knows that is fitting an ANCOVA type model rather than a two-way ANOVA because it knows the type of variables that it is dealing with. You can see this if you ask R to tell you what the `class` of the variables are:
 
@@ -172,7 +172,7 @@ You would report from this table something like this:
 x <- mod_A
 ```
 
-Hand width and gender both explain a significant amount of the variation in height (ANCOVA - Handwidth: F =`r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = 1 and `r x$Df[4]`, p<0.001; Gender: `r formatC(x$"F value"[2], digits = 3, format = "f")`, d.f. = 1 and `r x$Df[4]`, p<0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand width and height are not significantly different (ANCOVA - `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = 1 and `r x$Df[4]`, p = `r formatC(x$"Pr(>F)"[3], digits = 3,format = "f")`.
+Hand width and gender both explain a significant amount of the variation in height (ANCOVA - Handwidth: F =`r formatC(anova(mod_A)[[4]][1], digits = 3, format = "f")`, d.f. = 1 and `r anova(mod_A)[[1]][4]`, p<0.001; Gender: `r formatC(anova(mod_A)[[4]][2], digits = 3, format = "f")`, d.f. = 1 and `r anova(mod_A)[[1]][4]`, p<0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand width and height are not significantly different (ANCOVA - `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = 1 and `r anova(mod_A)[[1]][4]`, p = `r formatC(anova(mod_A)[[5]][3], digits = 3,format = "f")`.
 
 
 It is of course useful to take the interpretation a bit further. You could do this with reference to the plot - e.g. *Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller.*
@@ -197,17 +197,17 @@ For males the intercept is `r formatC(mod_A$coefficients[1], digits = 3,format =
 
 We could add these equations to our reporting of the results.
 
-*Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller. The model fit for males is Height = 1.75$\times$HandWidth + 155.27 and the fit for females is Height = 1.09$\times$HandWidth + 171.26*
+*Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller. The model fit for males is Height = ____$\times$HandWidth +  ____and the fit for females is Height = ____$\times$HandWidth + ____*
 
 You could check these by using `geom_abline` to add lines with those equations to the plot (just as a "sanity check").
 
-```{r, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht"}
+```{r, eval = FALSE, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht"}
 A +
-  geom_abline(intercept = 155.27, slope = 1.75) +
-  geom_abline(intercept = 171.26, slope = 1.09)
+  geom_abline(intercept = ____, slope = ____) +
+  geom_abline(intercept = ____, slope = ____)
 ```
 
-At the bottom of the `summary` output we are given the $R^2$ values. Because this model has several terms (i.e. variables) in it we should use the adjusted $R^2$ values. These have been corrected for the fact that the model has extra explanatory variables. So in this case, we could report that the model explains `r formatC(summary(mod_A)$adjusted*100,digits = 2,format = "f")`% of variation in Height (Adjusted $R^2$ = `r formatC(summary(mod_A)$adjusted,digits = 2,format = "f")` - not bad!
+At the bottom of the `summary` output we are given the $R^2$ values. Because this model has several terms (i.e. variables) in it we should use the adjusted $R^2$ values. These have been corrected for the fact that the model has extra explanatory variables. So in this case, we could report that the model explains `r formatC(summary(mod_A)$adj.r.squared*100,digits = 2,format = "f")`% of variation in Height (Adjusted $R^2$ = `r formatC(summary(mod_A)$adj.r.squared,digits = 2,format = "f")` - not bad!
 
 So, to describe this `summary` table more generally - the coefficients can be slopes, intercepts, differences between slopes, and differences between intercepts. They are slopes and intercepts for the first level of the categorical variable, and for the subsequent levels they are differences.  Piecing these together can be hard to figure out without reference to the plot of the data and model fits - another good reason to plot your data!
 
@@ -272,4 +272,4 @@ ggplot(classData, aes(
   geom_smooth(data = predictData, stat = "identity")
 ```
 
-We could report this in the usual way but first saying something like: *"The interaction term was not significant (F = xxxx, d.f. 1 and xx, p = XXX) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender ... "*
+We could report this in the usual way but first saying something like: *"The interaction term was not significant (F = ____, d.f. 1 and ____, p = ____) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender ... "*

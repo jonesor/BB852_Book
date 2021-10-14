@@ -314,7 +314,7 @@ anova(mod_A)
 ```
 
 When you run this function, you get a summary table that looks exactly like the one you got with an ANOVA. There are degrees of freedom (`Df`), Sums of Squares (`Sum Sq`), Mean Sums of Squares (`Mean Sq`) and the `F value` and p-value (`Pr(>F)`). 
-The most important parts of this table are the F value (`r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`) and the p-value (`r formatC(anova(mod_A)$Pr[1], digits = 8, format = "f")`): as described above, large F values lead to small p-values. This tells us that it is VERY unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand width)
+The most important parts of this table are the F value (`r formatC( anova(mod_A)$F[1], digits = 3, format = "f")`) and the p-value (`r formatC(anova(mod_A)$Pr[1], digits = 3, format = "f")`): as described above, large F values lead to small p-values. This tells us that it is unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand width).
 
 We could report the results of this hypothesis test like this: 
 *There was a statistically significant association between hand width and height (F = `r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001)*

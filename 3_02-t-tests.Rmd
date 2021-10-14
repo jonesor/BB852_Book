@@ -4,7 +4,7 @@ We will cover the following:
 
 * One-sample t-test
 * Paired t-test
-* Two-sample t-test ("Welch t-test")
+* Two-sample t-test ("Welch's t-test")
 
 ## Some theory
 
@@ -361,7 +361,7 @@ This output first tells us that we are using something called a "Welch Two Sampl
 
 Then we are told the t-statistic (`r formatC(temp$statistic, digits = 3, format = "f")`), the degrees of freedom (`r formatC(temp$parameter, digits = 3, format = "f")`) and the p-value (`r formatC(temp$p.value, digits = 3, format = "f")`). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are *not* faster than females. We could write report this something like this: 
 
-"*Although females had a slightly slower reaction time than males (`r formatC(temp$estimate[1], digits = 3, format = "f")` seconds compared to `r formatC(temp$estimate[2], digits = 3, format = "f")` seconds), this difference was not statistically significant (Welch t-test: t= `r formatC(temp$statistic, digits = 3, format = "f")`, d.f.= `r formatC(temp$parameter, digits = 3, format = "f")`), p=`r formatC(temp$p.value, digits = 3, format = "f")`).*"
+"*Although females had a slightly slower reaction time than males (`r formatC(temp$estimate[1], digits = 3, format = "f")` seconds compared to `r formatC(temp$estimate[2], digits = 3, format = "f")` seconds), this difference was not statistically significant (Welch's     t-test: t= `r formatC(temp$statistic, digits = 3, format = "f")`, d.f.= `r formatC(temp$parameter, digits = 3, format = "f")`), p=`r formatC(temp$p.value, digits = 3, format = "f")`).*"
 
 Note: With a t-test that *did* assume equal variances in the two groups, the d.f. is calculated as the sample size - 2 (the number of groups). You can do this by adding the argument "`var.equal = TRUE`" to the t-test command. With the Welch test, the appropriate degrees of freedom are estimated by looking at the sample sizes and variances in the two groups. The details of this are beyond the scope of this course.
 
