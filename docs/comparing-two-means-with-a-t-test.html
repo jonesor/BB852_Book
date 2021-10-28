@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-14" />
+<meta name="date" content="2021-10-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="randomisation-tests.html"/>
 <link rel="next" href="linear-models-with-a-single-categorical-explanatory-variable.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -60,6 +60,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -458,7 +459,7 @@ Figure 14.3: Histogram of the pollution data.
 ## mean of x 
 ##     162.2</code></pre>
 <p>The output of the model tells us (1) what type of t-test is being fitted (“<code>One Sample t-test</code>”). Then it gives some values for the t-statistic, the degrees of freedom and the p-value. The model output also tells us that the alternative hypothesis “<strong>true mean is greater than 100</strong>.” Because the p-value is very small (p&lt;0.05) we can reject the null hypothesis and accept the alternative hypothesis. Finally, the output gives you the confidence interval (the area where we strongly believe the true mean to lie) and the estimate of the mean.</p>
-<p>We could report these results like this: "<em>the mean value of the sample was 162.2 mg/m<sup>3</sup>, which is significantly greater than the acceptable threshold of 100 mg/m<sup>3</sup> (t-test: t = 6.2824, df = 19, p-value = 2.478e-06)</em>.</p>
+<p>We could report these results like this: “<em>the mean value of the sample was 162.2 mg/m<sup>3</sup>, which is significantly greater than the acceptable threshold of 100 mg/m<sup>3</sup> (t-test: t = 6.2824, df = 19, p-value = 2.478e-06)</em>.</p>
 </div>
 <div id="doing-it-by-hand---where-does-the-t-statistic-come-from" class="section level2" number="14.3">
 <h2><span class="header-section-number">14.3</span> Doing it “by hand” - where does the t-statistic come from?</h2>

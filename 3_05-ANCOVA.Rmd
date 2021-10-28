@@ -163,16 +163,20 @@ anova(mod_A)
 
 This type of *sequential sum of squares* Analysis of Variance table should be getting fairly familiar to you now, but let's unpack what this means. There are four rows in the summary table - one for each of the terms in the model (`HandWidth`, `Gender` and `HandWidth:Gender`), and one for the `Residuals` (the unexplained variation that remains after fitting the model). The table includes degrees of freedom (`Df`), sum of squares (`Sum Sq`), mean sum of squares (`Mean Sq`) and the associated F and p-values (`F value` and `Pr(>F)`. 
 
+```{r echo = FALSE}
+x<-anova(mod_A)
+```
 
-You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by a model that includes a common slope for both genders (881.6). Then it tells us that an *additional* bit of variation (471.13) is captured if we allow the intercepts to vary with gender. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the genders (3.65). Finally, there is a bit of unexplained variation left over (Residuals) (26.29). So you can see that hand width explains most variation, followed by gender, followed by the interaction between them.
+You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by a model that includes a common slope for both genders (`r round(x$'Mean Sq'[2],2)`) . Then it tells us that an *additional* bit of variation `r round(x$'Mean Sq'[1],2)` is captured if we allow the intercepts to vary with gender. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the genders `r round(x$'Mean Sq'[3],2)`. Finally, there is a bit of unexplained variation left over (Residuals) `r round(x$'Mean Sq'[4],2)`. So you can see that hand width explains most variation, followed by gender, followed by the interaction between them.
 
 You would report from this table something like this:
 
 ```{r, echo=FALSE}
-x <- mod_A
+mod_A_anova <- anova(mod_A)
+mod_A_summary <- summary(mod_A)
 ```
 
-Hand width and gender both explain a significant amount of the variation in height (ANCOVA - Handwidth: F =`r formatC(anova(mod_A)[[4]][1], digits = 3, format = "f")`, d.f. = 1 and `r anova(mod_A)[[1]][4]`, p<0.001; Gender: `r formatC(anova(mod_A)[[4]][2], digits = 3, format = "f")`, d.f. = 1 and `r anova(mod_A)[[1]][4]`, p<0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand width and height are not significantly different (ANCOVA - `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = 1 and `r anova(mod_A)[[1]][4]`, p = `r formatC(anova(mod_A)[[5]][3], digits = 3,format = "f")`.
+Hand width and gender both explain a significant amount of the variation in height (ANCOVA - Handwidth: F = `r round(mod_A_anova$'F value'[1],3)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p<0.001; Gender: `r round(mod_A_anova$'F value'[2],3)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p<0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand width and height are not significantly different from eachother (ANCOVA - F = `r round(mod_A_anova$'F value'[2],3)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p = `r round(mod_A_anova$'Pr(>F)'[3],3)`.
 
 
 It is of course useful to take the interpretation a bit further. You could do this with reference to the plot - e.g. *Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller.*
@@ -232,7 +236,8 @@ Now all the terms in the model are significant.
 summary(mod_B)
 ```
 
-The coefficient summary now gives us a two intercept estimates (152.0964 for females and 152.0964 + 2.1179 = 154.2143 for males) and single estimate for a slope that applies to both genders (2.1179).
+
+The coefficient summary now gives us a two intercept estimates (`r round(coef(mod_B)[1],3)` for females and `r round(coef(mod_B)[1],3)` + `r round(coef(mod_B)[3],3)` = `r round(sum(coef(mod_B)[c(1,3)]),3)` for males) and single estimate for a slope that applies to both genders (`r round(coef(mod_B)[2],3)`).
 
 Unfortunately, the handy `geom_smooth` function cannot handle this simpler model! We must take a slightly different, and sadly mode complicated approach:
 

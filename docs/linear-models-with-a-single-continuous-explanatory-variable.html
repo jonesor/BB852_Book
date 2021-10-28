@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-14" />
+<meta name="date" content="2021-10-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="linear-models-with-a-single-categorical-explanatory-variable.html"/>
 <link rel="next" href="linear-models-with-categorical-and-continuous-explanatory-variables.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -60,6 +60,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -474,15 +475,15 @@ These diagnostic plots allow you to check that the assumptions of the model are 
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
-##           Df  Sum Sq Mean Sq F value Pr(&gt;F)  
-## HandWidth  1  343.86  343.86  6.0059 0.0201 *
-## Residuals 31 1774.86   57.25                 
+##           Df Sum Sq Mean Sq F value     Pr(&gt;F)    
+## HandWidth  1  881.6  881.60  22.091 0.00005064 ***
+## Residuals 31 1237.1   39.91                       
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>When you run this function, you get a summary table that looks exactly like the one you got with an ANOVA. There are degrees of freedom (<code>Df</code>), Sums of Squares (<code>Sum Sq</code>), Mean Sums of Squares (<code>Mean Sq</code>) and the <code>F value</code> and p-value (<code>Pr(&gt;F)</code>).
-The most important parts of this table are the F value (6.006) and the p-value (0.020): as described above, large F values lead to small p-values. This tells us that it is unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand width).</p>
+The most important parts of this table are the F value (22.091) and the p-value (0.000): as described above, large F values lead to small p-values. This tells us that it is unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand width).</p>
 <p>We could report the results of this hypothesis test like this:
-<em>There was a statistically significant association between hand width and height (F = 6.0059, d.f. = 1,31, p &lt; 0.001)</em></p>
+<em>There was a statistically significant association between hand width and height (F = 22.0912, d.f. = 1,31, p &lt; 0.001)</em></p>
 <p>Now we can dig deeper by asking for a <code>summary</code> of the model.</p>
 <div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
@@ -490,19 +491,19 @@ The most important parts of this table are the F value (6.006) and the p-value (
 ## lm(formula = Height ~ HandWidth, data = classData)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -13.2276  -6.9886  -0.2276   5.3158  15.2064 
+##     Min      1Q  Median      3Q     Max 
+## -11.749  -3.924   1.251   6.135   9.601 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value            Pr(&gt;|t|)    
-## (Intercept)  161.052      5.878  27.398 &lt;0.0000000000000002 ***
-## HandWidth      1.522      0.621   2.451              0.0201 *  
+##             Estimate Std. Error t value             Pr(&gt;|t|)    
+## (Intercept) 140.6817     7.4030    19.0 &lt; 0.0000000000000002 ***
+## HandWidth     3.8834     0.8262     4.7            0.0000506 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 7.567 on 31 degrees of freedom
-## Multiple R-squared:  0.1623, Adjusted R-squared:  0.1353 
-## F-statistic: 6.006 on 1 and 31 DF,  p-value: 0.0201</code></pre>
+## Residual standard error: 6.317 on 31 degrees of freedom
+## Multiple R-squared:  0.4161, Adjusted R-squared:  0.3973 
+## F-statistic: 22.09 on 1 and 31 DF,  p-value: 0.00005064</code></pre>
 <p>This summary has a lot of information. First we see <code>Call</code> which reminds us what the formula we have used to fit the model. Then there is some summary information about the residuals. Ideally these should be fairly balanced around 0 (i.e. the <code>Min</code> value should be negative but with the same magnitude as <code>Max</code>). If they are <strong>wildly</strong> different, then you might want to check the data or model. In this case they look OK.</p>
 <p>Then we get to the important part of the table - the <code>Coefficients</code>. This lists the coefficients of the model and shows first the <code>Intercept</code> and then the slope, which is given by the name of the explanatory variable (<code>HandWidth</code> here). For each coefficient we get the <code>Estimate</code> of its value, and the uncertainty in that estimate (the standard error (`Std. Error)).</p>
 <p>These estimates and errors are each followed by a <code>t value</code> and a p-value (<code>Pr(&gt;|t|</code>)). These values provide a test of whether the slope/intercept is different from zero. In this case they both are. The t-tests are indeed doing t-tests of these estimates, in the same way that a regular t-test works, so that the significance depends on the ratio between signal (the estimate) and the noise (the standard error). This is illustrated for the coefficient estimates for our model in Figure <a href="linear-models-with-a-single-continuous-explanatory-variable.html#fig:coefPlot">16.5</a>.</p>
@@ -512,18 +513,18 @@ The most important parts of this table are the F value (6.006) and the p-value (
 Figure 16.5: Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.
 </p>
 </div>
-<p>The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the <span class="math inline">\(\epsilon\)</span> term in the equations at the start of this chapter). Then we are told what the <span class="math inline">\(R^2\)</span> value is 0.1623. The adjusted <span class="math inline">\(R^2\)</span> is for use in multiple regression models, where there are many explanatory variables and should not be used for this simple regression model. So what does <span class="math inline">\(R^2\)</span> actually mean?</p>
+<p>The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the <span class="math inline">\(\epsilon\)</span> term in the equations at the start of this chapter). Then we are told what the <span class="math inline">\(R^2\)</span> value is 0.4161. The adjusted <span class="math inline">\(R^2\)</span> is for use in multiple regression models, where there are many explanatory variables and should not be used for this simple regression model. So what does <span class="math inline">\(R^2\)</span> actually mean?</p>
 <p><span class="math inline">\(R^2\)</span> is the square of the correlation coefficient <span class="math inline">\(r\)</span> and is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the <span class="math inline">\(R^2\)</span> value would be 1. This idea is illustrated in Figure <a href="linear-models-with-a-single-continuous-explanatory-variable.html#fig:rSquared">16.6</a>.</p>
 <p>We could describe the model like this:</p>
-<p><em>There is a statistically significant association between hand width and height (F = 6.0059, d.f. = 1,31, p &lt; 0.001) The equation of the fitted model is: Height = 1.52(<span class="math inline">\(\pm\)</span> 0.62) <span class="math inline">\(\times\)</span> HandWidth + 161.05(<span class="math inline">\(\pm\)</span> 5.88). The model explains 16% of the variation in height (<span class="math inline">\(R^2\)</span> = 0.162).</em></p>
-<p>… or maybe, <em>The model, which explained 16% of the variation in height, showed that the slope of the relationship between hand width and height is 1.52 <span class="math inline">\(\pm\)</span> 0.62 which is significantly greater than 0 (t = 27.40, p &lt; 0.01)</em></p>
+<p><em>There is a statistically significant association between hand width and height (F = 22.0912, d.f. = 1,31, p &lt; 0.001) The equation of the fitted model is: Height = 3.88(<span class="math inline">\(\pm\)</span> 0.83) <span class="math inline">\(\times\)</span> HandWidth + 140.68(<span class="math inline">\(\pm\)</span> 7.40). The model explains 42% of the variation in height (<span class="math inline">\(R^2\)</span> = 0.416).</em></p>
+<p>… or maybe, <em>The model, which explained 42% of the variation in height, showed that the slope of the relationship between hand width and height is 3.88 <span class="math inline">\(\pm\)</span> 0.83 which is significantly greater than 0 (t = 19.00, p &lt; 0.01)</em></p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rSquared"></span>
 <img src="BB852_files/figure-html/rSquared-1.png" alt="An illustration of different R-squared values." width="384" />
 <p class="caption">
 Figure 16.6: An illustration of different R-squared values.
 </p>
 </div>
-<p>A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The <code>ggplot2</code> package has a neat and simple function called <code>geom_smooth</code> which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use <code>method = "lm"</code>. This will plot the fitted regression model, and will add, by default" a shaded “ribbon” which represents the so called “95% confidence interval” for the fitted values. These are 2 time the standard error.</p>
+<p>A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The <code>ggplot2</code> package has a neat and simple function called <code>geom_smooth</code> which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use <code>method = "lm"</code>. This will plot the fitted regression model, and will add, by default” a shaded “ribbon” which represents the so called “95% confidence interval” for the fitted values. These are 2 time the standard error.</p>
 <div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb393-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
 <span id="cb393-2"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb393-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb393-3"><a href="linear-models-with-a-single-continuous-explanatory-variable.html#cb393-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>

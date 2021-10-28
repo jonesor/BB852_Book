@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-10-14" />
+<meta name="date" content="2021-10-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="power-analysis-by-simulation.html"/>
 <link rel="next" href="exercise-solutions.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -60,6 +60,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -457,29 +458,29 @@ Reporting of methods and results should be written in the style of a scientific 
 ##     year n.fires
 ##    &lt;int&gt;   &lt;dbl&gt;
 ##  1  1998  20014.
-##  2  1999  27111.
-##  3  2000  27790.
-##  4  2001  29912.
-##  5  2002  38816.
-##  6  2003  44128.
-##  7  2004  39220.
-##  8  2005  35661.
-##  9  2006  35324.
-## 10  2007  34312.
-## 11  2008  29957.
-## 12  2009  39827.
-## 13  2010  37011.
-## 14  2011  34833.
-## 15  2012  42884.
-## 16  2013  36203.
-## 17  2014  40026.
-## 18  2015  44049.
-## 19  2016  43651.
-## 20  2017  37604.</code></pre>
+##  2  1999  26883.
+##  3  2000  27351.
+##  4  2001  29072.
+##  5  2002  37391.
+##  6  2003  42761.
+##  7  2004  38453.
+##  8  2005  35005.
+##  9  2006  33832.
+## 10  2007  33037.
+## 11  2008  29379.
+## 12  2009  39117.
+## 13  2010  37037.
+## 14  2011  34634.
+## 15  2012  40085.
+## 16  2013  35146.
+## 17  2014  39621.
+## 18  2015  41208.
+## 19  2016  42212.
+## 20  2017  36686.</code></pre>
 <div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="an-example-of-a-past-exam-2020.html#cb507-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(amazon_YearlyFires, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n.fires)) <span class="sc">+</span></span>
 <span id="cb507-2"><a href="an-example-of-a-past-exam-2020.html#cb507-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb507-3"><a href="an-example-of-a-past-exam-2020.html#cb507-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-360-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-361-1.png" width="672" /></p>
 <p>You may have slightly different values if you used old data that had some fractional numbers (e.g. 1.543 is not “1 point 5” fires, but one thousand five hundred!). Well done those of you that spotted that issue. Don’t worry if you didn’t - you don’t lose points!</p>
 <p>Some of you may also have made plots that included ONLY data from the “legal amazon,” by filtering to those states only. Again, that is no problem if you did that.</p>
 <p><strong>b) Produce a table showing the minimum, maximum, mean and median number of fires per month in the legally-defined Amazon.</strong></p>
@@ -535,17 +536,17 @@ Reporting of methods and results should be written in the style of a scientific 
 ##    month_numeric minimum  mean median maximum
 ##            &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
 ##  1             1     0   1382.  1370.   3257 
-##  2             2     0    886.   801    1963 
+##  2             2     0    880.   801    1859.
 ##  3             3     0    886.   857    1612 
-##  4             4     0    811.   792    1566 
+##  4             4     0    802.   792    1566 
 ##  5             5     0    980.  1028.   1938 
-##  6             6   333.  1492.  1526.   2670 
-##  7             7   772.  2025.  2142.   3422.
-##  8             8    46.2 1073.   978.   3337.
-##  9             9   132.   864.   919.   1695.
-## 10            10   594.  2064.  2140.   3113.
-## 11            11   634.  1889.  2014.   3619.
-## 12            12   260.  1251.  1214.   2861.</code></pre>
+##  6             6   333.  1480.  1526.   2670 
+##  7             7   480.  1983.  2054.   3422.
+##  8             8    59.4  976.   907.   3337.
+##  9             9   125.   486.   298.   1284.
+## 10            10   594.  1966.  2140.   3113.
+## 11            11   634.  1796.  1673.   3598.
+## 12            12   260.  1205.  1214.   2207.</code></pre>
 <p>This question was HARD. It could also have been interpreted in a couple of different ways. For example, it could be interpreted as asking for the mean/median/max (etc.) by state. What I actually meant was to find the TOTAL across ALL of the legal Amazon for each month and each year (20 years * 12 months = 240 values), and then produce a table summarising the mean, min, max etc. of these values.</p>
 <p>If you calculate the statistics “by state” as well as by year and month you end up with a different table, like this:</p>
 <div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="an-example-of-a-past-exam-2020.html#cb512-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> legalAmazon <span class="sc">%&gt;%</span></span>
@@ -561,17 +562,17 @@ Reporting of methods and results should be written in the style of a scientific 
 ##    month_numeric minimum  mean median maximum
 ##            &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
 ##  1             1       0 138.   44.5      960
-##  2             2       0  88.6  26        871
+##  2             2       0  88.0  25        871
 ##  3             3       0  88.6  19        820
-##  4             4       0  81.1  17        947
+##  4             4       0  80.2  15.5      947
 ##  5             5       0  98.0  12        942
-##  6             6       0 149.   36        979
-##  7             7       0 202.   39        989
-##  8             8       0 107.    5.27     960
-##  9             9       1  86.4   6.27     998
-## 10            10       1 206.   13.5      960
-## 11            11       0 189.  105        973
-## 12            12       0 125.   46        846</code></pre>
+##  6             6       0 148.   32.5      979
+##  7             7       0 198.   23.5      989
+##  8             8       0  97.6   4.77     960
+##  9             9       1  48.6   5.88     998
+## 10            10       1 197.    7.70     960
+## 11            11       0 180.   88        973
+## 12            12       0 120.   43.5      846</code></pre>
 <p>I have been lenient with the marking on this one!</p>
 <p><strong>c) Produce a graph using box plots to show the distribution of the number of fires per month in the Amazon (i.e. month on x-axis, number of fires on y-axis).</strong></p>
 <p>Here I am looking for a box plot of the number of fires per month in the Amazon (or legal Amazon). In other words, each row of data (each data point) should be the total number of fires across all of the states, for each month, in each year.</p>
@@ -602,7 +603,7 @@ Reporting of methods and results should be written in the style of a scientific 
 <span id="cb516-3"><a href="an-example-of-a-past-exam-2020.html#cb516-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb516-4"><a href="an-example-of-a-past-exam-2020.html#cb516-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Month&quot;</span>) <span class="sc">+</span></span>
 <span id="cb516-5"><a href="an-example-of-a-past-exam-2020.html#cb516-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Total number of fires&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-363-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-364-1.png" width="672" /></p>
 <p>Common mistakes -
 Understanding how <code>group_by</code> and <code>summarise</code> work is key to answering this question.
 To ensure that the months are displayed in the correct order you need to use the <code>numeric</code> month. Failure to do that will cause the plot to be presented in alphabetical order (i.e. with December falling before January!). However, box plots require that the input variable is a <code>factor</code> so you also need to convert back to a <code>factor</code> before plotting.</p>
@@ -621,7 +622,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb517-3"><a href="an-example-of-a-past-exam-2020.html#cb517-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coral, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> intensity)) <span class="sc">+</span></span>
 <span id="cb517-4"><a href="an-example-of-a-past-exam-2020.html#cb517-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb517-5"><a href="an-example-of-a-past-exam-2020.html#cb517-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-364-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-365-1.png" width="672" /></p>
 <p><strong>b) carry out a randomisation test to determine if there is a significant difference in the colour intensity in the two habitats. Write (i) a brief method description and (ii) a summary of the results. </strong></p>
 <p>First we need to calculate the observed difference between the two habitats.</p>
 <p>You can get the mean values like this (there are other ways):</p>
@@ -658,7 +659,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb523-3"><a href="an-example-of-a-past-exam-2020.html#cb523-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb523-4"><a href="an-example-of-a-past-exam-2020.html#cb523-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Shuffled differences&quot;</span>) <span class="sc">+</span></span>
 <span id="cb523-5"><a href="an-example-of-a-past-exam-2020.html#cb523-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsDiff)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-368-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-369-1.png" width="672" /></p>
 <p>Now I can calculate the significance by asking how many of she shuffled differences were more extreme than the observed value.</p>
 <div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="an-example-of-a-past-exam-2020.html#cb524-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(shuffledData<span class="sc">$</span>shuffledDiffs <span class="sc">&lt;=</span> obsDiff)</span></code></pre></div>
 <pre><code>## 
@@ -666,7 +667,7 @@ To ensure that the months are displayed in the correct order you need to use the
 ##  1999     1</code></pre>
 <p>In this case, NONE of the shuffled values are more extreme than the observed value, so the p-value can be reported as “p&lt;0.001.” You could write this up like this</p>
 <p><em>To test whether the difference in intensity between the mesophotic and shallow coral habitats is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means. The alternative hypothesis is that the mean for the mesophotic habitat is significantly lower than the mean for the shallow habitat. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.</em></p>
-<p><em>The observed mean values of light intensity for the mesophotic and shallow corals were 187.4 and 81.8 respectively and the difference between them is therefore -105.6 (shallow - mesophytic). None of the 1000 null distribution replicates were as extreme my observed difference value. I conclude that the observed difference between the means of the two groups is statistically significant (p &lt; 0.001)"</em></p>
+<p><em>The observed mean values of light intensity for the mesophotic and shallow corals were 187.4 and 81.8 respectively and the difference between them is therefore -105.6 (shallow - mesophytic). None of the 1000 null distribution replicates were as extreme my observed difference value. I conclude that the observed difference between the means of the two groups is statistically significant (p &lt; 0.001)“</em></p>
 <hr />
 <p><strong>3) Power in a field experiment (10 points)</strong></p>
 <p>Scientists have developed a new eco-friendly fertiliser made from seaweed extract. You are planning a outdoor field experiment to test how effective it is at increasing crop yield in oilseed rape (<em>Brassica napus</em>). A standard industrial chemical fertiliser can increase yield by 30%, and you would like to know if the new seaweed fertiliser has a similar effect. You will grow the plant in a number of 4m x 4m field plots with two treatments: (i) control, with no additional fertiliser (ii) addition of seaweed fertiliser.</p>
@@ -733,7 +734,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb531-3"><a href="an-example-of-a-past-exam-2020.html#cb531-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb531-4"><a href="an-example-of-a-past-exam-2020.html#cb531-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb531-5"><a href="an-example-of-a-past-exam-2020.html#cb531-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.8</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-374-1.png" width="672" /></p>
 <p>From this, it looks like a power of 80% is achieved with a sample size of about 16.</p>
 <p>Summing up:
 <em>My power analysis by simulation shows that a sample size of 16 per treatment group is required to detect a difference of 30% with 80% power.</em></p>
@@ -762,7 +763,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb532-7"><a href="an-example-of-a-past-exam-2020.html#cb532-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> habitatType</span>
 <span id="cb532-8"><a href="an-example-of-a-past-exam-2020.html#cb532-8" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb532-9"><a href="an-example-of-a-past-exam-2020.html#cb532-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-374-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-375-1.png" width="672" /></p>
 <p><strong>b) Fit a suitable statistical model to estimate the statistical relationship between area, habitat type, and species richness. Describe the method and then summarise the results produced by the model as if you were writing a report/thesis.</strong></p>
 <p>The key thing to remember here is that there are limits to counts of species. You can’t count &lt;0. Therefore, models that would allow the prediction of negative values may be problematic.
 Generalised Linear Models are designed for handling these kind of issues and, in this case, a Poisson model is most appropriate. This is an analogous situation to the example we looked at modelling the number of fox offspring in relation to mother’s weight.</p>
@@ -773,7 +774,7 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 <span id="cb533-3"><a href="an-example-of-a-past-exam-2020.html#cb533-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> roundabouts</span>
 <span id="cb533-4"><a href="an-example-of-a-past-exam-2020.html#cb533-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb533-5"><a href="an-example-of-a-past-exam-2020.html#cb533-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod1)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-375-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-376-1.png" width="672" /></p>
 <div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="an-example-of-a-past-exam-2020.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
@@ -861,7 +862,7 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 <span id="cb539-10"><a href="an-example-of-a-past-exam-2020.html#cb539-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb539-11"><a href="an-example-of-a-past-exam-2020.html#cb539-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">alpha =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># Remove the alpha legend</span></span>
 <span id="cb539-12"><a href="an-example-of-a-past-exam-2020.html#cb539-12" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-377-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-378-1.png" width="672" /></p>
 <hr />
 
 </div>

@@ -31,5 +31,9 @@ classData <- classData %>%
 
 classData
 
+summary(classData)
 # Write to course data folder
-write.csv(x = classData, file = "CourseData/classData.csv", row.names = FALSE)
+write.csv(x = classData, file = "/Users/jones/Dropbox/_SDU_Teaching/BB852/DataSetLibrary/classData.csv", row.names = FALSE)
+
+
+ggplot(classData, aes(x = HandWidth, y = Height, colour = Gender)) + geom_point()
