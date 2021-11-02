@@ -8,7 +8,8 @@ Carry out a two-sample t-test.
 
 ```{r,echo = -1,cache=TRUE}
 set.seed(12)
-classData <- read.csv("CourseData/classData.csv")
+classData <- read.csv("CourseData/classData.csv") %>% 
+  filter(Gender %in% c("Male", "Female"))
 
 ggplot(classData, aes(x = Gender, y = Precision)) +
   geom_boxplot() +
