@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Additional recommended reading | BB852 - Data handling, visualisation and statistics</title>
+  <title>Chapter 10 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Additional recommended reading | BB852 - Data handling, visualisation and statistics" />
+  <meta property="og:title" content="Chapter 10 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Additional recommended reading | BB852 - Data handling, visualisation and statistics" />
+  <meta name="twitter:title" content="Chapter 10 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics" />
   
   <meta name="twitter:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="schedule.html"/>
-<link rel="next" href="an-r-refresher.html"/>
+<link rel="prev" href="combining-data-sets.html"/>
+<link rel="next" href="distributions-and-summarising-data.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -392,30 +392,157 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="additional-recommended-reading" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Additional recommended reading</h1>
-<p>These can be downloaded via the link on itsLearning.</p>
-<ul>
-<li><p>Broman, K. W., &amp; Woo, K. H. (2018). <em>Data Organization in Spreadsheets</em>. The American Statistician, 72(1), 2–10.</p></li>
-<li><p>Gotelli, N. J., &amp; Ellison, A. M. (2013) Chapter 4, <em>Framing and Testing Hypotheses</em>, in A Primer of Ecological Statistics. Sinauer.</p></li>
-<li><p>Petchey, O., Beckerman, A., &amp; Childs, D. (2009). <em>Shock and Awe by Statistical Software - Why R?</em> Bulletin of the British Ecological Society, 40(4), 55–58.</p></li>
-<li><p>Weissgerber, T. L., Milic, N. M., Winham, S. J., &amp; Garovic, V. D. (2015). Beyond bar and line graphs: time for a new data presentation paradigm. PLoS Biology, 13(4), e1002128. <a href="doi:%5B10.1371/journal.pbio.1002128" class="uri">doi:[10.1371/journal.pbio.1002128</a>](<a href="https://doi.org/10.1371/journal.pbio.1002128" class="uri">https://doi.org/10.1371/journal.pbio.1002128</a>)</p></li>
-<li><p>Wickham, H. (2014). <em>Tidy Data</em>. Journal of Statistical Software, 59(10), 1–23.</p></li>
-</ul>
-<p>The following websites are also useful.</p>
-<p>The R graph gallery: <a href="https://www.r-graph-gallery.com/" class="uri">https://www.r-graph-gallery.com/</a></p>
-<p>STHDA:
-<a href="http://www.sthda.com/english/wiki/ggplot2-essentials" class="uri">http://www.sthda.com/english/wiki/ggplot2-essentials</a>
-<a href="http://www.sthda.com/english/wiki/r-basics-quick-and-easy" class="uri">http://www.sthda.com/english/wiki/r-basics-quick-and-easy</a></p>
+<div id="visualising-data-with-ggplot2" class="section level1" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Visualising data with <code>ggplot2</code></h1>
+<p>In this chapter you will be guided through using the <code>ggplot2</code> package to make some pretty plots. You will therefore need the <code>ggplot2</code> package to make this work. Remember, you can load packages like this:</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="visualising-data-with-ggplot2.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>We will use the SDU birds clutch size data that we produced at the end of the “[Data wrangling with dplyr]” chapter for these examples. You can find the data set via the Course Data Dropbox link.</p>
+<div class="do-something">
+<p>
+Remember to set your working directory, and start a new script. I am assuming that you have saved your data in a folder called “CourseData” inside your working directory.
+</p>
+</div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="visualising-data-with-ggplot2.html#cb191-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/SDUClutchSize.csv&quot;</span>)</span></code></pre></div>
+<div id="histograms" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> Histograms</h2>
+<p>The <code>ggplot</code> function expects two main arguments (1) the data and (2) the <strong>aesthetics</strong>. The aesthetics are the variables you want to plot, and associated characteristics like colours, groupings etc. The first argument is for the data, then the aesthetics are specified within the <code>aes(...)</code> argument. These usually include an argument for <code>x</code> which is normally the variable that appears on the horizontal axis, and (often) <code>y</code> which is usually the variable on the vertical axis. The details of this depend on the type of plot you are making.</p>
+<p>After setting up the plot the graphics are added as <strong>geometric layers</strong> or <strong>geoms</strong>. There are many of these available including <code>geom_histogram</code>, <code>geom_line</code>, <code>geom_point</code> etc.</p>
+<p>I will illustrate the construction of a simple plot by making a histogram of the clutch size of all the nests in the dataset.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="visualising-data-with-ggplot2.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<p>This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set <code>binwidth</code> to be 1 because we know we are dealing with counts between just 1 and 14. Try altering the <code>binwidth</code>.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="visualising-data-with-ggplot2.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize)) <span class="sc">+</span></span>
+<span id="cb193-2"><a href="visualising-data-with-ggplot2.html#cb193-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-108-1.png" width="672" />
+We know that we have two species here and we would like to compare them. This is done within the aesthetic argument. The default is that the bars for different categories are stacked on top of each other. This is good in some cases, but probably not here.</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="visualising-data-with-ggplot2.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb194-2"><a href="visualising-data-with-ggplot2.html#cb194-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
+<p>You can immediately see that there are far fewer blue tit nests than great tit ones. But you can also see that the centre of mass for blue tits is further to the right than great tits.</p>
+<p>To make it easier to compare distributions with very different counts, we can put density on the y-axis instead of the default count using the argument <code>stat(density)</code>.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="visualising-data-with-ggplot2.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="fu">stat</span>(density))) <span class="sc">+</span></span>
+<span id="cb195-2"><a href="visualising-data-with-ggplot2.html#cb195-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<p>An alternative approach would be to overlay the two sets of bars (using <code>position = "identity"</code>) and set the colours to be slightly transparent (using <code>alpha = 0.7</code>) so that you can see the overlapping region clearly.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="visualising-data-with-ggplot2.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="fu">stat</span>(density))) <span class="sc">+</span></span>
+<span id="cb196-2"><a href="visualising-data-with-ggplot2.html#cb196-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<p>It is very clear from this plot that blue tits tend to have bigger clutch sizes than great tits. Is this difference <em>statistically significant</em>? We will look at testing this in a future class - for now we will be satisfied with our visualisation.</p>
+</div>
+<div id="facets---splitting-data-across-panels" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> “Facets” - splitting data across panels</h2>
+<p>You should recall that there were several years of data represented here.
+<code>ggplot</code> has a very clever way of splitting up the plot to examine this.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="visualising-data-with-ggplot2.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="fu">stat</span>(density))) <span class="sc">+</span></span>
+<span id="cb197-2"><a href="visualising-data-with-ggplot2.html#cb197-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb197-3"><a href="visualising-data-with-ggplot2.html#cb197-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>,</span>
+<span id="cb197-4"><a href="visualising-data-with-ggplot2.html#cb197-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span></span>
+<span id="cb197-5"><a href="visualising-data-with-ggplot2.html#cb197-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb197-6"><a href="visualising-data-with-ggplot2.html#cb197-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Year)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+<p>You could split the data up by species in a similar way, as yet another way of visualising the difference between species:</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="visualising-data-with-ggplot2.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize)) <span class="sc">+</span></span>
+<span id="cb198-2"><a href="visualising-data-with-ggplot2.html#cb198-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb198-3"><a href="visualising-data-with-ggplot2.html#cb198-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> .)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
+<div class="do-something">
+<p>
+You can change whether the separate graphs are presented in a rows or columns by changing the order of the argument: <code>facet_grid(species~.)</code> or <code>facet_grid(.~species)</code>. Try it.
+</p>
+</div>
+</div>
+<div id="box-plots" class="section level2" number="10.3">
+<h2><span class="header-section-number">10.3</span> Box plots</h2>
+<p>Box plots are suitable for cases where one variable is categorical with 2+ levels, and the other is continuous. Therefore, another way to look at these distributions is to use a box plot.</p>
+<p>In a box plot the box shows the quartiles (i.e. the 25% and 75% quantiles) within which 50% of the data are found. The horizontal line in the box is the <em>median</em>, Then the whiskers extend from the smallest to largest value <em>unless they are further than 1.5 times the interquartile range (the length of the box)</em> away from the edge of the box, in which case they are individually shown as outlier points.</p>
+<p>To plot them using <code>ggplot</code> you must use a <code>geom_boxplot</code> layer.
+The categorical variable is normally placed on the x-axis so is placed as <code>x</code> in the <code>aes</code> argument, while the continuous variable is on the <code>y</code> axis.</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="visualising-data-with-ggplot2.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> clutchSize)) <span class="sc">+</span></span>
+<span id="cb199-2"><a href="visualising-data-with-ggplot2.html#cb199-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<p>Some researchers argue that it is a good idea to add the data as points to these plots as “full disclosure” of what the underlying data look like. These can be added with a <code>geom_jitter</code> layer (jitter is random noise added in this case to the horizontal axis). You should set <code>width</code> and <code>alpha</code> arguments to make it look nice.</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="visualising-data-with-ggplot2.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> clutchSize)) <span class="sc">+</span></span>
+<span id="cb200-2"><a href="visualising-data-with-ggplot2.html#cb200-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb200-3"><a href="visualising-data-with-ggplot2.html#cb200-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
+<div class="do-something">
+<p>
+Try splitting the data into different years using <code>facet_grid</code> with the box plot.
+</p>
+</div>
+</div>
+<div id="lines-and-points" class="section level2" number="10.4">
+<h2><span class="header-section-number">10.4</span> Lines and points</h2>
+<p>Perhaps not surprisingly lines and points can be added with the geoms, <code>geom_line</code> and <code>geom_point</code> respectively.
+To illustrate this we will make a plot showing how clutch size changes among years.
+First we will use <code>summarise</code> to create a dataset with the mean clutch size. We’ll start simply, by looking at only great tits.</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="visualising-data-with-ggplot2.html#cb201-1" aria-hidden="true" tabindex="-1"></a>GTclutch <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb201-2"><a href="visualising-data-with-ggplot2.html#cb201-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;GT&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb201-3"><a href="visualising-data-with-ggplot2.html#cb201-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb201-4"><a href="visualising-data-with-ggplot2.html#cb201-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanClutchSize =</span> <span class="fu">mean</span>(clutchSize))</span></code></pre></div>
+<p>Then you can plot this like this.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="visualising-data-with-ggplot2.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(GTclutch, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> meanClutchSize)) <span class="sc">+</span></span>
+<span id="cb202-2"><a href="visualising-data-with-ggplot2.html#cb202-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<p>I think this looks OK, but we should add both species. I’ll first need to produce a mean clutch size dataset that includes both species.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="visualising-data-with-ggplot2.html#cb203-1" aria-hidden="true" tabindex="-1"></a>meanClutch <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb203-2"><a href="visualising-data-with-ggplot2.html#cb203-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb203-3"><a href="visualising-data-with-ggplot2.html#cb203-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanClutchSize =</span> <span class="fu">mean</span>(clutchSize))</span></code></pre></div>
+<p>Now I can do the plot again. The only difference to the command is that I need to tell R that I want to colour the lines by species (<code>colour = species</code>).</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="visualising-data-with-ggplot2.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(meanClutch, <span class="fu">aes</span>(</span>
+<span id="cb204-2"><a href="visualising-data-with-ggplot2.html#cb204-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> Year, <span class="at">y =</span> meanClutchSize,</span>
+<span id="cb204-3"><a href="visualising-data-with-ggplot2.html#cb204-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> species</span>
+<span id="cb204-4"><a href="visualising-data-with-ggplot2.html#cb204-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb204-5"><a href="visualising-data-with-ggplot2.html#cb204-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<p>I can improve on this by (1) changing the y axis limits (using <code>ylim</code>) so that it goes through the full range of my data (0 - 14); (2) adding points (using a <code>geom_point</code> layer) where my actual data values are; (3) adding a nicely formatted axis label (using <code>ylab</code>); adding a title (<code>ggtitle</code>)</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="visualising-data-with-ggplot2.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(meanClutch, <span class="fu">aes</span>(</span>
+<span id="cb205-2"><a href="visualising-data-with-ggplot2.html#cb205-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> Year, <span class="at">y =</span> meanClutchSize,</span>
+<span id="cb205-3"><a href="visualising-data-with-ggplot2.html#cb205-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> species</span>
+<span id="cb205-4"><a href="visualising-data-with-ggplot2.html#cb205-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb205-5"><a href="visualising-data-with-ggplot2.html#cb205-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb205-6"><a href="visualising-data-with-ggplot2.html#cb205-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb205-7"><a href="visualising-data-with-ggplot2.html#cb205-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb205-8"><a href="visualising-data-with-ggplot2.html#cb205-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Mean clutch size&quot;</span>) <span class="sc">+</span></span>
+<span id="cb205-9"><a href="visualising-data-with-ggplot2.html#cb205-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Clutch size data from SDU Campus&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
+</div>
+<div id="scatter-plots" class="section level2" number="10.5">
+<h2><span class="header-section-number">10.5</span> Scatter plots</h2>
+<p>Finally, lets make a scatter plot.
+The SDU bird data are not suitable for this type of plot so we’ll use the data from a few days ago on suburban bird diversity.</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="visualising-data-with-ggplot2.html#cb206-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>)</span></code></pre></div>
+<p>Take a look at the data to remind ourselves what it looks like</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="visualising-data-with-ggplot2.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
+<pre><code>##          Name Year HabitatIndex nIndividuals nSpecies
+## 1    Alamotos 1946         10.0           48       12
+## 2      Ramona 1946          9.5           30       13
+## 3      Verona 1947          9.5           38       15
+## 4 Valle Vista 1950          9.5           42       11
+## 5    La Gonda 1955         11.0           44       13
+## 6     Belgian 1956          9.0           27       14</code></pre>
+<p>These data show the result of standardised bird surveys at housing developments of different ages in California. The surveys were carried out in 1975, and the data includes the <code>Year</code> and number of individual birds seen <code>nIndividuals</code> and number of species seen <code>nSpecies</code>. The question being addressed is “How does the age of the housing development affect the number of species?”</p>
+<p>To investigate this we should first add a new variable for <code>Age</code> to the data set. We can do this using the <code>mutate</code> function from <code>dplyr</code>. This function creates new variables, for example by manipulating existing ones.</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="visualising-data-with-ggplot2.html#cb209-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(df, <span class="at">Age =</span> <span class="dv">1975</span> <span class="sc">-</span> Year)</span></code></pre></div>
+<p>When we have created this variable we can plot the data. For aesthetic reasons I also would like to set the limits on the y-axis to go extend to zero, and I would like to include proper labels on the axes.</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="visualising-data-with-ggplot2.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nSpecies)) <span class="sc">+</span></span>
+<span id="cb210-2"><a href="visualising-data-with-ggplot2.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb210-3"><a href="visualising-data-with-ggplot2.html#cb210-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb210-4"><a href="visualising-data-with-ggplot2.html#cb210-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Age of development&quot;</span>) <span class="sc">+</span></span>
+<span id="cb210-5"><a href="visualising-data-with-ggplot2.html#cb210-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Bird species richness&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<p>This shows very clearly that older developments have more species, but it also appears to show that there is an asymptote around 13 species.</p>
+<p>Compare this plot to the one you made with base graphics in a previous class.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="schedule.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="an-r-refresher.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="combining-data-sets.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="distributions-and-summarising-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -447,7 +574,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jonesor/BB852_Book/edit/master/0_002-ExtraReading.Rmd",
+"link": "https://github.com/jonesor/BB852_Book/edit/master/2_01-visualisingData.Rmd",
 "text": "Edit"
 },
 "history": {

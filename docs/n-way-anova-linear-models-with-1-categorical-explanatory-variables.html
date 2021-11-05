@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Additional recommended reading | BB852 - Data handling, visualisation and statistics</title>
+  <title>Chapter 18 n-way ANOVA: Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Additional recommended reading | BB852 - Data handling, visualisation and statistics" />
+  <meta property="og:title" content="Chapter 18 n-way ANOVA: Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Additional recommended reading | BB852 - Data handling, visualisation and statistics" />
+  <meta name="twitter:title" content="Chapter 18 n-way ANOVA: Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics" />
   
   <meta name="twitter:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="schedule.html"/>
-<link rel="next" href="an-r-refresher.html"/>
+<link rel="prev" href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"/>
+<link rel="next" href="evaluating-linear-models.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -392,30 +392,205 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="additional-recommended-reading" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Additional recommended reading</h1>
-<p>These can be downloaded via the link on itsLearning.</p>
+<div id="n-way-anova-linear-models-with-1-categorical-explanatory-variables" class="section level1" number="18">
+<h1><span class="header-section-number">Chapter 18</span> n-way ANOVA: Linear models with &gt;1 categorical explanatory variables</h1>
+<p>In the one-way ANOVA we covered in the previous chapter we were interested in understanding the effect of a single categorical explanatory variable with two or more levels on a continuous response variable. Although the explanatory variable must be categorical (i.e. with discrete levels), it could represent a continuous variable. For example, the explanatory variable could be a two-level soil nutrient level (high or low), even though nutrient level is a continuous variable and one could measure the actual quantitative value of nutrients in mg/g.</p>
+<p>The two-way ANOVA is an extension of one-way ANOVA that allows you to investigate the effect of <strong>two</strong> categorical variables. This can be useful in an experimental context.</p>
+<p>For example, one might have run an experiment investigating in the effect of two types of diet (<em>lowProtein</em> and <em>highProtein</em>), and genotype (<em>gt1</em> and <em>gt2</em>), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possible outcomes are illustrated in Figure <a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#fig:possibilities">18.1</a>. the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of <strong>interaction plot</strong>: where they are parallel, there is no interaction.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:possibilities"></span>
+<img src="BB852_files/figure-html/possibilities-1.png" alt="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not)." width="960" />
+<p class="caption">
+Figure 18.1: Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).
+</p>
+</div>
+<p>In the model we aim to quantify these effects, and ask if they are statistically significant (i.e. if the effect sizes are &gt;0). We divide the effects of the explanatory variables into two types: <strong>main effects</strong> and <strong>interaction effects</strong>. The main effects are the overall effect of the explanatory variables (genotype and diet in this case) while the interaction effect allows us to ask whether one main effect <em>depends on another</em>. In this case we are asking whether <em>the effect of diet depends on genotype (and vice versa)</em>. Make sure that you understand this important concept.</p>
+<div id="fitting-a-two-way-anova-model" class="section level2" number="18.1">
+<h2><span class="header-section-number">18.1</span> Fitting a two-way ANOVA model</h2>
+<p>Let’s use R to fit a two-way ANOVA model using data from the example I just described. As with one-way ANOVA, you can fit a two-way ANOVA model in R using <code>lm</code>.</p>
+<div class="do-something">
+<p>
+Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot</code> packages, and to set your working directory correctly.
+</p>
+</div>
+<p>First, import the <code>insectDiet.csv</code> data and plot it, to produce a plot like in Figure <a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#fig:dietAndGenotype">18.2</a>. From looking at the graph in Figure <a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#fig:dietAndGenotype">18.2</a> you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the <em>difference</em> in size between the insects raised on the different diets) is larger for genotype 1 than it is for genotype 2. But are these differences statistically meaningful?</p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb416-1" aria-hidden="true" tabindex="-1"></a>insectDiet <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/insectDiet.csv&quot;</span>)</span>
+<span id="cb416-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb416-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb416-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb416-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(insectDiet, <span class="fu">aes</span>(<span class="at">x =</span> genotype, <span class="at">y =</span> lengthMM, <span class="at">fill =</span> diet)) <span class="sc">+</span></span>
+<span id="cb416-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb416-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb416-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb416-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Genotype&quot;</span>) <span class="sc">+</span></span>
+<span id="cb416-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb416-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Length (mm)&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:dietAndGenotype"></span>
+<img src="BB852_files/figure-html/dietAndGenotype-1.png" alt="The effect of diet protein content and genotype on adult size of an insect species" width="480" />
+<p class="caption">
+Figure 18.2: The effect of diet protein content and genotype on adult size of an insect species
+</p>
+</div>
+<p>To address this question, we will fit a linear model (the two-way ANOVA) to estimate the effects of diet and genotype.</p>
+<p>The model formula is <code>lengthMM ~ genotype + diet + genotype:diet</code>.</p>
+<p>Let’s try to understand this. The <code>genotype + diet</code> part represents the <strong>main effects</strong> of these two variables, and the <code>genotype:diet</code> part represents the <strong>interaction effect</strong> between them. This formula<em>can</em> be shortened to <code>lengthMM ~ genotype * diet</code> (i.e. this is exactly equivalent to the more complicated-looking formula), but I recommend to use the longer version because it is clearer.</p>
+<p>So we fit the model like this - putting the formula first, then telling R which data to use:</p>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb417-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(lengthMM <span class="sc">~</span> genotype <span class="sc">+</span> diet <span class="sc">+</span> genotype<span class="sc">:</span>diet,</span>
+<span id="cb417-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb417-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> insectDiet</span>
+<span id="cb417-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb417-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Then we can look at diagnostic plots, as with ANOVA etc.:</p>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb418-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb418-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-284-1.png" width="672" /></p>
+<p>These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots) now any major outliers.</p>
+</div>
+<div id="summarising-the-model-anova" class="section level2" number="18.2">
+<h2><span class="header-section-number">18.2</span> Summarising the model (<code>anova</code>)</h2>
+<p>Since we are satisfied with the diagnostic plots we can proceed by summarising the model using first <code>anova</code> and then <code>summary</code>.</p>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: lengthMM
+##               Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## genotype       1 426.02  426.02  99.575 7.135e-13 ***
+## diet           1 111.02  111.02  25.949 7.064e-06 ***
+## genotype:diet  1  54.19   54.19  12.665 0.0009073 ***
+## Residuals     44 188.25    4.28                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>This summary <code>Analysis of Variance Table</code> is similar to the ones you have already seen for one-way ANOVA and linear regression. It just has some extra rows because you have extra explanatory variables. It shows you the degrees of freedom for the different terms in the model (all 1, because they have two levels), the sum of squares (<code>Sum Sq</code>) and mean sum of squares (<code>Mean Sq</code>) and the associated <code>F value</code> and p-value (<code>Pr(&gt;F)</code>). Those F values are all large, leading to highly-significant p-values.</p>
+<p>This means that all of those terms in the model explain a significant proportion of the variation in insect length.</p>
+<p>But as you know, this summary table doesn’t tell you the direction of the effects. The obvious way to understand your data is to simply look at the plot you have already produced. You could also make an <strong>interaction plot</strong> which is a simplified version of the plot of the raw data.</p>
+<p>To do this you first need to create a summary table using <code>dplyr</code> tools <code>summarise</code> and <code>group_by</code> to get the mean and standard errors of the mean:</p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-1" aria-hidden="true" tabindex="-1"></a>insectDiet_means <span class="ot">&lt;-</span></span>
+<span id="cb421-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-2" aria-hidden="true" tabindex="-1"></a>  insectDiet <span class="sc">%&gt;%</span></span>
+<span id="cb421-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(genotype, diet) <span class="sc">%&gt;%</span> <span class="co"># &lt;- remember to group by *both* factors</span></span>
+<span id="cb421-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MeanLength =</span> <span class="fu">mean</span>(lengthMM), <span class="at">SELength =</span> <span class="fu">sd</span>(lengthMM) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()))</span>
+<span id="cb421-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-5" aria-hidden="true" tabindex="-1"></a>insectDiet_means</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 4
+## # Groups:   genotype [2]
+##   genotype diet        MeanLength SELength
+##   &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt;
+## 1 gt1      highProtein       25.8    0.672
+## 2 gt1      lowProtein        20.7    0.527
+## 3 gt2      highProtein       17.8    0.698
+## 4 gt2      lowProtein        16.8    0.458</code></pre>
+<p>Then you can make a simple plot of this information by plotting points, and lines joining them:</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb423-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb423-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb423-2" aria-hidden="true" tabindex="-1"></a>  insectDiet_means,</span>
+<span id="cb423-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb423-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> genotype, <span class="at">y =</span> MeanLength, <span class="at">colour =</span> diet, <span class="at">group =</span> diet)</span>
+<span id="cb423-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb423-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb423-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb423-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb423-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb423-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>())</span></code></pre></div>
+<p><img src="BB852_files/figure-html/interactionPlot-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>You could add error bars to the points by adding a line defining the <code>ymin</code> and <code>ymax</code> values from the data summary like this:</p>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb424-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-2" aria-hidden="true" tabindex="-1"></a>  insectDiet_means,</span>
+<span id="cb424-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb424-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> genotype, <span class="at">y =</span> MeanLength, <span class="at">colour =</span> diet, <span class="at">group =</span> diet,</span>
+<span id="cb424-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> MeanLength <span class="sc">-</span> SELength, <span class="at">ymax =</span> MeanLength <span class="sc">+</span> SELength</span>
+<span id="cb424-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb424-7"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb424-8"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb424-9"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb424-10"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">width =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/errorBars-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>But are these points statistically significantly different from each other?
+To answer that question we need to use a post-hoc test</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb425-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb425-2" aria-hidden="true" tabindex="-1"></a><span class="fu">HSD.test</span>(mod_A, <span class="at">trt =</span> <span class="fu">c</span>(<span class="st">&quot;diet&quot;</span>, <span class="st">&quot;genotype&quot;</span>), <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+## Study: mod_A ~ c(&quot;diet&quot;, &quot;genotype&quot;)
+## 
+## HSD Test for lengthMM 
+## 
+## Mean Square Error:  4.278409 
+## 
+## diet:genotype,  means
+## 
+##                 lengthMM      std  r Min Max
+## highProtein:gt1 25.83333 2.329000 12  23  31
+## highProtein:gt2 17.75000 2.416797 12  14  22
+## lowProtein:gt1  20.66667 1.825742 12  17  24
+## lowProtein:gt2  16.83333 1.585923 12  14  19
+## 
+## Alpha: 0.05 ; DF Error: 44 
+## Critical Value of Studentized Range: 3.775958 
+## 
+## Minimun Significant Difference: 2.254643 
+## 
+## Treatments with the same letter are not significantly different.
+## 
+##                 lengthMM groups
+## highProtein:gt1 25.83333      a
+## lowProtein:gt1  20.66667      b
+## highProtein:gt2 17.75000      c
+## lowProtein:gt2  16.83333      c</code></pre>
+<p>The important part of this output is at the bottom where it tells us <code>Treatments with the same letter are not significantly different.</code>. You can see that the mean lengths between diets for genotype 1 are significantly different (they do not share a letter). However, there is no significant difference between diets for genotype 2 (they share the same letter, <code>c</code>). The two genotypes are also significantly different from each other.</p>
+</div>
+<div id="summarising-the-model-summary" class="section level2" number="18.3">
+<h2><span class="header-section-number">18.3</span> Summarising the model (<code>summary</code>)</h2>
+<p>This (above) is generally enough information for a complete write up of results. However, you can ask R to provide the model summary that includes the <span class="math inline">\(R^2\)</span> values, coefficient estimates and standard errors using <code>summary</code>.</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = lengthMM ~ genotype + diet + genotype:diet, data = insectDiet)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.7500 -1.0417  0.1667  1.2500  5.1667 
+## 
+## Coefficients:
+##                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                 25.8333     0.5971  43.264  &lt; 2e-16 ***
+## genotypegt2                 -8.0833     0.8444  -9.572 2.53e-12 ***
+## dietlowProtein              -5.1667     0.8444  -6.118 2.26e-07 ***
+## genotypegt2:dietlowProtein   4.2500     1.1942   3.559 0.000907 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.068 on 44 degrees of freedom
+## Multiple R-squared:  0.7585, Adjusted R-squared:  0.742 
+## F-statistic: 46.06 on 3 and 44 DF,  p-value: 1.254e-13</code></pre>
+<p>The most useful thing shown here is the <span class="math inline">\(R^2\)</span> value. Because we have several terms in the model we should use the <code>Adjusted R-squared</code> value of 0.742. This indicates that our model explains 74.2% of variation in insect length.</p>
+<p>The next bit is not 100% necessary most of the time…</p>
+<p>We already have a good idea of the mean values and standard errors for these data look because we calculated them above directly from the data. For completeness though I will now run through the coefficient estimates part of the summary table.</p>
+<p>The coefficient <code>Estimates</code> here are interpreted in a similar way to a one-way ANOVA. Again, it is important to know what the reference point is. When you understand this you can reconstruct the mean values for the various levels of the variables that are estimated by the model. You will see that the model estimates lead to precisely the same estimates as obtained from summarising the data.</p>
+<p>Here you can see that:</p>
 <ul>
-<li><p>Broman, K. W., &amp; Woo, K. H. (2018). <em>Data Organization in Spreadsheets</em>. The American Statistician, 72(1), 2–10.</p></li>
-<li><p>Gotelli, N. J., &amp; Ellison, A. M. (2013) Chapter 4, <em>Framing and Testing Hypotheses</em>, in A Primer of Ecological Statistics. Sinauer.</p></li>
-<li><p>Petchey, O., Beckerman, A., &amp; Childs, D. (2009). <em>Shock and Awe by Statistical Software - Why R?</em> Bulletin of the British Ecological Society, 40(4), 55–58.</p></li>
-<li><p>Weissgerber, T. L., Milic, N. M., Winham, S. J., &amp; Garovic, V. D. (2015). Beyond bar and line graphs: time for a new data presentation paradigm. PLoS Biology, 13(4), e1002128. <a href="doi:%5B10.1371/journal.pbio.1002128" class="uri">doi:[10.1371/journal.pbio.1002128</a>](<a href="https://doi.org/10.1371/journal.pbio.1002128" class="uri">https://doi.org/10.1371/journal.pbio.1002128</a>)</p></li>
-<li><p>Wickham, H. (2014). <em>Tidy Data</em>. Journal of Statistical Software, 59(10), 1–23.</p></li>
+<li><p>The <code>(Intercept)</code> is 25.833 and must refer to the point for <em>genotype 1</em> on a <em>high protein diet</em> (look at the value of the intercept and compare to the graph/summary table, and/or the output from the Tukey test).</p></li>
+<li><p>The second coefficient (<code>genotypegt2</code>) is -8.083 which is the <strong>difference</strong> between the reference (intercept) and the value for <em>genotype 2</em> on a <em>high protein diet</em>: (25.833 + (-8.083) = 17.75).</p></li>
+<li><p>The third coefficient (<code>dietlowProtein</code>) is -5.167 which is the difference between the reference point and for <em>genotype 1</em> on a <em>low protein diet</em>: (25.833 + (-5.167) = 20.666).</p></li>
+<li><p>The final coefficient <code>dietlowProtein:genotypegt2</code> is 4.25 and is “interaction effect” of diet and genotype and represents the <em>additional</em> effect of genotype when it is on diet. In other words, in comparison to the reference point (genotype 1 &amp; high protein diet), the effect of a low protein diet is negative (-8.0833), as is the effect of being genotype 2 (-5.1667). However, having both a low protein diet <strong>and</strong> being genotype 2 leads to an additional positive effect (4.25) on length. The resulting estimate of mean length for <em>genotype 2</em> on a <em>low protein diet</em> is 25.833 + (-8.083) + (-5.167) + 4.25 = 16.833.</p></li>
 </ul>
-<p>The following websites are also useful.</p>
-<p>The R graph gallery: <a href="https://www.r-graph-gallery.com/" class="uri">https://www.r-graph-gallery.com/</a></p>
-<p>STHDA:
-<a href="http://www.sthda.com/english/wiki/ggplot2-essentials" class="uri">http://www.sthda.com/english/wiki/ggplot2-essentials</a>
-<a href="http://www.sthda.com/english/wiki/r-basics-quick-and-easy" class="uri">http://www.sthda.com/english/wiki/r-basics-quick-and-easy</a></p>
+<p>This is a bit complicated so my advice is generally to refer to the figures and the outputs of the <code>Tukey.HSD</code> function to obtain the estimate in the different groups.</p>
+<p>The logic and methods of the two-way ANOVA can be extended to produce <span class="math inline">\(n\)</span>-way ANOVA with <span class="math inline">\(n\)</span> categorical variables.</p>
+</div>
+<div id="exercise-fish-behaviour" class="section level2" number="18.4">
+<h2><span class="header-section-number">18.4</span> Exercise: Fish behaviour</h2>
+<p>Individual differences in animal personality and external appearance such as colouration patterns have both been extensively studied separately. A significant body of research has explored many of pertinent ecological and biological aspects that can be affected by them and their impact upon fitness. Currently little is known about how both factors interact and their effect on reproductive success.</p>
+<p>Researchers carried out a study looking at differences in personality and its interaction with colour phenotype in zebra fish (<em>Danio rerio</em>). They used two colour morphs, “homogeneous” which has clearly defined lateral stripes, and “heterogeneous” which has more variable and less clear patterns.</p>
+<p>They also assigned individuals to two personality types which they called “Proactive” (adventurous, risk taking) and “Reactive” (timid, less risk taking). They did this by recording how they explore a new environment</p>
+<p>The two variables of interest are:</p>
+<ul>
+<li>Colour pattern (homogeneous and heterogeneous)</li>
+<li>Personality (proactive and reactive)</li>
+</ul>
+<p>The research questions are: <em>What is the relative influence of colour pattern and personality? Which is more important? How do the variables interact to determine fitness? e.g. do proactive individuals do better than reactive ones, and does this depend on colour pattern? Or some other pattern?</em></p>
+<ol style="list-style-type: decimal">
+<li><p>Import the data set, <code>fishPersonality.csv</code></p></li>
+<li><p>Plot the data (e.g. as a box plot)</p></li>
+<li><p>Fit an ANOVA model using <code>lm</code>.</p></li>
+<li><p>Look at diagnostic plots from this model (<code>autoplot</code>)</p></li>
+<li><p>Use <code>anova</code> to get an Analysis of Variance summary table, and interpret the results.</p></li>
+<li><p>Get the coefficient summary (<code>summary</code>) and interpret the output.</p></li>
+<li><p>Do post-hoc Tukey tests (e.g. using <code>HSD.test</code> from the <code>agricolae</code> package). Interpret the results.</p></li>
+<li><p>Sum up your findings with reference to the initial research questions.</p></li>
+</ol>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="schedule.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="an-r-refresher.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="evaluating-linear-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -447,7 +622,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jonesor/BB852_Book/edit/master/0_002-ExtraReading.Rmd",
+"link": "https://github.com/jonesor/BB852_Book/edit/master/3_06-Two-way_ANOVA.Rmd",
 "text": "Edit"
 },
 "history": {

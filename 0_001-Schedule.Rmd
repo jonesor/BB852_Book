@@ -14,9 +14,8 @@ text(1, 1, labels = "The schedule is only available on the HTML version of this 
 ```
 
 ```{r echo = FALSE}
-updateSchedule <- FALSE
+updateSchedule <- TRUE
 ```
-
 
 ```{r, echo = FALSE, message=FALSE,warning=FALSE,eval=knitr::is_html_output()}
 library(flextable)
@@ -84,7 +83,7 @@ ft <- flextable(schedule2, cwidth = c(2, 6, 1, 1, .5, 1, 4, .75, .75)) %>%
   bold(part = "header") %>%
   bold(j = 1) %>%
   color(
-    i = ~ Type == "Lecture",
+    i = ~ Type %in% c("Lecture", "Exam"),
     j = ~ Session + Type + Topic,
     color = "red"
   ) %>%
