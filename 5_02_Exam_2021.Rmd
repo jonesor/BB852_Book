@@ -85,18 +85,31 @@ b) carry out a randomisation test to determine if there is a significant differe
 ##  3) Power in a field experiment (10 points)
 
 
+Running speed is a key attribute of escape behaviour.  Golden-mantled ground squirrels (*Spermophilus lateralis*) and least chipmunks (*Tamias minimus*) live together on the mountains of North America. It has been hypothesised that the ground squirrels can utilise more habitat area than least chipmunks they are faster, and can therefore use areas that are more exposed to predation (they would be able to run away quicker). 
 
-Scientists have developed a new eco-friendly fertiliser made from seaweed extract. You are planning a outdoor field experiment to test how effective it is at increasing crop yield in oilseed rape (*Brassica napus*). A standard industrial chemical fertiliser can increase yield by 30%, and you would like to know if the new seaweed fertiliser has a similar effect. You will grow the plant in a number of 4m x 4m field plots with two treatments: (i) control, with no additional fertiliser (ii) addition of seaweed fertiliser. 
+Your colleague studies one of these species, ground squirrels, and has measured running speed for a small number of individuals in this species only. She has sent you the data as a file called `runningSquirrels.csv`. 
+
+You would like to test the hypothesis that the least chipmunks are slower than ground squirrels. You decide that a speed difference of 20% would be biologically meaningful. However, due to current travel restrictions you cannot go to the field site in Colorado, USA yourself. Instead, you must instruct a research assistant at the site to measure running speed in the chipmunks. They need to know how many of each species to measure.
+
+Use the pilot study data to conduct a power analysis to help plan your study.
 
 
-You have some preliminary data from an older study (`oilseed.csv`) which shows the normal crop yield (in $kg/ha$). Use this data to do your power analysis
+```{r}
+set.seed(23)
+ss <- 8
+runningSquirrels <- data.frame(tagNumber = sample(100:500, size = ss)) %>% 
+  mutate(speed = round(rnorm(ss,3.14,1),3))
+```
 
 
-a) Summarise the older study data to obtain mean and standard deviation.
+
+
+
+
+a) Summarise the pilot study data to obtain mean and standard deviation.
 
 b) Conduct a power analysis based on the pilot study data to estimate the number of samples required to carry out your experiment with 80% power. Describe the results of this power analysis.
 
-c) Briefly describe a simple proposed experiment design to test the new seaweed fertiliser.
 
 
 **4) Biodiversity (20 points)**
