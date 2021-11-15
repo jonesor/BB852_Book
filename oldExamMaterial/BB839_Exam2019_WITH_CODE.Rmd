@@ -1,0 +1,535 @@
+---
+title: "BB839 Exam 2019 - model answer zzs"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+classoption: a4paper
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This exam includes four questions that test different aspects of your learning during this course: data wrangling, data visualisation and statistics. Each question is broken down into a number sub questions. 
+
+**You must answer questions 1-3; you must answer EITHER question 4 OR 5**
+
+Your work should be handed in as a single PDF. Each question should be clearly indicated
+
+For each question you must provide the R code you used to answer the question. The code should include comments to explain what you are doing. The code should be provided as text using a fixed-width font such as `Courier`. The rest of your answers should be in another font (e.g. Times New Roman, Cambria, Ariel).
+You can use the Microsoft Word template provided alongside these questions as guidance.
+
+
+* Plots and tables should have captions. 
+* Plots should be produced using `ggplot`.
+* Axis labels are important.
+* Reporting of any statistics should be appropriate to the type of analysis you have done.
+* Reporting of methods and results should be written in the style of a scientific paper.
+
+
+*If you don't understand what is required for any of these questions you are encouraged to ask for help.*
+
+**Hand in deadline is Friday 10th January 2020 at 12:00 CET**
+
+**You MUST submit your work via Blackboard (not email!)**
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse) 
+```
+
+## 1) Data wrangling life history data (10 points)
+
+The Anage database (`anage_data.csv`) is a large collection of data on the life history of animals. It includes information on life span, body size, generation time etc. for species from a wide range of taxonomic groups. In this question you will be using this data to produce a graph and some summary information. You may need to `filter`, `select`, `mutate` or otherwise manipulate the data before you use it. You may also like to rename some of the data columns for ease of use. 
+
+The length of gestation in humans is 9 months, but it varies across mammals. Gestation time (`Gestation.Incubation..days.`) is positively associated with birth weight (`Birth.weight..g.`), which makes sense since larger bodies take longer to build. It is interesting to consider if there are differences in this relationship between rodents (Order Rodentia) and their flying cousins - bats (Order Chiroptera). 
+
+
+
+a) Produce a graph showing the relationship between between the log transformed birth weight (x-axis) and log-transformed gestation length in days (y-axis) for bats and rodents.
+
+The starting point for all of the parts of this question is the data. So I first read that in using `read.csv`. 
+
+```{r}
+setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
+anage <- read.csv("CourseData/anage_data.csv")
+```
+
+
+Then I can write code to subset the data to the two Orders I want using `filter` and I can rename the columns to something more user-friendly with `rename`. This step is not strictly necessary.
+
+
+```{r}
+x <- anage %>% 
+  select(Class,Order,Family, Genus, Species,Birth.weight..g.,
+         Gestation.Incubation..days.,Litter.Clutch.size) %>% 
+  filter(Order %in% c("Chiroptera","Rodentia")) %>% 
+  rename(birthWeight = Birth.weight..g.,gestation = Gestation.Incubation..days.,
+         litterSize = Litter.Clutch.size)
+
+```
+
+After that I can use `ggplot` to make a nice Figure.
+
+```{r, fig.align="center", fig.width=6, fig.height=4, fig.cap="The association between (log transformed) birth weight and gestation duration for bats and mammals.",warning=FALSE,fig.pos = "ht"}
+ggplot(x,aes(x = log(birthWeight), y = log(gestation),colour=Order)) + 
+  geom_point() + 
+  xlab("log(birth weight, grams)") +
+  ylab("log(gestation duration, days)")
+
+```
+
+
+b) Produce a table showing the minimum, maximum, mean and median gestation times (in days) for rodents and bats.
+
+I do this by first grouping by taxonomic Order with `group_by`, then using `summarise` to calculate the summary statistics. There are other ways to do do this. The final table could be made using word, or left like this.
+
+```{r}
+x %>% 
+  group_by(Order) %>% 
+  summarise(minGestation = min(gestation,na.rm=TRUE),
+            maxGestation = max(gestation,na.rm=TRUE),
+            meanGestation = mean(gestation,na.rm=TRUE),
+            medianGestation = median(gestation,na.rm=TRUE)) 
+```
+
+You could nicely format this table like this, in Word.
+
+```{r echo =FALSE, results = 'asis'}
+x %>% 
+  group_by(Order) %>% 
+  summarise(minGestation = min(gestation,na.rm=TRUE),
+            maxGestation = max(gestation,na.rm=TRUE),
+            meanGestation = mean(gestation,na.rm=TRUE),
+            medianGestation = median(gestation,na.rm=TRUE)) ->data
+knitr::kable(data, caption = "Table of summary statistics for bats and rodents")
+```
+
+
+c) Which are the species (latin names) with the minimum and maximum gestation lengths in Rodentia and Chiroptera?
+
+I do this by first using `mutate` to create a new column of species names from `Genus` and `Species`, then I `select` the important columns and finally `filter` to those with the gestation values that I calculated in part B.
+
+```{r}
+x %>% 
+  mutate(species = paste(Genus,Species)) %>% 
+  select(Order,species,gestation) %>% 
+  filter(Order == "Chiroptera" & gestation == 275)
+
+x %>% 
+  mutate(species = paste(Genus,Species)) %>% 
+  select(Order,species,gestation) %>% 
+  filter(Order == "Chiroptera" & gestation == 35)
+
+x %>% 
+  mutate(species = paste(Genus,Species)) %>% 
+  select(Order,species,gestation) %>% 
+  filter(Order == "Rodentia" & gestation == 253)
+
+x %>% 
+  mutate(species = paste(Genus,Species)) %>% 
+  select(Order,species,gestation) %>% 
+  filter(Order == "Rodentia" & gestation == 15)
+```
+
+As before, you could format this information nicely in a table like this (or just write it in text):
+
+
+```{r echo =FALSE, results = 'asis'}
+data1 <- rbind(x %>% 
+  mutate(species = paste(Genus,Species)) %>% 
+  select(Order,species,gestation) %>% 
+  filter(Order == "Chiroptera" & gestation %in% c(35,275)),
+
+x %>% 
+  mutate(species = paste(Genus,Species)) %>% 
+  select(Order,species,gestation) %>% 
+  filter(Order == "Rodentia" & gestation %in% c(15,253))) %>% 
+  
+  mutate(Stat = c("Max","Min","Max","Min"))
+
+data1 %>% 
+  mutate(species = paste0(species,"  (", gestation, " days)")) %>% 
+  select(Order, Stat,species) -> data1
+knitr::kable(data1, caption = "Species with the maximum and minimum gestation lengths in Chiroptera and Rodentia")
+
+
+```
+
+
+
+d) Explain why an ordinary least squares regression would not be the best approach to analyse this relationship.
+
+For this question, I was looking for an understanding of one of the most important assumptions of OLS regression (which includes multiple regression, ANOVA, ANCOVA etc). This is that the data points are assumed be independent of eachother. In this case the data points are not indpendent of eachother because they are related via the phylogeny. Closely related species would be expected to cluster together and it would be "unfair" to give each point the same weight. This is a form of "pseudoreplication". There are other methods, such as "phylogenetic regression" which can account for these issues. These methods are beyond the scope of the course, but it is useful to have a good idea of where your knowledge ends and when to seek help. 
+
+This is an analagous issue to other kinds of pseudoreplication, like spatial or temporal pseudoreplication: if you are collecting data from a field, sampling from points that are too close together will be problematic. See here for a good explanation of this important topic: https://www.statisticsdonewrong.com/pseudoreplication.html
+
+
+
+## 2) Industrial melanism (10 points)
+
+Industrial melanism is a famous example of an evolutionary effect where dark pigmentation (melanism) evolves via natural selection where the environment is polluted with soot deposits. Darker individuals have a higher fitness in areas where their camouflage matches the polluted background surfaces better.
+
+Some biologists have claimed that the knot grass moth (*Acronicta rumicis*) shows industrial melanism. You have collected data on the percentage of moths collected in light traps that are of the dark morph (`melanism.csv`). Your expectation is that you will find a higher percentage of dark morphs in the city where there is more pollution.
+
+a) plot the data (e.g. with a box plot)
+```{r echo = FALSE, eval = TRUE}
+melanism <- data.frame(habitat = rep(c("city","countryside"),each = 8),
+                       percentDark = c(76,67,34,86,56,46,73,12,45,76,25,04,34,76,31,19))
+
+write.csv(melanism,file = "/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/CourseData/melanism.csv",row.names = FALSE)
+```
+
+First I import the data, as usual:
+
+```{r}
+setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
+
+melanism <- read.csv("CourseData/melanism.csv")
+
+```
+
+Then I can make a box plot like this (I could also add the jittered data points if I wanted to be flashy):
+
+```{r, fig.align="center", fig.width=6, fig.height=4, fig.cap="Box plot showing the difference in the proportion of dark morph moths in city and countryside habitats. Points show the raw data, jittered.",fig.pos = "ht"}
+ggplot(melanism,aes(x = habitat,y = percentDark))+
+  geom_boxplot()+
+  geom_jitter()
+```
+
+
+
+b) carry out a randomisation test to determine if there is a significant difference in the frequency of the dark morph between city and countryside. Write (i) a brief method description and (ii) a summary of the results. 
+
+
+For the randomisation test I need to calculate the observed difference, then replicate a permutation where I shuffle the data many times (e.g. 1000 or 5000). I can then ask what proportion many of these differences were greater than the observed difference, which will give me the p-value. You could plot the frequency distribution of the differences, and with a line for the observed value, but this is not strictly necessary in my opinion (it can be useful for you to double check that things are working though).
+
+```{r echo = TRUE, eval = TRUE}
+obsDiff <- diff(melanism %>% 
+                  group_by(habitat) %>% 
+                  summarise(meanPerc = mean(percentDark)) %>% 
+                  pull(meanPerc))
+
+diffs <- replicate(5000,diff(melanism %>% 
+                               mutate(habitat = sample(habitat)) %>% 
+                               group_by(habitat) %>% 
+                               summarise(meanPerc = mean(percentDark)) %>% 
+                               pull(meanPerc)))
+
+sum(abs(diffs) >= abs(obsDiff))/5000
+```
+
+I could write a description of the method something like this:
+
+"To test whether the difference between two habitats in the frequency of the dark morph is statistically significant I did a 5000 replicate randomisation test with the null hypothesis being that there is no difference between the habitat means and the alternative hypothesis that the mean for the two habitats is different. I compared the observed difference to this null distribution to calculate a p-value in a two-sided test."
+
+Then I could write up the results something like this:
+```{r echo = FALSE}
+obsvals <- melanism %>% 
+  group_by(habitat) %>% 
+  summarise(meanPerc = mean(percentDark)) %>% 
+  pull(meanPerc)
+```
+
+"The observed mean values of the city and countryside were `r obsvals[1]` and `r obsvals[2]` respectively and the difference between them is therefore `r obsDiff`. I found that `r sum(abs(diffs) > abs(obsDiff))` of the absolute values of the 5000 null distribution replicates greater than or equal to my observed difference value. I conclude that the observed difference between the means of the two treatment groups is not statistically significant (p = `r sum(abs(diffs) >= abs(obsDiff))/5000`). Therefore I accept the null hypothesis that there is no difference between the proportion of dark morph individuals in city and countryside habitats."
+
+Note that you may get slightly different results for this because it is a random process. If you get very different p-values between runs of your test you should increase the number of replicates (e.g. from 1000 to 5000). A larger number of replicates should cause the p-value to vary less between runs.
+
+## 3) Power in a planned experiment (10 points)
+
+You are planning an experiment testing how the behaviour of small fish is affected by exposure to danger from predators. There are two treatments: (i) "exposed to predator cues" (from video footage of large predatory fish) and (ii) a "control" treatment, which is a safe predator-free environment. You would like to be able to detect a 20% reduction in swimming distance.
+
+You record behaviour as the distance in meters travelled by fish as they swim around their tank within a 5 minute observation window. You hypothesise that when exposed to predator cues the fish will cover less distance and will tend to hide among the rocks and plants in the tank more. You have 5 fish tanks available for your study.
+
+You have some preliminary data from a pilot study (`fishFear.csv`) which shows the distances moved by several individuals in a single pilot study.
+
+
+```{r,echo = FALSE, eval = TRUE,message = FALSE}
+set.seed(123)
+x<-data.frame(id = 1:10,distance = round(rnorm(10,2,0.5),2))
+write.csv(x,file = "/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/CourseData/fishFear.csv",row.names = FALSE)
+```
+
+a) Summarise the pilot study data to obtain mean and standard deviation.
+
+
+First I import the pilot study data:
+
+```{r}
+setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
+fish <- read.csv("CourseData/fishFear.csv")
+```
+
+Then I calculate the mean and standard deviation:
+
+```{r}
+mean(fish$distance)
+sd(fish$distance)
+```
+
+b) Conduct a power analysis based on the pilot study data to estimate the number of samples required to carry out your experiment with 80% power. Describe the results of this power analysis.
+
+I can do a power analysis like this, where I replicate a t-test 1000 times for randomly generated samples based on the mean and standard deviation of the pilot study data. I assume that the standard deviation of the two groups is the same, but I calculate the mean for the treatment group by multiplying by 0.8 (i.e. a 20% decrease). I can then increase the sample size until I get a power of 80% (i.e. when the proportion of cases when the p-value is <0.05 exceeds 0.8). 
+
+You should end up with a required sample size of about 23.
+
+```{r}
+sampleSize <- 23 #Set sample size here
+meanDist <- mean(fish$distance)
+sdDist <- sd(fish$distance)
+
+#Repeat simulated test 1000 times
+pValues <- replicate(1000,t.test(rnorm(sampleSize, mean = meanDist,sd = sdDist),
+                       rnorm(sampleSize, mean = meanDist*0.8,sd = sdDist))$p.value)
+
+#What proportion of the p-values are <0.05
+sum(pValues<0.05)/1000
+```
+
+Another clever way of doing this and producing a graph:
+
+```{r echo = TRUE, eval = TRUE}
+meanDist <- mean(fish$distance)
+sdDist <- sd(fish$distance)
+
+powerResults <- data.frame(sampleSize = 5:30)
+
+powerResults$power <- NULL
+for(i in 1:nrow(powerResults)){
+pvals <- replicate(1000,t.test(rnorm(powerResults$sampleSize[i], 
+                                     mean = meanDist,sd = sdDist),
+       rnorm(powerResults$sampleSize[i], 
+             mean = meanDist*0.8,sd = sdDist))$p.value)
+
+powerResults$power[i]<-sum(pvals<0.05)/1000
+}
+
+ggplot(powerResults,aes(x = sampleSize,y=power))+
+  geom_point()+
+  geom_line()
+```
+
+c) Describe how you might carry out your study, given your findings and the facilities available to you.
+
+For this question I was hoping that you would come up with a workable plan, with a consideration of pseudoreplication.
+There are MANY ways you could have done this, I mainly wanted to see you think through a workable plan that weighed up the different factors: would putting several fish in the same tank mean that the measurements are not independent (the fish might influence eachother)? On the other hand, maybe you SHOULD put fish in groups (some fish would be freaked out by being alone). How would you capture data on several fish simulataneously? Did you realise that the sample size should be PER GROUP, not total number? Did you realise that the number you came up with is the MINIMUM, and that you could use more? This was a hard question because it was so open-ended, but it closely mimics the kind of problem you will be confronted with in real life.
+
+
+
+## 4) The Titanic (20 points)
+
+The `titanic.csv` data set includes a range of data on a subset of the passengers on the Titanic that sank in 1920 after hitting an iceberg. There were approximately 2200 passengers and crew on board and >1400 of these people died. 
+
+Your task is to analyse the data to find out how passenger class (`Pclass`) and gender (`Sex`) influenced survival probability. Survival is indicated with the numeric values 0 (died) and 1 (survived). Passenger class has values of 1, 2 or 3 and Sex is recorded as `male` or `female`.
+
+a) Produce an appropriate graph of the raw data that illustrates survival differences among passenger classes and genders.
+
+```{r, fig.align="center", fig.width=6, fig.height=4, fig.cap="The fate (survival/death) of Titanic passengers. Each point represents a person and the data are divided among categories of passenger class (1, 2 or 3) and gender.",fig.pos = "ht"}
+setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
+
+titanic <- read.csv("CourseData/titanic.csv") 
+
+titanic <- titanic %>% 
+  mutate(Pclass = as.factor(Pclass)) %>% 
+  mutate(Survived = as.factor(Survived))
+
+(A<-ggplot(titanic,aes(x = Pclass,y = Survived,colour=Sex))+geom_jitter(alpha = 0.75))
+```
+
+You could also have produced a bar plot, with counts of survivors/deaths.
+
+
+b) Fit a suitable statistical model to estimate survival probability among passenger class and genders. Describe the method and then summarise the results produced by the model.
+
+```{r}
+modA <- glm(Survived ~ Sex+ Pclass +Sex:Pclass,data = titanic,family = binomial)
+library(ggfortify)
+autoplot(modA)
+
+anova(modA,test="Chi")
+summary(modA)
+```
+
+"I modelled the survival of the titanic passengers with a generalised linear model with binomial error structure. The explanatory variables were sex, passenger class and the interaction between them. I included the interaction because I was interested in whether the effect of sex depended on the passenger class."
+
+"The results show that all three terms in the model were highly significant (Table 3). The Survival of males was generally much lower than that of females. In addition there was a slightly complicatef effect of passenger class: For males, the survival of 2nd and 3rd class passengers was markedly lower than that of 1st class passengers. For females, the survival of 1st and 2nd class passengers was very similar, but the survival of 3rd class passengers was much lower.|
+
+*Note that it might actually be easier to write this section after completing part (c). Then you could insert the actual values for these survival estimates. You could also use a table, like Table 4 below, which you can obtain from the input you will use to make the plot for (c)*
+
+```{r, echo = FALSE,  results = 'asis'}
+temp <- anova(modA,test="Chi")
+
+knitr::kable(broom::tidy(temp), caption = "Summary of the GLM results for the effect of sex and passenger class (Pclass), and their interaction, on survival on the Titanic")
+
+```
+
+
+c) Make a plot showing the model's estimates and their 95% confidence intervals.
+
+
+
+```{r echo = TRUE, eval = TRUE}
+
+newDat <- expand.grid(Pclass = c("1","2","3"),Sex = c("male","female"))
+
+pv <- predict(modA,newdata = newDat,se.fit = TRUE)
+library(tidyverse)
+
+newDat <- newDat %>% 
+  mutate(survival_LP = pv$fit,
+         lowerCI_LP = pv$fit - 1.96*pv$se.fit,
+         upperCI_LP = pv$fit + 1.96*pv$se.fit)
+
+inverseFunction <- family(modA)$linkinv
+
+newDat <- newDat %>% 
+  mutate(survival = inverseFunction(survival_LP)) %>% 
+  mutate(lowerCI = inverseFunction(lowerCI_LP)) %>% 
+  mutate(upperCI = inverseFunction(upperCI_LP)) 
+
+
+(B <- ggplot(newDat,aes(x = Pclass,y = survival,colour=Sex))+
+  geom_point() +
+  geom_segment(aes(xend = Pclass,y = lowerCI,yend = upperCI)))
+
+#ggpubr::ggarrange(A,B,ncol=2)  
+
+```
+
+Here's a suitable table with the same information.
+
+```{r, echo = FALSE,  results = 'asis'}
+newDat %>% 
+  select(Pclass, Sex, survival, lowerCI, upperCI) %>% 
+  mutate(survival = format(survival,nsmall = 3,digits = 3),lowerCI = format(lowerCI,nsmall = 3,digits = 3),upperCI = format(upperCI,nsmall = 3,digits = 3)) %>% 
+  mutate(survival = paste0(survival, " (",lowerCI, " - ",upperCI,")")) %>% 
+  select(Pclass,Sex,survival) -> temp2
+knitr::kable(temp2, caption = "Estimated survival and 95% confidence intervals passengers on the Titanic")
+
+```
+
+
+## 5) Elephant poaching (20 points) 
+
+Illegal poaching activity is a major problem for African elephant conservation. You are provided with some data from some nature reserves across southern Africa (`elephantPoaching.csv`). 
+
+The data includes the number of elephants killed in 2016 (`nkilled`) and the number of scouts (the guards that protect the elephants) (`scoutPerKm`). A philanthropist billionnaire has been working in the area to provide additional tools to some reserves such as drones, high-tech communications and additional vehicles. This funding is recorded in the dataset column `funding` as `funded` (the ordinary parks with no extra funding are recorded as `normal`). 
+
+Use an appropriate statistical model to explore the relationship between elephants killed and the amount of cover provided by guards. Does this relationship differ depending on how well equipped the guards are?
+
+```{r echo = FALSE, eval = TRUE}
+#Generate dataset
+set.seed(125)
+samplesize = 12
+x<-data.frame(scoutPerKm = sort(c(runif(samplesize,0,15)))) %>% 
+  mutate(lognkilled = (scoutPerKm*(-.2))+3.5) %>% 
+  mutate(lognkilled = lognkilled+rnorm(samplesize,0,1)) %>% 
+  mutate(nkilled = round(exp(lognkilled))) %>% 
+  mutate(funding = "normal")
+
+set.seed(1224)
+samplesize = 8
+x2<-data.frame(scoutPerKm = sort(c(runif(samplesize,0,15)))) %>% 
+  mutate(lognkilled = (scoutPerKm*(-.25))+2.5) %>% 
+  mutate(lognkilled = lognkilled+rnorm(samplesize,0,1)) %>% 
+  mutate(nkilled = round(exp(lognkilled))) %>% 
+  mutate(funding = "funded")
+
+x3 <- rbind(x,x2) %>% 
+  mutate(scoutPerKm = scoutPerKm/500)
+
+x3 <- select(x3,scoutPerKm,funding,nkilled)
+#setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
+write.csv(x3,file = "/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/CourseData/elephantPoaching.csv",row.names = FALSE)
+```
+
+a) Plot the data to show the relationship between the the number of scouts per unit area of park and the number of elephants killed. Colour code the points by whether the park management received extra funding or not.
+
+Here's how to do the plot.
+
+```{r}
+setwd("/Users/jones/Dropbox/_SDU_Teaching/BB839 New Stats Course/")
+
+eleph <- read.csv("CourseData/elephantPoaching.csv")
+ggplot(eleph,aes(x=scoutPerKm,y = nkilled,colour=funding)) + 
+  geom_point()
+
+```
+
+b) Fit a suitable statistical model to estimate the statistical relationship between guards per km, funding, and elephant deaths. Describe the method and then summarise the results produced by the model.
+
+The appropriate model is a Poisson GLM. This is because the data are *counts* and failure to use an appropriate GLM would lead to predictions of negative numbers of elephants killed (not realistic!).
+
+```{r}
+modA <- glm(nkilled ~ scoutPerKm + funding + scoutPerKm:funding,
+            data = eleph,family = poisson)
+anova(modA,test="Chi")
+library(ggfortify)
+autoplot(modA)
+
+
+summary(modA)
+```
+
+"To examine the effect of number of scouts and funding on elephant deaths in parks I fitted a GLM with Poisson error structure. The explanatory variables were funding status (funded and normal), and the number of scouts per square kilometer. I also included the interaction between the two to check whether the effectiveness of scouts (i.e. the reduction in deaths per additional scout) depended on their funding.".
+
+
+"The results show that both the number of scouts and funding had a significant effect on elephants killed. The addition of funding reduced the number of elephants killed significantly, as did the number of scouts. However, the fact that the interaction term was not significant indicates that the effect of increasing the amount of scouts did not depend on the amount of funding available (Table 4)"
+
+```{r, echo = FALSE,  results = 'asis',warning=FALSE,message=FALSE}
+
+temp <- broom::tidy(anova(modA,test="Chi")) %>% 
+  mutate(Deviance = format(Deviance,nsmall = 3, digits = 3),
+         Resid..Dev = format(Resid..Dev,nsmall = 3, digits = 3)	,
+         p.value = format(p.value,nsmall = 3, digits = 3))
+
+
+knitr::kable(temp, caption = "Summary of the GLM results for the effect of scout density and funding (and their interaction) on the number of elephant deaths. ")
+```
+
+c) Produce a plot that shows (in addition to the raw data points) the fitted values produced by your model and the uncertainty in those estimates.
+
+You can make this plot like this:
+
+```{r echo = TRUE, eval = TRUE,fig.align="center", fig.width=6, fig.height=4, fig.cap="The association between funding, scout density and the number of elephants killed in 2016. Each point indicates the number of elephants killed in a particular park. The lines show the results of the fitted GLM.",fig.pos = "ht"}
+#Create a data frame to predict from.
+newData <- expand.grid(scoutPerKm = seq(0,0.03,0.001),funding = c("funded","normal"))
+
+#Predict from the model using newData.
+pv <- predict(modA,newData,se.fit =TRUE)
+
+#Add predicted values (on scale of linear predictor).
+newData <- newData %>% 
+  mutate(nKilled_LP = pv$fit) %>% 
+  mutate(lower_LP = pv$fit - 1.96*pv$se.fit) %>% 
+  mutate(upper_LP = pv$fit + 1.96*pv$se.fit)
+
+#get inverse function.
+inverseLink <- family(modA)$linkinv
+
+#Apply inverse function to the predicted values.
+
+newData <- newData %>% 
+  mutate(nkilled = inverseLink(nKilled_LP)) %>% 
+  mutate(lowerCI = inverseLink(lower_LP)) %>% 
+  mutate(upperCI = inverseLink(upper_LP))
+
+#plot with ribbons, lines and points.
+ggplot(x3,aes(x=scoutPerKm,y = nkilled,colour=funding)) + 
+  geom_ribbon(data = newData,aes(x = scoutPerKm,ymin = lowerCI,
+                                 ymax = upperCI,fill = funding),
+              inherit.aes=FALSE,alpha = 0.4) + 
+  geom_line(data = newData,aes(x = scoutPerKm,y = nkilled,colour = funding))+
+  geom_point() + 
+  xlab("Scouts per km^2") + 
+  ylab("Number of elephants killed in 2016")+
+  NULL
+```
+
+
+
+
