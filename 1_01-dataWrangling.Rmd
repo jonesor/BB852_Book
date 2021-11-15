@@ -85,7 +85,7 @@ Eggs are usually laid one per day, and the clutch size is the maximum number of 
 
 The next part is the crucial part of our investigation. We need to get the maximum number of eggs seen at each nest. Of course we could repeatedly use `filter`, followed by `max`, for each nest-year combination but this would be incredibly tedious.
 
-Instead, we will use the `dplyr` function, `summarise`, to do this by asking for the maximum value of `nEggs`. To make this work we need to first use the `group_by` function tell R to group the data by the variables we are interested in. If we don't do this we just get the overall maximum. We can ungroup the data using the `ungroup` function.
+Instead, we will use the `dplyr` function, `summarise`, to do this by asking for the maximum value of `nEggs` using `max`. To make this work we need to first use the `group_by` function tell R to group the data by the variables we are interested in. If we don't do this we just get the overall maximum. We can ungroup the data using the `ungroup` function. 
 
 Because there are missing data (`NA` values) we need to specify `na.rm = TRUE` in the argument.
 
@@ -169,6 +169,8 @@ points(df2$Year[df2$species == "GT"],
 ```
 
 So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have large clutch sizes than great tits.
+
+This approach of using `group_by` followed by `summarise` can be used to summarise data in many different ways: maximum or minimum value (`max` or `min`), variance or standard deviation (`var` or `sd`), quantiles such as the 10% or 50% quantile etc. (see the section on **Distributions** below) (`quantile`), cumulative sums (`cumsum`) or counts (`n` or `length`) and so on.
 
 ## Using pipes, saving data.
 
