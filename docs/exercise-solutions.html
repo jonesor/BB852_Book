@@ -24,16 +24,16 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-05" />
+<meta name="date" content="2021-11-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="an-example-of-a-past-exam-2020.html"/>
-
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<link rel="prev" href="exam-2021.html"/>
+<link rel="next" href="an-example-of-a-past-exam-2020.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -60,7 +60,6 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -353,7 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Exam</b></span></li>
-<li class="chapter" data-level="23" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>23</b> An example of a past Exam (2020)</a></li>
+<li class="chapter" data-level="23" data-path="exam-2021.html"><a href="exam-2021.html"><i class="fa fa-check"></i><b>23</b> Exam 2021</a></li>
 <li class="part"><span><b>V Solutions</b></span></li>
 <li class="chapter" data-level="24" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>24</b> Exercise Solutions</a>
 <ul>
@@ -372,6 +371,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>24.13</b> Snails on the move</a></li>
 <li class="chapter" data-level="24.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>24.14</b> Mouse lemur strength</a></li>
 </ul></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Exam (2020)</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -401,39 +401,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>First import the data. Check that the columns look as they should. (e.g. use <code>summary</code> or <code>str</code> functions). Tip: use the “Wizard” in RStudio to guide you.</li>
 </ol>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="exercise-solutions.html#cb555-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="exercise-solutions.html#cb520-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)*</li>
 </ol>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="exercise-solutions.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="exercise-solutions.html#cb521-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>## [1] 9.647059</code></pre>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="exercise-solutions.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="exercise-solutions.html#cb523-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="exercise-solutions.html#cb560-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="exercise-solutions.html#cb525-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>## [1] 15</code></pre>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="exercise-solutions.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="exercise-solutions.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>## [1]  3 15</code></pre>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="exercise-solutions.html#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="exercise-solutions.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   3.000   6.000  11.000   9.647  13.000  15.000</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)</li>
 </ol>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="exercise-solutions.html#cb566-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1975</span> <span class="sc">-</span> <span class="fu">min</span>(df<span class="sc">$</span>Year)</span></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="exercise-solutions.html#cb531-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1975</span> <span class="sc">-</span> <span class="fu">min</span>(df<span class="sc">$</span>Year)</span></code></pre></div>
 <pre><code>## [1] 29</code></pre>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="exercise-solutions.html#cb568-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1975</span> <span class="sc">-</span> <span class="fu">max</span>(df<span class="sc">$</span>Year)</span></code></pre></div>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="exercise-solutions.html#cb533-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1975</span> <span class="sc">-</span> <span class="fu">max</span>(df<span class="sc">$</span>Year)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Plot the relationship between <code>Year</code> and <code>nSpecies</code> as a scatterplot using base-R graphics (using the <code>plot</code> function).</li>
 </ol>
-<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="exercise-solutions.html#cb570-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>Year, df<span class="sc">$</span>nSpecies)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-393-1.png" width="672" /></p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="exercise-solutions.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>Year, df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-384-1.png" width="672" /></p>
 <ol start="5" style="list-style-type: decimal">
 <li>The pattern might be easier to see if you could replace <code>YearBuilt</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>df$Age &lt;- 1975 - Year)</code>). Replot your results.</li>
 </ol>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="exercise-solutions.html#cb571-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="dv">1975</span> <span class="sc">-</span> df<span class="sc">$</span>Year</span>
-<span id="cb571-2"><a href="exercise-solutions.html#cb571-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>Age, df<span class="sc">$</span>nSpecies)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-394-1.png" width="672" /></p>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="exercise-solutions.html#cb536-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="dv">1975</span> <span class="sc">-</span> df<span class="sc">$</span>Year</span>
+<span id="cb536-2"><a href="exercise-solutions.html#cb536-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>Age, df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-385-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?</li>
 </ol>
@@ -449,12 +449,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>When you have imported the data, use <code>dim</code> to check the dimensions of the whole data frame (you should see that there are 36 columns and 21322 rows). Use <code>names</code> to look at the names of all columns in the data in <code>amniote</code>.</li>
 </ol>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="exercise-solutions.html#cb572-1" aria-hidden="true" tabindex="-1"></a>amniote <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/Amniote_Database_Aug_2015.csv&quot;</span>,</span>
-<span id="cb572-2"><a href="exercise-solutions.html#cb572-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.strings =</span> <span class="st">&quot;-999&quot;</span></span>
-<span id="cb572-3"><a href="exercise-solutions.html#cb572-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="exercise-solutions.html#cb573-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(amniote)</span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="exercise-solutions.html#cb537-1" aria-hidden="true" tabindex="-1"></a>amniote <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/Amniote_Database_Aug_2015.csv&quot;</span>,</span>
+<span id="cb537-2"><a href="exercise-solutions.html#cb537-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.strings =</span> <span class="st">&quot;-999&quot;</span></span>
+<span id="cb537-3"><a href="exercise-solutions.html#cb537-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="exercise-solutions.html#cb538-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(amniote)</span></code></pre></div>
 <pre><code>## [1] 21322    36</code></pre>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="exercise-solutions.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(amniote)</span></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="exercise-solutions.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(amniote)</span></code></pre></div>
 <pre><code>##  [1] &quot;class&quot;                                
 ##  [2] &quot;order&quot;                                
 ##  [3] &quot;family&quot;                               
@@ -495,20 +495,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use <code>select</code> to pick relevent columns of the dataset and discard the others. Call the new data frame <code>x</code>.
 The relevant columns are the taxonomic variables (<code>class</code>, <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</li>
 </ol>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="exercise-solutions.html#cb577-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> amniote <span class="sc">%&gt;%</span></span>
-<span id="cb577-2"><a href="exercise-solutions.html#cb577-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb577-3"><a href="exercise-solutions.html#cb577-3" aria-hidden="true" tabindex="-1"></a>    class, genus, species,</span>
-<span id="cb577-4"><a href="exercise-solutions.html#cb577-4" aria-hidden="true" tabindex="-1"></a>    longevity_y, adult_body_mass_g,</span>
-<span id="cb577-5"><a href="exercise-solutions.html#cb577-5" aria-hidden="true" tabindex="-1"></a>    litter_or_clutch_size_n, litters_or_clutches_per_y</span>
-<span id="cb577-6"><a href="exercise-solutions.html#cb577-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="exercise-solutions.html#cb542-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> amniote <span class="sc">%&gt;%</span></span>
+<span id="cb542-2"><a href="exercise-solutions.html#cb542-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb542-3"><a href="exercise-solutions.html#cb542-3" aria-hidden="true" tabindex="-1"></a>    class, genus, species,</span>
+<span id="cb542-4"><a href="exercise-solutions.html#cb542-4" aria-hidden="true" tabindex="-1"></a>    longevity_y, adult_body_mass_g,</span>
+<span id="cb542-5"><a href="exercise-solutions.html#cb542-5" aria-hidden="true" tabindex="-1"></a>    litter_or_clutch_size_n, litters_or_clutches_per_y</span>
+<span id="cb542-6"><a href="exercise-solutions.html#cb542-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Take a look at the first few entries in the <code>species</code> column. You will see that it is only the <em>epithet</em>, the second part of the <em>Genus_species</em> name, that is given.<br />
 Use <code>mutate</code> and <code>paste</code> to convert the <code>species</code> column to a <em>Genus_species</em> by pasting the data in <code>genus</code> and <code>species</code> together. To see how this works, try out the following command, <code>paste(1:3, 4:6)</code>. After you have created the new column, remove the <code>genus</code> column (using <code>select</code> and <code>-genus</code>).</li>
 </ol>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="exercise-solutions.html#cb578-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
-<span id="cb578-2"><a href="exercise-solutions.html#cb578-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(genus, species)) <span class="sc">%&gt;%</span></span>
-<span id="cb578-3"><a href="exercise-solutions.html#cb578-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus)</span>
-<span id="cb578-4"><a href="exercise-solutions.html#cb578-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="exercise-solutions.html#cb543-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb543-2"><a href="exercise-solutions.html#cb543-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(genus, species)) <span class="sc">%&gt;%</span></span>
+<span id="cb543-3"><a href="exercise-solutions.html#cb543-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus)</span>
+<span id="cb543-4"><a href="exercise-solutions.html#cb543-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <pre><code>##   class               species longevity_y adult_body_mass_g
 ## 1  Aves Accipiter albogularis          NA           251.500
 ## 2  Aves      Accipiter badius          NA           140.000
@@ -526,8 +526,8 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="4" style="list-style-type: decimal">
 <li>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</li>
 </ol>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="exercise-solutions.html#cb580-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>longevity_y)</span>
-<span id="cb580-2"><a href="exercise-solutions.html#cb580-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="exercise-solutions.html#cb545-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>longevity_y)</span>
+<span id="cb545-2"><a href="exercise-solutions.html#cb545-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <pre><code>##      class                 species longevity_y adult_body_mass_g
 ## 1 Reptilia Chelonoidis duncanensis       177.0                NA
 ## 2 Reptilia  Aldabrachelys gigantea       152.0            117200
@@ -545,8 +545,8 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="5" style="list-style-type: decimal">
 <li>Do the same thing but this time find the shortest lived species.</li>
 </ol>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="exercise-solutions.html#cb582-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(longevity_y)</span>
-<span id="cb582-2"><a href="exercise-solutions.html#cb582-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="exercise-solutions.html#cb547-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(longevity_y)</span>
+<span id="cb547-2"><a href="exercise-solutions.html#cb547-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <pre><code>##      class              species longevity_y adult_body_mass_g
 ## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875
 ## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000
@@ -564,13 +564,13 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>na.rm = TRUE</code> argument.</li>
 </ol>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="exercise-solutions.html#cb584-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span></span>
-<span id="cb584-2"><a href="exercise-solutions.html#cb584-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
-<span id="cb584-3"><a href="exercise-solutions.html#cb584-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb584-4"><a href="exercise-solutions.html#cb584-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="fu">min</span>(longevity_y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb584-5"><a href="exercise-solutions.html#cb584-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(longevity_y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb584-6"><a href="exercise-solutions.html#cb584-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(longevity_y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb584-7"><a href="exercise-solutions.html#cb584-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="exercise-solutions.html#cb549-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span></span>
+<span id="cb549-2"><a href="exercise-solutions.html#cb549-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
+<span id="cb549-3"><a href="exercise-solutions.html#cb549-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb549-4"><a href="exercise-solutions.html#cb549-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">min =</span> <span class="fu">min</span>(longevity_y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb549-5"><a href="exercise-solutions.html#cb549-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(longevity_y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb549-6"><a href="exercise-solutions.html#cb549-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(longevity_y, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb549-7"><a href="exercise-solutions.html#cb549-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 3 x 4
 ##   class       min median   max
 ##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
@@ -580,50 +580,50 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="7" style="list-style-type: decimal">
 <li>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</li>
 </ol>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="exercise-solutions.html#cb586-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>adult_body_mass_g, x<span class="sc">$</span>longevity_y)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-403-1.png" width="672" /></p>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="exercise-solutions.html#cb551-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>adult_body_mass_g, x<span class="sc">$</span>longevity_y)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-394-1.png" width="672" /></p>
 <ol start="8" style="list-style-type: decimal">
 <li>Use <code>mutate</code> to create a new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that makes the relationship more linear, and easier to “read.”</li>
 </ol>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="exercise-solutions.html#cb587-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
-<span id="cb587-2"><a href="exercise-solutions.html#cb587-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb587-3"><a href="exercise-solutions.html#cb587-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">logMass =</span> <span class="fu">log</span>(adult_body_mass_g),</span>
-<span id="cb587-4"><a href="exercise-solutions.html#cb587-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">logLongevity =</span> <span class="fu">log</span>(longevity_y)</span>
-<span id="cb587-5"><a href="exercise-solutions.html#cb587-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb587-6"><a href="exercise-solutions.html#cb587-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb587-7"><a href="exercise-solutions.html#cb587-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>logMass, x<span class="sc">$</span>logLongevity)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-404-1.png" width="672" /></p>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="exercise-solutions.html#cb552-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb552-2"><a href="exercise-solutions.html#cb552-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb552-3"><a href="exercise-solutions.html#cb552-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">logMass =</span> <span class="fu">log</span>(adult_body_mass_g),</span>
+<span id="cb552-4"><a href="exercise-solutions.html#cb552-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">logLongevity =</span> <span class="fu">log</span>(longevity_y)</span>
+<span id="cb552-5"><a href="exercise-solutions.html#cb552-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb552-6"><a href="exercise-solutions.html#cb552-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb552-7"><a href="exercise-solutions.html#cb552-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>logMass, x<span class="sc">$</span>logLongevity)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-395-1.png" width="672" /></p>
 <ol start="9" style="list-style-type: decimal">
 <li>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</li>
 </ol>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="exercise-solutions.html#cb588-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
-<span id="cb588-2"><a href="exercise-solutions.html#cb588-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logOffspring =</span> <span class="fu">log</span>(</span>
-<span id="cb588-3"><a href="exercise-solutions.html#cb588-3" aria-hidden="true" tabindex="-1"></a>    litter_or_clutch_size_n <span class="sc">*</span> litters_or_clutches_per_y</span>
-<span id="cb588-4"><a href="exercise-solutions.html#cb588-4" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb588-5"><a href="exercise-solutions.html#cb588-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb588-6"><a href="exercise-solutions.html#cb588-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>logOffspring, x<span class="sc">$</span>logLongevity)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-405-1.png" width="672" /></p>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="exercise-solutions.html#cb553-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb553-2"><a href="exercise-solutions.html#cb553-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logOffspring =</span> <span class="fu">log</span>(</span>
+<span id="cb553-3"><a href="exercise-solutions.html#cb553-3" aria-hidden="true" tabindex="-1"></a>    litter_or_clutch_size_n <span class="sc">*</span> litters_or_clutches_per_y</span>
+<span id="cb553-4"><a href="exercise-solutions.html#cb553-4" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb553-5"><a href="exercise-solutions.html#cb553-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb553-6"><a href="exercise-solutions.html#cb553-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>logOffspring, x<span class="sc">$</span>logLongevity)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-396-1.png" width="672" /></p>
 <ol start="10" style="list-style-type: decimal">
 <li>To answer the final question (differences between taxonomic classes) you could now use <code>filter</code> to subset to particular classes and repeat the plot to see whether the relationships holds universally.</li>
 </ol>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="exercise-solutions.html#cb589-1" aria-hidden="true" tabindex="-1"></a>aves <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
-<span id="cb589-2"><a href="exercise-solutions.html#cb589-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Aves&quot;</span>)</span>
-<span id="cb589-3"><a href="exercise-solutions.html#cb589-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb589-4"><a href="exercise-solutions.html#cb589-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aves<span class="sc">$</span>logOffspring, aves<span class="sc">$</span>logLongevity)</span>
-<span id="cb589-5"><a href="exercise-solutions.html#cb589-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Aves&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-406-1.png" width="672" /></p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="exercise-solutions.html#cb590-1" aria-hidden="true" tabindex="-1"></a>mammalia <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
-<span id="cb590-2"><a href="exercise-solutions.html#cb590-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Mammalia&quot;</span>)</span>
-<span id="cb590-3"><a href="exercise-solutions.html#cb590-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb590-4"><a href="exercise-solutions.html#cb590-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mammalia<span class="sc">$</span>logOffspring, mammalia<span class="sc">$</span>logLongevity)</span>
-<span id="cb590-5"><a href="exercise-solutions.html#cb590-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Mammalia&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-407-1.png" width="672" /></p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="exercise-solutions.html#cb591-1" aria-hidden="true" tabindex="-1"></a>reptilia <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
-<span id="cb591-2"><a href="exercise-solutions.html#cb591-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Reptilia&quot;</span>)</span>
-<span id="cb591-3"><a href="exercise-solutions.html#cb591-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb591-4"><a href="exercise-solutions.html#cb591-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reptilia<span class="sc">$</span>logOffspring, reptilia<span class="sc">$</span>logLongevity)</span>
-<span id="cb591-5"><a href="exercise-solutions.html#cb591-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Reptilia&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-408-1.png" width="672" /></p>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="exercise-solutions.html#cb554-1" aria-hidden="true" tabindex="-1"></a>aves <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb554-2"><a href="exercise-solutions.html#cb554-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Aves&quot;</span>)</span>
+<span id="cb554-3"><a href="exercise-solutions.html#cb554-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb554-4"><a href="exercise-solutions.html#cb554-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aves<span class="sc">$</span>logOffspring, aves<span class="sc">$</span>logLongevity)</span>
+<span id="cb554-5"><a href="exercise-solutions.html#cb554-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Aves&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-397-1.png" width="672" /></p>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="exercise-solutions.html#cb555-1" aria-hidden="true" tabindex="-1"></a>mammalia <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb555-2"><a href="exercise-solutions.html#cb555-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Mammalia&quot;</span>)</span>
+<span id="cb555-3"><a href="exercise-solutions.html#cb555-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb555-4"><a href="exercise-solutions.html#cb555-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mammalia<span class="sc">$</span>logOffspring, mammalia<span class="sc">$</span>logLongevity)</span>
+<span id="cb555-5"><a href="exercise-solutions.html#cb555-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Mammalia&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-398-1.png" width="672" /></p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="exercise-solutions.html#cb556-1" aria-hidden="true" tabindex="-1"></a>reptilia <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb556-2"><a href="exercise-solutions.html#cb556-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Reptilia&quot;</span>)</span>
+<span id="cb556-3"><a href="exercise-solutions.html#cb556-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-4"><a href="exercise-solutions.html#cb556-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reptilia<span class="sc">$</span>logOffspring, reptilia<span class="sc">$</span>logLongevity)</span>
+<span id="cb556-5"><a href="exercise-solutions.html#cb556-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Reptilia&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-399-1.png" width="672" /></p>
 
 </div>
 <div id="temperature-effects-on-egg-laying-dates" class="section level2" number="24.3">
@@ -631,8 +631,8 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol style="list-style-type: decimal">
 <li>Import the data and take a look at it with <code>head</code> or <code>str</code>.</li>
 </ol>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="exercise-solutions.html#cb592-1" aria-hidden="true" tabindex="-1"></a>eggDates <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/eggDates.csv&quot;</span>)</span>
-<span id="cb592-2"><a href="exercise-solutions.html#cb592-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eggDates)</span></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="exercise-solutions.html#cb557-1" aria-hidden="true" tabindex="-1"></a>eggDates <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/eggDates.csv&quot;</span>)</span>
+<span id="cb557-2"><a href="exercise-solutions.html#cb557-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eggDates)</span></code></pre></div>
 <pre><code>##   boxNumber y2013 y2014 y2016 y2017 y2018 y2019
 ## 1         1   116   103    NA   107   111    NA
 ## 2         2    NA    NA    NA   114   118    NA
@@ -646,12 +646,12 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <p>Maybe this will help: The first argument in the <code>pivot_longer</code> command (<code>cols</code>) tells R which columns contain the data you are interested in (in this case, these are <code>y2013</code>,<code>y2014</code> etc). Then the <code>names_to</code> argument tells R what you want to name the new column from this data (in this case, <code>Year</code>). Then, the <code>values_to</code> argument tells R what the data column should be called (e.g. <code>Day</code>). In addition, there is a useful argument called <code>names_prefix</code> that will remove the part of the column name (e.g. the <code>y</code> of <code>y2013</code>)</p>
 <p>You should also make sure that the <code>Year</code> column is recognised as being a numeric variable rather than a character string. You can do this by adding a command using <code>mutate</code> and <code>as.numeric</code>, like this <code>mutate(Year = as.numeric(Year))</code></p>
 <p>You should end up with a dataset with three columns as described above.</p>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="exercise-solutions.html#cb594-1" aria-hidden="true" tabindex="-1"></a>eggDates <span class="ot">&lt;-</span> eggDates <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb594-2"><a href="exercise-solutions.html#cb594-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;y&quot;</span>),</span>
-<span id="cb594-3"><a href="exercise-solutions.html#cb594-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;day&quot;</span></span>
-<span id="cb594-4"><a href="exercise-solutions.html#cb594-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb594-5"><a href="exercise-solutions.html#cb594-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb594-6"><a href="exercise-solutions.html#cb594-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eggDates)</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="exercise-solutions.html#cb559-1" aria-hidden="true" tabindex="-1"></a>eggDates <span class="ot">&lt;-</span> eggDates <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb559-2"><a href="exercise-solutions.html#cb559-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;y&quot;</span>),</span>
+<span id="cb559-3"><a href="exercise-solutions.html#cb559-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;day&quot;</span></span>
+<span id="cb559-4"><a href="exercise-solutions.html#cb559-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb559-5"><a href="exercise-solutions.html#cb559-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb559-6"><a href="exercise-solutions.html#cb559-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eggDates)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   boxNumber Year    day
 ##       &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -664,10 +664,10 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="3" style="list-style-type: decimal">
 <li>Ensure that year is coded as numeric variable using <code>mutate</code>. [Hint, you can use the command <code>as.numeric</code>, but first remove the “y” in the name using <code>gsub</code>].</li>
 </ol>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="exercise-solutions.html#cb596-1" aria-hidden="true" tabindex="-1"></a>eggDates <span class="ot">&lt;-</span> eggDates <span class="sc">%&gt;%</span></span>
-<span id="cb596-2"><a href="exercise-solutions.html#cb596-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;y&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>, Year)) <span class="sc">%&gt;%</span></span>
-<span id="cb596-3"><a href="exercise-solutions.html#cb596-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.numeric</span>(Year))</span>
-<span id="cb596-4"><a href="exercise-solutions.html#cb596-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eggDates)</span></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="exercise-solutions.html#cb561-1" aria-hidden="true" tabindex="-1"></a>eggDates <span class="ot">&lt;-</span> eggDates <span class="sc">%&gt;%</span></span>
+<span id="cb561-2"><a href="exercise-solutions.html#cb561-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;y&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>, Year)) <span class="sc">%&gt;%</span></span>
+<span id="cb561-3"><a href="exercise-solutions.html#cb561-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.numeric</span>(Year))</span>
+<span id="cb561-4"><a href="exercise-solutions.html#cb561-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eggDates)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   boxNumber  Year   day
 ##       &lt;int&gt; &lt;dbl&gt; &lt;int&gt;
@@ -680,11 +680,11 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="4" style="list-style-type: decimal">
 <li>Calculate the mean egg date per year using <code>summarise</code> (remember to <code>group_by</code> the year first). Take a look at the data.</li>
 </ol>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="exercise-solutions.html#cb598-1" aria-hidden="true" tabindex="-1"></a>meanEgg <span class="ot">&lt;-</span> eggDates <span class="sc">%&gt;%</span></span>
-<span id="cb598-2"><a href="exercise-solutions.html#cb598-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
-<span id="cb598-3"><a href="exercise-solutions.html#cb598-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanEggDate =</span> <span class="fu">mean</span>(day, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb598-4"><a href="exercise-solutions.html#cb598-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb598-5"><a href="exercise-solutions.html#cb598-5" aria-hidden="true" tabindex="-1"></a>meanEgg</span></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="exercise-solutions.html#cb563-1" aria-hidden="true" tabindex="-1"></a>meanEgg <span class="ot">&lt;-</span> eggDates <span class="sc">%&gt;%</span></span>
+<span id="cb563-2"><a href="exercise-solutions.html#cb563-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb563-3"><a href="exercise-solutions.html#cb563-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanEggDate =</span> <span class="fu">mean</span>(day, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb563-4"><a href="exercise-solutions.html#cb563-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb563-5"><a href="exercise-solutions.html#cb563-5" aria-hidden="true" tabindex="-1"></a>meanEgg</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##    Year meanEggDate
 ##   &lt;dbl&gt;       &lt;dbl&gt;
@@ -698,8 +698,8 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="5" style="list-style-type: decimal">
 <li>Import the weather data and take a look at it with <code>head</code> or <code>str</code>.</li>
 </ol>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="exercise-solutions.html#cb600-1" aria-hidden="true" tabindex="-1"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/AarslevTemperature.csv&quot;</span>)</span>
-<span id="cb600-2"><a href="exercise-solutions.html#cb600-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(weather)</span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="exercise-solutions.html#cb565-1" aria-hidden="true" tabindex="-1"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/AarslevTemperature.csv&quot;</span>)</span>
+<span id="cb565-2"><a href="exercise-solutions.html#cb565-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(weather)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    3291 obs. of  4 variables:
 ##  $ YEAR : int  2012 2012 2012 2012 2012 2012 2012 2012 2012 2012 ...
 ##  $ MONTH: int  4 4 4 4 4 4 4 4 4 4 ...
@@ -708,12 +708,12 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>filter</code> subset to the months of interest (February-April) and then <code>summarise</code> the data to calculate the mean temperature in this period (remember to <code>group_by</code> year). Look at the data. You should end up with a dataset with two columns - <code>YEAR</code> and <code>meanSpringTemp</code>.</li>
 </ol>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="exercise-solutions.html#cb602-1" aria-hidden="true" tabindex="-1"></a>weather <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span></span>
-<span id="cb602-2"><a href="exercise-solutions.html#cb602-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MONTH <span class="sc">%in%</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb602-3"><a href="exercise-solutions.html#cb602-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(YEAR) <span class="sc">%&gt;%</span></span>
-<span id="cb602-4"><a href="exercise-solutions.html#cb602-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanAprilTemp =</span> <span class="fu">mean</span>(TEMP))</span>
-<span id="cb602-5"><a href="exercise-solutions.html#cb602-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb602-6"><a href="exercise-solutions.html#cb602-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather)</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="exercise-solutions.html#cb567-1" aria-hidden="true" tabindex="-1"></a>weather <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span></span>
+<span id="cb567-2"><a href="exercise-solutions.html#cb567-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MONTH <span class="sc">%in%</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb567-3"><a href="exercise-solutions.html#cb567-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(YEAR) <span class="sc">%&gt;%</span></span>
+<span id="cb567-4"><a href="exercise-solutions.html#cb567-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanAprilTemp =</span> <span class="fu">mean</span>(TEMP))</span>
+<span id="cb567-5"><a href="exercise-solutions.html#cb567-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb567-6"><a href="exercise-solutions.html#cb567-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##    YEAR meanAprilTemp
 ##   &lt;int&gt;         &lt;dbl&gt;
@@ -727,8 +727,8 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="7" style="list-style-type: decimal">
 <li>Join the two datasets together using <code>left_join</code>. You should now have a dataset with columns <code>nestNumber</code>, <code>Year</code>, <code>dayNumber</code> and <code>meanAprilTemp</code></li>
 </ol>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="exercise-solutions.html#cb604-1" aria-hidden="true" tabindex="-1"></a>joinedData <span class="ot">&lt;-</span> <span class="fu">left_join</span>(meanEgg, weather, <span class="fu">c</span>(<span class="st">&quot;Year&quot;</span> <span class="ot">=</span> <span class="st">&quot;YEAR&quot;</span>))</span>
-<span id="cb604-2"><a href="exercise-solutions.html#cb604-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(joinedData)</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="exercise-solutions.html#cb569-1" aria-hidden="true" tabindex="-1"></a>joinedData <span class="ot">&lt;-</span> <span class="fu">left_join</span>(meanEgg, weather, <span class="fu">c</span>(<span class="st">&quot;Year&quot;</span> <span class="ot">=</span> <span class="st">&quot;YEAR&quot;</span>))</span>
+<span id="cb569-2"><a href="exercise-solutions.html#cb569-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(joinedData)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##    Year meanEggDate meanAprilTemp
 ##   &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
@@ -742,8 +742,8 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="8" style="list-style-type: decimal">
 <li>plot a graph of <code>meanAprilTemp</code> on the x-axis and <code>dayNumber</code> on the y-axis.</li>
 </ol>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="exercise-solutions.html#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(joinedData<span class="sc">$</span>meanAprilTemp, joinedData<span class="sc">$</span>meanEggDate)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-417-1.png" width="672" /></p>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="exercise-solutions.html#cb571-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(joinedData<span class="sc">$</span>meanAprilTemp, joinedData<span class="sc">$</span>meanEggDate)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-408-1.png" width="672" /></p>
 <p>Now you should be able to answer the question we started with: is laying date associated with spring temperatures? Yes, there looks to be a negative relationship between temperature and egg laying date.</p>
 
 </div>
@@ -751,14 +751,14 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <h2><span class="header-section-number">24.4</span> Virtual dice</h2>
 <p>Let’s try the same kind of thing with the roll of (virtual) dice.</p>
 <p>Here’s how to do one roll of the dice:</p>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="exercise-solutions.html#cb607-1" aria-hidden="true" tabindex="-1"></a>diceRoll <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
-<span id="cb607-2"><a href="exercise-solutions.html#cb607-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(diceRoll, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="exercise-solutions.html#cb572-1" aria-hidden="true" tabindex="-1"></a>diceRoll <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb572-2"><a href="exercise-solutions.html#cb572-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(diceRoll, <span class="dv">1</span>)</span></code></pre></div>
 <p>[1] 3</p>
 <ol style="list-style-type: decimal">
 <li>Simulate 10 rolls of the dice, and make a table of results.</li>
 </ol>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="exercise-solutions.html#cb608-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">sample</span>(diceRoll, <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb608-2"><a href="exercise-solutions.html#cb608-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="exercise-solutions.html#cb573-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">sample</span>(diceRoll, <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb573-2"><a href="exercise-solutions.html#cb573-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(result)</span></code></pre></div>
 <pre><code>## result
 ## 2 3 4 5 6 
 ## 2 3 1 1 3</code></pre>
@@ -766,14 +766,14 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <ol start="2" style="list-style-type: decimal">
 <li>Now simulate 90 rolls of the dice, and plot the results as a bar plot using <code>geom_bar</code> in <code>ggplot</code>. Add a horizontal line using <code>geom_abline</code> to show the <strong>expected</strong> result based on what you know about probability.</li>
 </ol>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="exercise-solutions.html#cb610-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">90</span></span>
-<span id="cb610-2"><a href="exercise-solutions.html#cb610-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">result =</span> <span class="fu">sample</span>(diceRoll, n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb610-3"><a href="exercise-solutions.html#cb610-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb610-4"><a href="exercise-solutions.html#cb610-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(result, <span class="fu">aes</span>(<span class="at">x =</span> result)) <span class="sc">+</span></span>
-<span id="cb610-5"><a href="exercise-solutions.html#cb610-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb610-6"><a href="exercise-solutions.html#cb610-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> n <span class="sc">/</span> <span class="dv">6</span>, <span class="at">slope =</span> <span class="dv">0</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-421"></span>
-<img src="BB852_files/figure-html/unnamed-chunk-421-1.png" alt="Barplot of 90 simulated dice throws" width="672" />
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="exercise-solutions.html#cb575-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">90</span></span>
+<span id="cb575-2"><a href="exercise-solutions.html#cb575-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">result =</span> <span class="fu">sample</span>(diceRoll, n, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb575-3"><a href="exercise-solutions.html#cb575-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb575-4"><a href="exercise-solutions.html#cb575-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(result, <span class="fu">aes</span>(<span class="at">x =</span> result)) <span class="sc">+</span></span>
+<span id="cb575-5"><a href="exercise-solutions.html#cb575-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb575-6"><a href="exercise-solutions.html#cb575-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> n <span class="sc">/</span> <span class="dv">6</span>, <span class="at">slope =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-412"></span>
+<img src="BB852_files/figure-html/unnamed-chunk-412-1.png" alt="Barplot of 90 simulated dice throws" width="672" />
 <p class="caption">
 Figure 24.1: Barplot of 90 simulated dice throws
 </p>
@@ -784,8 +784,8 @@ Figure 24.1: Barplot of 90 simulated dice throws
 <p>You only need to edit the <code>n &lt;- 90</code> line in the code above</p>
 <p>The main message here is that as sample size increases you are more likely to obtain a good estimate of the true value of the phenomenon. You may also notice that, what would be considered a good sample size for the coin flipping (i.e. it recovers the true probability of 0.5 reasonably well) is NOT adequate for getting a good estimate of the probabilities for the dice.</p>
 <p>This is because of the different number of possibilities: as the range of possible outcomes increases, the sample size requirements increase. In other words, choosing a good sample size is context-dependent.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-422"></span>
-<img src="BB852_files/figure-html/unnamed-chunk-422-1.png" alt="Barplots of 30 and 9000 simulated dice throws" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-413"></span>
+<img src="BB852_files/figure-html/unnamed-chunk-413-1.png" alt="Barplots of 30 and 9000 simulated dice throws" width="672" />
 <p class="caption">
 Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 </p>
@@ -805,133 +805,133 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <ol start="3" style="list-style-type: decimal">
 <li>Import the data.</li>
 </ol>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="exercise-solutions.html#cb611-1" aria-hidden="true" tabindex="-1"></a>hercules <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/herculesBeetle.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="exercise-solutions.html#cb576-1" aria-hidden="true" tabindex="-1"></a>hercules <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/herculesBeetle.csv&quot;</span>)</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>Calculate the mean for each sex (either using <code>tapply</code> or using <code>dplyr</code> tools)</li>
 </ol>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="exercise-solutions.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="co"># With dplyr</span></span>
-<span id="cb612-2"><a href="exercise-solutions.html#cb612-2" aria-hidden="true" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
-<span id="cb612-3"><a href="exercise-solutions.html#cb612-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb612-4"><a href="exercise-solutions.html#cb612-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width))</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="exercise-solutions.html#cb577-1" aria-hidden="true" tabindex="-1"></a><span class="co"># With dplyr</span></span>
+<span id="cb577-2"><a href="exercise-solutions.html#cb577-2" aria-hidden="true" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
+<span id="cb577-3"><a href="exercise-solutions.html#cb577-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb577-4"><a href="exercise-solutions.html#cb577-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   sex     mean
 ##   &lt;chr&gt;  &lt;dbl&gt;
 ## 1 Female  15.0
 ## 2 Male    17.4</code></pre>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="exercise-solutions.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
-<span id="cb614-2"><a href="exercise-solutions.html#cb614-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(hercules<span class="sc">$</span>width, hercules<span class="sc">$</span>sex, mean)</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="exercise-solutions.html#cb579-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
+<span id="cb579-2"><a href="exercise-solutions.html#cb579-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(hercules<span class="sc">$</span>width, hercules<span class="sc">$</span>sex, mean)</span></code></pre></div>
 <pre><code>##   Female     Male 
 ## 15.02825 17.36568</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Plot the data as a histogram.</li>
 </ol>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="exercise-solutions.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s look at the male and female data</span></span>
-<span id="cb616-2"><a href="exercise-solutions.html#cb616-2" aria-hidden="true" tabindex="-1"></a>(plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hercules, <span class="fu">aes</span>(<span class="at">x =</span> width, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
-<span id="cb616-3"><a href="exercise-solutions.html#cb616-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-426-1.png" width="672" /></p>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="exercise-solutions.html#cb581-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s look at the male and female data</span></span>
+<span id="cb581-2"><a href="exercise-solutions.html#cb581-2" aria-hidden="true" tabindex="-1"></a>(plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hercules, <span class="fu">aes</span>(<span class="at">x =</span> width, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb581-3"><a href="exercise-solutions.html#cb581-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-417-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Add vertical lines to the plot to indicate the mean values.</li>
 </ol>
-<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="exercise-solutions.html#cb617-1" aria-hidden="true" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
-<span id="cb617-2"><a href="exercise-solutions.html#cb617-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb617-3"><a href="exercise-solutions.html#cb617-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
-<span id="cb617-4"><a href="exercise-solutions.html#cb617-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="ot">-&gt;</span> meanVals</span>
-<span id="cb617-5"><a href="exercise-solutions.html#cb617-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb617-6"><a href="exercise-solutions.html#cb617-6" aria-hidden="true" tabindex="-1"></a>plot1 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> meanVals, <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-427-1.png" width="672" /></p>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="exercise-solutions.html#cb582-1" aria-hidden="true" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
+<span id="cb582-2"><a href="exercise-solutions.html#cb582-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb582-3"><a href="exercise-solutions.html#cb582-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
+<span id="cb582-4"><a href="exercise-solutions.html#cb582-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="ot">-&gt;</span> meanVals</span>
+<span id="cb582-5"><a href="exercise-solutions.html#cb582-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb582-6"><a href="exercise-solutions.html#cb582-6" aria-hidden="true" tabindex="-1"></a>plot1 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> meanVals, <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-418-1.png" width="672" /></p>
 <ol start="7" style="list-style-type: decimal">
 <li>Now calculate the difference between the mean values using <code>dplyr</code> tools, or <code>tapply</code>.</li>
 </ol>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="exercise-solutions.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with dplyr</span></span>
-<span id="cb618-2"><a href="exercise-solutions.html#cb618-2" aria-hidden="true" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
-<span id="cb618-3"><a href="exercise-solutions.html#cb618-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb618-4"><a href="exercise-solutions.html#cb618-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
-<span id="cb618-5"><a href="exercise-solutions.html#cb618-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
-<span id="cb618-6"><a href="exercise-solutions.html#cb618-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>() <span class="ot">-&gt;</span> observedDiff</span>
-<span id="cb618-7"><a href="exercise-solutions.html#cb618-7" aria-hidden="true" tabindex="-1"></a>observedDiff</span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="exercise-solutions.html#cb583-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with dplyr</span></span>
+<span id="cb583-2"><a href="exercise-solutions.html#cb583-2" aria-hidden="true" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
+<span id="cb583-3"><a href="exercise-solutions.html#cb583-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb583-4"><a href="exercise-solutions.html#cb583-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
+<span id="cb583-5"><a href="exercise-solutions.html#cb583-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
+<span id="cb583-6"><a href="exercise-solutions.html#cb583-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>() <span class="ot">-&gt;</span> observedDiff</span>
+<span id="cb583-7"><a href="exercise-solutions.html#cb583-7" aria-hidden="true" tabindex="-1"></a>observedDiff</span></code></pre></div>
 <pre><code>## [1] 2.337433</code></pre>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="exercise-solutions.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
-<span id="cb620-2"><a href="exercise-solutions.html#cb620-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">as.vector</span>(<span class="fu">tapply</span>(hercules<span class="sc">$</span>width, hercules<span class="sc">$</span>sex, mean)))</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="exercise-solutions.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
+<span id="cb585-2"><a href="exercise-solutions.html#cb585-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">as.vector</span>(<span class="fu">tapply</span>(hercules<span class="sc">$</span>width, hercules<span class="sc">$</span>sex, mean)))</span></code></pre></div>
 <pre><code>## [1] 2.337433</code></pre>
 <ol start="8" style="list-style-type: decimal">
 <li>Use <code>sample</code> to randomise the sex column of the data, and recalculate the difference between the mean.</li>
 </ol>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="exercise-solutions.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with dplyr</span></span>
-<span id="cb622-2"><a href="exercise-solutions.html#cb622-2" aria-hidden="true" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
-<span id="cb622-3"><a href="exercise-solutions.html#cb622-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">sample</span>(sex)) <span class="sc">%&gt;%</span></span>
-<span id="cb622-4"><a href="exercise-solutions.html#cb622-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb622-5"><a href="exercise-solutions.html#cb622-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
-<span id="cb622-6"><a href="exercise-solutions.html#cb622-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
-<span id="cb622-7"><a href="exercise-solutions.html#cb622-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="exercise-solutions.html#cb587-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with dplyr</span></span>
+<span id="cb587-2"><a href="exercise-solutions.html#cb587-2" aria-hidden="true" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
+<span id="cb587-3"><a href="exercise-solutions.html#cb587-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">sample</span>(sex)) <span class="sc">%&gt;%</span></span>
+<span id="cb587-4"><a href="exercise-solutions.html#cb587-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb587-5"><a href="exercise-solutions.html#cb587-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
+<span id="cb587-6"><a href="exercise-solutions.html#cb587-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
+<span id="cb587-7"><a href="exercise-solutions.html#cb587-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code></pre></div>
 <pre><code>## [1] -1.900753</code></pre>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="exercise-solutions.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
-<span id="cb624-2"><a href="exercise-solutions.html#cb624-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">as.vector</span>(<span class="fu">tapply</span>(hercules<span class="sc">$</span>width, <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean)))</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="exercise-solutions.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
+<span id="cb589-2"><a href="exercise-solutions.html#cb589-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">as.vector</span>(<span class="fu">tapply</span>(hercules<span class="sc">$</span>width, <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean)))</span></code></pre></div>
 <pre><code>## [1] 0.3205587</code></pre>
 <ol start="9" style="list-style-type: decimal">
 <li>Use <code>replicate</code> to repeat this 10 times (to ensure that you code works).</li>
 </ol>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="exercise-solutions.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with dplyr</span></span>
-<span id="cb626-2"><a href="exercise-solutions.html#cb626-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
-<span id="cb626-3"><a href="exercise-solutions.html#cb626-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
-<span id="cb626-4"><a href="exercise-solutions.html#cb626-4" aria-hidden="true" tabindex="-1"></a>  hercules <span class="sc">%&gt;%</span></span>
-<span id="cb626-5"><a href="exercise-solutions.html#cb626-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">sample</span>(sex)) <span class="sc">%&gt;%</span></span>
-<span id="cb626-6"><a href="exercise-solutions.html#cb626-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb626-7"><a href="exercise-solutions.html#cb626-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
-<span id="cb626-8"><a href="exercise-solutions.html#cb626-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
-<span id="cb626-9"><a href="exercise-solutions.html#cb626-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
-<span id="cb626-10"><a href="exercise-solutions.html#cb626-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="exercise-solutions.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with dplyr</span></span>
+<span id="cb591-2"><a href="exercise-solutions.html#cb591-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
+<span id="cb591-3"><a href="exercise-solutions.html#cb591-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
+<span id="cb591-4"><a href="exercise-solutions.html#cb591-4" aria-hidden="true" tabindex="-1"></a>  hercules <span class="sc">%&gt;%</span></span>
+<span id="cb591-5"><a href="exercise-solutions.html#cb591-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">sample</span>(sex)) <span class="sc">%&gt;%</span></span>
+<span id="cb591-6"><a href="exercise-solutions.html#cb591-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb591-7"><a href="exercise-solutions.html#cb591-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
+<span id="cb591-8"><a href="exercise-solutions.html#cb591-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
+<span id="cb591-9"><a href="exercise-solutions.html#cb591-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
+<span id="cb591-10"><a href="exercise-solutions.html#cb591-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595
 ##  [7] -2.1980346 -1.5961324  0.8836404  1.2863489</code></pre>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="exercise-solutions.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
-<span id="cb628-2"><a href="exercise-solutions.html#cb628-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
-<span id="cb628-3"><a href="exercise-solutions.html#cb628-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
-<span id="cb628-4"><a href="exercise-solutions.html#cb628-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>(<span class="fu">as.vector</span>(<span class="fu">tapply</span>(</span>
-<span id="cb628-5"><a href="exercise-solutions.html#cb628-5" aria-hidden="true" tabindex="-1"></a>    hercules<span class="sc">$</span>width,</span>
-<span id="cb628-6"><a href="exercise-solutions.html#cb628-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean</span>
-<span id="cb628-7"><a href="exercise-solutions.html#cb628-7" aria-hidden="true" tabindex="-1"></a>  )))</span>
-<span id="cb628-8"><a href="exercise-solutions.html#cb628-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="exercise-solutions.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
+<span id="cb593-2"><a href="exercise-solutions.html#cb593-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
+<span id="cb593-3"><a href="exercise-solutions.html#cb593-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
+<span id="cb593-4"><a href="exercise-solutions.html#cb593-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>(<span class="fu">as.vector</span>(<span class="fu">tapply</span>(</span>
+<span id="cb593-5"><a href="exercise-solutions.html#cb593-5" aria-hidden="true" tabindex="-1"></a>    hercules<span class="sc">$</span>width,</span>
+<span id="cb593-6"><a href="exercise-solutions.html#cb593-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean</span>
+<span id="cb593-7"><a href="exercise-solutions.html#cb593-7" aria-hidden="true" tabindex="-1"></a>  )))</span>
+<span id="cb593-8"><a href="exercise-solutions.html#cb593-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728
 ##  [7] -0.5334274  0.2076405 -0.4760695 -0.6967478</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</li>
 </ol>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="exercise-solutions.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with dplyr</span></span>
-<span id="cb630-2"><a href="exercise-solutions.html#cb630-2" aria-hidden="true" tabindex="-1"></a>diffs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb630-3"><a href="exercise-solutions.html#cb630-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">diffs =</span></span>
-<span id="cb630-4"><a href="exercise-solutions.html#cb630-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replicate</span>(</span>
-<span id="cb630-5"><a href="exercise-solutions.html#cb630-5" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1000</span>,</span>
-<span id="cb630-6"><a href="exercise-solutions.html#cb630-6" aria-hidden="true" tabindex="-1"></a>      hercules <span class="sc">%&gt;%</span></span>
-<span id="cb630-7"><a href="exercise-solutions.html#cb630-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">sample</span>(sex)) <span class="sc">%&gt;%</span></span>
-<span id="cb630-8"><a href="exercise-solutions.html#cb630-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb630-9"><a href="exercise-solutions.html#cb630-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
-<span id="cb630-10"><a href="exercise-solutions.html#cb630-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
-<span id="cb630-11"><a href="exercise-solutions.html#cb630-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">diff</span>()</span>
-<span id="cb630-12"><a href="exercise-solutions.html#cb630-12" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb630-13"><a href="exercise-solutions.html#cb630-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb630-14"><a href="exercise-solutions.html#cb630-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb630-15"><a href="exercise-solutions.html#cb630-15" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
-<span id="cb630-16"><a href="exercise-solutions.html#cb630-16" aria-hidden="true" tabindex="-1"></a>diffs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb630-17"><a href="exercise-solutions.html#cb630-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">diffs =</span></span>
-<span id="cb630-18"><a href="exercise-solutions.html#cb630-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replicate</span>(</span>
-<span id="cb630-19"><a href="exercise-solutions.html#cb630-19" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1000</span>,</span>
-<span id="cb630-20"><a href="exercise-solutions.html#cb630-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">diff</span>(<span class="fu">as.vector</span>(</span>
-<span id="cb630-21"><a href="exercise-solutions.html#cb630-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tapply</span>(hercules<span class="sc">$</span>width, <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean)</span>
-<span id="cb630-22"><a href="exercise-solutions.html#cb630-22" aria-hidden="true" tabindex="-1"></a>      ))</span>
-<span id="cb630-23"><a href="exercise-solutions.html#cb630-23" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb630-24"><a href="exercise-solutions.html#cb630-24" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="exercise-solutions.html#cb595-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with dplyr</span></span>
+<span id="cb595-2"><a href="exercise-solutions.html#cb595-2" aria-hidden="true" tabindex="-1"></a>diffs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb595-3"><a href="exercise-solutions.html#cb595-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">diffs =</span></span>
+<span id="cb595-4"><a href="exercise-solutions.html#cb595-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replicate</span>(</span>
+<span id="cb595-5"><a href="exercise-solutions.html#cb595-5" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1000</span>,</span>
+<span id="cb595-6"><a href="exercise-solutions.html#cb595-6" aria-hidden="true" tabindex="-1"></a>      hercules <span class="sc">%&gt;%</span></span>
+<span id="cb595-7"><a href="exercise-solutions.html#cb595-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">sample</span>(sex)) <span class="sc">%&gt;%</span></span>
+<span id="cb595-8"><a href="exercise-solutions.html#cb595-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb595-9"><a href="exercise-solutions.html#cb595-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
+<span id="cb595-10"><a href="exercise-solutions.html#cb595-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
+<span id="cb595-11"><a href="exercise-solutions.html#cb595-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">diff</span>()</span>
+<span id="cb595-12"><a href="exercise-solutions.html#cb595-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb595-13"><a href="exercise-solutions.html#cb595-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb595-14"><a href="exercise-solutions.html#cb595-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb595-15"><a href="exercise-solutions.html#cb595-15" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
+<span id="cb595-16"><a href="exercise-solutions.html#cb595-16" aria-hidden="true" tabindex="-1"></a>diffs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb595-17"><a href="exercise-solutions.html#cb595-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">diffs =</span></span>
+<span id="cb595-18"><a href="exercise-solutions.html#cb595-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replicate</span>(</span>
+<span id="cb595-19"><a href="exercise-solutions.html#cb595-19" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1000</span>,</span>
+<span id="cb595-20"><a href="exercise-solutions.html#cb595-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">diff</span>(<span class="fu">as.vector</span>(</span>
+<span id="cb595-21"><a href="exercise-solutions.html#cb595-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">tapply</span>(hercules<span class="sc">$</span>width, <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean)</span>
+<span id="cb595-22"><a href="exercise-solutions.html#cb595-22" aria-hidden="true" tabindex="-1"></a>      ))</span>
+<span id="cb595-23"><a href="exercise-solutions.html#cb595-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb595-24"><a href="exercise-solutions.html#cb595-24" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ol start="11" style="list-style-type: decimal">
 <li>Use <code>ggplot</code> to plot the null distribution you have just created, and add the observed difference.</li>
 </ol>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="exercise-solutions.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diffs, <span class="fu">aes</span>(<span class="at">x =</span> diffs)) <span class="sc">+</span></span>
-<span id="cb631-2"><a href="exercise-solutions.html#cb631-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb631-3"><a href="exercise-solutions.html#cb631-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observedDiff)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-432-1.png" width="672" /></p>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="exercise-solutions.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diffs, <span class="fu">aes</span>(<span class="at">x =</span> diffs)) <span class="sc">+</span></span>
+<span id="cb596-2"><a href="exercise-solutions.html#cb596-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb596-3"><a href="exercise-solutions.html#cb596-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observedDiff)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-423-1.png" width="672" /></p>
 <ol start="12" style="list-style-type: decimal">
 <li>Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.</li>
 </ol>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="exercise-solutions.html#cb632-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(diffs<span class="sc">$</span>diffs <span class="sc">&gt;=</span> observedDiff)</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="exercise-solutions.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(diffs<span class="sc">$</span>diffs <span class="sc">&gt;=</span> observedDiff)</span></code></pre></div>
 <pre><code>## [1] 14</code></pre>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="exercise-solutions.html#cb634-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(diffs<span class="sc">$</span>diffs <span class="sc">&gt;=</span> observedDiff) <span class="sc">/</span> <span class="dv">1000</span></span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="exercise-solutions.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(diffs<span class="sc">$</span>diffs <span class="sc">&gt;=</span> observedDiff) <span class="sc">/</span> <span class="dv">1000</span></span></code></pre></div>
 <pre><code>## [1] 0.014</code></pre>
 <ol start="13" style="list-style-type: decimal">
 <li>Summarise your result as in a report. Describe the method, followed by the result and conclusion.</li>
@@ -946,13 +946,13 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <ol style="list-style-type: decimal">
 <li>Plot the data (e.g. with a box plot, or histogram)</li>
 </ol>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="exercise-solutions.html#cb636-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb636-2"><a href="exercise-solutions.html#cb636-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
-<span id="cb636-3"><a href="exercise-solutions.html#cb636-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb636-4"><a href="exercise-solutions.html#cb636-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Precision)) <span class="sc">+</span></span>
-<span id="cb636-5"><a href="exercise-solutions.html#cb636-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb636-6"><a href="exercise-solutions.html#cb636-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-435-1.png" width="672" /></p>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="exercise-solutions.html#cb601-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb601-2"><a href="exercise-solutions.html#cb601-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
+<span id="cb601-3"><a href="exercise-solutions.html#cb601-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb601-4"><a href="exercise-solutions.html#cb601-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Precision)) <span class="sc">+</span></span>
+<span id="cb601-5"><a href="exercise-solutions.html#cb601-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb601-6"><a href="exercise-solutions.html#cb601-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-426-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Formulate null and alternative hypotheses.</li>
 </ol>
@@ -961,7 +961,7 @@ Alternative hypothesis - there is a significant difference between male and fema
 <ol start="3" style="list-style-type: decimal">
 <li>Use the <code>t.test</code> function to do the test.</li>
 </ol>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="exercise-solutions.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Precision <span class="sc">~</span> Gender, <span class="at">data =</span> classData)</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="exercise-solutions.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(Precision <span class="sc">~</span> Gender, <span class="at">data =</span> classData)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -986,24 +986,24 @@ Alternative hypothesis - there is a significant difference between male and fema
 <ol style="list-style-type: decimal">
 <li>Plot the data (e.g. with an interaction plot like Figure <a href="t-test-comparing-two-means.html#fig:toolData">14.5</a>)</li>
 </ol>
-<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="exercise-solutions.html#cb639-1" aria-hidden="true" tabindex="-1"></a>anorexiaCBT <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/anorexiaCBT.csv&quot;</span>,</span>
-<span id="cb639-2"><a href="exercise-solutions.html#cb639-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">TRUE</span></span>
-<span id="cb639-3"><a href="exercise-solutions.html#cb639-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb639-4"><a href="exercise-solutions.html#cb639-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb639-5"><a href="exercise-solutions.html#cb639-5" aria-hidden="true" tabindex="-1"></a>anorexiaCBT_long <span class="ot">&lt;-</span> anorexiaCBT <span class="sc">%&gt;%</span></span>
-<span id="cb639-6"><a href="exercise-solutions.html#cb639-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb639-7"><a href="exercise-solutions.html#cb639-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;Week&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;time&quot;</span>,</span>
-<span id="cb639-8"><a href="exercise-solutions.html#cb639-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;weight&quot;</span></span>
-<span id="cb639-9"><a href="exercise-solutions.html#cb639-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="exercise-solutions.html#cb640-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(anorexiaCBT_long, <span class="fu">aes</span>(</span>
-<span id="cb640-2"><a href="exercise-solutions.html#cb640-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> time, <span class="at">y =</span> weight,</span>
-<span id="cb640-3"><a href="exercise-solutions.html#cb640-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> Subject</span>
-<span id="cb640-4"><a href="exercise-solutions.html#cb640-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb640-5"><a href="exercise-solutions.html#cb640-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb640-6"><a href="exercise-solutions.html#cb640-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb640-7"><a href="exercise-solutions.html#cb640-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time&quot;</span>) <span class="sc">+</span></span>
-<span id="cb640-8"><a href="exercise-solutions.html#cb640-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Weight (kg)&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-439-1.png" width="672" /></p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="exercise-solutions.html#cb604-1" aria-hidden="true" tabindex="-1"></a>anorexiaCBT <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/anorexiaCBT.csv&quot;</span>,</span>
+<span id="cb604-2"><a href="exercise-solutions.html#cb604-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">TRUE</span></span>
+<span id="cb604-3"><a href="exercise-solutions.html#cb604-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb604-4"><a href="exercise-solutions.html#cb604-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb604-5"><a href="exercise-solutions.html#cb604-5" aria-hidden="true" tabindex="-1"></a>anorexiaCBT_long <span class="ot">&lt;-</span> anorexiaCBT <span class="sc">%&gt;%</span></span>
+<span id="cb604-6"><a href="exercise-solutions.html#cb604-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb604-7"><a href="exercise-solutions.html#cb604-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;Week&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;time&quot;</span>,</span>
+<span id="cb604-8"><a href="exercise-solutions.html#cb604-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">&quot;weight&quot;</span></span>
+<span id="cb604-9"><a href="exercise-solutions.html#cb604-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="exercise-solutions.html#cb605-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(anorexiaCBT_long, <span class="fu">aes</span>(</span>
+<span id="cb605-2"><a href="exercise-solutions.html#cb605-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> time, <span class="at">y =</span> weight,</span>
+<span id="cb605-3"><a href="exercise-solutions.html#cb605-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> Subject</span>
+<span id="cb605-4"><a href="exercise-solutions.html#cb605-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb605-5"><a href="exercise-solutions.html#cb605-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb605-6"><a href="exercise-solutions.html#cb605-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb605-7"><a href="exercise-solutions.html#cb605-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb605-8"><a href="exercise-solutions.html#cb605-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Weight (kg)&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-430-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Formulate a null and alternative hypothesis.</li>
 </ol>
@@ -1013,7 +1013,7 @@ Alternative Hypothesis = There is a significant change in weight between the two
 <li>Use <code>t.test</code> to conduct a <em>paired</em> t-test.</li>
 </ol>
 <p>The method here depends on whether you use the “long” data or not:</p>
-<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="exercise-solutions.html#cb641-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(anorexiaCBT<span class="sc">$</span>Week01, anorexiaCBT<span class="sc">$</span>Week08, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="exercise-solutions.html#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(anorexiaCBT<span class="sc">$</span>Week01, anorexiaCBT<span class="sc">$</span>Week08, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -1026,10 +1026,10 @@ Alternative Hypothesis = There is a significant change in weight between the two
 ## mean of the differences 
 ##               -3.006897</code></pre>
 <p>or</p>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="exercise-solutions.html#cb643-1" aria-hidden="true" tabindex="-1"></a>anorexiaCBT_long <span class="ot">&lt;-</span> anorexiaCBT_long <span class="sc">%&gt;%</span></span>
-<span id="cb643-2"><a href="exercise-solutions.html#cb643-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Subject, time)</span>
-<span id="cb643-3"><a href="exercise-solutions.html#cb643-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb643-4"><a href="exercise-solutions.html#cb643-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> time, <span class="at">data =</span> anorexiaCBT_long, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="exercise-solutions.html#cb608-1" aria-hidden="true" tabindex="-1"></a>anorexiaCBT_long <span class="ot">&lt;-</span> anorexiaCBT_long <span class="sc">%&gt;%</span></span>
+<span id="cb608-2"><a href="exercise-solutions.html#cb608-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Subject, time)</span>
+<span id="cb608-3"><a href="exercise-solutions.html#cb608-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb608-4"><a href="exercise-solutions.html#cb608-4" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> time, <span class="at">data =</span> anorexiaCBT_long, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
 ## 
@@ -1044,7 +1044,7 @@ Alternative Hypothesis = There is a significant change in weight between the two
 <ol start="4" style="list-style-type: decimal">
 <li>Write a couple of sentences to report your result.</li>
 </ol>
-<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="exercise-solutions.html#cb645-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">t.test</span>(anorexiaCBT<span class="sc">$</span>Week01, anorexiaCBT<span class="sc">$</span>Week08, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="exercise-solutions.html#cb610-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">t.test</span>(anorexiaCBT<span class="sc">$</span>Week01, anorexiaCBT<span class="sc">$</span>Week08, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>There was a significant difference in weight of -3.007kg between week 1 and week 8 (t.test: t = -2.22, df = 28.00, p = 0.035). The 95% confidence interval for the difference between weeks was between -5.787 and -0.227. Therefore, I reject the null hypotheses, that the difference is due to chance alone, and accept the alternative hypothesis.</p>
 </div>
 <div id="compare-t-tests-with-randomisation-tests" class="section level2" number="24.8">
@@ -1066,8 +1066,8 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol style="list-style-type: decimal">
 <li>Import and look at the data (e.g. <code>summary</code> or <code>str</code> or <code>head</code>)</li>
 </ol>
-<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="exercise-solutions.html#cb646-1" aria-hidden="true" tabindex="-1"></a>apples <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/apples.csv&quot;</span>)</span>
-<span id="cb646-2"><a href="exercise-solutions.html#cb646-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(apples)</span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="exercise-solutions.html#cb611-1" aria-hidden="true" tabindex="-1"></a>apples <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/apples.csv&quot;</span>)</span>
+<span id="cb611-2"><a href="exercise-solutions.html#cb611-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(apples)</span></code></pre></div>
 <pre><code>##     spacing       yield      
 ##  Min.   : 6   Min.   : 64.1  
 ##  1st Qu.: 6   1st Qu.:108.2  
@@ -1079,30 +1079,30 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="2" style="list-style-type: decimal">
 <li>Ensure that the explanatory variable (<code>spacing</code>) is defined as a categorical variable (i.e. a “factor,” in R-speak). You can use <code>mutate</code> and <code>as.factor</code> functions for this.</li>
 </ol>
-<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="exercise-solutions.html#cb648-1" aria-hidden="true" tabindex="-1"></a>apples <span class="ot">&lt;-</span> apples <span class="sc">%&gt;%</span></span>
-<span id="cb648-2"><a href="exercise-solutions.html#cb648-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">spacing =</span> <span class="fu">as.factor</span>(spacing))</span></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="exercise-solutions.html#cb613-1" aria-hidden="true" tabindex="-1"></a>apples <span class="ot">&lt;-</span> apples <span class="sc">%&gt;%</span></span>
+<span id="cb613-2"><a href="exercise-solutions.html#cb613-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">spacing =</span> <span class="fu">as.factor</span>(spacing))</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Plot the data using <code>ggplot</code> (a box plot with (optionally) added jittered points would be good).</li>
 </ol>
-<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="exercise-solutions.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(apples, <span class="fu">aes</span>(<span class="at">x =</span> spacing, <span class="at">y =</span> yield)) <span class="sc">+</span></span>
-<span id="cb649-2"><a href="exercise-solutions.html#cb649-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb649-3"><a href="exercise-solutions.html#cb649-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb649-4"><a href="exercise-solutions.html#cb649-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Yield (kg per tree)&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-447-1.png" width="672" /></p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="exercise-solutions.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(apples, <span class="fu">aes</span>(<span class="at">x =</span> spacing, <span class="at">y =</span> yield)) <span class="sc">+</span></span>
+<span id="cb614-2"><a href="exercise-solutions.html#cb614-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb614-3"><a href="exercise-solutions.html#cb614-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb614-4"><a href="exercise-solutions.html#cb614-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Yield (kg per tree)&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-438-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Fit an ANOVA model using <code>lm</code>.</li>
 </ol>
-<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="exercise-solutions.html#cb650-1" aria-hidden="true" tabindex="-1"></a>apple_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> spacing, <span class="at">data =</span> apples)</span></code></pre></div>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="exercise-solutions.html#cb615-1" aria-hidden="true" tabindex="-1"></a>apple_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> spacing, <span class="at">data =</span> apples)</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Check the model using a diagnostic plot (i.e. using <code>autoplot</code> from the <code>ggfortify</code> package).</li>
 </ol>
-<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="exercise-solutions.html#cb651-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb651-2"><a href="exercise-solutions.html#cb651-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(apple_mod)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-449-1.png" width="672" /></p>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="exercise-solutions.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb616-2"><a href="exercise-solutions.html#cb616-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(apple_mod)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-440-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>anova</code> to get the ANOVA summary.</li>
 </ol>
-<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="exercise-solutions.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(apple_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="exercise-solutions.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(apple_mod)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: yield
@@ -1114,7 +1114,7 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="7" style="list-style-type: decimal">
 <li>You should see that there are differences among treatments. But where are those differences? Use <code>summary</code> on your model to find out.</li>
 </ol>
-<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="exercise-solutions.html#cb654-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(apple_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="exercise-solutions.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(apple_mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = yield ~ spacing, data = apples)
@@ -1138,8 +1138,8 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="8" style="list-style-type: decimal">
 <li>Use a Tukey test to make all the pairwise comparisons among the treatments.</li>
 </ol>
-<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="exercise-solutions.html#cb656-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
-<span id="cb656-2"><a href="exercise-solutions.html#cb656-2" aria-hidden="true" tabindex="-1"></a><span class="fu">HSD.test</span>(apple_mod, <span class="st">&quot;spacing&quot;</span>, <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="exercise-solutions.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb621-2"><a href="exercise-solutions.html#cb621-2" aria-hidden="true" tabindex="-1"></a><span class="fu">HSD.test</span>(apple_mod, <span class="st">&quot;spacing&quot;</span>, <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ## Study: apple_mod ~ &quot;spacing&quot;
 ## 
@@ -1169,15 +1169,15 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <li>Write a few sentences that summarise your findings. What biological processes do you think drive the effects that you have detected?</li>
 </ol>
 <p><em>There was a significant effect of spacing on apple yields (Figure XX, ANOVA: F = 9.385, d.f. = 2 and 89, p = 0.0002). </em></p>
-<p>Then: <em>The pairwise comparisons in the ANOVA model showed that means of the 6 and 10 foot spacing treatment were significantly different (t= 3.244, p = 0.0017), as were those of 6 and 14 (t=4.022, p = 0.0001), but the 10 foot - 14 foot comparison showed no significant difference (t= 0.707, p= 0.4813)<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>.</em></p>
+<p>Then: <em>The pairwise comparisons in the ANOVA model showed that means of the 6 and 10 foot spacing treatment were significantly different (t= 3.244, p = 0.0017), as were those of 6 and 14 (t=4.022, p = 0.0001), but the 10 foot - 14 foot comparison showed no significant difference (t= 0.707, p= 0.4813)<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>.</em></p>
 <p>Or, more simply: <em>The 6-10ft and 6-14ft comparisons showed significant differences (Tukey HSD: p&lt;0.05), but the 10-14ft comparison showed no significant difference (Tukey HSD: p&gt;0.05)</em></p>
 <ol start="10" style="list-style-type: decimal">
 <li>Optional. Instead of using a Tukey test, use the alternative “relevel” approach to make the missing comparison.</li>
 </ol>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="exercise-solutions.html#cb658-1" aria-hidden="true" tabindex="-1"></a>apples2 <span class="ot">&lt;-</span> apples <span class="sc">%&gt;%</span></span>
-<span id="cb658-2"><a href="exercise-solutions.html#cb658-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">spacing =</span> <span class="fu">relevel</span>(spacing, <span class="at">ref =</span> <span class="st">&quot;10&quot;</span>))</span>
-<span id="cb658-3"><a href="exercise-solutions.html#cb658-3" aria-hidden="true" tabindex="-1"></a>apple_mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> spacing, <span class="at">data =</span> apples2)</span>
-<span id="cb658-4"><a href="exercise-solutions.html#cb658-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(apple_mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="exercise-solutions.html#cb623-1" aria-hidden="true" tabindex="-1"></a>apples2 <span class="ot">&lt;-</span> apples <span class="sc">%&gt;%</span></span>
+<span id="cb623-2"><a href="exercise-solutions.html#cb623-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">spacing =</span> <span class="fu">relevel</span>(spacing, <span class="at">ref =</span> <span class="st">&quot;10&quot;</span>))</span>
+<span id="cb623-3"><a href="exercise-solutions.html#cb623-3" aria-hidden="true" tabindex="-1"></a>apple_mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield <span class="sc">~</span> spacing, <span class="at">data =</span> apples2)</span>
+<span id="cb623-4"><a href="exercise-solutions.html#cb623-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(apple_mod2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = yield ~ spacing, data = apples2)
@@ -1207,13 +1207,13 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol style="list-style-type: decimal">
 <li>Import the data</li>
 </ol>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="exercise-solutions.html#cb660-1" aria-hidden="true" tabindex="-1"></a>chirps <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/chirps.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="exercise-solutions.html#cb625-1" aria-hidden="true" tabindex="-1"></a>chirps <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/chirps.csv&quot;</span>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Use <code>mutate</code> to convert Fahrenheit to Celsius (Google it)</li>
 </ol>
-<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="exercise-solutions.html#cb661-1" aria-hidden="true" tabindex="-1"></a>chirps <span class="ot">&lt;-</span> chirps <span class="sc">%&gt;%</span></span>
-<span id="cb661-2"><a href="exercise-solutions.html#cb661-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temperatureC =</span> (temperature <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> (<span class="dv">5</span> <span class="sc">/</span> <span class="dv">9</span>))</span>
-<span id="cb661-3"><a href="exercise-solutions.html#cb661-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chirps)</span></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="exercise-solutions.html#cb626-1" aria-hidden="true" tabindex="-1"></a>chirps <span class="ot">&lt;-</span> chirps <span class="sc">%&gt;%</span></span>
+<span id="cb626-2"><a href="exercise-solutions.html#cb626-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temperatureC =</span> (temperature <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> (<span class="dv">5</span> <span class="sc">/</span> <span class="dv">9</span>))</span>
+<span id="cb626-3"><a href="exercise-solutions.html#cb626-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chirps)</span></code></pre></div>
 <pre><code>##   chirps temperature temperatureC
 ## 1   20.0        88.6     31.44444
 ## 2   16.0        71.6     22.00000
@@ -1224,23 +1224,23 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="3" style="list-style-type: decimal">
 <li>Plot the data</li>
 </ol>
-<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="exercise-solutions.html#cb663-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(chirps, <span class="fu">aes</span>(<span class="at">x =</span> temperatureC, <span class="at">y =</span> chirps)) <span class="sc">+</span></span>
-<span id="cb663-2"><a href="exercise-solutions.html#cb663-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-458-1.png" width="672" /></p>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="exercise-solutions.html#cb628-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(chirps, <span class="fu">aes</span>(<span class="at">x =</span> temperatureC, <span class="at">y =</span> chirps)) <span class="sc">+</span></span>
+<span id="cb628-2"><a href="exercise-solutions.html#cb628-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>())</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-449-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Fit a linear regression model with <code>lm</code></li>
 </ol>
-<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="exercise-solutions.html#cb664-1" aria-hidden="true" tabindex="-1"></a>chirp_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(chirps <span class="sc">~</span> temperatureC, <span class="at">data =</span> chirps)</span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="exercise-solutions.html#cb629-1" aria-hidden="true" tabindex="-1"></a>chirp_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(chirps <span class="sc">~</span> temperatureC, <span class="at">data =</span> chirps)</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Look at diagnostic plots to evaluate the model</li>
 </ol>
-<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="exercise-solutions.html#cb665-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb665-2"><a href="exercise-solutions.html#cb665-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(chirp_mod)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-460-1.png" width="672" /></p>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="exercise-solutions.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb630-2"><a href="exercise-solutions.html#cb630-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(chirp_mod)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-451-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>anova</code> to figure out if the effect of temperature is statistically significant.</li>
 </ol>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="exercise-solutions.html#cb666-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(chirp_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="exercise-solutions.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(chirp_mod)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: chirps
@@ -1252,7 +1252,7 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="7" style="list-style-type: decimal">
 <li>Use <code>summary</code> to obtain information about the coefficients and <span class="math inline">\(R^2\)</span>-value.</li>
 </ol>
-<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="exercise-solutions.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(chirp_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="exercise-solutions.html#cb633-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(chirp_mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = chirps ~ temperatureC, data = chirps)
@@ -1278,8 +1278,8 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="9" style="list-style-type: decimal">
 <li>Add model fit line to the plot.</li>
 </ol>
-<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="exercise-solutions.html#cb670-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-463-1.png" width="672" /></p>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="exercise-solutions.html#cb635-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-454-1.png" width="672" /></p>
 <ol start="10" style="list-style-type: decimal">
 <li>Can I use cricket chirp frequency as a kind of thermometer?</li>
 </ol>
@@ -1291,26 +1291,26 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol style="list-style-type: decimal">
 <li>Import the data set, <code>fishPersonality.csv</code></li>
 </ol>
-<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="exercise-solutions.html#cb671-1" aria-hidden="true" tabindex="-1"></a>fishPersonality <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/fishPersonality.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="exercise-solutions.html#cb636-1" aria-hidden="true" tabindex="-1"></a>fishPersonality <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/fishPersonality.csv&quot;</span>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Plot the data (e.g. as a box plot)</li>
 </ol>
-<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="exercise-solutions.html#cb672-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fishPersonality, <span class="fu">aes</span>(</span>
-<span id="cb672-2"><a href="exercise-solutions.html#cb672-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> colouration, <span class="at">y =</span> spawning,</span>
-<span id="cb672-3"><a href="exercise-solutions.html#cb672-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill =</span> personality</span>
-<span id="cb672-4"><a href="exercise-solutions.html#cb672-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb672-5"><a href="exercise-solutions.html#cb672-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-466-1.png" width="672" /></p>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="exercise-solutions.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fishPersonality, <span class="fu">aes</span>(</span>
+<span id="cb637-2"><a href="exercise-solutions.html#cb637-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> colouration, <span class="at">y =</span> spawning,</span>
+<span id="cb637-3"><a href="exercise-solutions.html#cb637-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill =</span> personality</span>
+<span id="cb637-4"><a href="exercise-solutions.html#cb637-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb637-5"><a href="exercise-solutions.html#cb637-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-457-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Fit an ANOVA model using <code>lm</code>.</li>
 </ol>
-<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="exercise-solutions.html#cb673-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(spawning <span class="sc">~</span> personality <span class="sc">+</span> colouration <span class="sc">+</span></span>
-<span id="cb673-2"><a href="exercise-solutions.html#cb673-2" aria-hidden="true" tabindex="-1"></a>  personality<span class="sc">:</span>colouration, <span class="at">data =</span> fishPersonality)</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="exercise-solutions.html#cb638-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(spawning <span class="sc">~</span> personality <span class="sc">+</span> colouration <span class="sc">+</span></span>
+<span id="cb638-2"><a href="exercise-solutions.html#cb638-2" aria-hidden="true" tabindex="-1"></a>  personality<span class="sc">:</span>colouration, <span class="at">data =</span> fishPersonality)</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li><p>Look at diagnostic plots from this model (<code>autoplot</code>)</p></li>
 <li><p>Use <code>anova</code> to get an Analysis of Variance summary table, and interpret the results.</p></li>
 </ol>
-<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="exercise-solutions.html#cb674-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="exercise-solutions.html#cb639-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: spawning
@@ -1324,7 +1324,7 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="6" style="list-style-type: decimal">
 <li>Get the coefficient summary (<code>summary</code>) and interpret the output.</li>
 </ol>
-<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="exercise-solutions.html#cb676-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="exercise-solutions.html#cb641-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = spawning ~ personality + colouration + personality:colouration, 
@@ -1354,8 +1354,8 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="7" style="list-style-type: decimal">
 <li>Do post-hoc Tukey tests (e.g. using <code>HSD.test</code> from the <code>agricolae</code> package). Interpret the results.</li>
 </ol>
-<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="exercise-solutions.html#cb678-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
-<span id="cb678-2"><a href="exercise-solutions.html#cb678-2" aria-hidden="true" tabindex="-1"></a><span class="fu">HSD.test</span>(mod_A, <span class="fu">c</span>(<span class="st">&quot;personality&quot;</span>, <span class="st">&quot;colouration&quot;</span>), <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="exercise-solutions.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb643-2"><a href="exercise-solutions.html#cb643-2" aria-hidden="true" tabindex="-1"></a><span class="fu">HSD.test</span>(mod_A, <span class="fu">c</span>(<span class="st">&quot;personality&quot;</span>, <span class="st">&quot;colouration&quot;</span>), <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ## Study: mod_A ~ c(&quot;personality&quot;, &quot;colouration&quot;)
 ## 
@@ -1398,8 +1398,8 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol style="list-style-type: decimal">
 <li>Import the data and graph it (<code>geom_boxplot</code>). Try adding the points to the <code>ggplot</code> using the new (to you) function <code>geom_dotplot(binaxis = "y", stackdir = "center")</code>.</li>
 </ol>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="exercise-solutions.html#cb680-1" aria-hidden="true" tabindex="-1"></a>maze <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/maze.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb680-2"><a href="exercise-solutions.html#cb680-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(maze)</span></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="exercise-solutions.html#cb645-1" aria-hidden="true" tabindex="-1"></a>maze <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/maze.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb645-2"><a href="exercise-solutions.html#cb645-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(maze)</span></code></pre></div>
 <pre><code>##     Age nErrors
 ## 1 Child       2
 ## 2 Child       4
@@ -1407,24 +1407,24 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 ## 4 Child       5
 ## 5 Child       6
 ## 6 Child       0</code></pre>
-<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="exercise-solutions.html#cb682-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(maze, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nErrors)) <span class="sc">+</span></span>
-<span id="cb682-2"><a href="exercise-solutions.html#cb682-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb682-3"><a href="exercise-solutions.html#cb682-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">&quot;y&quot;</span>, <span class="at">stackdir =</span> <span class="st">&quot;center&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-472-1.png" width="672" /></p>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="exercise-solutions.html#cb647-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(maze, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nErrors)) <span class="sc">+</span></span>
+<span id="cb647-2"><a href="exercise-solutions.html#cb647-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb647-3"><a href="exercise-solutions.html#cb647-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">&quot;y&quot;</span>, <span class="at">stackdir =</span> <span class="st">&quot;center&quot;</span>))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-463-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Fit an appropriate GLM.</li>
 </ol>
-<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="exercise-solutions.html#cb683-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">glm</span>(nErrors <span class="sc">~</span> Age, <span class="at">data =</span> maze, <span class="at">family =</span> poisson)</span></code></pre></div>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="exercise-solutions.html#cb648-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">glm</span>(nErrors <span class="sc">~</span> Age, <span class="at">data =</span> maze, <span class="at">family =</span> poisson)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Examine the diagnostic plots of the model (<code>autoplot</code>).</li>
 </ol>
-<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="exercise-solutions.html#cb684-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb684-2"><a href="exercise-solutions.html#cb684-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-474-1.png" width="672" /></p>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="exercise-solutions.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb649-2"><a href="exercise-solutions.html#cb649-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-465-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Get the analysis of variance (deviance) table (<code>anova</code>). What does this tell you?</li>
 </ol>
-<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="exercise-solutions.html#cb685-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="exercise-solutions.html#cb650-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod_A, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model: poisson, link: log
@@ -1442,7 +1442,7 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="5" style="list-style-type: decimal">
 <li>Obtain the <code>summary</code> table. What does this tell you?</li>
 </ol>
-<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="exercise-solutions.html#cb687-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="exercise-solutions.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = nErrors ~ Age, family = poisson, data = maze)
@@ -1468,94 +1468,69 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
 <ol start="6" style="list-style-type: decimal">
 <li>Use the coefficient information in the <code>summary</code> table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations “by hand,” or using the <code>predict</code> function. Ask for help if you get stuck.</li>
 </ol>
-<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="exercise-solutions.html#cb689-1" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age =</span> <span class="fu">c</span>(<span class="st">&quot;Child&quot;</span>, <span class="st">&quot;Adult&quot;</span>))</span>
-<span id="cb689-2"><a href="exercise-solutions.html#cb689-2" aria-hidden="true" tabindex="-1"></a>pv <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_A, newData, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb689-3"><a href="exercise-solutions.html#cb689-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb689-4"><a href="exercise-solutions.html#cb689-4" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
-<span id="cb689-5"><a href="exercise-solutions.html#cb689-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nErrors_LP =</span> pv<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
-<span id="cb689-6"><a href="exercise-solutions.html#cb689-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span></span>
-<span id="cb689-7"><a href="exercise-solutions.html#cb689-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upperCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit)</span>
-<span id="cb689-8"><a href="exercise-solutions.html#cb689-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb689-9"><a href="exercise-solutions.html#cb689-9" aria-hidden="true" tabindex="-1"></a>inverseFunction <span class="ot">&lt;-</span> <span class="fu">family</span>(mod_A)<span class="sc">$</span>linkinv</span>
-<span id="cb689-10"><a href="exercise-solutions.html#cb689-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb689-11"><a href="exercise-solutions.html#cb689-11" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
-<span id="cb689-12"><a href="exercise-solutions.html#cb689-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nErrors =</span> <span class="fu">inverseFunction</span>(nErrors_LP)) <span class="sc">%&gt;%</span></span>
-<span id="cb689-13"><a href="exercise-solutions.html#cb689-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI =</span> <span class="fu">inverseFunction</span>(lowerCI_LP)) <span class="sc">%&gt;%</span></span>
-<span id="cb689-14"><a href="exercise-solutions.html#cb689-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upperCI =</span> <span class="fu">inverseFunction</span>(upperCI_LP))</span>
-<span id="cb689-15"><a href="exercise-solutions.html#cb689-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb689-16"><a href="exercise-solutions.html#cb689-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb689-17"><a href="exercise-solutions.html#cb689-17" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">geom_point</span>(</span>
-<span id="cb689-18"><a href="exercise-solutions.html#cb689-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> newData, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nErrors),</span>
-<span id="cb689-19"><a href="exercise-solutions.html#cb689-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">&quot;red&quot;</span></span>
-<span id="cb689-20"><a href="exercise-solutions.html#cb689-20" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb689-21"><a href="exercise-solutions.html#cb689-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> newData, <span class="fu">aes</span>(</span>
-<span id="cb689-22"><a href="exercise-solutions.html#cb689-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Age, <span class="at">xend =</span> Age,</span>
-<span id="cb689-23"><a href="exercise-solutions.html#cb689-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> lowerCI, <span class="at">yend =</span> upperCI</span>
-<span id="cb689-24"><a href="exercise-solutions.html#cb689-24" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-477-1.png" width="672" /></p>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="exercise-solutions.html#cb654-1" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age =</span> <span class="fu">c</span>(<span class="st">&quot;Child&quot;</span>, <span class="st">&quot;Adult&quot;</span>))</span>
+<span id="cb654-2"><a href="exercise-solutions.html#cb654-2" aria-hidden="true" tabindex="-1"></a>pv <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_A, newData, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb654-3"><a href="exercise-solutions.html#cb654-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-4"><a href="exercise-solutions.html#cb654-4" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
+<span id="cb654-5"><a href="exercise-solutions.html#cb654-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nErrors_LP =</span> pv<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
+<span id="cb654-6"><a href="exercise-solutions.html#cb654-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span></span>
+<span id="cb654-7"><a href="exercise-solutions.html#cb654-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upperCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit)</span>
+<span id="cb654-8"><a href="exercise-solutions.html#cb654-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-9"><a href="exercise-solutions.html#cb654-9" aria-hidden="true" tabindex="-1"></a>inverseFunction <span class="ot">&lt;-</span> <span class="fu">family</span>(mod_A)<span class="sc">$</span>linkinv</span>
+<span id="cb654-10"><a href="exercise-solutions.html#cb654-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-11"><a href="exercise-solutions.html#cb654-11" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
+<span id="cb654-12"><a href="exercise-solutions.html#cb654-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nErrors =</span> <span class="fu">inverseFunction</span>(nErrors_LP)) <span class="sc">%&gt;%</span></span>
+<span id="cb654-13"><a href="exercise-solutions.html#cb654-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI =</span> <span class="fu">inverseFunction</span>(lowerCI_LP)) <span class="sc">%&gt;%</span></span>
+<span id="cb654-14"><a href="exercise-solutions.html#cb654-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upperCI =</span> <span class="fu">inverseFunction</span>(upperCI_LP))</span>
+<span id="cb654-15"><a href="exercise-solutions.html#cb654-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-16"><a href="exercise-solutions.html#cb654-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-17"><a href="exercise-solutions.html#cb654-17" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">geom_point</span>(</span>
+<span id="cb654-18"><a href="exercise-solutions.html#cb654-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> newData, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nErrors),</span>
+<span id="cb654-19"><a href="exercise-solutions.html#cb654-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> <span class="st">&quot;red&quot;</span></span>
+<span id="cb654-20"><a href="exercise-solutions.html#cb654-20" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb654-21"><a href="exercise-solutions.html#cb654-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> newData, <span class="fu">aes</span>(</span>
+<span id="cb654-22"><a href="exercise-solutions.html#cb654-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Age, <span class="at">xend =</span> Age,</span>
+<span id="cb654-23"><a href="exercise-solutions.html#cb654-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> lowerCI, <span class="at">yend =</span> upperCI</span>
+<span id="cb654-24"><a href="exercise-solutions.html#cb654-24" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-468-1.png" width="672" /></p>
 
 </div>
 <div id="snails-on-the-move" class="section level2" number="24.13">
 <h2><span class="header-section-number">24.13</span> Snails on the move</h2>
 <p>Simulate a t-test-based analysis in R to figure out what sample size would result in 80% power.</p>
-<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="exercise-solutions.html#cb690-1" aria-hidden="true" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># vary this until power &gt; 0.8</span></span>
-<span id="cb690-2"><a href="exercise-solutions.html#cb690-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb690-3"><a href="exercise-solutions.html#cb690-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
-<span id="cb690-4"><a href="exercise-solutions.html#cb690-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
-<span id="cb690-5"><a href="exercise-solutions.html#cb690-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, <span class="at">mean =</span> <span class="fl">7.4</span>, <span class="at">sd =</span> <span class="fl">2.76</span>),</span>
-<span id="cb690-6"><a href="exercise-solutions.html#cb690-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, <span class="at">mean =</span> <span class="fl">7.4</span> <span class="sc">*</span> <span class="fl">1.25</span>, <span class="at">sd =</span> <span class="fl">2.76</span>)</span>
-<span id="cb690-7"><a href="exercise-solutions.html#cb690-7" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
-<span id="cb690-8"><a href="exercise-solutions.html#cb690-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb690-9"><a href="exercise-solutions.html#cb690-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(result <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span></span></code></pre></div>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="exercise-solutions.html#cb655-1" aria-hidden="true" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">40</span> <span class="co"># vary this until power &gt; 0.8</span></span>
+<span id="cb655-2"><a href="exercise-solutions.html#cb655-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb655-3"><a href="exercise-solutions.html#cb655-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
+<span id="cb655-4"><a href="exercise-solutions.html#cb655-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
+<span id="cb655-5"><a href="exercise-solutions.html#cb655-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, <span class="at">mean =</span> <span class="fl">7.4</span>, <span class="at">sd =</span> <span class="fl">2.76</span>),</span>
+<span id="cb655-6"><a href="exercise-solutions.html#cb655-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, <span class="at">mean =</span> <span class="fl">7.4</span> <span class="sc">*</span> <span class="fl">1.25</span>, <span class="at">sd =</span> <span class="fl">2.76</span>)</span>
+<span id="cb655-7"><a href="exercise-solutions.html#cb655-7" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
+<span id="cb655-8"><a href="exercise-solutions.html#cb655-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb655-9"><a href="exercise-solutions.html#cb655-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(result <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span></span></code></pre></div>
 <pre><code>## [1] 0.83</code></pre>
 <p>You should find that you need a sample size of about 40 per group.</p>
 </div>
 <div id="mouse-lemur-strength" class="section level2" number="24.14">
 <h2><span class="header-section-number">24.14</span> Mouse lemur strength</h2>
 <p>What difference in strength could you reliably detect (with power &gt;80%) with these sample sizes?</p>
-<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="exercise-solutions.html#cb692-1" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">&lt;-</span> <span class="dv">185</span> <span class="co"># Vary this to give a difference to 2nd group t-test</span></span>
-<span id="cb692-2"><a href="exercise-solutions.html#cb692-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb692-3"><a href="exercise-solutions.html#cb692-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
-<span id="cb692-4"><a href="exercise-solutions.html#cb692-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
-<span id="cb692-5"><a href="exercise-solutions.html#cb692-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean =</span> <span class="dv">600</span>, <span class="at">sd =</span> <span class="dv">145</span>),</span>
-<span id="cb692-6"><a href="exercise-solutions.html#cb692-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">600</span> <span class="sc">-</span> diff, <span class="at">sd =</span> <span class="dv">145</span>)</span>
-<span id="cb692-7"><a href="exercise-solutions.html#cb692-7" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
-<span id="cb692-8"><a href="exercise-solutions.html#cb692-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb692-9"><a href="exercise-solutions.html#cb692-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(result <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span></span></code></pre></div>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="exercise-solutions.html#cb657-1" aria-hidden="true" tabindex="-1"></a>diff <span class="ot">&lt;-</span> <span class="dv">185</span> <span class="co"># Vary this to give a difference to 2nd group t-test</span></span>
+<span id="cb657-2"><a href="exercise-solutions.html#cb657-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb657-3"><a href="exercise-solutions.html#cb657-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
+<span id="cb657-4"><a href="exercise-solutions.html#cb657-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
+<span id="cb657-5"><a href="exercise-solutions.html#cb657-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean =</span> <span class="dv">600</span>, <span class="at">sd =</span> <span class="dv">145</span>),</span>
+<span id="cb657-6"><a href="exercise-solutions.html#cb657-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">8</span>, <span class="at">mean =</span> <span class="dv">600</span> <span class="sc">-</span> diff, <span class="at">sd =</span> <span class="dv">145</span>)</span>
+<span id="cb657-7"><a href="exercise-solutions.html#cb657-7" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
+<span id="cb657-8"><a href="exercise-solutions.html#cb657-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb657-9"><a href="exercise-solutions.html#cb657-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(result <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span></span></code></pre></div>
 <pre><code>## [1] 0.812</code></pre>
 <p>You should find that you could detect a difference of about 185g or a mean for old animals of 415g which is 70% of the young animals i.e. a 30% reduction.</p>
 
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="footnotes">
 <hr />
-<ol start="20">
-<li id="fn20"><p>These values come from the <code>summary</code> tables for the ANOVA model, and the releveled ANOVA model<a href="exercise-solutions.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<ol start="19">
+<li id="fn19"><p>These values come from the <code>summary</code> tables for the ANOVA model, and the releveled ANOVA model<a href="exercise-solutions.html#fnref19" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -1563,8 +1538,8 @@ Then try answering the question - “<em>are people who prefer dogs taller than 
           </div>
         </div>
       </div>
-<a href="an-example-of-a-past-exam-2020.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="exam-2021.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="an-example-of-a-past-exam-2020.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
