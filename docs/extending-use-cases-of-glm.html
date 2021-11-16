@@ -33,7 +33,7 @@
   
 <link rel="prev" href="generalised-linear-models.html"/>
 <link rel="next" href="power-analysis-by-simulation.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -60,6 +60,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -686,8 +687,8 @@ These data are binomial/proportion data because the values in the cells of the t
 <pre><code>##      1_yes 0_no
 ## [1,]   816 3203
 ## [2,]   188 1168</code></pre>
-<p>So we can see “success” on the left and “failure” on the right“.
-We now create a (tiny) <code>data.frame</code> for the parental status (smoker =”1_yes“, non-smoker =”0_no").</p>
+<p>So we can see “success” on the left and “failure” on the right”.
+We now create a (tiny) <code>data.frame</code> for the parental status (smoker = “1_yes,” non-smoker = “0_no”).</p>
 <div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="extending-use-cases-of-glm.html#cb491-1" aria-hidden="true" tabindex="-1"></a>smoke <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">parentSmoke =</span> <span class="fu">c</span>(<span class="st">&quot;1_yes&quot;</span>, <span class="st">&quot;0_no&quot;</span>))</span></code></pre></div>
 <p>Now we can fit the model. Pause now and think about what the NULL hypothesis is here. It is that parental smoking does not have any influence on whether the child smokes, and that the probability that the student smokes is unrelated to parental smoking.</p>
 <div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="extending-use-cases-of-glm.html#cb492-1" aria-hidden="true" tabindex="-1"></a>smokeMod <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> parentSmoke, <span class="at">data =</span> smoke, <span class="at">family =</span> binomial)</span></code></pre></div>
