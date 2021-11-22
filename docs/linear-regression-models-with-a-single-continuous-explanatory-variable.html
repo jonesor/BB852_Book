@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-16" />
+<meta name="date" content="2021-11-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="anova-linear-models-with-a-single-categorical-explanatory-variable.html"/>
 <link rel="next" href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -60,7 +60,6 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -532,7 +531,7 @@ Figure 16.5: Illustration of the coefficient estimates for our model. The peak o
 Figure 16.6: An illustration of different R-squared values.
 </p>
 </div>
-<p>A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The <code>ggplot2</code> package has a neat and simple function called <code>geom_smooth</code> which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use <code>method = "lm"</code>. This will plot the fitted regression model, and will add, by default” a shaded “ribbon” which represents the so called “95% confidence interval” for the fitted values. These are 2 time the standard error.</p>
+<p>A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The <code>ggplot2</code> package has a neat and simple function called <code>geom_smooth</code> which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use <code>method = "lm"</code>. This will plot the fitted regression model, and will add, by default" a shaded “ribbon” which represents the so called “95% confidence interval” for the fitted values. These are 2 time the standard error.</p>
 <div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb393-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
 <span id="cb393-2"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb393-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb393-3"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb393-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>

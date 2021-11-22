@@ -24,7 +24,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-16" />
+<meta name="date" content="2021-11-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="data-wrangling-with-dplyr.html"/>
 <link rel="next" href="visualising-data-with-ggplot2.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -60,7 +60,6 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -555,7 +554,7 @@ You can “pipe” data into the function, then tell it which columns you would 
 ##  9 London heightMale      177
 ## 10 London heightFemale    153
 ## # … with 50 more rows</code></pre>
-<p>We are nearly done. But this is not perfect because the names in the <code>Sex</code> column are not right. We can fix this in a couple ways. Here’s one easy way using the function <code>gsub</code>. The <code>gsub</code> function (“<strong>g</strong>eneral <strong>sub</strong>stution) finds text and replaces it with other text. In this case we want to find”height” and replace it with nothing (““).</p>
+<p>We are nearly done. But this is not perfect because the names in the <code>Sex</code> column are not right. We can fix this in a couple ways. Here’s one easy way using the function <code>gsub</code>. The <code>gsub</code> function (“<strong>g</strong>eneral <strong>sub</strong>stution) finds text and replaces it with other text. In this case we want to find”height" and replace it with nothing ("").</p>
 <p>So we can now complete the job with a <code>mutate</code> command, and make sure it is recognised as a categorical variable (a <code>factor</code>, like this:</p>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="combining-data-sets.html#cb187-1" aria-hidden="true" tabindex="-1"></a>newHeights <span class="ot">&lt;-</span> heights <span class="sc">%&gt;%</span></span>
 <span id="cb187-2"><a href="combining-data-sets.html#cb187-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
