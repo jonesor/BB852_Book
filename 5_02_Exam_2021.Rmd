@@ -250,8 +250,44 @@ set.seed(Sys.time())
 ```
 
 ```{r eval = FALSE, echo = FALSE}
-ggplot(musselSurvey,aes(x=depth,y = nMussels,colour = habitat)) +
-  geom_point()
+
+mussel<-read.csv("courseData/musselSurvey.csv")
+
+
+ggplot(mussel, aes(x = depth, y = nMussels, colour = habitat)) + geom_point()
+
+
+mod1 <- glm(nMussels ~ depth * habitat, data = mussel, family = poisson)
+
+anova(mod1, test = "Chi")
+summary(mod1)
+
+newData <- expand.grid(depth = seq(0,3,0.1),habitat = unique(mussel$habitat))
+
+pv <- predict(mod1, newdata = newData, se.fit = TRUE)
+
+newData <- newData %>%
+  mutate(fit_LP = pv$fit) %>%
+  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) %>%
+  mutate(upperCI_LP = pv$fit + 1.96 * pv$se.fit)
+
+# Get the inverse link function
+inverseFunction <- family(mod1)$linkinv
+
+# transform predicted data to the natural scale
+newData <- newData %>%
+  mutate(
+    nMussels = inverseFunction(fit_LP),
+    ymin = inverseFunction(lowerCI_LP),
+    ymax = inverseFunction(upperCI_LP)
+  )
+
+ggplot(mussel, aes(x = depth, y = nMussels, colour = habitat)) + geom_point() +
+geom_ribbon(
+    data = newData, aes(x = depth, ymin = ymin, ymax = ymax, fill = habitat), alpha = 0.5)
+
+
 ```
+
 
 
