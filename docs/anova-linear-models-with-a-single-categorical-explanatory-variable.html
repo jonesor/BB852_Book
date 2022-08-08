@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 ANOVA: Linear models with a single categorical explanatory variable | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 ANOVA: Linear models with a single categorical explanatory variable | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-22" />
+<meta name="date" content="2022-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="t-test-comparing-two-means.html"/>
 <link rel="next" href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,16 +49,18 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -289,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.2.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>15.2.1</b> Where are the differences?</a></li>
 <li class="chapter" data-level="15.2.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>15.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand.”</a></li>
+<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand”.</a></li>
 <li class="chapter" data-level="15.4" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>15.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>16</b> Linear regression: models with a single continuous explanatory variable</a>
@@ -352,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Exam</b></span></li>
-<li class="chapter" data-level="23" data-path="exam-2021.html"><a href="exam-2021.html"><i class="fa fa-check"></i><b>23</b> Exam 2021</a></li>
+<li class="chapter" data-level="23" data-path="exam-2022.html"><a href="exam-2022.html"><i class="fa fa-check"></i><b>23</b> Exam 2022</a></li>
 <li class="part"><span><b>V Solutions</b></span></li>
 <li class="chapter" data-level="24" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>24</b> Exercise Solutions</a>
 <ul>
@@ -392,12 +393,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="anova-linear-models-with-a-single-categorical-explanatory-variable" class="section level1" number="15">
-<h1><span class="header-section-number">Chapter 15</span> ANOVA: Linear models with a single categorical explanatory variable</h1>
+<div id="anova-linear-models-with-a-single-categorical-explanatory-variable" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Chapter 15</span> ANOVA: Linear models with a single categorical explanatory variable<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-linear-models-with-a-single-categorical-explanatory-variable" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>With the previous work on t-tests (and also with randomisation tests), you are now equipped to test for differences between two groups, or between one group and some fixed value. But what if there are more than two groups?</p>
 <p>The answer is to use a one-way analysis of variance (ANOVA). Conceptually, this works the same way as a t-test.</p>
-<div id="one-way-anova" class="section level2" number="15.1">
-<h2><span class="header-section-number">15.1</span> One-way ANOVA</h2>
+<div id="one-way-anova" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> One-way ANOVA<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The one-way ANOVA is illustrated below with two cases (Figure <a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fig:anovaVis">15.1</a>). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether <em>at least one</em> of the groups is different from the others.</p>
 <div class="figure" style="text-align: left"><span style="display:block;" id="fig:anovaVis"></span>
 <img src="BB852_files/figure-html/anovaVis-1.png" alt="Visualising an ANOVA." width="672" />
@@ -407,12 +408,14 @@ Figure 15.1: Visualising an ANOVA.
 </div>
 <p>After figuring out if at least one of the groups is significantly different from the others it is often enough to examine plots (or summary statistics) to see where the differences are (e.g. which group(s) are different from each other). In other cases it might be necessary to do follow up <em>post-hoc multiple comparison</em> tests. We will come to those later.</p>
 </div>
-<div id="fitting-an-anova-in-r" class="section level2" number="15.2">
-<h2><span class="header-section-number">15.2</span> Fitting an ANOVA in R</h2>
-<p>New coffee machines use “pods” to make espresso. These have become much more popular than the traditional “bar machines.” This data looks at the amount of “crema” or foam produced (a sign of quality!) using three methods: bar machines (BM), Hyper Espresso Pods (HIP) and Illy Espresso System (IES). Are any of these methods better than the others?</p>
+<div id="fitting-an-anova-in-r" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> Fitting an ANOVA in R<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fitting-an-anova-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>New coffee machines use “pods” to make espresso. These have become much more popular than the traditional “bar machines”. This data looks at the amount of “crema” or foam produced (a sign of quality!) using three methods: bar machines (BM), Hyper Espresso Pods (HIP) and Illy Espresso System (IES). Are any of these methods better than the others?</p>
 <div class="do-something">
 <p>
-Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot</code> packages, and to set your working directory correctly.
+Remember to load the <code>dplyr</code>, <code>magrittr</code> and
+<code>ggplot</code> packages, and to set your working directory
+correctly.
 </p>
 </div>
 <p>Import the data (<code>espresso.csv</code>) and look at it.</p>
@@ -466,8 +469,8 @@ Figure 15.3: Diagnostic plots for the ANOVA model. This looks great.
 <p>This results in a p-value of 0.0000004699 (very highly significant!).</p>
 <p>Based on this p-value we can reject the null hypothesis that there is no difference between groups. We might report this simple result like this:</p>
 <p><em>The foam index varied significantly among groups (ANOVA: F = 28.413, d.f. = 2 and 24, p = 0.000).</em></p>
-<div id="where-are-the-differences" class="section level3" number="15.2.1">
-<h3><span class="header-section-number">15.2.1</span> Where are the differences?</h3>
+<div id="where-are-the-differences" class="section level3 hasAnchor" number="15.2.1">
+<h3><span class="header-section-number">15.2.1</span> Where are the differences?<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This model output doesn’t tell us <em>where</em> those differences are, nor does it tell us what the estimated mean values of foaminess are for the three groups: what are the effects? We need to dig further into the model to get to these details.</p>
 <p>There are several ways to do this and we’ll look at one of them.</p>
 <p>We do this using the <code>summary</code> function.</p>
@@ -491,12 +494,12 @@ Figure 15.3: Diagnostic plots for the ANOVA model. This looks great.
 ## Residual standard error: 8.458 on 24 degrees of freedom
 ## Multiple R-squared:  0.7031, Adjusted R-squared:  0.6783 
 ## F-statistic: 28.41 on 2 and 24 DF,  p-value: 4.699e-07</code></pre>
-<p>To properly interpret this output you need to understand something called “treatment contrasts.” Essentially, contrasts define how model coefficients (the estimates made by the model) are presented in R outputs.</p>
+<p>To properly interpret this output you need to understand something called “treatment contrasts”. Essentially, contrasts define how model coefficients (the estimates made by the model) are presented in R outputs.</p>
 <p>They are a bit hard to wrap your head aroudn and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use <code>group_by</code> and <code>summarise</code> to calculate the means for your the levels of your explanatory variable.</p>
 <div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb354-1" aria-hidden="true" tabindex="-1"></a>espresso <span class="sc">%&gt;%</span></span>
 <span id="cb354-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb354-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
 <span id="cb354-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb354-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">gp_mean =</span> <span class="fu">mean</span>(foamIndx))</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 2
+<pre><code>## # A tibble: 3 × 2
 ##   method gp_mean
 ##   &lt;fct&gt;    &lt;dbl&gt;
 ## 1 BM        32.4
@@ -562,8 +565,8 @@ Figure 15.4: Comparison illustrating the difference between ANOVA models using (
 <p>So, from the first of the model outputs above you can say that BM is significantly different than HIP (t= 7.248, p &lt; 0.0001), but that BM is not significantly different from IES (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP is significantly different from IES (t=-5.417, p &lt; 0.0001). You could write this into the main text, include the information in a figure caption (i.e. add it to Figure <a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fig:coffee">15.2</a>).</p>
 <p>e.g. <em>The foam index varied significantly among groups (ANOVA: F = 28.413, d.f. = 2 and 24, p = 0.000). The pairwise comparisons in the ANOVA model showed that means of BM and HIP were significantly different (t= 7.248, p &lt; 0.0001), as were those of HIP and IES (t=-5.417, p &lt; 0.0001), but the BM-IES comparison showed no significant difference (t= 1.831, p= 0.0796)</em>.</p>
 </div>
-<div id="tukeys-honestly-significant-difference-hsd" class="section level3" number="15.2.2">
-<h3><span class="header-section-number">15.2.2</span> Tukey’s Honestly Significant Difference (HSD)</h3>
+<div id="tukeys-honestly-significant-difference-hsd" class="section level3 hasAnchor" number="15.2.2">
+<h3><span class="header-section-number">15.2.2</span> Tukey’s Honestly Significant Difference (HSD)<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>An alternative way to approach these comparisons between groups is to use something called a <strong>post-hoc multiple comparison test</strong>. The words “post-hoc” mean “after the event” – i.e. after the ANOVA in this case – while the “multiple comparison” refers to the (potentially many) pairwise comparisons that you would like to make with an ANOVA. One of the most widely used post-hoc tests is called Tukey’s Honestly Significant Difference (Tukey HSD) test. There is a convenient R package called <code>agricolae</code> that will do these for you.</p>
 <div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You only need to do this once!</span></span>
 <span id="cb364-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb364-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;agricolae&quot;</span>)</span></code></pre></div>
@@ -595,15 +598,16 @@ Figure 15.4: Comparison illustrating the difference between ANOVA models using (
 ## HIP     61.3      a
 ## IES     39.7      b
 ## BM      32.4      b</code></pre>
-<p>The output is long-winded, and the main thing to look at is the part at the end. The key to understanding this is actually written in the output, “<code>Treatments with the same letter are not significantly different</code>.”</p>
+<p>The output is long-winded, and the main thing to look at is the part at the end. The key to understanding this is actually written in the output, “<code>Treatments with the same letter are not significantly different</code>”.</p>
 <p>You could include these in a figure or a table with text like, <em>“Means followed by the same letter did not differ significantly (Tukey HSD test, p&gt;0.05)”</em>.</p>
 </div>
 </div>
-<div id="anova-calculation-by-hand." class="section level2" number="15.3">
-<h2><span class="header-section-number">15.3</span> ANOVA calculation “by hand.”</h2>
+<div id="anova-calculation-by-hand." class="section level2 hasAnchor" number="15.3">
+<h2><span class="header-section-number">15.3</span> ANOVA calculation “by hand”.<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand." class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="do-something">
 <p>
-The following is an optional exercise designed to help you understand how ANOVA works.
+The following is an optional exercise designed to help you understand
+how ANOVA works.
 </p>
 </div>
 <p>The ANOVA calculation involves calculating something called an F-value or F-statistic (the F stands for Fisher, who invented ANOVA). This is similar to the t-statistic in that it is a ratio between two quantities, in this case variances. In ANOVA, the F-statistic is calculated as the <strong>treatment variance</strong> divided by the <strong>error variance</strong>.</p>
@@ -615,7 +619,7 @@ The following is an optional exercise designed to help you understand how ANOVA 
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ANOVAbyhand"></span>
 <img src="BB852_files/figure-html/ANOVAbyhand-1.png" alt="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the &quot;treatment sum of squares&quot;." width="768" />
 <p class="caption">
-Figure 15.5: The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the “treatment sum of squares.”
+Figure 15.5: The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the “treatment sum of squares”.
 </p>
 </div>
 <p>In the following I will show how these calculations can be done “by hand” in R. The purpose of showing you this is to demonstrate exactly how the <code>lm</code> model that you fitted above works, and prove to yourself that it is not rocket science… you will never need to do this in real life, because you have the wonderful <code>lm</code> function.</p>
@@ -667,13 +671,13 @@ Figure 15.5: The relative size of the squared residual errors from the overall m
 <pre><code>## [1] 4.698636e-07</code></pre>
 <p>As you can see, the method is a bit laborious and time consuming but it is conceptually fairly straightforward - it all hinges on the ratio of variation due to treatment effect vs. overall variation. Signal and noise.</p>
 </div>
-<div id="exercise-apple-tree-crop-yield" class="section level2" number="15.4">
-<h2><span class="header-section-number">15.4</span> Exercise: Apple tree crop yield</h2>
+<div id="exercise-apple-tree-crop-yield" class="section level2 hasAnchor" number="15.4">
+<h2><span class="header-section-number">15.4</span> Exercise: Apple tree crop yield<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>An experiment was conducted to look at the effect of tree spacing on apple crop yield (total kg per tree of apples between 1975-1979) in different spacing conditions (i.e. distances between trees). There were 40 trees in each treatment group. The spacing was 6, 10 and 14 feet, and should be treated as a categorical variable. There may be some <code>NA</code> missing yield values.</p>
 <p>Import the data (<code>apples.csv</code>) and analyse it using the techniques you have learned in the ANOVA lecture, and the previous chapter, to answer the question “What is the effect of tree spacing on apple yields?”</p>
 <ol style="list-style-type: decimal">
 <li><p>Import and look at the data (e.g. <code>summary</code> or <code>str</code> or <code>head</code>)</p></li>
-<li><p>Ensure that the explanatory variable (<code>spacing</code>) is defined as a categorical variable (i.e. a “factor,” in R-speak). You can use <code>mutate</code> and <code>as.factor</code> functions for this.</p></li>
+<li><p>Ensure that the explanatory variable (<code>spacing</code>) is defined as a categorical variable (i.e. a “factor”, in R-speak). You can use <code>mutate</code> and <code>as.factor</code> functions for this.</p></li>
 <li><p>Plot the data using <code>ggplot</code> (a box plot with (optionally) added jittered points would be good).</p></li>
 <li><p>Fit an ANOVA model using <code>lm</code>.</p></li>
 <li><p>Check the model using a diagnostic plot (i.e. using <code>autoplot</code> from the <code>ggfortify</code> package).</p></li>
@@ -685,7 +689,11 @@ Figure 15.5: The relative size of the squared residual errors from the overall m
 </ol>
 <div class="do-something">
 <p>
-If you get this far, try using the ANOVA approach on one of the previous t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the <code>t.test</code> function or the ANOVA approach with <code>lm</code>.
+If you get this far, try using the ANOVA approach on one of the
+previous t-test examples (remember that ANOVA can be used when your
+single explanatory variable has TWO or more levels). You should notice
+that the results are the same whether you use the <code>t.test</code>
+function or the ANOVA approach with <code>lm</code>.
 </p>
 </div>
 
@@ -701,7 +709,6 @@ If you get this far, try using the ANOVA approach on one of the previous t-test 
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -742,7 +749,7 @@ gitbook.start({
 },
 "download": ["BB852.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

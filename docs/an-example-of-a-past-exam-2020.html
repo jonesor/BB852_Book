@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 25 An example of a past Exam (2020) | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 25 An example of a past Exam (2020) | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-22" />
+<meta name="date" content="2022-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="exercise-solutions.html"/>
 
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,16 +49,18 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -289,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.2.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>15.2.1</b> Where are the differences?</a></li>
 <li class="chapter" data-level="15.2.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>15.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand.”</a></li>
+<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand”.</a></li>
 <li class="chapter" data-level="15.4" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>15.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>16</b> Linear regression: models with a single continuous explanatory variable</a>
@@ -352,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Exam</b></span></li>
-<li class="chapter" data-level="23" data-path="exam-2021.html"><a href="exam-2021.html"><i class="fa fa-check"></i><b>23</b> Exam 2021</a></li>
+<li class="chapter" data-level="23" data-path="exam-2022.html"><a href="exam-2022.html"><i class="fa fa-check"></i><b>23</b> Exam 2022</a></li>
 <li class="part"><span><b>V Solutions</b></span></li>
 <li class="chapter" data-level="24" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>24</b> Exercise Solutions</a>
 <ul>
@@ -392,22 +393,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="an-example-of-a-past-exam-2020" class="section level1" number="25">
-<h1><span class="header-section-number">Chapter 25</span> An example of a past Exam (2020)</h1>
+<div id="an-example-of-a-past-exam-2020" class="section level1 hasAnchor" number="25">
+<h1><span class="header-section-number">Chapter 25</span> An example of a past Exam (2020)<a href="an-example-of-a-past-exam-2020.html#an-example-of-a-past-exam-2020" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><strong>This is a previous year’s exam!</strong></p>
 <p>I am leaving this here so you can see what the final exam will look like.</p>
 <div class="do-something">
 <p>
-This exam includes four questions that test different aspects of your learning during this course: data wrangling, data visualisation and statistics. Each question is broken down into a number sub-questions.
+This exam includes four questions that test different aspects of your
+learning during this course: data wrangling, data visualisation and
+statistics. Each question is broken down into a number
+sub-questions.
 </p>
 <p>
-Your work should be handed in as a single PDF. The number of each question should be clearly indicated, and the answer to each question should start on a new page.
+Your work should be handed in as a single PDF. The number of each
+question should be clearly indicated, and the answer to each question
+should start on a new page.
 </p>
 <p>
-For each question you must provide the R code you used to answer the question. The code should include comments to explain what you are doing. The code should be provided as text using a fixed-width font such as <code>Courier</code>. The rest of your answers should be in another font (e.g. Times New Roman, Cambria). Please use <em>text</em> rather than a screenshot of your code.
+For each question you must provide the R code you used to answer the
+question. The code should include comments to explain what you are
+doing. The code should be provided as text using a fixed-width font such
+as <code>Courier</code>. The rest of your answers should be in another
+font (e.g. Times New Roman, Cambria). Please use <em>text</em> rather
+than a screenshot of your code.
 </p>
 <p>
-You can use the Microsoft Word template provided alongside these questions (<a href="https://www.dropbox.com/s/0ecb2c4fl6ygui9/BB852_Exam_template.docx?dl=0">here</a>) as guidance.
+You can use the Microsoft Word template provided alongside these
+questions (<a
+href="https://www.dropbox.com/s/0ecb2c4fl6ygui9/BB852_Exam_template.docx?dl=0">here</a>)
+as guidance.
 </p>
 <ul>
 <li>
@@ -420,23 +434,30 @@ Plots should be produced using <code>ggplot</code>.
 Remember that you can make “panels” of plots (e.g. Fig 1A, B)
 </li>
 <li>
-Axis labels are important. Sometimes you may want to edit them to be different from a data column name.
+Axis labels are important. Sometimes you may want to edit them to be
+different from a data column name.
 </li>
 <li>
-Reporting of any statistics should be appropriate to the type of analysis you have done. There are examples in the course materials.
+Reporting of any statistics should be appropriate to the type of
+analysis you have done. There are examples in the course materials.
 </li>
 <li>
-Reporting of methods and results should be written in the style of a scientific paper (again, there are examples in the course materials).
+Reporting of methods and results should be written in the style of a
+scientific paper (again, there are examples in the course
+materials).
 </li>
 </ul>
 <p>
-<em>If you don’t understand any aspects of the questions, please ask for help!</em>
+<em>If you don’t understand any aspects of the questions, please ask
+for help!</em>
 </p>
 <p>
-<strong>Hand in deadline is 8th January 2021 at 23:59 CET</strong>
+<strong>Hand in deadline is 8th January 2021 at 23:59
+CET</strong>
 </p>
 <p>
-<strong>You MUST submit your work via Blackboard (not email!)</strong>
+<strong>You MUST submit your work via Blackboard (not
+email!)</strong>
 </p>
 </div>
 <hr />
@@ -461,7 +482,7 @@ Reporting of methods and results should be written in the style of a scientific 
 <span id="cb659-10"><a href="an-example-of-a-past-exam-2020.html#cb659-10" aria-hidden="true" tabindex="-1"></a>(amazon_YearlyFires <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
 <span id="cb659-11"><a href="an-example-of-a-past-exam-2020.html#cb659-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
 <span id="cb659-12"><a href="an-example-of-a-past-exam-2020.html#cb659-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n.fires =</span> <span class="fu">sum</span>(number)))</span></code></pre></div>
-<pre><code>## # A tibble: 20 x 2
+<pre><code>## # A tibble: 20 × 2
 ##     year n.fires
 ##    &lt;int&gt;   &lt;dbl&gt;
 ##  1  1998  20014.
@@ -487,9 +508,9 @@ Reporting of methods and results should be written in the style of a scientific 
 <div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="an-example-of-a-past-exam-2020.html#cb661-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(amazon_YearlyFires, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n.fires)) <span class="sc">+</span></span>
 <span id="cb661-2"><a href="an-example-of-a-past-exam-2020.html#cb661-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb661-3"><a href="an-example-of-a-past-exam-2020.html#cb661-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-475-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-465-1.png" width="672" /></p>
 <p>You may have slightly different values if you used old data that had some fractional numbers (e.g. 1.543 is not “1 point 5” fires, but one thousand five hundred!). Well done those of you that spotted that issue. Don’t worry if you didn’t - you don’t lose points!</p>
-<p>Some of you may also have made plots that included ONLY data from the “legal amazon,” by filtering to those states only. Again, that is no problem if you did that.</p>
+<p>Some of you may also have made plots that included ONLY data from the “legal amazon”, by filtering to those states only. Again, that is no problem if you did that.</p>
 <p><strong>b) Produce a table showing the minimum, maximum, mean and median number of fires per month in the legally-defined Amazon.</strong></p>
 <div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="an-example-of-a-past-exam-2020.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First filter to only include the &quot;legally defined amazon&quot;</span></span>
 <span id="cb662-2"><a href="an-example-of-a-past-exam-2020.html#cb662-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that all are included in the result (you might need to</span></span>
@@ -539,7 +560,7 @@ Reporting of methods and results should be written in the style of a scientific 
 <span id="cb664-15"><a href="an-example-of-a-past-exam-2020.html#cb664-15" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb664-16"><a href="an-example-of-a-past-exam-2020.html#cb664-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb664-17"><a href="an-example-of-a-past-exam-2020.html#cb664-17" aria-hidden="true" tabindex="-1"></a>table1</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 5
+<pre><code>## # A tibble: 12 × 5
 ##    month_numeric minimum  mean median maximum
 ##            &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
 ##  1             1     0   1382.  1370.   3257 
@@ -565,7 +586,7 @@ Reporting of methods and results should be written in the style of a scientific 
 <span id="cb666-7"><a href="an-example-of-a-past-exam-2020.html#cb666-7" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb666-8"><a href="an-example-of-a-past-exam-2020.html#cb666-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb666-9"><a href="an-example-of-a-past-exam-2020.html#cb666-9" aria-hidden="true" tabindex="-1"></a>table1</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 5
+<pre><code>## # A tibble: 12 × 5
 ##    month_numeric minimum  mean median maximum
 ##            &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
 ##  1             1       0 138.   44.5      960
@@ -610,13 +631,13 @@ Reporting of methods and results should be written in the style of a scientific 
 <span id="cb670-3"><a href="an-example-of-a-past-exam-2020.html#cb670-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb670-4"><a href="an-example-of-a-past-exam-2020.html#cb670-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Month&quot;</span>) <span class="sc">+</span></span>
 <span id="cb670-5"><a href="an-example-of-a-past-exam-2020.html#cb670-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Total number of fires&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-478-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-468-1.png" width="672" /></p>
 <p>Common mistakes -
 Understanding how <code>group_by</code> and <code>summarise</code> work is key to answering this question.
 To ensure that the months are displayed in the correct order you need to use the <code>numeric</code> month. Failure to do that will cause the plot to be presented in alphabetical order (i.e. with December falling before January!). However, box plots require that the input variable is a <code>factor</code> so you also need to convert back to a <code>factor</code> before plotting.</p>
 <hr />
 <p><strong>2) Coral bleaching (10 points)</strong></p>
-<p>Coral bleaching is when coral polyps expel the endosymbiotic algae that live within their tissues. Although the coral can survive bleaching events, their algae provide most of their energy, so the coral can eventually starve and die. It is thought that deeper corals (from the mesophotic zone) might be protected from bleaching events because the depth offers more stable conditions with fewer stressors. This is known as the “deep reef refugia hypothesis.”</p>
+<p>Coral bleaching is when coral polyps expel the endosymbiotic algae that live within their tissues. Although the coral can survive bleaching events, their algae provide most of their energy, so the coral can eventually starve and die. It is thought that deeper corals (from the mesophotic zone) might be protected from bleaching events because the depth offers more stable conditions with fewer stressors. This is known as the “deep reef refugia hypothesis”.</p>
 <p>To test this idea, a transplant experiment was carried out on the coral <em>Agaricia lamarcki</em> at the island of Utila, Honduras. In the study, intact samples of the coral were moved from deep (mesophotic) reefs to the shallow reef and <em>vice versa</em>. They were left there for 8 months and then their colouration was measured to assess bleaching: lower colour intensity means more bleaching. The data are provided in <code>coral.csv</code>.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>plot the data (e.g. with a box plot)</p></li>
@@ -629,19 +650,19 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb671-3"><a href="an-example-of-a-past-exam-2020.html#cb671-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coral, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> intensity)) <span class="sc">+</span></span>
 <span id="cb671-4"><a href="an-example-of-a-past-exam-2020.html#cb671-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb671-5"><a href="an-example-of-a-past-exam-2020.html#cb671-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-479-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-469-1.png" width="672" /></p>
 <p><strong>b) carry out a randomisation test to determine if there is a significant difference in the colour intensity in the two habitats. Write (i) a brief method description and (ii) a summary of the results. </strong></p>
 <p>First we need to calculate the observed difference between the two habitats.</p>
 <p>You can get the mean values like this (there are other ways):</p>
 <div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="an-example-of-a-past-exam-2020.html#cb672-1" aria-hidden="true" tabindex="-1"></a>coral <span class="sc">%&gt;%</span></span>
 <span id="cb672-2"><a href="an-example-of-a-past-exam-2020.html#cb672-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">%&gt;%</span></span>
 <span id="cb672-3"><a href="an-example-of-a-past-exam-2020.html#cb672-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanIntensity =</span> <span class="fu">mean</span>(intensity))</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
+<pre><code>## # A tibble: 2 × 2
 ##   habitat    meanIntensity
 ##   &lt;fct&gt;              &lt;dbl&gt;
 ## 1 mesophotic         187. 
 ## 2 shallow             81.8</code></pre>
-<p>…then subtract one value from the other “by hand.”</p>
+<p>…then subtract one value from the other “by hand”.</p>
 <p>You could also do the whole calculation using the pipes syntax like this:</p>
 <div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="an-example-of-a-past-exam-2020.html#cb674-1" aria-hidden="true" tabindex="-1"></a>(obsDiff <span class="ot">&lt;-</span> coral <span class="sc">%&gt;%</span></span>
 <span id="cb674-2"><a href="an-example-of-a-past-exam-2020.html#cb674-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">%&gt;%</span></span>
@@ -649,7 +670,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb674-4"><a href="an-example-of-a-past-exam-2020.html#cb674-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(meanIntensity) <span class="sc">%&gt;%</span></span>
 <span id="cb674-5"><a href="an-example-of-a-past-exam-2020.html#cb674-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>())</span></code></pre></div>
 <pre><code>## [1] -105.5377</code></pre>
-<p>Next we ask “is the observed difference significantly larger than what we would expect by chance?”<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a></p>
+<p>Next we ask “is the observed difference significantly larger than what we would expect by chance?”.<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a></p>
 <div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="an-example-of-a-past-exam-2020.html#cb676-1" aria-hidden="true" tabindex="-1"></a>shuffledData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rep =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb676-2"><a href="an-example-of-a-past-exam-2020.html#cb676-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledDiffs =</span> <span class="fu">replicate</span>(</span>
 <span id="cb676-3"><a href="an-example-of-a-past-exam-2020.html#cb676-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2000</span>,</span>
@@ -666,15 +687,15 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb677-3"><a href="an-example-of-a-past-exam-2020.html#cb677-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb677-4"><a href="an-example-of-a-past-exam-2020.html#cb677-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Shuffled differences&quot;</span>) <span class="sc">+</span></span>
 <span id="cb677-5"><a href="an-example-of-a-past-exam-2020.html#cb677-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsDiff)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-483-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-473-1.png" width="672" /></p>
 <p>Now I can calculate the significance by asking how many of she shuffled differences were more extreme than the observed value.</p>
 <div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="an-example-of-a-past-exam-2020.html#cb678-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(shuffledData<span class="sc">$</span>shuffledDiffs <span class="sc">&lt;=</span> obsDiff)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##  1999     1</code></pre>
-<p>In this case, NONE of the shuffled values are more extreme than the observed value, so the p-value can be reported as “p&lt;0.001.” You could write this up like this</p>
+<p>In this case, NONE of the shuffled values are more extreme than the observed value, so the p-value can be reported as “p&lt;0.001”. You could write this up like this</p>
 <p><em>To test whether the difference in intensity between the mesophotic and shallow coral habitats is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means. The alternative hypothesis is that the mean for the mesophotic habitat is significantly lower than the mean for the shallow habitat. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.</em></p>
-<p><em>The observed mean values of light intensity for the mesophotic and shallow corals were 187.4 and 81.8 respectively and the difference between them is therefore -105.6 (shallow - mesophytic). None of the 1000 null distribution replicates were as extreme my observed difference value. I conclude that the observed difference between the means of the two groups is statistically significant (p &lt; 0.001)"</em></p>
+<p><em>The observed mean values of light intensity for the mesophotic and shallow corals were 187.4 and 81.8 respectively and the difference between them is therefore -105.6 (shallow - mesophytic). None of the 1000 null distribution replicates were as extreme my observed difference value. I conclude that the observed difference between the means of the two groups is statistically significant (p &lt; 0.001)“</em></p>
 <hr />
 <p><strong>3) Power in a field experiment (10 points)</strong></p>
 <p>Scientists have developed a new eco-friendly fertiliser made from seaweed extract. You are planning a outdoor field experiment to test how effective it is at increasing crop yield in oilseed rape (<em>Brassica napus</em>). A standard industrial chemical fertiliser can increase yield by 30%, and you would like to know if the new seaweed fertiliser has a similar effect. You will grow the plant in a number of 4m x 4m field plots with two treatments: (i) control, with no additional fertiliser (ii) addition of seaweed fertiliser.</p>
@@ -741,7 +762,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb685-3"><a href="an-example-of-a-past-exam-2020.html#cb685-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb685-4"><a href="an-example-of-a-past-exam-2020.html#cb685-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb685-5"><a href="an-example-of-a-past-exam-2020.html#cb685-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.8</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-488-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-478-1.png" width="672" /></p>
 <p>From this, it looks like a power of 80% is achieved with a sample size of about 16.</p>
 <p>Summing up:
 <em>My power analysis by simulation shows that a sample size of 16 per treatment group is required to detect a difference of 30% with 80% power.</em></p>
@@ -751,16 +772,16 @@ To ensure that the months are displayed in the correct order you need to use the
 <em>I would try to ensure that the plots were as similar as possible to each other to avoid the effects of unmeasured differences between them. Then I would randomise the assignment of treatments (control vs. treated) to each plot. Ideally the plots would be spaced far apart to avoid pseudo-replication.</em></p>
 <hr />
 <p><strong>4) Biodiversity (20 points)</strong></p>
-<p>There is a well-known relationship between habitat area and biodiversity - the “species-area relationship.” In a nutshell, the number of species tends to increase as the area available increases. This relationship is clearly seen, for example, if we look at island biodiversity: larger islands support more species then small ones. One potential mechanism for this observed pattern is that larger islands tend to have more variety of different habitats, and therefore more niches available for species to occupy (more niches = more species).</p>
+<p>There is a well-known relationship between habitat area and biodiversity - the “species-area relationship”. In a nutshell, the number of species tends to increase as the area available increases. This relationship is clearly seen, for example, if we look at island biodiversity: larger islands support more species then small ones. One potential mechanism for this observed pattern is that larger islands tend to have more variety of different habitats, and therefore more niches available for species to occupy (more niches = more species).</p>
 <p>The dataset <code>roundabouts.csv</code> shows the results of a study carried out in an urban environment to investigate these ideas. During the study, the number of beetle species (<code>nSpecies</code>) living on roundabouts and other “islands” of vegetation of different sizes (<code>area</code> in <span class="math inline">\(m^2\)</span>) in a sea of concrete and tarmac was counted. Some of these islands had “complex” vegetation (e.g. trees, bushes, shrubs, ponds and rocks) while others were “simple” (only grass), indicated by the variable <code>habitatType</code>,</p>
 <p>Use an appropriate statistical model to explore the relationship between area and species richness. Does this relationship differ depending on habitat complexity?</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Plot the data to show the relationship between the the number of species and the area of the “island.” Colour code the points by whether the habitat type.</p></li>
+<li><p>Plot the data to show the relationship between the the number of species and the area of the “island”. Colour code the points by whether the habitat type.</p></li>
 <li><p>Fit a suitable statistical model to estimate the statistical relationship between area, habitat type, and species richness. Describe the method and then summarise the results produced by the model as if you were writing a report/thesis.</p></li>
 <li><p>Produce a plot that shows (in addition to the raw data points) the fitted values produced by your model and the uncertainty in those estimates.</p></li>
 </ol>
 <hr />
-<p><strong>a) Plot the data to show the relationship between the the number of species and the area of the “island.” Colour code the points by whether the habitat type.</strong></p>
+<p><strong>a) Plot the data to show the relationship between the the number of species and the area of the “island”. Colour code the points by whether the habitat type.</strong></p>
 <div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="an-example-of-a-past-exam-2020.html#cb686-1" aria-hidden="true" tabindex="-1"></a>roundabouts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/roundabouts.csv&quot;</span>,</span>
 <span id="cb686-2"><a href="an-example-of-a-past-exam-2020.html#cb686-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
 <span id="cb686-3"><a href="an-example-of-a-past-exam-2020.html#cb686-3" aria-hidden="true" tabindex="-1"></a>)</span>
@@ -770,7 +791,7 @@ To ensure that the months are displayed in the correct order you need to use the
 <span id="cb686-7"><a href="an-example-of-a-past-exam-2020.html#cb686-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> habitatType</span>
 <span id="cb686-8"><a href="an-example-of-a-past-exam-2020.html#cb686-8" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb686-9"><a href="an-example-of-a-past-exam-2020.html#cb686-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-489-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-479-1.png" width="672" /></p>
 <p><strong>b) Fit a suitable statistical model to estimate the statistical relationship between area, habitat type, and species richness. Describe the method and then summarise the results produced by the model as if you were writing a report/thesis.</strong></p>
 <p>The key thing to remember here is that there are limits to counts of species. You can’t count &lt;0. Therefore, models that would allow the prediction of negative values may be problematic.
 Generalised Linear Models are designed for handling these kind of issues and, in this case, a Poisson model is most appropriate. This is an analogous situation to the example we looked at modelling the number of fox offspring in relation to mother’s weight.</p>
@@ -781,7 +802,7 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 <span id="cb687-3"><a href="an-example-of-a-past-exam-2020.html#cb687-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> roundabouts</span>
 <span id="cb687-4"><a href="an-example-of-a-past-exam-2020.html#cb687-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb687-5"><a href="an-example-of-a-past-exam-2020.html#cb687-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod1)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-490-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-480-1.png" width="672" /></p>
 <div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="an-example-of-a-past-exam-2020.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
@@ -869,7 +890,7 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 <span id="cb693-10"><a href="an-example-of-a-past-exam-2020.html#cb693-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb693-11"><a href="an-example-of-a-past-exam-2020.html#cb693-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">alpha =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># Remove the alpha legend</span></span>
 <span id="cb693-12"><a href="an-example-of-a-past-exam-2020.html#cb693-12" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-492-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-482-1.png" width="672" /></p>
 <hr />
 
 </div>
@@ -914,7 +935,6 @@ Generalised Linear Models are designed for handling these kind of issues and, in
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -955,7 +975,7 @@ gitbook.start({
 },
 "download": ["BB852.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

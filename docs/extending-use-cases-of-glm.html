@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 21 Extending use cases of GLM | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 21 Extending use cases of GLM | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-22" />
+<meta name="date" content="2022-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="generalised-linear-models.html"/>
 <link rel="next" href="power-analysis-by-simulation.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,16 +49,18 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -289,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.2.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>15.2.1</b> Where are the differences?</a></li>
 <li class="chapter" data-level="15.2.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>15.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand.”</a></li>
+<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand”.</a></li>
 <li class="chapter" data-level="15.4" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>15.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>16</b> Linear regression: models with a single continuous explanatory variable</a>
@@ -352,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Exam</b></span></li>
-<li class="chapter" data-level="23" data-path="exam-2021.html"><a href="exam-2021.html"><i class="fa fa-check"></i><b>23</b> Exam 2021</a></li>
+<li class="chapter" data-level="23" data-path="exam-2022.html"><a href="exam-2022.html"><i class="fa fa-check"></i><b>23</b> Exam 2022</a></li>
 <li class="part"><span><b>V Solutions</b></span></li>
 <li class="chapter" data-level="24" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>24</b> Exercise Solutions</a>
 <ul>
@@ -392,17 +393,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="extending-use-cases-of-glm" class="section level1" number="21">
-<h1><span class="header-section-number">Chapter 21</span> Extending use cases of GLM</h1>
+<div id="extending-use-cases-of-glm" class="section level1 hasAnchor" number="21">
+<h1><span class="header-section-number">Chapter 21</span> Extending use cases of GLM<a href="extending-use-cases-of-glm.html#extending-use-cases-of-glm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In the previous chapter we used the case of modelling count data, which is bounded at 0 and takes integer values, to understand how Generalised Linear Models work. In this chapter we extend our understanding by looking at another type of data, namely <em>binomial</em> data.</p>
-<div id="binomial-response-data" class="section level2" number="21.1">
-<h2><span class="header-section-number">21.1</span> Binomial response data</h2>
+<div id="binomial-response-data" class="section level2 hasAnchor" number="21.1">
+<h2><span class="header-section-number">21.1</span> Binomial response data<a href="extending-use-cases-of-glm.html#binomial-response-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are three types of Binomial data, but all three types have the idea of “success” and “failure” at their heart. It is up to you, the modeller, to decide what these successes and failures are, but they can be any kind of data that can be coerced into two discrete categories. Common examples include pass/fail, survived/died, presence/absence and yes/no.</p>
 <p>The three data types are as follows:</p>
 <ol style="list-style-type: decimal">
 <li>The data can be in the form of a two-level factor - often coded as zeros and ones (0/1 data). For example, this could represent whether an died (0) or survived (1) in a study; or it could represent male (<code>M</code>) or female (<code>F</code>) in a study trying to predict sex from other variables (e.g. size or morphology).</li>
-<li>The data could be expressed as a numeric vector of proportions, bounded between 0 and 1 (i.e. can take any value between 0 and 1). For example these data could be percentages expressed as proportion, such as proportion (or percent) of individuals in a group surviving. In this case, the total number of cases that contributed to the proportion can be optionally included as <code>weights</code> in the regression model.<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a></li>
-<li>Finally, the data could be expressed as numbers in a two column matrix where the first column gives the number of “successes” and the second column gives the number of “failures.”</li>
+<li>The data could be expressed as a numeric vector of proportions, bounded between 0 and 1 (i.e. can take any value between 0 and 1). For example these data could be percentages expressed as proportion, such as proportion (or percent) of individuals in a group surviving. In this case, the total number of cases that contributed to the proportion can be optionally included as <code>weights</code> in the regression model <a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>.</li>
+<li>Finally, the data could be expressed as numbers in a two column matrix where the first column gives the number of “successes” and the second column gives the number of “failures”.</li>
 </ol>
 <p>The aim of the GLM is usually to estimate probability of “success” (e.g. survival, passing, scoring a goal…). Thus, the outcome (the predicted response, or fit, of the model) is a value between 0 and 1 on the natural scale, that can be interpreted as a probability (e.g. of survival, of success, of presence etc.)</p>
 <p>The link function used for a binomial GLM is usually the <em>logit</em> transformation, and therefore another name for this type of regression is <strong>logistic regression</strong>. The logit transformation linearises an S-shaped curve and therefore allows a linear regression line to be fitted from data that follows this pattern. The function is <span class="math inline">\(y = log(\frac{p}{1-p})\)</span>, where <span class="math inline">\(p\)</span> is the probability or proportion. The inverse logit (the anti-logit) is <span class="math inline">\(p = \frac{exp(y)}{exp(y)+1}\)</span>.</p>
@@ -411,12 +412,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s try a couple of examples.</p>
 <div class="do-something">
 <p>
-Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot</code> packages, and to set your working directory correctly.
+Remember to load the <code>dplyr</code>, <code>magrittr</code> and
+<code>ggplot</code> packages, and to set your working directory
+correctly.
 </p>
 </div>
 </div>
-<div id="example-nfl-field-goals" class="section level2" number="21.2">
-<h2><span class="header-section-number">21.2</span> Example: NFL field goals</h2>
+<div id="example-nfl-field-goals" class="section level2 hasAnchor" number="21.2">
+<h2><span class="header-section-number">21.2</span> Example: NFL field goals<a href="extending-use-cases-of-glm.html#example-nfl-field-goals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this example you will be dealing with binary data (0/1, failure/success) from the American National Football League (NFL). The data are a record of field goals, which are a relatively rare method of scoring where someone kicks the ball through over the crossbar and through the uprights of the goal during play.</p>
 <p>Our aim is to estimate how the probability of success changes with distance from the goal. We already have a good idea that success probability will decline with increasing distance! But at what rate does the probability decline? And at what distance is there a probability of 0.5 (i.e. 50% chance of success)?</p>
 <p>First, import the data and convert the distance from yards to meters.</p>
@@ -486,7 +489,10 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and <code>ggplot<
 <p>The <code>predict</code> function returns an object that includes the <code>fit</code> and the <code>se.fit</code> which are the predicted value of the regression and the standard error of that predicted value respectively. Thus, if the output of the <code>predict</code> function is stored as <code>pv</code> we can address those parts as <code>pv$fit</code> and <code>pv$se.fit</code>, and we can save these values alongside the data in <code>newDat</code>.</p>
 <div class="do-something">
 <p>
-Remember that the model, and the predicted values from it, are expressed on the scale of the <em>linear predictor</em> (i.e. the transformed data scale). It is usually desirable to “backtransform” to the natural scale before plotting. See below.
+Remember that the model, and the predicted values from it, are
+expressed on the scale of the <em>linear predictor</em> (i.e. the
+transformed data scale). It is usually desirable to “backtransform” to
+the natural scale before plotting. See below.
 </p>
 </div>
 <p>First we obtain the predictions and CI on the scale of the linear predictor (logit scale). We calculate 95% CI from the standard errors simply by multiplying by 1.96.</p>
@@ -522,7 +528,7 @@ Remember that the model, and the predicted values from it, are expressed on the 
 <span id="cb470-7"><a href="extending-use-cases-of-glm.html#cb470-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> newDat, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
 <span id="cb470-8"><a href="extending-use-cases-of-glm.html#cb470-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-326-1.png" width="480" style="display: block; margin: auto;" />
-So, at what distance does the probability of success fall to just 50%? You could read this directly from the plot as “approximately 44m.” Alternatively, you could obtain the value from the <code>newDat</code> dataset you created above with predictions from the model, by filtering it. This confirms the probability of success reaches 0.5 somewhere between 43-44m.</p>
+So, at what distance does the probability of success fall to just 50%? You could read this directly from the plot as “approximately 44m”. Alternatively, you could obtain the value from the <code>newDat</code> dataset you created above with predictions from the model, by filtering it. This confirms the probability of success reaches 0.5 somewhere between 43-44m.</p>
 <div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="extending-use-cases-of-glm.html#cb471-1" aria-hidden="true" tabindex="-1"></a>newDat <span class="sc">%&gt;%</span></span>
 <span id="cb471-2"><a href="extending-use-cases-of-glm.html#cb471-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Success <span class="sc">&lt;</span> <span class="fl">0.55</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb471-3"><a href="extending-use-cases-of-glm.html#cb471-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Success <span class="sc">&gt;</span> <span class="fl">0.45</span>) <span class="sc">%&gt;%</span></span>
@@ -532,8 +538,8 @@ So, at what distance does the probability of success fall to just 50%? You could
 ## 2       43 0.5122432
 ## 3       44 0.4794630</code></pre>
 </div>
-<div id="example-sex-ratio-in-turtles" class="section level2" number="21.3">
-<h2><span class="header-section-number">21.3</span> Example: Sex ratio in turtles</h2>
+<div id="example-sex-ratio-in-turtles" class="section level2 hasAnchor" number="21.3">
+<h2><span class="header-section-number">21.3</span> Example: Sex ratio in turtles<a href="extending-use-cases-of-glm.html#example-sex-ratio-in-turtles" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this example we will look at sex ratio of hawksbill turtles (<em>Eretmochelys imbricata</em>)<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>. The data are counts of males and females in clutches of eggs incubated at different temperatures.</p>
 <p>The sex ratio in the species varies with temperature during incubation. We are interested in what the “tipping point” temperature is between male-female biased ratios.</p>
 <div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="extending-use-cases-of-glm.html#cb473-1" aria-hidden="true" tabindex="-1"></a>hawksbill <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/hawksbill.csv&quot;</span>)</span></code></pre></div>
@@ -558,7 +564,7 @@ So, at what distance does the probability of success fall to just 50%? You could
 <span id="cb477-5"><a href="extending-use-cases-of-glm.html#cb477-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>())</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-331-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>You can see that the proportion of females increases with temperature. Let’s fit a model to these data to better understand them. We could use the <code>propFemale</code> data as the response variable, but there is a big problem with that: we would be giving equal weight to each of the data points, even though the sample size for each one ranges from 10 to 31 This is not good because we would have much more faith in the very large sample sizes than the small ones.</p>
-<p>Instead we can bind the data into a two column matrix using <code>cbind</code>. The first column is our “success” and the second column is our “failure.” If we put <code>females</code> in the first column the model will predict “probability of being female,” which is what we want. This two-column approach provides the model with the sample size which it can use to weight the regression appropriately.</p>
+<p>Instead we can bind the data into a two column matrix using <code>cbind</code>. The first column is our “success” and the second column is our “failure”. If we put <code>females</code> in the first column the model will predict “probability of being female”, which is what we want. This two-column approach provides the model with the sample size which it can use to weight the regression appropriately.</p>
 <div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="extending-use-cases-of-glm.html#cb478-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">cbind</span>(hawksbill<span class="sc">$</span>Nfemale, hawksbill<span class="sc">$</span>Nmale)</span></code></pre></div>
 <p>Now lets fit the model.</p>
 <div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="extending-use-cases-of-glm.html#cb479-1" aria-hidden="true" tabindex="-1"></a>modA <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> Temperature, <span class="at">data =</span> hawksbill, <span class="at">family =</span> binomial)</span></code></pre></div>
@@ -647,12 +653,15 @@ So, at what distance does the probability of success fall to just 50%? You could
 <p>Can you give read off the graph the approximate estimated temperature at which sex ratio is 50:50?</p>
 <div class="do-something">
 <p>
-Try refitting the model using simply the proportion female (<code>propFemale</code>) data rather than the two-column (<code>cbind</code>) approach. Then try writing up the result in the same way as shown for the NFL field goals example.
+Try refitting the model using simply the proportion female
+(<code>propFemale</code>) data rather than the two-column
+(<code>cbind</code>) approach. Then try writing up the result in the
+same way as shown for the NFL field goals example.
 </p>
 </div>
 </div>
-<div id="example-smoking" class="section level2" number="21.4">
-<h2><span class="header-section-number">21.4</span> Example: Smoking</h2>
+<div id="example-smoking" class="section level2 hasAnchor" number="21.4">
+<h2><span class="header-section-number">21.4</span> Example: Smoking<a href="extending-use-cases-of-glm.html#example-smoking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>As I mentioned above binomial regression can be applied to anything where there data can be classified into two groups. I’ll illustrate that now with an example about smoking.</p>
 <p>The data set is very small and looks like this:</p>
 <table>
@@ -686,8 +695,8 @@ These data are binomial/proportion data because the values in the cells of the t
 <pre><code>##      1_yes 0_no
 ## [1,]   816 3203
 ## [2,]   188 1168</code></pre>
-<p>So we can see “success” on the left and “failure” on the right“.
-We now create a (tiny) <code>data.frame</code> for the parental status (smoker =”1_yes“, non-smoker =”0_no").</p>
+<p>So we can see “success” on the left and “failure” on the right”.
+We now create a (tiny) <code>data.frame</code> for the parental status (smoker = “1_yes”, non-smoker = “0_no”).</p>
 <div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="extending-use-cases-of-glm.html#cb491-1" aria-hidden="true" tabindex="-1"></a>smoke <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">parentSmoke =</span> <span class="fu">c</span>(<span class="st">&quot;1_yes&quot;</span>, <span class="st">&quot;0_no&quot;</span>))</span></code></pre></div>
 <p>Now we can fit the model. Pause now and think about what the NULL hypothesis is here. It is that parental smoking does not have any influence on whether the child smokes, and that the probability that the student smokes is unrelated to parental smoking.</p>
 <div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="extending-use-cases-of-glm.html#cb492-1" aria-hidden="true" tabindex="-1"></a>smokeMod <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> parentSmoke, <span class="at">data =</span> smoke, <span class="at">family =</span> binomial)</span></code></pre></div>
@@ -784,7 +793,6 @@ First we calculate the fitted values and 95% confidence intervals on the scale o
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -825,7 +833,7 @@ gitbook.start({
 },
 "download": ["BB852.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

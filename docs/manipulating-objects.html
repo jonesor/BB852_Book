@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Manipulating objects | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Manipulating objects | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-22" />
+<meta name="date" content="2022-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="an-r-refresher.html"/>
 <link rel="next" href="tips-and-tricks.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,16 +49,18 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -289,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.2.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>15.2.1</b> Where are the differences?</a></li>
 <li class="chapter" data-level="15.2.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>15.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand.”</a></li>
+<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand”.</a></li>
 <li class="chapter" data-level="15.4" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>15.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>16</b> Linear regression: models with a single continuous explanatory variable</a>
@@ -352,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Exam</b></span></li>
-<li class="chapter" data-level="23" data-path="exam-2021.html"><a href="exam-2021.html"><i class="fa fa-check"></i><b>23</b> Exam 2021</a></li>
+<li class="chapter" data-level="23" data-path="exam-2022.html"><a href="exam-2022.html"><i class="fa fa-check"></i><b>23</b> Exam 2022</a></li>
 <li class="part"><span><b>V Solutions</b></span></li>
 <li class="chapter" data-level="24" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>24</b> Exercise Solutions</a>
 <ul>
@@ -392,8 +393,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="manipulating-objects" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Manipulating objects</h1>
+<div id="manipulating-objects" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Manipulating objects<a href="manipulating-objects.html#manipulating-objects" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Objects can be manipulated (just like in real life). In R, we use <strong>functions</strong> to manipulate objects.</p>
 <p>For example, we can use the basic arithmetic functions (<code>*</code>, <code>+</code>, <code>/</code>,<code>-</code>) on a vector:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="manipulating-objects.html#cb42-1" aria-hidden="true" tabindex="-1"></a>B</span></code></pre></div>
@@ -405,15 +406,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You can <em>concatenate</em> entire vectors together using the <code>c</code> function. E.g. concatenating the vectors <code>A</code> and <code>B</code> from above:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="manipulating-objects.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(A, B)</span></code></pre></div>
 <pre><code>##  [1] 1 2 3 4 5 1 3 6 1 7 9</code></pre>
-<p>Other manipulations are also done “element-by-element.” For example, here we multiply the first element of B by 1, the second by 2, the 3rd by 3 and so on…:</p>
+<p>Other manipulations are also done “element-by-element”. For example, here we multiply the first element of B by 1, the second by 2, the 3rd by 3 and so on…:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="manipulating-objects.html#cb50-1" aria-hidden="true" tabindex="-1"></a>B <span class="sc">*</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span></code></pre></div>
 <pre><code>## [1]  1  6 18  4 35 54</code></pre>
 <p>If the length of the vectors match, we can also multiply (or add/subtract/divide etc.) multiple vectors:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="manipulating-objects.html#cb52-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">/</span> B</span></code></pre></div>
 <pre><code>## [1] 1.0000000 0.6666667 0.5000000 4.0000000 0.7142857 0.1111111</code></pre>
-<div id="missing-values-infinity-and-non-numbers" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Missing values, infinity and “non-numbers”</h2>
-<p>By convention, <em>missing values</em> in R are coded by the value “NA.” The way that particular functions handle missing values varies: sometimes the NA values are stripped out of the data, other times the function may fail.</p>
+<div id="missing-values-infinity-and-non-numbers" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Missing values, infinity and “non-numbers”<a href="manipulating-objects.html#missing-values-infinity-and-non-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>By convention, <em>missing values</em> in R are coded by the value “NA”. The way that particular functions handle missing values varies: sometimes the NA values are stripped out of the data, other times the function may fail.</p>
 <p>For example, if we asked for the mean value of a vector of numbers with an NA value, it will fail:</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="manipulating-objects.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="cn">NA</span>))</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
@@ -431,8 +432,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="manipulating-objects.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="cn">Inf</span> <span class="sc">-</span> <span class="cn">Inf</span></span></code></pre></div>
 <pre><code>## [1] NaN</code></pre>
 </div>
-<div id="basic-information-about-objects" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Basic information about objects</h2>
+<div id="basic-information-about-objects" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Basic information about objects<a href="manipulating-objects.html#basic-information-about-objects" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You can obtain information about most objects using the <code>summary</code> function:</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="manipulating-objects.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(B)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -447,8 +448,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="manipulating-objects.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(B)</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 </div>
-<div id="data-frames" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Data frames</h2>
+<div id="data-frames" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Data frames<a href="manipulating-objects.html#data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Data frames are the usual way of storing data in R. It is more-or-less the same as a worksheet in Excel. A data frame is usually made up of a number of vectors (of the same length) bound together in a single object. You can make a data frame by binding together vectors, or you can import them from outside R.</p>
 <p>This example shows the creation of a data frame in R, from 3 vectors:</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="manipulating-objects.html#cb76-1" aria-hidden="true" tabindex="-1"></a>height <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">173</span>, <span class="dv">145</span>, <span class="dv">187</span>, <span class="dv">155</span>, <span class="dv">179</span>, <span class="dv">133</span>)</span>
@@ -492,8 +493,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4    155  20 Female
 ## 6    133  30 Female</code></pre>
 </div>
-<div id="classes-in-r" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Classes in R</h2>
+<div id="classes-in-r" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Classes in R<a href="manipulating-objects.html#classes-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Every objects you create, or import into R, has a “type” called a <code>class</code>. You can ask what class an object has using the <code>class</code> function.</p>
 <p>For example, the vectors you created above have types.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="manipulating-objects.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(height)</span></code></pre></div>
@@ -525,16 +526,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="BB852_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <div class="do-something">
 <p>
-If you are getting strange results from your code it is a good idea to check the structure of the data. Are the classes what they should be?
+If you are getting strange results from your code it is a good idea
+to check the structure of the data. Are the classes what they should
+be?
 </p>
 </div>
 </div>
-<div id="organising-your-work" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Organising your work</h2>
+<div id="organising-your-work" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Organising your work<a href="manipulating-objects.html#organising-your-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It would be incredibly tedious to enter real data into <strong>R</strong> by typing it in!</p>
 <p>Thankfully, R can import data from a several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called <em>directories</em>) on your computer.</p>
 <p>The most commonly used data format is <code>comma separated value (CSV)</code> so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I’ll cover this in a later class).</p>
-<p>For this course, I suggest that you make a folder somewhere on your computer called “IntroToR.” We will use this as the <code>working directory</code> for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items <strong>Session → Set Working Directory → Choose Directory</strong>.</p>
+<p>For this course, I suggest that you make a folder somewhere on your computer called “IntroToR”. We will use this as the <code>working directory</code> for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items <strong>Session → Set Working Directory → Choose Directory</strong>.</p>
 <p>You can also using the <code>setwd</code> function to do this, if you know where your files are stored (the <em>file path</em>). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\). In windows you also need to define the drive (e.g. C:).</p>
 <p>So, to set the working directory in Apple OSX you would use something like this (obviously, you need to put <em>your</em> path!):</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="manipulating-objects.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/orj/Desktop/IntroToR&quot;</span>)</span></code></pre></div>
@@ -546,21 +549,22 @@ If you are getting strange results from your code it is a good idea to check the
 <p>I can check what the current working directory is using the <code>getwd</code> function:</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="manipulating-objects.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
 <p>It is good practice to keep your files well-organised. I recommend that you create a folder in your working directory called <code>CourseData</code> (or similar). Store your data files in this folder.</p>
-<p>I have put all the data for the course into a Dropbox folder - see the link in Chapter 1. In there you will find a file called “<code>carnivora.csv</code>.” Download this to your new <code>CourseData</code> folder.</p>
+<p>I have put all the data for the course into a Dropbox folder - see the link in Chapter 1. In there you will find a file called “<code>carnivora.csv</code>”. Download this to your new <code>CourseData</code> folder.</p>
 <p>You can now import this file into R using the <code>read.csv</code> function. The specification of the argument <code>header = TRUE</code> signifies that the first row of our CSV file contains the column names. Note that your file path will be different to mine<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>:</p>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="manipulating-objects.html#cb106-1" aria-hidden="true" tabindex="-1"></a>carni <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/carnivora.csv&quot;</span>,</span>
 <span id="cb106-2"><a href="manipulating-objects.html#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb106-3"><a href="manipulating-objects.html#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
 <span id="cb106-4"><a href="manipulating-objects.html#cb106-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>The <code>stringsAsFactors</code> argument tells R to treat text-type data (technically known as “character <strong>strings</strong>”) as a special kind of data called <strong>factors</strong>. Essentially, factors are <em>categorical</em> data where the data can take a limited number of discrete values. For example, “treatmentA,” “treatmentB,” “treatmentC.” Although this may seem a little esoteric right now, it is important to ensure that your data is recognised by R in the correct way. In <strong>most</strong> cases, your text-type data will be factor data, so it is usually safe to set <code>stringsAsFactors = TRUE</code>.</p>
+<p>The <code>stringsAsFactors</code> argument tells R to treat text-type data (technically known as “character <strong>strings</strong>”) as a special kind of data called <strong>factors</strong>. Essentially, factors are <em>categorical</em> data where the data can take a limited number of discrete values. For example, “treatmentA”, “treatmentB”, “treatmentC”. Although this may seem a little esoteric right now, it is important to ensure that your data is recognised by R in the correct way. In <strong>most</strong> cases, your text-type data will be factor data, so it is usually safe to set <code>stringsAsFactors = TRUE</code>.</p>
 <div class="do-something">
 <p>
-<strong>Tip:</strong> RStudio also has a point-and-click “Wizard” to help import data. Look for “Import Dataset” in the top-right pane.
+<strong>Tip:</strong> RStudio also has a point-and-click “Wizard” to
+help import data. Look for “Import Dataset” in the top-right pane.
 </p>
 </div>
 </div>
-<div id="inspecting-the-data" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> Inspecting the data</h2>
+<div id="inspecting-the-data" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Inspecting the data<a href="manipulating-objects.html#inspecting-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We can get some basic information on your imported data (e.g. the <code>carni</code> data frame) using the <code>summary</code> function, but also the <code>dim</code> and <code>nrow/ncol</code> functions:</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="manipulating-objects.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(carni)</span></code></pre></div>
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="manipulating-objects.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(carni)</span></code></pre></div>
@@ -571,10 +575,9 @@ If you are getting strange results from your code it is a good idea to check the
 <pre><code>## [1] 17</code></pre>
 <p>We can find the names of the columns of a data frame with the <code>names</code> function:</p>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="manipulating-objects.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(carni)</span></code></pre></div>
-<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;    
-##  [6] &quot;FW&quot;          &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;         
-## [11] &quot;GL&quot;          &quot;BW&quot;          &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;         
-## [16] &quot;AM&quot;          &quot;IB&quot;</code></pre>
+<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;     &quot;FW&quot;         
+##  [7] &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;          &quot;GL&quot;          &quot;BW&quot;         
+## [13] &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;          &quot;AM&quot;          &quot;IB&quot;</code></pre>
 <p>The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
 SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).</p>
 <p>You can refer to the sub-parts of a <code>data.frame</code> (the columns) using the <code>$</code> syntax:</p>
@@ -582,37 +585,33 @@ SW = Average body weight of adult male and adult female (kg), FB = Female brain 
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   0.050   1.245   3.400  18.099  10.363 320.000</code></pre>
 </div>
-<div id="classes-in-r-1" class="section level2" number="5.7">
-<h2><span class="header-section-number">5.7</span> “Classes” in R</h2>
-<p>I have already mentioned the different object types in R (e.g. vectors and data frames). The object types are technically known as “classes.” You can find out what “class” an object is by using the <code>class</code> function:</p>
+<div id="classes-in-r-1" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> “Classes” in R<a href="manipulating-objects.html#classes-in-r-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>I have already mentioned the different object types in R (e.g. vectors and data frames). The object types are technically known as “classes”. You can find out what “class” an object is by using the <code>class</code> function:</p>
 <div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="manipulating-objects.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(carni)</span></code></pre></div>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
-<p>In this case, the data frame is, unsurprisingly, of class “data.frame.” However, the vectors that compose the data frame also have classes. There are several classes of vectors including “integer” (whole numbers), “numeric” (real numbers), “factor” (categorical variables) and “logical” (true/false values).</p>
+<p>In this case, the data frame is, unsurprisingly, of class “data.frame”. However, the vectors that compose the data frame also have classes. There are several classes of vectors including “integer” (whole numbers), “numeric” (real numbers), “factor” (categorical variables) and “logical” (true/false values).</p>
 <p>I expect you have heard of the first two data types, but “factor” might be puzzling. Factors are defined as variables which can take on a <em>limited</em> number of different values. They are often referred to as <code>categorical variables</code>. For example, in the carnivore dataset, the taxonomic variables are factors. The different values that a factor can take are known as <code>levels</code> and you can check on the levels of a vector with the <code>levels</code> function.</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="manipulating-objects.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="manipulating-objects.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
-<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot; 
-## [6] &quot;Procyonidae&quot; &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
+<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot;  &quot;Procyonidae&quot;
+## [7] &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
 </div>
-<div id="tables-and-summary-statistics" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> Tables and summary statistics</h2>
+<div id="tables-and-summary-statistics" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Tables and summary statistics<a href="manipulating-objects.html#tables-and-summary-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For vectors of class “factor” you can use the <code>table</code> function to give the counts for each level:</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="manipulating-objects.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
 <pre><code>## 
-##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
-##           1          18          19           4          30           4 
-##     Ursidae  Viverridae 
-##           4          32</code></pre>
+##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
+##           1          18          19           4          30           4           4          32</code></pre>
 <p>You can use the function <code>tapply</code> (“table apply”), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument <code>mean</code>:</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="manipulating-objects.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(carni<span class="sc">$</span>FW, carni<span class="sc">$</span>Family, mean)</span></code></pre></div>
-<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
-##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500 
-##     Ursidae  Viverridae 
-##  198.250000    2.672813</code></pre>
+<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
+##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500  198.250000    2.672813</code></pre>
 </div>
-<div id="plotting-data" class="section level2" number="5.9">
-<h2><span class="header-section-number">5.9</span> Plotting data</h2>
+<div id="plotting-data" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> Plotting data<a href="manipulating-objects.html#plotting-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Basic plots can be made using the <code>plot</code> command. For example, let’s have a look at the relationship between log gestation length and log female body weight (see Figure <a href="manipulating-objects.html#fig:basicplot">5.1</a>, below):</p>
 <div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="manipulating-objects.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(carni<span class="sc">$</span>FW), <span class="fu">log</span>(carni<span class="sc">$</span>GL))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:basicplot"></span>
@@ -622,9 +621,9 @@ Figure 5.1: A simple scatter plot
 </p>
 </div>
 </div>
-<div id="r-packages" class="section level2" number="5.10">
-<h2><span class="header-section-number">5.10</span> R Packages</h2>
-<p>R packages are collections of software that add capabilities to “base R.” In this course we use several packages including <code>dplyr</code>, which adds functionality for manipulating data, <code>ggplot2</code> which helps us make pretty plots and <code>magrittr</code> which adds tools to allow more “elegant” programming. Packages need to be installed using <code>install.packages</code> command before they can be used. You only need to install them once.</p>
+<div id="r-packages" class="section level2 hasAnchor" number="5.10">
+<h2><span class="header-section-number">5.10</span> R Packages<a href="manipulating-objects.html#r-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R packages are collections of software that add capabilities to “base R”. In this course we use several packages including <code>dplyr</code>, which adds functionality for manipulating data, <code>ggplot2</code> which helps us make pretty plots and <code>magrittr</code> which adds tools to allow more “elegant” programming. Packages need to be installed using <code>install.packages</code> command before they can be used. You only need to install them once.</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="manipulating-objects.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
 <span id="cb129-2"><a href="manipulating-objects.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
 <span id="cb129-3"><a href="manipulating-objects.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;magrittr&quot;</span>)</span></code></pre></div>
@@ -642,18 +641,18 @@ Figure 5.1: A simple scatter plot
 <!-- Q4. Plot the relationship between log female weight (FW) and litter size (LS) in the *Mustelidae*. -->
 <!-- Q5. Identify the largest and smallest (by female weight (FW)) species in the *Viverridae* family. What are their brain sizes (FB)? Hint: use subset and the `which.min`/`which.max` functions (use help), and maybe square brackets [ ]. -->
 </div>
-<div id="exercise-californian-bird-diversity" class="section level2" number="5.11">
-<h2><span class="header-section-number">5.11</span> Exercise: Californian bird diversity</h2>
+<div id="exercise-californian-bird-diversity" class="section level2 hasAnchor" number="5.11">
+<h2><span class="header-section-number">5.11</span> Exercise: Californian bird diversity<a href="manipulating-objects.html#exercise-californian-bird-diversity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the 1950s-1970s there was rapid growth in the number of houses being built in California, with suburbs sprawling out into the new sites in the countryside. What effect would this have on local bird communities?</p>
-<p>Surveys on bird abundances were carried out in several locations near Oakland, California.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest housing developments as the baseline pre-development condition.</p>
+<p>Surveys on bird abundances were carried out in several locations near Oakland, California <a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest housing developments as the baseline pre-development condition.</p>
 <p>Think about what you might expect to happen to bird species diversity through time in a newly developing suburb.</p>
-<div id="the-data" class="section level3" number="5.11.1">
-<h3><span class="header-section-number">5.11.1</span> The data</h3>
+<div id="the-data" class="section level3 hasAnchor" number="5.11.1">
+<h3><span class="header-section-number">5.11.1</span> The data<a href="manipulating-objects.html#the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The relevant data file is called <code>suburbanBirds.csv</code>. This file contains data on bird abundances surveyed in 1975. The columns of the data are <code>Name</code> (name of the suburb), <code>Year</code> (the year that the suburb was built), <code>HabitatIndex</code> (an index of habitat quality, related to tree height, garden maturity etc.), <code>nIndividuals</code> (number of individual birds seen in a standard survey) and <code>nSpecies</code> (number of species seen in a standard survey).</p>
 <p>Additional surveys found an average species richness of 3.5 in nearby undisturbed habitats of grassland savanna.</p>
 </div>
-<div id="try-the-following" class="section level3" number="5.11.2">
-<h3><span class="header-section-number">5.11.2</span> Try the following</h3>
+<div id="try-the-following" class="section level3 hasAnchor" number="5.11.2">
+<h3><span class="header-section-number">5.11.2</span> Try the following<a href="manipulating-objects.html#try-the-following" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li><p>First import the data. Check that the columns look as they should (use <code>summary</code> or <code>str</code> functions).</p></li>
 <li><p>What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)</p></li>
@@ -685,7 +684,6 @@ Figure 5.1: A simple scatter plot
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -726,7 +724,7 @@ gitbook.start({
 },
 "download": ["BB852.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

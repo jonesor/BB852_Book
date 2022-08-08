@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-22" />
+<meta name="date" content="2022-08-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="combining-data-sets.html"/>
 <link rel="next" href="distributions-and-summarising-data.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,16 +49,18 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -289,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.2.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>15.2.1</b> Where are the differences?</a></li>
 <li class="chapter" data-level="15.2.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>15.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand.”</a></li>
+<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand”.</a></li>
 <li class="chapter" data-level="15.4" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>15.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>16</b> Linear regression: models with a single continuous explanatory variable</a>
@@ -352,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Exam</b></span></li>
-<li class="chapter" data-level="23" data-path="exam-2021.html"><a href="exam-2021.html"><i class="fa fa-check"></i><b>23</b> Exam 2021</a></li>
+<li class="chapter" data-level="23" data-path="exam-2022.html"><a href="exam-2022.html"><i class="fa fa-check"></i><b>23</b> Exam 2022</a></li>
 <li class="part"><span><b>V Solutions</b></span></li>
 <li class="chapter" data-level="24" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>24</b> Exercise Solutions</a>
 <ul>
@@ -392,19 +393,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="visualising-data-with-ggplot2" class="section level1" number="10">
-<h1><span class="header-section-number">Chapter 10</span> Visualising data with <code>ggplot2</code></h1>
+<div id="visualising-data-with-ggplot2" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Visualising data with <code>ggplot2</code><a href="visualising-data-with-ggplot2.html#visualising-data-with-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this chapter you will be guided through using the <code>ggplot2</code> package to make some pretty plots. You will therefore need the <code>ggplot2</code> package to make this work. Remember, you can load packages like this:</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="visualising-data-with-ggplot2.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <p>We will use the SDU birds clutch size data that we produced at the end of the “[Data wrangling with dplyr]” chapter for these examples. You can find the data set via the Course Data Dropbox link.</p>
 <div class="do-something">
 <p>
-Remember to set your working directory, and start a new script. I am assuming that you have saved your data in a folder called “CourseData” inside your working directory.
+Remember to set your working directory, and start a new script. I am
+assuming that you have saved your data in a folder called “CourseData”
+inside your working directory.
 </p>
 </div>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="visualising-data-with-ggplot2.html#cb191-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/SDUClutchSize.csv&quot;</span>)</span></code></pre></div>
-<div id="histograms" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Histograms</h2>
+<div id="histograms" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Histograms<a href="visualising-data-with-ggplot2.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>ggplot</code> function expects two main arguments (1) the data and (2) the <strong>aesthetics</strong>. The aesthetics are the variables you want to plot, and associated characteristics like colours, groupings etc. The first argument is for the data, then the aesthetics are specified within the <code>aes(...)</code> argument. These usually include an argument for <code>x</code> which is normally the variable that appears on the horizontal axis, and (often) <code>y</code> which is usually the variable on the vertical axis. The details of this depend on the type of plot you are making.</p>
 <p>After setting up the plot the graphics are added as <strong>geometric layers</strong> or <strong>geoms</strong>. There are many of these available including <code>geom_histogram</code>, <code>geom_line</code>, <code>geom_point</code> etc.</p>
 <p>I will illustrate the construction of a simple plot by making a histogram of the clutch size of all the nests in the dataset.</p>
@@ -429,8 +432,8 @@ We know that we have two species here and we would like to compare them. This is
 <p><img src="BB852_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <p>It is very clear from this plot that blue tits tend to have bigger clutch sizes than great tits. Is this difference <em>statistically significant</em>? We will look at testing this in a future class - for now we will be satisfied with our visualisation.</p>
 </div>
-<div id="facets---splitting-data-across-panels" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> “Facets” - splitting data across panels</h2>
+<div id="facets---splitting-data-across-panels" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> “Facets” - splitting data across panels<a href="visualising-data-with-ggplot2.html#facets---splitting-data-across-panels" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You should recall that there were several years of data represented here.
 <code>ggplot</code> has a very clever way of splitting up the plot to examine this.</p>
 <div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="visualising-data-with-ggplot2.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="fu">stat</span>(density))) <span class="sc">+</span></span>
@@ -447,12 +450,15 @@ We know that we have two species here and we would like to compare them. This is
 <p><img src="BB852_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
 <div class="do-something">
 <p>
-You can change whether the separate graphs are presented in a rows or columns by changing the order of the argument: <code>facet_grid(species~.)</code> or <code>facet_grid(.~species)</code>. Try it.
+You can change whether the separate graphs are presented in a rows or
+columns by changing the order of the argument:
+<code>facet_grid(species~.)</code> or
+<code>facet_grid(.~species)</code>. Try it.
 </p>
 </div>
 </div>
-<div id="box-plots" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Box plots</h2>
+<div id="box-plots" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Box plots<a href="visualising-data-with-ggplot2.html#box-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Box plots are suitable for cases where one variable is categorical with 2+ levels, and the other is continuous. Therefore, another way to look at these distributions is to use a box plot.</p>
 <p>In a box plot the box shows the quartiles (i.e. the 25% and 75% quantiles) within which 50% of the data are found. The horizontal line in the box is the <em>median</em>, Then the whiskers extend from the smallest to largest value <em>unless they are further than 1.5 times the interquartile range (the length of the box)</em> away from the edge of the box, in which case they are individually shown as outlier points.</p>
 <p>To plot them using <code>ggplot</code> you must use a <code>geom_boxplot</code> layer.
@@ -467,12 +473,13 @@ The categorical variable is normally placed on the x-axis so is placed as <code>
 <p><img src="BB852_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
 <div class="do-something">
 <p>
-Try splitting the data into different years using <code>facet_grid</code> with the box plot.
+Try splitting the data into different years using
+<code>facet_grid</code> with the box plot.
 </p>
 </div>
 </div>
-<div id="lines-and-points" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Lines and points</h2>
+<div id="lines-and-points" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Lines and points<a href="visualising-data-with-ggplot2.html#lines-and-points" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Perhaps not surprisingly lines and points can be added with the geoms, <code>geom_line</code> and <code>geom_point</code> respectively.
 To illustrate this we will make a plot showing how clutch size changes among years.
 First we will use <code>summarise</code> to create a dataset with the mean clutch size. We’ll start simply, by looking at only great tits.</p>
@@ -507,8 +514,8 @@ First we will use <code>summarise</code> to create a dataset with the mean clutc
 <span id="cb205-9"><a href="visualising-data-with-ggplot2.html#cb205-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Clutch size data from SDU Campus&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
 </div>
-<div id="scatter-plots" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Scatter plots</h2>
+<div id="scatter-plots" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Scatter plots<a href="visualising-data-with-ggplot2.html#scatter-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Finally, lets make a scatter plot.
 The SDU bird data are not suitable for this type of plot so we’ll use the data from a few days ago on suburban bird diversity.</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="visualising-data-with-ggplot2.html#cb206-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>)</span></code></pre></div>
@@ -546,7 +553,6 @@ The SDU bird data are not suitable for this type of plot so we’ll use the data
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -587,7 +593,7 @@ gitbook.start({
 },
 "download": ["BB852.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

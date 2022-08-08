@@ -2,19 +2,8 @@
 require(magrittr)
 require(dplyr)
 require(calendar)
-require(lubridate)
 
-savingsTimeSwitch <- with_tz(lubridate::as_datetime("2021-10-31 03:00:00"), "Europe/Copenhagen")
-
-courseCal <- ic_read("bb852.ics") %>%
-  arrange(DTSTART) %>%
-  mutate(Session = row_number()) %>%
-  mutate(savingsT = DTSTART < savingsTimeSwitch) %>%
-  mutate(offsetT = if_else(savingsT == TRUE, 2, 1)) %>%
-  # Check this every year!
-  mutate(DTSTART2 = DTSTART + hours(offsetT)) %>%
-  mutate(DTEND2 = DTEND + hours(offsetT)) %>%
-  mutate(Room = gsub(pattern = "Odense ", replacement = "", x = LOCATION)) %>%
+courseCal_ics <- courseCal %>%
   select(Session, DTSTART2, DTEND2, Room)
 
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
