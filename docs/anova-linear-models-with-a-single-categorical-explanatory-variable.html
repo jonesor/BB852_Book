@@ -329,6 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>20.1.2</b> Example: Cancer clusters</a></li>
 </ul></li>
 <li class="chapter" data-level="20.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>20.2</b> Exercise: Maze runner</a></li>
+<li class="chapter" data-level="20.3" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#overdispersion"><i class="fa fa-check"></i><b>20.3</b> Overdispersion</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>21</b> Extending use cases of GLM</a>
 <ul>
@@ -418,9 +419,9 @@ correctly.
 </p>
 </div>
 <p>Import the data (<code>espresso.csv</code>) and look at it.</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb345-1" aria-hidden="true" tabindex="-1"></a>espresso <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/espresso.csv&quot;</span>, </span>
-<span id="cb345-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb345-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb345-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb345-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(espresso)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb343-1" aria-hidden="true" tabindex="-1"></a>espresso <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/espresso.csv&quot;</span>, </span>
+<span id="cb343-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb343-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb343-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb343-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(espresso)</span></code></pre></div>
 <pre><code>##   foamIndx method
 ## 1    36.64     BM
 ## 2    39.65     BM
@@ -428,9 +429,9 @@ correctly.
 ## 4    35.96     BM
 ## 5    38.52     BM
 ## 6    21.02     BM</code></pre>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb347-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(espresso, <span class="fu">aes</span>(<span class="at">x =</span> method, <span class="at">y =</span> foamIndx)) <span class="sc">+</span></span>
-<span id="cb347-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb347-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb347-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb347-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb345-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(espresso, <span class="fu">aes</span>(<span class="at">x =</span> method, <span class="at">y =</span> foamIndx)) <span class="sc">+</span></span>
+<span id="cb345-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb345-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb345-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb345-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:coffee"></span>
 <img src="BB852_files/figure-html/coffee-1.png" alt="A box and whisker plot, with jittered points, for the espresso foam data." width="384" />
 <p class="caption">
@@ -439,10 +440,10 @@ Figure 15.2: A box and whisker plot, with jittered points, for the espresso foam
 </div>
 <p>You can see in Figure <a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fig:coffee">15.2</a> that the categorical explanatory variable (“method”) defines the three treatment groups and has the three levels representing the different coffee types: BM, HIP and IES.</p>
 <p>Let’s first fit the ANOVA using R. One way ANOVAs are fitted using the <code>lm</code> function (<code>lm</code> stands for “linear model” - yes, an ANOVA is a type of linear model).</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb348-1" aria-hidden="true" tabindex="-1"></a>foam_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(foamIndx <span class="sc">~</span> method, <span class="at">data =</span> espresso)</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb346-1" aria-hidden="true" tabindex="-1"></a>foam_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(foamIndx <span class="sc">~</span> method, <span class="at">data =</span> espresso)</span></code></pre></div>
 <p>Before proceeding, we need to check the assumptions of the model. This can be done visually using the <code>autoplot</code> function in the <code>ggfortify</code> package. If you don’t have the package installed, install it now (<code>install.packages("ggfortify"</code>)).</p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb349-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb349-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(foam_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb347-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb347-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(foam_mod)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:diagnostic"></span>
 <img src="BB852_files/figure-html/diagnostic-1.png" alt="Diagnostic plots for the ANOVA model. This looks great." width="480" />
 <p class="caption">
@@ -453,7 +454,7 @@ Figure 15.3: Diagnostic plots for the ANOVA model. This looks great.
 <p>Trust me, everything here looks great.</p>
 <p>Now let’s evaluate our ANOVA model. We do this using two functions: <code>anova</code> and <code>summary</code> (it sounds strange, but yes we do use a function called <code>anova</code> on our ANOVA model).</p>
 <p>First, the <code>anova</code>. This gives us the following summary:</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(foam_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(foam_mod)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: foamIndx
@@ -473,7 +474,7 @@ Figure 15.3: Diagnostic plots for the ANOVA model. This looks great.
 <p>This model output doesn’t tell us <em>where</em> those differences are, nor does it tell us what the estimated mean values of foaminess are for the three groups: what are the effects? We need to dig further into the model to get to these details.</p>
 <p>There are several ways to do this and we’ll look at one of them.</p>
 <p>We do this using the <code>summary</code> function.</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foam_mod)</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foam_mod)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = foamIndx ~ method, data = espresso)
@@ -495,9 +496,9 @@ Figure 15.3: Diagnostic plots for the ANOVA model. This looks great.
 ## F-statistic: 28.41 on 2 and 24 DF,  p-value: 4.699e-07</code></pre>
 <p>To properly interpret this output you need to understand something called “treatment contrasts”. Essentially, contrasts define how model coefficients (the estimates made by the model) are presented in R outputs.</p>
 <p>They are a bit hard to wrap your head aroudn and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use <code>group_by</code> and <code>summarise</code> to calculate the means for your the levels of your explanatory variable.</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb354-1" aria-hidden="true" tabindex="-1"></a>espresso <span class="sc">%&gt;%</span></span>
-<span id="cb354-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb354-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
-<span id="cb354-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb354-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">gp_mean =</span> <span class="fu">mean</span>(foamIndx))</span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb352-1" aria-hidden="true" tabindex="-1"></a>espresso <span class="sc">%&gt;%</span></span>
+<span id="cb352-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb352-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
+<span id="cb352-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb352-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">gp_mean =</span> <span class="fu">mean</span>(foamIndx))</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 2
 ##   method gp_mean
 ##   &lt;fct&gt;    &lt;dbl&gt;
@@ -515,17 +516,17 @@ Journal of Food Engineering, Vol. 121, pp. 112-117.
 <p>Likewise, the t-values and p-values, are evaluating <em>differences between the focal group and this baseline</em>. Thus in this case, the comparisons (the “contrasts”) are between the intercept (BM) and the second level (HIP), and the intercept (BM) and the third level (IES). There is no formal statistical comparison between HIP and IES.</p>
 <p>You can see that it is very important to understand the levels of your explanatory variable, and how these relate to the summary outputs of the model. It can be useful to use the function <code>relevel</code> to manipulate the explanatory variable to make sure that the output gives you the comparisons you are interested in. Another simple trick would be to always ensure that your reference group (e.g. “control”) comes first alphabetically and is therefore selected by R as the intercept (reference point).</p>
 <p>For example, we can <code>relevel</code> the method variable so that the levels are re-ordered as HIP, BM, then IES so that the comparisons are between zero-HIP, HIP-BM and HIP-IES. (make sure that you understand this before proceeding).</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is what the original data looks like:</span></span>
-<span id="cb356-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb356-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(espresso<span class="sc">$</span>method)</span></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb354-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is what the original data looks like:</span></span>
+<span id="cb354-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb354-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(espresso<span class="sc">$</span>method)</span></code></pre></div>
 <pre><code>## [1] &quot;BM&quot;  &quot;HIP&quot; &quot;IES&quot;</code></pre>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb358-1" aria-hidden="true" tabindex="-1"></a><span class="co"># releveling changes this by changing the reference.</span></span>
-<span id="cb358-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb358-2" aria-hidden="true" tabindex="-1"></a>espresso_2 <span class="ot">&lt;-</span> espresso <span class="sc">%&gt;%</span></span>
-<span id="cb358-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb358-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="fu">relevel</span>(method, <span class="at">ref =</span> <span class="st">&quot;HIP&quot;</span>))</span>
-<span id="cb358-4"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb358-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(espresso_2<span class="sc">$</span>method)</span></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb356-1" aria-hidden="true" tabindex="-1"></a><span class="co"># releveling changes this by changing the reference.</span></span>
+<span id="cb356-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb356-2" aria-hidden="true" tabindex="-1"></a>espresso_2 <span class="ot">&lt;-</span> espresso <span class="sc">%&gt;%</span></span>
+<span id="cb356-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb356-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="fu">relevel</span>(method, <span class="at">ref =</span> <span class="st">&quot;HIP&quot;</span>))</span>
+<span id="cb356-4"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb356-4" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(espresso_2<span class="sc">$</span>method)</span></code></pre></div>
 <pre><code>## [1] &quot;HIP&quot; &quot;BM&quot;  &quot;IES&quot;</code></pre>
 <p>Now we can refit the model with this modified data set and see what difference that made:</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb360-1" aria-hidden="true" tabindex="-1"></a>foam_mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(foamIndx <span class="sc">~</span> method, <span class="at">data =</span> espresso_2)</span>
-<span id="cb360-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb360-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(foam_mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb358-1" aria-hidden="true" tabindex="-1"></a>foam_mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(foamIndx <span class="sc">~</span> method, <span class="at">data =</span> espresso_2)</span>
+<span id="cb358-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb358-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(foam_mod2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: foamIndx
@@ -534,7 +535,7 @@ Journal of Food Engineering, Vol. 121, pp. 112-117.
 ## Residuals 24 1716.9   71.54                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foam_mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(foam_mod2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = foamIndx ~ method, data = espresso_2)
@@ -567,11 +568,11 @@ Figure 15.4: Comparison illustrating the difference between ANOVA models using (
 <div id="tukeys-honestly-significant-difference-hsd" class="section level3 hasAnchor" number="15.2.2">
 <h3><span class="header-section-number">15.2.2</span> Tukey’s Honestly Significant Difference (HSD)<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>An alternative way to approach these comparisons between groups is to use something called a <strong>post-hoc multiple comparison test</strong>. The words “post-hoc” mean “after the event” – i.e. after the ANOVA in this case – while the “multiple comparison” refers to the (potentially many) pairwise comparisons that you would like to make with an ANOVA. One of the most widely used post-hoc tests is called Tukey’s Honestly Significant Difference (Tukey HSD) test. There is a convenient R package called <code>agricolae</code> that will do these for you.</p>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You only need to do this once!</span></span>
-<span id="cb364-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb364-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;agricolae&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You only need to do this once!</span></span>
+<span id="cb362-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb362-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;agricolae&quot;</span>)</span></code></pre></div>
 <p>When you have the package installed, you can load it (using <code>library</code>). Then you can run the Tukey HSD test using the function <code>HSD.test</code>. The first argument for the function is the name of the model, followed by the name of the variable you are comparing (in this case <code>method</code>) and finally <code>console = TRUE</code> tells the function to print the output to your computer screen.</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
-<span id="cb365-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb365-2" aria-hidden="true" tabindex="-1"></a><span class="fu">HSD.test</span>(foam_mod2, <span class="st">&quot;method&quot;</span>, <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb363-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb363-2" aria-hidden="true" tabindex="-1"></a><span class="fu">HSD.test</span>(foam_mod2, <span class="st">&quot;method&quot;</span>, <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ## Study: foam_mod2 ~ &quot;method&quot;
 ## 
@@ -624,22 +625,22 @@ Figure 15.5: The relative size of the squared residual errors from the overall m
 <p>In the following I will show how these calculations can be done “by hand” in R. The purpose of showing you this is to demonstrate exactly how the <code>lm</code> model that you fitted above works, and prove to yourself that it is not rocket science… you will never need to do this in real life, because you have the wonderful <code>lm</code> function.</p>
 <p>Here goes…</p>
 <p>First, calculate the total sum of squares:</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb367-1" aria-hidden="true" tabindex="-1"></a>overallMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(espresso<span class="sc">$</span>foamIndx)</span>
-<span id="cb367-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb367-2" aria-hidden="true" tabindex="-1"></a>(SSTotal <span class="ot">&lt;-</span> <span class="fu">sum</span>((overallMean <span class="sc">-</span> espresso<span class="sc">$</span>foamIndx)<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb365-1" aria-hidden="true" tabindex="-1"></a>overallMean <span class="ot">&lt;-</span> <span class="fu">mean</span>(espresso<span class="sc">$</span>foamIndx)</span>
+<span id="cb365-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb365-2" aria-hidden="true" tabindex="-1"></a>(SSTotal <span class="ot">&lt;-</span> <span class="fu">sum</span>((overallMean <span class="sc">-</span> espresso<span class="sc">$</span>foamIndx)<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## [1] 5782.099</code></pre>
 <p>Now calculate the group-specific means:</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-1" aria-hidden="true" tabindex="-1"></a>(groupMeans <span class="ot">&lt;-</span> espresso <span class="sc">%&gt;%</span></span>
-<span id="cb369-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
-<span id="cb369-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">groupMean =</span> <span class="fu">mean</span>(foamIndx)) <span class="sc">%&gt;%</span></span>
-<span id="cb369-4"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(groupMean))</span></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb367-1" aria-hidden="true" tabindex="-1"></a>(groupMeans <span class="ot">&lt;-</span> espresso <span class="sc">%&gt;%</span></span>
+<span id="cb367-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
+<span id="cb367-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">groupMean =</span> <span class="fu">mean</span>(foamIndx)) <span class="sc">%&gt;%</span></span>
+<span id="cb367-4"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb367-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(groupMean))</span></code></pre></div>
 <pre><code>## [1] 32.4 61.3 39.7</code></pre>
 <p>Now add those group-specific mean values to the dataset using <code>left_join</code> so that you can calculate the group-specific errors.</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-1" aria-hidden="true" tabindex="-1"></a>espresso <span class="ot">&lt;-</span> <span class="fu">left_join</span>(espresso, espresso <span class="sc">%&gt;%</span></span>
-<span id="cb371-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
-<span id="cb371-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">groupMean =</span> <span class="fu">mean</span>(foamIndx))) <span class="sc">%&gt;%</span></span>
-<span id="cb371-4"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">groupSS =</span> (foamIndx <span class="sc">-</span> groupMean)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb371-5"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb371-6"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(espresso)</span></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-1" aria-hidden="true" tabindex="-1"></a>espresso <span class="ot">&lt;-</span> <span class="fu">left_join</span>(espresso, espresso <span class="sc">%&gt;%</span></span>
+<span id="cb369-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
+<span id="cb369-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">groupMean =</span> <span class="fu">mean</span>(foamIndx))) <span class="sc">%&gt;%</span></span>
+<span id="cb369-4"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">groupSS =</span> (foamIndx <span class="sc">-</span> groupMean)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb369-5"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb369-6"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb369-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(espresso)</span></code></pre></div>
 <pre><code>##   foamIndx method groupMean  groupSS
 ## 1    36.64     BM      32.4  17.9776
 ## 2    39.65     BM      32.4  52.5625
@@ -648,25 +649,25 @@ Figure 15.5: The relative size of the squared residual errors from the overall m
 ## 5    38.52     BM      32.4  37.4544
 ## 6    21.02     BM      32.4 129.5044</code></pre>
 <p>Then, to calculate the errors:</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb373-1" aria-hidden="true" tabindex="-1"></a>(SSError <span class="ot">&lt;-</span> espresso <span class="sc">%&gt;%</span></span>
-<span id="cb373-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb373-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">sum</span>(groupSS)) <span class="sc">%&gt;%</span></span>
-<span id="cb373-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb373-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-1" aria-hidden="true" tabindex="-1"></a>(SSError <span class="ot">&lt;-</span> espresso <span class="sc">%&gt;%</span></span>
+<span id="cb371-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">sum</span>(groupSS)) <span class="sc">%&gt;%</span></span>
+<span id="cb371-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>())</span></code></pre></div>
 <pre><code>## [1] 1716.919</code></pre>
 <p>From there, you can calculate the <strong>Treatment Sum of Squares</strong></p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb375-1" aria-hidden="true" tabindex="-1"></a>(SSTreatment <span class="ot">&lt;-</span> SSTotal <span class="sc">-</span> SSError)</span></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb373-1" aria-hidden="true" tabindex="-1"></a>(SSTreatment <span class="ot">&lt;-</span> SSTotal <span class="sc">-</span> SSError)</span></code></pre></div>
 <pre><code>## [1] 4065.18</code></pre>
 <p>So far, so good - but we can’t just look at the ratio of SSTreatment/SSError, because sum of square errors always increase with sample size. We can account for this by dividing</p>
 <p>We need to take account of sample size (degrees of freedom) by dividing these sum of squares by the degrees of freedom to give us variances. There are 3 treatment groups and 9 samples per group. Therefore there are 2 degrees of freedom for the treatment, and 8 degrees of freedom per each of the three treatments, giving a total of 8*3 = 24 error degrees of freedom.</p>
 <p>Now we need to correct for degrees of freedom, which will give us variances.</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb377-1" aria-hidden="true" tabindex="-1"></a>(meanSSTreatment <span class="ot">&lt;-</span> SSTreatment <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb375-1" aria-hidden="true" tabindex="-1"></a>(meanSSTreatment <span class="ot">&lt;-</span> SSTreatment <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 2032.59</code></pre>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb379-1" aria-hidden="true" tabindex="-1"></a>(meanSSError <span class="ot">&lt;-</span> SSError <span class="sc">/</span> <span class="dv">24</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb377-1" aria-hidden="true" tabindex="-1"></a>(meanSSError <span class="ot">&lt;-</span> SSError <span class="sc">/</span> <span class="dv">24</span>)</span></code></pre></div>
 <pre><code>## [1] 71.5383</code></pre>
 <p>The F-statistic is then the ratio of these values.</p>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb381-1" aria-hidden="true" tabindex="-1"></a>(Fstat <span class="ot">&lt;-</span> meanSSTreatment <span class="sc">/</span> meanSSError)</span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb379-1" aria-hidden="true" tabindex="-1"></a>(Fstat <span class="ot">&lt;-</span> meanSSTreatment <span class="sc">/</span> meanSSError)</span></code></pre></div>
 <pre><code>## [1] 28.41261</code></pre>
 <p>We can “look up” the p-value associated with this F-statistic using the <code>pf</code> function (<code>pf</code> stands for probability of f) like this:</p>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pf</span>(Fstat, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">24</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pf</span>(Fstat, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">24</span>)</span></code></pre></div>
 <pre><code>## [1] 4.698636e-07</code></pre>
 <p>As you can see, the method is a bit laborious and time consuming but it is conceptually fairly straightforward - it all hinges on the ratio of variation due to treatment effect vs. overall variation. Signal and noise.</p>
 </div>

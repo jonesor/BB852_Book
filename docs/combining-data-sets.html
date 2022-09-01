@@ -329,6 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>20.1.2</b> Example: Cancer clusters</a></li>
 </ul></li>
 <li class="chapter" data-level="20.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>20.2</b> Exercise: Maze runner</a></li>
+<li class="chapter" data-level="20.3" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#overdispersion"><i class="fa fa-check"></i><b>20.3</b> Overdispersion</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>21</b> Extending use cases of GLM</a>
 <ul>
@@ -402,23 +403,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This question is crucial to conservation biologists because it helps us to generalise our ideas about what drives extinction risks. In other words, if we can say “<em>species with slow life histories tend to be more threatened</em>” then this gives useful information that can help with planning. For example, imagine we have some species that have not yet been assessed (we don’t know if they are threatened or not). Should we focus attention on the one with a short generation time, or long generation time?</p>
 <p>To answer the question we will need to import two large data sets, tidy them up a bit and then combine them for analysis.</p>
 <p>Let’s start with the “Amniote Life History Database” <a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>, which is a good source of life history data. We have encountered this database before. Recall that the missing values (which are normally coded as <code>NA</code> in R) are coded as “<code>-999</code>”. The easiest way to take care of this is to specify this when we import the data using the <code>na.strings</code> argument of the <code>read.csv</code> function. Thus we can import the data like this:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="combining-data-sets.html#cb164-1" aria-hidden="true" tabindex="-1"></a>amniote <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/Amniote_Database_Aug_2015.csv&quot;</span>,</span>
-<span id="cb164-2"><a href="combining-data-sets.html#cb164-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.strings =</span> <span class="st">&quot;-999&quot;</span></span>
-<span id="cb164-3"><a href="combining-data-sets.html#cb164-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="combining-data-sets.html#cb162-1" aria-hidden="true" tabindex="-1"></a>amniote <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/Amniote_Database_Aug_2015.csv&quot;</span>,</span>
+<span id="cb162-2"><a href="combining-data-sets.html#cb162-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.strings =</span> <span class="st">&quot;-999&quot;</span></span>
+<span id="cb162-3"><a href="combining-data-sets.html#cb162-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>We can filter on the taxonomic <code>class</code> to subset to only mammals. Then, to address our question, we want data on generation time for mammals. Generation time is often measured as the average age at which females reproduce so we can get close to that with <code>female_maturity_d</code>. We will first <code>select</code> these columns, along with <code>genus</code> and <code>species</code>. We can combine these two taxonomic variables using <code>mutate</code> and <code>paste</code> to get our Latin binomial species name.</p>
 <p>We have previously learned that log transforming such variables is a good thing to do, so we can use <code>mutate</code> again to do this transformation.</p>
 <p>Finally, we can use <code>na.omit</code> to get rid of entries with missing values (which we cannot use). This is not essential, but keeps things more manageable.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="combining-data-sets.html#cb165-1" aria-hidden="true" tabindex="-1"></a>mammal <span class="ot">&lt;-</span> amniote <span class="sc">%&gt;%</span></span>
-<span id="cb165-2"><a href="combining-data-sets.html#cb165-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Mammalia&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb165-3"><a href="combining-data-sets.html#cb165-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the mammals only</span></span>
-<span id="cb165-4"><a href="combining-data-sets.html#cb165-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(genus, species, female_maturity_d) <span class="sc">%&gt;%</span></span>
-<span id="cb165-5"><a href="combining-data-sets.html#cb165-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get useful columns</span></span>
-<span id="cb165-6"><a href="combining-data-sets.html#cb165-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(genus, species)) <span class="sc">%&gt;%</span></span>
-<span id="cb165-7"><a href="combining-data-sets.html#cb165-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus) <span class="sc">%&gt;%</span></span>
-<span id="cb165-8"><a href="combining-data-sets.html#cb165-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logMaturity =</span> <span class="fu">log</span>(female_maturity_d)) <span class="sc">%&gt;%</span></span>
-<span id="cb165-9"><a href="combining-data-sets.html#cb165-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="combining-data-sets.html#cb163-1" aria-hidden="true" tabindex="-1"></a>mammal <span class="ot">&lt;-</span> amniote <span class="sc">%&gt;%</span></span>
+<span id="cb163-2"><a href="combining-data-sets.html#cb163-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Mammalia&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb163-3"><a href="combining-data-sets.html#cb163-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get the mammals only</span></span>
+<span id="cb163-4"><a href="combining-data-sets.html#cb163-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(genus, species, female_maturity_d) <span class="sc">%&gt;%</span></span>
+<span id="cb163-5"><a href="combining-data-sets.html#cb163-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># get useful columns</span></span>
+<span id="cb163-6"><a href="combining-data-sets.html#cb163-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(genus, species)) <span class="sc">%&gt;%</span></span>
+<span id="cb163-7"><a href="combining-data-sets.html#cb163-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus) <span class="sc">%&gt;%</span></span>
+<span id="cb163-8"><a href="combining-data-sets.html#cb163-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logMaturity =</span> <span class="fu">log</span>(female_maturity_d)) <span class="sc">%&gt;%</span></span>
+<span id="cb163-9"><a href="combining-data-sets.html#cb163-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
 <p>Let’s take a quick look at what we have:</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="combining-data-sets.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mammal)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="combining-data-sets.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mammal)</span></code></pre></div>
 <pre><code>##                      species female_maturity_d logMaturity
 ## 20         Echinops telfairi         278.42000    5.629131
 ## 22    Hemicentetes nigriceps          48.57000    3.883006
@@ -427,26 +428,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 40        Microgale talazaci         639.00000    6.459904
 ## 47           Setifer setosus         198.00000    5.288267</code></pre>
 <p>Looks good. Now let’s import the IUCN Red List data.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="combining-data-sets.html#cb168-1" aria-hidden="true" tabindex="-1"></a>redlist <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/MammalRedList.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="combining-data-sets.html#cb166-1" aria-hidden="true" tabindex="-1"></a>redlist <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/MammalRedList.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at that.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="combining-data-sets.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(redlist)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="combining-data-sets.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(redlist)</span></code></pre></div>
 <pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                    &quot;Class&quot;                     &quot;Order&quot;                    
 ##  [6] &quot;Family&quot;                    &quot;Genus&quot;                     &quot;Species&quot;                   &quot;Authority&quot;                 &quot;Infraspecific.rank&quot;       
 ## [11] &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;   &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;       
 ## [16] &quot;Common.names..Fre.&quot;        &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;           &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot;
 ## [21] &quot;Year.assessed&quot;             &quot;Population.trend&quot;          &quot;Petitioned&quot;</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="combining-data-sets.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(redlist<span class="sc">$</span>Red.List.status)</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="combining-data-sets.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(redlist<span class="sc">$</span>Red.List.status)</span></code></pre></div>
 <pre><code>## [1] &quot;DD&quot; &quot;LC&quot; &quot;CR&quot; &quot;NT&quot; &quot;EN&quot; &quot;VU&quot; &quot;EX&quot; &quot;EW&quot;</code></pre>
 <p>There’s a lot of information there but what we really need is simply the Latin binomial (for which we need <code>genus</code> and <code>species</code>) and the threat status <code>Red.List.status</code>.</p>
 <p>R treats categorical variables (<code>factor</code> variables) as alphabetical, but in this case the red list status has a meaning going from low threat (Least Concern - LC) to Critically Endangered (CR) and even Extinct in the Wild (EX) at the other end of the spectrum. We can define this ordering using <code>mutate</code> with the <code>factor</code> function.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="combining-data-sets.html#cb173-1" aria-hidden="true" tabindex="-1"></a>redlist <span class="ot">&lt;-</span> redlist <span class="sc">%&gt;%</span></span>
-<span id="cb173-2"><a href="combining-data-sets.html#cb173-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(Genus, Species)) <span class="sc">%&gt;%</span></span>
-<span id="cb173-3"><a href="combining-data-sets.html#cb173-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, Red.List.status) <span class="sc">%&gt;%</span></span>
-<span id="cb173-4"><a href="combining-data-sets.html#cb173-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Red.List.status =</span> <span class="fu">factor</span>(Red.List.status,</span>
-<span id="cb173-5"><a href="combining-data-sets.html#cb173-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;LC&quot;</span>, <span class="st">&quot;NT&quot;</span>, <span class="st">&quot;VU&quot;</span>, <span class="st">&quot;EN&quot;</span>, <span class="st">&quot;CR&quot;</span>, <span class="st">&quot;EW&quot;</span>, <span class="st">&quot;EX&quot;</span>)</span>
-<span id="cb173-6"><a href="combining-data-sets.html#cb173-6" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb173-7"><a href="combining-data-sets.html#cb173-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb173-8"><a href="combining-data-sets.html#cb173-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(redlist)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="combining-data-sets.html#cb171-1" aria-hidden="true" tabindex="-1"></a>redlist <span class="ot">&lt;-</span> redlist <span class="sc">%&gt;%</span></span>
+<span id="cb171-2"><a href="combining-data-sets.html#cb171-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(Genus, Species)) <span class="sc">%&gt;%</span></span>
+<span id="cb171-3"><a href="combining-data-sets.html#cb171-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, Red.List.status) <span class="sc">%&gt;%</span></span>
+<span id="cb171-4"><a href="combining-data-sets.html#cb171-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Red.List.status =</span> <span class="fu">factor</span>(Red.List.status,</span>
+<span id="cb171-5"><a href="combining-data-sets.html#cb171-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;LC&quot;</span>, <span class="st">&quot;NT&quot;</span>, <span class="st">&quot;VU&quot;</span>, <span class="st">&quot;EN&quot;</span>, <span class="st">&quot;CR&quot;</span>, <span class="st">&quot;EW&quot;</span>, <span class="st">&quot;EX&quot;</span>)</span>
+<span id="cb171-6"><a href="combining-data-sets.html#cb171-6" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb171-7"><a href="combining-data-sets.html#cb171-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb171-8"><a href="combining-data-sets.html#cb171-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(redlist)</span></code></pre></div>
 <pre><code>##                species Red.List.status
 ## 1   Abditomys latidens            &lt;NA&gt;
 ## 2    Abeomelomys sevia              LC
@@ -455,9 +456,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 Abrocoma boliviensis              CR
 ## 6      Abrocoma budini            &lt;NA&gt;</code></pre>
 <p>Now we can combine this with the life history data from above using <code>left_join</code>.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="combining-data-sets.html#cb175-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">left_join</span>(mammal, redlist, <span class="at">by =</span> <span class="st">&quot;species&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="combining-data-sets.html#cb173-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">left_join</span>(mammal, redlist, <span class="at">by =</span> <span class="st">&quot;species&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at what we have now:</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="combining-data-sets.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="combining-data-sets.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <pre><code>##                     species female_maturity_d logMaturity Red.List.status
 ## 1         Echinops telfairi         278.42000    5.629131              LC
 ## 2    Hemicentetes nigriceps          48.57000    3.883006              LC
@@ -465,7 +466,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4         Microgale dobsoni         669.59200    6.506669              LC
 ## 5        Microgale talazaci         639.00000    6.459904              LC
 ## 6           Setifer setosus         198.00000    5.288267              LC</code></pre>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="combining-data-sets.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="combining-data-sets.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code></pre></div>
 <pre><code>##    species          female_maturity_d  logMaturity    Red.List.status
 ##  Length:2000        Min.   :  23.81   Min.   :3.170   LC     :1219   
 ##  Class :character   1st Qu.: 121.53   1st Qu.:4.800   VU     : 176   
@@ -476,22 +477,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##                                                       NA&#39;s   : 247</code></pre>
 <p>You can see that there are 247 missing values for the Red List status. These are either species that have not yet been assessed, or maybe where there are mismatches in the species names between the two databases. We will ignore this problem today.</p>
 <p>Before plotting, I will also use <code>filter</code> remove species that are extinct (status = “EX” and “EW”). To do this I use the <code>%in%</code> argument to allow me to match a vector of variables. Because I want to NOT match them I negate the match using <code>!</code>.</p>
-<p>I then ensure that those levels are removed from the variable using <code>droplevels</code>.</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="combining-data-sets.html#cb180-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
-<span id="cb180-2"><a href="combining-data-sets.html#cb180-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Red.List.status <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;EX&quot;</span>, <span class="st">&quot;EW&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb180-3"><a href="combining-data-sets.html#cb180-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="combining-data-sets.html#cb178-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb178-2"><a href="combining-data-sets.html#cb178-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Red.List.status <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;EX&quot;</span>, <span class="st">&quot;EW&quot;</span>)) </span></code></pre></div>
 <p>Let’s now plot the data to answer the question.</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="combining-data-sets.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>Red.List.status, x<span class="sc">$</span>logMaturity, <span class="at">ylab =</span> <span class="st">&quot;Maturity&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="combining-data-sets.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>Red.List.status, x<span class="sc">$</span>logMaturity, <span class="at">ylab =</span> <span class="st">&quot;Maturity&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
 <p>What can we see? If you focus on the median values, it looks like there is a weak positive relationship between this life history trait and threat status: animals with slower life histories tend to be more threatened.</p>
 </div>
 <div id="using-pivot_longer" class="section level2 hasAnchor" number="9.2">
 <h2><span class="header-section-number">9.2</span> Using <code>pivot_longer</code><a href="combining-data-sets.html#using-pivot_longer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sometimes data are not arranged in a way that make them easy to use in R. For example, data could be arranged so that the column headings are themselves data (e.g. treatments, sex of individuals).</p>
 <p>To illustrate this I will use a data set on heights of men and women.</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="combining-data-sets.html#cb182-1" aria-hidden="true" tabindex="-1"></a>heights <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/heights.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="combining-data-sets.html#cb180-1" aria-hidden="true" tabindex="-1"></a>heights <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/heights.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look:</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="combining-data-sets.html#cb183-1" aria-hidden="true" tabindex="-1"></a>heights</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="combining-data-sets.html#cb181-1" aria-hidden="true" tabindex="-1"></a>heights</span></code></pre></div>
 <pre><code>##      place heightMale heightFemale
 ## 1   London        170          164
 ## 2   London        176          158
@@ -526,13 +525,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>I would like to make a boxplot, but it is not possible to easily do it with the data arranged in this format. What I need to do is “unpack” or rearrange the data to add another column for sex. This will make the data frame twice as long, and less wide.</p>
 <p>There is a convenient function called <code>pivot_longer</code> in the <code>tidyr</code> package that will do this for you.
 You can “pipe” data into the function, then tell it which columns you would like to move, and then give it the name of the new column that contains data that <strong>was</strong> in the column heading, and the name of the column containing the data.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="combining-data-sets.html#cb185-1" aria-hidden="true" tabindex="-1"></a>newHeights <span class="ot">&lt;-</span> heights <span class="sc">%&gt;%</span></span>
-<span id="cb185-2"><a href="combining-data-sets.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb185-3"><a href="combining-data-sets.html#cb185-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(heightMale, heightFemale),</span>
-<span id="cb185-4"><a href="combining-data-sets.html#cb185-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Sex&quot;</span>), <span class="at">values_to =</span> <span class="st">&quot;Height&quot;</span></span>
-<span id="cb185-5"><a href="combining-data-sets.html#cb185-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb185-6"><a href="combining-data-sets.html#cb185-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb185-7"><a href="combining-data-sets.html#cb185-7" aria-hidden="true" tabindex="-1"></a>newHeights</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="combining-data-sets.html#cb183-1" aria-hidden="true" tabindex="-1"></a>newHeights <span class="ot">&lt;-</span> heights <span class="sc">%&gt;%</span></span>
+<span id="cb183-2"><a href="combining-data-sets.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb183-3"><a href="combining-data-sets.html#cb183-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(heightMale, heightFemale),</span>
+<span id="cb183-4"><a href="combining-data-sets.html#cb183-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Sex&quot;</span>), <span class="at">values_to =</span> <span class="st">&quot;Height&quot;</span></span>
+<span id="cb183-5"><a href="combining-data-sets.html#cb183-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb183-6"><a href="combining-data-sets.html#cb183-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-7"><a href="combining-data-sets.html#cb183-7" aria-hidden="true" tabindex="-1"></a>newHeights</span></code></pre></div>
 <pre><code>## # A tibble: 60 × 3
 ##    place  Sex          Height
 ##    &lt;chr&gt;  &lt;chr&gt;         &lt;int&gt;
@@ -549,18 +548,18 @@ You can “pipe” data into the function, then tell it which columns you would 
 ## # … with 50 more rows</code></pre>
 <p>We are nearly done. But this is not perfect because the names in the <code>Sex</code> column are not right. We can fix this in a couple ways. Here’s one easy way using the function <code>gsub</code>. The <code>gsub</code> function (“<strong>g</strong>eneral <strong>sub</strong>stution) finds text and replaces it with other text. In this case we want to find”height” and replace it with nothing (““).</p>
 <p>So we can now complete the job with a <code>mutate</code> command, and make sure it is recognised as a categorical variable (a <code>factor</code>, like this:</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="combining-data-sets.html#cb187-1" aria-hidden="true" tabindex="-1"></a>newHeights <span class="ot">&lt;-</span> heights <span class="sc">%&gt;%</span></span>
-<span id="cb187-2"><a href="combining-data-sets.html#cb187-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb187-3"><a href="combining-data-sets.html#cb187-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(heightMale, heightFemale),</span>
-<span id="cb187-4"><a href="combining-data-sets.html#cb187-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Sex&quot;</span>), <span class="at">values_to =</span> <span class="st">&quot;Height&quot;</span></span>
-<span id="cb187-5"><a href="combining-data-sets.html#cb187-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb187-6"><a href="combining-data-sets.html#cb187-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sex =</span> <span class="fu">gsub</span>(</span>
-<span id="cb187-7"><a href="combining-data-sets.html#cb187-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">pattern =</span> <span class="st">&quot;height&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb187-8"><a href="combining-data-sets.html#cb187-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Sex</span>
-<span id="cb187-9"><a href="combining-data-sets.html#cb187-9" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb187-10"><a href="combining-data-sets.html#cb187-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sex =</span> <span class="fu">as.factor</span>(Sex))</span>
-<span id="cb187-11"><a href="combining-data-sets.html#cb187-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb187-12"><a href="combining-data-sets.html#cb187-12" aria-hidden="true" tabindex="-1"></a>newHeights</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="combining-data-sets.html#cb185-1" aria-hidden="true" tabindex="-1"></a>newHeights <span class="ot">&lt;-</span> heights <span class="sc">%&gt;%</span></span>
+<span id="cb185-2"><a href="combining-data-sets.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb185-3"><a href="combining-data-sets.html#cb185-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(heightMale, heightFemale),</span>
+<span id="cb185-4"><a href="combining-data-sets.html#cb185-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;Sex&quot;</span>), <span class="at">values_to =</span> <span class="st">&quot;Height&quot;</span></span>
+<span id="cb185-5"><a href="combining-data-sets.html#cb185-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb185-6"><a href="combining-data-sets.html#cb185-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sex =</span> <span class="fu">gsub</span>(</span>
+<span id="cb185-7"><a href="combining-data-sets.html#cb185-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">pattern =</span> <span class="st">&quot;height&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb185-8"><a href="combining-data-sets.html#cb185-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Sex</span>
+<span id="cb185-9"><a href="combining-data-sets.html#cb185-9" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb185-10"><a href="combining-data-sets.html#cb185-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Sex =</span> <span class="fu">as.factor</span>(Sex))</span>
+<span id="cb185-11"><a href="combining-data-sets.html#cb185-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb185-12"><a href="combining-data-sets.html#cb185-12" aria-hidden="true" tabindex="-1"></a>newHeights</span></code></pre></div>
 <pre><code>## # A tibble: 60 × 3
 ##    place  Sex    Height
 ##    &lt;chr&gt;  &lt;fct&gt;   &lt;int&gt;
@@ -576,8 +575,8 @@ You can “pipe” data into the function, then tell it which columns you would 
 ## 10 London Female    153
 ## # … with 50 more rows</code></pre>
 <p>Now we can plot those data more easily</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="combining-data-sets.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(newHeights<span class="sc">$</span>Sex, newHeights<span class="sc">$</span>Height)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="combining-data-sets.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(newHeights<span class="sc">$</span>Sex, newHeights<span class="sc">$</span>Height)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
 <p>This data manipulation is useful surprisingly often.</p>
 </div>
 <div id="exercise-temperature-effects-on-egg-laying-dates" class="section level2 hasAnchor" number="9.3">

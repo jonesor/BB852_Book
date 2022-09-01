@@ -329,6 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>20.1.2</b> Example: Cancer clusters</a></li>
 </ul></li>
 <li class="chapter" data-level="20.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>20.2</b> Exercise: Maze runner</a></li>
+<li class="chapter" data-level="20.3" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#overdispersion"><i class="fa fa-check"></i><b>20.3</b> Overdispersion</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>21</b> Extending use cases of GLM</a>
 <ul>
@@ -469,18 +470,18 @@ email!)</strong>
 </ol>
 <hr />
 <p><strong>a) Produce a graph showing the the total number of fires per year through time as points joined by lines.</strong></p>
-<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="an-example-of-a-past-exam-2020.html#cb659-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data</span></span>
-<span id="cb659-2"><a href="an-example-of-a-past-exam-2020.html#cb659-2" aria-hidden="true" tabindex="-1"></a>amazon <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/amazon.csv&quot;</span>)</span>
-<span id="cb659-3"><a href="an-example-of-a-past-exam-2020.html#cb659-3" aria-hidden="true" tabindex="-1"></a>amazon <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/amazon.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb659-4"><a href="an-example-of-a-past-exam-2020.html#cb659-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">ifelse</span>(number <span class="sc">&gt;=</span> <span class="dv">1000</span>,</span>
-<span id="cb659-5"><a href="an-example-of-a-past-exam-2020.html#cb659-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="sc">+</span> (number <span class="sc">-</span> <span class="dv">1000</span>) <span class="sc">/</span> <span class="dv">1000</span>, number</span>
-<span id="cb659-6"><a href="an-example-of-a-past-exam-2020.html#cb659-6" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb659-7"><a href="an-example-of-a-past-exam-2020.html#cb659-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb659-8"><a href="an-example-of-a-past-exam-2020.html#cb659-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A) MAKE GRAPH OF TOTAL FIRES PER YEAR.</span></span>
-<span id="cb659-9"><a href="an-example-of-a-past-exam-2020.html#cb659-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb659-10"><a href="an-example-of-a-past-exam-2020.html#cb659-10" aria-hidden="true" tabindex="-1"></a>(amazon_YearlyFires <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
-<span id="cb659-11"><a href="an-example-of-a-past-exam-2020.html#cb659-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
-<span id="cb659-12"><a href="an-example-of-a-past-exam-2020.html#cb659-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n.fires =</span> <span class="fu">sum</span>(number)))</span></code></pre></div>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="an-example-of-a-past-exam-2020.html#cb657-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data</span></span>
+<span id="cb657-2"><a href="an-example-of-a-past-exam-2020.html#cb657-2" aria-hidden="true" tabindex="-1"></a>amazon <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/amazon.csv&quot;</span>)</span>
+<span id="cb657-3"><a href="an-example-of-a-past-exam-2020.html#cb657-3" aria-hidden="true" tabindex="-1"></a>amazon <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/amazon.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb657-4"><a href="an-example-of-a-past-exam-2020.html#cb657-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">ifelse</span>(number <span class="sc">&gt;=</span> <span class="dv">1000</span>,</span>
+<span id="cb657-5"><a href="an-example-of-a-past-exam-2020.html#cb657-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="sc">+</span> (number <span class="sc">-</span> <span class="dv">1000</span>) <span class="sc">/</span> <span class="dv">1000</span>, number</span>
+<span id="cb657-6"><a href="an-example-of-a-past-exam-2020.html#cb657-6" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb657-7"><a href="an-example-of-a-past-exam-2020.html#cb657-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb657-8"><a href="an-example-of-a-past-exam-2020.html#cb657-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A) MAKE GRAPH OF TOTAL FIRES PER YEAR.</span></span>
+<span id="cb657-9"><a href="an-example-of-a-past-exam-2020.html#cb657-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb657-10"><a href="an-example-of-a-past-exam-2020.html#cb657-10" aria-hidden="true" tabindex="-1"></a>(amazon_YearlyFires <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
+<span id="cb657-11"><a href="an-example-of-a-past-exam-2020.html#cb657-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb657-12"><a href="an-example-of-a-past-exam-2020.html#cb657-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n.fires =</span> <span class="fu">sum</span>(number)))</span></code></pre></div>
 <pre><code>## # A tibble: 20 × 2
 ##     year n.fires
 ##    &lt;int&gt;   &lt;dbl&gt;
@@ -504,31 +505,31 @@ email!)</strong>
 ## 18  2015  41208.
 ## 19  2016  42212.
 ## 20  2017  36686.</code></pre>
-<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="an-example-of-a-past-exam-2020.html#cb661-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(amazon_YearlyFires, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n.fires)) <span class="sc">+</span></span>
-<span id="cb661-2"><a href="an-example-of-a-past-exam-2020.html#cb661-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb661-3"><a href="an-example-of-a-past-exam-2020.html#cb661-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-465-1.png" width="672" /></p>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="an-example-of-a-past-exam-2020.html#cb659-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(amazon_YearlyFires, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n.fires)) <span class="sc">+</span></span>
+<span id="cb659-2"><a href="an-example-of-a-past-exam-2020.html#cb659-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb659-3"><a href="an-example-of-a-past-exam-2020.html#cb659-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>())</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-464-1.png" width="672" /></p>
 <p>You may have slightly different values if you used old data that had some fractional numbers (e.g. 1.543 is not “1 point 5” fires, but one thousand five hundred!). Well done those of you that spotted that issue. Don’t worry if you didn’t - you don’t lose points!</p>
 <p>Some of you may also have made plots that included ONLY data from the “legal amazon”, by filtering to those states only. Again, that is no problem if you did that.</p>
 <p><strong>b) Produce a table showing the minimum, maximum, mean and median number of fires per month in the legally-defined Amazon.</strong></p>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="an-example-of-a-past-exam-2020.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First filter to only include the &quot;legally defined amazon&quot;</span></span>
-<span id="cb662-2"><a href="an-example-of-a-past-exam-2020.html#cb662-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that all are included in the result (you might need to</span></span>
-<span id="cb662-3"><a href="an-example-of-a-past-exam-2020.html#cb662-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check and fix &quot;foreign&quot; letters - a typical data cleaning task!)</span></span>
-<span id="cb662-4"><a href="an-example-of-a-past-exam-2020.html#cb662-4" aria-hidden="true" tabindex="-1"></a>legalAmazonStates <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb662-5"><a href="an-example-of-a-past-exam-2020.html#cb662-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Acre&quot;</span>, <span class="st">&quot;Amapa&quot;</span>, <span class="st">&quot;Pará&quot;</span>, <span class="st">&quot;Amazonas&quot;</span>, <span class="st">&quot;Rondonia&quot;</span>,</span>
-<span id="cb662-6"><a href="an-example-of-a-past-exam-2020.html#cb662-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Roraima&quot;</span>, <span class="st">&quot;Mato Grosso&quot;</span>, <span class="st">&quot;Tocantins&quot;</span>, <span class="st">&quot;Maranhao&quot;</span></span>
-<span id="cb662-7"><a href="an-example-of-a-past-exam-2020.html#cb662-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb662-8"><a href="an-example-of-a-past-exam-2020.html#cb662-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-9"><a href="an-example-of-a-past-exam-2020.html#cb662-9" aria-hidden="true" tabindex="-1"></a>legalAmazon <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
-<span id="cb662-10"><a href="an-example-of-a-past-exam-2020.html#cb662-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> legalAmazonStates)</span>
-<span id="cb662-11"><a href="an-example-of-a-past-exam-2020.html#cb662-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-12"><a href="an-example-of-a-past-exam-2020.html#cb662-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-13"><a href="an-example-of-a-past-exam-2020.html#cb662-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Next make a &quot;look up&quot; table to convert month name</span></span>
-<span id="cb662-14"><a href="an-example-of-a-past-exam-2020.html#cb662-14" aria-hidden="true" tabindex="-1"></a><span class="co"># to a numeric value 1-12</span></span>
-<span id="cb662-15"><a href="an-example-of-a-past-exam-2020.html#cb662-15" aria-hidden="true" tabindex="-1"></a>(monthLookup <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
-<span id="cb662-16"><a href="an-example-of-a-past-exam-2020.html#cb662-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(month) <span class="sc">%&gt;%</span></span>
-<span id="cb662-17"><a href="an-example-of-a-past-exam-2020.html#cb662-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb662-18"><a href="an-example-of-a-past-exam-2020.html#cb662-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month_numeric =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="an-example-of-a-past-exam-2020.html#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First filter to only include the &quot;legally defined amazon&quot;</span></span>
+<span id="cb660-2"><a href="an-example-of-a-past-exam-2020.html#cb660-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Check that all are included in the result (you might need to</span></span>
+<span id="cb660-3"><a href="an-example-of-a-past-exam-2020.html#cb660-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check and fix &quot;foreign&quot; letters - a typical data cleaning task!)</span></span>
+<span id="cb660-4"><a href="an-example-of-a-past-exam-2020.html#cb660-4" aria-hidden="true" tabindex="-1"></a>legalAmazonStates <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb660-5"><a href="an-example-of-a-past-exam-2020.html#cb660-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Acre&quot;</span>, <span class="st">&quot;Amapa&quot;</span>, <span class="st">&quot;Pará&quot;</span>, <span class="st">&quot;Amazonas&quot;</span>, <span class="st">&quot;Rondonia&quot;</span>,</span>
+<span id="cb660-6"><a href="an-example-of-a-past-exam-2020.html#cb660-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Roraima&quot;</span>, <span class="st">&quot;Mato Grosso&quot;</span>, <span class="st">&quot;Tocantins&quot;</span>, <span class="st">&quot;Maranhao&quot;</span></span>
+<span id="cb660-7"><a href="an-example-of-a-past-exam-2020.html#cb660-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb660-8"><a href="an-example-of-a-past-exam-2020.html#cb660-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb660-9"><a href="an-example-of-a-past-exam-2020.html#cb660-9" aria-hidden="true" tabindex="-1"></a>legalAmazon <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
+<span id="cb660-10"><a href="an-example-of-a-past-exam-2020.html#cb660-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> legalAmazonStates)</span>
+<span id="cb660-11"><a href="an-example-of-a-past-exam-2020.html#cb660-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb660-12"><a href="an-example-of-a-past-exam-2020.html#cb660-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb660-13"><a href="an-example-of-a-past-exam-2020.html#cb660-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Next make a &quot;look up&quot; table to convert month name</span></span>
+<span id="cb660-14"><a href="an-example-of-a-past-exam-2020.html#cb660-14" aria-hidden="true" tabindex="-1"></a><span class="co"># to a numeric value 1-12</span></span>
+<span id="cb660-15"><a href="an-example-of-a-past-exam-2020.html#cb660-15" aria-hidden="true" tabindex="-1"></a>(monthLookup <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
+<span id="cb660-16"><a href="an-example-of-a-past-exam-2020.html#cb660-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb660-17"><a href="an-example-of-a-past-exam-2020.html#cb660-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb660-18"><a href="an-example-of-a-past-exam-2020.html#cb660-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month_numeric =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>))</span></code></pre></div>
 <pre><code>##         month month_numeric
 ## 1     Janeiro             1
 ## 21  Fevereiro             2
@@ -542,23 +543,23 @@ email!)</strong>
 ## 181   Outubro            10
 ## 201  Novembro            11
 ## 221  Dezembro            12</code></pre>
-<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="an-example-of-a-past-exam-2020.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then use left_join to add the numeric month to the data</span></span>
-<span id="cb664-2"><a href="an-example-of-a-past-exam-2020.html#cb664-2" aria-hidden="true" tabindex="-1"></a><span class="co"># then group_by month and year, and summarise to get total</span></span>
-<span id="cb664-3"><a href="an-example-of-a-past-exam-2020.html#cb664-3" aria-hidden="true" tabindex="-1"></a><span class="co"># number (i.e. sum for each month in each year for whole amazon)</span></span>
-<span id="cb664-4"><a href="an-example-of-a-past-exam-2020.html#cb664-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Then group_by month again and calculate the min/mean/max etc.</span></span>
-<span id="cb664-5"><a href="an-example-of-a-past-exam-2020.html#cb664-5" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> legalAmazon <span class="sc">%&gt;%</span></span>
-<span id="cb664-6"><a href="an-example-of-a-past-exam-2020.html#cb664-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(monthLookup) <span class="sc">%&gt;%</span></span>
-<span id="cb664-7"><a href="an-example-of-a-past-exam-2020.html#cb664-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_numeric, year) <span class="sc">%&gt;%</span></span>
-<span id="cb664-8"><a href="an-example-of-a-past-exam-2020.html#cb664-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sumFires =</span> <span class="fu">sum</span>(number)) <span class="sc">%&gt;%</span></span>
-<span id="cb664-9"><a href="an-example-of-a-past-exam-2020.html#cb664-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># total fires per month, per year</span></span>
-<span id="cb664-10"><a href="an-example-of-a-past-exam-2020.html#cb664-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_numeric) <span class="sc">%&gt;%</span></span>
-<span id="cb664-11"><a href="an-example-of-a-past-exam-2020.html#cb664-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group by month to get min/max/median per month</span></span>
-<span id="cb664-12"><a href="an-example-of-a-past-exam-2020.html#cb664-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb664-13"><a href="an-example-of-a-past-exam-2020.html#cb664-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(sumFires), <span class="at">mean =</span> <span class="fu">mean</span>(sumFires),</span>
-<span id="cb664-14"><a href="an-example-of-a-past-exam-2020.html#cb664-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(sumFires), <span class="at">maximum =</span> <span class="fu">max</span>(sumFires)</span>
-<span id="cb664-15"><a href="an-example-of-a-past-exam-2020.html#cb664-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb664-16"><a href="an-example-of-a-past-exam-2020.html#cb664-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-17"><a href="an-example-of-a-past-exam-2020.html#cb664-17" aria-hidden="true" tabindex="-1"></a>table1</span></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="an-example-of-a-past-exam-2020.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Then use left_join to add the numeric month to the data</span></span>
+<span id="cb662-2"><a href="an-example-of-a-past-exam-2020.html#cb662-2" aria-hidden="true" tabindex="-1"></a><span class="co"># then group_by month and year, and summarise to get total</span></span>
+<span id="cb662-3"><a href="an-example-of-a-past-exam-2020.html#cb662-3" aria-hidden="true" tabindex="-1"></a><span class="co"># number (i.e. sum for each month in each year for whole amazon)</span></span>
+<span id="cb662-4"><a href="an-example-of-a-past-exam-2020.html#cb662-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Then group_by month again and calculate the min/mean/max etc.</span></span>
+<span id="cb662-5"><a href="an-example-of-a-past-exam-2020.html#cb662-5" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> legalAmazon <span class="sc">%&gt;%</span></span>
+<span id="cb662-6"><a href="an-example-of-a-past-exam-2020.html#cb662-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(monthLookup) <span class="sc">%&gt;%</span></span>
+<span id="cb662-7"><a href="an-example-of-a-past-exam-2020.html#cb662-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_numeric, year) <span class="sc">%&gt;%</span></span>
+<span id="cb662-8"><a href="an-example-of-a-past-exam-2020.html#cb662-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sumFires =</span> <span class="fu">sum</span>(number)) <span class="sc">%&gt;%</span></span>
+<span id="cb662-9"><a href="an-example-of-a-past-exam-2020.html#cb662-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># total fires per month, per year</span></span>
+<span id="cb662-10"><a href="an-example-of-a-past-exam-2020.html#cb662-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_numeric) <span class="sc">%&gt;%</span></span>
+<span id="cb662-11"><a href="an-example-of-a-past-exam-2020.html#cb662-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># group by month to get min/max/median per month</span></span>
+<span id="cb662-12"><a href="an-example-of-a-past-exam-2020.html#cb662-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb662-13"><a href="an-example-of-a-past-exam-2020.html#cb662-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(sumFires), <span class="at">mean =</span> <span class="fu">mean</span>(sumFires),</span>
+<span id="cb662-14"><a href="an-example-of-a-past-exam-2020.html#cb662-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(sumFires), <span class="at">maximum =</span> <span class="fu">max</span>(sumFires)</span>
+<span id="cb662-15"><a href="an-example-of-a-past-exam-2020.html#cb662-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb662-16"><a href="an-example-of-a-past-exam-2020.html#cb662-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-17"><a href="an-example-of-a-past-exam-2020.html#cb662-17" aria-hidden="true" tabindex="-1"></a>table1</span></code></pre></div>
 <pre><code>## # A tibble: 12 × 5
 ##    month_numeric minimum  mean median maximum
 ##            &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
@@ -576,15 +577,15 @@ email!)</strong>
 ## 12            12   260.  1205.  1214.   2207.</code></pre>
 <p>This question was HARD. It could also have been interpreted in a couple of different ways. For example, it could be interpreted as asking for the mean/median/max (etc.) by state. What I actually meant was to find the TOTAL across ALL of the legal Amazon for each month and each year (20 years * 12 months = 240 values), and then produce a table summarising the mean, min, max etc. of these values.</p>
 <p>If you calculate the statistics “by state” as well as by year and month you end up with a different table, like this:</p>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="an-example-of-a-past-exam-2020.html#cb666-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> legalAmazon <span class="sc">%&gt;%</span></span>
-<span id="cb666-2"><a href="an-example-of-a-past-exam-2020.html#cb666-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(monthLookup) <span class="sc">%&gt;%</span></span>
-<span id="cb666-3"><a href="an-example-of-a-past-exam-2020.html#cb666-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_numeric) <span class="sc">%&gt;%</span></span>
-<span id="cb666-4"><a href="an-example-of-a-past-exam-2020.html#cb666-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb666-5"><a href="an-example-of-a-past-exam-2020.html#cb666-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(number), <span class="at">mean =</span> <span class="fu">mean</span>(number),</span>
-<span id="cb666-6"><a href="an-example-of-a-past-exam-2020.html#cb666-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(number), <span class="at">maximum =</span> <span class="fu">max</span>(number)</span>
-<span id="cb666-7"><a href="an-example-of-a-past-exam-2020.html#cb666-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb666-8"><a href="an-example-of-a-past-exam-2020.html#cb666-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb666-9"><a href="an-example-of-a-past-exam-2020.html#cb666-9" aria-hidden="true" tabindex="-1"></a>table1</span></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="an-example-of-a-past-exam-2020.html#cb664-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> legalAmazon <span class="sc">%&gt;%</span></span>
+<span id="cb664-2"><a href="an-example-of-a-past-exam-2020.html#cb664-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(monthLookup) <span class="sc">%&gt;%</span></span>
+<span id="cb664-3"><a href="an-example-of-a-past-exam-2020.html#cb664-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_numeric) <span class="sc">%&gt;%</span></span>
+<span id="cb664-4"><a href="an-example-of-a-past-exam-2020.html#cb664-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb664-5"><a href="an-example-of-a-past-exam-2020.html#cb664-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(number), <span class="at">mean =</span> <span class="fu">mean</span>(number),</span>
+<span id="cb664-6"><a href="an-example-of-a-past-exam-2020.html#cb664-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(number), <span class="at">maximum =</span> <span class="fu">max</span>(number)</span>
+<span id="cb664-7"><a href="an-example-of-a-past-exam-2020.html#cb664-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb664-8"><a href="an-example-of-a-past-exam-2020.html#cb664-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb664-9"><a href="an-example-of-a-past-exam-2020.html#cb664-9" aria-hidden="true" tabindex="-1"></a>table1</span></code></pre></div>
 <pre><code>## # A tibble: 12 × 5
 ##    month_numeric minimum  mean median maximum
 ##            &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
@@ -604,33 +605,33 @@ email!)</strong>
 <p><strong>c) Produce a graph using box plots to show the distribution of the number of fires per month in the Amazon (i.e. month on x-axis, number of fires on y-axis).</strong></p>
 <p>Here I am looking for a box plot of the number of fires per month in the Amazon (or legal Amazon). In other words, each row of data (each data point) should be the total number of fires across all of the states, for each month, in each year.</p>
 <p>To check that you are on the right track you could look at the dimensions of the data frame you create - with 12 months per year and 20 years of data you can expect 240 rows of data (though perhaps not all years include all months of data). Nevertheless, it gives you a ballpark figure and if your dataset is not approximately this size, something has gone wrong!</p>
-<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="an-example-of-a-past-exam-2020.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summarise to calculate the the total number of</span></span>
-<span id="cb668-2"><a href="an-example-of-a-past-exam-2020.html#cb668-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fires per month.</span></span>
-<span id="cb668-3"><a href="an-example-of-a-past-exam-2020.html#cb668-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case I use the legal amazon, but it is acceptable</span></span>
-<span id="cb668-4"><a href="an-example-of-a-past-exam-2020.html#cb668-4" aria-hidden="true" tabindex="-1"></a><span class="co"># to look at the whole data set. You need to make sure that</span></span>
-<span id="cb668-5"><a href="an-example-of-a-past-exam-2020.html#cb668-5" aria-hidden="true" tabindex="-1"></a><span class="co"># you are using the numeric month.</span></span>
-<span id="cb668-6"><a href="an-example-of-a-past-exam-2020.html#cb668-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb668-7"><a href="an-example-of-a-past-exam-2020.html#cb668-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by year and month to calculate the total number of</span></span>
-<span id="cb668-8"><a href="an-example-of-a-past-exam-2020.html#cb668-8" aria-hidden="true" tabindex="-1"></a><span class="co"># fires in each year and month.</span></span>
-<span id="cb668-9"><a href="an-example-of-a-past-exam-2020.html#cb668-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb668-10"><a href="an-example-of-a-past-exam-2020.html#cb668-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the dataset by filtering to legal amazon, adding</span></span>
-<span id="cb668-11"><a href="an-example-of-a-past-exam-2020.html#cb668-11" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric month, grouping by year and month and finally</span></span>
-<span id="cb668-12"><a href="an-example-of-a-past-exam-2020.html#cb668-12" aria-hidden="true" tabindex="-1"></a><span class="co"># summarising.</span></span>
-<span id="cb668-13"><a href="an-example-of-a-past-exam-2020.html#cb668-13" aria-hidden="true" tabindex="-1"></a>amazon2 <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
-<span id="cb668-14"><a href="an-example-of-a-past-exam-2020.html#cb668-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> legalAmazonStates) <span class="sc">%&gt;%</span></span>
-<span id="cb668-15"><a href="an-example-of-a-past-exam-2020.html#cb668-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(monthLookup) <span class="sc">%&gt;%</span></span>
-<span id="cb668-16"><a href="an-example-of-a-past-exam-2020.html#cb668-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month_numeric) <span class="sc">%&gt;%</span></span>
-<span id="cb668-17"><a href="an-example-of-a-past-exam-2020.html#cb668-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_fires =</span> <span class="fu">sum</span>(number))</span>
-<span id="cb668-18"><a href="an-example-of-a-past-exam-2020.html#cb668-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb668-19"><a href="an-example-of-a-past-exam-2020.html#cb668-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of rows</span></span>
-<span id="cb668-20"><a href="an-example-of-a-past-exam-2020.html#cb668-20" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(amazon2)</span></code></pre></div>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="an-example-of-a-past-exam-2020.html#cb666-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use summarise to calculate the the total number of</span></span>
+<span id="cb666-2"><a href="an-example-of-a-past-exam-2020.html#cb666-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fires per month.</span></span>
+<span id="cb666-3"><a href="an-example-of-a-past-exam-2020.html#cb666-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In this case I use the legal amazon, but it is acceptable</span></span>
+<span id="cb666-4"><a href="an-example-of-a-past-exam-2020.html#cb666-4" aria-hidden="true" tabindex="-1"></a><span class="co"># to look at the whole data set. You need to make sure that</span></span>
+<span id="cb666-5"><a href="an-example-of-a-past-exam-2020.html#cb666-5" aria-hidden="true" tabindex="-1"></a><span class="co"># you are using the numeric month.</span></span>
+<span id="cb666-6"><a href="an-example-of-a-past-exam-2020.html#cb666-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb666-7"><a href="an-example-of-a-past-exam-2020.html#cb666-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by year and month to calculate the total number of</span></span>
+<span id="cb666-8"><a href="an-example-of-a-past-exam-2020.html#cb666-8" aria-hidden="true" tabindex="-1"></a><span class="co"># fires in each year and month.</span></span>
+<span id="cb666-9"><a href="an-example-of-a-past-exam-2020.html#cb666-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb666-10"><a href="an-example-of-a-past-exam-2020.html#cb666-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the dataset by filtering to legal amazon, adding</span></span>
+<span id="cb666-11"><a href="an-example-of-a-past-exam-2020.html#cb666-11" aria-hidden="true" tabindex="-1"></a><span class="co"># numeric month, grouping by year and month and finally</span></span>
+<span id="cb666-12"><a href="an-example-of-a-past-exam-2020.html#cb666-12" aria-hidden="true" tabindex="-1"></a><span class="co"># summarising.</span></span>
+<span id="cb666-13"><a href="an-example-of-a-past-exam-2020.html#cb666-13" aria-hidden="true" tabindex="-1"></a>amazon2 <span class="ot">&lt;-</span> amazon <span class="sc">%&gt;%</span></span>
+<span id="cb666-14"><a href="an-example-of-a-past-exam-2020.html#cb666-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">%in%</span> legalAmazonStates) <span class="sc">%&gt;%</span></span>
+<span id="cb666-15"><a href="an-example-of-a-past-exam-2020.html#cb666-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(monthLookup) <span class="sc">%&gt;%</span></span>
+<span id="cb666-16"><a href="an-example-of-a-past-exam-2020.html#cb666-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month_numeric) <span class="sc">%&gt;%</span></span>
+<span id="cb666-17"><a href="an-example-of-a-past-exam-2020.html#cb666-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_fires =</span> <span class="fu">sum</span>(number))</span>
+<span id="cb666-18"><a href="an-example-of-a-past-exam-2020.html#cb666-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb666-19"><a href="an-example-of-a-past-exam-2020.html#cb666-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of rows</span></span>
+<span id="cb666-20"><a href="an-example-of-a-past-exam-2020.html#cb666-20" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(amazon2)</span></code></pre></div>
 <pre><code>## [1] 239</code></pre>
-<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="an-example-of-a-past-exam-2020.html#cb670-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
-<span id="cb670-2"><a href="an-example-of-a-past-exam-2020.html#cb670-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(amazon2, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(month_numeric), <span class="at">y =</span> n_fires)) <span class="sc">+</span></span>
-<span id="cb670-3"><a href="an-example-of-a-past-exam-2020.html#cb670-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb670-4"><a href="an-example-of-a-past-exam-2020.html#cb670-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Month&quot;</span>) <span class="sc">+</span></span>
-<span id="cb670-5"><a href="an-example-of-a-past-exam-2020.html#cb670-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Total number of fires&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-468-1.png" width="672" /></p>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="an-example-of-a-past-exam-2020.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb668-2"><a href="an-example-of-a-past-exam-2020.html#cb668-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(amazon2, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(month_numeric), <span class="at">y =</span> n_fires)) <span class="sc">+</span></span>
+<span id="cb668-3"><a href="an-example-of-a-past-exam-2020.html#cb668-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb668-4"><a href="an-example-of-a-past-exam-2020.html#cb668-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Month&quot;</span>) <span class="sc">+</span></span>
+<span id="cb668-5"><a href="an-example-of-a-past-exam-2020.html#cb668-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Total number of fires&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-467-1.png" width="672" /></p>
 <p>Common mistakes -
 Understanding how <code>group_by</code> and <code>summarise</code> work is key to answering this question.
 To ensure that the months are displayed in the correct order you need to use the <code>numeric</code> month. Failure to do that will cause the plot to be presented in alphabetical order (i.e. with December falling before January!). However, box plots require that the input variable is a <code>factor</code> so you also need to convert back to a <code>factor</code> before plotting.</p>
@@ -644,18 +645,18 @@ To ensure that the months are displayed in the correct order you need to use the
 </ol>
 <hr />
 <p><strong>a) plot the data (e.g. with a box plot)</strong></p>
-<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="an-example-of-a-past-exam-2020.html#cb671-1" aria-hidden="true" tabindex="-1"></a>coral <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/coral.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb671-2"><a href="an-example-of-a-past-exam-2020.html#cb671-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb671-3"><a href="an-example-of-a-past-exam-2020.html#cb671-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coral, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> intensity)) <span class="sc">+</span></span>
-<span id="cb671-4"><a href="an-example-of-a-past-exam-2020.html#cb671-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb671-5"><a href="an-example-of-a-past-exam-2020.html#cb671-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-469-1.png" width="672" /></p>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="an-example-of-a-past-exam-2020.html#cb669-1" aria-hidden="true" tabindex="-1"></a>coral <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/coral.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb669-2"><a href="an-example-of-a-past-exam-2020.html#cb669-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb669-3"><a href="an-example-of-a-past-exam-2020.html#cb669-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coral, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">y =</span> intensity)) <span class="sc">+</span></span>
+<span id="cb669-4"><a href="an-example-of-a-past-exam-2020.html#cb669-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb669-5"><a href="an-example-of-a-past-exam-2020.html#cb669-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-468-1.png" width="672" /></p>
 <p><strong>b) carry out a randomisation test to determine if there is a significant difference in the colour intensity in the two habitats. Write (i) a brief method description and (ii) a summary of the results. </strong></p>
 <p>First we need to calculate the observed difference between the two habitats.</p>
 <p>You can get the mean values like this (there are other ways):</p>
-<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="an-example-of-a-past-exam-2020.html#cb672-1" aria-hidden="true" tabindex="-1"></a>coral <span class="sc">%&gt;%</span></span>
-<span id="cb672-2"><a href="an-example-of-a-past-exam-2020.html#cb672-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">%&gt;%</span></span>
-<span id="cb672-3"><a href="an-example-of-a-past-exam-2020.html#cb672-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanIntensity =</span> <span class="fu">mean</span>(intensity))</span></code></pre></div>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="an-example-of-a-past-exam-2020.html#cb670-1" aria-hidden="true" tabindex="-1"></a>coral <span class="sc">%&gt;%</span></span>
+<span id="cb670-2"><a href="an-example-of-a-past-exam-2020.html#cb670-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">%&gt;%</span></span>
+<span id="cb670-3"><a href="an-example-of-a-past-exam-2020.html#cb670-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanIntensity =</span> <span class="fu">mean</span>(intensity))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 2
 ##   habitat    meanIntensity
 ##   &lt;fct&gt;              &lt;dbl&gt;
@@ -663,32 +664,32 @@ To ensure that the months are displayed in the correct order you need to use the
 ## 2 shallow             81.8</code></pre>
 <p>…then subtract one value from the other “by hand”.</p>
 <p>You could also do the whole calculation using the pipes syntax like this:</p>
-<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="an-example-of-a-past-exam-2020.html#cb674-1" aria-hidden="true" tabindex="-1"></a>(obsDiff <span class="ot">&lt;-</span> coral <span class="sc">%&gt;%</span></span>
-<span id="cb674-2"><a href="an-example-of-a-past-exam-2020.html#cb674-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">%&gt;%</span></span>
-<span id="cb674-3"><a href="an-example-of-a-past-exam-2020.html#cb674-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanIntensity =</span> <span class="fu">mean</span>(intensity)) <span class="sc">%&gt;%</span></span>
-<span id="cb674-4"><a href="an-example-of-a-past-exam-2020.html#cb674-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(meanIntensity) <span class="sc">%&gt;%</span></span>
-<span id="cb674-5"><a href="an-example-of-a-past-exam-2020.html#cb674-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="an-example-of-a-past-exam-2020.html#cb672-1" aria-hidden="true" tabindex="-1"></a>(obsDiff <span class="ot">&lt;-</span> coral <span class="sc">%&gt;%</span></span>
+<span id="cb672-2"><a href="an-example-of-a-past-exam-2020.html#cb672-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(habitat) <span class="sc">%&gt;%</span></span>
+<span id="cb672-3"><a href="an-example-of-a-past-exam-2020.html#cb672-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanIntensity =</span> <span class="fu">mean</span>(intensity)) <span class="sc">%&gt;%</span></span>
+<span id="cb672-4"><a href="an-example-of-a-past-exam-2020.html#cb672-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(meanIntensity) <span class="sc">%&gt;%</span></span>
+<span id="cb672-5"><a href="an-example-of-a-past-exam-2020.html#cb672-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>())</span></code></pre></div>
 <pre><code>## [1] -105.5377</code></pre>
 <p>Next we ask “is the observed difference significantly larger than what we would expect by chance?”.<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a></p>
-<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="an-example-of-a-past-exam-2020.html#cb676-1" aria-hidden="true" tabindex="-1"></a>shuffledData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rep =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb676-2"><a href="an-example-of-a-past-exam-2020.html#cb676-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledDiffs =</span> <span class="fu">replicate</span>(</span>
-<span id="cb676-3"><a href="an-example-of-a-past-exam-2020.html#cb676-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2000</span>,</span>
-<span id="cb676-4"><a href="an-example-of-a-past-exam-2020.html#cb676-4" aria-hidden="true" tabindex="-1"></a>    coral <span class="sc">%&gt;%</span></span>
-<span id="cb676-5"><a href="an-example-of-a-past-exam-2020.html#cb676-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">habitat =</span> <span class="fu">sample</span>(habitat)) <span class="sc">%&gt;%</span></span>
-<span id="cb676-6"><a href="an-example-of-a-past-exam-2020.html#cb676-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(habitat) <span class="sc">%&gt;%</span></span>
-<span id="cb676-7"><a href="an-example-of-a-past-exam-2020.html#cb676-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">meanIntensity =</span> <span class="fu">mean</span>(intensity)) <span class="sc">%&gt;%</span></span>
-<span id="cb676-8"><a href="an-example-of-a-past-exam-2020.html#cb676-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(meanIntensity) <span class="sc">%&gt;%</span></span>
-<span id="cb676-9"><a href="an-example-of-a-past-exam-2020.html#cb676-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">diff</span>()</span>
-<span id="cb676-10"><a href="an-example-of-a-past-exam-2020.html#cb676-10" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="an-example-of-a-past-exam-2020.html#cb674-1" aria-hidden="true" tabindex="-1"></a>shuffledData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rep =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb674-2"><a href="an-example-of-a-past-exam-2020.html#cb674-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shuffledDiffs =</span> <span class="fu">replicate</span>(</span>
+<span id="cb674-3"><a href="an-example-of-a-past-exam-2020.html#cb674-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2000</span>,</span>
+<span id="cb674-4"><a href="an-example-of-a-past-exam-2020.html#cb674-4" aria-hidden="true" tabindex="-1"></a>    coral <span class="sc">%&gt;%</span></span>
+<span id="cb674-5"><a href="an-example-of-a-past-exam-2020.html#cb674-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">habitat =</span> <span class="fu">sample</span>(habitat)) <span class="sc">%&gt;%</span></span>
+<span id="cb674-6"><a href="an-example-of-a-past-exam-2020.html#cb674-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(habitat) <span class="sc">%&gt;%</span></span>
+<span id="cb674-7"><a href="an-example-of-a-past-exam-2020.html#cb674-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="at">meanIntensity =</span> <span class="fu">mean</span>(intensity)) <span class="sc">%&gt;%</span></span>
+<span id="cb674-8"><a href="an-example-of-a-past-exam-2020.html#cb674-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(meanIntensity) <span class="sc">%&gt;%</span></span>
+<span id="cb674-9"><a href="an-example-of-a-past-exam-2020.html#cb674-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">diff</span>()</span>
+<span id="cb674-10"><a href="an-example-of-a-past-exam-2020.html#cb674-10" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
 <p>I can plot these data, and add a line to show where the observed value is</p>
-<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="an-example-of-a-past-exam-2020.html#cb677-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(shuffledData, <span class="fu">aes</span>(<span class="at">x =</span> shuffledDiffs)) <span class="sc">+</span></span>
-<span id="cb677-2"><a href="an-example-of-a-past-exam-2020.html#cb677-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb677-3"><a href="an-example-of-a-past-exam-2020.html#cb677-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb677-4"><a href="an-example-of-a-past-exam-2020.html#cb677-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Shuffled differences&quot;</span>) <span class="sc">+</span></span>
-<span id="cb677-5"><a href="an-example-of-a-past-exam-2020.html#cb677-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsDiff)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-473-1.png" width="672" /></p>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="an-example-of-a-past-exam-2020.html#cb675-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(shuffledData, <span class="fu">aes</span>(<span class="at">x =</span> shuffledDiffs)) <span class="sc">+</span></span>
+<span id="cb675-2"><a href="an-example-of-a-past-exam-2020.html#cb675-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb675-3"><a href="an-example-of-a-past-exam-2020.html#cb675-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb675-4"><a href="an-example-of-a-past-exam-2020.html#cb675-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Shuffled differences&quot;</span>) <span class="sc">+</span></span>
+<span id="cb675-5"><a href="an-example-of-a-past-exam-2020.html#cb675-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsDiff)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-472-1.png" width="672" /></p>
 <p>Now I can calculate the significance by asking how many of she shuffled differences were more extreme than the observed value.</p>
-<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="an-example-of-a-past-exam-2020.html#cb678-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(shuffledData<span class="sc">$</span>shuffledDiffs <span class="sc">&lt;=</span> obsDiff)</span></code></pre></div>
+<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="an-example-of-a-past-exam-2020.html#cb676-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(shuffledData<span class="sc">$</span>shuffledDiffs <span class="sc">&lt;=</span> obsDiff)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##  1999     1</code></pre>
@@ -706,62 +707,62 @@ To ensure that the months are displayed in the correct order you need to use the
 </ol>
 <hr />
 <p><strong>a) Summarise the older study data to obtain mean and standard deviation.</strong></p>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="an-example-of-a-past-exam-2020.html#cb680-1" aria-hidden="true" tabindex="-1"></a>oilseed <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/oilseed.csv&quot;</span>,</span>
-<span id="cb680-2"><a href="an-example-of-a-past-exam-2020.html#cb680-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
-<span id="cb680-3"><a href="an-example-of-a-past-exam-2020.html#cb680-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb680-4"><a href="an-example-of-a-past-exam-2020.html#cb680-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb680-5"><a href="an-example-of-a-past-exam-2020.html#cb680-5" aria-hidden="true" tabindex="-1"></a>(controlData <span class="ot">&lt;-</span> oilseed <span class="sc">%&gt;%</span></span>
-<span id="cb680-6"><a href="an-example-of-a-past-exam-2020.html#cb680-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanVal =</span> <span class="fu">mean</span>(yield), <span class="at">sdVal =</span> <span class="fu">sd</span>(yield)))</span></code></pre></div>
+<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="an-example-of-a-past-exam-2020.html#cb678-1" aria-hidden="true" tabindex="-1"></a>oilseed <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/oilseed.csv&quot;</span>,</span>
+<span id="cb678-2"><a href="an-example-of-a-past-exam-2020.html#cb678-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
+<span id="cb678-3"><a href="an-example-of-a-past-exam-2020.html#cb678-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb678-4"><a href="an-example-of-a-past-exam-2020.html#cb678-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb678-5"><a href="an-example-of-a-past-exam-2020.html#cb678-5" aria-hidden="true" tabindex="-1"></a>(controlData <span class="ot">&lt;-</span> oilseed <span class="sc">%&gt;%</span></span>
+<span id="cb678-6"><a href="an-example-of-a-past-exam-2020.html#cb678-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanVal =</span> <span class="fu">mean</span>(yield), <span class="at">sdVal =</span> <span class="fu">sd</span>(yield)))</span></code></pre></div>
 <pre><code>##   meanVal    sdVal
 ## 1  958.25 277.7619</code></pre>
 <p><strong>b) Conduct a power analysis based on the pilot study data to estimate the number of samples required to carry out your experiment with 80% power. Describe the results of this power analysis.</strong></p>
-<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="an-example-of-a-past-exam-2020.html#cb682-1" aria-hidden="true" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> controlData<span class="sc">$</span>meanVal</span>
-<span id="cb682-2"><a href="an-example-of-a-past-exam-2020.html#cb682-2" aria-hidden="true" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> controlData<span class="sc">$</span>meanVal <span class="sc">*</span> <span class="fl">1.3</span> <span class="co"># Increase of 30%</span></span>
-<span id="cb682-3"><a href="an-example-of-a-past-exam-2020.html#cb682-3" aria-hidden="true" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> controlData<span class="sc">$</span>sdVal</span>
-<span id="cb682-4"><a href="an-example-of-a-past-exam-2020.html#cb682-4" aria-hidden="true" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb682-5"><a href="an-example-of-a-past-exam-2020.html#cb682-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb682-6"><a href="an-example-of-a-past-exam-2020.html#cb682-6" aria-hidden="true" tabindex="-1"></a>powerResults <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb682-7"><a href="an-example-of-a-past-exam-2020.html#cb682-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
-<span id="cb682-8"><a href="an-example-of-a-past-exam-2020.html#cb682-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
-<span id="cb682-9"><a href="an-example-of-a-past-exam-2020.html#cb682-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, controlMean, sdValue),</span>
-<span id="cb682-10"><a href="an-example-of-a-past-exam-2020.html#cb682-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, treatmentMean, sdValue)</span>
-<span id="cb682-11"><a href="an-example-of-a-past-exam-2020.html#cb682-11" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
-<span id="cb682-12"><a href="an-example-of-a-past-exam-2020.html#cb682-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb682-13"><a href="an-example-of-a-past-exam-2020.html#cb682-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb682-14"><a href="an-example-of-a-past-exam-2020.html#cb682-14" aria-hidden="true" tabindex="-1"></a><span class="co"># How many times is the test successful?</span></span>
-<span id="cb682-15"><a href="an-example-of-a-past-exam-2020.html#cb682-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(powerResults <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="an-example-of-a-past-exam-2020.html#cb680-1" aria-hidden="true" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> controlData<span class="sc">$</span>meanVal</span>
+<span id="cb680-2"><a href="an-example-of-a-past-exam-2020.html#cb680-2" aria-hidden="true" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> controlData<span class="sc">$</span>meanVal <span class="sc">*</span> <span class="fl">1.3</span> <span class="co"># Increase of 30%</span></span>
+<span id="cb680-3"><a href="an-example-of-a-past-exam-2020.html#cb680-3" aria-hidden="true" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> controlData<span class="sc">$</span>sdVal</span>
+<span id="cb680-4"><a href="an-example-of-a-past-exam-2020.html#cb680-4" aria-hidden="true" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb680-5"><a href="an-example-of-a-past-exam-2020.html#cb680-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb680-6"><a href="an-example-of-a-past-exam-2020.html#cb680-6" aria-hidden="true" tabindex="-1"></a>powerResults <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb680-7"><a href="an-example-of-a-past-exam-2020.html#cb680-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
+<span id="cb680-8"><a href="an-example-of-a-past-exam-2020.html#cb680-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
+<span id="cb680-9"><a href="an-example-of-a-past-exam-2020.html#cb680-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, controlMean, sdValue),</span>
+<span id="cb680-10"><a href="an-example-of-a-past-exam-2020.html#cb680-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, treatmentMean, sdValue)</span>
+<span id="cb680-11"><a href="an-example-of-a-past-exam-2020.html#cb680-11" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
+<span id="cb680-12"><a href="an-example-of-a-past-exam-2020.html#cb680-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb680-13"><a href="an-example-of-a-past-exam-2020.html#cb680-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb680-14"><a href="an-example-of-a-past-exam-2020.html#cb680-14" aria-hidden="true" tabindex="-1"></a><span class="co"># How many times is the test successful?</span></span>
+<span id="cb680-15"><a href="an-example-of-a-past-exam-2020.html#cb680-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(powerResults <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## [1] 559</code></pre>
 <p>For 80% power, you want a sample size that results in 80% (i.e. 800 out of 1000 replicates) correctly detecting that there is a difference between control and treatment. Therefore you can increase <code>sampleSize</code> until you hit that magic number.</p>
 <p>A more advanced approach is to write code to try a range of sample sizes, and collect the results so that they can be plotted in a graph showing the relationship between statistical power and samples size:</p>
-<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="an-example-of-a-past-exam-2020.html#cb684-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a data frame for the simulation results</span></span>
-<span id="cb684-2"><a href="an-example-of-a-past-exam-2020.html#cb684-2" aria-hidden="true" tabindex="-1"></a>simulData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleSize =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">20</span>)</span>
-<span id="cb684-3"><a href="an-example-of-a-past-exam-2020.html#cb684-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb684-4"><a href="an-example-of-a-past-exam-2020.html#cb684-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set basic values</span></span>
-<span id="cb684-5"><a href="an-example-of-a-past-exam-2020.html#cb684-5" aria-hidden="true" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> controlData<span class="sc">$</span>meanVal</span>
-<span id="cb684-6"><a href="an-example-of-a-past-exam-2020.html#cb684-6" aria-hidden="true" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> controlData<span class="sc">$</span>meanVal <span class="sc">*</span> <span class="fl">1.3</span> <span class="co"># Increase of 30%</span></span>
-<span id="cb684-7"><a href="an-example-of-a-past-exam-2020.html#cb684-7" aria-hidden="true" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> controlData<span class="sc">$</span>sdVal</span>
-<span id="cb684-8"><a href="an-example-of-a-past-exam-2020.html#cb684-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb684-9"><a href="an-example-of-a-past-exam-2020.html#cb684-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to do the t-test</span></span>
-<span id="cb684-10"><a href="an-example-of-a-past-exam-2020.html#cb684-10" aria-hidden="true" tabindex="-1"></a>pwr <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb684-11"><a href="an-example-of-a-past-exam-2020.html#cb684-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">replicate</span>(</span>
-<span id="cb684-12"><a href="an-example-of-a-past-exam-2020.html#cb684-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
-<span id="cb684-13"><a href="an-example-of-a-past-exam-2020.html#cb684-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t.test</span>(</span>
-<span id="cb684-14"><a href="an-example-of-a-past-exam-2020.html#cb684-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, controlMean, sdValue),</span>
-<span id="cb684-15"><a href="an-example-of-a-past-exam-2020.html#cb684-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, treatmentMean, sdValue)</span>
-<span id="cb684-16"><a href="an-example-of-a-past-exam-2020.html#cb684-16" aria-hidden="true" tabindex="-1"></a>    )<span class="sc">$</span>p.value</span>
-<span id="cb684-17"><a href="an-example-of-a-past-exam-2020.html#cb684-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span></span>
-<span id="cb684-18"><a href="an-example-of-a-past-exam-2020.html#cb684-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb684-19"><a href="an-example-of-a-past-exam-2020.html#cb684-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb684-20"><a href="an-example-of-a-past-exam-2020.html#cb684-20" aria-hidden="true" tabindex="-1"></a><span class="co"># map_dbl applying the function for every value of</span></span>
-<span id="cb684-21"><a href="an-example-of-a-past-exam-2020.html#cb684-21" aria-hidden="true" tabindex="-1"></a><span class="co"># simulData$sampleSize</span></span>
-<span id="cb684-22"><a href="an-example-of-a-past-exam-2020.html#cb684-22" aria-hidden="true" tabindex="-1"></a>simulData<span class="sc">$</span>Power <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(simulData<span class="sc">$</span>sampleSize, pwr)</span></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="an-example-of-a-past-exam-2020.html#cb682-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a data frame for the simulation results</span></span>
+<span id="cb682-2"><a href="an-example-of-a-past-exam-2020.html#cb682-2" aria-hidden="true" tabindex="-1"></a>simulData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleSize =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb682-3"><a href="an-example-of-a-past-exam-2020.html#cb682-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb682-4"><a href="an-example-of-a-past-exam-2020.html#cb682-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set basic values</span></span>
+<span id="cb682-5"><a href="an-example-of-a-past-exam-2020.html#cb682-5" aria-hidden="true" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> controlData<span class="sc">$</span>meanVal</span>
+<span id="cb682-6"><a href="an-example-of-a-past-exam-2020.html#cb682-6" aria-hidden="true" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> controlData<span class="sc">$</span>meanVal <span class="sc">*</span> <span class="fl">1.3</span> <span class="co"># Increase of 30%</span></span>
+<span id="cb682-7"><a href="an-example-of-a-past-exam-2020.html#cb682-7" aria-hidden="true" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> controlData<span class="sc">$</span>sdVal</span>
+<span id="cb682-8"><a href="an-example-of-a-past-exam-2020.html#cb682-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb682-9"><a href="an-example-of-a-past-exam-2020.html#cb682-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to do the t-test</span></span>
+<span id="cb682-10"><a href="an-example-of-a-past-exam-2020.html#cb682-10" aria-hidden="true" tabindex="-1"></a>pwr <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb682-11"><a href="an-example-of-a-past-exam-2020.html#cb682-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">replicate</span>(</span>
+<span id="cb682-12"><a href="an-example-of-a-past-exam-2020.html#cb682-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
+<span id="cb682-13"><a href="an-example-of-a-past-exam-2020.html#cb682-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t.test</span>(</span>
+<span id="cb682-14"><a href="an-example-of-a-past-exam-2020.html#cb682-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, controlMean, sdValue),</span>
+<span id="cb682-15"><a href="an-example-of-a-past-exam-2020.html#cb682-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, treatmentMean, sdValue)</span>
+<span id="cb682-16"><a href="an-example-of-a-past-exam-2020.html#cb682-16" aria-hidden="true" tabindex="-1"></a>    )<span class="sc">$</span>p.value</span>
+<span id="cb682-17"><a href="an-example-of-a-past-exam-2020.html#cb682-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span></span>
+<span id="cb682-18"><a href="an-example-of-a-past-exam-2020.html#cb682-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb682-19"><a href="an-example-of-a-past-exam-2020.html#cb682-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb682-20"><a href="an-example-of-a-past-exam-2020.html#cb682-20" aria-hidden="true" tabindex="-1"></a><span class="co"># map_dbl applying the function for every value of</span></span>
+<span id="cb682-21"><a href="an-example-of-a-past-exam-2020.html#cb682-21" aria-hidden="true" tabindex="-1"></a><span class="co"># simulData$sampleSize</span></span>
+<span id="cb682-22"><a href="an-example-of-a-past-exam-2020.html#cb682-22" aria-hidden="true" tabindex="-1"></a>simulData<span class="sc">$</span>Power <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(simulData<span class="sc">$</span>sampleSize, pwr)</span></code></pre></div>
 <p>Now plot the results:</p>
-<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="an-example-of-a-past-exam-2020.html#cb685-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the output</span></span>
-<span id="cb685-2"><a href="an-example-of-a-past-exam-2020.html#cb685-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simulData, <span class="fu">aes</span>(<span class="at">x =</span> sampleSize, <span class="at">y =</span> Power)) <span class="sc">+</span></span>
-<span id="cb685-3"><a href="an-example-of-a-past-exam-2020.html#cb685-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb685-4"><a href="an-example-of-a-past-exam-2020.html#cb685-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb685-5"><a href="an-example-of-a-past-exam-2020.html#cb685-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.8</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-478-1.png" width="672" /></p>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="an-example-of-a-past-exam-2020.html#cb683-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the output</span></span>
+<span id="cb683-2"><a href="an-example-of-a-past-exam-2020.html#cb683-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simulData, <span class="fu">aes</span>(<span class="at">x =</span> sampleSize, <span class="at">y =</span> Power)) <span class="sc">+</span></span>
+<span id="cb683-3"><a href="an-example-of-a-past-exam-2020.html#cb683-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb683-4"><a href="an-example-of-a-past-exam-2020.html#cb683-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb683-5"><a href="an-example-of-a-past-exam-2020.html#cb683-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.8</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-477-1.png" width="672" /></p>
 <p>From this, it looks like a power of 80% is achieved with a sample size of about 16.</p>
 <p>Summing up:
 <em>My power analysis by simulation shows that a sample size of 16 per treatment group is required to detect a difference of 30% with 80% power.</em></p>
@@ -781,28 +782,28 @@ To ensure that the months are displayed in the correct order you need to use the
 </ol>
 <hr />
 <p><strong>a) Plot the data to show the relationship between the the number of species and the area of the “island”. Colour code the points by whether the habitat type.</strong></p>
-<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="an-example-of-a-past-exam-2020.html#cb686-1" aria-hidden="true" tabindex="-1"></a>roundabouts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/roundabouts.csv&quot;</span>,</span>
-<span id="cb686-2"><a href="an-example-of-a-past-exam-2020.html#cb686-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
-<span id="cb686-3"><a href="an-example-of-a-past-exam-2020.html#cb686-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb686-4"><a href="an-example-of-a-past-exam-2020.html#cb686-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb686-5"><a href="an-example-of-a-past-exam-2020.html#cb686-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(roundabouts, <span class="fu">aes</span>(</span>
-<span id="cb686-6"><a href="an-example-of-a-past-exam-2020.html#cb686-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> area, <span class="at">y =</span> nSpecies,</span>
-<span id="cb686-7"><a href="an-example-of-a-past-exam-2020.html#cb686-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> habitatType</span>
-<span id="cb686-8"><a href="an-example-of-a-past-exam-2020.html#cb686-8" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb686-9"><a href="an-example-of-a-past-exam-2020.html#cb686-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-479-1.png" width="672" /></p>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="an-example-of-a-past-exam-2020.html#cb684-1" aria-hidden="true" tabindex="-1"></a>roundabouts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/roundabouts.csv&quot;</span>,</span>
+<span id="cb684-2"><a href="an-example-of-a-past-exam-2020.html#cb684-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">TRUE</span></span>
+<span id="cb684-3"><a href="an-example-of-a-past-exam-2020.html#cb684-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb684-4"><a href="an-example-of-a-past-exam-2020.html#cb684-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb684-5"><a href="an-example-of-a-past-exam-2020.html#cb684-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(roundabouts, <span class="fu">aes</span>(</span>
+<span id="cb684-6"><a href="an-example-of-a-past-exam-2020.html#cb684-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> area, <span class="at">y =</span> nSpecies,</span>
+<span id="cb684-7"><a href="an-example-of-a-past-exam-2020.html#cb684-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> habitatType</span>
+<span id="cb684-8"><a href="an-example-of-a-past-exam-2020.html#cb684-8" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb684-9"><a href="an-example-of-a-past-exam-2020.html#cb684-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-478-1.png" width="672" /></p>
 <p><strong>b) Fit a suitable statistical model to estimate the statistical relationship between area, habitat type, and species richness. Describe the method and then summarise the results produced by the model as if you were writing a report/thesis.</strong></p>
 <p>The key thing to remember here is that there are limits to counts of species. You can’t count &lt;0. Therefore, models that would allow the prediction of negative values may be problematic.
 Generalised Linear Models are designed for handling these kind of issues and, in this case, a Poisson model is most appropriate. This is an analogous situation to the example we looked at modelling the number of fox offspring in relation to mother’s weight.</p>
 <p>I could describe the methods like this:
 <em>I fitted a generalised linear model with Poisson errors to model how species richness is associated with survey area and habitat complexity. I included species richness as the response variable, and area and habitat complexity as explanatory variables. I used Poisson errors because these are count data and using an ordinary linear model could lead to estimates of negative species richness, and would not account for the fact that variance increases with the mean, which violates one of the assumptions of ordinary regression models. After fitting the model I examined the diagnostic plots of the model to check that the model was appropriate.</em></p>
-<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="an-example-of-a-past-exam-2020.html#cb687-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(nSpecies <span class="sc">~</span> area <span class="sc">*</span> habitatType,</span>
-<span id="cb687-2"><a href="an-example-of-a-past-exam-2020.html#cb687-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span>,</span>
-<span id="cb687-3"><a href="an-example-of-a-past-exam-2020.html#cb687-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> roundabouts</span>
-<span id="cb687-4"><a href="an-example-of-a-past-exam-2020.html#cb687-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb687-5"><a href="an-example-of-a-past-exam-2020.html#cb687-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod1)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-480-1.png" width="672" /></p>
-<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="an-example-of-a-past-exam-2020.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="an-example-of-a-past-exam-2020.html#cb685-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(nSpecies <span class="sc">~</span> area <span class="sc">*</span> habitatType,</span>
+<span id="cb685-2"><a href="an-example-of-a-past-exam-2020.html#cb685-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span>,</span>
+<span id="cb685-3"><a href="an-example-of-a-past-exam-2020.html#cb685-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> roundabouts</span>
+<span id="cb685-4"><a href="an-example-of-a-past-exam-2020.html#cb685-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb685-5"><a href="an-example-of-a-past-exam-2020.html#cb685-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod1)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-479-1.png" width="672" /></p>
+<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="an-example-of-a-past-exam-2020.html#cb686-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model: poisson, link: log
@@ -819,7 +820,7 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 ## area:habitatType  1   13.842        32     26.193 0.0001988 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="an-example-of-a-past-exam-2020.html#cb690-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="an-example-of-a-past-exam-2020.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = nSpecies ~ area * habitatType, family = &quot;poisson&quot;, 
@@ -851,45 +852,45 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 <p><strong>c) Produce a plot that shows (in addition to the raw data points) the fitted values produced by your model and the uncertainty in those estimates. </strong></p>
 <p>Here I am asking you to add the predicted values (fitted value lines) from your model to the plot of the raw data. I am also asking you to show uncertainty. This is best done by adding a shaded ribbon.</p>
 <p>The main thing to remember here is that you need to back-transform from the scale of the linear predictor to the natural scale.</p>
-<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="an-example-of-a-past-exam-2020.html#cb692-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data set to predict from</span></span>
-<span id="cb692-2"><a href="an-example-of-a-past-exam-2020.html#cb692-2" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb692-3"><a href="an-example-of-a-past-exam-2020.html#cb692-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">area =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="fl">0.1</span>),</span>
-<span id="cb692-4"><a href="an-example-of-a-past-exam-2020.html#cb692-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">habitatType =</span> <span class="fu">c</span>(<span class="st">&quot;complex&quot;</span>, <span class="st">&quot;simple&quot;</span>)</span>
-<span id="cb692-5"><a href="an-example-of-a-past-exam-2020.html#cb692-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb692-6"><a href="an-example-of-a-past-exam-2020.html#cb692-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-7"><a href="an-example-of-a-past-exam-2020.html#cb692-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicted values (and SE)</span></span>
-<span id="cb692-8"><a href="an-example-of-a-past-exam-2020.html#cb692-8" aria-hidden="true" tabindex="-1"></a>pv <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, newData, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb692-9"><a href="an-example-of-a-past-exam-2020.html#cb692-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-10"><a href="an-example-of-a-past-exam-2020.html#cb692-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new data for the predicted fit line</span></span>
-<span id="cb692-11"><a href="an-example-of-a-past-exam-2020.html#cb692-11" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
-<span id="cb692-12"><a href="an-example-of-a-past-exam-2020.html#cb692-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nSpecies_LP =</span> pv<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
-<span id="cb692-13"><a href="an-example-of-a-past-exam-2020.html#cb692-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span></span>
-<span id="cb692-14"><a href="an-example-of-a-past-exam-2020.html#cb692-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upperCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit)</span>
-<span id="cb692-15"><a href="an-example-of-a-past-exam-2020.html#cb692-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-16"><a href="an-example-of-a-past-exam-2020.html#cb692-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the inverse link function</span></span>
-<span id="cb692-17"><a href="an-example-of-a-past-exam-2020.html#cb692-17" aria-hidden="true" tabindex="-1"></a>inverseFunction <span class="ot">&lt;-</span> <span class="fu">family</span>(mod1)<span class="sc">$</span>linkinv</span>
-<span id="cb692-18"><a href="an-example-of-a-past-exam-2020.html#cb692-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-19"><a href="an-example-of-a-past-exam-2020.html#cb692-19" aria-hidden="true" tabindex="-1"></a><span class="co"># transform predicted data to the natural scale</span></span>
-<span id="cb692-20"><a href="an-example-of-a-past-exam-2020.html#cb692-20" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
-<span id="cb692-21"><a href="an-example-of-a-past-exam-2020.html#cb692-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb692-22"><a href="an-example-of-a-past-exam-2020.html#cb692-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">nSpecies =</span> <span class="fu">inverseFunction</span>(nSpecies_LP),</span>
-<span id="cb692-23"><a href="an-example-of-a-past-exam-2020.html#cb692-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fu">inverseFunction</span>(lowerCI_LP),</span>
-<span id="cb692-24"><a href="an-example-of-a-past-exam-2020.html#cb692-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> <span class="fu">inverseFunction</span>(upperCI_LP)</span>
-<span id="cb692-25"><a href="an-example-of-a-past-exam-2020.html#cb692-25" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="an-example-of-a-past-exam-2020.html#cb690-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data set to predict from</span></span>
+<span id="cb690-2"><a href="an-example-of-a-past-exam-2020.html#cb690-2" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb690-3"><a href="an-example-of-a-past-exam-2020.html#cb690-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">area =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="fl">0.1</span>),</span>
+<span id="cb690-4"><a href="an-example-of-a-past-exam-2020.html#cb690-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">habitatType =</span> <span class="fu">c</span>(<span class="st">&quot;complex&quot;</span>, <span class="st">&quot;simple&quot;</span>)</span>
+<span id="cb690-5"><a href="an-example-of-a-past-exam-2020.html#cb690-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb690-6"><a href="an-example-of-a-past-exam-2020.html#cb690-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb690-7"><a href="an-example-of-a-past-exam-2020.html#cb690-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicted values (and SE)</span></span>
+<span id="cb690-8"><a href="an-example-of-a-past-exam-2020.html#cb690-8" aria-hidden="true" tabindex="-1"></a>pv <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, newData, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb690-9"><a href="an-example-of-a-past-exam-2020.html#cb690-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb690-10"><a href="an-example-of-a-past-exam-2020.html#cb690-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create new data for the predicted fit line</span></span>
+<span id="cb690-11"><a href="an-example-of-a-past-exam-2020.html#cb690-11" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
+<span id="cb690-12"><a href="an-example-of-a-past-exam-2020.html#cb690-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nSpecies_LP =</span> pv<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
+<span id="cb690-13"><a href="an-example-of-a-past-exam-2020.html#cb690-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span></span>
+<span id="cb690-14"><a href="an-example-of-a-past-exam-2020.html#cb690-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upperCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit)</span>
+<span id="cb690-15"><a href="an-example-of-a-past-exam-2020.html#cb690-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb690-16"><a href="an-example-of-a-past-exam-2020.html#cb690-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the inverse link function</span></span>
+<span id="cb690-17"><a href="an-example-of-a-past-exam-2020.html#cb690-17" aria-hidden="true" tabindex="-1"></a>inverseFunction <span class="ot">&lt;-</span> <span class="fu">family</span>(mod1)<span class="sc">$</span>linkinv</span>
+<span id="cb690-18"><a href="an-example-of-a-past-exam-2020.html#cb690-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb690-19"><a href="an-example-of-a-past-exam-2020.html#cb690-19" aria-hidden="true" tabindex="-1"></a><span class="co"># transform predicted data to the natural scale</span></span>
+<span id="cb690-20"><a href="an-example-of-a-past-exam-2020.html#cb690-20" aria-hidden="true" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
+<span id="cb690-21"><a href="an-example-of-a-past-exam-2020.html#cb690-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb690-22"><a href="an-example-of-a-past-exam-2020.html#cb690-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">nSpecies =</span> <span class="fu">inverseFunction</span>(nSpecies_LP),</span>
+<span id="cb690-23"><a href="an-example-of-a-past-exam-2020.html#cb690-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fu">inverseFunction</span>(lowerCI_LP),</span>
+<span id="cb690-24"><a href="an-example-of-a-past-exam-2020.html#cb690-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> <span class="fu">inverseFunction</span>(upperCI_LP)</span>
+<span id="cb690-25"><a href="an-example-of-a-past-exam-2020.html#cb690-25" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Now we can add these to the plot:</p>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="an-example-of-a-past-exam-2020.html#cb693-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(roundabouts, <span class="fu">aes</span>(</span>
-<span id="cb693-2"><a href="an-example-of-a-past-exam-2020.html#cb693-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> area, <span class="at">y =</span> nSpecies,</span>
-<span id="cb693-3"><a href="an-example-of-a-past-exam-2020.html#cb693-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> habitatType</span>
-<span id="cb693-4"><a href="an-example-of-a-past-exam-2020.html#cb693-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb693-5"><a href="an-example-of-a-past-exam-2020.html#cb693-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newData, <span class="fu">aes</span>(</span>
-<span id="cb693-6"><a href="an-example-of-a-past-exam-2020.html#cb693-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> area, <span class="at">ymin =</span> ymin, <span class="at">ymax =</span> ymax,</span>
-<span id="cb693-7"><a href="an-example-of-a-past-exam-2020.html#cb693-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> habitatType, <span class="at">alpha =</span> <span class="fl">0.3</span></span>
-<span id="cb693-8"><a href="an-example-of-a-past-exam-2020.html#cb693-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
-<span id="cb693-9"><a href="an-example-of-a-past-exam-2020.html#cb693-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> newData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
-<span id="cb693-10"><a href="an-example-of-a-past-exam-2020.html#cb693-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb693-11"><a href="an-example-of-a-past-exam-2020.html#cb693-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">alpha =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># Remove the alpha legend</span></span>
-<span id="cb693-12"><a href="an-example-of-a-past-exam-2020.html#cb693-12" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span></span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-482-1.png" width="672" /></p>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="an-example-of-a-past-exam-2020.html#cb691-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(roundabouts, <span class="fu">aes</span>(</span>
+<span id="cb691-2"><a href="an-example-of-a-past-exam-2020.html#cb691-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> area, <span class="at">y =</span> nSpecies,</span>
+<span id="cb691-3"><a href="an-example-of-a-past-exam-2020.html#cb691-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">colour =</span> habitatType</span>
+<span id="cb691-4"><a href="an-example-of-a-past-exam-2020.html#cb691-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb691-5"><a href="an-example-of-a-past-exam-2020.html#cb691-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newData, <span class="fu">aes</span>(</span>
+<span id="cb691-6"><a href="an-example-of-a-past-exam-2020.html#cb691-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> area, <span class="at">ymin =</span> ymin, <span class="at">ymax =</span> ymax,</span>
+<span id="cb691-7"><a href="an-example-of-a-past-exam-2020.html#cb691-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> habitatType, <span class="at">alpha =</span> <span class="fl">0.3</span></span>
+<span id="cb691-8"><a href="an-example-of-a-past-exam-2020.html#cb691-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb691-9"><a href="an-example-of-a-past-exam-2020.html#cb691-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> newData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb691-10"><a href="an-example-of-a-past-exam-2020.html#cb691-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb691-11"><a href="an-example-of-a-past-exam-2020.html#cb691-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">alpha =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="co"># Remove the alpha legend</span></span>
+<span id="cb691-12"><a href="an-example-of-a-past-exam-2020.html#cb691-12" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span></span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-481-1.png" width="672" /></p>
 <hr />
 
 </div>
