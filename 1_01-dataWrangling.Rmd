@@ -58,14 +58,6 @@ sduBirds <- filter(sduBirds, species %in% c("GT", "BT"))
 table(sduBirds$species)
 ```
 
-You will notice that all the levels of the variable are retained. This is not a problem, and can usually be ignored. You can also tidy this up using the `droplevels` function, which removes all unused factor levels.
-
-```{r}
-sduBirds <- droplevels(sduBirds)
-table(sduBirds$species)
-```
-
-
 
 ## `arrange`
 
@@ -183,7 +175,6 @@ Below I show how do do this to create a clutch size data set from the raw data (
 # Import and process data using pipes
 SDUClutchSize <- read.csv("CourseData/sduBirds.csv") %>%
   filter(species %in% c("GT", "BT")) %>% # include only GT and BT
-  droplevels() %>% # drop unwanted factor levels
   select(species, Year, Day, boxNumber, nEggs) %>% # select columns
   group_by(species, Year, boxNumber) %>% # group data
   summarise(clutchSize = max(nEggs, na.rm = TRUE)) %>% # clutch size
