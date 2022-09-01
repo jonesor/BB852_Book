@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Combining data sets | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Combining data sets | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-08-08" />
+<meta name="date" content="2022-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,7 +53,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -431,14 +430,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="combining-data-sets.html#cb168-1" aria-hidden="true" tabindex="-1"></a>redlist <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/MammalRedList.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at that.</p>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="combining-data-sets.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(redlist)</span></code></pre></div>
-<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                   
-##  [4] &quot;Class&quot;                     &quot;Order&quot;                     &quot;Family&quot;                   
-##  [7] &quot;Genus&quot;                     &quot;Species&quot;                   &quot;Authority&quot;                
-## [10] &quot;Infraspecific.rank&quot;        &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;  
-## [13] &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;       
-## [16] &quot;Common.names..Fre.&quot;        &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;          
-## [19] &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot; &quot;Year.assessed&quot;            
-## [22] &quot;Population.trend&quot;          &quot;Petitioned&quot;</code></pre>
+<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                    &quot;Class&quot;                     &quot;Order&quot;                    
+##  [6] &quot;Family&quot;                    &quot;Genus&quot;                     &quot;Species&quot;                   &quot;Authority&quot;                 &quot;Infraspecific.rank&quot;       
+## [11] &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;   &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;       
+## [16] &quot;Common.names..Fre.&quot;        &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;           &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot;
+## [21] &quot;Year.assessed&quot;             &quot;Population.trend&quot;          &quot;Petitioned&quot;</code></pre>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="combining-data-sets.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(redlist<span class="sc">$</span>Red.List.status)</span></code></pre></div>
 <pre><code>## [1] &quot;DD&quot; &quot;LC&quot; &quot;CR&quot; &quot;NT&quot; &quot;EN&quot; &quot;VU&quot; &quot;EX&quot; &quot;EW&quot;</code></pre>
 <p>There’s a lot of information there but what we really need is simply the Latin binomial (for which we need <code>genus</code> and <code>species</code>) and the threat status <code>Red.List.status</code>.</p>

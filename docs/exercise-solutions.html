@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 24 Exercise Solutions | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 24 Exercise Solutions | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-08-08" />
+<meta name="date" content="2022-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,7 +53,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -402,38 +401,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>First import the data. Check that the columns look as they should. (e.g. use <code>summary</code> or <code>str</code> functions). Tip: use the “Wizard” in RStudio to guide you.</li>
 </ol>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="exercise-solutions.html#cb520-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="exercise-solutions.html#cb520-1" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)*</li>
 </ol>
-<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="exercise-solutions.html#cb521-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="exercise-solutions.html#cb521-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>## [1] 9.647059</code></pre>
-<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="exercise-solutions.html#cb523-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="exercise-solutions.html#cb523-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="exercise-solutions.html#cb525-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="exercise-solutions.html#cb525-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>## [1] 15</code></pre>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="exercise-solutions.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="exercise-solutions.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>## [1]  3 15</code></pre>
-<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="exercise-solutions.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="exercise-solutions.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   3.000   6.000  11.000   9.647  13.000  15.000</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)</li>
 </ol>
-<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="exercise-solutions.html#cb531-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1975</span> <span class="sc">-</span> <span class="fu">min</span>(df<span class="sc">$</span>Year)</span></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="exercise-solutions.html#cb531-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1975</span> <span class="sc">-</span> <span class="fu">min</span>(birds<span class="sc">$</span>Year)</span></code></pre></div>
 <pre><code>## [1] 29</code></pre>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="exercise-solutions.html#cb533-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1975</span> <span class="sc">-</span> <span class="fu">max</span>(df<span class="sc">$</span>Year)</span></code></pre></div>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="exercise-solutions.html#cb533-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1975</span> <span class="sc">-</span> <span class="fu">max</span>(birds<span class="sc">$</span>Year)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Plot the relationship between <code>Year</code> and <code>nSpecies</code> as a scatterplot using base-R graphics (using the <code>plot</code> function).</li>
 </ol>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="exercise-solutions.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>Year, df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="exercise-solutions.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(birds<span class="sc">$</span>Year, birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-374-1.png" width="672" /></p>
 <ol start="5" style="list-style-type: decimal">
-<li>The pattern might be easier to see if you could replace <code>YearBuilt</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>df$Age &lt;- 1975 - Year)</code>). Replot your results.</li>
+<li>The pattern might be easier to see if you could replace <code>YearBuilt</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>birds$Age &lt;- 1975 - birds$Year)</code>). Re-plot your results.</li>
 </ol>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="exercise-solutions.html#cb536-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="dv">1975</span> <span class="sc">-</span> df<span class="sc">$</span>Year</span>
-<span id="cb536-2"><a href="exercise-solutions.html#cb536-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>Age, df<span class="sc">$</span>nSpecies)</span></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="exercise-solutions.html#cb536-1" aria-hidden="true" tabindex="-1"></a>birds<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="dv">1975</span> <span class="sc">-</span> birds<span class="sc">$</span>Year</span>
+<span id="cb536-2"><a href="exercise-solutions.html#cb536-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(birds<span class="sc">$</span>Age, birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-375-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?</li>
@@ -456,24 +455,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="exercise-solutions.html#cb538-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(amniote)</span></code></pre></div>
 <pre><code>## [1] 21322    36</code></pre>
 <div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="exercise-solutions.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(amniote)</span></code></pre></div>
-<pre><code>##  [1] &quot;class&quot;                                 &quot;order&quot;                                
-##  [3] &quot;family&quot;                                &quot;genus&quot;                                
-##  [5] &quot;species&quot;                               &quot;subspecies&quot;                           
-##  [7] &quot;common_name&quot;                           &quot;female_maturity_d&quot;                    
-##  [9] &quot;litter_or_clutch_size_n&quot;               &quot;litters_or_clutches_per_y&quot;            
-## [11] &quot;adult_body_mass_g&quot;                     &quot;maximum_longevity_y&quot;                  
-## [13] &quot;gestation_d&quot;                           &quot;weaning_d&quot;                            
-## [15] &quot;birth_or_hatching_weight_g&quot;            &quot;weaning_weight_g&quot;                     
-## [17] &quot;egg_mass_g&quot;                            &quot;incubation_d&quot;                         
-## [19] &quot;fledging_age_d&quot;                        &quot;longevity_y&quot;                          
-## [21] &quot;male_maturity_d&quot;                       &quot;inter_litter_or_interbirth_interval_y&quot;
-## [23] &quot;female_body_mass_g&quot;                    &quot;male_body_mass_g&quot;                     
-## [25] &quot;no_sex_body_mass_g&quot;                    &quot;egg_width_mm&quot;                         
-## [27] &quot;egg_length_mm&quot;                         &quot;fledging_mass_g&quot;                      
-## [29] &quot;adult_svl_cm&quot;                          &quot;male_svl_cm&quot;                          
-## [31] &quot;female_svl_cm&quot;                         &quot;birth_or_hatching_svl_cm&quot;             
-## [33] &quot;female_svl_at_maturity_cm&quot;             &quot;female_body_mass_at_maturity_g&quot;       
-## [35] &quot;no_sex_svl_cm&quot;                         &quot;no_sex_maturity_d&quot;</code></pre>
+<pre><code>##  [1] &quot;class&quot;                                 &quot;order&quot;                                 &quot;family&quot;                               
+##  [4] &quot;genus&quot;                                 &quot;species&quot;                               &quot;subspecies&quot;                           
+##  [7] &quot;common_name&quot;                           &quot;female_maturity_d&quot;                     &quot;litter_or_clutch_size_n&quot;              
+## [10] &quot;litters_or_clutches_per_y&quot;             &quot;adult_body_mass_g&quot;                     &quot;maximum_longevity_y&quot;                  
+## [13] &quot;gestation_d&quot;                           &quot;weaning_d&quot;                             &quot;birth_or_hatching_weight_g&quot;           
+## [16] &quot;weaning_weight_g&quot;                      &quot;egg_mass_g&quot;                            &quot;incubation_d&quot;                         
+## [19] &quot;fledging_age_d&quot;                        &quot;longevity_y&quot;                           &quot;male_maturity_d&quot;                      
+## [22] &quot;inter_litter_or_interbirth_interval_y&quot; &quot;female_body_mass_g&quot;                    &quot;male_body_mass_g&quot;                     
+## [25] &quot;no_sex_body_mass_g&quot;                    &quot;egg_width_mm&quot;                          &quot;egg_length_mm&quot;                        
+## [28] &quot;fledging_mass_g&quot;                       &quot;adult_svl_cm&quot;                          &quot;male_svl_cm&quot;                          
+## [31] &quot;female_svl_cm&quot;                         &quot;birth_or_hatching_svl_cm&quot;              &quot;female_svl_at_maturity_cm&quot;            
+## [34] &quot;female_body_mass_at_maturity_g&quot;        &quot;no_sex_svl_cm&quot;                         &quot;no_sex_maturity_d&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use <code>select</code> to pick relevent columns of the dataset and discard the others. Call the new data frame <code>x</code>.
 The relevant columns are the taxonomic variables (<code>class</code>, <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</li>
@@ -492,58 +485,37 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb543-2"><a href="exercise-solutions.html#cb543-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(genus, species)) <span class="sc">%&gt;%</span></span>
 <span id="cb543-3"><a href="exercise-solutions.html#cb543-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus)</span>
 <span id="cb543-4"><a href="exercise-solutions.html#cb543-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##   class               species longevity_y adult_body_mass_g litter_or_clutch_size_n
-## 1  Aves Accipiter albogularis          NA           251.500                      NA
-## 2  Aves      Accipiter badius          NA           140.000                    3.25
-## 3  Aves     Accipiter bicolor          NA           345.000                    2.70
-## 4  Aves  Accipiter brachyurus          NA           142.000                      NA
-## 5  Aves    Accipiter brevipes          NA           203.500                    4.00
-## 6  Aves Accipiter castanilius          NA           159.375                      NA
-##   litters_or_clutches_per_y
-## 1                        NA
-## 2                         1
-## 3                        NA
-## 4                        NA
-## 5                         1
-## 6                        NA</code></pre>
+<pre><code>##   class               species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
+## 1  Aves Accipiter albogularis          NA           251.500                      NA                        NA
+## 2  Aves      Accipiter badius          NA           140.000                    3.25                         1
+## 3  Aves     Accipiter bicolor          NA           345.000                    2.70                        NA
+## 4  Aves  Accipiter brachyurus          NA           142.000                      NA                        NA
+## 5  Aves    Accipiter brevipes          NA           203.500                    4.00                         1
+## 6  Aves Accipiter castanilius          NA           159.375                      NA                        NA</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</li>
 </ol>
 <div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="exercise-solutions.html#cb545-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>longevity_y)</span>
 <span id="cb545-2"><a href="exercise-solutions.html#cb545-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class                 species longevity_y adult_body_mass_g litter_or_clutch_size_n
-## 1 Reptilia Chelonoidis duncanensis       177.0                NA                      NA
-## 2 Reptilia  Aldabrachelys gigantea       152.0            117200                    13.5
-## 3 Reptilia          Testudo graeca       127.0              1430                     5.0
-## 4 Mammalia            Homo sapiens       122.5             62035                     1.0
-## 5 Mammalia   Balaenoptera physalus        95.0          38800000                     1.0
-## 6 Mammalia            Orcinus orca        90.0           4300000                     1.0
-##   litters_or_clutches_per_y
-## 1                        NA
-## 2                  2.000000
-## 3                  3.200993
-## 4                  0.485000
-## 5                  0.400000
-## 6                  0.210000</code></pre>
+<pre><code>##      class                 species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
+## 1 Reptilia Chelonoidis duncanensis       177.0                NA                      NA                        NA
+## 2 Reptilia  Aldabrachelys gigantea       152.0            117200                    13.5                  2.000000
+## 3 Reptilia          Testudo graeca       127.0              1430                     5.0                  3.200993
+## 4 Mammalia            Homo sapiens       122.5             62035                     1.0                  0.485000
+## 5 Mammalia   Balaenoptera physalus        95.0          38800000                     1.0                  0.400000
+## 6 Mammalia            Orcinus orca        90.0           4300000                     1.0                  0.210000</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Do the same thing but this time find the shortest lived species.</li>
 </ol>
 <div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="exercise-solutions.html#cb547-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(longevity_y)</span>
 <span id="cb547-2"><a href="exercise-solutions.html#cb547-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class              species longevity_y adult_body_mass_g litter_or_clutch_size_n
-## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875                    1.59
-## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000                    1.50
-## 3 Mammalia Allactaga balikunica  0.08333333                NA                    2.52
-## 4 Mammalia    Allactaga bullata  0.08333333                NA                    2.52
-## 5 Mammalia       Geomys pinetis  0.08333333           195.750                    1.77
-## 6 Mammalia          Mus sorella  0.08333333            12.535                    5.20
-##   litters_or_clutches_per_y
-## 1                     7.150
-## 2                        NA
-## 3                        NA
-## 4                        NA
-## 5                     1.865
-## 6                     3.000</code></pre>
+<pre><code>##      class              species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
+## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875                    1.59                     7.150
+## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000                    1.50                        NA
+## 3 Mammalia Allactaga balikunica  0.08333333                NA                    2.52                        NA
+## 4 Mammalia    Allactaga bullata  0.08333333                NA                    2.52                        NA
+## 5 Mammalia       Geomys pinetis  0.08333333           195.750                    1.77                     1.865
+## 6 Mammalia          Mus sorella  0.08333333            12.535                    5.20                     3.000</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>na.rm = TRUE</code> argument.</li>
 </ol>
@@ -863,8 +835,7 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb591-8"><a href="exercise-solutions.html#cb591-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb591-9"><a href="exercise-solutions.html#cb591-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
 <span id="cb591-10"><a href="exercise-solutions.html#cb591-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595 -2.1980346 -1.5961324
-##  [9]  0.8836404  1.2863489</code></pre>
+<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595 -2.1980346 -1.5961324  0.8836404  1.2863489</code></pre>
 <div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="exercise-solutions.html#cb593-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
 <span id="cb593-2"><a href="exercise-solutions.html#cb593-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
 <span id="cb593-3"><a href="exercise-solutions.html#cb593-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
@@ -873,8 +844,7 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb593-6"><a href="exercise-solutions.html#cb593-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean</span>
 <span id="cb593-7"><a href="exercise-solutions.html#cb593-7" aria-hidden="true" tabindex="-1"></a>  )))</span>
 <span id="cb593-8"><a href="exercise-solutions.html#cb593-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728 -0.5334274  0.2076405
-##  [9] -0.4760695 -0.6967478</code></pre>
+<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728 -0.5334274  0.2076405 -0.4760695 -0.6967478</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</li>
 </ol>
