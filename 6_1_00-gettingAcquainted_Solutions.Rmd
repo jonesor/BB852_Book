@@ -3,39 +3,39 @@
 1. First import the data. Check that the columns look as they should. (e.g. use `summary` or `str` functions). Tip: use the "Wizard" in RStudio to guide you.
 
 ```{r}
-df <- read.csv("CourseData/suburbanBirds.csv")
+birds <- read.csv("CourseData/suburbanBirds.csv")
 ```
 
 
 2. What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)*
 
 ```{r}
-mean(df$nSpecies)
-min(df$nSpecies)
-max(df$nSpecies)
-range(df$nSpecies)
-summary(df$nSpecies)
+mean(birds$nSpecies)
+min(birds$nSpecies)
+max(birds$nSpecies)
+range(birds$nSpecies)
+summary(birds$nSpecies)
 ```
 
 
 3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)
 
 ```{r}
-1975 - min(df$Year)
-1975 - max(df$Year)
+1975 - min(birds$Year)
+1975 - max(birds$Year)
 ```
 
 4. Plot the relationship between `Year` and `nSpecies` as a scatterplot using base-R graphics (using the `plot` function).
 
 ```{r}
-plot(df$Year, df$nSpecies)
+plot(birds$Year, birds$nSpecies)
 ```
 
-5. The pattern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Replot your results.
+5. The pattern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `birds$Age <- 1975 - birds$Year)`). Re-plot your results.
 
 ```{r}
-df$Age <- 1975 - df$Year
-plot(df$Age, df$nSpecies)
+birds$Age <- 1975 - birds$Year
+plot(birds$Age, birds$nSpecies)
 ```
 
 
