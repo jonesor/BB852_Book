@@ -24,7 +24,9 @@ In these cases:
 * Zeros difficult to deal with by transformation (e.g. log(0) = -Inf).
 * Other error families do not allow zero values.
 
-The standard ("canonical") link used with the Poisson error family is the log link. The log link ensures that all fitted (i.e. predicted) values are positive, while the Poisson errors take account of the fact that the data are integer and the variance scales 1:1 with the mean (i.e. variance increases linearly and is equal to the mean). There are other potential link and error families that *could* be used with this kind of data, but we'll stick with the standard ones here. Lets look at a couple of examples...
+The standard ("canonical") link used with the Poisson error family is the log link. The log link ensures that all fitted (i.e. predicted) values are positive, while the Poisson errors take account of the fact that the data are integer and the variance scales 1:1 with the mean (i.e. variance increases linearly and is equal to the mean). 
+
+There are other potential link and error families that *could* be used with this kind of data, but we'll stick with the standard ones here. Lets look at a couple of examples...
 
 
 ### Example: Number of offspring in foxes.
@@ -186,3 +188,10 @@ In this example, you will be fitting a GLM equivalent of a t-test that is approp
 4) Get the analysis of variance (deviance) table (`anova`). What does this tell you?
 5) Obtain the `summary` table. What does this tell you?
 6) Use the coefficient information in the `summary` table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations "by hand", or using the `predict` function. Ask for help if you get stuck.
+
+## Overdispersion
+
+I mentioned above that in Poisson models, the variance is assumed to increase linearly with the mean. In some cases, especially where there are important unmeasured variables, the variance might increase more rapidly than this 1:1 relationship with the mean. This is called OVERDISPERSION. There's a nice intuitive description of this in the textbook (Getting Started With R, section 7.5.1), but in a nutshell if the data are overdispersed you need to account for that extra variation using a different GLM "family". To diagnose overdispersion, you compare the `Residual deviance` to the `degrees of freedom`.  In a perfect Poisson model, these values will be equal, so we can generate a useful index of overdispersion by dividing the residual deviance by the degrees of freedom. The "rule of thumb" is that an overdispersion index >2 is problematic.
+
+The solution is to use a different GLM family. The easiest approach is to use the `quasipoisson` family (`family = quasipoisson`). With this family, the the model works in exactly the same way, except that it ALSO estimates the way that variance increases with the mean, and adjusts the p-values and standard errors accordingly. Another way is to use a so-called **negative binomial** model, fitted using `glm.nb` instead of `glm`.  Another useful option is the "zero inflated" model, which is useful where the overdispersion is caused by having an excessive amount of zero-values in your data. We won't go any further into these models here, but it is good to know that they exist and that they are fitted and interpreted in similar ways to regular GLMs.
+
