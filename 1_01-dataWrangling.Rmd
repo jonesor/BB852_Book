@@ -25,8 +25,8 @@ You should first set up your working directory (e.g. a folder for the course, wi
 See the earlier material for how to do this, or ask for help.
 
 ```{r}
-df <- read.csv("CourseData/sduBirds.csv")
-str(df)
+sduBirds <- read.csv("CourseData/sduBirds.csv")
+str(sduBirds)
 ```
 
 
@@ -35,8 +35,8 @@ str(df)
 From the `str` summary (above) you can see that there are many columns in the data set and we only need some of them. Let's `select` only the columns that we need for our calculations to make things a bit easier to handle. We need the `species`, `Year`, `Day`, `boxNumber` and `nEggs`: 
 
 ```{r}
-df <- select(df, species, Year, Day, boxNumber, nEggs)
-head(df)
+sduBirds <- select(sduBirds, species, Year, Day, boxNumber, nEggs)
+head(sduBirds)
 ```
 
 The output of `head` shows you the first few rows of the data set. You can see that each row represents a visit of a researcher to a particular nest. The researcher records the bird species if it is known (GT = Great tit, BT = Blue tit, NH = Nuthatch etc.), and then records the number of eggs, number of chicks, activity of the adults and so on. We need to convert this huge dataset into one which contains clutch size for each nest, for each year of the study. 
@@ -46,7 +46,7 @@ The information given by `str` (above) shows that there are data on species othe
 We can check what the make up of this part of the data is using the `table` function which will count up all of the entries.
 
 ```{r}
-table(df$species)
+table(sduBirds$species)
 ```
 
 ## `filter`
@@ -54,15 +54,15 @@ table(df$species)
 Now let's filter this data and double check that this has worked:
 
 ```{r}
-df <- filter(df, species %in% c("GT", "BT"))
-table(df$species)
+sduBirds <- filter(sduBirds, species %in% c("GT", "BT"))
+table(sduBirds$species)
 ```
 
 You will notice that all the levels of the variable are retained. This is not a problem, and can usually be ignored. You can also tidy this up using the `droplevels` function, which removes all unused factor levels.
 
 ```{r}
-df <- droplevels(df)
-table(df$species)
+sduBirds <- droplevels(sduBirds)
+table(sduBirds$species)
 ```
 
 
@@ -72,9 +72,9 @@ table(df$species)
 Recall that the data are records of visits to each nest a few times per week. To ensure that the data are in time order I can first `arrange` by first `Year` and then `Day`. To illustrate this we can make a temporary data set (called `temp`) to look at a particular nest in a particular year to get a record of the progress for that particular nest, and then plot it (this is an ugly plot and we will learn how to make beautiful ones soon):
 
 ```{r}
-df <- arrange(df, Year, Day)
+sduBirds <- arrange(sduBirds, Year, Day)
 
-temp <- filter(df, boxNumber == 1, Year == 2014)
+temp <- filter(sduBirds, boxNumber == 1, Year == 2014)
 max(temp$nEggs) # get the max value
 plot(temp$Day, temp$nEggs, type = "b")
 ```
@@ -92,20 +92,20 @@ Because there are missing data (`NA` values) we need to specify `na.rm = TRUE` i
 So first, let's get the max per species, just to illustrate how this works:
 
 ```{r}
-df <- group_by(df, species)
-summarise(df, clutchSize = max(nEggs, na.rm = TRUE))
+sduBirds <- group_by(sduBirds, species)
+summarise(sduBirds, clutchSize = max(nEggs, na.rm = TRUE))
 ```
 
 We can see how the data are grouped by asking for a summary:
 
 ```{r}
-summary(df)
+summary(sduBirds)
 ```
 
 We can ungroup the data again like this:
 
 ```{r}
-df <- ungroup(df)
+sduBirds <- ungroup(sduBirds)
 ```
 
 So both species lay the same maximum number of eggs, but maybe this is just caused by outliers for one of the species. We'll need to dig deeper.
@@ -115,55 +115,55 @@ How can we calculate the average? We cannot simply ask for the `mean` because th
 We first calculate the clutch size for each box for each species in each year:
 
 ```{r}
-df <- group_by(df, species, Year, boxNumber)
-df <- summarise(df, clutchSize = max(nEggs, na.rm = TRUE))
+sduBirds <- group_by(sduBirds, species, Year, boxNumber)
+sduBirds <- summarise(sduBirds, clutchSize = max(nEggs, na.rm = TRUE))
 ```
 
 Let's first look at all the clutch size data:
 
 ```{r}
-hist(df$clutchSize)
+hist(sduBirds$clutchSize)
 ```
 
 You can see here that there are a lot of zero values. This is because nests were recorded even if they did not attempt to lay eggs. We should remove these from our data using `filter` again:
 
 ```{r}
-df <- filter(df, clutchSize > 0)
-hist(df$clutchSize)
+sduBirds <- filter(sduBirds, clutchSize > 0)
+hist(sduBirds$clutchSize)
 ```
 
 That looks better.
 Now we can plot them again but this time split apart the species (again - this plot is ugly and we'll learn to plot nicer ones soon).
 
 ```{r}
-plot(as.factor(df$species), df$clutchSize)
+plot(as.factor(sduBirds$species), sduBirds$clutchSize)
 ```
 
 From these distributions it looks like the average clutch size is greater in the blue tit. We can use `summarise` to calculate the means.
 
 ```{r}
-df <- group_by(df, species)
-summarise(df, mean = mean(clutchSize), sd = sd(clutchSize))
+sduBirds <- group_by(sduBirds, species)
+summarise(sduBirds, mean = mean(clutchSize), sd = sd(clutchSize))
 ```
 
 Lets now turn to the other question - how does the clutch size vary with year?
 
 ```{r}
-df <- group_by(df, species, Year)
-df2 <- summarise(df, meanClutchSize = mean(clutchSize))
-head(df2)
+sduBirds <- group_by(sduBirds, species, Year)
+sduBirds2 <- summarise(sduBirds, meanClutchSize = mean(clutchSize))
+head(sduBirds2)
 ```
 
 We can plot this by first making a plot for blue tits, and then adding the points for great tits. I have used the `pch` argument to use filled circles for the great tits:
 
 ```{r}
-plot(df2$Year[df2$species == "BT"],
-  df2$meanClutchSize[df2$species == "BT"],
+plot(sduBirds2$Year[sduBirds2$species == "BT"],
+  sduBirds2$meanClutchSize[sduBirds2$species == "BT"],
   type = "b",
   ylim = c(0, 12), xlab = "Year", ylab = "Clutch Size"
 )
-points(df2$Year[df2$species == "GT"],
-  df2$meanClutchSize[df2$species == "GT"],
+points(sduBirds2$Year[sduBirds2$species == "GT"],
+  sduBirds2$meanClutchSize[sduBirds2$species == "GT"],
   pch = 16, type = "b"
 )
 ```
