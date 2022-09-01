@@ -36,8 +36,6 @@ anage <- x %>%
     "Aves", "Amphibia",
     "Mammalia", "Reptilia"
   )) %>%
-  droplevels() %>%
-  # this removes unused "factor levels" e.g. "Insecta"
   mutate(
     Mass = Mass / 1000,
     BMRperKg = BMR / Mass

@@ -92,12 +92,9 @@ You can see that there are `r sum(is.na(x$Red.List.status))` missing values for 
 
 Before plotting, I will also use `filter` remove species that are extinct (status = "EX" and "EW"). To do this I use the `%in%` argument to allow me to match a vector of variables. Because I want to NOT match them I negate the match using `!`. 
 
-I  then ensure that those levels are removed from the variable using `droplevels`.
-
 ```{r}
 x <- x %>%
-  filter(!Red.List.status %in% c("EX", "EW")) %>%
-  droplevels()
+  filter(!Red.List.status %in% c("EX", "EW")) 
 ```
 
 Let's now plot the data to answer the question.
