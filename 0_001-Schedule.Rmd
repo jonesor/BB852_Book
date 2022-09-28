@@ -51,6 +51,8 @@ xx <- readLines("bb852.ics")
 locationIndex <- grep("^LOCATION", xx)
 location <- gsub(pattern = "LOCATION:Odense ", replacement = "", x = xx[locationIndex])
 
+
+
 courseCal <- ical::ical_parse_df("bb852.ics") %>%
   filter(!is.na(uid)) %>%
   arrange(start) %>%
@@ -72,6 +74,8 @@ courseCal <- ical::ical_parse_df("bb852.ics") %>%
 
 courseCal_web <- courseCal %>%
   select(Session, Date, Time, Room)
+
+
 
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 
