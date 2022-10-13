@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-10-10" />
+<meta name="date" content="2022-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -466,22 +466,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="combining-data-sets.html#cb173-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">left_join</span>(mammal, redlist, <span class="at">by =</span> <span class="st">&quot;species&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at what we have now:</p>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="combining-data-sets.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##                     species female_maturity_d logMaturity Red.List.status
-## 1         Echinops telfairi         278.42000    5.629131              LC
-## 2    Hemicentetes nigriceps          48.57000    3.883006              LC
-## 3 Hemicentetes semispinosus          46.19892    3.832956              LC
-## 4         Microgale dobsoni         669.59200    6.506669              LC
-## 5        Microgale talazaci         639.00000    6.459904              LC
-## 6           Setifer setosus         198.00000    5.288267              LC</code></pre>
+<pre><code>##                     species female_maturity_d logMaturity
+## 1         Echinops telfairi         278.42000    5.629131
+## 2    Hemicentetes nigriceps          48.57000    3.883006
+## 3 Hemicentetes semispinosus          46.19892    3.832956
+## 4         Microgale dobsoni         669.59200    6.506669
+## 5        Microgale talazaci         639.00000    6.459904
+## 6           Setifer setosus         198.00000    5.288267
+##   Red.List.status
+## 1              LC
+## 2              LC
+## 3              LC
+## 4              LC
+## 5              LC
+## 6              LC</code></pre>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="combining-data-sets.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code></pre></div>
-<pre><code>##    species          female_maturity_d  logMaturity    Red.List.status
-##  Length:2000        Min.   :  23.81   Min.   :3.170   LC     :1219   
-##  Class :character   1st Qu.: 121.53   1st Qu.:4.800   VU     : 176   
-##  Mode  :character   Median : 344.12   Median :5.841   EN     : 168   
-##                     Mean   : 574.92   Mean   :5.745   NT     : 114   
-##                     3rd Qu.: 696.38   3rd Qu.:6.546   CR     :  66   
-##                     Max.   :6391.56   Max.   :8.763   (Other):  10   
-##                                                       NA&#39;s   : 247</code></pre>
+<pre><code>##    species          female_maturity_d  logMaturity   
+##  Length:2000        Min.   :  23.81   Min.   :3.170  
+##  Class :character   1st Qu.: 121.53   1st Qu.:4.800  
+##  Mode  :character   Median : 344.12   Median :5.841  
+##                     Mean   : 574.92   Mean   :5.745  
+##                     3rd Qu.: 696.38   3rd Qu.:6.546  
+##                     Max.   :6391.56   Max.   :8.763  
+##                                                      
+##  Red.List.status
+##  LC     :1219   
+##  VU     : 176   
+##  EN     : 168   
+##  NT     : 114   
+##  CR     :  66   
+##  (Other):  10   
+##  NA&#39;s   : 247</code></pre>
 <p>You can see that there are 247 missing values for the Red List status. These are either species that have not yet been assessed, or maybe where there are mismatches in the species names between the two databases. We will ignore this problem today.</p>
 <p>Before plotting, I will also use <code>filter</code> remove species that are extinct (status = “EX” and “EW”). To do this I use the <code>%in%</code> argument to allow me to match a vector of variables. Because I want to NOT match them I negate the match using <code>!</code>.</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="combining-data-sets.html#cb178-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>

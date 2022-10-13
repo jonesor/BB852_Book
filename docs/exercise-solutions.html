@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-10-10" />
+<meta name="date" content="2022-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -529,20 +529,27 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 </ol>
 <div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="exercise-solutions.html#cb543-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>longevity_y)</span>
 <span id="cb543-2"><a href="exercise-solutions.html#cb543-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class                 species longevity_y adult_body_mass_g
-## 1 Reptilia Chelonoidis duncanensis       177.0                NA
-## 2 Reptilia  Aldabrachelys gigantea       152.0            117200
-## 3 Reptilia          Testudo graeca       127.0              1430
-## 4 Mammalia            Homo sapiens       122.5             62035
-## 5 Mammalia   Balaenoptera physalus        95.0          38800000
-## 6 Mammalia            Orcinus orca        90.0           4300000
-##   litter_or_clutch_size_n litters_or_clutches_per_y
-## 1                      NA                        NA
-## 2                    13.5                  2.000000
-## 3                     5.0                  3.200993
-## 4                     1.0                  0.485000
-## 5                     1.0                  0.400000
-## 6                     1.0                  0.210000</code></pre>
+<pre><code>##      class                 species longevity_y
+## 1 Reptilia Chelonoidis duncanensis       177.0
+## 2 Reptilia  Aldabrachelys gigantea       152.0
+## 3 Reptilia          Testudo graeca       127.0
+## 4 Mammalia            Homo sapiens       122.5
+## 5 Mammalia   Balaenoptera physalus        95.0
+## 6 Mammalia            Orcinus orca        90.0
+##   adult_body_mass_g litter_or_clutch_size_n
+## 1                NA                      NA
+## 2            117200                    13.5
+## 3              1430                     5.0
+## 4             62035                     1.0
+## 5          38800000                     1.0
+## 6           4300000                     1.0
+##   litters_or_clutches_per_y
+## 1                        NA
+## 2                  2.000000
+## 3                  3.200993
+## 4                  0.485000
+## 5                  0.400000
+## 6                  0.210000</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Do the same thing but this time find the shortest lived species.</li>
 </ol>
@@ -881,8 +888,8 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb589-8"><a href="exercise-solutions.html#cb589-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb589-9"><a href="exercise-solutions.html#cb589-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
 <span id="cb589-10"><a href="exercise-solutions.html#cb589-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595
-##  [7] -2.1980346 -1.5961324  0.8836404  1.2863489</code></pre>
+<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082
+##  [6] -0.4678595 -2.1980346 -1.5961324  0.8836404  1.2863489</code></pre>
 <div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="exercise-solutions.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
 <span id="cb591-2"><a href="exercise-solutions.html#cb591-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
 <span id="cb591-3"><a href="exercise-solutions.html#cb591-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
@@ -891,8 +898,8 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb591-6"><a href="exercise-solutions.html#cb591-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean</span>
 <span id="cb591-7"><a href="exercise-solutions.html#cb591-7" aria-hidden="true" tabindex="-1"></a>  )))</span>
 <span id="cb591-8"><a href="exercise-solutions.html#cb591-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728
-##  [7] -0.5334274  0.2076405 -0.4760695 -0.6967478</code></pre>
+<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738
+##  [6]  0.6233728 -0.5334274  0.2076405 -0.4760695 -0.6967478</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</li>
 </ol>
@@ -1320,11 +1327,16 @@ analysis?
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: spawning
-##                         Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-## personality              1   7781    7781  5.5032   0.02629 *  
-## colouration              1  55862   55862 39.5074 8.519e-07 ***
-## personality:colouration  1   4118    4118  2.9123   0.09898 .  
-## Residuals               28  39591    1414                      
+##                         Df Sum Sq Mean Sq F value    Pr(&gt;F)
+## personality              1   7781    7781  5.5032   0.02629
+## colouration              1  55862   55862 39.5074 8.519e-07
+## personality:colouration  1   4118    4118  2.9123   0.09898
+## Residuals               28  39591    1414                  
+##                            
+## personality             *  
+## colouration             ***
+## personality:colouration .  
+## Residuals                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <ol start="6" style="list-style-type: decimal">
@@ -1341,11 +1353,16 @@ analysis?
 ## -61.625 -23.344  -5.375  26.313  60.125 
 ## 
 ## Coefficients:
-##                                            Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)                                  218.50      13.29  16.435  6.5e-16
-## personalityReactive                          -53.88      18.80  -2.865  0.00781
-## colourationHomogeneous                        60.87      18.80   3.238  0.00309
-## personalityReactive:colourationHomogeneous    45.38      26.59   1.707  0.09898
+##                                            Estimate Std. Error
+## (Intercept)                                  218.50      13.29
+## personalityReactive                          -53.88      18.80
+## colourationHomogeneous                        60.87      18.80
+## personalityReactive:colourationHomogeneous    45.38      26.59
+##                                            t value Pr(&gt;|t|)
+## (Intercept)                                 16.435  6.5e-16
+## personalityReactive                         -2.865  0.00781
+## colourationHomogeneous                       3.238  0.00309
+## personalityReactive:colourationHomogeneous   1.707  0.09898
 ##                                               
 ## (Intercept)                                ***
 ## personalityReactive                        ** 

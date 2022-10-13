@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-10-10" />
+<meta name="date" content="2022-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -762,9 +762,12 @@ First we calculate the fitted values and 95% confidence intervals on the scale o
 <span id="cb496-9"><a href="extending-use-cases-of-glm.html#cb496-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymax =</span> <span class="fu">inverseFunction</span>(upperCI_LP)</span>
 <span id="cb496-10"><a href="extending-use-cases-of-glm.html#cb496-10" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb496-11"><a href="extending-use-cases-of-glm.html#cb496-11" aria-hidden="true" tabindex="-1"></a>smoke</span></code></pre></div>
-<pre><code>##   parentSmoke   prob_LP lowerCI_LP upperCI_LP      prob      ymin      ymax
-## 1       1_yes -1.367429  -1.444287  -1.290570 0.2030356 0.1908823 0.2157563
-## 2        0_no -1.826606  -1.980629  -1.672583 0.1386431 0.1212518 0.1580801</code></pre>
+<pre><code>##   parentSmoke   prob_LP lowerCI_LP upperCI_LP      prob
+## 1       1_yes -1.367429  -1.444287  -1.290570 0.2030356
+## 2        0_no -1.826606  -1.980629  -1.672583 0.1386431
+##        ymin      ymax
+## 1 0.1908823 0.2157563
+## 2 0.1212518 0.1580801</code></pre>
 <p>This table shows us that the probability of the students smoking is 0.2030 (95% CI = 0.191-0.216) for children of smokers, and 0.139 (95% CI = 0.121-0.158) for children of non-smokers. We can plot this using <code>ggplot</code> like this.</p>
 <div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="extending-use-cases-of-glm.html#cb498-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(smoke, <span class="fu">aes</span>(</span>
 <span id="cb498-2"><a href="extending-use-cases-of-glm.html#cb498-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> parentSmoke, <span class="at">y =</span> prob, <span class="at">ymin =</span> ymin,</span>

@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-10-10" />
+<meta name="date" content="2022-10-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -813,11 +813,16 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 ## Terms added sequentially (first to last)
 ## 
 ## 
-##                  Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
-## NULL                                35     72.607              
-## area              1   21.627        34     50.980 3.311e-06 ***
-## habitatType       1   10.945        33     40.035 0.0009386 ***
-## area:habitatType  1   13.842        32     26.193 0.0001988 ***
+##                  Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)
+## NULL                                35     72.607          
+## area              1   21.627        34     50.980 3.311e-06
+## habitatType       1   10.945        33     40.035 0.0009386
+## area:habitatType  1   13.842        32     26.193 0.0001988
+##                     
+## NULL                
+## area             ***
+## habitatType      ***
+## area:habitatType ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="an-example-of-a-past-exam-2020.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
@@ -831,11 +836,16 @@ Generalised Linear Models are designed for handling these kind of issues and, in
 ## -1.3652  -0.8311  -0.2552   0.5103   1.6721  
 ## 
 ## Coefficients:
-##                         Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)             0.099910   0.321923   0.310 0.756291    
-## area                    0.051446   0.009423   5.460 4.77e-08 ***
-## habitatTypesimple       1.171997   0.488857   2.397 0.016511 *  
-## area:habitatTypesimple -0.064852   0.017255  -3.758 0.000171 ***
+##                         Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)             0.099910   0.321923   0.310 0.756291
+## area                    0.051446   0.009423   5.460 4.77e-08
+## habitatTypesimple       1.171997   0.488857   2.397 0.016511
+## area:habitatTypesimple -0.064852   0.017255  -3.758 0.000171
+##                           
+## (Intercept)               
+## area                   ***
+## habitatTypesimple      *  
+## area:habitatTypesimple ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
