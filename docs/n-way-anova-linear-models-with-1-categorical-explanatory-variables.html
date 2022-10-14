@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-10-13" />
+<meta name="date" content="2022-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -438,7 +438,7 @@ Figure 18.2: The effect of diet protein content and genotype on adult size of an
 <p>Then we can look at diagnostic plots, as with ANOVA etc.:</p>
 <div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb416-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb416-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-283-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-292-1.png" width="672" /></p>
 <p>These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots) now any major outliers.</p>
 </div>
 <div id="summarising-the-model-anova" class="section level2 hasAnchor" number="18.2">
@@ -538,16 +538,11 @@ To answer that question we need to use a post-hoc test</p>
 ## -3.7500 -1.0417  0.1667  1.2500  5.1667 
 ## 
 ## Coefficients:
-##                            Estimate Std. Error t value
-## (Intercept)                 25.8333     0.5971  43.264
-## genotypegt2                 -8.0833     0.8444  -9.572
-## dietlowProtein              -5.1667     0.8444  -6.118
-## genotypegt2:dietlowProtein   4.2500     1.1942   3.559
-##                            Pr(&gt;|t|)    
-## (Intercept)                 &lt; 2e-16 ***
-## genotypegt2                2.53e-12 ***
-## dietlowProtein             2.26e-07 ***
-## genotypegt2:dietlowProtein 0.000907 ***
+##                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                 25.8333     0.5971  43.264  &lt; 2e-16 ***
+## genotypegt2                 -8.0833     0.8444  -9.572 2.53e-12 ***
+## dietlowProtein              -5.1667     0.8444  -6.118 2.26e-07 ***
+## genotypegt2:dietlowProtein   4.2500     1.1942   3.559 0.000907 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 

@@ -109,7 +109,7 @@ anova(mod1)
 So here we already know that the model explains `r 100*round(summary(mod1)$r.squared,4)`% of variation in Height. We can partition this among the terms by using the Sums of Squares values. 
 The proportion of variance explained by HandWidth is `r round(unlist(anova(mod1)[2]),1)[1]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[1]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
 
-Similarly, the proportion of variance explained by Gender is `r round(unlist(anova(mod1)[2]),1)[1]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[1]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
+Similarly, the proportion of variance explained by Gender is `r round(unlist(anova(mod1)[2]),1)[2]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[2]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
 
 
 In more complicated multiple regression one could use this approach to further group variables into types so one could e.g., one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level, for example. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of "types", such as "genetic", "morphological" and "diet". Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.

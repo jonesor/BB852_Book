@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-10-13" />
+<meta name="date" content="2022-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -445,7 +445,7 @@ Figure 17.2: ANCOVA on hand width vs. height data in males and females
 <p>The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size. Nevertheless, lets keep with good habits:</p>
 <div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb399-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-269-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-278-1.png" width="672" /></p>
 <p>These look good. No evidence of non-normality in the residuals, no heteroscedasticity and no weird outliers.</p>
 </div>
 <div id="summarising-with-anova" class="section level2 hasAnchor" number="17.2">
@@ -575,7 +575,7 @@ Figure 17.2: ANCOVA on hand width vs. height data in males and females
 <span id="cb413-4"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb413-5"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb413-6"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> predictData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-279-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-288-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>We could report this in the usual way but first saying something like: <em>“The interaction term was not significant (F = ____, d.f. 1 and ____, p = ____) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender …”</em></p>
 
 </div>

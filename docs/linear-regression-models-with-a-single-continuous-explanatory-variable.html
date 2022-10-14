@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-10-13" />
+<meta name="date" content="2022-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -470,14 +470,14 @@ correctly.
 <p>We should then plot the data to make sure it looks OK.</p>
 <div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
 <span id="cb384-2"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb384-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-259-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-268-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>This looks OK, and the relationship looks fairly linear. Now we can fit a model using the <code>lm</code> function (same as for ANOVA!).<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a></p>
 <p>The response variable is always the one we would like to predict, in this case <code>Height</code>. The explanatory variable (sometimes called the predictor) is <code>HandWidth</code>. These are added to the model using a formula where they are separated with the <code>~</code> (“tilde”) symbol: <code>Height ~ HandWidth</code>. In the model expression, we also need to tell R where the data are using the <code>data =</code> argument. We can save the model as an R object by naming it e.g. <code>mod_A &lt;-</code>.</p>
 <div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb385-1" aria-hidden="true" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth, <span class="at">data =</span> classData)</span></code></pre></div>
 <p>Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the <code>autoplot</code> function in the <code>ggfortify</code> package (you may need to install and/or load the package).</p>
 <div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb386-2"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb386-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-261-1.png" width="480" style="display: block; margin: auto;" />
+<p><img src="BB852_files/figure-html/unnamed-chunk-270-1.png" width="480" style="display: block; margin: auto;" />
 These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows “leverage” which is a measure of how much influence individual data points have on the model. Outliers will have large leverage and can mess up your model. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.</p>
 <p>Now that we are satisfied that the model doesn’t violate the assumptions we can dig into the model to see what it is telling us.</p>
 <p>To test the (slightly boring) slope hypothesis we use the <code>anova</code> function (again, this is the same as with the ANOVA).</p>
@@ -538,7 +538,7 @@ Figure 16.6: An illustration of different R-squared values.
 <div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
 <span id="cb391-2"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb391-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb391-3"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb391-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-264-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-273-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p><strong>Question:</strong> If police find the 9.8cm wide hand print at a crime scene, what is your best guess of the height of the person involved?</p>
 </div>
 <div id="exercise-chirping-crickets" class="section level2 hasAnchor" number="16.5">
