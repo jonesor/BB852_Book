@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 24 Exercise Solutions | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 24 Exercise Solutions | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-11-02" />
+<meta name="date" content="2022-11-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,7 +53,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -429,13 +428,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Plot the relationship between <code>Year</code> and <code>nSpecies</code> as a scatterplot using base-R graphics (using the <code>plot</code> function).</li>
 </ol>
 <div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="exercise-solutions.html#cb533-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(birds<span class="sc">$</span>Year, birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-377-1.png" width="672" /></p>
 <ol start="5" style="list-style-type: decimal">
 <li>The pattern might be easier to see if you could replace <code>YearBuilt</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>birds$Age &lt;- 1975 - birds$Year)</code>). Re-plot your results.</li>
 </ol>
 <div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="exercise-solutions.html#cb534-1" aria-hidden="true" tabindex="-1"></a>birds<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="dv">1975</span> <span class="sc">-</span> birds<span class="sc">$</span>Year</span>
 <span id="cb534-2"><a href="exercise-solutions.html#cb534-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(birds<span class="sc">$</span>Age, birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-374-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-378-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?</li>
 </ol>
@@ -457,15 +456,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="exercise-solutions.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(amniote)</span></code></pre></div>
 <pre><code>## [1] 21322    36</code></pre>
 <div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="exercise-solutions.html#cb538-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(amniote)</span></code></pre></div>
-<pre><code>##  [1] &quot;class&quot;                                 &quot;order&quot;                                 &quot;family&quot;                                &quot;genus&quot;                                
-##  [5] &quot;species&quot;                               &quot;subspecies&quot;                            &quot;common_name&quot;                           &quot;female_maturity_d&quot;                    
-##  [9] &quot;litter_or_clutch_size_n&quot;               &quot;litters_or_clutches_per_y&quot;             &quot;adult_body_mass_g&quot;                     &quot;maximum_longevity_y&quot;                  
-## [13] &quot;gestation_d&quot;                           &quot;weaning_d&quot;                             &quot;birth_or_hatching_weight_g&quot;            &quot;weaning_weight_g&quot;                     
-## [17] &quot;egg_mass_g&quot;                            &quot;incubation_d&quot;                          &quot;fledging_age_d&quot;                        &quot;longevity_y&quot;                          
-## [21] &quot;male_maturity_d&quot;                       &quot;inter_litter_or_interbirth_interval_y&quot; &quot;female_body_mass_g&quot;                    &quot;male_body_mass_g&quot;                     
-## [25] &quot;no_sex_body_mass_g&quot;                    &quot;egg_width_mm&quot;                          &quot;egg_length_mm&quot;                         &quot;fledging_mass_g&quot;                      
-## [29] &quot;adult_svl_cm&quot;                          &quot;male_svl_cm&quot;                           &quot;female_svl_cm&quot;                         &quot;birth_or_hatching_svl_cm&quot;             
-## [33] &quot;female_svl_at_maturity_cm&quot;             &quot;female_body_mass_at_maturity_g&quot;        &quot;no_sex_svl_cm&quot;                         &quot;no_sex_maturity_d&quot;</code></pre>
+<pre><code>##  [1] &quot;class&quot;                                
+##  [2] &quot;order&quot;                                
+##  [3] &quot;family&quot;                               
+##  [4] &quot;genus&quot;                                
+##  [5] &quot;species&quot;                              
+##  [6] &quot;subspecies&quot;                           
+##  [7] &quot;common_name&quot;                          
+##  [8] &quot;female_maturity_d&quot;                    
+##  [9] &quot;litter_or_clutch_size_n&quot;              
+## [10] &quot;litters_or_clutches_per_y&quot;            
+## [11] &quot;adult_body_mass_g&quot;                    
+## [12] &quot;maximum_longevity_y&quot;                  
+## [13] &quot;gestation_d&quot;                          
+## [14] &quot;weaning_d&quot;                            
+## [15] &quot;birth_or_hatching_weight_g&quot;           
+## [16] &quot;weaning_weight_g&quot;                     
+## [17] &quot;egg_mass_g&quot;                           
+## [18] &quot;incubation_d&quot;                         
+## [19] &quot;fledging_age_d&quot;                       
+## [20] &quot;longevity_y&quot;                          
+## [21] &quot;male_maturity_d&quot;                      
+## [22] &quot;inter_litter_or_interbirth_interval_y&quot;
+## [23] &quot;female_body_mass_g&quot;                   
+## [24] &quot;male_body_mass_g&quot;                     
+## [25] &quot;no_sex_body_mass_g&quot;                   
+## [26] &quot;egg_width_mm&quot;                         
+## [27] &quot;egg_length_mm&quot;                        
+## [28] &quot;fledging_mass_g&quot;                      
+## [29] &quot;adult_svl_cm&quot;                         
+## [30] &quot;male_svl_cm&quot;                          
+## [31] &quot;female_svl_cm&quot;                        
+## [32] &quot;birth_or_hatching_svl_cm&quot;             
+## [33] &quot;female_svl_at_maturity_cm&quot;            
+## [34] &quot;female_body_mass_at_maturity_g&quot;       
+## [35] &quot;no_sex_svl_cm&quot;                        
+## [36] &quot;no_sex_maturity_d&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use <code>select</code> to pick relevent columns of the dataset and discard the others. Call the new data frame <code>x</code>.
 The relevant columns are the taxonomic variables (<code>class</code>, <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</li>
@@ -484,37 +510,65 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb541-2"><a href="exercise-solutions.html#cb541-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(genus, species)) <span class="sc">%&gt;%</span></span>
 <span id="cb541-3"><a href="exercise-solutions.html#cb541-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus)</span>
 <span id="cb541-4"><a href="exercise-solutions.html#cb541-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##   class               species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
-## 1  Aves Accipiter albogularis          NA           251.500                      NA                        NA
-## 2  Aves      Accipiter badius          NA           140.000                    3.25                         1
-## 3  Aves     Accipiter bicolor          NA           345.000                    2.70                        NA
-## 4  Aves  Accipiter brachyurus          NA           142.000                      NA                        NA
-## 5  Aves    Accipiter brevipes          NA           203.500                    4.00                         1
-## 6  Aves Accipiter castanilius          NA           159.375                      NA                        NA</code></pre>
+<pre><code>##   class               species longevity_y adult_body_mass_g
+## 1  Aves Accipiter albogularis          NA           251.500
+## 2  Aves      Accipiter badius          NA           140.000
+## 3  Aves     Accipiter bicolor          NA           345.000
+## 4  Aves  Accipiter brachyurus          NA           142.000
+## 5  Aves    Accipiter brevipes          NA           203.500
+## 6  Aves Accipiter castanilius          NA           159.375
+##   litter_or_clutch_size_n litters_or_clutches_per_y
+## 1                      NA                        NA
+## 2                    3.25                         1
+## 3                    2.70                        NA
+## 4                      NA                        NA
+## 5                    4.00                         1
+## 6                      NA                        NA</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</li>
 </ol>
 <div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="exercise-solutions.html#cb543-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>longevity_y)</span>
 <span id="cb543-2"><a href="exercise-solutions.html#cb543-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class                 species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
-## 1 Reptilia Chelonoidis duncanensis       177.0                NA                      NA                        NA
-## 2 Reptilia  Aldabrachelys gigantea       152.0            117200                    13.5                  2.000000
-## 3 Reptilia          Testudo graeca       127.0              1430                     5.0                  3.200993
-## 4 Mammalia            Homo sapiens       122.5             62035                     1.0                  0.485000
-## 5 Mammalia   Balaenoptera physalus        95.0          38800000                     1.0                  0.400000
-## 6 Mammalia            Orcinus orca        90.0           4300000                     1.0                  0.210000</code></pre>
+<pre><code>##      class                 species longevity_y
+## 1 Reptilia Chelonoidis duncanensis       177.0
+## 2 Reptilia  Aldabrachelys gigantea       152.0
+## 3 Reptilia          Testudo graeca       127.0
+## 4 Mammalia            Homo sapiens       122.5
+## 5 Mammalia   Balaenoptera physalus        95.0
+## 6 Mammalia            Orcinus orca        90.0
+##   adult_body_mass_g litter_or_clutch_size_n
+## 1                NA                      NA
+## 2            117200                    13.5
+## 3              1430                     5.0
+## 4             62035                     1.0
+## 5          38800000                     1.0
+## 6           4300000                     1.0
+##   litters_or_clutches_per_y
+## 1                        NA
+## 2                  2.000000
+## 3                  3.200993
+## 4                  0.485000
+## 5                  0.400000
+## 6                  0.210000</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Do the same thing but this time find the shortest lived species.</li>
 </ol>
 <div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="exercise-solutions.html#cb545-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(longevity_y)</span>
 <span id="cb545-2"><a href="exercise-solutions.html#cb545-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class              species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
-## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875                    1.59                     7.150
-## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000                    1.50                        NA
-## 3 Mammalia Allactaga balikunica  0.08333333                NA                    2.52                        NA
-## 4 Mammalia    Allactaga bullata  0.08333333                NA                    2.52                        NA
-## 5 Mammalia       Geomys pinetis  0.08333333           195.750                    1.77                     1.865
-## 6 Mammalia          Mus sorella  0.08333333            12.535                    5.20                     3.000</code></pre>
+<pre><code>##      class              species longevity_y adult_body_mass_g
+## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875
+## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000
+## 3 Mammalia Allactaga balikunica  0.08333333                NA
+## 4 Mammalia    Allactaga bullata  0.08333333                NA
+## 5 Mammalia       Geomys pinetis  0.08333333           195.750
+## 6 Mammalia          Mus sorella  0.08333333            12.535
+##   litter_or_clutch_size_n litters_or_clutches_per_y
+## 1                    1.59                     7.150
+## 2                    1.50                        NA
+## 3                    2.52                        NA
+## 4                    2.52                        NA
+## 5                    1.77                     1.865
+## 6                    5.20                     3.000</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>na.rm = TRUE</code> argument.</li>
 </ol>
@@ -535,7 +589,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <li>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</li>
 </ol>
 <div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="exercise-solutions.html#cb549-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>adult_body_mass_g, x<span class="sc">$</span>longevity_y)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-383-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-387-1.png" width="672" /></p>
 <ol start="8" style="list-style-type: decimal">
 <li>Use <code>mutate</code> to create a new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that makes the relationship more linear, and easier to “read”.</li>
 </ol>
@@ -546,7 +600,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb550-5"><a href="exercise-solutions.html#cb550-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb550-6"><a href="exercise-solutions.html#cb550-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb550-7"><a href="exercise-solutions.html#cb550-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>logMass, x<span class="sc">$</span>logLongevity)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-384-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-388-1.png" width="672" /></p>
 <ol start="9" style="list-style-type: decimal">
 <li>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</li>
 </ol>
@@ -556,7 +610,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb551-4"><a href="exercise-solutions.html#cb551-4" aria-hidden="true" tabindex="-1"></a>  ))</span>
 <span id="cb551-5"><a href="exercise-solutions.html#cb551-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb551-6"><a href="exercise-solutions.html#cb551-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>logOffspring, x<span class="sc">$</span>logLongevity)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-385-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-389-1.png" width="672" /></p>
 <ol start="10" style="list-style-type: decimal">
 <li>To answer the final question (differences between taxonomic classes) you could now use <code>filter</code> to subset to particular classes and repeat the plot to see whether the relationships holds universally.</li>
 </ol>
@@ -565,19 +619,19 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb552-3"><a href="exercise-solutions.html#cb552-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb552-4"><a href="exercise-solutions.html#cb552-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aves<span class="sc">$</span>logOffspring, aves<span class="sc">$</span>logLongevity)</span>
 <span id="cb552-5"><a href="exercise-solutions.html#cb552-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Aves&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-386-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-390-1.png" width="672" /></p>
 <div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="exercise-solutions.html#cb553-1" aria-hidden="true" tabindex="-1"></a>mammalia <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
 <span id="cb553-2"><a href="exercise-solutions.html#cb553-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Mammalia&quot;</span>)</span>
 <span id="cb553-3"><a href="exercise-solutions.html#cb553-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb553-4"><a href="exercise-solutions.html#cb553-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mammalia<span class="sc">$</span>logOffspring, mammalia<span class="sc">$</span>logLongevity)</span>
 <span id="cb553-5"><a href="exercise-solutions.html#cb553-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Mammalia&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-387-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-391-1.png" width="672" /></p>
 <div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="exercise-solutions.html#cb554-1" aria-hidden="true" tabindex="-1"></a>reptilia <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
 <span id="cb554-2"><a href="exercise-solutions.html#cb554-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Reptilia&quot;</span>)</span>
 <span id="cb554-3"><a href="exercise-solutions.html#cb554-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb554-4"><a href="exercise-solutions.html#cb554-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reptilia<span class="sc">$</span>logOffspring, reptilia<span class="sc">$</span>logLongevity)</span>
 <span id="cb554-5"><a href="exercise-solutions.html#cb554-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Reptilia&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-388-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-392-1.png" width="672" /></p>
 
 </div>
 <div id="temperature-effects-on-egg-laying-dates" class="section level2 hasAnchor" number="24.3">
@@ -697,7 +751,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <li>plot a graph of <code>meanAprilTemp</code> on the x-axis and <code>dayNumber</code> on the y-axis.</li>
 </ol>
 <div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="exercise-solutions.html#cb569-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(joinedData<span class="sc">$</span>meanAprilTemp, joinedData<span class="sc">$</span>meanEggDate)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-397-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-401-1.png" width="672" /></p>
 <p>Now you should be able to answer the question we started with: is laying date associated with spring temperatures? Yes, there looks to be a negative relationship between temperature and egg laying date.</p>
 
 </div>
@@ -726,8 +780,8 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb573-4"><a href="exercise-solutions.html#cb573-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(result, <span class="fu">aes</span>(<span class="at">x =</span> result)) <span class="sc">+</span></span>
 <span id="cb573-5"><a href="exercise-solutions.html#cb573-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb573-6"><a href="exercise-solutions.html#cb573-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> n <span class="sc">/</span> <span class="dv">6</span>, <span class="at">slope =</span> <span class="dv">0</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-401"></span>
-<img src="BB852_files/figure-html/unnamed-chunk-401-1.png" alt="Barplot of 90 simulated dice throws" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-405"></span>
+<img src="BB852_files/figure-html/unnamed-chunk-405-1.png" alt="Barplot of 90 simulated dice throws" width="672" />
 <p class="caption">
 Figure 24.1: Barplot of 90 simulated dice throws
 </p>
@@ -738,8 +792,8 @@ Figure 24.1: Barplot of 90 simulated dice throws
 <p>You only need to edit the <code>n &lt;- 90</code> line in the code above</p>
 <p>The main message here is that as sample size increases you are more likely to obtain a good estimate of the true value of the phenomenon. You may also notice that, what would be considered a good sample size for the coin flipping (i.e. it recovers the true probability of 0.5 reasonably well) is NOT adequate for getting a good estimate of the probabilities for the dice.</p>
 <p>This is because of the different number of possibilities: as the range of possible outcomes increases, the sample size requirements increase. In other words, choosing a good sample size is context-dependent.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-402"></span>
-<img src="BB852_files/figure-html/unnamed-chunk-402-1.png" alt="Barplots of 30 and 9000 simulated dice throws" width="672" />
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-406"></span>
+<img src="BB852_files/figure-html/unnamed-chunk-406-1.png" alt="Barplots of 30 and 9000 simulated dice throws" width="672" />
 <p class="caption">
 Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 </p>
@@ -782,7 +836,7 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="exercise-solutions.html#cb579-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s look at the male and female data</span></span>
 <span id="cb579-2"><a href="exercise-solutions.html#cb579-2" aria-hidden="true" tabindex="-1"></a>(plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hercules, <span class="fu">aes</span>(<span class="at">x =</span> width, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb579-3"><a href="exercise-solutions.html#cb579-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-406-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-410-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Add vertical lines to the plot to indicate the mean values.</li>
 </ol>
@@ -792,7 +846,7 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb580-4"><a href="exercise-solutions.html#cb580-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="ot">-&gt;</span> meanVals</span>
 <span id="cb580-5"><a href="exercise-solutions.html#cb580-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb580-6"><a href="exercise-solutions.html#cb580-6" aria-hidden="true" tabindex="-1"></a>plot1 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> meanVals, <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-407-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-411-1.png" width="672" /></p>
 <ol start="7" style="list-style-type: decimal">
 <li>Now calculate the difference between the mean values using <code>dplyr</code> tools, or <code>tapply</code>.</li>
 </ol>
@@ -834,7 +888,8 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb589-8"><a href="exercise-solutions.html#cb589-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb589-9"><a href="exercise-solutions.html#cb589-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
 <span id="cb589-10"><a href="exercise-solutions.html#cb589-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595 -2.1980346 -1.5961324  0.8836404  1.2863489</code></pre>
+<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082
+##  [6] -0.4678595 -2.1980346 -1.5961324  0.8836404  1.2863489</code></pre>
 <div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="exercise-solutions.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with tapply</span></span>
 <span id="cb591-2"><a href="exercise-solutions.html#cb591-2" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(</span>
 <span id="cb591-3"><a href="exercise-solutions.html#cb591-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10</span>,</span>
@@ -843,7 +898,8 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb591-6"><a href="exercise-solutions.html#cb591-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean</span>
 <span id="cb591-7"><a href="exercise-solutions.html#cb591-7" aria-hidden="true" tabindex="-1"></a>  )))</span>
 <span id="cb591-8"><a href="exercise-solutions.html#cb591-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728 -0.5334274  0.2076405 -0.4760695 -0.6967478</code></pre>
+<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738
+##  [6]  0.6233728 -0.5334274  0.2076405 -0.4760695 -0.6967478</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</li>
 </ol>
@@ -877,7 +933,7 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="exercise-solutions.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diffs, <span class="fu">aes</span>(<span class="at">x =</span> diffs)) <span class="sc">+</span></span>
 <span id="cb594-2"><a href="exercise-solutions.html#cb594-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb594-3"><a href="exercise-solutions.html#cb594-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observedDiff)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-412-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-416-1.png" width="672" /></p>
 <ol start="12" style="list-style-type: decimal">
 <li>Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.</li>
 </ol>
@@ -904,7 +960,7 @@ Figure 24.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb599-4"><a href="exercise-solutions.html#cb599-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Precision)) <span class="sc">+</span></span>
 <span id="cb599-5"><a href="exercise-solutions.html#cb599-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb599-6"><a href="exercise-solutions.html#cb599-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-415-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-419-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Formulate null and alternative hypotheses.</li>
 </ol>
@@ -918,17 +974,17 @@ Alternative hypothesis - there is a significant difference between male and fema
 ##  Welch Two Sample t-test
 ## 
 ## data:  Precision by Gender
-## t = -1.7624, df = 71.525, p-value = 0.08227
+## t = -1.7991, df = 77.43, p-value = 0.0759
 ## alternative hypothesis: true difference in means between group Female and group Male is not equal to 0
 ## 95 percent confidence interval:
-##  -4.6835444  0.2883709
+##  -4.4442107  0.2251347
 ## sample estimates:
 ## mean in group Female   mean in group Male 
-##             28.72549             30.92308</code></pre>
+##             28.75410             30.86364</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Write a sentence or two describing the results.</li>
 </ol>
-<p>There was no significant difference in mean precision between the two genders (t-test: t = -1.76, df = 71.52, p = 0.0823). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = -4.684-0.288). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.</p>
+<p>There was no significant difference in mean precision between the two genders (t-test: t = -1.80, df = 77.43, p = 0.0759). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = -4.444-0.225). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.</p>
 </div>
 <div id="therapy-for-anorexia" class="section level2 hasAnchor" number="24.7">
 <h2><span class="header-section-number">24.7</span> Therapy for anorexia<a href="exercise-solutions.html#therapy-for-anorexia" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -955,7 +1011,7 @@ Alternative hypothesis - there is a significant difference between male and fema
 <span id="cb603-6"><a href="exercise-solutions.html#cb603-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb603-7"><a href="exercise-solutions.html#cb603-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time&quot;</span>) <span class="sc">+</span></span>
 <span id="cb603-8"><a href="exercise-solutions.html#cb603-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Weight (kg)&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-419-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-423-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Formulate a null and alternative hypothesis.</li>
 </ol>
@@ -1045,7 +1101,7 @@ analysis?
 <span id="cb612-2"><a href="exercise-solutions.html#cb612-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb612-3"><a href="exercise-solutions.html#cb612-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
 <span id="cb612-4"><a href="exercise-solutions.html#cb612-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Yield (kg per tree)&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-427-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-431-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Fit an ANOVA model using <code>lm</code>.</li>
 </ol>
@@ -1055,7 +1111,7 @@ analysis?
 </ol>
 <div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="exercise-solutions.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb614-2"><a href="exercise-solutions.html#cb614-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(apple_mod)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-429-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-433-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>anova</code> to get the ANOVA summary.</li>
 </ol>
@@ -1183,7 +1239,7 @@ analysis?
 </ol>
 <div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="exercise-solutions.html#cb626-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(chirps, <span class="fu">aes</span>(<span class="at">x =</span> temperatureC, <span class="at">y =</span> chirps)) <span class="sc">+</span></span>
 <span id="cb626-2"><a href="exercise-solutions.html#cb626-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-438-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-442-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Fit a linear regression model with <code>lm</code></li>
 </ol>
@@ -1193,7 +1249,7 @@ analysis?
 </ol>
 <div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="exercise-solutions.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb628-2"><a href="exercise-solutions.html#cb628-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(chirp_mod)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-440-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-444-1.png" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>anova</code> to figure out if the effect of temperature is statistically significant.</li>
 </ol>
@@ -1236,7 +1292,7 @@ analysis?
 <li>Add model fit line to the plot.</li>
 </ol>
 <div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="exercise-solutions.html#cb633-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-443-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-447-1.png" width="672" /></p>
 <ol start="10" style="list-style-type: decimal">
 <li>Can I use cricket chirp frequency as a kind of thermometer?</li>
 </ol>
@@ -1257,7 +1313,7 @@ analysis?
 <span id="cb635-3"><a href="exercise-solutions.html#cb635-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill =</span> personality</span>
 <span id="cb635-4"><a href="exercise-solutions.html#cb635-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb635-5"><a href="exercise-solutions.html#cb635-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-446-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-450-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Fit an ANOVA model using <code>lm</code>.</li>
 </ol>
@@ -1271,11 +1327,16 @@ analysis?
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: spawning
-##                         Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-## personality              1   7781    7781  5.5032   0.02629 *  
-## colouration              1  55862   55862 39.5074 8.519e-07 ***
-## personality:colouration  1   4118    4118  2.9123   0.09898 .  
-## Residuals               28  39591    1414                      
+##                         Df Sum Sq Mean Sq F value    Pr(&gt;F)
+## personality              1   7781    7781  5.5032   0.02629
+## colouration              1  55862   55862 39.5074 8.519e-07
+## personality:colouration  1   4118    4118  2.9123   0.09898
+## Residuals               28  39591    1414                  
+##                            
+## personality             *  
+## colouration             ***
+## personality:colouration .  
+## Residuals                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <ol start="6" style="list-style-type: decimal">
@@ -1292,11 +1353,21 @@ analysis?
 ## -61.625 -23.344  -5.375  26.313  60.125 
 ## 
 ## Coefficients:
-##                                            Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                                  218.50      13.29  16.435  6.5e-16 ***
-## personalityReactive                          -53.88      18.80  -2.865  0.00781 ** 
-## colourationHomogeneous                        60.87      18.80   3.238  0.00309 ** 
-## personalityReactive:colourationHomogeneous    45.38      26.59   1.707  0.09898 .  
+##                                            Estimate Std. Error
+## (Intercept)                                  218.50      13.29
+## personalityReactive                          -53.88      18.80
+## colourationHomogeneous                        60.87      18.80
+## personalityReactive:colourationHomogeneous    45.38      26.59
+##                                            t value Pr(&gt;|t|)
+## (Intercept)                                 16.435  6.5e-16
+## personalityReactive                         -2.865  0.00781
+## colourationHomogeneous                       3.238  0.00309
+## personalityReactive:colourationHomogeneous   1.707  0.09898
+##                                               
+## (Intercept)                                ***
+## personalityReactive                        ** 
+## colourationHomogeneous                     ** 
+## personalityReactive:colourationHomogeneous .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -1362,7 +1433,7 @@ analysis?
 <div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="exercise-solutions.html#cb645-1" aria-hidden="true" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(maze, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nErrors)) <span class="sc">+</span></span>
 <span id="cb645-2"><a href="exercise-solutions.html#cb645-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb645-3"><a href="exercise-solutions.html#cb645-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">&quot;y&quot;</span>, <span class="at">stackdir =</span> <span class="st">&quot;center&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-452-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-456-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Fit an appropriate GLM.</li>
 </ol>
@@ -1372,7 +1443,7 @@ analysis?
 </ol>
 <div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="exercise-solutions.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb647-2"><a href="exercise-solutions.html#cb647-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-454-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-458-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Get the analysis of variance (deviance) table (<code>anova</code>). What does this tell you?</li>
 </ol>
@@ -1444,7 +1515,7 @@ analysis?
 <span id="cb652-22"><a href="exercise-solutions.html#cb652-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> Age, <span class="at">xend =</span> Age,</span>
 <span id="cb652-23"><a href="exercise-solutions.html#cb652-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> lowerCI, <span class="at">yend =</span> upperCI</span>
 <span id="cb652-24"><a href="exercise-solutions.html#cb652-24" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-457-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-461-1.png" width="672" /></p>
 
 </div>
 <div id="snails-on-the-move" class="section level2 hasAnchor" number="24.13">

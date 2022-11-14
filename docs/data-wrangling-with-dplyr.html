@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Data wrangling with dplyr | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Data wrangling with dplyr | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-11-02" />
+<meta name="date" content="2022-11-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,7 +53,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -468,7 +467,7 @@ See the earlier material for how to do this, or ask for help.</p>
 <span id="cb141-4"><a href="data-wrangling-with-dplyr.html#cb141-4" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(temp<span class="sc">$</span>nEggs) <span class="co"># get the max value</span></span></code></pre></div>
 <pre><code>## [1] 12</code></pre>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="data-wrangling-with-dplyr.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp<span class="sc">$</span>Day, temp<span class="sc">$</span>nEggs, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-71-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
 <p>Eggs are usually laid one per day, and the clutch size is the maximum number of eggs reached for each nest box. In this case, the clutch size is 12 eggs. The rapid decline in number of eggs after this peak value shows when the eggs have hatched and the researcher finds chicks instead of eggs!</p>
 </div>
 <div id="summarise-and-group_by" class="section level2 hasAnchor" number="8.4">
@@ -486,14 +485,22 @@ See the earlier material for how to do this, or ask for help.</p>
 ## 2 GT              14</code></pre>
 <p>We can see how the data are grouped by asking for a summary:</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-wrangling-with-dplyr.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sduBirds)</span></code></pre></div>
-<pre><code>##    species               Year           Day          boxNumber          nEggs       
-##  Length:5604        Min.   :2013   Min.   : 60.0   Min.   :  1.00   Min.   : 0.000  
-##  Class :character   1st Qu.:2014   1st Qu.:116.0   1st Qu.: 29.75   1st Qu.: 0.000  
-##  Mode  :character   Median :2014   Median :133.0   Median : 57.00   Median : 0.000  
-##                     Mean   :2015   Mean   :133.2   Mean   : 55.83   Mean   : 2.326  
-##                     3rd Qu.:2017   3rd Qu.:148.0   3rd Qu.: 85.00   3rd Qu.: 4.000  
-##                     Max.   :2019   Max.   :212.0   Max.   :101.00   Max.   :14.000  
-##                                                                     NA&#39;s   :613</code></pre>
+<pre><code>##    species               Year           Day       
+##  Length:5604        Min.   :2013   Min.   : 60.0  
+##  Class :character   1st Qu.:2014   1st Qu.:116.0  
+##  Mode  :character   Median :2014   Median :133.0  
+##                     Mean   :2015   Mean   :133.2  
+##                     3rd Qu.:2017   3rd Qu.:148.0  
+##                     Max.   :2019   Max.   :212.0  
+##                                                   
+##    boxNumber          nEggs       
+##  Min.   :  1.00   Min.   : 0.000  
+##  1st Qu.: 29.75   1st Qu.: 0.000  
+##  Median : 57.00   Median : 0.000  
+##  Mean   : 55.83   Mean   : 2.326  
+##  3rd Qu.: 85.00   3rd Qu.: 4.000  
+##  Max.   :101.00   Max.   :14.000  
+##                   NA&#39;s   :613</code></pre>
 <p>We can ungroup the data again like this:</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-wrangling-with-dplyr.html#cb148-1" aria-hidden="true" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">ungroup</span>(sduBirds)</span></code></pre></div>
 <p>So both species lay the same maximum number of eggs, but maybe this is just caused by outliers for one of the species. We’ll need to dig deeper.</p>
@@ -503,15 +510,15 @@ See the earlier material for how to do this, or ask for help.</p>
 <span id="cb149-2"><a href="data-wrangling-with-dplyr.html#cb149-2" aria-hidden="true" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">summarise</span>(sduBirds, <span class="at">clutchSize =</span> <span class="fu">max</span>(nEggs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p>Let’s first look at all the clutch size data:</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="data-wrangling-with-dplyr.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sduBirds<span class="sc">$</span>clutchSize)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
 <p>You can see here that there are a lot of zero values. This is because nests were recorded even if they did not attempt to lay eggs. We should remove these from our data using <code>filter</code> again:</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="data-wrangling-with-dplyr.html#cb151-1" aria-hidden="true" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">filter</span>(sduBirds, clutchSize <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb151-2"><a href="data-wrangling-with-dplyr.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sduBirds<span class="sc">$</span>clutchSize)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
 <p>That looks better.
 Now we can plot them again but this time split apart the species (again - this plot is ugly and we’ll learn to plot nicer ones soon).</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="data-wrangling-with-dplyr.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(sduBirds<span class="sc">$</span>species), sduBirds<span class="sc">$</span>clutchSize)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
 <p>From these distributions it looks like the average clutch size is greater in the blue tit. We can use <code>summarise</code> to calculate the means.</p>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="data-wrangling-with-dplyr.html#cb153-1" aria-hidden="true" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">group_by</span>(sduBirds, species)</span>
 <span id="cb153-2"><a href="data-wrangling-with-dplyr.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(sduBirds, <span class="at">mean =</span> <span class="fu">mean</span>(clutchSize), <span class="at">sd =</span> <span class="fu">sd</span>(clutchSize))</span></code></pre></div>
@@ -544,7 +551,7 @@ Now we can plot them again but this time split apart the species (again - this p
 <span id="cb157-7"><a href="data-wrangling-with-dplyr.html#cb157-7" aria-hidden="true" tabindex="-1"></a>  sduBirds2<span class="sc">$</span>meanClutchSize[sduBirds2<span class="sc">$</span>species <span class="sc">==</span> <span class="st">&quot;GT&quot;</span>],</span>
 <span id="cb157-8"><a href="data-wrangling-with-dplyr.html#cb157-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span></span>
 <span id="cb157-9"><a href="data-wrangling-with-dplyr.html#cb157-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
 <p>So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have large clutch sizes than great tits.</p>
 <p>This approach of using <code>group_by</code> followed by <code>summarise</code> can be used to summarise data in many different ways: maximum or minimum value (<code>max</code> or <code>min</code>), variance or standard deviation (<code>var</code> or <code>sd</code>), quantiles such as the 10% or 50% quantile etc. (see the section on <strong>Distributions</strong> below) (<code>quantile</code>), cumulative sums (<code>cumsum</code>) or counts (<code>n</code> or <code>length</code>) and so on.</p>
 </div>

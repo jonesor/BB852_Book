@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 ANCOVA: Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 ANCOVA: Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-11-02" />
+<meta name="date" content="2022-11-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,7 +53,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -446,7 +445,7 @@ Figure 17.2: ANCOVA on hand width vs. height data in males and females
 <p>The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size. Nevertheless, lets keep with good habits:</p>
 <div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb399-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-269-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
 <p>These look good. No evidence of non-normality in the residuals, no heteroscedasticity and no weird outliers.</p>
 </div>
 <div id="summarising-with-anova" class="section level2 hasAnchor" number="17.2">
@@ -576,7 +575,7 @@ Figure 17.2: ANCOVA on hand width vs. height data in males and females
 <span id="cb413-4"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb413-5"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb413-6"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> predictData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-279-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-283-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>We could report this in the usual way but first saying something like: <em>“The interaction term was not significant (F = ____, d.f. 1 and ____, p = ____) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender …”</em></p>
 
 </div>
