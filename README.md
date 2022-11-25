@@ -14,5 +14,5 @@
 
 ### Note:
 
-- New data sets (e.g. for the exam) should be added to the `PotentialCourseData` folder (OJ's personal dropbox). It will then be automatically transferred into the `CourseData` folder.
+- New data sets (e.g. for the exam) should be added to the `DataSetLibrary` folder (OJ's personal dropbox). It will then be automatically transferred into the `CourseData` folder.
 - New simulated data should be created in the `SimulateData.R` script.
