@@ -11,7 +11,7 @@ crabs <- data.frame(ID = 1:sampleSize, carapaceWidth = runif(n = sampleSize,min 
   mutate(chelaLength = round(chelaLength,2)) %>% 
   mutate(carapaceWidth = round(carapaceWidth,2))
 
-plot(crabs$carapaceWidth, crabs$chelaLength)
+#plot(crabs$carapaceWidth, crabs$chelaLength)
 
 set.seed(12)
 
