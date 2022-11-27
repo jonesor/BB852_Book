@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Tips and tricks | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Tips and tricks | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -24,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2021-11-05" />
+<meta name="date" content="2022-11-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="manipulating-objects.html"/>
 <link rel="next" href="paths-and-projects.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,10 +49,11 @@
 
 
 
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -290,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.2.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>15.2.1</b> Where are the differences?</a></li>
 <li class="chapter" data-level="15.2.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>15.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand.”</a></li>
+<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand”.</a></li>
 <li class="chapter" data-level="15.4" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>15.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>16</b> Linear regression: models with a single continuous explanatory variable</a>
@@ -330,6 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>20.1.2</b> Example: Cancer clusters</a></li>
 </ul></li>
 <li class="chapter" data-level="20.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>20.2</b> Exercise: Maze runner</a></li>
+<li class="chapter" data-level="20.3" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#overdispersion"><i class="fa fa-check"></i><b>20.3</b> Overdispersion</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>21</b> Extending use cases of GLM</a>
 <ul>
@@ -353,7 +354,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Exam</b></span></li>
-<li class="chapter" data-level="23" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>23</b> An example of a past Exam (2020)</a></li>
+<li class="chapter" data-level="23" data-path="exam-2022.html"><a href="exam-2022.html"><i class="fa fa-check"></i><b>23</b> Exam 2022</a></li>
 <li class="part"><span><b>V Solutions</b></span></li>
 <li class="chapter" data-level="24" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>24</b> Exercise Solutions</a>
 <ul>
@@ -372,6 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>24.13</b> Snails on the move</a></li>
 <li class="chapter" data-level="24.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>24.14</b> Mouse lemur strength</a></li>
 </ul></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Exam (2020)</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -392,16 +394,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tips-and-tricks" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Tips and tricks</h1>
-<div id="appearance" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Appearance</h2>
+<div id="tips-and-tricks" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Tips and tricks<a href="tips-and-tricks.html#tips-and-tricks" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="appearance" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Appearance<a href="tips-and-tricks.html#appearance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You can modify the appearance of RStudio via the <em>Options</em> dialog: <strong>Tools &gt; Options</strong> menu (<strong>RStudio &gt; Preferences</strong> on a Mac).</p>
-<p>There you will find many ways of modifying how RStudio looks and works. However, for beginners I suggest to leave the defaults for most of these. Instead, focus on the Appearance section where you can change the colour scheme or “Theme.” My current favourite is “Modern,” what’s yours? You can also change the font and font size. When choosing a font, it is important to use only “monospace” fonts (these are fonts fixed width of characters). Why would you want to do that? Some fonts are better at distinguishing similar looking characters (e.g. is that an upper case or lower case letter “w,” or is it a “1” (the number one) or a “l” (lower case L)). Good examples of monospace fonts are “LucidaConsole,” and “Courier.” The availability of fonts might differ between computers.</p>
+<p>There you will find many ways of modifying how RStudio looks and works. However, for beginners I suggest to leave the defaults for most of these. Instead, focus on the Appearance section where you can change the colour scheme or “Theme”. My current favourite is “Modern”, what’s yours? You can also change the font and font size. When choosing a font, it is important to use only “monospace” fonts (these are fonts fixed width of characters). Why would you want to do that? Some fonts are better at distinguishing similar looking characters (e.g. is that an upper case or lower case letter “w”, or is it a “1” (the number one) or a “l” (lower case L)). Good examples of monospace fonts are “LucidaConsole”, and “Courier”. The availability of fonts might differ between computers.</p>
 <p>If you choose non-monospaced fonts it can cause problems with formatting your code in the scripts, so if you get any formatting weirdness, check your font!</p>
 </div>
-<div id="shortcuts" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Shortcuts</h2>
+<div id="shortcuts" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Shortcuts<a href="tips-and-tricks.html#shortcuts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are several useful keyboard shortcuts that can make your life easier in RStudio. You can find a full list by clicking through the menu – Tools &gt; Keyboard Shortcuts Help – but these are the ones I find most useful:</p>
 <ul>
 <li>Auto-complete code: if you start to write function or object names, after a short pause, RStudio will offer some auto-complete the name. Use the arrow keys to choose the best option, and press Enter.</li>
@@ -418,35 +420,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Pipes (<code>%&gt;%</code>: Ctrl+Shift+M (Cmd+Shift+M) (you’ll meet these later in the course!)</li>
 </ul>
 </div>
-<div id="code-style" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Code style</h2>
+<div id="code-style" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Code style<a href="tips-and-tricks.html#code-style" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R is very forgiving about code styling, the use of white space (e.g., spaces and tabs), splitting code over lines and so on. This can make things a bit messy sometimes so it is a good idea to develop a style that you find easy to work with.</p>
 <p>There are some guidelines for “good style” which you might like to follow e.g. <a href="https://google.github.io/styleguide/Rguide.html" class="uri">https://google.github.io/styleguide/Rguide.html</a> or <a href="https://style.tidyverse.org" class="uri">https://style.tidyverse.org</a>.</p>
 <p>There is also a way to automatically format your code into a consistent, nice, style after you have written it. To do that, you use the <code>styler</code> R package, and then add a keyboard/menu shortcut to RStudio (click Tools &gt; Addins). See here: <a href="https://lorenzwalthert.github.io/stylerpost/" class="uri">https://lorenzwalthert.github.io/stylerpost/</a>.</p>
 </div>
-<div id="the-plots-pane" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> The plots pane</h2>
+<div id="the-plots-pane" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> The plots pane<a href="tips-and-tricks.html#the-plots-pane" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>As you make plots they appear in the plot pane, which is by default on the bottom right of RStudio. Old plots are kept in the memory and you can navigate to them using the back/forward arrows at the top of the plot pane.</p>
 <p>You can use the <em>Export</em> button to copy a plot (for pasting into a document) after resizing it, or to save a plot as an image file.</p>
 </div>
-<div id="tables" class="section level2" number="6.5">
-<h2><span class="header-section-number">6.5</span> Tables</h2>
+<div id="tables" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Tables<a href="tips-and-tricks.html#tables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you have made summary tables, for example with the <code>dplyr</code> function <code>summarise</code>, you can save them as a csv file using <code>write.csv(xxx, file = "xxx.csv", row.names = FALSE)</code>. You can then open the csv in Excel and cut/paste into your Word document as a table.</p>
 </div>
-<div id="importing-data-from-text-files" class="section level2" number="6.6">
-<h2><span class="header-section-number">6.6</span> Importing data from text files</h2>
+<div id="importing-data-from-text-files" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Importing data from text files<a href="tips-and-tricks.html#importing-data-from-text-files" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are several ways of importing data, and several ways that it can go wrong.</p>
 <p>RStudio can import data in text files via the <em>Import Dataset</em> button (top right pane), or via the the main menu (File &gt; Import Dataset). There are two ways to import data from text files (such as .csv or .tab or .txt). These are <code>base</code> and <code>readr</code>. They work in similar ways. During the import process you can choose what the column delimiter (separator) is (e.g. <code>,</code> or <code>;</code>) and what the decimal separator is (e.g. <code>.</code> or <code>,</code>).</p>
 <p>When you have imported the data, you should check it using e.g. <code>head</code> or <code>str</code> functions. Make sure that you have the expected number of columns, and that they have the right names.
 Most of the problems with importing data comes from problems with Excel. A common problem is that the columns of the data are squashed together into a single column. This can be because (1) you have chosen the wrong delimiter (separator) or (2) because Excel has saved the csv file incorrectly.</p>
-<p>To avoid this problems (1) check the delimiter (2) avoiding saving the file with Excel when you download it. You can also open the text file in a text editor and remove problematic characters using “Find and Replace.” For example, the single-column problem is caused by Excel putting the line of data within quotation marks, which you could remove and then save the data.</p>
+<p>To avoid this problems (1) check the delimiter (2) avoiding saving the file with Excel when you download it. You can also open the text file in a text editor and remove problematic characters using “Find and Replace”. For example, the single-column problem is caused by Excel putting the line of data within quotation marks, which you could remove and then save the data.</p>
 </div>
-<div id="importing-data-from-excel" class="section level2" number="6.7">
-<h2><span class="header-section-number">6.7</span> Importing data from Excel</h2>
-<p>Yes, it is possible to import data directly from Excel using the <em>Import Dataset</em> dialogue (or using the <code>read_excel</code> function from the <code>readxl</code> package). This is pretty neat – BUT – the data need to be very well-arranged for this to work properly. What do I mean by “well-arranged?” Read the paper by Broman &amp; Wu for more details<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+<div id="importing-data-from-excel" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Importing data from Excel<a href="tips-and-tricks.html#importing-data-from-excel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Yes, it is possible to import data directly from Excel using the <em>Import Dataset</em> dialogue (or using the <code>read_excel</code> function from the <code>readxl</code> package). This is pretty neat – BUT – the data need to be very well-arranged for this to work properly. What do I mean by “well-arranged”? Read the paper by Broman &amp; Wu for more details <a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
 </div>
-<div id="numbers" class="section level2" number="6.8">
-<h2><span class="header-section-number">6.8</span> Numbers</h2>
+<div id="numbers" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Numbers<a href="tips-and-tricks.html#numbers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R uses scientific notation when showing you numbers.
 Thus very large and very small numbers are shown with exponentials so that 1,000,000 is shown as <code>1e+06</code> and <code>0.0005</code> is shown as <code>5e-04</code>, for example. This can be a bit confusing, and you can turn this behaviour off by setting the <code>scipen</code> option like this.</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="tips-and-tricks.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span></code></pre></div>
@@ -470,7 +472,6 @@ Thus very large and very small numbers are shown with exponentials so that 1,000
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -509,9 +510,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["BB852.pdf"],
+"download": null,
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

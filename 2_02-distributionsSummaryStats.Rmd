@@ -163,7 +163,7 @@ Try changing the distributions and re-plotting them (you can change the number o
 
 ## Poisson distribution
 
-The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the "`lambda`" parameter. Small values of lambda give more skewed distributions.
+The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the "`lambda`" parameter, which is the arithmetic mean of the distribution. Due to the zero bounds, small values of `lambda` will give more skewed distributions.
 
 ```{r, echo=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 set.seed(42)
@@ -209,7 +209,8 @@ summary(rp) # Take a look
 
 
 ```{block, type="do-something"}
-Try changing the value of lambda and look at how the shape changes.
+Try changing the value of lambda and look at how the shape changes. 
+Calculate the mean values and compare those with `lambda` (they should be very similar).
 ```
 
 Let's calculate summary statistics of mean and standard deviation for this distribution

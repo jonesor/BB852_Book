@@ -70,3 +70,38 @@ x2 <- data.frame(area = sort(runif(n = sampleSize, 1, 50))) %>%
 x3 <- rbind(x, x2)
 write.csv(x3, file = "CourseData/roundabouts.csv", row.names = FALSE)
 rm(x, x2, x3, sampleSize)
+
+# Crabs -----
+source("examPreparationCode/simulateCrabs.R")
+
+# Niveoscincus Character displacement---- 
+
+set.seed(44)
+niveoscincus <- data.frame(area = rep(c("OverlapZone", "AllopatricZone"), each = 14), snoutVentLength = c(rnorm(14,  53.4, 7.811), rnorm(14,  56, 7.811))) %>% 
+  mutate(snoutVentLength = round(snoutVentLength,1))
+
+# ggplot(niveoscincus,aes(x = area,y = snoutVentLength)) + geom_boxplot()
+# 
+# 
+# (obsDiff <- niveoscincus %>%
+#     group_by(area) %>%
+#     summarise(meanVal = mean(snoutVentLength)) %>%
+#     pull(meanVal) %>%
+#     diff())
+# 
+# shuffledData <- data.frame(rep = 1:1000) %>%
+#   mutate(shuffledDiffs = replicate(
+#     1000,
+#     niveoscincus %>%
+#       mutate(area = sample(area)) %>%
+#       group_by(area) %>%
+#       summarise(meanVal = mean(snoutVentLength)) %>%
+#       pull(meanVal) %>%
+#       diff()
+#   ))
+# table(shuffledData$shuffledDiffs <= obsDiff)
+
+
+write.csv(niveoscincus, file = "CourseData/Niveoscincus.csv", row.names = FALSE)
+
+rm(niveoscincus)

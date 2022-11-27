@@ -2,7 +2,7 @@
 
 This is the schedule for the course. 
 Please note that it is liable to change (possibly at short notice). 
-If you find a mismatch between this schedule and the official one^[https://mitsdu.sdu.dk/skema/activity/N110040101/e21], then it is the official one that is correct.
+If you find a mismatch between this schedule and the official one^[https://mitsdu.sdu.dk/skema/activity/N110040101/e22], then it is the official one that is correct.
 
 The columns, GSWR and Course Book, refer to the relevant chapters in the recommended text book ("*Getting Started With R*") and this course book, respectively. You should aim to read and work through these chapters as the course proceeds.
 
@@ -34,7 +34,7 @@ schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 ics_files <- list.files(pattern = "*.ics")
 file.remove(ics_files)
 
-curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e21/e21", destfile = "bb852.ics")
+curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e22/e22", destfile = "bb852.ics")
 ```
 
 
@@ -45,26 +45,41 @@ curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101
 
 savingsTimeSwitch <- with_tz(lubridate::as_datetime("2021-10-31 03:00:00"), "Europe/Copenhagen")
 
-courseCal <- ic_read("bb852.ics") %>%
-  arrange(DTSTART) %>%
+
+xx <- readLines("bb852.ics")
+
+locationIndex <- grep("^LOCATION", xx)
+location <- gsub(pattern = "LOCATION:Odense ", replacement = "", x = xx[locationIndex])
+
+
+
+courseCal <- ical::ical_parse_df("bb852.ics") %>%
+  filter(!is.na(uid)) %>%
+  arrange(start) %>%
+  select(summary, DTSTART = start, DTEND = end) %>%
   mutate(Session = row_number()) %>%
   mutate(savingsT = DTSTART < savingsTimeSwitch) %>%
-  mutate(offsetT = if_else(savingsT == TRUE, 2, 1)) %>%
-  # Check this every year!
+  # mutate(offsetT = if_else(savingsT == TRUE, 2, 1)) %>% #Check this every year!
+  mutate(offsetT = 0) %>% # Check this every year!
   mutate(DTSTART2 = DTSTART + hours(offsetT)) %>%
   mutate(DTEND2 = DTEND + hours(offsetT)) %>%
   mutate(St = hour(DTSTART2)) %>%
   mutate(En = hour(DTEND2)) %>%
   mutate(wd = lubridate::wday(DTSTART2, label = TRUE)) %>%
-  mutate(Room = gsub(pattern = "Odense ", replacement = "", x = LOCATION)) %>%
+  # mutate(Room = gsub(pattern = "Odense ",replacement = "", x = LOCATION)) %>%
+  mutate(Room = location) %>%
   mutate(Room = paste0("(", Room, ")")) %>%
   mutate(Date = paste0(month(DTSTART2, label = TRUE), " ", day(DTSTART2), ", ", wd)) %>%
-  mutate(Time = paste0("kl.", St, "-", En)) %>%
+  mutate(Time = paste0("kl.", St, "-", En))
+
+courseCal_web <- courseCal %>%
   select(Session, Date, Time, Room)
+
+
 
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 
-schedule <- left_join(courseCal, schedule)
+schedule <- left_join(courseCal_web, schedule)
 ```
 
 

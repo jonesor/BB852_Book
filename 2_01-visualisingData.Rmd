@@ -16,7 +16,7 @@ Remember to set your working directory, and start a new script. I am assuming th
 ```
 
 ```{r}
-df <- read.csv("CourseData/SDUClutchSize.csv")
+clutch <- read.csv("CourseData/SDUClutchSize.csv")
 ```
 
 ## Histograms
@@ -28,19 +28,19 @@ After setting up the plot the graphics are added as **geometric layers** or **ge
 I will illustrate the construction of a simple plot by making a histogram of the clutch size of all the nests in the dataset.
 
 ```{r}
-ggplot(df, aes(x = clutchSize))
+ggplot(clutch, aes(x = clutchSize))
 ```
 
 This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set `binwidth` to be 1 because we know we are dealing with counts between just 1 and 14. Try altering the `binwidth`.
 
 ```{r}
-ggplot(df, aes(x = clutchSize)) +
+ggplot(clutch, aes(x = clutchSize)) +
   geom_histogram(binwidth = 1)
 ```
 We know that we have two species here and we would like to compare them. This is done within the aesthetic argument. The default is that the bars for different categories are stacked on top of each other. This is good in some cases, but probably not here.
 
 ```{r}
-ggplot(df, aes(x = clutchSize, fill = species)) +
+ggplot(clutch, aes(x = clutchSize, fill = species)) +
   geom_histogram(binwidth = 1, position = "dodge")
 ```
 
@@ -50,14 +50,14 @@ To make it easier to compare distributions with very different counts, we can pu
 
 
 ```{r}
-ggplot(df, aes(x = clutchSize, fill = species, stat(density))) +
+ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
   geom_histogram(binwidth = 1, position = "dodge")
 ```
 
 An alternative approach would be to overlay the two sets of bars (using `position = "identity"`) and set the colours to be slightly transparent (using `alpha = 0.7`) so that you can see the overlapping region clearly. 
 
 ```{r}
-ggplot(df, aes(x = clutchSize, fill = species, stat(density))) +
+ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
   geom_histogram(binwidth = 1, position = "identity", alpha = 0.7)
 ```
 
@@ -69,7 +69,7 @@ You should recall that there were several years of data represented here.
 `ggplot` has a very clever way of splitting up the plot to examine this.
 
 ```{r}
-ggplot(df, aes(x = clutchSize, fill = species, stat(density))) +
+ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
   geom_histogram(
     binwidth = 1, position = "identity",
     alpha = 0.7
@@ -80,7 +80,7 @@ ggplot(df, aes(x = clutchSize, fill = species, stat(density))) +
 You could split the data up by species in a similar way, as yet another way of visualising the difference between species:
 
 ```{r}
-ggplot(df, aes(x = clutchSize)) +
+ggplot(clutch, aes(x = clutchSize)) +
   geom_histogram(binwidth = 1) +
   facet_grid(species ~ .)
 ```
@@ -101,7 +101,7 @@ To plot them using `ggplot` you must use a `geom_boxplot` layer.
 The categorical variable is normally placed on the x-axis so is placed as `x` in the `aes` argument, while the continuous variable is on the `y` axis.
 
 ```{r}
-ggplot(df, aes(x = species, y = clutchSize)) +
+ggplot(clutch, aes(x = species, y = clutchSize)) +
   geom_boxplot()
 ```
 
@@ -110,7 +110,7 @@ Some researchers argue that it is a good idea to add the data as points to these
 
 ```{r,echo = -1,cache = TRUE}
 set.seed(42)
-ggplot(df, aes(x = species, y = clutchSize)) +
+ggplot(clutch, aes(x = species, y = clutchSize)) +
   geom_boxplot() +
   geom_jitter(width = .2, alpha = 0.5, colour = "black", fill = "black")
 ```
@@ -128,7 +128,7 @@ First we will use `summarise` to create a dataset with the mean clutch size. We'
 
 
 ```{r}
-GTclutch <- df %>%
+GTclutch <- clutch %>%
   filter(species == "GT") %>%
   group_by(Year) %>%
   summarise(meanClutchSize = mean(clutchSize))
@@ -145,7 +145,7 @@ I think this looks OK, but we should add both species. I'll first need to produc
 
 
 ```{r}
-meanClutch <- df %>%
+meanClutch <- clutch %>%
   group_by(species, Year) %>%
   summarise(meanClutchSize = mean(clutchSize))
 ```
@@ -180,13 +180,13 @@ Finally, lets make a scatter plot.
 The SDU bird data are not suitable for this type of plot so we'll use the data from a few days ago on suburban bird diversity.
 
 ```{r}
-df <- read.csv("CourseData/suburbanBirds.csv")
+birds <- read.csv("CourseData/suburbanBirds.csv")
 ```
 
 Take a look at the data to remind ourselves what it looks like
 
 ```{r}
-head(df)
+head(birds)
 ```
 
 These data show the result of standardised bird surveys at housing developments of different ages in California. The surveys were carried out in 1975, and the data includes the `Year` and number of individual birds seen `nIndividuals` and number of species seen `nSpecies`. The question being addressed is "How does the age of the housing development affect the number of species?"
@@ -194,13 +194,13 @@ These data show the result of standardised bird surveys at housing developments 
 To investigate this we should first add a new variable for `Age` to the data set. We can do this using the `mutate` function from `dplyr`. This function creates new variables, for example by manipulating existing ones.
 
 ```{r}
-df <- mutate(df, Age = 1975 - Year)
+birds <- mutate(birds, Age = 1975 - Year)
 ```
 
 When we have created this variable we can plot the data. For aesthetic reasons I also would like to set the limits on the y-axis to go extend to zero, and I would like to include proper labels on the axes.
 
 ```{r}
-ggplot(df, aes(x = Age, y = nSpecies)) +
+ggplot(birds, aes(x = Age, y = nSpecies)) +
   geom_point() +
   ylim(0, 15) +
   xlab("Age of development") +

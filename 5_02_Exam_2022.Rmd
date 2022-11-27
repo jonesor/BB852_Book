@@ -1,0 +1,121 @@
+# Exam 2022
+
+
+
+```{block, type="do-something"}
+
+**Read these instructions carefully**
+
+This exam includes four questions that test different aspects of your learning during this course: data wrangling, data visualisation and statistics. Each question is broken down into a number sub-questions. 
+
+Your work should be handed in as a single PDF. 
+The number of each question should be clearly indicated, and the answer to each question should start on a new page.
+
+For each question you must provide the R code you used to answer the question. The code should include comments to explain what you are doing. The code should be provided as text using a fixed-width font such as `Courier`. The rest of your answers should be in another font (e.g. Times New Roman, Cambria). Please use *text* rather than a screenshot of your code.
+
+* Plots and tables should have appropriate captions. 
+* Plots should be produced using `ggplot`.
+* Remember that you can make "panels" of plots (e.g. Fig 1A, B)
+* Axis labels are important. Sometimes you may want to edit them to be different from a data column name.
+* Reporting of any statistics should be appropriate to the type of analysis you have done. There are examples in the course materials.
+* Reporting of methods and results should be written in the style of a scientific paper (again, there are examples in the course materials).
+
+*If you don't understand any aspects of the questions, please ask for help!*
+
+**Hand in deadline is 9th January 2021 at 23:59 CET**
+
+**You MUST submit your work via itsLearning (not email!)**
+```
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(ggfortify)
+
+options(dplyr.summarise.inform = FALSE)
+```
+
+*****
+
+**1) Kaunas weather (10 points)**
+
+The dataset `kaunasWeather.csv` is weather data obtained from near Kaunas in Lithuania, starting in 1953 and ending in 2022.
+
+Each row of the dataset represents a single day.
+
+`YEAR`, `MONTH`, `DAY` give the calendar dates.
+`YDAY` is the day of the year.
+`TEMPMEAN` is the mean temperature of the day (Celsius).
+`TEMPMIN` is the minimum temperature of the day (Celsius).
+`TEMPMAX` is the minimum temperature of the day (Celsius).
+`PRCP` is the precipitation (rain and melted snow) (millimeters)
+`MXSPD` is the maximum sustained wind speed (meters per second)
+
+a) Produce a graph with points and lines showing how the monthly mean value of the daily temperature varies through the year.
+
+b) Produce a graph showing how mean temperature in spring (defined as March, April and May) have changed between 1960 and 2020 (i.e. one point per year).
+
+c) Produce a graph with box plots and jittered points showing daily temperature variation within each month in 2021. (there should be 12 boxes, one for each month)
+
+d) Produce a graph showing with points showing the number of days per year with storm speed winds (>14 m/s). (i.e. one point per year)
+
+
+******
+
+**2) Character dispacement in lizards (10 points)**
+
+
+Character displacement is the phenomenon where differences among similar species with overlapping geographic distributions are accentuated in regions where the species co-occur. This means that the morphology of a species (e.g. adult body size) can be influenced by the presence of a competitor.
+
+Researchers collected data (`Niveoscincus.csv`) to examine this phenomenon in an alpine lizard _Niveoscincus microlepidotus_ in Tasmania. The geographic range of the species overlaps in some areas with a close relative _N. greeni_. The researchers measured the size (`snoutVentLength`) of _N. microlepidotus_ in two places: firstly an area where the competitor species does not occur (`AllopatricZone`), and secondly in an area where both species co-occur and actively compete (`OverlapZone`).
+
+Use a randomisation test to test whether there is a significant difference in the mean size of _N. microlepidotus_ in the two areas.
+
+
+a) plot the data (e.g. with a box plot)
+
+b) carry out a randomisation test to determine if there is a significant difference in mean size. Write (i) a brief method description and (ii) a summary of the results. 
+
+******
+
+
+**3) Power in a laboratory experiment (10 points)**
+
+A recent study of 37 people in Copenhagen found that people produces a mean of 245.4 grams (sem = 10.1) of avoidable food waste per capita per week.
+
+In connection to the UN Sustainable Development Goals you plan a new project based here in Odense aims to reduce avoidable food waste by 25% by a combination of education and coaching. Odense municipality may be able to fund the project but they need details on costs, which you estimate to be 125kr per participant. You therefore need to do a power analysis to figure out the number of participants required to demonstrate a statistically significant reduction in food waste.
+
+You design a study with two treatment groups: control and coached. The coached group will receive information and coaching while the control group will receive no special training.
+
+a) Conduct a power analysis based on the findings of the Copenhagen study to estimate the number of participants required to carry out your experiment with 80% power. 
+
+b) Describe the methods of this power analysis.
+
+c) Write up the results of the power analysis to justify the costs of your new project.
+
+******
+
+
+
+**4) Weapon size and body size in crabs (20 points)**
+
+Individuals compete to obtain resources where these resources, such as food or mates, are limited. Many factors, including morphological factors such as body size, determine an individual's resource-holding potential (RHP). During aggressive encounters, individuals compare their own RHP with their opponent before deciding whether to escalate their encounter: When an individual competes with a larger opponent, it will often concede the resources to its opponent without fighting. Prolonged fights are rare and occur only between evenly-matched individuals. 
+
+Many studies have shown that body size or weight is a good predictor of the outcome of aggressive encounters, with larger individuals tending to win (often without a fight). In addition to body size, the evolution of weapons such as horns and antlers provides another method for individuals to signal their fighting prowess. The fact that there are two "indicators" of RHP (body size and weapon size) has generated debate about which is more important. For example, could a smaller animal with large horns beat a larger animal with smaller horns?
+
+Researchers tested this idea using shore crabs (_Carcinus maenas_). First, they collected males of different sizes and measured their body size (carapace width) and weapon size (claw length). The researchers then staged fights between pairs of crabs (i.e., a "focal crab" and an "opponent crab") and observed the outcome. The winner was the crab that successfully climbed on top of its opponent or elicited repeated retreats from the other crab (the loser).
+
+These data are stored in the file `crabFights.csv`. The data set has seven columns. The first two columns are the ID numbers of the focal and opponent crabs. Columns 3 and 4 give the carapace width (`focal_carapaceWidth`) and chela length (`focal_chelaLength`) of the focal crab in millimeters. Columns 5 and 6 provide the same information for the opponent crab. The final column (`fightOutcome`), gives the fight's outcome: `won` indicates that the focal crab won the fight, `lost` means that it lost the fight.
+
+
+Your aim is to determine how the relative size (i.e., focal crab size divided by opponent crab size) of the body and the weapon of the crab influence the outcome of these fights.
+
+a) Plot the data to show the relationship between carapace width and chela length.
+
+b) Use a suitable statistical model to describe the relationship between carapace width and chela length. Add the model fit line to the plot produced in (a)
+
+c) Calculate relative sizes (i.e., focal/opponent size) and then fit a suitable model (or models) to describe the relationship  between size and fight outcome.
+
+d) Describe the results of (c). What is the relative importance of the two size measures?
+
+
+******
