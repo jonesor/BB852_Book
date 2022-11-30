@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Data wrangling with dplyr | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Data wrangling with dplyr | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-11-26" />
+<meta name="date" content="2022-11-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,7 +53,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
-<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -486,14 +485,22 @@ See the earlier material for how to do this, or ask for help.</p>
 ## 2 GT              14</code></pre>
 <p>We can see how the data are grouped by asking for a summary:</p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-wrangling-with-dplyr.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sduBirds)</span></code></pre></div>
-<pre><code>##    species               Year           Day          boxNumber          nEggs       
-##  Length:5604        Min.   :2013   Min.   : 60.0   Min.   :  1.00   Min.   : 0.000  
-##  Class :character   1st Qu.:2014   1st Qu.:116.0   1st Qu.: 29.75   1st Qu.: 0.000  
-##  Mode  :character   Median :2014   Median :133.0   Median : 57.00   Median : 0.000  
-##                     Mean   :2015   Mean   :133.2   Mean   : 55.83   Mean   : 2.326  
-##                     3rd Qu.:2017   3rd Qu.:148.0   3rd Qu.: 85.00   3rd Qu.: 4.000  
-##                     Max.   :2019   Max.   :212.0   Max.   :101.00   Max.   :14.000  
-##                                                                     NA&#39;s   :613</code></pre>
+<pre><code>##    species               Year           Day          boxNumber     
+##  Length:5604        Min.   :2013   Min.   : 60.0   Min.   :  1.00  
+##  Class :character   1st Qu.:2014   1st Qu.:116.0   1st Qu.: 29.75  
+##  Mode  :character   Median :2014   Median :133.0   Median : 57.00  
+##                     Mean   :2015   Mean   :133.2   Mean   : 55.83  
+##                     3rd Qu.:2017   3rd Qu.:148.0   3rd Qu.: 85.00  
+##                     Max.   :2019   Max.   :212.0   Max.   :101.00  
+##                                                                    
+##      nEggs       
+##  Min.   : 0.000  
+##  1st Qu.: 0.000  
+##  Median : 0.000  
+##  Mean   : 2.326  
+##  3rd Qu.: 4.000  
+##  Max.   :14.000  
+##  NA&#39;s   :613</code></pre>
 <p>We can ungroup the data again like this:</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-wrangling-with-dplyr.html#cb148-1" aria-hidden="true" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">ungroup</span>(sduBirds)</span></code></pre></div>
 <p>So both species lay the same maximum number of eggs, but maybe this is just caused by outliers for one of the species. We’ll need to dig deeper.</p>
@@ -660,7 +667,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["BB852.pdf"],
 "search": {
 "engine": "fuse",
 "options": null
