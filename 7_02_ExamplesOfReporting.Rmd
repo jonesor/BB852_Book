@@ -33,7 +33,7 @@ mean of x mean of y
 
 You might report this as:
 
-_My t-test comparing the mean height of plants in the control group and the treatment group showed that the mean height of plants in the control group was 7.2 while the mean height of plants in the treatment group was 8.2. There was no significant difference between the two groups (t-statistic = -1.6184, df = 8, p-value = 0.1431)._
+_My t-test comparing the mean height of plants in the control group and the treatment group showed that the mean height of plants in the control group was 7.2cm while the mean height of plants in the treatment group was 8.2cm. The 95% Confidence Interval of the difference between the mean values was -1.66cm to 0.06cm and it is clear that there is no significant difference between the two groups (t-statistic = -1.6184, d.f. = 8, p-value = 0.1431). _
 
 In this example, the important details of the t-test (the t-statistic, the degrees of freedom, and the p-value) are included in parentheses after giving the mean estimates for the control and treatment groups. This allows the reader to see the key results of the t-test while also providing the relevant details.
 
@@ -90,7 +90,7 @@ F-statistic: 1593 on 1 and 148 DF,  p-value: < 2.2e-16
 
 You might write this up something like this:
 
-_The coefficient for sepal width was 0.816 (+/- 0.020), indicating that an increase in sepal width of 1 mm is associated with an increase in sepal length of 0.816 mm. This slope was significantly different from zero (t = 39.858, d.f. = 148, p < 0.001).  The adjusted R-squared value for the model was 0.642, indicating that sepal width explains approximately 64% of the variance in sepal length. These results suggest that sepal width is a strong predictor of sepal length._
+_The coefficient for sepal width was 0.816 ($\pm$ 0.020), indicating that an increase in sepal width of 1 mm is associated with an increase in sepal length of 0.816 mm. This slope was significantly different from zero (t = 39.858, d.f. = 148, p < 0.001).  The adjusted R-squared value for the model was 0.642, indicating that sepal width explains approximately 64% of the variance in sepal length. These results suggest that sepal width is a strong predictor of sepal length._
 
 ## A Generalised linear model (GLM)
 
@@ -123,7 +123,7 @@ Here's what the `anova()` output shows:
 ```
 
 
-_The ANOVA results showed that maternal weight was strongly associated with the number of offspring  (Poisson GLM: dGLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). This indicates that there is a significant relationship between the weight of the offspring and the number of offspring produced._
+_The ANOVA results showed that maternal weight was strongly associated with the number of offspring  (Poisson GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). This indicates that there is a significant relationship between the weight of the offspring and the number of offspring produced._
 
 We could also add something about the deviances.  In this case, the model has a `NULL` deviance of 166.84 and `weight` explains 44.124 Deviance. We can therefore calculate a kind of _pseudo-R^2_ value as  44.124/166.84 = 0.264 = 26.4%.
 
@@ -164,11 +164,11 @@ From this we can say something like:
 
 _The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63 × MotherWeight_
 
-One could also add the standard error of the slope (0.09502) and intercept (0.31107) into this equation: _log(nOffspring) = -0.75$\pm$0.31 + 0.63$\pm$0.10 $\times$ MotherWeight_.
+One could also add the standard error of the slope (0.09502) and intercept (0.31107) into this equation: _log(nOffspring) = -0.75 $\pm$ 0.31 + 0.63 $\pm$ 0.10 $\times$ MotherWeight_.
 
 So, to put it together:
 
-_The ANOVA results showed that maternal weight was strongly associated with the number of offspring  (Poisson GLM: dGLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). This indicates that there is a significant relationship between the weight of the offspring and the number of offspring produced. The deviances and residual deviance showed that the model explained 26.4% of the variation in number of offspring. The coefficients allowed me to calculate the equation of the relationship as log(nOffspring) = -0.75$\pm$0.31 + 0.63$\pm$0.10 $\times$ MotherWeight_.
+_The ANOVA results showed that maternal weight was strongly associated with the number of offspring  (Poisson GLM: dGLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). This indicates that there is a significant relationship between the weight of the offspring and the number of offspring produced. The deviances and residual deviance showed that the model explained 26.4% of the variation in number of offspring. The coefficients allowed me to calculate the equation of the relationship as log(nOffspring) = -0.75 $\pm$ 0.31 + 0.63 $\pm$ 0.10 $\times$ MotherWeight_.
 
 
 
