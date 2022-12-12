@@ -29,3 +29,56 @@ My t-test comparing the mean height of plants in the control group and the treat
 
 In this example, the important details of the t-test (the t-statistic, the degrees of freedom, and the p-value) are included in parentheses after giving the mean estimates for the control and treatment groups. This allows the reader to see the key results of the t-test while also providing the relevant details.
 
+## Simple linear regression model
+
+In this example, the model focusses on the relationship between the size of a plant and the amount of sunlight it receives.
+
+The output of `anova()` looks like this:
+
+```
+Analysis of Variance Table
+
+Response: Sepal.Length
+           Df Sum Sq Mean Sq F value Pr(>F)
+Sepal.Width  1  63.21  63.206   89.59 <2e-16 ***
+Residuals 148  73.81   0.497                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+```
+
+We might use this part of the summary to say something like this:
+
+The linear regression analysis investigating the relationship between sepal length and sepal width showed that there is a significant association between the two variables (F = 89.59, df = 1 and 148, p-value <0.01).
+
+
+
+The output of `summary()` looks like this:
+
+```
+Call:
+lm(formula = Sepal.Length ~ Sepal.Width, data = iris)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.5396 -0.4374 -0.0813  0.4304  1.7227 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.55147    0.14392  24.630  < 2e-16 ***
+Sepal.Width  0.81633    0.02047  39.858  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.7029 on 148 degrees of freedom
+Multiple R-squared:  0.643,	Adjusted R-squared:  0.642 
+F-statistic: 1593 on 1 and 148 DF,  p-value: < 2.2e-16
+```
+
+You might write this up something like this:
+
+The coefficient for sepal width was 0.816 (+/- 0.020), indicating that an increase in sepal width of 1 mm is associated with an increase in sepal length of 0.816 mm. This slope was significantly different from zero (t = 39.858, d.f. = 148, p < 0.001).  The adjusted R-squared value for the model was 0.642, indicating that sepal width explains approximately 64% of the variance in sepal length. These results suggest that sepal width is a strong predictor of sepal length.
+
+
+
+
