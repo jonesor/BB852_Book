@@ -1,0 +1,31 @@
+# Examples of statistics reporting
+
+In this section I give some examples of how one can report results of statistical analyses.
+These are not "set in stone" but are intended to give you an idea to base your own reporting on.
+
+## t-test
+
+Based on the following t-test result:
+
+```
+> results <- t.test(control, treatment, var.equal = TRUE)
+> print(results)
+
+	Two Sample t-test
+
+data:  control and treatment
+t = -1.6184, df = 8, p-value = 0.1431
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.6644772  0.0644772
+sample estimates:
+mean of x mean of y 
+       7.2        8.2 
+```
+
+You might report this as:
+
+My t-test comparing the mean height of plants in the control group and the treatment group showed that the mean height of plants in the control group was 7.2 while the mean height of plants in the treatment group was 8.2. There was no significant difference between the two groups (t-statistic = -1.6184, df = 8, p-value = 0.1431).
+
+In this example, the important details of the t-test (the t-statistic, the degrees of freedom, and the p-value) are included in parentheses after giving the mean estimates for the control and treatment groups. This allows the reader to see the key results of the t-test while also providing the relevant details.
+
