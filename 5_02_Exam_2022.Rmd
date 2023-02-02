@@ -52,11 +52,95 @@ Each row of the dataset represents a single day.
 
 a) Produce a graph with points and lines showing how the monthly mean value of the daily temperature varies through the year (i.e. 12 points, 1 for each month).
 
+Import the data:
+```{r}
+kaunas <- read.csv("CourseData/kaunasWeather.csv")
+```
+
+Calculate the montly mean of the daily temperature. I need 12 points - one for each month.
+
+```{r}
+library(tidyverse)
+kaunas_summary <- kaunas %>%
+  group_by(MONTH) %>%
+  summarise(meanTemp = mean(TEMPMEAN))
+```
+
+Make the plot:
+
+```{r}
+ggplot(kaunas_summary, aes(x = MONTH, y = meanTemp)) +
+  geom_point() +
+  geom_line() +
+  xlab("Month") +
+  ylab("Temperature (Celsius)") +
+  scale_x_continuous(breaks = 1:12) +
+  theme_minimal()
+```
+The figure caption could be: "Figure 1. The monthly mean temperature in Kaunas across all available data. The average temperatures are below zero in January and February, rising to a high of around 17.5C in July."
+
+
 b) Produce a graph showing how mean temperature in spring (defined as March, April and May) have changed between 1960 and 2020 (i.e. one point per year).
+
+First I need to filter the data to (A) only include spring months, and (B) only include years 1960-2020. Then I need to group it by YEAR, and then summarise to get the mean temperature.
+
+```{r}
+kaunas_springTemp <- kaunas %>% 
+  filter(MONTH %in% 3:5) %>% 
+  filter(YEAR %in% 1960:2020) %>% 
+  group_by(YEAR) %>% 
+  summarise(meanTemp = mean(TEMPMEAN))
+```
+
+```{r}
+ggplot(kaunas_springTemp,aes(x = YEAR, y = meanTemp)) + 
+  geom_point() +
+  xlab("Year") + 
+  ylab("Mean Spring Temperature (Celsius)")
+
+```
+
+The figure caption could be: "Figure 2. Mean spring temperature between 1960 and 2020 in Kaunas. Although there is a large amount of variation there is an increasing temperature trend over the 60 years of the data."
 
 c) Produce a graph with box plots and jittered points showing daily temperature variation within each month in 2021. (there should be 12 boxes, one for each month).
 
+For this I need to filter the data to include only 2021. Then I can make my plot:
+
+```{r}
+kaunas_2021 <- kaunas %>% 
+  filter(YEAR == 2021) %>% 
+  mutate(MONTH = as.factor(MONTH))
+
+ggplot(kaunas_2021, aes(x = MONTH, y = TEMPMEAN))+
+  geom_boxplot(outlier.shape = NA) + 
+  geom_jitter(width = 0.1, colour = "grey30", alpha = 0.5) +
+  xlab("Month")+ylab("Temperature (Celsius)")
+```
+
+The figure caption could be: "Figure 3. Daily temperature in 2021 in Kaunas. The individual grey points indicate the daily mean temperature, while the box plots summarise the distribution of daily values by month."
+
 d) Produce a graph showing, with points, the number of days per year with storm speed winds (>14 m/s). (i.e. one point per year).
+
+For this I need to count the number of times a wind speed value of >14 occurs per month. There is more than one way of doing this, but this is how I would do it:
+
+```{r}
+kaunas_storm <- kaunas %>% 
+  filter(MXSPD > 14) %>% 
+  group_by(YEAR) %>% 
+  summarise(nDays = n())
+```
+
+Now I can plot that data:
+
+```{r}
+ggplot(kaunas_storm,aes(x = YEAR, y = nDays)) + 
+  geom_point() +
+  xlab("Year")+ 
+  ylab("Number of days with wind speeds > 14m/s")
+```
+
+The figure caption could be: "Figure 4. Number of days per year where wind speeds exceed 14 m/s show a declining trend with time."
+
 
 
 ******
@@ -73,7 +157,67 @@ Use a randomisation test to test whether there is a significant difference in th
 
 a) plot the data (e.g., with a box plot)
 
+```{r}
+lizard <- read.csv("CourseData/Niveoscincus.csv")
+
+ggplot(lizard, aes(x = factor(area), y = snoutVentLength)) +    geom_boxplot() +
+  geom_jitter(width = .2, alpha = 0.4, colour = "black", fill = "black") +
+
+  xlab("Area") +
+  ylab("Length (mm)") + theme_minimal()
+```
+
+
 b) carry out a randomisation test to determine if there is a significant difference in mean size. Write (i) a brief method description and (ii) a summary of the results. 
+
+
+First get the observed difference.
+
+```{r}
+observedDiff <- lizard %>%
+  group_by(area) %>% 
+  summarise(mean = mean(snoutVentLength)) %>% 
+  pull(mean) %>%
+  diff() 
+```
+
+The observed difference is `r observedDiff`
+
+Now get the null distribution:
+
+```{r}
+shuffledDataframe <- data.frame(rep = 1:1000) %>%
+  mutate(shuffledDiffs = replicate(
+    1000,
+    lizard %>%
+      mutate(area = sample(area)) %>%
+      group_by(area) %>%
+      summarise(mean = mean(snoutVentLength)) %>%
+      pull(mean) %>%
+diff() ))
+```
+
+
+Now we can plot the observed value onto this null distribution and check the result.
+
+```{r}
+ggplot(shuffledDataframe, aes(x = shuffledDiffs)) +
+  geom_histogram() +
+  theme_minimal() +
+  xlab("Difference between means") +
+  geom_vline(xintercept = observedDiff)
+
+```
+
+The p-value is the number of times that the 
+
+```{r}
+(result <- table(shuffledDataframe$shuffledDiffs <= observedDiff))
+```
+
+The p-value is defined as the proportion of times that the values inthe null distribution is more extreme than the observed value. i.e. `r as.vector(result[2])`/`as.vector(sum(result))` = `r as.vector(result[2]/sum(result))`.
+
+
 
 ******
 
