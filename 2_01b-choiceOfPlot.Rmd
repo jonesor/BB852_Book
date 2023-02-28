@@ -1,0 +1,86 @@
+## Some guidelines on choice of graphs
+
+Just like the choice of words in a written format can greatly impact the message being conveyed, the choice of graph when representing data can have a similarly significant impact on the interpretation of the data. When selecting a graph, it's important to consider the features of the graph, such as the scales, labels, and overall presentation, as well as the type of graph being used. In much the same way that a well-written report can effectively convey information and insights, a well-crafted graph can do the same for data, enabling a clear and accurate representation of the data that supports analysis and understanding.
+
+Some general guidelines that apply across graph types.
+
+* Show the Data: Avoid "chartjunk" and provide the data in the most unadulterated form possible.
+* Maximize the Data-Ink Ratio: Use the ink to display the data and not to decorate the chart.
+* Facilitate Comparisons: Provide an easy way to compare different elements of the data (e.g. treatment groups)
+* Show Causality: Show the relationships between variables and how changes in one variable affect the others.
+* For Multivariate Data: Consider display more than one variable on the same chart to reveal their relationships (e.g. you could add a 3rd "axis" by using colour or point size).
+
+`ggplot2` makes most of this easy.
+
+### Type of graphs
+
+When representing data, it is important to choose the most appropriate type of plot that accurately reflects the data and supports the message you want to convey. The type of plot you choose will depend on the nature of the data you are working with and the insights you hope to communicate. While there are no hard and fast rules for selecting the right type of plot, there are conventions and norms that have been established through years of statistical and data analysis practice. By considering the conventions and norms, and carefully evaluating the data and message, you can select a plot type that effectively communicates your insights and findings. 
+
+Line charts: Use line charts to show trends over time, such as changes in stock prices, temperatures, or sales. Line charts are best when there are many data points and the trend is not obvious from a bar chart.
+
+Scatterplots: Use scatterplots to show the relationship between two continuous variables. For example, you can use a scatterplot to show the relationship between height and weight, or between temperature and metabolic rate.
+
+Bar plots: Use bar plots to compare categorical data or to show changes over time. For example, you can use a bar chart to compare sales by product, or to show the number of visitors to a website each month. **BUT** - bar plots are not a good choice to summarise data where you also have variation within the category. For example, the mean value of a variable for different treatment groups. This is the case even if you use error bars to express this variation. A better choice in this case is to use a plot type that shows the reader more information about the variation within the groups (e.g. box plots, or box plots with jittered points). 
+
+Box plots: Use box plots to show the distribution of a continuous variable and to identify outliers. Box plots show the median, quartiles, and minimum and maximum values of the data and are a good choice when it is useful to understand distributions.
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+set.seed(23)
+sampleSize <- 50
+data <- data.frame(
+  group = rep(LETTERS[1:3], each = sampleSize),
+  value = c(rnorm(sampleSize, 70, 20), rnorm(sampleSize, 100, 30), rnorm(sampleSize, 160, 20))
+)
+
+A <- ggplot(data, aes(x = group,y = value)) +
+  ylim(0, 220) + 
+  geom_boxplot(outlier.shape = NA) + 
+  geom_jitter(width = 0.2, colour = "grey20", alpha = 0.7)
+A  
+
+```
+
+
+Histograms and density plots: Use histograms to show the distribution of a continuous variable. For example, you can use a histogram to show the distribution of exam scores, or the distribution of heights in a population. They can also be a good choice when you want to compare distributions of different groups. Density plots serve a similar purpose to histograms and show the "density" of density along the continuous variable. These two types are shown for the same data, comparing three groups, below.
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+
+
+
+B <- A + geom_histogram(position = "identity", alpha = 0.5)
+
+
+C <- A + geom_density(alpha = 0.5, colour = NA)
+
+B + ggtitle("A histogram") | C + ggtitle("A density plot")
+```
+
+
+Pie charts: Pie charts are intended to show proportions of a whole, such as the distribution of expenditures in a budget. However, they are highly criticised by data visualisation experts for a number of good reasons. Most importantly, it can be difficult to accurately judge the proportion of each section. An alternative would be a simple bar plot, as illustrated below. TLDR: Avoid pie charts!
+
+```{r, echo = FALSE, message=FALSE}
+data <- data.frame(
+  group = LETTERS[1:6],
+  value = c(13, 7, 9, 8, 21, 2)
+)
+
+# Basic piechart
+A <- ggplot(data, aes(x = "", y = value, fill = group)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y", start = 0)
+
+B <- ggplot(data, aes(x = group, y = value)) +
+  geom_bar(stat = "identity")
+
+require(patchwork)
+
+A | B
+```
+
+
+Small Slices: In biology, you may be working with data that has many categories, each represented by a small slice in a pie chart. This can make it difficult to accurately interpret the size of each slice and the proportion of each category.
+Limited Data Representation: Pie charts are limited to representing only one variable. In biology, you may need to represent multiple variables in a single chart, and pie charts may not be the best option for this task.
+Misleading Representations: Pie charts can be misleading if the data is not presented accurately. This can be a major problem in biology, where accurate data representation is crucial for making informed conclusions and decisions.
+Lack of Precision: Pie charts can be imprecise, especially when the data is divided into many small slices. This can be a problem in biology, where precision is essential for making accurate conclusions and predictions.
+Alternatives: There are often better alternatives to pie charts in biology, such as bar charts or stacked bar charts, which can more accurately represent the size of each category and allow for easy comparisons between categories.
+In conclusion, while pie charts can be a useful tool in some situations, it's important for 
