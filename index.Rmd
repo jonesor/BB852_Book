@@ -88,8 +88,8 @@ These materials are inspired by the excellent textbook, "Getting Started With R"
 ```{r, echo = FALSE, message=FALSE, results='hide'}
 # Copy potential files over from PotentialCourseData
 # These will then be checked, and only the ones that are actually used will be retained.
-system("rm ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/CourseData/classData.csv")
-system("cp -r ~/Dropbox/_SDU_Teaching/BB852/DataSetLibrary/*.csv ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/CourseData/")
+#system("rm ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/CourseData/classData.csv")
+#system("cp -r ~/Dropbox/_SDU_Teaching/BB852/DataSetLibrary/*.csv ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/CourseData/")
 ```
 
 ```{r, echo = FALSE, message=FALSE, results='hide'}
@@ -121,19 +121,23 @@ write.csv(x = dataSetsUsed, file = "dataSetsUsed.csv", row.names = FALSE)
 
 # list.files mentioned in course materials
 currentFiles <- list.files(path = "CourseData/")
-delFiles <- paste0("CourseData/", currentFiles[which(!currentFiles %in% dataSetsUsed$name)])
+currentFilesNotUsed <- currentFiles[which(!currentFiles %in% dataSetsUsed$name)]
 
-#Add extra files that should be there even though not mentioned in book text
-delFiles <- delFiles[!delFiles %in% c("CourseData/birds.csv")]
+if (length(currentFilesNotUsed) > 0) {
+  delFiles <- paste0("CourseData/", currentFilesNotUsed)
+
+  # Add extra files that should be there even though not mentioned in book text
+  delFiles <- delFiles[!delFiles %in% c("CourseData/birds.csv")]
+
+  # Remove files that are not mentioned in the course.
+  if (!delFiles[1] == "CourseData/") {
+    file.remove(delFiles)
+  }
+}
 
 # Missing files: mentioned in materials but not available
 missingFiles <- dataSetsUsed$name[!dataSetsUsed$name %in% currentFiles]
 dataSetsMissing <- data.frame(name = missingFiles) %>%
   filter(!name %in% c("SDUweather.csv"))
 write.csv(x = dataSetsMissing, file = "dataSetsMissing.csv", row.names = FALSE)
-
-# Remove files that are not mentioned in the course.
-if (!delFiles[1] == "CourseData/") {
-  file.remove(delFiles)
-}
 ```

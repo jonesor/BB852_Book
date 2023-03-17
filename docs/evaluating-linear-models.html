@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 19 Evaluating linear models | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 19 Evaluating linear models | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2022-11-30" />
+<meta name="date" content="2023-03-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+<link href="libs/tabwid-1.0.0/scrool.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -353,7 +354,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Exam</b></span></li>
-<li class="chapter" data-level="23" data-path="exam-2022.html"><a href="exam-2022.html"><i class="fa fa-check"></i><b>23</b> Exam 2022</a></li>
+<li class="chapter" data-level="23" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html"><i class="fa fa-check"></i><b>23</b> Re-exam March 2023</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html#moths-and-butterflies-10-points"><i class="fa fa-check"></i><b>23.1</b> 1) Moths and butterflies (10 points)</a></li>
+<li class="chapter" data-level="23.2" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html#sex-difference-in-dispersal-10-points"><i class="fa fa-check"></i><b>23.2</b> 2) Sex difference in dispersal (10 points)</a></li>
+<li class="chapter" data-level="23.3" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html#power-in-a-field-study-10-points"><i class="fa fa-check"></i><b>23.3</b> 3) Power in a field study (10 points)</a></li>
+<li class="chapter" data-level="23.4" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html#mussels-20-points"><i class="fa fa-check"></i><b>23.4</b> 4) Mussels (20 points)</a></li>
+</ul></li>
 <li class="part"><span><b>V Solutions</b></span></li>
 <li class="chapter" data-level="24" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>24</b> Exercise Solutions</a>
 <ul>
@@ -366,13 +373,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>24.7</b> Therapy for anorexia</a></li>
 <li class="chapter" data-level="24.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>24.8</b> Compare t-tests with randomisation tests</a></li>
 <li class="chapter" data-level="24.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>24.9</b> Apple tree crop yield</a></li>
-<li class="chapter" data-level="24.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>24.10</b> Chirping crickets</a></li>
-<li class="chapter" data-level="24.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>24.11</b> Fish behaviour</a></li>
-<li class="chapter" data-level="24.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#maze-runner"><i class="fa fa-check"></i><b>24.12</b> Maze runner</a></li>
-<li class="chapter" data-level="24.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>24.13</b> Snails on the move</a></li>
-<li class="chapter" data-level="24.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>24.14</b> Mouse lemur strength</a></li>
+<li class="chapter" data-level="24.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#analysis-of-deviance-table"><i class="fa fa-check"></i><b>24.10</b> Analysis of Deviance Table</a></li>
+<li class="chapter" data-level="24.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section"><i class="fa fa-check"></i><b>24.11</b> </a></li>
+<li class="chapter" data-level="24.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#model-poisson-link-log"><i class="fa fa-check"></i><b>24.12</b> Model: poisson, link: log</a></li>
+<li class="chapter" data-level="24.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-1"><i class="fa fa-check"></i><b>24.13</b> </a></li>
+<li class="chapter" data-level="24.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#response-noffspring"><i class="fa fa-check"></i><b>24.14</b> Response: noffspring</a></li>
+<li class="chapter" data-level="24.15" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-2"><i class="fa fa-check"></i><b>24.15</b> </a></li>
+<li class="chapter" data-level="24.16" data-path="exercise-solutions.html"><a href="exercise-solutions.html#terms-added-sequentially-first-to-last"><i class="fa fa-check"></i><b>24.16</b> Terms added sequentially (first to last)</a></li>
+<li class="chapter" data-level="24.17" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-3"><i class="fa fa-check"></i><b>24.17</b> </a></li>
+<li class="chapter" data-level="24.18" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-4"><i class="fa fa-check"></i><b>24.18</b> </a></li>
+<li class="chapter" data-level="24.19" data-path="exercise-solutions.html"><a href="exercise-solutions.html#df-deviance-resid.-df-resid.-dev-prchi"><i class="fa fa-check"></i><b>24.19</b> Df Deviance Resid. Df Resid. Dev Pr(&gt;Chi)</a></li>
+<li class="chapter" data-level="24.20" data-path="exercise-solutions.html"><a href="exercise-solutions.html#null-99-166.84"><i class="fa fa-check"></i><b>24.20</b> NULL 99 166.84</a></li>
+<li class="chapter" data-level="24.21" data-path="exercise-solutions.html"><a href="exercise-solutions.html#weight-1-44.124-98-122.72-3.082e-11"><i class="fa fa-check"></i><b>24.21</b> weight 1 44.124 98 122.72 3.082e-11 ***</a></li>
+<li class="chapter" data-level="24.22" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-5"><i class="fa fa-check"></i><b>24.22</b> —</a></li>
+<li class="chapter" data-level="24.23" data-path="exercise-solutions.html"><a href="exercise-solutions.html#signif.-codes-0-0.001-0.01-0.05-.-0.1-1"><i class="fa fa-check"></i><b>24.23</b> Signif. codes: 0 ‘<em><strong>’ 0.001 ’</strong>’ 0.01 ’</em>’ 0.05 ‘.’ 0.1 ’ ’ 1</a></li>
+<li class="chapter" data-level="24.24" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-6"><i class="fa fa-check"></i><b>24.24</b> </a></li>
+<li class="chapter" data-level="24.25" data-path="exercise-solutions.html"><a href="exercise-solutions.html#call"><i class="fa fa-check"></i><b>24.25</b> Call:</a></li>
+<li class="chapter" data-level="24.26" data-path="exercise-solutions.html"><a href="exercise-solutions.html#glmformula-noffspring-weight-family-poisson-data-fox"><i class="fa fa-check"></i><b>24.26</b> glm(formula = noffspring ~ weight, family = poisson, data = fox)</a></li>
+<li class="chapter" data-level="24.27" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-7"><i class="fa fa-check"></i><b>24.27</b> </a></li>
+<li class="chapter" data-level="24.28" data-path="exercise-solutions.html"><a href="exercise-solutions.html#deviance-residuals"><i class="fa fa-check"></i><b>24.28</b> Deviance Residuals:</a></li>
+<li class="chapter" data-level="24.29" data-path="exercise-solutions.html"><a href="exercise-solutions.html#min-1q-median-3q-max"><i class="fa fa-check"></i><b>24.29</b> Min 1Q Median 3Q Max</a></li>
+<li class="chapter" data-level="24.30" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-8"><i class="fa fa-check"></i><b>24.30</b> -2.3891 -0.9719 -0.1183 0.5897 2.3426</a></li>
+<li class="chapter" data-level="24.31" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-9"><i class="fa fa-check"></i><b>24.31</b> </a></li>
+<li class="chapter" data-level="24.32" data-path="exercise-solutions.html"><a href="exercise-solutions.html#coefficients"><i class="fa fa-check"></i><b>24.32</b> Coefficients:</a></li>
+<li class="chapter" data-level="24.33" data-path="exercise-solutions.html"><a href="exercise-solutions.html#estimate-std.-error-z-value-prz"><i class="fa fa-check"></i><b>24.33</b> Estimate Std. Error z value Pr(&gt;|z|)</a></li>
+<li class="chapter" data-level="24.34" data-path="exercise-solutions.html"><a href="exercise-solutions.html#intercept--0.74981-0.31107--2.410-0.0159"><i class="fa fa-check"></i><b>24.34</b> (Intercept) -0.74981 0.31107 -2.410 0.0159 *</a></li>
+<li class="chapter" data-level="24.35" data-path="exercise-solutions.html"><a href="exercise-solutions.html#weight-0.63239-0.09502-6.655-2.83e-11"><i class="fa fa-check"></i><b>24.35</b> weight 0.63239 0.09502 6.655 2.83e-11 ***</a></li>
+<li class="chapter" data-level="24.36" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-10"><i class="fa fa-check"></i><b>24.36</b> —</a></li>
+<li class="chapter" data-level="24.37" data-path="exercise-solutions.html"><a href="exercise-solutions.html#signif.-codes-0-0.001-0.01-0.05-.-0.1-1-1"><i class="fa fa-check"></i><b>24.37</b> Signif. codes: 0 ‘<em><strong>’ 0.001 ’</strong>’ 0.01 ’</em>’ 0.05 ‘.’ 0.1 ’ ’ 1</a></li>
+<li class="chapter" data-level="24.38" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-11"><i class="fa fa-check"></i><b>24.38</b> </a></li>
+<li class="chapter" data-level="24.39" data-path="exercise-solutions.html"><a href="exercise-solutions.html#dispersion-parameter-for-poisson-family-taken-to-be-1"><i class="fa fa-check"></i><b>24.39</b> (Dispersion parameter for poisson family taken to be 1)</a></li>
+<li class="chapter" data-level="24.40" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-12"><i class="fa fa-check"></i><b>24.40</b> </a></li>
+<li class="chapter" data-level="24.41" data-path="exercise-solutions.html"><a href="exercise-solutions.html#null-deviance-166.85-on-99-degrees-of-freedom"><i class="fa fa-check"></i><b>24.41</b> Null deviance: 166.85 on 99 degrees of freedom</a></li>
+<li class="chapter" data-level="24.42" data-path="exercise-solutions.html"><a href="exercise-solutions.html#residual-deviance-122.72-on-98-degrees-of-freedom"><i class="fa fa-check"></i><b>24.42</b> Residual deviance: 122.72 on 98 degrees of freedom</a></li>
+<li class="chapter" data-level="24.43" data-path="exercise-solutions.html"><a href="exercise-solutions.html#aic-405.56"><i class="fa fa-check"></i><b>24.43</b> AIC: 405.56</a></li>
+<li class="chapter" data-level="24.44" data-path="exercise-solutions.html"><a href="exercise-solutions.html#section-13"><i class="fa fa-check"></i><b>24.44</b> </a></li>
+<li class="chapter" data-level="24.45" data-path="exercise-solutions.html"><a href="exercise-solutions.html#number-of-fisher-scoring-iterations-5"><i class="fa fa-check"></i><b>24.45</b> Number of Fisher Scoring iterations: 5</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Exam (2020)</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
