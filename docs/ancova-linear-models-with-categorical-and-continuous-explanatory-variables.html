@@ -360,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="23" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>23</b> An example of a past Exam (2020)</a></li>
 <li class="part"><span><b>V Exam</b></span></li>
-<li class="chapter" data-level="24" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html"><i class="fa fa-check"></i><b>24</b> Re-exam March 2023</a></li>
+<li class="chapter" data-level="24" data-path="exam-december-2023.html"><a href="exam-december-2023.html"><i class="fa fa-check"></i><b>24</b> Exam December 2023</a></li>
 <li class="part"><span><b>VI Solutions</b></span></li>
 <li class="chapter" data-level="25" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>25</b> Exercise Solutions</a>
 <ul>
@@ -451,7 +451,7 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 <p>The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size. Nevertheless, lets keep with good habits:</p>
 <div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb399-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb399-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-268-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-378-1.png" width="672" /></p>
 <p>These look good. No evidence of non-normality in the residuals, no heteroscedasticity and no weird outliers.</p>
 </div>
 <div id="summarising-with-anova" class="section level2 hasAnchor" number="16.2">
@@ -471,7 +471,7 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 <p>This type of <em>sequential sum of squares</em> Analysis of Variance table should be getting fairly familiar to you now, but let’s unpack what this means. There are four rows in the summary table - one for each of the terms in the model (<code>HandWidth</code>, <code>Gender</code> and <code>HandWidth:Gender</code>), and one for the <code>Residuals</code> (the unexplained variation that remains after fitting the model). The table includes degrees of freedom (<code>Df</code>), sum of squares (<code>Sum Sq</code>), mean sum of squares (<code>Mean Sq</code>) and the associated F and p-values (<code>F value</code> and <code>Pr(&gt;F)</code>.</p>
 <p>You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by a model that includes a common slope for both genders (471.13) . Then it tells us that an <em>additional</em> bit of variation 881.6 is captured if we allow the intercepts to vary with gender. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the genders 3.65. Finally, there is a bit of unexplained variation left over (Residuals) 26.29. So you can see that hand width explains most variation, followed by gender, followed by the interaction between them.</p>
 <p>You would report from this table something like this:</p>
-<p>Hand width and gender both explain a significant amount of the variation in height (ANCOVA - Handwidth: F = 33.536, d.f. = 1 and 29, p&lt;0.001; Gender: 17.922, d.f. = 1 and 29, p&lt;0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand width and height are not significantly different from eachother (ANCOVA - F = 17.922, d.f. = 1 and 29, p = 0.712.</p>
+<p>Hand width and gender both explain a significant amount of the variation in height (ANCOVA - Handwidth: F = 33.536, d.f. = 1 and 29, p&lt;0.001; Gender: 17.922, d.f. = 1 and 29, p&lt;0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand width and height are not significantly different from each other (ANCOVA - F = 17.922, d.f. = 1 and 29, p = 0.712.</p>
 <p>It is of course useful to take the interpretation a bit further. You could do this with reference to the plot - e.g. <em>Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller.</em></p>
 </div>
 <div id="the-summary-of-coefficients-summary" class="section level2 hasAnchor" number="16.3">
@@ -507,9 +507,9 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 <p>We could add these equations to our reporting of the results.</p>
 <p><em>Figure X shows the clear positive relationship between hand width and height and shows that the intercept for females is smaller than that for males. This which means that, for a given hand width, males tend to be taller. The model fit for males is Height = ____<span class="math inline">\(\times\)</span>HandWidth + ____and the fit for females is Height = ____<span class="math inline">\(\times\)</span>HandWidth + ____</em></p>
 <p>You could check these by using <code>geom_abline</code> to add lines with those equations to the plot (just as a “sanity check”).</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-1" aria-hidden="true" tabindex="-1"></a>A <span class="sc">+</span></span>
-<span id="cb404-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> ____, <span class="at">slope =</span> ____) <span class="sc">+</span></span>
-<span id="cb404-3"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> ____, <span class="at">slope =</span> ____)</span></code></pre></div>
+<pre><code>A +
+  geom_abline(intercept = ____, slope = ____) +
+  geom_abline(intercept = ____, slope = ____)</code></pre>
 <p>At the bottom of the <code>summary</code> output we are given the <span class="math inline">\(R^2\)</span> values. Because this model has several terms (i.e. variables) in it we should use the adjusted <span class="math inline">\(R^2\)</span> values. These have been corrected for the fact that the model has extra explanatory variables. So in this case, we could report that the model explains 60.30% of variation in Height (Adjusted <span class="math inline">\(R^2\)</span> = 0.60 - not bad!</p>
 <p>So, to describe this <code>summary</code> table more generally - the coefficients can be slopes, intercepts, differences between slopes, and differences between intercepts. They are slopes and intercepts for the first level of the categorical variable, and for the subsequent levels they are differences. Piecing these together can be hard to figure out without reference to the plot of the data and model fits - another good reason to plot your data!</p>
 </div>
@@ -581,7 +581,7 @@ Figure 16.2: ANCOVA on hand width vs. height data in males and females
 <span id="cb413-4"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-4" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb413-5"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb413-6"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb413-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> predictData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-278-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-387-1.png" width="432" style="display: block; margin: auto;" /></p>
 <p>We could report this in the usual way but first saying something like: <em>“The interaction term was not significant (F = ____, d.f. 1 and ____, p = ____) and I therefore simplified the model to remove this term. The resulting model with just HandWidth and Gender …”</em></p>
 
 </div>

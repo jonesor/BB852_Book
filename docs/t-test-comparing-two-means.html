@@ -360,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="23" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>23</b> An example of a past Exam (2020)</a></li>
 <li class="part"><span><b>V Exam</b></span></li>
-<li class="chapter" data-level="24" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html"><i class="fa fa-check"></i><b>24</b> Re-exam March 2023</a></li>
+<li class="chapter" data-level="24" data-path="exam-december-2023.html"><a href="exam-december-2023.html"><i class="fa fa-check"></i><b>24</b> Exam December 2023</a></li>
 <li class="part"><span><b>VI Solutions</b></span></li>
 <li class="chapter" data-level="25" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>25</b> Exercise Solutions</a>
 <ul>
@@ -623,8 +623,8 @@ Figure 13.6: A two-sample t-test.
 So far so good… let’s push on and use R to do some statistics.</p>
 <p>In this example, we can revisit the class data and ask the question, <em>Is the reaction time of males different than that of females?</em> The null hypothesis for this question is that there is no difference in mean reaction times between the two groups. The alternative hypothesis is that there <strong>is</strong> a difference in the mean reaction time between the two groups.</p>
 <p>Import the data in the usual way, and subset it to the right year (in the example below I am using 2019 data).</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="t-test-comparing-two-means.html#cb332-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb332-2"><a href="t-test-comparing-two-means.html#cb332-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="t-test-comparing-two-means.html#cb332-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb332-2"><a href="t-test-comparing-two-means.html#cb332-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb332-3"><a href="t-test-comparing-two-means.html#cb332-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span></code></pre></div>
 <p>Then look at the data. Here I do this using a box plot with jittered points (a nice way of plotting data with small sample sizes) (Figure <a href="t-test-comparing-two-means.html#fig:reactionData">13.7</a>). From Figure <a href="t-test-comparing-two-means.html#fig:reactionData">13.7</a> it looks like males have a faster reaction time than females, but there is a lot of variation. We need to apply the t-test in a similar way to above.</p>
 <div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="t-test-comparing-two-means.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(x, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Reaction)) <span class="sc">+</span></span>

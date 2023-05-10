@@ -360,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="23" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>23</b> An example of a past Exam (2020)</a></li>
 <li class="part"><span><b>V Exam</b></span></li>
-<li class="chapter" data-level="24" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html"><i class="fa fa-check"></i><b>24</b> Re-exam March 2023</a></li>
+<li class="chapter" data-level="24" data-path="exam-december-2023.html"><a href="exam-december-2023.html"><i class="fa fa-check"></i><b>24</b> Exam December 2023</a></li>
 <li class="part"><span><b>VI Solutions</b></span></li>
 <li class="chapter" data-level="25" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>25</b> Exercise Solutions</a>
 <ul>
@@ -430,11 +430,11 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and
 correctly.
 </p>
 </div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-297-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-406-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).</p>
 <div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalised-linear-models.html#cb442-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(noffspring <span class="sc">~</span> weight, <span class="at">data =</span> fox, <span class="at">family =</span> poisson)</span></code></pre></div>
 <p>After fitting the model it is a good idea to look at the model diagnostics, using <code>autoplot</code> from the <code>ggfortify</code> package.</p>
-<p><img src="BB852_files/figure-html/unnamed-chunk-299-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-408-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>These diagnostic plots are, basically, the same as the ones you saw for <code>lm</code> models. There is one difference and that is that the plots use something called standardised <em>deviance</em> residuals instead of just standardised residuals. These are transformed versions of the residuals that will look <em>normal</em> (in the statistical sense) if the family of hte GLM is appropriate. So, if “poisson” is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.</p>
 <p>Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using the <code>test = "F"</code> or <code>test = "Chi"</code>. For Poisson and binomial GLMs the chi-squared test is most appropriate while for Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.</p>
 <div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalised-linear-models.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
@@ -514,7 +514,7 @@ before plotting. See below.
 <span id="cb450-5"><a href="generalised-linear-models.html#cb450-5" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">fill =</span> <span class="st">&quot;grey75&quot;</span>) <span class="sc">+</span></span>
 <span id="cb450-6"><a href="generalised-linear-models.html#cb450-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb450-7"><a href="generalised-linear-models.html#cb450-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> newData, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-305-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-414-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>So we could summarise this something like this:</p>
 <p>Methods: <em>I modelled the association between mother’s weight and number of pups produced using a generalised linear model with a log link and Poisson error structure. This is appropriate because the data are count data (number of pups) that are bounded at 0 with increasing variance with increased maternal weight.</em></p>
 <p>Results: <em>The GLM showed that maternal weight was significantly associated with the number of pups produced (GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p &lt;0.001). The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63 <span class="math inline">\(\times\)</span> MotherWeight (see Figure XXX)</em></p>
@@ -528,12 +528,12 @@ before plotting. See below.
 <span id="cb451-2"><a href="generalised-linear-models.html#cb451-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb451-3"><a href="generalised-linear-models.html#cb451-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cancer, <span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> Cancers)) <span class="sc">+</span></span>
 <span id="cb451-4"><a href="generalised-linear-models.html#cb451-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-306-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-415-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Again, you will notice that the data are formed into horizontal rows of integer response values. There are lots of zero values at all distances, but the biggest cluster (6 cases), is very close to the plant. But is there a relationship between the distance from the nuclear plant and the number of cancers?</p>
 <p>Let’s fit a Generalised Linear Model to find out. As before will assume that the error is Poisson (that they variance increases directly in proportion to the mean), and we will use the standard log link to ensure that we don’t predict negative values:</p>
 <div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="generalised-linear-models.html#cb452-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Cancers <span class="sc">~</span> Distance, <span class="at">data =</span> cancer, <span class="at">family =</span> poisson)</span></code></pre></div>
 <p>Next, plot the diagnostic plots.</p>
-<p><img src="BB852_files/figure-html/unnamed-chunk-308-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-417-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>These look a bit dodgy, but we’ll stick with it for the moment.</p>
 <p>Next ask for the Analysis of Variance table.</p>
 <div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="generalised-linear-models.html#cb453-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>

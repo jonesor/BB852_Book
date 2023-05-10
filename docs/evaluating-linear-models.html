@@ -360,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="23" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>23</b> An example of a past Exam (2020)</a></li>
 <li class="part"><span><b>V Exam</b></span></li>
-<li class="chapter" data-level="24" data-path="re-exam-march-2023.html"><a href="re-exam-march-2023.html"><i class="fa fa-check"></i><b>24</b> Re-exam March 2023</a></li>
+<li class="chapter" data-level="24" data-path="exam-december-2023.html"><a href="exam-december-2023.html"><i class="fa fa-check"></i><b>24</b> Exam December 2023</a></li>
 <li class="part"><span><b>VI Solutions</b></span></li>
 <li class="chapter" data-level="25" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>25</b> Exercise Solutions</a>
 <ul>
@@ -406,10 +406,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There are some additional useful points to consider: proportion of variance explained (R-squared value), proportion of variance explained <em>by different variables in the model</em>, Akaike’s Information Criterion (and likelihood).</p>
 <p>During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? which ones should you include? Would a log-transformed explanatory variable be better?</p>
 <p>We will use the class data to look at these topics (download the latest version please!).</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="evaluating-linear-models.html#cb427-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="evaluating-linear-models.html#cb427-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb427-2"><a href="evaluating-linear-models.html#cb427-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> <span class="co"># you can edit this to look at particular years.</span></span>
-<span id="cb427-3"><a href="evaluating-linear-models.html#cb427-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb427-4"><a href="evaluating-linear-models.html#cb427-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(HandWidth)) <span class="co">#Filter out NA</span></span></code></pre></div>
+<span id="cb427-3"><a href="evaluating-linear-models.html#cb427-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb427-4"><a href="evaluating-linear-models.html#cb427-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(HandWidth)) <span class="co"># Filter out NA</span></span></code></pre></div>
 <div id="r-squared-value" class="section level2 hasAnchor" number="18.1">
 <h2><span class="header-section-number">18.1</span> R-squared value<a href="evaluating-linear-models.html#r-squared-value" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s fit a simple model: <code>Height ~ HandWidth + Gender</code></p>
@@ -436,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## F-statistic: 26.49 on 2 and 30 DF,  p-value: 2.357e-07</code></pre>
 <p>The model summary here shows us the R-squared value, which is a measure of the proportion of variation in the response variable that is explained by variation in the explanatory variable(s). In a linear regression, an r-squared value of 1 (100%) would mean that all data points fall on the line. As the r-squared value declines, there exists more noise in the relationship (i.e. the points become more spread out around the line).</p>
 <p>There are two type of R-squared value shown in this summary: Multiple R-squared (0.6385) and Adjusted R-squared 0.6144.</p>
-<p>We’ll look at Multiple R-squared first. This value is calculated as the amount of explained variation divided by the total amount of variation. Take a look at the anova summary table:</p>
+<p>We’ll look at multiple R-squared first. This value is calculated as the amount of explained variation divided by the total amount of variation. Take a look at the anova summary table:</p>
 <div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="evaluating-linear-models.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
@@ -447,11 +447,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Residuals 30 766.00   25.53                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Here, the column labelled <code>Sum Sq</code> is telling us what the variance EXPLAINED by each of the terms is. The final entry, for <code>Residuals</code>, is the amount NOT explained (hence “residual”). THerefore we can calculate R-squared from this as (881.6 + 471.1) / (881.6 + 471.1 + 766) = 0.6384575. You can check that this matches the figure indicated by <code>summary(mod1)</code>.</p>
+<p>Here, the column labelled <code>Sum Sq</code> is telling us what the variance EXPLAINED by each of the terms is. The final entry, for <code>Residuals</code>, is the amount <strong>not</strong> explained (hence “residual”). Therefore we can calculate R-squared from this as (881.6 + 471.1) / (881.6 + 471.1 + 766) = 0.6384575. You can check that this matches the figure indicated by <code>summary(mod1)</code>.</p>
 <p>But what is the Adjusted R-squared?</p>
 <p>Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. Therefore it accurately measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will <em>always</em> increase because terms will <em>always</em> explain some portion of the variance, even if it is vary small. This behaviour can be a bit annoying, and so adjusted R-squared controls against this increase, by adding penalties for the number of predictors in the model. When reporting R-squared values for models with &gt;1 term you should report the adjusted R-squared value.</p>
-<p>You can test this by adding terms to the model. Let’s start with something silly - we’ll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the Multiple R-squared value?</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="evaluating-linear-models.html#cb432-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> classData <span class="sc">%&gt;%</span> </span>
+<p>You can test this by adding terms to the model. Let’s start with something silly - we’ll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?</p>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="evaluating-linear-models.html#cb432-1" aria-hidden="true" tabindex="-1"></a>classData <span class="ot">&lt;-</span> classData <span class="sc">%&gt;%</span></span>
 <span id="cb432-2"><a href="evaluating-linear-models.html#cb432-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">randomVariable =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(classData)))</span>
 <span id="cb432-3"><a href="evaluating-linear-models.html#cb432-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb432-4"><a href="evaluating-linear-models.html#cb432-4" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender <span class="sc">+</span> randomVariable, <span class="at">data =</span> classData)</span>
@@ -497,7 +497,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb438-6"><a href="evaluating-linear-models.html#cb438-6" aria-hidden="true" tabindex="-1"></a>mod6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> randomVariable, <span class="at">data =</span> classData)</span>
 <span id="cb438-7"><a href="evaluating-linear-models.html#cb438-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb438-8"><a href="evaluating-linear-models.html#cb438-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb438-9"><a href="evaluating-linear-models.html#cb438-9" aria-hidden="true" tabindex="-1"></a>(AICtable<span class="ot">&lt;-</span><span class="fu">AIC</span>(mod1,mod2,mod3,mod4,mod5,mod6) <span class="sc">%&gt;%</span> </span>
+<span id="cb438-9"><a href="evaluating-linear-models.html#cb438-9" aria-hidden="true" tabindex="-1"></a>(AICtable <span class="ot">&lt;-</span> <span class="fu">AIC</span>(mod1, mod2, mod3, mod4, mod5, mod6) <span class="sc">%&gt;%</span></span>
 <span id="cb438-10"><a href="evaluating-linear-models.html#cb438-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(AIC))</span></code></pre></div>
 <pre><code>##      df      AIC
 ## mod1  4 205.4242
@@ -528,7 +528,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 The proportion of variance explained by HandWidth is 881.6/(881.6 + 471.1) = 0.6517336.</p>
 <p>Similarly, the proportion of variance explained by Gender is 471.1/(881.6 + 471.1) = 0.3482664.</p>
 <p>In more complicated multiple regression one could use this approach to further group variables into types so one could e.g., one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level, for example. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of “types”, such as “genetic”, “morphological” and “diet”. Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.</p>
-<p>The logical process is the same for Generalised Linear Models (GLM), which we will cover soon, except we use an analagous quantity called <code>Deviance</code> rather than Sum of Squares.</p>
+<p>The logical process is the same for Generalised Linear Models (GLM), which we will cover soon, except we use an analogous quantity called <code>Deviance</code> rather than Sum of Squares.</p>
 </div>
 <div id="conclusion" class="section level2 hasAnchor" number="18.4">
 <h2><span class="header-section-number">18.4</span> Conclusion<a href="evaluating-linear-models.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
