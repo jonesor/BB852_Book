@@ -7,7 +7,6 @@ In a simple case, you might be interested in a model with a continuous response 
 Some of these different possible outcomes of this type of analysis are illustrated in Figure \@ref(fig:possibilities). We might see that neither of the two explanatory variables has a significant effect. We might see that one of them does but not the other one. We might see an interaction effect (where the effect of one variable (e.g. hand width) depends on the other (e.g gender). We might also see an interaction effect but no main effect.
 
 ```{r, ANCOVApossibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
-
 fakeData <- expand.grid(contVar = c(1, 5), categVar = c("A", "B"))
 
 # No effect of contVar nor categVar
@@ -164,7 +163,7 @@ anova(mod_A)
 This type of *sequential sum of squares* Analysis of Variance table should be getting fairly familiar to you now, but let's unpack what this means. There are four rows in the summary table - one for each of the terms in the model (`HandWidth`, `Gender` and `HandWidth:Gender`), and one for the `Residuals` (the unexplained variation that remains after fitting the model). The table includes degrees of freedom (`Df`), sum of squares (`Sum Sq`), mean sum of squares (`Mean Sq`) and the associated F and p-values (`F value` and `Pr(>F)`. 
 
 ```{r echo = FALSE}
-x<-anova(mod_A)
+x <- anova(mod_A)
 ```
 
 You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by a model that includes a common slope for both genders (`r round(x$'Mean Sq'[2],2)`) . Then it tells us that an *additional* bit of variation `r round(x$'Mean Sq'[1],2)` is captured if we allow the intercepts to vary with gender. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the genders `r round(x$'Mean Sq'[3],2)`. Finally, there is a bit of unexplained variation left over (Residuals) `r round(x$'Mean Sq'[4],2)`. So you can see that hand width explains most variation, followed by gender, followed by the interaction between them.
@@ -205,7 +204,7 @@ We could add these equations to our reporting of the results.
 
 You could check these by using `geom_abline` to add lines with those equations to the plot (just as a "sanity check").
 
-```{r, eval = FALSE, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht"}
+```
 A +
   geom_abline(intercept = ____, slope = ____) +
   geom_abline(intercept = ____, slope = ____)
