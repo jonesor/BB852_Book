@@ -311,20 +311,19 @@ result <- data.frame(result = sample(diceRoll, n, replace = TRUE))
 
 A <- ggplot(result, aes(x = result)) +
   geom_bar() +
-  geom_abline(intercept = n / 6, slope = 0) + 
+  geom_abline(intercept = n / 6, slope = 0) +
   ggtitle("n = 30")
 
 set.seed(2)
-n <- 9000 #Vary this number
+n <- 9000 # Vary this number
 result <- data.frame(result = sample(diceRoll, n, replace = TRUE))
 
 B <- ggplot(result, aes(x = result)) +
   geom_bar() +
-  geom_abline(intercept = n / 6, slope = 0) + 
+  geom_abline(intercept = n / 6, slope = 0) +
   ggtitle("n = 9000")
 
 A + B
-
 ```
 
 
@@ -377,7 +376,6 @@ plot1 + geom_vline(xintercept = meanVals, colour = c("red", "blue"))
 7. Now calculate the difference between the mean values using `dplyr` tools, or `tapply`.
 
 ```{r}
-
 # with dplyr
 hercules %>%
   group_by(sex) %>%
@@ -487,7 +485,7 @@ Carry out a two-sample t-test.
 
 ```{r,echo = -1,cache=TRUE}
 set.seed(12)
-classData <- read.csv("CourseData/classData.csv") %>% 
+classData <- read.csv("CourseData/classData.csv") %>%
   filter(Gender %in% c("Male", "Female"))
 
 ggplot(classData, aes(x = Gender, y = Precision)) +
