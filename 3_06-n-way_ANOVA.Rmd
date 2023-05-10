@@ -169,7 +169,6 @@ insectDiet_means
 Then you can make a simple plot of this information by plotting points, and lines joining them:
 
 ```{r, interactionPlot,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
-
 (A <- ggplot(
   insectDiet_means,
   aes(x = genotype, y = MeanLength, colour = diet, group = diet)
@@ -181,7 +180,6 @@ Then you can make a simple plot of this information by plotting points, and line
 You could add error bars to the points by adding a line defining the `ymin` and `ymax` values from the data summary like this:
 
 ```{r, errorBars,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
-
 ggplot(
   insectDiet_means,
   aes(
