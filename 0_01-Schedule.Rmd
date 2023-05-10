@@ -25,7 +25,7 @@ library(magrittr)
 library(dplyr)
 library(calendar)
 
-system("cp -r ~/Dropbox/_SDU_Teaching/BB852/'Course Documents'/BB852_Schedule.xlsx ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/BB852_Schedule.xlsx")
+# The BB852_Schedule.xlsx file is where I plan the course "by day"
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 ```
 
@@ -34,7 +34,8 @@ schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 ics_files <- list.files(pattern = "*.ics")
 file.remove(ics_files)
 
-curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e22/e22", destfile = "bb852.ics")
+curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e23/e23", 
+                    destfile = "bb852.ics")
 ```
 
 
@@ -42,14 +43,32 @@ curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101
 
 # Last sunday in October, 0300, CEST -> CET,
 # So the time offset moves from +2 to +1
+# Get the current year
+current_year <- format(Sys.Date(), "%Y")
 
-savingsTimeSwitch <- with_tz(lubridate::as_datetime("2021-10-31 03:00:00"), "Europe/Copenhagen")
+# Create a sequence of dates for October of the current year
+october_dates <- seq(as.Date(paste0(current_year, "-10-01")), 
+                     as.Date(paste0(current_year, "-10-31")), 
+                     by = "day")
 
+# Filter the sequence for Sundays
+sundays_in_october <- october_dates[weekdays(october_dates) == "Sunday"]
 
+# Get the last Sunday
+last_sunday_in_october <- sundays_in_october[length(sundays_in_october)]
+
+# Create a time object
+my_time <- as.POSIXct("03:00:00", format = "%H:%M:%S")
+
+# Combine the date and time objects
+savingsTimeSwitch <- as.POSIXct(paste(last_sunday_in_october, format(my_time, "%H:%M:%S")), format = "%Y-%m-%d %H:%M:%S")
+
+# Read in calendar
 xx <- readLines("bb852.ics")
 
 locationIndex <- grep("^LOCATION", xx)
-location <- gsub(pattern = "LOCATION:Odense ", replacement = "", x = xx[locationIndex])
+location <- gsub(pattern = "LOCATION:Odense ", replacement = "", 
+                 x = xx[locationIndex])
 
 
 
@@ -59,23 +78,27 @@ courseCal <- ical::ical_parse_df("bb852.ics") %>%
   select(summary, DTSTART = start, DTEND = end) %>%
   mutate(Session = row_number()) %>%
   mutate(savingsT = DTSTART < savingsTimeSwitch) %>%
-  # mutate(offsetT = if_else(savingsT == TRUE, 2, 1)) %>% #Check this every year!
+  # Check this every year!
+  # mutate(offsetT = if_else(savingsT == TRUE, 2, 1)) %>% 
   mutate(offsetT = 0) %>% # Check this every year!
   mutate(DTSTART2 = DTSTART + hours(offsetT)) %>%
   mutate(DTEND2 = DTEND + hours(offsetT)) %>%
   mutate(St = hour(DTSTART2)) %>%
   mutate(En = hour(DTEND2)) %>%
   mutate(wd = lubridate::wday(DTSTART2, label = TRUE)) %>%
-  # mutate(Room = gsub(pattern = "Odense ",replacement = "", x = LOCATION)) %>%
   mutate(Room = location) %>%
   mutate(Room = paste0("(", Room, ")")) %>%
-  mutate(Date = paste0(month(DTSTART2, label = TRUE), " ", day(DTSTART2), ", ", wd)) %>%
+  mutate(Date = paste0(month(DTSTART2, label = TRUE),
+                       " ", day(DTSTART2), ", ", wd)) %>%
   mutate(Time = paste0("kl.", St, "-", En))
 
 courseCal_web <- courseCal %>%
   select(Session, Date, Time, Room)
 
-
+if (any(hour(courseCal$DTSTART) < 8)) {
+  stop("Some start times are before 0800. 
+       Check the schedule and daylight savings.")
+  }
 
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 
