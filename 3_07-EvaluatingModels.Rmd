@@ -11,10 +11,10 @@ During the 2+ way ANOVA (multiple regression) section you may have realised that
 We will use the class data to look at these topics (download the latest version please!).
 
 ```{r}
-classData <- read.csv("CourseData/classData.csv") %>% 
+classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year %in% 2019) %>% # you can edit this to look at particular years.
-  filter(Gender %in% c("Male","Female")) %>% 
-  filter(!is.na(HandWidth)) #Filter out NA
+  filter(Gender %in% c("Male", "Female")) %>%
+  filter(!is.na(HandWidth)) # Filter out NA
 ```
 ## R-squared value
 
@@ -44,7 +44,7 @@ Multiple R-squared is a measure of R-squared value for models that can have mult
 You can test this by adding terms to the model. Let's start with something silly - we'll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?
 
 ```{r}
-classData <- classData %>% 
+classData <- classData %>%
   mutate(randomVariable = rnorm(nrow(classData)))
 
 mod2 <- lm(Height ~ HandWidth + Gender + randomVariable, data = classData)
@@ -81,7 +81,7 @@ mod5 <- lm(Height ~ 1, data = classData)
 mod6 <- lm(Height ~ HandWidth + randomVariable, data = classData)
 
 
-(AICtable<-AIC(mod1,mod2,mod3,mod4,mod5,mod6) %>% 
+(AICtable <- AIC(mod1, mod2, mod3, mod4, mod5, mod6) %>%
   arrange(AIC))
 ```
 
@@ -101,9 +101,7 @@ This is done by examining the anova summary (e.g. `anova(mod1)`), using the `Sum
 
 
 ```{r}
-
 anova(mod1)
-
 ```
 
 So here we already know that the model explains `r 100*round(summary(mod1)$r.squared,4)`% of variation in Height. We can partition this among the terms by using the Sums of Squares values. 
