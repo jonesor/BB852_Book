@@ -10,7 +10,6 @@ The one-way ANOVA is illustrated below with two cases (Figure \@ref(fig:anovaVis
 
 
 ```{r, anovaVis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
-
 d1 <- c(40, 10)
 d2 <- c(45, 10)
 d3 <- c(50, 10)
@@ -22,10 +21,6 @@ A <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
   ylab("Probability density") +
   xlab("y") +
   scale_y_continuous(breaks = NULL) +
-  # geom_segment(data = data.frame(y=.002,yend=.002,x=d1[1],xend=d2[1]),
-  #             aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="black") +
-  # geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
-  #            aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="red")+
   geom_vline(xintercept = d1[1], linetype = "dashed", colour = "#007F00") +
   geom_vline(xintercept = d2[1], linetype = "dashed", colour = "red") +
   geom_vline(xintercept = d3[1], linetype = "dashed", colour = "blue") +
@@ -43,10 +38,6 @@ B <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
   ylab("Probability density") +
   xlab("y") +
   scale_y_continuous(breaks = NULL) +
-  # geom_segment(data = data.frame(y=.002,yend=.002,x=d1[1],xend=d2[1]),
-  #             aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="black") +
-  # geom_segment(data = data.frame(y=.003,yend=.003,x=100,xend=d2[1]),
-  #            aes(x=x,xend=xend,y=y,yend=yend),arrow=arrow(ends="both",length = unit(0.1, "inches")),colour="red")+
   geom_vline(xintercept = d1[1], linetype = "dashed", colour = "#007F00") +
   geom_vline(xintercept = d2[1], linetype = "dashed", colour = "red") +
   geom_vline(xintercept = d3[1], linetype = "dashed", colour = "blue") +
@@ -99,8 +90,9 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 Import the data (`espresso.csv`) and look at it.
 
 ```{r}
-espresso <- read.csv("CourseData/espresso.csv", 
-                     stringsAsFactors = TRUE)
+espresso <- read.csv("CourseData/espresso.csv",
+  stringsAsFactors = TRUE
+)
 head(espresso)
 ```
 
@@ -315,7 +307,6 @@ If that doesn't make sense yet, picture the case where the treatment-specific me
 
 
 ```{r, ANOVAbyhand, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
-
 overallMean <- espresso %>%
   summarise(overallMean = mean(foamIndx)) %>%
   pull()
