@@ -213,7 +213,6 @@ $$F = \frac{mESS}{mRSS}$$
 If the *explained variance* (mESS) is large compared to the *residual error variance* (mRSS), then F will be large. The size of F tells us how likely or unlikely it is that the null hypothesis is true. When F is large, the probability that the slope is significantly different from 0 is high. To obtain the actual probabilities, the F-value must be compared to a theoretical distribution which depends on the two degrees of freedom (explained and residual d.f.). Once upon a time you would have looked this up in a printed table, but now R makes this very straightforward.
 
 ```{r, slopeHypo, echo=FALSE,fig.width=8,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
-
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
@@ -275,7 +274,6 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 
 First, load the data:
 ```{r}
-
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 ```
@@ -333,7 +331,6 @@ These estimates and errors are each followed by a `t value` and a p-value (`Pr(>
 
 
 ```{r, coefPlot, echo=FALSE,fig.width=6,fig.height=3,fig.align='center',fig.cap="Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.", fig.pos = "ht"}
-
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
