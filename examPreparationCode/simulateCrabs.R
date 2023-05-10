@@ -5,18 +5,22 @@ library(patchwork)
 
 
 set.seed(124)
-sampleSize = 60
-crabs <- data.frame(ID = 1:sampleSize, carapaceWidth = runif(n = sampleSize,min = 55,max = 80)) %>% #rnorm(n = 50, mean = 66, sd = 7)) %>%
-  mutate(chelaLength = -2.93 + 0.676 * carapaceWidth + rnorm(n = sampleSize, mean = 0, sd = 6)) %>% 
-  mutate(chelaLength = round(chelaLength,2)) %>% 
-  mutate(carapaceWidth = round(carapaceWidth,2))
+sampleSize <- 60
+crabs <- data.frame(ID = 1:sampleSize, 
+                    carapaceWidth = runif(n = sampleSize, min = 55, max = 80)) %>% 
+  mutate(chelaLength = -2.93 + 0.676 * 
+           carapaceWidth + rnorm(n = sampleSize, mean = 0, sd = 6)) %>%
+  mutate(chelaLength = round(chelaLength, 2)) %>%
+  mutate(carapaceWidth = round(carapaceWidth, 2))
 
-#plot(crabs$carapaceWidth, crabs$chelaLength)
+# plot(crabs$carapaceWidth, crabs$chelaLength)
 
 set.seed(12)
 
-fightOutcome <- data.frame(focalCrab = sample(x = crabs$ID, size = sampleSize/2)) %>%
-  mutate(opponentCrab = sample(x = crabs$ID[!crabs$ID %in% focalCrab], size = sampleSize/2)) %>%
+fightOutcome <- data.frame(focalCrab = sample(x = crabs$ID, 
+                                              size = sampleSize / 2)) %>%
+  mutate(opponentCrab = sample(x = crabs$ID[!crabs$ID %in% focalCrab], 
+                               size = sampleSize / 2)) %>%
   left_join(crabs, by = c("focalCrab" = "ID")) %>%
   left_join(crabs, by = c("opponentCrab" = "ID")) %>%
   rename(focal_carapaceWidth = carapaceWidth.x) %>%
@@ -31,58 +35,14 @@ set.seed(123)
 fightOutcome_2 <- fightOutcome %>%
   mutate(outcome = -8.5 + 8 * relativeChelaLength + 0.5 * relativeCarapaceWidth) %>%
   mutate(pr = 1 / (1 + exp(-outcome))) %>%
-  mutate(y = rbinom(n = length(pr), size = 1, prob = pr)) %>% 
-  mutate(fightOutcome = ifelse(y == 1,"won","lost")) 
+  mutate(y = rbinom(n = length(pr), size = 1, prob = pr)) %>%
+  mutate(fightOutcome = ifelse(y == 1, "won", "lost"))
 
-# 
-# 
-# A <- ggplot(fightOutcome_2, aes(x = relativeCarapaceWidth, y = pr)) +
-#   geom_point()
-# 
-# B <- ggplot(fightOutcome_2, aes(x = relativeChelaLength, y = pr)) +
-#   geom_point()
-# 
-# A | B
-# 
-# # now feed it to glm:
-# 
-# mod1 <- glm(y ~ relativeCarapaceWidth, data = fightOutcome_2, family = "binomial")
-# anova(mod1, test = "Chi")
-# summary(mod1)
-# 
-# mod2 <- glm(y ~ relativeChelaLength, data = fightOutcome_2, family = "binomial")
-# anova(mod2, test = "Chi")
-# summary(mod2)
-# 
-# 
-# mod3 <- glm(y ~ relativeChelaLength + relativeCarapaceWidth, data = fightOutcome_2, family = "binomial")
-# anova(mod3, test = "Chi")
-# summary(mod3)
-# 
-# mod4 <- glm(y ~ relativeChelaLength * relativeCarapaceWidth, data = fightOutcome_2, family = "binomial")
-# anova(mod4, test = "Chi")
-# summary(mod4)
-# 
-# 
-# binomial_smooth <- function(...) {
-#   geom_smooth(method = "glm", method.args = list(family = "binomial"), ...)
-# }
-# 
-# 
-# 
-# 
-# C <- ggplot(fightOutcome_2, aes(x = relativeCarapaceWidth, y = y)) +
-#   geom_point() +
-#   binomial_smooth()
-# 
-# D <- ggplot(fightOutcome_2, aes(x = relativeChelaLength, y = y)) +
-#   geom_point() +
-#   binomial_smooth()
-# 
-# (A|B)/(C|D)
+# Save the data ----
+crabFights <- fightOutcome_2 %>%
+  select(focalCrab, opponentCrab, focal_carapaceWidth, 
+         focal_chelaLength, opponent_carapaceWidth, 
+         opponent_chelaLength, fightOutcome)
 
-#Save the data ----
-crabFights <- fightOutcome_2 %>% 
-  select(focalCrab,opponentCrab,focal_carapaceWidth,focal_chelaLength, opponent_carapaceWidth,opponent_chelaLength,fightOutcome)
-
-write.csv(x = crabFights,file = "CourseData/crabFights.csv", row.names = FALSE)
+write.csv(x = crabFights, file = "DataSetLibrary/crabFights.csv", 
+          row.names = FALSE)
