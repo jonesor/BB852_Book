@@ -86,13 +86,6 @@ These materials are inspired by the excellent textbook, "Getting Started With R"
 
 
 ```{r, echo = FALSE, message=FALSE, results='hide'}
-# Copy potential files over from PotentialCourseData
-# These will then be checked, and only the ones that are actually used will be retained.
-#system("rm ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/CourseData/classData.csv")
-#system("cp -r ~/Dropbox/_SDU_Teaching/BB852/DataSetLibrary/*.csv ~/Dropbox/_SDU_Teaching/BB852/BB852_Book/CourseData/")
-```
-
-```{r, echo = FALSE, message=FALSE, results='hide'}
 # Simulate data
 source("SimulateData.R")
 ```
@@ -100,47 +93,60 @@ source("SimulateData.R")
 ```{r, which datasets imported, echo = FALSE, message=FALSE, results='hide'}
 rmdFiles <- list.files(pattern = "*.Rmd")
 
-dataSetsUsed <- NULL
+course_data_files <- NULL
 
-for (i in 1:length(rmdFiles)) {
+for (i in seq_along(rmdFiles)) {
   x1 <- readLines(rmdFiles[i])
   csvLines <- grep("[_A-Za-z0-9]+\\.csv", x1)
-  dataSetsUsed <- append(dataSetsUsed, x1[csvLines])
+  course_data_files <- append(course_data_files, x1[csvLines])
 }
 
-dataSetsUsed <- unique(dataSetsUsed)
+course_data_files <- unique(course_data_files)
 
 library(stringr)
-dataSetsUsed <- unlist(str_extract_all(dataSetsUsed, "([A-Za-z0-9_]+\\.csv)")) %>%
+
+course_data_files <- unlist(str_extract_all(course_data_files, 
+                                       "([A-Za-z0-9_]+\\.csv)")) %>%
   sort() %>%
   unique()
-dataSetsUsed <- data.frame(name = c(dataSetsUsed, "GSWR_datasets")) %>%
-  filter(!name %in% c("write.csv", "read.csv", "dataSetsUsed.csv", "dataSetsMissing.csv"))
 
-write.csv(x = dataSetsUsed, file = "dataSetsUsed.csv", row.names = FALSE)
+course_data_files <- data.frame(file_name = c(course_data_files, "birds.csv")) %>% 
+  dplyr::filter(!file_name %in% c("write.csv", "read.csv", "course_data_files.csv", "datasets_missing.csv"))
 
-# list.files mentioned in course materials
-currentFiles <- list.files(path = "CourseData/")
-currentFilesNotUsed <- currentFiles[which(!currentFiles %in% dataSetsUsed$name)]
+write.csv(x = course_data_files, file = "course_data_files.csv", row.names = FALSE)
+```
 
-if (length(currentFilesNotUsed) > 0) {
-  delFiles <- paste0("CourseData/", currentFilesNotUsed)
+```{r, echo = FALSE, message=FALSE, results='hide'}
+#Delete all files in CourseData
+unlink("CourseData/*", recursive = FALSE)
 
-  # Add extra files that should be there even though not mentioned in book text
-  delFiles <- delFiles[!delFiles %in% c("CourseData/birds.csv")]
+# Copy potential files over from the DataSetLibrary into CourseData.
+# Later the files in CourseData should be put in a Dropbox folder for 
+# easy access by the students
+source_dir <- "DataSetLibrary"
+dest_dir <- "CourseData"
 
-  # Remove files that are not mentioned in the course.
-  if (!delFiles[1] == "CourseData/") {
-    file.remove(delFiles)
-  }
-}
+# Get a list of all available files in DataSetLibrary
+# and filter the list to only those that are USED in the Rmd files
+library_files <- list.files(path = "DataSetLibrary/", full.names = TRUE, recursive = TRUE)
+course_files <- library_files[basename(library_files) %in% course_data_files$file_name]
+
+# Copy all files from the source directory to the destination directory
+file.copy(from = library_files, file.path(dest_dir, basename(library_files)))
 
 # Missing files: mentioned in materials but not available
-missingFiles <- dataSetsUsed$name[!dataSetsUsed$name %in% currentFiles]
-dataSetsMissing <- data.frame(name = missingFiles) %>%
-  filter(!name %in% c("SDUweather.csv","example.csv","myData.csv"))
-write.csv(x = dataSetsMissing, file = "dataSetsMissing.csv", row.names = FALSE)
+current_files <- list.files("CourseData/")
 
-if(nrow(dataSetsMissing)>0){stop("One or more datasets mentioned in the text are missing. Check dataSetsMissing.csv.")}
+missingFiles <- course_data_files$file_name[!course_data_files$file_name %in% current_files]
 
+datasets_missing <- data.frame(name = missingFiles) %>%
+  filter(!name %in% c("SDUweather.csv", "example.csv", "myData.csv"))
+
+# Write out the missing datasets to a CSV
+write.csv(x = datasets_missing, file = "datasets_missing.csv", row.names = FALSE)
+
+if (nrow(datasets_missing) > 0) {
+  stop("One or more datasets mentioned in the text are missing. 
+       Check datasets_missing.csv")
+}
 ```
