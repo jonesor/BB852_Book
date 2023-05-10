@@ -23,20 +23,22 @@ ggplot(normData, aes(x = x, y = dens)) +
     aes(x = x, ymax = dens, ymin = 0), fill = "#0072B2"
   ) +
   geom_line() +
-  geom_segment(aes(
-    x = -1, xend = 1,
-    y = .22, yend = .22
-  ),
-  colour = "#FFFFFF", size = 1.5
+  geom_segment(
+    aes(
+      x = -1, xend = 1,
+      y = .22, yend = .22
+    ),
+    colour = "#FFFFFF", size = 1.5
   ) +
   geom_label(aes(label = "1 SD: 68%", x = 0, y = .22),
     colour = "gray10", fill = "#FFFFFF"
   ) +
-  geom_segment(aes(
-    x = -2, xend = 2,
-    y = 0.05, yend = 0.05
-  ),
-  colour = "#FFFFFF", size = 1.5
+  geom_segment(
+    aes(
+      x = -2, xend = 2,
+      y = 0.05, yend = 0.05
+    ),
+    colour = "#FFFFFF", size = 1.5
   ) +
   geom_label(aes(label = "2 SD: 95%", x = 0, y = 0.05),
     colour = "gray10", fill = "#FFFFFF"
