@@ -1,26 +1,26 @@
-#Food waste
+# Food waste
 
-#grams per capita per week
-gpd <- 245.4#49.08
+# grams per capita per week
+gpd <- 245.4 # 49.08
 
 
-n = 37
+n <- 37
 
 gpd_se <- 9.1
 
-#sd = se * sqrt(n)
-(gpd_sd <- gpd_se *sqrt(n))
+# sd = se * sqrt(n)
+(gpd_sd <- gpd_se * sqrt(n))
 
 x <- rnorm(n = 1000, mean = gpd, sd = gpd_sd)
-table(x<0)
+table(x < 0)
 
 hist(x)
 
 
-#Food waste
+# Food waste
 
-#grams per capita per day
-gpd2 <- gpd*0.75
+# grams per capita per day
+gpd2 <- gpd * 0.75
 
 
 # Set up a data frame for the simulation results
