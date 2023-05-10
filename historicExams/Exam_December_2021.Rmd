@@ -156,14 +156,14 @@ shuffledData <- data.frame(rep = 1:1000) %>%
 (p1 <- ggplot(shuffledData, aes(x = shuffledDiffs)) +
   geom_histogram() +
   theme_minimal() +
-  xlab("Difference") + 
-    geom_vline(xintercept = observedDiff)
+  xlab("Difference") +
+  geom_vline(xintercept = observedDiff)
 )
 
 (trialResult <- table(shuffledData$shuffledDiffs >= observedDiff))
-trialResult[2]/1000
+trialResult[2] / 1000
 
-#Write up as shown here: https://jonesor.github.io/BB852_Book/randomisation-tests.html#writing-it-up
+# Write up as shown here: https://jonesor.github.io/BB852_Book/randomisation-tests.html#writing-it-up
 ```
 
 
@@ -203,11 +203,10 @@ powerResults <- replicate(
   1000,
   t.test(
     rnorm(sampleSize, groundSquirrelMean, groundSquirrelSD),
-    rnorm(sampleSize, groundSquirrelMean*1.2, groundSquirrelSD)
+    rnorm(sampleSize, groundSquirrelMean * 1.2, groundSquirrelSD)
   )$p.value
 )
-sum(powerResults < 0.05)/1000
-
+sum(powerResults < 0.05) / 1000
 ```
 
 
@@ -229,28 +228,33 @@ c) Produce a plot that shows (in addition to the raw data points) the fitted val
 
 
 ```{r echo = FALSE, eval =TRUE}
-#Simulate data.
+# Simulate data.
 set.seed(123)
 ss <- 50
 
-df1 <- data.frame(habitat = "gravel",
-           depth =  round(runif(ss,0,3),2)) %>% 
+df1 <- data.frame(
+  habitat = "gravel",
+  depth = round(runif(ss, 0, 3), 2)
+) %>%
   mutate(nMussels = rpois(ss, exp(0.1 + 0.00001 * depth)))
 
-df2 <- data.frame(habitat = "mud",
-           depth =  round(runif(ss,0,3),2)) %>% 
+df2 <- data.frame(
+  habitat = "mud",
+  depth = round(runif(ss, 0, 3), 2)
+) %>%
   mutate(nMussels = rpois(ss, exp(0.0 + 0.8 * depth)))
 
-df3 <- data.frame(habitat = "sand",
-           depth =  round(runif(ss,0,3),2)) %>% 
+df3 <- data.frame(
+  habitat = "sand",
+  depth = round(runif(ss, 0, 3), 2)
+) %>%
   mutate(nMussels = rpois(ss, exp(0.0 + 0.6 * depth)))
 
-musselSurvey <- bind_rows(df1,df2, df3)
+musselSurvey <- bind_rows(df1, df2, df3)
 
-ggplot(musselSurvey,aes(x=depth,y = nMussels,colour = habitat)) +
+ggplot(musselSurvey, aes(x = depth, y = nMussels, colour = habitat)) +
   geom_point()
 
 write.csv(musselSurvey, file = "CourseData/musselSurvey.csv", row.names = FALSE)
 set.seed(Sys.time())
-
 ```
