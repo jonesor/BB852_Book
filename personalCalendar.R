@@ -19,7 +19,8 @@ for (inst in 1:length(instructorList)) {
   }
   dir.create(paste0("personalCalendar_", instructorList[inst]))
 
-  icalScheduleTemp <- icalSchedule %>% filter(Instructor == instructorList[inst])
+  icalScheduleTemp <- icalSchedule %>%
+    filter(Instructor == instructorList[inst])
 
   for (i in 1:nrow(icalScheduleTemp)) {
     icalName <- paste0("BB852_", icalScheduleTemp$DTSTART2[i])
@@ -37,7 +38,13 @@ for (inst in 1:length(instructorList)) {
   }
 
   # Combine event files by appending the text
-  files <- list.files(paste0("personalCalendar_", instructorList[inst]), full.names = TRUE)
+  files <- list.files(
+    paste0(
+      "personalCalendar_",
+      instructorList[inst]
+    ),
+    full.names = TRUE
+  )
   combinedFiles <- NULL
   for (i in 1:length(files)) {
     temp <- readLines(con = files[i])
@@ -51,7 +58,12 @@ for (inst in 1:length(instructorList)) {
   combinedFiles[1] <- "BEGIN:VCALENDAR"
   combinedFiles[length(combinedFiles)] <- "END:VCALENDAR"
 
-  writeLines(combinedFiles, con = paste0("BB852_", instructorList[inst], ".ics"))
+  writeLines(combinedFiles,
+    con = paste0(
+      "BB852_",
+      instructorList[inst], ".ics"
+    )
+  )
 }
 
 
@@ -73,7 +85,8 @@ for (i in 1:nrow(icalScheduleTemp)) {
       start = icalScheduleTemp$DTSTART2[i],
       end = icalScheduleTemp$DTEND2[i],
       summary = paste0(
-        "BB852 ", icalScheduleTemp$Topic[i], " w.", icalScheduleTemp$Instructor[i],
+        "BB852 ", icalScheduleTemp$Topic[i], " w.",
+        icalScheduleTemp$Instructor[i],
         icalScheduleTemp$Type[i], " in ", icalScheduleTemp$Room[i]
       )
     )
