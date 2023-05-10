@@ -10,7 +10,8 @@ file <- googledrive::drive_find(pattern = "Class", type = "spreadsheet")
 file
 googledrive::drive_download(
   file = googledrive::as_id(file$id),
-  path = paste("tempData/", file$name, ".xlsx", sep = ""), type = "xlsx", overwrite = TRUE
+  path = paste("tempData/", file$name, ".xlsx", sep = ""),
+  type = "xlsx", overwrite = TRUE
 )
 
 # Import from xlsx
@@ -33,7 +34,12 @@ classData
 
 summary(classData)
 # Write to course data folder
-write.csv(x = classData, file = "/Users/jones/Dropbox/_SDU_Teaching/BB852/DataSetLibrary/classData.csv", row.names = FALSE)
+write.csv(
+  x = classData,
+  file = "/Users/jones/Dropbox/_SDU_Teaching/BB852/DataSetLibrary/classData.csv",
+  row.names = FALSE
+)
 
 
-ggplot(classData, aes(x = HandWidth, y = Height, colour = Gender)) + geom_point()
+ggplot(classData, aes(x = HandWidth, y = Height, colour = Gender)) +
+  geom_point()
