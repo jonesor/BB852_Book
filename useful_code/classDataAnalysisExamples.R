@@ -12,10 +12,10 @@ head(classData)
 tail(classData)
 
 
-ggplot(classData %>% filter(Year == 2019),aes(x = HandWidth,y = Height)) +
+ggplot(classData %>% filter(Year == 2019), aes(x = HandWidth, y = Height)) +
   geom_point()
 
-ggplot(classData,aes(x = Precision,fill = Gender)) +
+ggplot(classData, aes(x = Precision, fill = Gender)) +
   geom_histogram()
 
 # Are males taller than females?
