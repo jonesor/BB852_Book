@@ -1,0 +1,70 @@
+# Tips and tricks
+
+## Appearance
+
+You can modify the appearance of RStudio via the *Options* dialog: **Tools > Options** menu (**RStudio > Preferences** on a Mac).
+
+There you will find many ways of modifying how RStudio looks and works. However, for beginners I suggest to leave the defaults for most of these. Instead, focus on the Appearance section where you can change the colour scheme or "Theme". My current favourite is "Modern", what's yours? You can also change the font and font size. When choosing a font, it is important to use only "monospace" fonts (these are fonts fixed width of characters). Why would you want to do that? Some fonts are better at distinguishing similar looking characters (e.g. is that an upper case or lower case letter "w", or is it a "1" (the number one) or a "l" (lower case L)). Good examples of monospace fonts are "LucidaConsole", and "Courier". The availability of fonts might differ between computers.
+
+If you choose non-monospaced fonts it can cause problems with formatting your code in the scripts, so if you get any formatting weirdness, check your font! 
+
+## Shortcuts
+
+There are several useful keyboard shortcuts that can make your life easier in RStudio. You can find a full list by clicking through the menu -- Tools > Keyboard Shortcuts Help -- but these are the ones I find most useful:
+
+* Auto-complete code: if you start to write function or object names, after a short pause, RStudio will offer some auto-complete the name. Use the arrow keys to choose the best option, and press Enter.
+* Run current line/selection	Ctrl+Enter	(Cmd+Return, on a Mac)
+* Run code from script beginning to current line:	Ctrl+Alt+B	(Cmd+Option+B)
+* Comment/uncomment current line/selection:	Ctrl+Shift+C	(Cmd+Shift+C)
+* Reflow Comment:	Ctrl+Shift+/	(Cmd+Shift+/)
+* Find text in Files:	Ctrl+Shift+F	(Cmd+Shift+F)
+* Undo:	Ctrl+Z	(Cmd+Z)
+* Cut:	Ctrl+X	(Cmd+X)
+* Copy:	Ctrl+C	(Cmd+C)
+* Paste:	Ctrl+V	(Cmd+V)
+* Parentheses (brackets): Select text you want to "wrap" in parentheses and type Shift+(, or Shift+), to automatically put the brackets on both sides of text. 
+* Pipes (`%>%`: Ctrl+Shift+M (Cmd+Shift+M) (you'll meet these later in the course!)
+
+## Code style
+
+R is very forgiving about code styling, the use of white space (e.g., spaces and tabs), splitting code over lines and so on. This can make things a bit messy sometimes so it is a good idea to develop a style that you find easy to work with.
+
+There are some guidelines for "good style" which you might like to follow e.g. https://google.github.io/styleguide/Rguide.html or https://style.tidyverse.org.
+
+There is also a way to automatically format your code into a consistent, nice, style after you have written it. To do that, you use the `styler` R package, and then add a keyboard/menu shortcut to RStudio (click Tools > Addins). See here: https://lorenzwalthert.github.io/stylerpost/.
+
+## The plots pane
+
+As you make plots they appear in the plot pane, which is by default on the bottom right of RStudio. Old plots are kept in the memory and you can navigate to them using the back/forward arrows at the top of the plot pane.
+
+You can use the *Export* button to copy a plot (for pasting into a document) after resizing it, or to save a plot as an image file.
+
+## Tables
+
+If you have made summary tables, for example with the `dplyr` function `summarise`, you can save them as a csv file using `write.csv(xxx, file = "example.csv", row.names = FALSE)`. You can then open the csv in Excel and cut/paste into your Word document as a table.
+
+## Importing data from text files
+
+There are several ways of importing data, and several ways that it can go wrong.
+
+RStudio can import data in text files via the *Import Dataset* button (top right pane), or via the the main menu (File > Import Dataset). There are two ways to import data from text files (such as .csv or .tab or .txt). These are `base` and `readr`. They work in similar ways. During the import process you can choose what the column delimiter (separator) is (e.g. `,` or `;`) and what the decimal separator is (e.g. `.` or `,`). 
+
+When you have imported the data, you should check it using e.g. `head` or `str` functions. Make sure that you have the expected number of columns, and that they have the right names. 
+Most of the problems with importing data comes from problems with Excel. A common problem is that the columns of the data are squashed together into a single column. This can be because (1) you have chosen the wrong delimiter (separator) or (2) because Excel has saved the csv file incorrectly. 
+
+To avoid this problems (1) check the delimiter (2) avoiding saving the file with Excel when you download it. You can also open the text file in a text editor and remove problematic characters using "Find and Replace". For example, the single-column problem is caused by Excel putting the line of data within quotation marks, which you could remove and then save the data.
+
+## Importing data from Excel
+
+Yes, it is possible to import data directly from Excel using the *Import Dataset* dialogue (or using the `read_excel` function from the `readxl` package). This is pretty neat -- BUT -- the data need to be very well-arranged for this to work properly. What do I mean by "well-arranged"? Read the paper by Broman & Wu for more details ^[Broman, K. W., & Woo, K. H. (2018). *Data Organization in Spreadsheets*. The American Statistician, 72(1), 2–10.]
+
+## Numbers
+
+R uses scientific notation when showing you numbers.
+Thus very large and very small numbers are shown with exponentials so that 1,000,000 is shown as `1e+06` and `0.0005` is shown as `5e-04`, for example. This can be a bit confusing, and you can turn this behaviour off by setting the `scipen` option like this. 
+
+```{r eval = FALSE}
+options(scipen = 999)
+```
+
+The option will be set until you re-start R, or until you turn it off  with `options(scipen = 0)`. You could start your script by setting this option.

@@ -65,8 +65,8 @@ https://www.dropbox.com/sh/m8qjm1v7c3bunjg/AACyID24e9VjBflhPzPaN6nza?dl=0
 You are welcome to contact instructors with any problems/questions (but please put a little effort in first).
 
 *	[Owen Jones](https://portal.findresearcher.sdu.dk/en/persons/jones), Associate Professor, <jones@biology.sdu.dk>
-* Olga Filatova, postdoc, <filatova@biology.sdu.dk>
-* Hèloïse Hamel, PhD student, <heloisehamel@biology.sdu.dk>
+* X
+* X
 
 ## Expectations
 
@@ -138,6 +138,9 @@ if (length(currentFilesNotUsed) > 0) {
 # Missing files: mentioned in materials but not available
 missingFiles <- dataSetsUsed$name[!dataSetsUsed$name %in% currentFiles]
 dataSetsMissing <- data.frame(name = missingFiles) %>%
-  filter(!name %in% c("SDUweather.csv"))
+  filter(!name %in% c("SDUweather.csv","example.csv","myData.csv"))
 write.csv(x = dataSetsMissing, file = "dataSetsMissing.csv", row.names = FALSE)
+
+if(nrow(dataSetsMissing)>0){stop("One or more datasets mentioned in the text are missing. Check dataSetsMissing.csv.")}
+
 ```

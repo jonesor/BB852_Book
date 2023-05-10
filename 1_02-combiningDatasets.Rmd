@@ -195,7 +195,7 @@ names(xx)[2:ncol(xx)] <- paste0("y", names(xx)[2:ncol(xx)])
 write.csv(xx, "CourseData/eggDates.csv", row.names = FALSE)
 
 # Prep weather
-weather <- read.csv("/Users/jones/Dropbox/_SDU_Birds/Data/SDUweather.csv") %>%
+weather <- read.csv("DataSetLibrary/SDUweather.csv") %>%
   select(YEAR, MONTH, DAY, TEMP)
 
 write.csv(weather, "CourseData/AarslevTemperature.csv", row.names = FALSE)

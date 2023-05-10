@@ -1,0 +1,173 @@
+# Examples of statistics reporting
+
+In this section I give some examples of how one can describe methods and report results of statistical analyses.
+These are not "set in stone". The are certainly other ways to write these up, but these examples will give you an idea to base your own reporting on.
+
+## t-test
+
+
+This example concerns a t-test where the mean heights of plants after a set amount of growing time was compared across two groups (control and treatment).
+
+The methods could be reported like this:
+
+_To asses whether there Was a significant difference in mean height between the two groups I used two-sample t-test where the variances of the two groups were assumed to be equal._
+
+
+Based on the following t-test result:
+
+```
+> results <- t.test(control, treatment, var.equal = TRUE)
+> print(results)
+
+	Two Sample t-test
+
+data:  control and treatment
+t = -1.6184, df = 8, p-value = 0.1431
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.6644772  0.0644772
+sample estimates:
+mean of x mean of y 
+       7.2        8.2 
+```
+
+You might report this as:
+
+_My t-test comparing the mean height of plants in the control group and the treatment group showed that the mean height of plants in the control group was 7.2cm while the mean height of plants in the treatment group was 8.2cm. The 95% Confidence Interval of the difference between the mean values was -1.66cm to 0.06cm and it is clear that there is no significant difference between the two groups (t-statistic = -1.6184, d.f. = 8, p-value = 0.1431). _
+
+In this example, the important details of the t-test (the t-statistic, the degrees of freedom, and the p-value) are included in parentheses after giving the mean estimates for the control and treatment groups. This allows the reader to see the key results of the t-test while also providing the relevant details.
+
+## Simple linear regression model
+
+In this example, the model focuses on the relationship between sepal length and sepal width in the `iris` dataset.
+
+For the methods, I might write something like this:
+
+_To investigate the relationship between sepal length and sepal width I fitted a linear regression with sepal length as the response variable and sepal width as the explanatory variable._
+
+
+The output of `anova()` looks like this:
+
+```
+Analysis of Variance Table
+
+Response: Sepal.Length
+           Df Sum Sq Mean Sq F value Pr(>F)
+Sepal.Width  1  63.21  63.206   89.59 <2e-16 ***
+Residuals 148  73.81   0.497                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+```
+
+We might use this part of the summary to say something like this:
+
+_The linear regression analysis investigating the relationship between sepal length and sepal width showed that there is a significant association between the two variables (F = 89.59, d.f. = 1 and 148, p-value <0.01)._
+
+
+
+The output of `summary()` looks like this:
+
+```
+Call:
+lm(formula = Sepal.Length ~ Sepal.Width, data = iris)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.5396 -0.4374 -0.0813  0.4304  1.7227 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  3.55147    0.14392  24.630  < 2e-16 ***
+Sepal.Width  0.81633    0.02047  39.858  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.7029 on 148 degrees of freedom
+Multiple R-squared:  0.643,	Adjusted R-squared:  0.642 
+F-statistic: 1593 on 1 and 148 DF,  p-value: < 2.2e-16
+```
+
+You might write this up something like this:
+
+_The coefficient for sepal width was 0.816 ($\pm$ 0.020), indicating that an increase in sepal width of 1 mm is associated with an increase in sepal length of 0.816 mm. This slope was significantly different from zero (t = 39.858, d.f. = 148, p < 0.001).  The adjusted R-squared value for the model was 0.642, indicating that sepal width explains approximately 64% of the variance in sepal length. These results suggest that sepal width is a strong predictor of sepal length._
+
+## A Generalised linear model (GLM)
+
+In this fictitious example we are looking at the results of a Poisson GLM that is used to study the number of offspring produced by arctic fox of different weights. We use a Poisson GLM because these are count data (number of babies). The model will help us understand how weight is associated with the reproductive success.
+
+For the methods, I might write something like this:
+
+_We fitted a Poisson generalized linear model (GLM) to study the number of offspring produced by a population of arctic fox. The model included the factor `weight` as a predictor. We then summarised the fitted model using `anova()` and `summary()` to produce the ANOVA summary and summary of coefficients respectively._
+
+
+Here's what the `anova()` output shows:
+
+```
+## Analysis of Deviance Table
+## 
+## Model: poisson, link: log
+## 
+## Response: noffspring
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##        Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+## NULL                      99     166.84              
+## weight  1   44.124        98     122.72 3.082e-11 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+```
+
+
+_The ANOVA results showed that maternal weight was strongly associated with the number of offspring  (Poisson GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). This indicates that there is a significant relationship between the weight of the offspring and the number of offspring produced._
+
+We could also add something about the deviances.  In this case, the model has a `NULL` deviance of 166.84 and `weight` explains 44.124 Deviance. We can therefore calculate a kind of _pseudo-R^2_ value as  44.124/166.84 = 0.264 = 26.4%.
+
+So we could say something like: _The deviances and residual deviance showed that the model explained 26.4% of the variation in number of offspring._
+
+
+
+Here's what the `summary()` output shows:
+
+
+```
+## 
+## Call:
+## glm(formula = noffspring ~ weight, family = poisson, data = fox)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.3891  -0.9719  -0.1183   0.5897   2.3426  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -0.74981    0.31107  -2.410   0.0159 *  
+## weight       0.63239    0.09502   6.655 2.83e-11 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 166.85  on 99  degrees of freedom
+## Residual deviance: 122.72  on 98  degrees of freedom
+## AIC: 405.56
+## 
+## Number of Fisher Scoring iterations: 5
+
+```
+
+From this we can say something like: 
+
+_The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63 × MotherWeight_
+
+One could also add the standard error of the slope (0.09502) and intercept (0.31107) into this equation: _log(nOffspring) = -0.75 $\pm$ 0.31 + 0.63 $\pm$ 0.10 $\times$ MotherWeight_.
+
+So, to put it together:
+
+_The ANOVA results showed that maternal weight was strongly associated with the number of offspring  (Poisson GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). This indicates that there is a significant relationship between the weight of the offspring and the number of offspring produced. The deviances and residual deviance showed that the model explained 26.4% of the variation in number of offspring. The coefficients allowed me to calculate the equation of the relationship as log(nOffspring) = -0.75 $\pm$ 0.31 + 0.63 $\pm$ 0.10 $\times$ MotherWeight_.
+
+

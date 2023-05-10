@@ -1,0 +1,69 @@
+# Paths and projects
+
+## File structure 
+
+Files on a computer are stored in hierarchical folders (also known as directories). On a Mac you can use the Finder program to navigate these folders while on a Windows machine you can use Windows Explorer.
+
+Try that now!
+
+When managing your research projects, it's a good idea to keep your files organised in some sensible structure rather than simply dumping all your files chaotically into the same folder. Be kind to your future self and get organised!
+
+Exactly how you do that is a matter of personal taste but my own personal preference is to set up a folder per project, and then, within that folder to create folders for Data, Code (for my R scripts), Plots (graphs produced by R), and Writing (e.g. for Word documents with my project write-up).
+
+## Paths and the command line
+
+The Command Line Interface (CLI) is an program interface where you use text commands to operate the program rather than the now more commonplace Graphical User Interface (GUI). R and RStudio have a mix of CLI and GUI.
+
+To use files (e.g. data) in CLI you will need to know the path, which can be written in text with folder names separated by slashes
+
+e.g. .`C:/Users/Owen/Documents/ProjectX/Data/myData.txt`
+
+## R and file structure
+
+To load data into R using the CLI you need to use file paths which can be annoying to type. 
+
+e.g. `x <- read.csv(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/Data/myData.txt”)`
+
+There are two ways to make life easier for yourself: (1) you can set the "working directory" for your project; (2) you can set up an R Project.
+
+It is true that RStudio has a data import wizard to help with this, but setting a working directory or using Projects is recommended. I will briefly outline these two options.
+
+
+### Setting the working directory
+
+R/RStudio use “relative paths” which means that you can tell R where you are working (i.e. the path). To understand what this means, is is useful to see what R sees:
+
+Open RStudio and type `getwd()` (“get working directory”) to get the working directory of your RStudio session. Any files within that working directory folder can be loaded **without** typing the full path. In other words, if a data file, `myData.csv`, is in the working directory folder you could load it by typing `x <- read.csv(“myData.csv”)`rather than with the full path e.g. `x <- read.csv(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/Data/myData.csv”)`.
+
+In R you can change the working directory with `setwd()` e.g.  `setwd(“PATH_TO_NEW_DIRECTORY”)`.
+
+Basically, setting the working directory acts like a short cut. 
+By setting the working directory to like this:
+
+`setwd(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/“)`,
+
+the long command to read in data... 
+
+`x <- read.csv(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/Data/myData.csv”)`
+
+...becomes much shorter... 
+
+`x <- read.csv(“Data/myData.txt”)`.
+
+## Projects in R
+
+Projects in RStudio are a very convenient way to automate the setting of the working directory. To set up a project do the following:
+
+* Navigate in *Finder* (Mac) or *Windows Explorer* (Windows) to where you would like to put your work.
+* Create a folder to contain your work (e.g. `BB852CourseWork`, this is your Working Directory.
+* Open RStudio.
+* Click `File > New Project`.
+* Click `Existing directory`.
+* Browse to find the correct folder, click to enter the folder.
+* Click `Create Project`. This will create a file called e.g. `BB852CourseWork.Rproj`. From now on, you can open RStudio by clicking this file. Doing so will automatically set your working directory and any other settings saved for your project.
+* Close RStudio and try opening the `Rproj` file by clicking it.
+
+If you use the command `getwd()` you will see that the working directory is now automatically set as the project folder location. Awesome!
+
+After you have created a project folder (e.g. `BB852CourseWork`), you can add useful folders to keep yourself organised. As mentioned above, exactly how you do that is a matter of personal taste but you should at least have a folder here for `data` and `plots`.
+
