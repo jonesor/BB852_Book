@@ -10,7 +10,7 @@ The names of the topics for the **Practical** sessions corresponds to the chapte
 
 ```{r, echo = FALSE, include=knitr::is_latex_output()}
 plot(1, 1, type = "n", axes = FALSE, xlab = "", ylab = "")
-text(1, 1, labels = "The schedule is only available on the HTML version of this document")
+text(1, 1, labels = "The schedule is only available on the HTML version.")
 ```
 
 ```{r echo = FALSE}
@@ -34,22 +34,23 @@ schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 ics_files <- list.files(pattern = "*.ics")
 file.remove(ics_files)
 
-curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e23/e23", 
-                    destfile = "bb852.ics")
+curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e23/e23",
+  destfile = "bb852.ics"
+)
 ```
 
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, results = 'hide'}
-
 # Last sunday in October, 0300, CEST -> CET,
 # So the time offset moves from +2 to +1
 # Get the current year
 current_year <- format(Sys.Date(), "%Y")
 
 # Create a sequence of dates for October of the current year
-october_dates <- seq(as.Date(paste0(current_year, "-10-01")), 
-                     as.Date(paste0(current_year, "-10-31")), 
-                     by = "day")
+october_dates <- seq(as.Date(paste0(current_year, "-10-01")),
+  as.Date(paste0(current_year, "-10-31")),
+  by = "day"
+)
 
 # Filter the sequence for Sundays
 sundays_in_october <- october_dates[weekdays(october_dates) == "Sunday"]
@@ -67,8 +68,10 @@ savingsTimeSwitch <- as.POSIXct(paste(last_sunday_in_october, format(my_time, "%
 xx <- readLines("bb852.ics")
 
 locationIndex <- grep("^LOCATION", xx)
-location <- gsub(pattern = "LOCATION:Odense ", replacement = "", 
-                 x = xx[locationIndex])
+location <- gsub(
+  pattern = "LOCATION:Odense ", replacement = "",
+  x = xx[locationIndex]
+)
 
 
 
@@ -79,7 +82,7 @@ courseCal <- ical::ical_parse_df("bb852.ics") %>%
   mutate(Session = row_number()) %>%
   mutate(savingsT = DTSTART < savingsTimeSwitch) %>%
   # Check this every year!
-  # mutate(offsetT = if_else(savingsT == TRUE, 2, 1)) %>% 
+  # mutate(offsetT = if_else(savingsT == TRUE, 2, 1)) %>%
   mutate(offsetT = 0) %>% # Check this every year!
   mutate(DTSTART2 = DTSTART + hours(offsetT)) %>%
   mutate(DTEND2 = DTEND + hours(offsetT)) %>%
@@ -88,17 +91,19 @@ courseCal <- ical::ical_parse_df("bb852.ics") %>%
   mutate(wd = lubridate::wday(DTSTART2, label = TRUE)) %>%
   mutate(Room = location) %>%
   mutate(Room = paste0("(", Room, ")")) %>%
-  mutate(Date = paste0(month(DTSTART2, label = TRUE),
-                       " ", day(DTSTART2), ", ", wd)) %>%
+  mutate(Date = paste0(
+    month(DTSTART2, label = TRUE),
+    " ", day(DTSTART2), ", ", wd
+  )) %>%
   mutate(Time = paste0("kl.", St, "-", En))
 
 courseCal_web <- courseCal %>%
   select(Session, Date, Time, Room)
 
 if (any(hour(courseCal$DTSTART) < 8)) {
-  stop("Some start times are before 0800. 
+  stop("Some start times are before 0800.
        Check the schedule and daylight savings.")
-  }
+}
 
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 
