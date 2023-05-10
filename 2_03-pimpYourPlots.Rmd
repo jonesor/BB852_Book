@@ -23,7 +23,6 @@ I will process the data a bit to make it easier to work with. One of the command
 I will also use `mutate` to (1) convert the Mass from grams to kilograms and (2) to make a new variable called "BMRperKg" which standardises metabolic rate by expressing it as rate per kilogram.
 
 ```{r, process data,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
-
 anage <- x %>%
   mutate(Species = paste(Genus, Species)) %>%
   rename(
@@ -93,8 +92,10 @@ This looks nice. But the numbers on the axis are not very nice. Using `summary(a
 ```{r, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (p2 <- p1 +
   scale_x_continuous(trans = "log") +
-  scale_y_continuous(trans = "log", 
-                     breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000)))
+  scale_y_continuous(
+    trans = "log",
+    breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000)
+  ))
 ```
 
 Using `summary(anage$Mass)`  tells us that the range of data is from 0.001 to 3672. We could place tick marks anywhere on this axis, but let's try 0.001,0.1, 1,10, 100, 1000.
