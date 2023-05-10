@@ -14,8 +14,8 @@ newData <- data.frame(Distance = seq(0, 100, 1))
 
 # Predicted values (and SE)
 predVals <- predict(mod1, newData,
-                    type = "response",
-                    se.fit = TRUE
+  type = "response",
+  se.fit = TRUE
 )
 
 # Create new data for the predicted fit line
@@ -26,9 +26,9 @@ newData <- newData %>%
 
 head(newData)
 ggplot(cancer, aes(x = Distance, y = Cancers)) +
-    geom_ribbon(data = newData, aes(
-      x = Distance, ymin = ymin,
-      ymax = ymax
-    ), fill = "grey75") +
-    geom_point() +
-    geom_smooth(data = newData, stat = "identity")
+  geom_ribbon(data = newData, aes(
+    x = Distance, ymin = ymin,
+    ymax = ymax
+  ), fill = "grey75") +
+  geom_point() +
+  geom_smooth(data = newData, stat = "identity")
