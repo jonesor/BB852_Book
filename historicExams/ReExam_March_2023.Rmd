@@ -128,26 +128,31 @@ c) Produce a plot that shows (in addition to the raw data points) the fitted val
 
 
 ```{r echo = FALSE, eval =TRUE}
-#Simulate data.
+# Simulate data.
 set.seed(42)
 ss <- 50
 
-df1 <- data.frame(habitat = "gravel",
-           depth =  round(runif(ss,0,3),2)) %>% 
+df1 <- data.frame(
+  habitat = "gravel",
+  depth = round(runif(ss, 0, 3), 2)
+) %>%
   mutate(nMussels = rpois(ss, exp(0.1 + 0.00001 * depth)))
 
-df2 <- data.frame(habitat = "mud",
-           depth =  round(runif(ss,0,3),2)) %>% 
+df2 <- data.frame(
+  habitat = "mud",
+  depth = round(runif(ss, 0, 3), 2)
+) %>%
   mutate(nMussels = rpois(ss, exp(0.0 + 0.8 * depth)))
 
-df3 <- data.frame(habitat = "sand",
-           depth =  round(runif(ss,0,3),2)) %>% 
+df3 <- data.frame(
+  habitat = "sand",
+  depth = round(runif(ss, 0, 3), 2)
+) %>%
   mutate(nMussels = rpois(ss, exp(0.0 + 0.6 * depth)))
 
-musselSurvey <- bind_rows(df1,df2, df3)
+musselSurvey <- bind_rows(df1, df2, df3)
 
 write.csv(musselSurvey, file = "CourseData/musselSurvey.csv", row.names = FALSE)
 set.seed(Sys.time())
-
 ```
 
