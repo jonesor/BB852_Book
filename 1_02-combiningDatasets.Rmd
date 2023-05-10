@@ -170,7 +170,7 @@ sduBirds <- read.csv("CourseData/sduBirds.csv")
 
 # Process to get first egg date
 # First egg, data preparation ------------
-sduBirds %>%
+xx <- sduBirds %>%
   mutate(nEggs = as.numeric(as.character(nEggs))) %>%
   select(Timestamp, Year, Day, boxNumber, nEggs) %>%
   filter(nEggs > 0) %>%
@@ -189,7 +189,7 @@ sduBirds %>%
   select(boxNumber, Year, estimatedFirstEggDate) %>%
   rename(firstEgg = estimatedFirstEggDate) %>%
   arrange(boxNumber, Year) %>%
-  spread(Year, firstEgg) -> xx
+  spread(Year, firstEgg)
 
 names(xx)[2:ncol(xx)] <- paste0("y", names(xx)[2:ncol(xx)])
 write.csv(xx, "CourseData/eggDates.csv", row.names = FALSE)
