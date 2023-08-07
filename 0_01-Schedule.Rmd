@@ -1,8 +1,15 @@
 # Schedule
 
+```{r echo = FALSE}
+# Get current year and use it to build the link to the official time table.
+current_year <- format(Sys.Date(), "%Y")
+link_to_schedule <- paste0("https://mitsdu.sdu.dk/skema/activity/N110040101/e",substr(current_year,3,4))
+```
+
+
 This is the schedule for the course. 
 Please note that it is liable to change (possibly at short notice). 
-If you find a mismatch between this schedule and the official one^[https://mitsdu.sdu.dk/skema/activity/N110040101/e23], then it is the official one that is correct.
+If you find a mismatch between this schedule and the official one^[`r link_to_schedule`], then it is the official one that is correct.
 
 The columns, GSWR and Course Book, refer to the relevant chapters in the recommended text book ("*Getting Started With R*") and this course book, respectively. You should aim to read and work through these chapters as the course proceeds.
 
@@ -37,7 +44,15 @@ schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 ics_files <- list.files(pattern = "*.ics")
 file.remove(ics_files)
 
-curl::curl_download("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e23/e23",
+# Get current year and use it to build the link to the official time table download.
+current_year <- format(Sys.Date(), "%Y")
+link_to_schedule_dl <- paste0("https://mitsdu.sdu.dk/skema/icalendar/activities/N110040101/e",
+                           substr(current_year,3,4),
+                           "/e",
+                           substr(current_year,3,4))
+
+#Download the new calendar to an ics file
+curl::curl_download(link_to_schedule_dl, 
   destfile = "bb852.ics"
 )
 ```
