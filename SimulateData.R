@@ -6,7 +6,7 @@ temp <- data.frame(
   place = rep(c("London", "Bristol"), each = 15),
   heightMale = round(rnorm(30, 175, 4)), heightFemale = round(rnorm(30, 160, 4))
 )
-write.csv(temp, file = "CourseData/heights.csv", row.names = FALSE)
+write.csv(temp, file = "DataSetLibrary/heights.csv", row.names = FALSE)
 rm(temp)
 
 # Fish personality ----
@@ -24,7 +24,7 @@ fishPersonality <- expand.grid(
   mutate(spawning = round(rnorm(sampleSize * 4, spawningMean, spawningSEM))) %>%
   select(personality, colouration, spawning)
 
-write.csv(fishPersonality, "CourseData/fishPersonality.csv", row.names = FALSE)
+write.csv(fishPersonality, "DataSetLibrary/fishPersonality.csv", row.names = FALSE)
 rm(fishPersonality)
 
 
@@ -42,7 +42,7 @@ myData <- expand.grid(
   mutate(lengthMM = round(rnorm(48, meanSize, semSize)), 2) %>%
   select(diet, genotype, lengthMM)
 
-write.csv(myData, "CourseData/insectDiet.csv", row.names = FALSE)
+write.csv(myData, "DataSetLibrary/insectDiet.csv", row.names = FALSE)
 rm(myData)
 
 
