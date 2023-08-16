@@ -21,15 +21,13 @@ set.seed(183975)
 
 # Preface
 
-I wrote this book to accompany the course *BB852 - Data Handling, Visualisation and Statistics*.
+I wrote this online book to accompany the course *BB852 - Data Handling, Visualisation and Statistics*.
 
-
-It is available as a website (https://jonesor.github.io/BB852_Book/) or as a PDF (click the link at the top of book's website). I recommend
-to use the website where possible because the formatting is sometimes messy on the PDF, but the PDF is helpful if you want a copy for offline use.
 
 ```{block, type="do-something"}
-**Note:** The book is a "work in progress" and will change during the course. The latest version can always be found at the website, or by downloading it again. 
-Please let me know ([jones@biology.sdu.dk](mailto:jones@biology.sdu.dk)) if you spot any errors, or have any suggestions for improvement.
+**Note:** The book is a "work in progress" and will change during the course. The latest version can always be found at the website. 
+
+Please let me know ([jones@biology.sdu.dk](mailto:jones@biology.sdu.dk)) if you spot any errors, omissions or if you have suggestions for improvement.
 ```
 
 The book is divided into three parts: data wrangling, data visualisation and statistics.
@@ -58,7 +56,7 @@ This book accompanies the course lectures. The general idea is that there will b
 This book uses numerous data sets in examples, most of which are real data sets obtained from published works, or collected by me.
 
 The data sets can be found at the following link:
-https://www.dropbox.com/sh/m8qjm1v7c3bunjg/AACyID24e9VjBflhPzPaN6nza?dl=0
+https://www.dropbox.com/scl/fo/8ozu5pxtuuhsslkmnmwh2/h?rlkey=1xbx121qy48ydp75ualwdo5on&dl=0
 
 
 ## Your instructors
@@ -151,3 +149,68 @@ if (nrow(datasets_missing) > 0) {
        Check datasets_missing.csv")
 }
 ```
+
+```{r, echo = FALSE, message = FALSE}
+#COPY CourseData to Dropbox
+# Define the source and destination directories
+source_dir <- "CourseData"
+destination_dir <- "/Users/jones/Dropbox/_SDU_Teaching/BB852/BB852_CourseData"
+
+
+# Delete all files in the destination directory
+file.remove(list.files(destination_dir, full.names = TRUE))
+
+# Get the list of files in the source directory
+file_list <- list.files(source_dir, full.names = TRUE)
+
+# Copy each file to the destination directory
+for (file in file_list) {
+  file.copy(from = file, to = destination_dir, overwrite = TRUE)
+}
+```
+
+
+# Schedule
+
+```{r echo = FALSE}
+# Get current year and use it to build the link to the official time table.
+current_year <- format(Sys.Date(), "%Y")
+link_to_schedule <- paste0("https://mitsdu.sdu.dk/skema/activity/N110040101/e",substr(current_year,3,4))
+```
+
+
+This is the schedule for the course. You can check itsLearning for the dates, times and locations.
+
+Also check itsLearning for details of other tasks/assignments/reading etc.
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+schedule <- readxl::read_excel("BB852_Schedule.xlsx")
+```
+
+
+
+```{r, echo = FALSE, message=FALSE,eval=knitr::is_html_output(), warning=FALSE}
+schedule2 <- schedule %>%
+  select(Part, Session, Type, Topic, Instructor)
+
+big_b <- fp_border(color = "gray70", width = 3)
+std_b <- fp_border(color = "gray70", style = "dashed")
+big_b_end <- fp_border(color = "white", width = 3)
+
+ft <- flextable(schedule2, cwidth = c(2, .5, 1, 4, .75, .75)) %>%
+  bold(part = "header") %>%
+  bold(j = 1) %>%
+  color(
+    i = ~ Type == "Lecture",
+    j = ~ Session + Type + Topic,
+    color = "red"
+  ) %>%
+  fontsize(part = "all", size = 14) %>%
+  vline(border = std_b, j = 1:4) %>%
+  rotate(j = ~Part, align = "top", rotation = "tblr") %>%
+  hline(border = std_b, i = seq(2, nrow(schedule2), 2)) %>%
+  hline(border = big_b_end, i = nrow(schedule2))
+
+ft
+```
+
