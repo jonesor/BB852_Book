@@ -405,15 +405,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There are some additional useful points to consider: proportion of variance explained (R-squared value), proportion of variance explained <em>by different variables in the model</em>, Akaike’s Information Criterion (and likelihood).</p>
 <p>During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? which ones should you include? Would a log-transformed explanatory variable be better?</p>
 <p>We will use the class data to look at these topics (download the latest version please!).</p>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="evaluating-linear-models.html#cb419-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb419-2"><a href="evaluating-linear-models.html#cb419-2" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> <span class="co"># you can edit this to look at particular years.</span></span>
-<span id="cb419-3"><a href="evaluating-linear-models.html#cb419-3" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb419-4"><a href="evaluating-linear-models.html#cb419-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(HandWidth)) <span class="co"># Filter out NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="evaluating-linear-models.html#cb418-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb418-2"><a href="evaluating-linear-models.html#cb418-2" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> <span class="co"># you can edit this to look at particular years.</span></span>
+<span id="cb418-3"><a href="evaluating-linear-models.html#cb418-3" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb418-4"><a href="evaluating-linear-models.html#cb418-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(HandWidth)) <span class="co"># Filter out NA</span></span></code></pre></div>
 <div id="r-squared-value" class="section level2 hasAnchor" number="18.1">
 <h2><span class="header-section-number">18.1</span> R-squared value<a href="evaluating-linear-models.html#r-squared-value" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s fit a simple model: <code>Height ~ HandWidth + Gender</code></p>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="evaluating-linear-models.html#cb420-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender, <span class="at">data =</span> classData)</span>
-<span id="cb420-2"><a href="evaluating-linear-models.html#cb420-2" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="evaluating-linear-models.html#cb419-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender, <span class="at">data =</span> classData)</span>
+<span id="cb419-2"><a href="evaluating-linear-models.html#cb419-2" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Height ~ HandWidth + Gender, data = classData)
@@ -436,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The model summary here shows us the R-squared value, which is a measure of the proportion of variation in the response variable that is explained by variation in the explanatory variable(s). In a linear regression, an r-squared value of 1 (100%) would mean that all data points fall on the line. As the r-squared value declines, there exists more noise in the relationship (i.e. the points become more spread out around the line).</p>
 <p>There are two type of R-squared value shown in this summary: Multiple R-squared (0.6385) and Adjusted R-squared 0.6144.</p>
 <p>We’ll look at multiple R-squared first. This value is calculated as the amount of explained variation divided by the total amount of variation. Take a look at the anova summary table:</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="evaluating-linear-models.html#cb422-1" tabindex="-1"></a><span class="fu">anova</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="evaluating-linear-models.html#cb421-1" tabindex="-1"></a><span class="fu">anova</span>(mod1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
@@ -450,11 +450,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>But what is the Adjusted R-squared?</p>
 <p>Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. Therefore it accurately measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will <em>always</em> increase because terms will <em>always</em> explain some portion of the variance, even if it is vary small. This behaviour can be a bit annoying, and so adjusted R-squared controls against this increase, by adding penalties for the number of predictors in the model. When reporting R-squared values for models with &gt;1 term you should report the adjusted R-squared value.</p>
 <p>You can test this by adding terms to the model. Let’s start with something silly - we’ll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="evaluating-linear-models.html#cb424-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> classData <span class="sc">%&gt;%</span></span>
-<span id="cb424-2"><a href="evaluating-linear-models.html#cb424-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">randomVariable =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(classData)))</span>
-<span id="cb424-3"><a href="evaluating-linear-models.html#cb424-3" tabindex="-1"></a></span>
-<span id="cb424-4"><a href="evaluating-linear-models.html#cb424-4" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender <span class="sc">+</span> randomVariable, <span class="at">data =</span> classData)</span>
-<span id="cb424-5"><a href="evaluating-linear-models.html#cb424-5" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="evaluating-linear-models.html#cb423-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> classData <span class="sc">%&gt;%</span></span>
+<span id="cb423-2"><a href="evaluating-linear-models.html#cb423-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">randomVariable =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(classData)))</span>
+<span id="cb423-3"><a href="evaluating-linear-models.html#cb423-3" tabindex="-1"></a></span>
+<span id="cb423-4"><a href="evaluating-linear-models.html#cb423-4" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender <span class="sc">+</span> randomVariable, <span class="at">data =</span> classData)</span>
+<span id="cb423-5"><a href="evaluating-linear-models.html#cb423-5" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Height ~ HandWidth + Gender + randomVariable, data = classData)
@@ -476,9 +476,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Multiple R-squared:  0.6398, Adjusted R-squared:  0.6025 
 ## F-statistic: 17.17 on 3 and 29 DF,  p-value: 1.332e-06</code></pre>
 <p>We can ask for the more precise multiple R-squared values like this:</p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="evaluating-linear-models.html#cb426-1" tabindex="-1"></a><span class="fu">summary</span>(mod1)<span class="sc">$</span>r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="evaluating-linear-models.html#cb425-1" tabindex="-1"></a><span class="fu">summary</span>(mod1)<span class="sc">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.638462</code></pre>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="evaluating-linear-models.html#cb428-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)<span class="sc">$</span>r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="evaluating-linear-models.html#cb427-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)<span class="sc">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.6398092</code></pre>
 <p>If you subtract one from the other, you will see that the Multiple R-squared has “improved” by 0.0013472. In contrast, the Adjusted R-squared has decreased slightly (-0.0119), from 0.6144 to 0.6025. This, hopefully, is enough evidence to make you favour reporting adjusted rather than multiple R-squared values.</p>
 <p>The adjusted-R-squared value can be used as a one number summary of model explanatory power.</p>
@@ -488,16 +488,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The Akaike information criterion (AIC) is an estimator of prediction error in a statistical model developed in 1970 by a Japanese statistician called Hirotugu Akaike. In a nutshell, it is a measure of the relative quality of statistical models <em>for a given set of data</em>. This last part is important. AIC is only comparable among statistical models that use the same data (and which have the same response variable). In other words, given a collection of various plausible models that use the same data set, AIC estimates the quality of each model, relative to each of the other models. If you are interested in the mysterious details of what this quantity is you can read further on Wikipedia, or a more advanced statistics book, otherwise you can simply trust that AIC estimates the relative quality of model, with lower values being better.</p>
 <p>You can get R to tell you the AIC value for a model using the function <code>AIC()</code> e.g. <code>AIC(mod1)</code>.</p>
 <p>Here’s a simple example of use in practice:</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="evaluating-linear-models.html#cb430-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender, <span class="at">data =</span> classData)</span>
-<span id="cb430-2"><a href="evaluating-linear-models.html#cb430-2" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">*</span> Gender, <span class="at">data =</span> classData)</span>
-<span id="cb430-3"><a href="evaluating-linear-models.html#cb430-3" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth, <span class="at">data =</span> classData)</span>
-<span id="cb430-4"><a href="evaluating-linear-models.html#cb430-4" tabindex="-1"></a>mod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> Gender, <span class="at">data =</span> classData)</span>
-<span id="cb430-5"><a href="evaluating-linear-models.html#cb430-5" tabindex="-1"></a>mod5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> classData)</span>
-<span id="cb430-6"><a href="evaluating-linear-models.html#cb430-6" tabindex="-1"></a>mod6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> randomVariable, <span class="at">data =</span> classData)</span>
-<span id="cb430-7"><a href="evaluating-linear-models.html#cb430-7" tabindex="-1"></a></span>
-<span id="cb430-8"><a href="evaluating-linear-models.html#cb430-8" tabindex="-1"></a></span>
-<span id="cb430-9"><a href="evaluating-linear-models.html#cb430-9" tabindex="-1"></a>(AICtable <span class="ot">&lt;-</span> <span class="fu">AIC</span>(mod1, mod2, mod3, mod4, mod5, mod6) <span class="sc">%&gt;%</span></span>
-<span id="cb430-10"><a href="evaluating-linear-models.html#cb430-10" tabindex="-1"></a>  <span class="fu">arrange</span>(AIC))</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="evaluating-linear-models.html#cb429-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender, <span class="at">data =</span> classData)</span>
+<span id="cb429-2"><a href="evaluating-linear-models.html#cb429-2" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">*</span> Gender, <span class="at">data =</span> classData)</span>
+<span id="cb429-3"><a href="evaluating-linear-models.html#cb429-3" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth, <span class="at">data =</span> classData)</span>
+<span id="cb429-4"><a href="evaluating-linear-models.html#cb429-4" tabindex="-1"></a>mod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> Gender, <span class="at">data =</span> classData)</span>
+<span id="cb429-5"><a href="evaluating-linear-models.html#cb429-5" tabindex="-1"></a>mod5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> classData)</span>
+<span id="cb429-6"><a href="evaluating-linear-models.html#cb429-6" tabindex="-1"></a>mod6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> randomVariable, <span class="at">data =</span> classData)</span>
+<span id="cb429-7"><a href="evaluating-linear-models.html#cb429-7" tabindex="-1"></a></span>
+<span id="cb429-8"><a href="evaluating-linear-models.html#cb429-8" tabindex="-1"></a></span>
+<span id="cb429-9"><a href="evaluating-linear-models.html#cb429-9" tabindex="-1"></a>(AICtable <span class="ot">&lt;-</span> <span class="fu">AIC</span>(mod1, mod2, mod3, mod4, mod5, mod6) <span class="sc">%&gt;%</span></span>
+<span id="cb429-10"><a href="evaluating-linear-models.html#cb429-10" tabindex="-1"></a>  <span class="fu">arrange</span>(AIC))</span></code></pre></div>
 <pre><code>##      df      AIC
 ## mod1  4 205.4242
 ## mod4  3 206.1204
@@ -513,7 +513,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We can do this using variance partitioning.</p>
 <p>Consider our earlier model <code>lm(Height ~ HandWidth + Gender</code>. What proportion of the variance in height is explained by hand width? And what proportion by Gender? (and so on, for more complicated models…)</p>
 <p>This is done by examining the anova summary (e.g. <code>anova(mod1)</code>), using the <code>Sum Sq</code> column.</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="evaluating-linear-models.html#cb432-1" tabindex="-1"></a><span class="fu">anova</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="evaluating-linear-models.html#cb431-1" tabindex="-1"></a><span class="fu">anova</span>(mod1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height

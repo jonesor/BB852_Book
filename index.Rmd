@@ -56,7 +56,7 @@ This book accompanies the course lectures. The general idea is that there will b
 This book uses numerous data sets in examples, most of which are real data sets obtained from published works, or collected by me.
 
 The data sets can be found at the following link:
-https://www.dropbox.com/scl/fo/8ozu5pxtuuhsslkmnmwh2/h?rlkey=1xbx121qy48ydp75ualwdo5on&dl=0
+https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0
 
 
 ## Your instructors
@@ -151,22 +151,7 @@ if (nrow(datasets_missing) > 0) {
 ```
 
 ```{r, echo = FALSE, message = FALSE}
-#COPY CourseData to Dropbox
-# Define the source and destination directories
-source_dir <- "CourseData"
-destination_dir <- "/Users/jones/Dropbox/_SDU_Teaching/BB852/BB852_CourseData"
-
-
-# Delete all files in the destination directory
-file.remove(list.files(destination_dir, full.names = TRUE))
-
-# Get the list of files in the source directory
-file_list <- list.files(source_dir, full.names = TRUE)
-
-# Copy each file to the destination directory
-for (file in file_list) {
-  file.copy(from = file, to = destination_dir, overwrite = TRUE)
-}
+source("CopyDataToDropbox.R")
 ```
 
 
