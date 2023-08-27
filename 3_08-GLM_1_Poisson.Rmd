@@ -79,25 +79,46 @@ summary(mod1)
 ```{block, type="do-something"}
 GLM model coefficients and predicted values, are expressed on the scale of the *linear predictor* (i.e. the transformed data scale). It is usually desirable to "backtransform" to the natural scale before plotting. See below.
 ```
+
 The model coefficients and their standard errors are given on the scale of the linear predictor. They tell us that there is a significant association between the weight of the fox mother and the number of offspring she will produce: larger foxes produce more offspring. Because the coefficients are given on the scale of the linear predictor rather than on the real scale it is useful to plot predictions of the model to visualise the relationship.
 
-To do that we must (1) tell the model what to predict `from` i.e. we must provide a suitable sequence of numbers to predict from using `seq`, (2) use the `predict` function to predict values (`fit`) from the model. We use the argument `type = "response"` to tell the function that we want the predictions on the back-transformed (real) scale rather than on the scale of the linear predictor. We add the argument `se.fit = TRUE` to tell the function to give us the standard error estimates of the fit. The `se.fit` values are added or subtracted from the fit to obtain the plus/minus standard errors. We can multiply these by 1.96 to get the 95% confidence intervals of the fitted values.
+To do that we can use the following four steps:
+
+(1) tell the model what to predict `from` i.e. we must provide a suitable set of values to predict **from**, In this case, we do that using the `seq` function to create a vector in a data frame.
+
+(2) use the `predict` function to predict values (`fit`) from the model. We add the argument `se.fit = TRUE` to tell the `predict` function to give us the standard error estimates of the fit. 
+
+(3) we then put these values into the `newData` data frame. The `se.fit` values are added or subtracted from the fit to obtain the plus/minus standard errors. We can multiply these by 1.96 to get the 95% confidence intervals of the fitted values.
+
+(4) at this point, the predicted values (and the errors) are be on the scale of the linear predictor (which is why I have given them the "_LP" suffix). We must now back-transform them to the natural scale using the appropriate "inverse" of the link function. We can extract this function from the model object with `family(MODEL_NAME)$linkinv`. We can then apply that function to the predicted data.
+
+That's a lot! Let's put it all together. It is worth saving the code somewhere so you can cut-and-paste it (with some modification) for future use.
 
 ```{r}
-# Vector to predict from
+# (1) Create a data frame with a vector to predict from
 newData <- data.frame(weight = seq(1.7, 4.4, 0.01))
 
-# Predicted values (and SE)
-predVals <- predict(mod1, newData,
-  type = "response",
-  se.fit = TRUE
-)
+# (2) Use predict, to get the predicted values (and SE)
+predVals <- predict(mod1, newData, se.fit = TRUE)
 
-# Create new data for the predicted fit line
+# (3) Add the predicted fit and SE to newData
 newData <- newData %>%
-  mutate(noffspring = predVals$fit) %>%
-  mutate(ymin = predVals$fit - 1.96 * predVals$se.fit) %>%
-  mutate(ymax = predVals$fit + 1.96 * predVals$se.fit)
+  mutate(fit_LP = predVals$fit) %>%
+  mutate(lowerCI_LP = predVals$fit - 1.96 * predVals$se.fit) %>%
+  mutate(upperCI_LP = predVals$fit + 1.96 * predVals$se.fit)
+
+# (4) Backtransform these data to the natural scale
+# Get the inverse link function
+inverseFunction <- family(mod1)$linkinv
+
+# transform predicted data to the natural scale
+newData <- newData %>%
+  mutate(
+    fit = inverseFunction(fit_LP),
+    lowerCI = inverseFunction(lowerCI_LP),
+    upperCI = inverseFunction(upperCI_LP)
+  )
+
 ```
 
 Take a look at this data to make sure it looks OK.
@@ -105,19 +126,24 @@ Take a look at this data to make sure it looks OK.
 ```{r}
 head(newData)
 ```
-This looks OK. Now we can plot the data and add a the model fit line, and a "ribbon" representing the errors (the 95% confidence interval for the line).
+
+This looks OK. Now we can plot the data and add a the model fit line, and a "ribbon" representing the errors (the 95% confidence interval for the line). Because the data used to draw the ribbon are not from the original dataset, we need to tell the `geom_ribbon` function NOT to use the same aesthetics (`inherit.aes = FALSE`). The geom layers are applied sequentially, so I add the real points last so they are not obscured by the ribbon or line.
 
 
 ```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 (A <- ggplot(fox, aes(x = weight, y = noffspring)) +
-  geom_ribbon(data = newData, aes(
-    x = weight, ymin = ymin,
-    ymax = ymax
-  ), fill = "grey75") +
-  geom_point() +
-  geom_smooth(data = newData, stat = "identity"))
+  geom_ribbon(data = newData, 
+              aes(x = weight, ymin = lowerCI, ymax = upperCI), 
+              fill = "grey75", 
+              inherit.aes = FALSE) +
+  geom_line(data = newData, aes(x = weight, y = fit)) +
+  geom_point())
 ```
 
+
+```{block, type="do-something"}
+As you can see, this procedure is long-winded and error-prone. I therefore recommend that you save this code somewhere so you can cut-and-paste it (with some modifications) for future use!
+```
 
 So we could summarise this something like this:
 

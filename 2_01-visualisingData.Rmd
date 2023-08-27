@@ -176,7 +176,7 @@ ggplot(meanClutch, aes(
 
 ## Scatter plots
 
-Finally, lets make a scatter plot.
+Let's now make a scatter plot.
 The SDU bird data are not suitable for this type of plot so we'll use the data from a few days ago on suburban bird diversity.
 
 ```{r}
@@ -210,3 +210,78 @@ ggplot(birds, aes(x = Age, y = nSpecies)) +
 This shows very clearly that older developments have more species, but it also appears to show that there is an asymptote around 13 species.
 
 Compare this plot to the one you made with base graphics in a previous class.
+
+
+## Bar plots
+
+Finally, another common type of plot is the bar plot. These are often used poorly. 
+
+**TLDR: you should probably be using box plots or line/point plots. Consider carefully!**
+
+Bar charts are originally intended to represent categorical variables, but they are frequently employed to display continuous data. When bar charts are used for continuous data, they often serve as "visual tables" that typically depict the mean (and sometimes a measure of variation such as standard error or standard deviation). However, this approach presents some issues. 
+
+Firstly, various data distributions can yield the same bar chart, and analyzing the complete dataset may lead to different conclusions compared to relying solely on summary statistics. For example, it is perfectly possible for several markedly different distributions to have the same mean value: a bar chart would erroneously show them as being the same when they were not.
+
+Secondly, summarizing data using the mean and measures of variation can mislead readers into assuming that the data follow a normal distribution without any outliers. These statistics can distort the data, particularly in studies with small sample sizes where outliers are common and there isn't enough data to assess the distribution of the sample. For example, a bar chart with standard error bars can hide the fact that the data might be skewed.
+
+Furthermore, using bar charts to display paired or non-independent data poses an additional problem. Figures should ideally convey the study's design. Bar charts of paired data inaccurately imply that the compared groups are independent, and they fail to provide information about whether changes are consistent across individuals. 
+
+These issues are covered in detail in Weissgerber et al. (2015)^[Weissgerber TL, Milic NM, Winham SJ,
+Garovic VD (2015) Beyond Bar and Line Graphs:
+Time for a New Data Presentation Paradigm. PLoS Biol 13(4): e1002128. doi:10.1371/journal.
+pbio.1002128]. 
+
+The short version is that in MOST cases, when you think you should use a bar plot, you should really be using a box plot with jittered points (see above).
+
+So when CAN you use bar plots?
+
+I would argue that bar plots can be useful for presenting summaries of counts. For example, sample sizes.
+
+```{r}
+clutch <- read.csv("CourseData/SDUClutchSize.csv")
+```
+
+Next we can summarise the data to get the sample sizes for each year
+
+```{r}
+table(clutch$species)
+```
+
+```{r}
+(sampleSize <- as.data.frame(table(clutch$species)))
+
+#rename columns
+names(sampleSize) <- c("Species", "SampleSize")
+```
+
+Here's how to plot these data in `ggplot`, using `geom_bar`. The `stat = "identity"` argument tells `ggplot2` to use the actual values from the data column for the height of the bars.  
+
+```{r}
+ggplot(sampleSize, aes(x = Species, y = SampleSize)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Barplot Example", x = "Category", y = "Sample Size")
+```
+
+With the same data set you might think about making a bar plot for sample size per year like this 
+
+```{r}
+(sampleSize <- as.data.frame(table(clutch$Year)))
+
+#rename columns
+names(sampleSize) <- c("Year", "SampleSize")
+ggplot(sampleSize, aes(x = Year, y = SampleSize)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Barplot Example", x = "Year", y = "Sample Size")
+```
+In this case, I would strongly argue that a line plot is much more appropriate, because it captures the fact that "year" is NOT a discrete category and shows that neighbouring years are connected:
+
+```{r}
+sampleSize$Year <- as.numeric(as.character(sampleSize$Year))
+
+ggplot(sampleSize, aes(x = as.numeric(Year), y = SampleSize)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "A better plot", x = "Year", y = "Sample Size")
+```
+
+

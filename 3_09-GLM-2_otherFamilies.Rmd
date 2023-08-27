@@ -109,28 +109,31 @@ A +
   geom_line(data = d1, aes(x, y), colour = "red")
 ```
 
-Rather than using the equation, there is an easier way by using the **R**'s `predict` function. We will use `predict` to get the predicted probability of success across the range of distances that we provide as a new data frame that we are here calling `newDat`. We will also predict the 95% Confidence Interval (CI) for these estimates. We will use these data to add the CI ribbon and line to the plot.
+Rather than using the equation, there is an easier way by using the **R**'s `predict` function. This was covered in the previous chapter, but for convenience, here are the steps:
 
-The `predict` function returns an object that includes the `fit` and the `se.fit` which are the predicted value of the regression and the standard error of that predicted value respectively. Thus, if the output of the `predict` function is stored as `pv` we can address those parts as `pv$fit` and `pv$se.fit`, and we can save these values alongside the data in `newDat`.
+(1) create a data frame for the model what to predict `from`.
 
-```{block, type="do-something"}
-Remember that the model, and the predicted values from it, are expressed on the scale of the *linear predictor* (i.e. the transformed data scale). It is usually desirable to "backtransform" to the natural scale before plotting. See below.
-```
+(2) use the `predict` function to predict fitted values and standard errors (SE).
 
-First we obtain the predictions and CI on the scale of the linear predictor (logit scale). We calculate 95% CI from the standard errors simply by multiplying by 1.96.
+(3) put these predicted values into a `newData` data frame, multiplying the SE values these by 1.96 to get the 95% confidence intervals of the fitted values.
+
+(4) back-transform the fitted values to the natural scale using the appropriate "inverse" of the link function. 
+
+
+So, this how to do it in this case. First we obtain the predictions and CI on the scale of the linear predictor (logit scale). We calculate 95% CI from the standard errors simply by multiplying by 1.96.
 
 ```{r}
 # Dataset to predict FROM
-newDat <- data.frame(Distance = 14:52)
+newData <- data.frame(Distance = 14:52)
 
 # Get predictions from the model
-pv <- predict(nflMod, newdata = newDat, se.fit = TRUE)
+predVals <- predict(nflMod, newdata = newData, se.fit = TRUE)
 
 # Add those predictions to newDat
-newDat <- newDat %>%
-  mutate(Success_LP = pv$fit) %>%
-  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) %>%
-  mutate(upperCI_LP = pv$fit + 1.96 * pv$se.fit)
+newData <- newData %>%
+  mutate(fit_LP = predVals$fit) %>%
+  mutate(lowerCI_LP = predVals$fit - 1.96 * predVals$se.fit) %>%
+  mutate(upperCI_LP = predVals$fit + 1.96 * predVals$se.fit)
 ```
 
 Now we can first obtain the inverse link from the model object `family(nflMod)$linkinv`, and use that to backtransform the data onto the natural scale ready for plotting.
@@ -140,11 +143,11 @@ Now we can first obtain the inverse link from the model object `family(nflMod)$l
 inverseFunction <- family(nflMod)$linkinv
 
 # transform predicted data to the natural scale
-newDat <- newDat %>%
+newData <- newData %>%
   mutate(
-    Success = inverseFunction(Success_LP),
-    ymin = inverseFunction(lowerCI_LP),
-    ymax = inverseFunction(upperCI_LP)
+    fit = inverseFunction(fit_LP),
+    lowerCI = inverseFunction(lowerCI_LP),
+    upperCI = inverseFunction(upperCI_LP)
   )
 ```
 
@@ -155,19 +158,20 @@ set.seed(42)
 # The plot and ribbon
 (A <- ggplot(NFL, aes(x = Distance, y = Success)) +
   geom_ribbon(
-    data = newDat, aes(x = Distance, ymin = ymin, ymax = ymax),
-    fill = "grey75", alpha = 0.5
+    data = newData, aes(x = Distance, ymin = lowerCI, ymax = upperCI),
+    fill = "grey75", alpha = 0.5, inherit.aes = FALSE
   ) +
-  geom_smooth(data = newDat, stat = "identity") +
+  geom_line(data = newData, aes(x = Distance, y = fit)) +
   geom_jitter(height = 0.05, alpha = 0.5))
 ```
-So, at what distance does the probability of success fall to just 50%? You could read this directly from the plot as "approximately 44m". Alternatively, you could obtain the value from the `newDat` dataset you created above with predictions from the model, by filtering it. This confirms the probability of success reaches 0.5 somewhere between 43-44m.
+
+So, at what distance does the probability of success fall to just 50%? You could read this directly from the plot as "approximately 44m". Alternatively, you could obtain the value from the `newData` dataset you created above with predictions from the model, by filtering it. This confirms the probability of success reaches 0.5 somewhere between 43-44m.
 
 ```{r}
-newDat %>%
-  filter(Success < 0.55) %>%
-  filter(Success > 0.45) %>%
-  select(Distance, Success)
+newData %>%
+  filter(fit < 0.55) %>%
+  filter(fit > 0.45) %>%
+  select(Distance, fit)
 ```
 
 ## Example: Sex ratio in turtles

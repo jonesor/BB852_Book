@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-08-18" />
+<meta name="date" content="2023-08-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -220,6 +220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.3" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.3</b> Box plots</a></li>
 <li class="chapter" data-level="9.4" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#lines-and-points"><i class="fa fa-check"></i><b>9.4</b> Lines and points</a></li>
 <li class="chapter" data-level="9.5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#scatter-plots"><i class="fa fa-check"></i><b>9.5</b> Scatter plots</a></li>
+<li class="chapter" data-level="9.6" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#bar-plots"><i class="fa fa-check"></i><b>9.6</b> Bar plots</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html"><i class="fa fa-check"></i><b>10</b> Distributions and summarising data</a>
 <ul>
@@ -729,16 +730,16 @@ SW = Average body weight of adult male and adult female (kg), FB = Female brain 
 <p>For vectors of class “factor” you can use the <code>table</code> function to give the counts for each level:</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="an-r-refresher.html#cb124-1" tabindex="-1"></a><span class="fu">table</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
 <pre><code>## 
-##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae 
-##           1          18          19           4          30           4           4 
-##  Viverridae 
-##          32</code></pre>
+##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
+##           1          18          19           4          30           4 
+##     Ursidae  Viverridae 
+##           4          32</code></pre>
 <p>You can use the function <code>tapply</code> (“table apply”), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument <code>mean</code>:</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="an-r-refresher.html#cb126-1" tabindex="-1"></a><span class="fu">tapply</span>(carni<span class="sc">$</span>FW, carni<span class="sc">$</span>Family, mean)</span></code></pre></div>
-<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae 
-##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500  198.250000 
-##  Viverridae 
-##    2.672813</code></pre>
+<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
+##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500 
+##     Ursidae  Viverridae 
+##  198.250000    2.672813</code></pre>
 </div>
 <div id="plotting-data" class="section level2 hasAnchor" number="4.14">
 <h2><span class="header-section-number">4.14</span> Plotting data<a href="an-r-refresher.html#plotting-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>

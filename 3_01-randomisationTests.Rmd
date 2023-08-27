@@ -1,10 +1,10 @@
 # Randomisation Tests
 
-Simple experiments testing for a difference in mean values between two groups usually have the null hypothesis that there is no difference. The alternative hypothesis varies. Sometimes it is simply that the two groups are different (and that the difference could be wither positive or negative). In other cases the alternative hypothesis is that the mean of Group A is less then the mean of Group B (or that it is greater).
+When conducting simple experiments to compare mean values between two groups, the null hypothesis typically assumes no difference between the groups. The alternative hypothesis, on the other hand, can vary. Sometimes, it simply states that the two groups are different, without specifying the direction of the difference. In other cases, the alternative hypothesis asserts that the mean of Group A is either less than or greater than the mean of Group B.
 
-Randomisation tests are an intuitive, but computationally intensive way of testing these hypotheses. They have a long history and were first proposed by R.A. Fisher in the 1930s. However they only became convenient when computers became sufficiently fast to do the calculations.
+Randomisation tests provide an intuitive approach to testing these hypotheses, although they can be computationally intensive. These tests have a long history and were initially proposed by R.A. Fisher in the 1930s. However, they only became widely practical with the advent of high-speed computers capable of performing the necessary calculations.
 
-Carrying out a test in R requires that you put your `dplyr` skills to the test. Here you will be guided through an example.
+To conduct a randomisation test using R, you will have the opportunity to put your `dplyr` skills to the test. In the following example, you will be guided through the process step by step, gaining a better understanding of how randomisation tests work and how they can be applied to biological research.
 
 ## Randomisation test in R
 
@@ -193,7 +193,19 @@ We can report our findings something like this:
 
 ## Paired Randomisation Tests
 
-The paired randomisation test is a one-sample randomisation test where the distribution is tested against a value of 0 (i.e. where there is no difference between the two groups). Often, this distribution is the **difference** in measurements between two sets of measurements taken from the same individuals (or study sites) before and after some treatment has been applied. 
+A paired randomisation test is used when the observations in your data are paired or matched in some way. In this type of test, each observation in one group (e.g. Group A) is paired or matched with a corresponding observation in the other group (e.g. Group B), based on some relevant characteristic or factor.
+
+You would use a paired randomisation test when you want to compare the mean values of the two groups while taking into account the paired nature of the observations. This type of test is particularly useful when the paired observations are expected to be more similar to each other than to the observations in the other group.
+
+Here are three examples of situations where a paired randomisation test would be appropriate:
+
+(1) Pre- and post-treatment measurements: Suppose you are conducting a study to evaluate the effectiveness of a new drug. You measure a specific outcome variable in each participant before and after administering the treatment. 
+
+(2) Left-right comparisons: Imagine you are studying the effect of a certain intervention on the strength of participants' dominant and non-dominant hands. Each participant's hand strength is measured twice, once for the dominant hand and once for the non-dominant hand. 
+
+(3) Matched case-control studies: In a case-control study design, where individuals with a particular condition (cases) are compared to individuals without the condition (controls), it is common to match cases and controls based on certain characteristics such as age, gender, or socioeconomic status. The idea is that the pairs (case vs. control) are similar in every way EXCEPT the condition being investigated.
+
+The paired randomisation test is a **one-sample** randomisation test where the distribution is tested against a value of 0 (i.e. where there is no difference between the two groups). Usually this distribution is the **difference** in measurements between two sets of measurements taken from the pairs. For example, measurements taken from the same individuals before and after some treatment has been applied. 
 
 I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. Everitt collected data on weights of people before and after therapy. These data are in the file `anorexiaCBT.csv`
 
