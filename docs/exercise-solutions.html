@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-08-27" />
+<meta name="date" content="2023-08-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -460,42 +460,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="exercise-solutions.html#cb543-1" tabindex="-1"></a><span class="fu">dim</span>(amniote)</span></code></pre></div>
 <pre><code>## [1] 21322    36</code></pre>
 <div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="exercise-solutions.html#cb545-1" tabindex="-1"></a><span class="fu">names</span>(amniote)</span></code></pre></div>
-<pre><code>##  [1] &quot;class&quot;                                
-##  [2] &quot;order&quot;                                
-##  [3] &quot;family&quot;                               
-##  [4] &quot;genus&quot;                                
-##  [5] &quot;species&quot;                              
-##  [6] &quot;subspecies&quot;                           
-##  [7] &quot;common_name&quot;                          
-##  [8] &quot;female_maturity_d&quot;                    
-##  [9] &quot;litter_or_clutch_size_n&quot;              
-## [10] &quot;litters_or_clutches_per_y&quot;            
-## [11] &quot;adult_body_mass_g&quot;                    
-## [12] &quot;maximum_longevity_y&quot;                  
-## [13] &quot;gestation_d&quot;                          
-## [14] &quot;weaning_d&quot;                            
-## [15] &quot;birth_or_hatching_weight_g&quot;           
-## [16] &quot;weaning_weight_g&quot;                     
-## [17] &quot;egg_mass_g&quot;                           
-## [18] &quot;incubation_d&quot;                         
-## [19] &quot;fledging_age_d&quot;                       
-## [20] &quot;longevity_y&quot;                          
-## [21] &quot;male_maturity_d&quot;                      
-## [22] &quot;inter_litter_or_interbirth_interval_y&quot;
-## [23] &quot;female_body_mass_g&quot;                   
-## [24] &quot;male_body_mass_g&quot;                     
-## [25] &quot;no_sex_body_mass_g&quot;                   
-## [26] &quot;egg_width_mm&quot;                         
-## [27] &quot;egg_length_mm&quot;                        
-## [28] &quot;fledging_mass_g&quot;                      
-## [29] &quot;adult_svl_cm&quot;                         
-## [30] &quot;male_svl_cm&quot;                          
-## [31] &quot;female_svl_cm&quot;                        
-## [32] &quot;birth_or_hatching_svl_cm&quot;             
-## [33] &quot;female_svl_at_maturity_cm&quot;            
-## [34] &quot;female_body_mass_at_maturity_g&quot;       
-## [35] &quot;no_sex_svl_cm&quot;                        
-## [36] &quot;no_sex_maturity_d&quot;</code></pre>
+<pre><code>##  [1] &quot;class&quot;                                 &quot;order&quot;                                 &quot;family&quot;                                &quot;genus&quot;                                
+##  [5] &quot;species&quot;                               &quot;subspecies&quot;                            &quot;common_name&quot;                           &quot;female_maturity_d&quot;                    
+##  [9] &quot;litter_or_clutch_size_n&quot;               &quot;litters_or_clutches_per_y&quot;             &quot;adult_body_mass_g&quot;                     &quot;maximum_longevity_y&quot;                  
+## [13] &quot;gestation_d&quot;                           &quot;weaning_d&quot;                             &quot;birth_or_hatching_weight_g&quot;            &quot;weaning_weight_g&quot;                     
+## [17] &quot;egg_mass_g&quot;                            &quot;incubation_d&quot;                          &quot;fledging_age_d&quot;                        &quot;longevity_y&quot;                          
+## [21] &quot;male_maturity_d&quot;                       &quot;inter_litter_or_interbirth_interval_y&quot; &quot;female_body_mass_g&quot;                    &quot;male_body_mass_g&quot;                     
+## [25] &quot;no_sex_body_mass_g&quot;                    &quot;egg_width_mm&quot;                          &quot;egg_length_mm&quot;                         &quot;fledging_mass_g&quot;                      
+## [29] &quot;adult_svl_cm&quot;                          &quot;male_svl_cm&quot;                           &quot;female_svl_cm&quot;                         &quot;birth_or_hatching_svl_cm&quot;             
+## [33] &quot;female_svl_at_maturity_cm&quot;             &quot;female_body_mass_at_maturity_g&quot;        &quot;no_sex_svl_cm&quot;                         &quot;no_sex_maturity_d&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use <code>select</code> to pick relevent columns of the dataset and discard the others. Call the new data frame <code>x</code>.
 The relevant columns are the taxonomic variables (<code>class</code>, <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</li>
@@ -514,58 +487,37 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb548-2"><a href="exercise-solutions.html#cb548-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(genus, species)) <span class="sc">%&gt;%</span></span>
 <span id="cb548-3"><a href="exercise-solutions.html#cb548-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus)</span>
 <span id="cb548-4"><a href="exercise-solutions.html#cb548-4" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##   class               species longevity_y adult_body_mass_g
-## 1  Aves Accipiter albogularis          NA           251.500
-## 2  Aves      Accipiter badius          NA           140.000
-## 3  Aves     Accipiter bicolor          NA           345.000
-## 4  Aves  Accipiter brachyurus          NA           142.000
-## 5  Aves    Accipiter brevipes          NA           203.500
-## 6  Aves Accipiter castanilius          NA           159.375
-##   litter_or_clutch_size_n litters_or_clutches_per_y
-## 1                      NA                        NA
-## 2                    3.25                         1
-## 3                    2.70                        NA
-## 4                      NA                        NA
-## 5                    4.00                         1
-## 6                      NA                        NA</code></pre>
+<pre><code>##   class               species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
+## 1  Aves Accipiter albogularis          NA           251.500                      NA                        NA
+## 2  Aves      Accipiter badius          NA           140.000                    3.25                         1
+## 3  Aves     Accipiter bicolor          NA           345.000                    2.70                        NA
+## 4  Aves  Accipiter brachyurus          NA           142.000                      NA                        NA
+## 5  Aves    Accipiter brevipes          NA           203.500                    4.00                         1
+## 6  Aves Accipiter castanilius          NA           159.375                      NA                        NA</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</li>
 </ol>
 <div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="exercise-solutions.html#cb550-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>longevity_y)</span>
 <span id="cb550-2"><a href="exercise-solutions.html#cb550-2" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class                 species longevity_y adult_body_mass_g
-## 1 Reptilia Chelonoidis duncanensis       177.0                NA
-## 2 Reptilia  Aldabrachelys gigantea       152.0            117200
-## 3 Reptilia          Testudo graeca       127.0              1430
-## 4 Mammalia            Homo sapiens       122.5             62035
-## 5 Mammalia   Balaenoptera physalus        95.0          38800000
-## 6 Mammalia            Orcinus orca        90.0           4300000
-##   litter_or_clutch_size_n litters_or_clutches_per_y
-## 1                      NA                        NA
-## 2                    13.5                  2.000000
-## 3                     5.0                  3.200993
-## 4                     1.0                  0.485000
-## 5                     1.0                  0.400000
-## 6                     1.0                  0.210000</code></pre>
+<pre><code>##      class                 species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
+## 1 Reptilia Chelonoidis duncanensis       177.0                NA                      NA                        NA
+## 2 Reptilia  Aldabrachelys gigantea       152.0            117200                    13.5                  2.000000
+## 3 Reptilia          Testudo graeca       127.0              1430                     5.0                  3.200993
+## 4 Mammalia            Homo sapiens       122.5             62035                     1.0                  0.485000
+## 5 Mammalia   Balaenoptera physalus        95.0          38800000                     1.0                  0.400000
+## 6 Mammalia            Orcinus orca        90.0           4300000                     1.0                  0.210000</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Do the same thing but this time find the shortest lived species.</li>
 </ol>
 <div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="exercise-solutions.html#cb552-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(longevity_y)</span>
 <span id="cb552-2"><a href="exercise-solutions.html#cb552-2" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class              species longevity_y adult_body_mass_g
-## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875
-## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000
-## 3 Mammalia Allactaga balikunica  0.08333333                NA
-## 4 Mammalia    Allactaga bullata  0.08333333                NA
-## 5 Mammalia       Geomys pinetis  0.08333333           195.750
-## 6 Mammalia          Mus sorella  0.08333333            12.535
-##   litter_or_clutch_size_n litters_or_clutches_per_y
-## 1                    1.59                     7.150
-## 2                    1.50                        NA
-## 3                    2.52                        NA
-## 4                    2.52                        NA
-## 5                    1.77                     1.865
-## 6                    5.20                     3.000</code></pre>
+<pre><code>##      class              species longevity_y adult_body_mass_g litter_or_clutch_size_n litters_or_clutches_per_y
+## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875                    1.59                     7.150
+## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000                    1.50                        NA
+## 3 Mammalia Allactaga balikunica  0.08333333                NA                    2.52                        NA
+## 4 Mammalia    Allactaga bullata  0.08333333                NA                    2.52                        NA
+## 5 Mammalia       Geomys pinetis  0.08333333           195.750                    1.77                     1.865
+## 6 Mammalia          Mus sorella  0.08333333            12.535                    5.20                     3.000</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>na.rm = TRUE</code> argument.</li>
 </ol>
@@ -882,8 +834,7 @@ Figure 25.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb596-8"><a href="exercise-solutions.html#cb596-8" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb596-9"><a href="exercise-solutions.html#cb596-9" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
 <span id="cb596-10"><a href="exercise-solutions.html#cb596-10" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595 -2.1980346
-##  [8] -1.5961324  0.8836404  1.2863489</code></pre>
+<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595 -2.1980346 -1.5961324  0.8836404  1.2863489</code></pre>
 <div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="exercise-solutions.html#cb598-1" tabindex="-1"></a><span class="co"># with tapply</span></span>
 <span id="cb598-2"><a href="exercise-solutions.html#cb598-2" tabindex="-1"></a><span class="fu">replicate</span>(</span>
 <span id="cb598-3"><a href="exercise-solutions.html#cb598-3" tabindex="-1"></a>  <span class="dv">10</span>,</span>
@@ -892,8 +843,7 @@ Figure 25.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb598-6"><a href="exercise-solutions.html#cb598-6" tabindex="-1"></a>    <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean</span>
 <span id="cb598-7"><a href="exercise-solutions.html#cb598-7" tabindex="-1"></a>  )))</span>
 <span id="cb598-8"><a href="exercise-solutions.html#cb598-8" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728 -0.5334274
-##  [8]  0.2076405 -0.4760695 -0.6967478</code></pre>
+<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728 -0.5334274  0.2076405 -0.4760695 -0.6967478</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</li>
 </ol>
@@ -948,11 +898,12 @@ Figure 25.2: Barplots of 30 and 9000 simulated dice throws
 <li>Plot the data (e.g. with a box plot, or histogram)</li>
 </ol>
 <div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="exercise-solutions.html#cb606-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb606-2"><a href="exercise-solutions.html#cb606-2" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</span>
-<span id="cb606-3"><a href="exercise-solutions.html#cb606-3" tabindex="-1"></a></span>
-<span id="cb606-4"><a href="exercise-solutions.html#cb606-4" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Precision)) <span class="sc">+</span></span>
-<span id="cb606-5"><a href="exercise-solutions.html#cb606-5" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb606-6"><a href="exercise-solutions.html#cb606-6" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<span id="cb606-2"><a href="exercise-solutions.html#cb606-2" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb606-3"><a href="exercise-solutions.html#cb606-3" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>) <span class="co">#you may use a different filter</span></span>
+<span id="cb606-4"><a href="exercise-solutions.html#cb606-4" tabindex="-1"></a></span>
+<span id="cb606-5"><a href="exercise-solutions.html#cb606-5" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Precision)) <span class="sc">+</span></span>
+<span id="cb606-6"><a href="exercise-solutions.html#cb606-6" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb606-7"><a href="exercise-solutions.html#cb606-7" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-410-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Formulate null and alternative hypotheses.</li>
@@ -967,17 +918,17 @@ Alternative hypothesis - there is a significant difference between male and fema
 ##  Welch Two Sample t-test
 ## 
 ## data:  Precision by Gender
-## t = -1.7991, df = 77.43, p-value = 0.0759
+## t = -1.1836, df = 22.601, p-value = 0.2489
 ## alternative hypothesis: true difference in means between group Female and group Male is not equal to 0
 ## 95 percent confidence interval:
-##  -4.4442107  0.2251347
+##  -6.873689  1.873689
 ## sample estimates:
 ## mean in group Female   mean in group Male 
-##             28.75410             30.86364</code></pre>
+##             26.16667             28.66667</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Write a sentence or two describing the results.</li>
 </ol>
-<p>There was no significant difference in mean precision between the two genders (t-test: t = -1.80, df = 77.43, p = 0.0759). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = -4.444-0.225). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.</p>
+<p>There was no significant difference in mean precision between the two genders (t-test: t = -1.18, df = 22.60, p = 0.249). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = -6.874-1.874). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.</p>
 </div>
 <div id="therapy-for-anorexia" class="section level2 hasAnchor" number="25.7">
 <h2><span class="header-section-number">25.7</span> Therapy for anorexia<a href="exercise-solutions.html#therapy-for-anorexia" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1338,16 +1289,11 @@ analysis?
 ## -61.625 -23.344  -5.375  26.313  60.125 
 ## 
 ## Coefficients:
-##                                            Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)                                  218.50      13.29  16.435  6.5e-16
-## personalityReactive                          -53.88      18.80  -2.865  0.00781
-## colourationHomogeneous                        60.88      18.80   3.238  0.00309
-## personalityReactive:colourationHomogeneous    45.38      26.59   1.707  0.09898
-##                                               
-## (Intercept)                                ***
-## personalityReactive                        ** 
-## colourationHomogeneous                     ** 
-## personalityReactive:colourationHomogeneous .  
+##                                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                                  218.50      13.29  16.435  6.5e-16 ***
+## personalityReactive                          -53.88      18.80  -2.865  0.00781 ** 
+## colourationHomogeneous                        60.88      18.80   3.238  0.00309 ** 
+## personalityReactive:colourationHomogeneous    45.38      26.59   1.707  0.09898 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 

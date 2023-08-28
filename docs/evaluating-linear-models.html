@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-08-27" />
+<meta name="date" content="2023-08-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -405,9 +405,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The models are all fitted in the same way, and have the same assumptions. We have already covered the four key diagnostic plots (see the ANOVA and linear regression sections, and the GSWR textbook), how to evaluate the significance of parameters, and the meaning of the coefficients.</p>
 <p>There are some additional useful points to consider: proportion of variance explained (R-squared value), proportion of variance explained <em>by different variables in the model</em>, Akaike’s Information Criterion (and likelihood).</p>
 <p>During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? which ones should you include? Would a log-transformed explanatory variable be better?</p>
-<p>We will use the class data to look at these topics (download the latest version please!).</p>
+<p>We will use the class data to look at these topics (download the latest version please!). In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or this year’s data.</p>
 <div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="evaluating-linear-models.html#cb429-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb429-2"><a href="evaluating-linear-models.html#cb429-2" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> <span class="co"># you can edit this to look at particular years.</span></span>
+<span id="cb429-2"><a href="evaluating-linear-models.html#cb429-2" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> <span class="co"># you can edit this to look at particular years.</span></span>
 <span id="cb429-3"><a href="evaluating-linear-models.html#cb429-3" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb429-4"><a href="evaluating-linear-models.html#cb429-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(HandWidth)) <span class="co"># Filter out NA</span></span></code></pre></div>
 <div id="r-squared-value" class="section level2 hasAnchor" number="18.1">

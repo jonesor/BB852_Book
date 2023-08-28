@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-08-27" />
+<meta name="date" content="2023-08-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -701,10 +701,8 @@ help import data. Look for “Import Dataset” in the top-right pane.
 <pre><code>## [1] 17</code></pre>
 <p>We can find the names of the columns of a data frame with the <code>names</code> function:</p>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="an-r-refresher.html#cb114-1" tabindex="-1"></a><span class="fu">names</span>(carni)</span></code></pre></div>
-<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;    
-##  [6] &quot;FW&quot;          &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;         
-## [11] &quot;GL&quot;          &quot;BW&quot;          &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;         
-## [16] &quot;AM&quot;          &quot;IB&quot;</code></pre>
+<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;     &quot;FW&quot;          &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;          &quot;GL&quot;          &quot;BW&quot;         
+## [13] &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;          &quot;AM&quot;          &quot;IB&quot;</code></pre>
 <p>The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
 SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).</p>
 <p>You can refer to the sub-parts of a <code>data.frame</code> (the columns) using the <code>$</code> syntax:</p>
@@ -722,24 +720,19 @@ SW = Average body weight of adult male and adult female (kg), FB = Female brain 
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="an-r-refresher.html#cb120-1" tabindex="-1"></a><span class="fu">class</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="an-r-refresher.html#cb122-1" tabindex="-1"></a><span class="fu">levels</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
-<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot; 
-## [6] &quot;Procyonidae&quot; &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
+<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot;  &quot;Procyonidae&quot; &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
 </div>
 <div id="tables-and-summary-statistics" class="section level2 hasAnchor" number="4.13">
 <h2><span class="header-section-number">4.13</span> Tables and summary statistics<a href="an-r-refresher.html#tables-and-summary-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For vectors of class “factor” you can use the <code>table</code> function to give the counts for each level:</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="an-r-refresher.html#cb124-1" tabindex="-1"></a><span class="fu">table</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
 <pre><code>## 
-##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
-##           1          18          19           4          30           4 
-##     Ursidae  Viverridae 
-##           4          32</code></pre>
+##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
+##           1          18          19           4          30           4           4          32</code></pre>
 <p>You can use the function <code>tapply</code> (“table apply”), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument <code>mean</code>:</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="an-r-refresher.html#cb126-1" tabindex="-1"></a><span class="fu">tapply</span>(carni<span class="sc">$</span>FW, carni<span class="sc">$</span>Family, mean)</span></code></pre></div>
-<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
-##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500 
-##     Ursidae  Viverridae 
-##  198.250000    2.672813</code></pre>
+<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
+##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500  198.250000    2.672813</code></pre>
 </div>
 <div id="plotting-data" class="section level2 hasAnchor" number="4.14">
 <h2><span class="header-section-number">4.14</span> Plotting data<a href="an-r-refresher.html#plotting-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>

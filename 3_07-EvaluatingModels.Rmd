@@ -8,11 +8,11 @@ There are some additional useful points to consider: proportion of variance expl
 
 During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? which ones should you include? Would a log-transformed explanatory variable be better? 
 
-We will use the class data to look at these topics (download the latest version please!).
+We will use the class data to look at these topics (download the latest version please!). In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or this year's data. 
 
 ```{r}
 classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Year %in% 2019) %>% # you can edit this to look at particular years.
+  filter(Year == 2019) %>% # you can edit this to look at particular years.
   filter(Gender %in% c("Male", "Female")) %>%
   filter(!is.na(HandWidth)) # Filter out NA
 ```

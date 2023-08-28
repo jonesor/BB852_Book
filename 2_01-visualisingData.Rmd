@@ -220,9 +220,54 @@ Finally, another common type of plot is the bar plot. These are often used poorl
 
 Bar charts are originally intended to represent categorical variables, but they are frequently employed to display continuous data. When bar charts are used for continuous data, they often serve as "visual tables" that typically depict the mean (and sometimes a measure of variation such as standard error or standard deviation). However, this approach presents some issues. 
 
-Firstly, various data distributions can yield the same bar chart, and analyzing the complete dataset may lead to different conclusions compared to relying solely on summary statistics. For example, it is perfectly possible for several markedly different distributions to have the same mean value: a bar chart would erroneously show them as being the same when they were not.
+Firstly, various data distributions can yield the same bar chart, and analyzing the complete dataset may lead to different conclusions compared to relying solely on summary statistics. For example, it is perfectly possible for several markedly different distributions to have very similar mean values: a bar chart would erroneously show them as being similar when they were not.
 
 Secondly, summarizing data using the mean and measures of variation can mislead readers into assuming that the data follow a normal distribution without any outliers. These statistics can distort the data, particularly in studies with small sample sizes where outliers are common and there isn't enough data to assess the distribution of the sample. For example, a bar chart with standard error bars can hide the fact that the data might be skewed.
+
+Figure \@ref(fig:barplot1) illustrates this with two plots showing two distributions, G1 and G2: Plot A is a classic bar plot with standard error bars, and plot B is a box plot with jittered points placed on top. There are differences in the distributions of data in G1 and G2 (G2 is skewed, and includes an outlier). This difference between distributions is captured quite well in plot B (even without the addition of the jittered points, look at the "whiskers" of the box plot), but is not captured well with plot B. 
+
+Box plots are simply better than bar plots (unless you are trying to hide something!).
+
+```{r, barplot1, echo = FALSE, fig.width = 6, fig.height = 2, fig.align = 'center', fig.cap = "Problems with bar plots."}
+library(patchwork)
+set.seed(42)
+n = 50
+mv <- 2
+v <- 3
+#Gamma
+shape = (mv^2)/v
+scale = v/mv
+
+df1 <- data.frame(x = rep(c("G1","G2"),each = n),
+                  y = c(rnorm(n,mean = mv),
+                        rgamma(n,shape = shape,scale = scale)))
+
+df2 <- df1 %>% 
+  group_by(x) %>% 
+  summarise(meanVal = mean(y), sdVal = sd(y))
+
+
+A<-ggplot(df2, aes(x = x, y = meanVal)) + 
+  geom_bar(stat = "identity", fill = "steelblue") + 
+  geom_errorbar(aes(ymin=meanVal-sdVal/sqrt(n), 
+                    ymax=meanVal+sdVal/sqrt(n)),
+                width=.2) + 
+  theme_minimal() + 
+  ggtitle("A") + 
+  ylab("y")
+
+B<- ggplot(df1,aes(x = x, y = y)) +
+  geom_boxplot(outlier.shape = NA) + 
+  geom_jitter(size = 2, width = 0.2) +
+  theme_minimal() + 
+  ggtitle("B") +
+  ylab("y")
+
+A|B
+
+```
+
+
 
 Furthermore, using bar charts to display paired or non-independent data poses an additional problem. Figures should ideally convey the study's design. Bar charts of paired data inaccurately imply that the compared groups are independent, and they fail to provide information about whether changes are consistent across individuals. 
 
