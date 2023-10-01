@@ -433,8 +433,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## HandWidth     1.4026     0.8777   1.598 0.120500    
 ## GenderMale   10.0774     2.3460   4.296 0.000169 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 5.053 on 30 degrees of freedom
 ## Multiple R-squared:  0.6385, Adjusted R-squared:  0.6144 
@@ -451,8 +450,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Gender     1 471.13  471.13  18.451 0.0001685 ***
 ## Residuals 30 766.00   25.53                      
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Here, the column labelled <code>Sum Sq</code> is telling us what the variance EXPLAINED by each of the terms is. The final entry, for <code>Residuals</code>, is the amount <strong>not</strong> explained (hence “residual”). Therefore we can calculate R-squared from this as (881.6 + 471.1) / (881.6 + 471.1 + 766) = 0.6384575. You can check that this matches the figure indicated by <code>summary(mod1)</code>.</p>
 <p>But what is the Adjusted R-squared?</p>
 <p>Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. Therefore it accurately measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will <em>always</em> increase because terms will <em>always</em> explain some portion of the variance, even if it is vary small. This behaviour can be a bit annoying, and so adjusted R-squared controls against this increase, by adding penalties for the number of predictors in the model. When reporting R-squared values for models with &gt;1 term you should report the adjusted R-squared value.</p>
@@ -477,8 +475,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## GenderMale      10.1993     2.4103   4.232 0.000213 ***
 ## randomVariable  -0.2626     0.7974  -0.329 0.744267    
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 5.13 on 29 degrees of freedom
 ## Multiple R-squared:  0.6398, Adjusted R-squared:  0.6025 
@@ -530,8 +527,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Gender     1 471.13  471.13  18.451 0.0001685 ***
 ## Residuals 30 766.00   25.53                      
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>So here we already know that the model explains 63.85% of variation in Height. We can partition this among the terms by using the Sums of Squares values.
 The proportion of variance explained by HandWidth is 881.6/(881.6 + 471.1) = 0.6517336.</p>
 <p>Similarly, the proportion of variance explained by Gender is 471.1/(881.6 + 471.1) = 0.3482664.</p>

@@ -464,8 +464,7 @@ Figure 18.2: The effect of diet protein content and genotype on adult size of an
 ## genotype:diet  1  54.19   54.19  12.665 0.0009073 ***
 ## Residuals     44 188.25    4.28                      
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This summary <code>Analysis of Variance Table</code> is similar to the ones you have already seen for one-way ANOVA and linear regression. It just has some extra rows because you have extra explanatory variables. It shows you the degrees of freedom for the different terms in the model (all 1, because they have two levels), the sum of squares (<code>Sum Sq</code>) and mean sum of squares (<code>Mean Sq</code>) and the associated <code>F value</code> and p-value (<code>Pr(&gt;F)</code>). Those F values are all large, leading to highly-significant p-values.</p>
 <p>This means that all of those terms in the model explain a significant proportion of the variation in insect length.</p>
 <p>But as you know, this summary table doesn’t tell you the direction of the effects. The obvious way to understand your data is to simply look at the plot you have already produced. You could also make an <strong>interaction plot</strong> which is a simplified version of the plot of the raw data.</p>
@@ -549,19 +548,13 @@ To answer that question we need to use a post-hoc test</p>
 ## -3.7500 -1.0417  0.1667  1.2500  5.1667 
 ## 
 ## Coefficients:
-##                            Estimate Std. Error t value
-## (Intercept)                 25.8333     0.5971  43.264
-## genotypegt2                 -8.0833     0.8444  -9.572
-## dietlowProtein              -5.1667     0.8444  -6.118
-## genotypegt2:dietlowProtein   4.2500     1.1942   3.559
-##                            Pr(&gt;|t|)    
-## (Intercept)                 &lt; 2e-16 ***
-## genotypegt2                2.53e-12 ***
-## dietlowProtein             2.26e-07 ***
-## genotypegt2:dietlowProtein 0.000907 ***
+##                            Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                 25.8333     0.5971  43.264  &lt; 2e-16 ***
+## genotypegt2                 -8.0833     0.8444  -9.572 2.53e-12 ***
+## dietlowProtein              -5.1667     0.8444  -6.118 2.26e-07 ***
+## genotypegt2:dietlowProtein   4.2500     1.1942   3.559 0.000907 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 2.068 on 44 degrees of freedom
 ## Multiple R-squared:  0.7585, Adjusted R-squared:  0.742 

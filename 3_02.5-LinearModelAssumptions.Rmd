@@ -1,36 +1,38 @@
 # Assumptions in linear models
 
-Before proceeding we should talk about assumptions in linear models. And before that we should talk about what we mean by linear models.
+Before proceeding, we should talk about assumptions in linear models. And before that we should talk about what we mean by *linear models*.
 
-Linear models assume a linear relationship between the response variable (the outcome of interest) and one or more explanatory variables (factors that may influence the response). Linear models encompass various techniques, including t-tests, least-squares regression, analysis of variance (ANOVA), and analysis of covariance (ANCOVA).
+Linear models assume a linear relationship between the response variable (the outcome of interest) and one or more explanatory variables (factors that may influence the response). Linear models encompass various techniques, including t-tests, linear regression, analysis of variance (ANOVA), and analysis of covariance (ANCOVA).
 
-All these techniques fall under the umbrella of linear models because they assume a linear relationship between the response variable and the explanatory variables.
+All these techniques fall under the umbrella of linear models because they assume a linear relationship between the response variable and the explanatory variables. This linearity is a little hard to visualise for some models (e.g. t-tests) but for others (e.g. linear regression) it is easy to see.
 
 Note also that linear models can be extended to include non-linear relationships through appropriate transformations of data (e.g. log-transformation) or by incorporating polynomial terms or other non-linear functions into the model.
 
-In a nutshell, all the models we use here in this course are linear models. Generalised Linear Models (GLMs), which are get to later, are models that relax some of the assumptions (they **generalise** the model).
+In a nutshell, all the models we use in this course are linear models. Generalised Linear Models (GLMs), which are get to later, are models that relax some of the assumptions (they **generalise** the model by relaxing the assumptions of linearity and homoscedasticity - more on this later).
 
 ## The assumptions
 
-The assumptions of linear models are outlined below. The relevance of the assumptions depends on the type of model. For example, the assumption of linearity is not important in a t-test. I should also emphasise that some assumptions are more important than others and that some models/tests are quite robust to minor-to-moderate violations of some assumptions. 
+The assumptions of linear models are outlined below. The relevance of the assumptions depends on the type of model. For example, the assumption of linearity is not important in a t-test. I should also emphasise that some assumptions are more important than others and that models/tests are quite robust to minor-to-moderate violations of some assumptions. 
 
 **Linearity**: The assumption of linearity states that the relationship between the response variable and continuous explanatory variable(s) should be linear. This means that the effect of continuous explanatory variables on the response variable is additive and constant across all levels of the explanatory variable. For practical purposes, the assumption of linearity is only relevant when there is a continuous explanatory variable. 
 
 **Independence**: The observations in the dataset are assumed to be independent of each other. Two common scenarios where this assumption may be violated are:
 
-a. Spatial clustering: Observations that are spatially close to each other may exhibit similarities. For example, measurements taken at nearby locations might have similar characteristics. In such cases, the assumption of independence is violated, and specialized spatial regression techniques may be required.
+a. Spatial clustering: Observations that are spatially close to each other may exhibit similarities. For example, measurements taken at nearby locations might have similar characteristics. In such cases, the assumption of independence is violated, and specialised spatial regression techniques may be required.
 
 b. Repeated measurements: When multiple measurements are collected from the same individual or unit, such as repeated measurements over time, the observations are likely to be correlated. For instance, if multiple blood pressure measurements are collected from each patient over time, measurements **within** each patient are expected to be more similar than measurements **between** different patients. 
 
 c. Relatedness: When measurements are collected from individuals that are related via a pedigree (family tree) or phylogeny, the observations from closely-related individuals are likely to be more similar than those from distantly-related individuals.
 
-**Homoscedasticity**: The assumption of homoscedasticity (or homogeneity of variances) states that the variability of the response variable should be constant across all levels of the explanatory variables. In a linear regression, you can picture this as the uncertainty or cloud of data points being evenly dispersed like a ribbon running along the fitted line of the regression model. For a t-test this assumption means that we exoect the spread of data to be same for both group 1 and group2 (note though, that Welch's t-test used by default in R with `t.test` this assumption is relaxed!)
+**Homoscedasticity**: The assumption of homoscedasticity (or homogeneity of variances) states that the variability of the response variable should be constant across all levels of the explanatory variables. In a linear regression, you can picture this as the cloud of data points being evenly dispersed like a ribbon running along the fitted line of the regression model. For a t-test this assumption means that we expect the spread of data to be same for both group 1 and group 2 (note though, that Welch's t-test used by default in R with `t.test` this assumption is relaxed!)
 
 
-**Normality**: The residuals of the model are assumed to follow a normal distribution. This assumption is important for hypothesis testing, confidence intervals, and obtaining accurate p-values. It is typically assumed that the errors or residuals are normally distributed with a mean of zero. Note that it is the **residuals** that are expected to be normally distributed, **not** the actual data.
+**Normality**: The residuals of the model are assumed to follow a normal distribution with a mean of zero. Note that it is the **residuals** that are expected to be normally distributed, **not** the actual data.
 
-**No multicollinearity**: The explanatory variables should not be highly correlated with each other. High multicollinearity can cause issues with model estimation and interpretation of the coefficients. It is desirable to have explanatory variables that are moderately or weakly correlated with each other.
+**No multicollinearity**: The explanatory variables should not be highly correlated with each other. High multicollinearity can cause issues with model estimation and interpretation of the coefficients. It is desirable to have explanatory variables that are moderately or weakly correlated with each other. This is normally only an issue for multiple regression models.
 
 **No influential outliers**: Outliers are extreme values that have a significant impact on the estimated coefficients and can distort the model. Linear models assume that there are no influential outliers that disproportionately affect the model's results.
 
-Finally, it is important to recognize that no model is perfect and that violations of assumptions are common in statistical analyses. While we strive to develop accurate and precise models, it is crucial to understand that real-world data often deviate from idealized assumptions. However, this should not discourage us from using models; rather, it emphasizes the need to fit the best model possible given the available data and circumstances. By carefully considering the assumptions and limitations of the chosen model, we can make informed decisions about its applicability and potential biases. Moreover, it is critical to consider assumptions at the design stage of a study, as this allows for the collection of appropriate data and the implementation of strategies to minimize violations. By being mindful of the assumptions and continuously evaluating the model's performance, we can enhance the reliability and validity of our analyses and draw meaningful conclusions from the data at hand.
+Finally, it is important to recognize that no model is perfect and that violations of assumptions are common in statistical analyses. While we strive to develop valid models, we must understand that real-world data can deviate from idealized assumptions. However, this should not discourage us from using models; rather, it emphasises the need to fit the best model possible given the available data and circumstances. By carefully considering the assumptions and limitations of the chosen model, we can make informed decisions about its applicability and potential biases. 
+
+Moreover, it is critical to consider assumptions at the **design stage** of a study, because this allows for the collection of appropriate data and the implementation of strategies to minimize violations. By being mindful of the assumptions and continuously evaluating the model's performance, we can enhance the reliability and validity of our analyses and draw meaningful conclusions from the data at hand.

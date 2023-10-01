@@ -460,8 +460,7 @@ correctly.
 ## NULL                       947     955.38              
 ## Distance  1    137.8       946     817.58 &lt; 2.2e-16 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>We get more useful information from the coefficient <code>summary</code> of the model. This gives the intercept and slope of the model <strong>on the scale of the linear predictor</strong> (see the figure above).</p>
 <div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="extending-use-cases-of-glm.html#cb465-1" tabindex="-1"></a><span class="fu">summary</span>(nflMod)</span></code></pre></div>
 <pre><code>## 
@@ -473,8 +472,7 @@ correctly.
 ## (Intercept)  5.68958    0.45021   12.64   &lt;2e-16 ***
 ## Distance    -0.13118    0.01263  -10.38   &lt;2e-16 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
@@ -588,15 +586,11 @@ correctly.
 ## Terms added sequentially (first to last)
 ## 
 ## 
-##             Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)
-## NULL                            6     70.353          
-## Temperature  1   61.869         5      8.484 3.671e-15
-##                
-## NULL           
-## Temperature ***
+##             Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
+## NULL                            6     70.353              
+## Temperature  1   61.869         5      8.484 3.671e-15 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now for the coefficients:</p>
 <div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="extending-use-cases-of-glm.html#cb483-1" tabindex="-1"></a><span class="fu">summary</span>(modA)</span></code></pre></div>
 <pre><code>## 
@@ -608,8 +602,7 @@ correctly.
 ## (Intercept) -111.7200    22.4260  -4.982 6.30e-07 ***
 ## Temperature    3.7754     0.7625   4.951 7.37e-07 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
@@ -718,15 +711,11 @@ We now create a (tiny) <code>data.frame</code> for the parental status (smoker =
 ## Terms added sequentially (first to last)
 ## 
 ## 
-##             Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)
-## NULL                            1     29.121          
-## parentSmoke  1   29.121         0      0.000 6.801e-08
-##                
-## NULL           
-## parentSmoke ***
+##             Df Deviance Resid. Df Resid. Dev  Pr(&gt;Chi)    
+## NULL                            1     29.121              
+## parentSmoke  1   29.121         0      0.000 6.801e-08 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This tells us that the status of the parents (whether they smoke or not) is highly significant: it explains a lot of the pattern that we see in the data.</p>
 <p>We can find out what this pattern is by examining the <code>summary</code> table.</p>
 <div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="extending-use-cases-of-glm.html#cb495-1" tabindex="-1"></a><span class="fu">summary</span>(smokeMod)</span></code></pre></div>
@@ -735,15 +724,11 @@ We now create a (tiny) <code>data.frame</code> for the parental status (smoker =
 ## glm(formula = y ~ parentSmoke, family = binomial, data = smoke)
 ## 
 ## Coefficients:
-##                  Estimate Std. Error z value Pr(&gt;|z|)
-## (Intercept)      -1.82661    0.07858 -23.244  &lt; 2e-16
-## parentSmoke1_yes  0.45918    0.08782   5.228 1.71e-07
-##                     
-## (Intercept)      ***
-## parentSmoke1_yes ***
+##                  Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      -1.82661    0.07858 -23.244  &lt; 2e-16 ***
+## parentSmoke1_yes  0.45918    0.08782   5.228 1.71e-07 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
@@ -773,12 +758,9 @@ First we calculate the fitted values and 95% confidence intervals on the scale o
 <span id="cb498-9"><a href="extending-use-cases-of-glm.html#cb498-9" tabindex="-1"></a>    <span class="at">ymax =</span> <span class="fu">inverseFunction</span>(upperCI_LP)</span>
 <span id="cb498-10"><a href="extending-use-cases-of-glm.html#cb498-10" tabindex="-1"></a>  )</span>
 <span id="cb498-11"><a href="extending-use-cases-of-glm.html#cb498-11" tabindex="-1"></a>smoke</span></code></pre></div>
-<pre><code>##   parentSmoke   prob_LP lowerCI_LP upperCI_LP      prob
-## 1       1_yes -1.367429  -1.444287  -1.290570 0.2030356
-## 2        0_no -1.826606  -1.980629  -1.672583 0.1386431
-##        ymin      ymax
-## 1 0.1908823 0.2157563
-## 2 0.1212518 0.1580801</code></pre>
+<pre><code>##   parentSmoke   prob_LP lowerCI_LP upperCI_LP      prob      ymin      ymax
+## 1       1_yes -1.367429  -1.444287  -1.290570 0.2030356 0.1908823 0.2157563
+## 2        0_no -1.826606  -1.980629  -1.672583 0.1386431 0.1212518 0.1580801</code></pre>
 <p>This table shows us that the probability of the students smoking is 0.2030 (95% CI = 0.191-0.216) for children of smokers, and 0.139 (95% CI = 0.121-0.158) for children of non-smokers. We can plot this using <code>ggplot</code> like this.</p>
 <div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="extending-use-cases-of-glm.html#cb500-1" tabindex="-1"></a><span class="fu">ggplot</span>(smoke, <span class="fu">aes</span>(</span>
 <span id="cb500-2"><a href="extending-use-cases-of-glm.html#cb500-2" tabindex="-1"></a>  <span class="at">x =</span> parentSmoke, <span class="at">y =</span> prob, <span class="at">ymin =</span> ymin,</span>

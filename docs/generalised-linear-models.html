@@ -455,8 +455,7 @@ correctly.
 ## NULL                      99     166.84              
 ## weight  1   44.124        98     122.72 3.082e-11 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This summary table tells us that the single explanatory variable (<code>weight</code>) is fantastically important (p-value is very small indeed).</p>
 <p>We can then ask for the coefficient summary using <code>summary</code>.</p>
 <div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="generalised-linear-models.html#cb447-1" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
@@ -469,8 +468,7 @@ correctly.
 ## (Intercept) -0.74981    0.31107  -2.410   0.0159 *  
 ## weight       0.63239    0.09502   6.655 2.83e-11 ***
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for poisson family taken to be 1)
 ## 
@@ -521,20 +519,13 @@ before plotting. See below.
 <span id="cb449-23"><a href="generalised-linear-models.html#cb449-23" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Take a look at this data to make sure it looks OK.</p>
 <div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="generalised-linear-models.html#cb450-1" tabindex="-1"></a><span class="fu">head</span>(newData)</span></code></pre></div>
-<pre><code>##   weight    fit_LP lowerCI_LP upperCI_LP      fit
-## 1   1.70 0.3252609 0.02226977  0.6282521 1.384392
-## 2   1.71 0.3315849 0.03033712  0.6328326 1.393174
-## 3   1.72 0.3379088 0.03840303  0.6374146 1.402013
-## 4   1.73 0.3442328 0.04646747  0.6419981 1.410907
-## 5   1.74 0.3505567 0.05453044  0.6465830 1.419858
-## 6   1.75 0.3568807 0.06259189  0.6511695 1.428865
-##    lowerCI  upperCI
-## 1 1.022520 1.874332
-## 2 1.030802 1.882937
-## 3 1.039150 1.891584
-## 4 1.047564 1.900274
-## 5 1.056045 1.909007
-## 6 1.064592 1.917782</code></pre>
+<pre><code>##   weight    fit_LP lowerCI_LP upperCI_LP      fit  lowerCI  upperCI
+## 1   1.70 0.3252609 0.02226977  0.6282521 1.384392 1.022520 1.874332
+## 2   1.71 0.3315849 0.03033712  0.6328326 1.393174 1.030802 1.882937
+## 3   1.72 0.3379088 0.03840303  0.6374146 1.402013 1.039150 1.891584
+## 4   1.73 0.3442328 0.04646747  0.6419981 1.410907 1.047564 1.900274
+## 5   1.74 0.3505567 0.05453044  0.6465830 1.419858 1.056045 1.909007
+## 6   1.75 0.3568807 0.06259189  0.6511695 1.428865 1.064592 1.917782</code></pre>
 <p>This looks OK. Now we can plot the data and add a the model fit line, and a “ribbon” representing the errors (the 95% confidence interval for the line). Because the data used to draw the ribbon are not from the original dataset, we need to tell the <code>geom_ribbon</code> function NOT to use the same aesthetics (<code>inherit.aes = FALSE</code>). The geom layers are applied sequentially, so I add the real points last so they are not obscured by the ribbon or line.</p>
 <div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="generalised-linear-models.html#cb452-1" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fox, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> noffspring)) <span class="sc">+</span></span>
 <span id="cb452-2"><a href="generalised-linear-models.html#cb452-2" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> newData, </span>
@@ -586,8 +577,7 @@ cut-and-paste it (with some modifications) for future use!
 ## NULL                        93     149.48           
 ## Distance  1   2.8408        92     146.64   0.0919 .
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The ANOVA table tells us that there is no significant effect of the Distance variable. In other words a model that includes the <code>Distance</code> term does not explain significantly more variation than the <code>NULL</code> model that includes no terms and instead assumes that variation in cancer incidence is simply caused by random variation.</p>
 <p>We needn’t go further with this model, but go ahead and plot the model in any case (just for practice).</p>
 <div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="generalised-linear-models.html#cb457-1" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
@@ -600,8 +590,7 @@ cut-and-paste it (with some modifications) for future use!
 ## (Intercept)  0.186865   0.188728   0.990   0.3221  
 ## Distance    -0.006138   0.003667  -1.674   0.0941 .
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for poisson family taken to be 1)
 ## 

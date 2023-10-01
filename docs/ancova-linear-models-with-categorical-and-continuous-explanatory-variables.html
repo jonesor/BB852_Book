@@ -471,8 +471,7 @@ Figure 17.2: ANCOVA on hand width vs. height data in males and females
 ## HandWidth:Gender  1   3.65    3.65  0.1388 0.7122211    
 ## Residuals        29 762.35   26.29                      
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This type of <em>sequential sum of squares</em> Analysis of Variance table should be getting fairly familiar to you now, but let’s unpack what this means. There are four rows in the summary table - one for each of the terms in the model (<code>HandWidth</code>, <code>Gender</code> and <code>HandWidth:Gender</code>), and one for the <code>Residuals</code> (the unexplained variation that remains after fitting the model). The table includes degrees of freedom (<code>Df</code>), sum of squares (<code>Sum Sq</code>), mean sum of squares (<code>Mean Sq</code>) and the associated F and p-values (<code>F value</code> and <code>Pr(&gt;F)</code>.</p>
 <p>You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by a model that includes a common slope for both genders (471.13) . Then it tells us that an <em>additional</em> bit of variation 881.6 is captured if we allow the intercepts to vary with gender. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the genders 3.65. Finally, there is a bit of unexplained variation left over (Residuals) 26.29. So you can see that hand width explains most variation, followed by gender, followed by the interaction between them.</p>
 <p>You would report from this table something like this:</p>
@@ -493,19 +492,13 @@ Figure 17.2: ANCOVA on hand width vs. height data in males and females
 ## -10.6726  -4.0419   0.9581   3.7181   9.7839 
 ## 
 ## Coefficients:
-##                      Estimate Std. Error t value
-## (Intercept)          155.2705    10.4866  14.807
-## HandWidth              1.7514     1.2922   1.355
-## GenderMale            15.9875    16.0430   0.997
-## HandWidth:GenderMale  -0.6643     1.7833  -0.373
-##                      Pr(&gt;|t|)    
-## (Intercept)          4.69e-15 ***
-## HandWidth               0.186    
-## GenderMale              0.327    
-## HandWidth:GenderMale    0.712    
+##                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)          155.2705    10.4866  14.807 4.69e-15 ***
+## HandWidth              1.7514     1.2922   1.355    0.186    
+## GenderMale            15.9875    16.0430   0.997    0.327    
+## HandWidth:GenderMale  -0.6643     1.7833  -0.373    0.712    
 ## ---
-## Signif. codes:  
-## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 5.127 on 29 degrees of freedom
 ## Multiple R-squared:  0.6402, Adjusted R-squared:  0.603 
