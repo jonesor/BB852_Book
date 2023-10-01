@@ -12,7 +12,11 @@ In this theory section I focus on the one-sample t-test, but the concepts apply 
 
 The one-sample t-test is used to compare the mean of a sample to some fixed value. For example, we might want to compare pollution levels (e.g. in mg/m^3^) in a sample to some acceptable threshold value to help us decide whether we need to take action to prevent or clean up pollution.
 
-One of the assumptions of t-tests (and many other tests/models) is that the distribution of values in the **sample** of data can be described by a normal distribution. If this assumption is true, you can use these data to estimate the parameters of this sample's normal distribution: the mean and standard error of the mean. 
+One of the assumptions of t-tests (and many other tests/models) is that the distribution of **residual** values in the **sample** of data can be described by a normal distribution. For a t-test, in practice, this means that the distribution of measured values **for each group** should be normal.
+
+If this assumption is true, you can use these data to estimate the parameters of this sample's normal distribution: the mean and standard error of the mean. 
+
+We will talk more about model assumptions later.
 
 The mean gives an estimate of location, and the standard error of the mean (which is calculated as $s/ \sqrt{n}$, where *s* = standard deviation and *n* = sample size) gives an estimate of precision of this estimate (i.e. how certain is it that the mean value is really where you think it is?)
 
