@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 ANOVA: Linear models with a single categorical explanatory variable | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 ANOVA: Linear models with a single categorical explanatory variable | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-10-02" />
+<meta name="date" content="2023-11-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -121,6 +121,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -593,10 +597,10 @@ Figure 15.4: Comparison illustrating the difference between ANOVA models using (
 ## 
 ## method,  means
 ## 
-##     foamIndx       std r   Min   Max
-## BM      32.4  7.300060 9 21.02 39.65
-## HIP     61.3 10.100604 9 46.68 73.19
-## IES     39.7  7.700768 9 32.68 56.19
+##     foamIndx       std r       se   Min   Max   Q25   Q50   Q75
+## BM      32.4  7.300060 9 2.819344 21.02 39.65 24.81 35.96 37.74
+## HIP     61.3 10.100604 9 2.819344 46.68 73.19 54.26 62.53 70.84
+## IES     39.7  7.700768 9 2.819344 32.68 56.19 35.35 37.12 40.11
 ## 
 ## Alpha: 0.05 ; DF Error: 24 
 ## Critical Value of Studentized Range: 3.531697 
@@ -628,7 +632,7 @@ how ANOVA works.
 <p>The difference between those values is called the <em>Treatment Sum of Squares (SSTreatment)</em> and is the key to ANOVA - it represents the importance of the treatment: <span class="math display">\[SSTreatment = SSTotal - SSError\]</span>.</p>
 <p>If that doesn’t make sense yet, picture the case where the treatment-specific means are all very similar, and are therefore very close to the overall mean. Now the difference between the <em>Total Sum of Squares</em> and the <em>Error Sum of Squares</em> will be small. Sketch out a couple of examples with pen on paper if that helps. You should now see that you can investigate differences among means by looking at variation.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:ANOVAbyhand"></span>
-<img src="BB852_files/figure-html/ANOVAbyhand-1.png" alt="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the &quot;treatment sum of squares&quot;." width="768" />
+&lt;img src=“BB852_files/figure-html/ANOVAbyhand-1.png” alt=“The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the”treatment sum of squares”.” width=“768” /&gt;
 <p class="caption">
 Figure 15.5: The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the “treatment sum of squares”.
 </p>

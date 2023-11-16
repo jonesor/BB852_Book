@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 26 Exercise Solutions | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 26 Exercise Solutions | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-10-02" />
+<meta name="date" content="2023-11-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -121,6 +121,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -464,24 +468,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="exercise-solutions.html#cb543-1" tabindex="-1"></a><span class="fu">dim</span>(amniote)</span></code></pre></div>
 <pre><code>## [1] 21322    36</code></pre>
 <div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="exercise-solutions.html#cb545-1" tabindex="-1"></a><span class="fu">names</span>(amniote)</span></code></pre></div>
-<pre><code>##  [1] &quot;class&quot;                                 &quot;order&quot;                                
-##  [3] &quot;family&quot;                                &quot;genus&quot;                                
-##  [5] &quot;species&quot;                               &quot;subspecies&quot;                           
-##  [7] &quot;common_name&quot;                           &quot;female_maturity_d&quot;                    
-##  [9] &quot;litter_or_clutch_size_n&quot;               &quot;litters_or_clutches_per_y&quot;            
-## [11] &quot;adult_body_mass_g&quot;                     &quot;maximum_longevity_y&quot;                  
-## [13] &quot;gestation_d&quot;                           &quot;weaning_d&quot;                            
-## [15] &quot;birth_or_hatching_weight_g&quot;            &quot;weaning_weight_g&quot;                     
-## [17] &quot;egg_mass_g&quot;                            &quot;incubation_d&quot;                         
-## [19] &quot;fledging_age_d&quot;                        &quot;longevity_y&quot;                          
-## [21] &quot;male_maturity_d&quot;                       &quot;inter_litter_or_interbirth_interval_y&quot;
-## [23] &quot;female_body_mass_g&quot;                    &quot;male_body_mass_g&quot;                     
-## [25] &quot;no_sex_body_mass_g&quot;                    &quot;egg_width_mm&quot;                         
-## [27] &quot;egg_length_mm&quot;                         &quot;fledging_mass_g&quot;                      
-## [29] &quot;adult_svl_cm&quot;                          &quot;male_svl_cm&quot;                          
-## [31] &quot;female_svl_cm&quot;                         &quot;birth_or_hatching_svl_cm&quot;             
-## [33] &quot;female_svl_at_maturity_cm&quot;             &quot;female_body_mass_at_maturity_g&quot;       
-## [35] &quot;no_sex_svl_cm&quot;                         &quot;no_sex_maturity_d&quot;</code></pre>
+<pre><code>##  [1] &quot;class&quot;                                
+##  [2] &quot;order&quot;                                
+##  [3] &quot;family&quot;                               
+##  [4] &quot;genus&quot;                                
+##  [5] &quot;species&quot;                              
+##  [6] &quot;subspecies&quot;                           
+##  [7] &quot;common_name&quot;                          
+##  [8] &quot;female_maturity_d&quot;                    
+##  [9] &quot;litter_or_clutch_size_n&quot;              
+## [10] &quot;litters_or_clutches_per_y&quot;            
+## [11] &quot;adult_body_mass_g&quot;                    
+## [12] &quot;maximum_longevity_y&quot;                  
+## [13] &quot;gestation_d&quot;                          
+## [14] &quot;weaning_d&quot;                            
+## [15] &quot;birth_or_hatching_weight_g&quot;           
+## [16] &quot;weaning_weight_g&quot;                     
+## [17] &quot;egg_mass_g&quot;                           
+## [18] &quot;incubation_d&quot;                         
+## [19] &quot;fledging_age_d&quot;                       
+## [20] &quot;longevity_y&quot;                          
+## [21] &quot;male_maturity_d&quot;                      
+## [22] &quot;inter_litter_or_interbirth_interval_y&quot;
+## [23] &quot;female_body_mass_g&quot;                   
+## [24] &quot;male_body_mass_g&quot;                     
+## [25] &quot;no_sex_body_mass_g&quot;                   
+## [26] &quot;egg_width_mm&quot;                         
+## [27] &quot;egg_length_mm&quot;                        
+## [28] &quot;fledging_mass_g&quot;                      
+## [29] &quot;adult_svl_cm&quot;                         
+## [30] &quot;male_svl_cm&quot;                          
+## [31] &quot;female_svl_cm&quot;                        
+## [32] &quot;birth_or_hatching_svl_cm&quot;             
+## [33] &quot;female_svl_at_maturity_cm&quot;            
+## [34] &quot;female_body_mass_at_maturity_g&quot;       
+## [35] &quot;no_sex_svl_cm&quot;                        
+## [36] &quot;no_sex_maturity_d&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>We are interested in longevity (lifespan) and body size and reproductive effort and how this might vary depending on the taxonomy (specifically, with Class). Use <code>select</code> to pick relevent columns of the dataset and discard the others. Call the new data frame <code>x</code>.
 The relevant columns are the taxonomic variables (<code>class</code>, <code>species</code>) and <code>longevity_y</code>, <code>litter_or_clutch_size_n</code>, <code>litters_or_clutches_per_y</code>, and <code>adult_body_mass_g</code>.</li>
@@ -500,58 +522,58 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb548-2"><a href="exercise-solutions.html#cb548-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">paste</span>(genus, species)) <span class="sc">%&gt;%</span></span>
 <span id="cb548-3"><a href="exercise-solutions.html#cb548-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>genus)</span>
 <span id="cb548-4"><a href="exercise-solutions.html#cb548-4" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##   class               species longevity_y adult_body_mass_g litter_or_clutch_size_n
-## 1  Aves Accipiter albogularis          NA           251.500                      NA
-## 2  Aves      Accipiter badius          NA           140.000                    3.25
-## 3  Aves     Accipiter bicolor          NA           345.000                    2.70
-## 4  Aves  Accipiter brachyurus          NA           142.000                      NA
-## 5  Aves    Accipiter brevipes          NA           203.500                    4.00
-## 6  Aves Accipiter castanilius          NA           159.375                      NA
-##   litters_or_clutches_per_y
-## 1                        NA
-## 2                         1
-## 3                        NA
-## 4                        NA
-## 5                         1
-## 6                        NA</code></pre>
+<pre><code>##   class               species longevity_y adult_body_mass_g
+## 1  Aves Accipiter albogularis          NA           251.500
+## 2  Aves      Accipiter badius          NA           140.000
+## 3  Aves     Accipiter bicolor          NA           345.000
+## 4  Aves  Accipiter brachyurus          NA           142.000
+## 5  Aves    Accipiter brevipes          NA           203.500
+## 6  Aves Accipiter castanilius          NA           159.375
+##   litter_or_clutch_size_n litters_or_clutches_per_y
+## 1                      NA                        NA
+## 2                    3.25                         1
+## 3                    2.70                        NA
+## 4                      NA                        NA
+## 5                    4.00                         1
+## 6                      NA                        NA</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</li>
 </ol>
 <div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="exercise-solutions.html#cb550-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>longevity_y)</span>
 <span id="cb550-2"><a href="exercise-solutions.html#cb550-2" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class                 species longevity_y adult_body_mass_g litter_or_clutch_size_n
-## 1 Reptilia Chelonoidis duncanensis       177.0                NA                      NA
-## 2 Reptilia  Aldabrachelys gigantea       152.0            117200                    13.5
-## 3 Reptilia          Testudo graeca       127.0              1430                     5.0
-## 4 Mammalia            Homo sapiens       122.5             62035                     1.0
-## 5 Mammalia   Balaenoptera physalus        95.0          38800000                     1.0
-## 6 Mammalia            Orcinus orca        90.0           4300000                     1.0
-##   litters_or_clutches_per_y
-## 1                        NA
-## 2                  2.000000
-## 3                  3.200993
-## 4                  0.485000
-## 5                  0.400000
-## 6                  0.210000</code></pre>
+<pre><code>##      class                 species longevity_y adult_body_mass_g
+## 1 Reptilia Chelonoidis duncanensis       177.0                NA
+## 2 Reptilia  Aldabrachelys gigantea       152.0            117200
+## 3 Reptilia          Testudo graeca       127.0              1430
+## 4 Mammalia            Homo sapiens       122.5             62035
+## 5 Mammalia   Balaenoptera physalus        95.0          38800000
+## 6 Mammalia            Orcinus orca        90.0           4300000
+##   litter_or_clutch_size_n litters_or_clutches_per_y
+## 1                      NA                        NA
+## 2                    13.5                  2.000000
+## 3                     5.0                  3.200993
+## 4                     1.0                  0.485000
+## 5                     1.0                  0.400000
+## 6                     1.0                  0.210000</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Do the same thing but this time find the shortest lived species.</li>
 </ol>
 <div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="exercise-solutions.html#cb552-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(longevity_y)</span>
 <span id="cb552-2"><a href="exercise-solutions.html#cb552-2" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<pre><code>##      class              species longevity_y adult_body_mass_g litter_or_clutch_size_n
-## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875                    1.59
-## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000                    1.50
-## 3 Mammalia Allactaga balikunica  0.08333333                NA                    2.52
-## 4 Mammalia    Allactaga bullata  0.08333333                NA                    2.52
-## 5 Mammalia       Geomys pinetis  0.08333333           195.750                    1.77
-## 6 Mammalia          Mus sorella  0.08333333            12.535                    5.20
-##   litters_or_clutches_per_y
-## 1                     7.150
-## 2                        NA
-## 3                        NA
-## 4                        NA
-## 5                     1.865
-## 6                     3.000</code></pre>
+<pre><code>##      class              species longevity_y adult_body_mass_g
+## 1 Mammalia    Lepus nigricollis  0.08333333          2196.875
+## 2 Mammalia  Notoryctes caurinus  0.08333333            34.000
+## 3 Mammalia Allactaga balikunica  0.08333333                NA
+## 4 Mammalia    Allactaga bullata  0.08333333                NA
+## 5 Mammalia       Geomys pinetis  0.08333333           195.750
+## 6 Mammalia          Mus sorella  0.08333333            12.535
+##   litter_or_clutch_size_n litters_or_clutches_per_y
+## 1                    1.59                     7.150
+## 2                    1.50                        NA
+## 3                    2.52                        NA
+## 4                    2.52                        NA
+## 5                    1.77                     1.865
+## 6                    5.20                     3.000</code></pre>
 <ol start="6" style="list-style-type: decimal">
 <li>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>na.rm = TRUE</code> argument.</li>
 </ol>
@@ -868,8 +890,8 @@ Figure 26.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb596-8"><a href="exercise-solutions.html#cb596-8" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb596-9"><a href="exercise-solutions.html#cb596-9" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
 <span id="cb596-10"><a href="exercise-solutions.html#cb596-10" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595 -2.1980346 -1.5961324
-##  [9]  0.8836404  1.2863489</code></pre>
+<pre><code>##  [1]  0.3885126 -0.5711667 -0.2898130 -0.3766535 -0.4209082 -0.4678595
+##  [7] -2.1980346 -1.5961324  0.8836404  1.2863489</code></pre>
 <div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="exercise-solutions.html#cb598-1" tabindex="-1"></a><span class="co"># with tapply</span></span>
 <span id="cb598-2"><a href="exercise-solutions.html#cb598-2" tabindex="-1"></a><span class="fu">replicate</span>(</span>
 <span id="cb598-3"><a href="exercise-solutions.html#cb598-3" tabindex="-1"></a>  <span class="dv">10</span>,</span>
@@ -878,8 +900,8 @@ Figure 26.2: Barplots of 30 and 9000 simulated dice throws
 <span id="cb598-6"><a href="exercise-solutions.html#cb598-6" tabindex="-1"></a>    <span class="fu">sample</span>(hercules<span class="sc">$</span>sex), mean</span>
 <span id="cb598-7"><a href="exercise-solutions.html#cb598-7" tabindex="-1"></a>  )))</span>
 <span id="cb598-8"><a href="exercise-solutions.html#cb598-8" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728 -0.5334274  0.2076405
-##  [9] -0.4760695 -0.6967478</code></pre>
+<pre><code>##  [1]  1.2267611 -0.2954281  0.3783011 -0.6666253 -1.4024738  0.6233728
+##  [7] -0.5334274  0.2076405 -0.4760695 -0.6967478</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>When your code is working, use <code>replicate</code> again, but this time with 1000 replicates and pass the results into a data frame.</li>
 </ol>
@@ -1141,10 +1163,10 @@ analysis?
 ## 
 ## spacing,  means
 ## 
-##       yield      std  r  Min   Max
-## 10 156.4893 45.60411 28 64.1 248.6
-## 14 164.6724 50.41401 29 72.3 282.3
-## 6  120.5657 35.32755 35 66.4 185.5
+##       yield      std  r       se  Min   Max     Q25   Q50     Q75
+## 10 156.4893 45.60411 28 8.253364 64.1 248.6 123.725 153.2 190.225
+## 14 164.6724 50.41401 29 8.109816 72.3 282.3 134.100 168.2 202.700
+## 6  120.5657 35.32755 35 7.382033 66.4 185.5  90.900 116.4 151.350
 ## 
 ## Alpha: 0.05 ; DF Error: 89 
 ## Critical Value of Studentized Range: 3.370849 
@@ -1325,11 +1347,16 @@ analysis?
 ## -61.625 -23.344  -5.375  26.313  60.125 
 ## 
 ## Coefficients:
-##                                            Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                                  218.50      13.29  16.435  6.5e-16 ***
-## personalityReactive                          -53.88      18.80  -2.865  0.00781 ** 
-## colourationHomogeneous                        60.88      18.80   3.238  0.00309 ** 
-## personalityReactive:colourationHomogeneous    45.38      26.59   1.707  0.09898 .  
+##                                            Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                                  218.50      13.29  16.435  6.5e-16
+## personalityReactive                          -53.88      18.80  -2.865  0.00781
+## colourationHomogeneous                        60.88      18.80   3.238  0.00309
+## personalityReactive:colourationHomogeneous    45.38      26.59   1.707  0.09898
+##                                               
+## (Intercept)                                ***
+## personalityReactive                        ** 
+## colourationHomogeneous                     ** 
+## personalityReactive:colourationHomogeneous .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -1350,11 +1377,11 @@ analysis?
 ## 
 ## personality:colouration,  means
 ## 
-##                         spawning      std r Min Max
-## Proactive:Heterogeneous  218.500 34.92850 8 161 268
-## Proactive:Homogeneous    279.375 40.40133 8 219 339
-## Reactive:Heterogeneous   164.625 39.86383 8 103 220
-## Reactive:Homogeneous     270.875 34.84840 8 233 331
+##                         spawning      std r      se Min Max    Q25 Q50    Q75
+## Proactive:Heterogeneous  218.500 34.92850 8 13.2945 161 268 198.50 216 238.25
+## Proactive:Homogeneous    279.375 40.40133 8 13.2945 219 339 257.75 274 299.00
+## Reactive:Heterogeneous   164.625 39.86383 8 13.2945 103 220 139.75 167 191.25
+## Reactive:Homogeneous     270.875 34.84840 8 13.2945 233 331 241.00 269 284.25
 ## 
 ## Alpha: 0.05 ; DF Error: 28 
 ## Critical Value of Studentized Range: 3.861244 
