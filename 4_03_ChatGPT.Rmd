@@ -1,0 +1,122 @@
+# Leveraging ChatGPT for R Programming Assistance
+
+## Introduction
+
+This class is a bit different to previous classes. Instead of a lecture, this will be a workshop with some discussion and plenty of hands-on use of new tools. Specifically we’ll be focussing on using ChatGPT, which is a Large Language Model (LLM) to help with R programming tasks.
+
+## Overview
+
+* What is a Large Language Model (LLM) and how do they work?
+* The ethics of using LLMs
+* Use cases in R coding
+
+## What is a Large Language Model (LLM) and how do they work?
+LLMs are a type of machine learning model that are designed to process and generate human-like language. They can be used to process and generate language in a way that is similar to how humans use language, but on a much larger scale and with the ability to process vast amounts of data quickly. These models use a neural network architecture, which is a type of algorithm that is loosely modeled on the structure of the human brain. LLMs are trained on massive datasets of text, such as books, news articles, and social media posts, in order to learn patterns and relationships within language. This process is known as pre-training, and it allows LLMs to develop a deep understanding of the structure and nuances of language. This is incredibly computationally intensive and costs MILLIONS of dollars to create a model. For example, it is said that OpenAI spent an estimated $4.6 million to train ChatGPT-3 on 285,000 processing cores and 10,000 graphics cards.
+
+After an LLM has been pre-trained, it is fine-tuned for specific tasks. A finished model can be used for tasks such as answering questions, summarising text or generating new text. When you ask a question to ChatGPT, it uses its knowledge of language to understand the meaning of the question, and then generates a response based on what it has learned from the training data.
+
+## Limitations
+
+### Limited knowledge
+
+While LLMs like ChatGPT have impressive capabilities they also have limitations. One of the biggest concerns with LLMs is the potential for bias in their training data. In a nutshell, an LLM can be expected to reflect any bias that is present in its training dataset. Another important limitation, which is particularly important for a rapidly developing field like R and its many packages, is that the LLM will have no knowledge of developmnents that occur after the period of its training data. For ChatGPT, the training data ends in 2021 so its usefulness to help, for example, with using packages produced after this date will be highly limited.
+
+### Hallucination
+
+Another important limitation is that LLMs can sometimes “hallucinate”. In the context of LLMs “hallucination” refers to a phenomenon where the model generates text that is not grounded in reality. Essentially, the model generates text that appears to be “imagined” or “made up” rather than being based on facts. For example, if you ask about something that the LLM has no knowledge of it will still often produce an answer, but the answer will be close to nonsense!
+
+To illustrate a hallucination try the following prompt in ChatGPT:
+
+```
+Explain the actuary package in R. Summarise what it is for and give an example of basic use. Describe any limitations.
+```
+
+There is no such package in R. So this entire answer is a hallucination.
+
+### Numerical ability
+
+Most LLMs are not good with numbers. This could have important consequences for helping with maths statistics, so bear it in mind!
+
+To illustrate that, try the following prompt.
+
+```
+Write a sentence about dogs that contains 8 + 2 words.
+```
+
+You might need to try it a few times, but you should see that ChatGPT is not good at counting words. It would fail at a task such as asking it to write a paragraph with a certain word count.
+
+## Ethics of using LLMs in education
+
+The use tools like ChatGPT in student coursework raises ethical concerns. On the one hand, students can use these tools to enhance their learning and understanding of complex concepts. For example, they can generate helpful insights and help with writing assignments. On the other hand, they can encourage plagiarism or cheating which could result in NOT learning.
+
+Some guidelines:
+
+* Use ChatGPT as a supplement to your own learning and understanding of the course material. For example, by asking it to explain difficult concepts.
+* Don’t rely solely on ChatGPT to complete your assignments or study for exams (remember the hallucinations!).
+* When using ChatGPT to generate solutions or code, be sure that you understand and can explain the reasoning behind the output. Don’t simply copy and paste answers without understanding.
+* Give credit where credit is due. If you use ChatGPT to generate code or solutions, acknowledge the role of ChatGPT in your work.
+* Be aware of the limitations of ChatGPT. Double-check your work and verify any information you obtain from ChatGPT.
+* Use ChatGPT to enhance your learning experience, but don’t use it to cheat. Plagiarism and academic dishonesty are taken very seriously at SDU and can negatively impact your education and career.
+
+The Guidelines for SDU Biology Masters students are [here](https://mitsdu.dk/en/mit_studie/kandidat/biologi_kandidat/vejledning-og-support/aipaasdu)
+
+Despite these issues, LLMs like ChatGPT can be very useful in R programming. In the next part of the workshop we’ll cover some use cases. I provide some examples here but during the workshop we’ll work through others that are relevant to the course. You could also try using your own project code.
+
+## Use cases in R
+
+* Finding errors (debugging)
+* Explaining complex code
+* Interpreting output (e.g. what does this model summary mean?)
+* Improving code (finding better ways to do things)
+* Solving modelling problems (e.g. I have this set-up, how do i model it?)
+
+### Finding errors.
+
+It can be frustrating to deal with error messages in R. 
+Use ChatGPT to find the error and make it work.
+
+A suitable prompt could be:
+
+```
+The following code doesn’t work. Please help me debug it.
+
+mod1 <- glm(noffspring ~ weight, data = fox family = poisson)
+
+```
+
+### Explaining code
+
+This is some text.
+
+I don’t understand what this code does. Please explain it to me in as much detail as possible.
+
+```
+mod1 <- glm(noffspring ~ weight, data = fox, family = poisson)
+```
+
+### Interpreting output
+
+I have the following model output summary. Please explain it to me:
+
+```
+Analysis of Variance Table
+
+Response: lengthMM
+              Df Sum Sq Mean Sq F value    Pr(>F)    
+genotype       1 426.02  426.02  99.575 7.135e-13 ***
+diet           1 111.02  111.02  25.949 7.064e-06 ***
+genotype:diet  1  54.19   54.19  12.665 0.0009073 ***
+Residuals     44 188.25    4.28                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Improving code
+```
+
+
+
+
+### Solving modelling problems
+
+You can describe your data to ChatGPT, and ask it to help you with modelling choices. This is probably quite error prone, so it is good practice to ask follow up questions to make sure you understand WHY it is advising certain approaches. In a nutshell, be suspicious and treat ChatGPT as an advisor/sparring partner rather than blindly listening too it. Engage your own brain!
+
+
