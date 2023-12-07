@@ -1,0 +1,107 @@
+# Question 3: Habitat restoration
+
+The aim of this question was to test the hypothesis that habitat restoration leads to an increase in the average body mass of a specific bird species. I hypothesize that restored habitats may support healthier bird populations, reflected in larger body mass.
+
+The form of the expected data lends itself to a t-test. So I will use that method. 
+
+## a) 
+
+First I will import the data to examine it.
+
+```{r}
+restoration <- read.csv("DataSetLibrary/habitat_restoration.csv")
+summary(restoration)
+```
+
+I can see that the data set is just one column of data called `BodySize`.
+I can get the mean and standard deviation in a couple of ways. For example like this:
+
+```{r}
+mean(restoration$BodySize)
+sd(restoration$BodySize)
+```
+
+Or using `dplyr` like this:
+
+```{r}
+(dataSummary <- restoration %>% 
+  summarise(meanVal = mean(BodySize), sdVal = sd(BodySize)))
+```
+
+## b) 
+
+I now conduct a power analysis to get the required sample size for 80% power.
+
+```{r}
+controlMean <- dataSummary$meanVal
+treatmentMean <- controlMean * 1.2 # A 20% increase compared to the control
+sdValue <- dataSummary$sdVal
+sampleSize <- 10 # I'll start with a small sample size and see what happens!
+```
+
+I can then simulate a t-test using `t.test` and use `replicate` to repeat the simulation any number of times. 
+
+```{r}
+nReps <- 1000
+
+powerResults <- replicate(
+  nReps,
+  t.test(
+    rnorm(sampleSize, controlMean, sdValue),
+    rnorm(sampleSize, treatmentMean, sdValue)
+  )$p.value
+)
+```
+
+I then can ask how many of the `r nReps` replicates produced statistically significant p-values (i.e. < 0.05).
+
+```{r}
+sum(powerResults < 0.05)
+```
+
+The power is given as a percentage like this:
+
+```{r}
+(sum(powerResults < 0.05) / nReps) * 100
+```
+Therefore, in this case, it looks like I can get away with a smaller sample size.
+
+### Advanced level
+
+Rather than looking individually at different sample size, I could look systematically at how power changes with sample size like this:
+
+```{r}
+# Set up a data frame for the simulation results
+simulData <- data.frame(sampleSize = 2:20)
+
+# Set basic values
+controlMean <- dataSummary$meanVal
+treatmentMean <- controlMean * 1.2 # A 20% increase compared to the control
+sdValue <- dataSummary$sdVal
+
+# Function to do the t-test
+pwr <- function(n) {
+  sum(replicate(
+    1000,
+    t.test(
+      rnorm(n, controlMean, sdValue),
+      rnorm(n, treatmentMean, sdValue)
+    )$p.value
+  ) < 0.05) / 1000
+}
+
+# map_dbl applying the function for every value of
+# simulData$sampleSize
+simulData$Power <- purrr::map_dbl(simulData$sampleSize, pwr)
+```
+
+Then plot the results...
+
+```{r}
+# Plot the output
+ggplot(simulData, aes(x = sampleSize, y = Power)) +
+  geom_point() +
+  geom_line() +
+  geom_hline(yintercept = 0.8, linetype = "dashed")
+```
+I could then read of the graph, the best sample size for any desired power level. I could also adjust the "alpha value", i.e. the significance threshold, so that it is more strict. For example I could change from 0.05 to 0.01 for a more convincing study.

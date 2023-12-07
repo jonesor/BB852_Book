@@ -1,0 +1,135 @@
+# Question 1: Wine quality and climate 
+  
+## Introduction
+  
+This question investigates the relationship between wine ratings and regions in Spain, focusing on data post-1980 and excluding non-vintage wines.
+
+
+## a)
+
+First, I set up we R environment with some useful packages, like `dplyr` for handling data and `ggplot2` for making plots.
+
+```{r setup}
+library(dplyr)
+library(ggplot2)
+```
+
+We then load two datasets: `winesSpain.csv` for wine ratings and `SpainSurfaceTemp.csv` for temperature data in Spain. On my computer, these files are in a folder called `DataSetLibrary`.
+
+```{r}
+winesSpain <- read.csv("DataSetLibrary/winesSpain.csv")
+SpainSurfaceTemp <- read.csv("DataSetLibrary/SpainSurfaceTemp.csv")
+```
+
+
+Next, I clean up the wine data. I get rid of entries where the year is listed as "`N.V.`" (non-vintage) and keep only the data from 1980 onwards.
+
+```{r}
+winesSpainCleaned <- winesSpain %>%
+  filter(year != "N.V.") %>% 
+  mutate(year = as.numeric(year)) %>% 
+  filter(year >= 1980)
+```
+
+After cleaning, I analyse the data. I group the wine data by region and calculate three things for each region: the number of wines rated (number of data points), the average rating (mean quality), and how much the ratings vary (standard deviation of quality). I then arrange these groups so that the regions with the most wines come first.
+
+
+```{r}
+summaryTable <- winesSpainCleaned %>%
+  group_by(region) %>%
+  summarise(
+    NumberOfDataPoints = n(),
+    MeanQuality = mean(rating, na.rm = TRUE),
+    StdDevQuality = sd(rating, na.rm = TRUE)
+  ) %>%
+  arrange(desc(NumberOfDataPoints))
+```
+
+
+
+My main focus is on the top 10 regions with the most data. I round the average rating and the variation in ratings to three decimal places to make them easier to read.
+
+
+
+```{r}
+top10Regions <- head(summaryTable, 10) %>% 
+  mutate(MeanQuality = round(MeanQuality,3)) %>% 
+  mutate(StdDevQuality = round(StdDevQuality,3)) 
+  
+```
+
+
+I'm not expecting the students to do this, a simpler way is fine.
+
+```{r}
+library(knitr)
+kable(top10Regions, format = "html", 
+      caption = "Top 10 Regions by Number of Data Points")
+
+```
+
+## b)
+
+In this part of our analysis, I focus on the two regions in Spain that have the most data points in our dataset. I'll create a plot for these regions showing how the average wine rating has changed over time. I will also add trend lines to the plot to help me see the overall trends more clearly.
+
+```{r select-top-regions}
+topTwoRegions <- top10Regions$region[1:2]
+```
+
+I then filter the wine data to these regions only.
+
+```{r}
+topRegionsData <- winesSpainCleaned %>%
+  filter(region %in% topTwoRegions) %>%
+  group_by(year, region) %>%
+  summarise(AvgRating = mean(rating, na.rm = TRUE))
+
+```
+THe plot is done using `ggplot` like this:
+
+```{r}
+ggplot(topRegionsData, aes(x = as.numeric(year), y = AvgRating, color = region)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(title = "Average Wine Rating Over Time in Top Two Regions",
+       x = "Year",
+       y = "Average Rating",
+       color = "Region") +
+  theme_minimal()
+
+```
+
+## c)
+
+In this section, I'll investigate how wine quality correlates with the average temperature in Spain. I will select one of the two regions with the most data points and merge the wine data with the temperature data. Then, I'll create a plot to visualise any potential relationship between wine quality and temperature for this chosen region.
+
+First I pick the first region (I could pick the 2nd region by changing the `[1]` part to `[2]`).
+
+```{r}
+selectedRegion <- topTwoRegions[1]
+```
+
+Next I filter the data to only include the Merge the wine data with temperature data from the `SpainSurfaceTemp` data frame.
+
+```{r}
+mergedData <- winesSpainCleaned %>%
+  filter(region == selectedRegion) %>%
+  group_by(year) %>%
+  summarise(AvgRating = mean(rating, na.rm = TRUE)) %>%
+  left_join(SpainSurfaceTemp, by = "year")
+
+```
+Lastly I can make the plot, which shows a negative relationship between wine quality and temperature.
+
+```{r}
+
+ggplot(mergedData, aes(x = tempC, y = AvgRating)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = paste("Relationship between Wine Quality and Temperature in", selectedRegion),
+       x = "Average Temperature",
+       y = "Average Wine Rating") +
+  theme_minimal()
+
+```
+
