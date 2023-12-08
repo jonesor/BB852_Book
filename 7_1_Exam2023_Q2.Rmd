@@ -1,0 +1,118 @@
+## Question 2: Foraging in Blackbird
+
+This analysis aims to understand the impact of rising winter temperatures, a consequence of climate change, on the foraging behavior of the Eurasian Blackbird (*Turdus merula*). My hypothesis suggests that warmer temperatures would reduce the time these birds spend foraging due to lower energy demands for thermoregulation.
+
+
+### a)
+
+```{r}
+blackbirdData <- read.csv("DataSetLibrary/blackbird_foraging.csv")
+```
+
+I examine the data to see if I need to clean it
+
+```{r}
+summary(blackbirdData)
+table(blackbirdData$group)
+```
+This shows that there are some negative values for foragingTime. These make no sense, so I will assume they are incorrect and remove these.
+I can also see there are errors in the group column. I will correct those.
+
+```{r}
+blackbirdData <- blackbirdData %>%
+  filter(foragingTime > 0) %>%
+  mutate(group = ifelse(group == "contrl", "Control", group))
+```
+
+
+
+Now the data are ready to analyse.
+
+### b)
+
+I first want to plot the data:
+
+```{r}
+# Comparing foraging times between control and treatment groups
+ggplot(blackbirdData, aes(x = group, y = foragingTime)) +
+  geom_boxplot() +
+  labs(
+    title = "Foraging Times of Eurasian Blackbirds in Different Temperature Conditions",
+    x = "Group",
+    y = "Foraging Time (Proportion)"
+  ) +
+  theme_minimal()
+```
+It looks like there is a difference between groups. But I want to confirm this with a randomisation test.
+
+### c)
+
+
+**Method**
+
+For a report I would write the method like this:
+
+*To test whether effect of the heating treatment on time spent foraging is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means, and the alternative hypothesis that the mean for the heated group is lower than the control group. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.*
+
+Or like this :
+
+*I employ a randomisation test to assess the significance of differences in foraging times between the control and treatment groups. This method involves repeatedly shuffling the group labels and recalculating the difference in mean foraging times across these shuffled samples to generate a null distribution. I did this 1000 times. The p-value is determined by the proportion of shuffled datasets where the observed difference is at least as extreme as in the original data.*
+
+```{r}
+(observedMeans <- blackbirdData %>%
+  group_by(group) %>% # group the data by treatment
+  summarise(mean = mean(foragingTime)) %>% # calculate means
+  pull(mean)) # extract the mean vector
+```
+
+```{r}
+(observedDiff <- diff(observedMeans))
+```
+
+Now I shuffle the data repeatedly...
+
+```{r echo = FALSE}
+#Set seed for repeatability
+set.seed(123)
+```
+
+
+```{r}
+nReps <- 1000
+shuffledData <- data.frame(rep = 1:nReps) %>%
+  mutate(shuffledDiffs = replicate(
+    nReps,
+    blackbirdData %>%
+      mutate(group = sample(group)) %>%
+      group_by(group) %>%
+      summarise(mean = mean(foragingTime)) %>%
+      pull(mean) %>%
+      diff()
+  ))
+```
+
+I can look at how this distribution of differences is compared to the observed difference like this:
+
+```{r}
+(p1 <- ggplot(shuffledData, aes(x = shuffledDiffs)) +
+  geom_histogram() +
+  theme_minimal() +
+  xlab("Null distribution of differences") +
+  geom_vline(xintercept = observedDiff)
+ )
+```
+
+There is clearly a very significant difference.
+
+```{r}
+table(shuffledData$shuffledDiffs <= observedDiff)
+```
+```{r echo = FALSE}
+temp1 <- table(shuffledData$shuffledDiffs <= observedDiff)
+```
+
+The p-value is `r temp1[2]/sum(temp1)` (calculated as `r temp1[2]`/ `r sum(temp1)`)
+
+I would write this up for a **results** section like this:
+
+*The observed mean values of the control and treatment groups `r round(observedMeans[1],3)` and `r round(observedMeans[2],3)` respectively and the difference between them is therefore `r round(observedDiff,3)` (treatment mean - control mean). Only `r temp1[2]` of the `r nReps` null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = `r round(temp1[2]/sum(temp1),3)`)*.
