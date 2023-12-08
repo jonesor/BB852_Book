@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Randomisation Tests | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Randomisation Tests | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-12-04" />
+<meta name="date" content="2023-12-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -121,10 +121,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -454,7 +450,7 @@ correctly.
 <div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="randomisation-tests.html#cb279-1" tabindex="-1"></a><span class="fu">ggplot</span>(ch, <span class="fu">aes</span>(<span class="at">x =</span> Treatment, <span class="at">y =</span> Cholesterol)) <span class="sc">+</span></span>
 <span id="cb279-2"><a href="randomisation-tests.html#cb279-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb279-3"><a href="randomisation-tests.html#cb279-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">colour =</span> <span class="st">&quot;grey&quot;</span>, <span class="at">width =</span> .<span class="dv">1</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
 <p>It looks like there might be a difference between the groups.
 Now let’s consider our test statistic and our hypotheses. Our test statistic is the difference in mean cholesterol levels between the two groups: mean of control group minus the mean of the drug group.</p>
 <p>The <em>null hypothesis</em> is that there is no difference between these two groups (i.e. the difference should be close to 0).</p>
@@ -555,10 +551,10 @@ messages annoy you!
 <span id="cb292-2"><a href="randomisation-tests.html#cb292-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb292-3"><a href="randomisation-tests.html#cb292-3" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb292-4"><a href="randomisation-tests.html#cb292-4" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Drug mean - Control mean&quot;</span>))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
 <p>You can now add your observed difference (calculated above) to this plot like this:</p>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="randomisation-tests.html#cb293-1" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observedDiff)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
 </div>
 <div id="testing-the-hypothesis" class="section level3 hasAnchor" number="12.1.4">
 <h3><span class="header-section-number">12.1.4</span> Testing the hypothesis<a href="randomisation-tests.html#testing-the-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -620,13 +616,13 @@ messages annoy you!
 <div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="randomisation-tests.html#cb300-1" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill =</span> time)) <span class="sc">+</span></span>
 <span id="cb300-2"><a href="randomisation-tests.html#cb300-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>)</span>
 <span id="cb300-3"><a href="randomisation-tests.html#cb300-3" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-201-1.png" width="672" /></p>
 <p>Another useful way to plot this data is to use an <strong>interaction plot</strong>. In these plots the matched pairs (grouped by <code>Subject</code>) are joined together with lines. You can plot one like this:</p>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="randomisation-tests.html#cb301-1" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> weight, <span class="at">group =</span> Subject)) <span class="sc">+</span></span>
 <span id="cb301-2"><a href="randomisation-tests.html#cb301-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb301-3"><a href="randomisation-tests.html#cb301-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
 <span id="cb301-4"><a href="randomisation-tests.html#cb301-4" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-201-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-202-1.png" width="672" /></p>
 <p>What we are interested in is whether there has been a change in weight of the subjects after CBT. The null hypothesis is that there is zero change in weight. The alternative hypothesis is that weight has increased.</p>
 <p>The starting point for the analysis is to calculate the observed change in weight.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="randomisation-tests.html#cb302-1" tabindex="-1"></a>an <span class="ot">&lt;-</span> an <span class="sc">%&gt;%</span></span>
@@ -705,10 +701,10 @@ messages annoy you!
 <h3><span class="header-section-number">12.2.2</span> Null distribution<a href="randomisation-tests.html#null-distribution-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="randomisation-tests.html#cb315-1" tabindex="-1"></a>(nullDistPlot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nullDist, <span class="fu">aes</span>(<span class="at">x =</span> change)) <span class="sc">+</span></span>
 <span id="cb315-2"><a href="randomisation-tests.html#cb315-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-211-1.png" width="672" /></p>
 <p>We can add the observed change as a line to this:</p>
 <div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="randomisation-tests.html#cb316-1" tabindex="-1"></a>nullDistPlot <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> obsChange)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-211-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
 </div>
 <div id="the-formal-hypothesis-test" class="section level3 hasAnchor" number="12.2.3">
 <h3><span class="header-section-number">12.2.3</span> The formal hypothesis test<a href="randomisation-tests.html#the-formal-hypothesis-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>

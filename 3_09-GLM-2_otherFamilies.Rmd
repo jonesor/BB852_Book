@@ -73,7 +73,11 @@ Now we can fit a GLM using an appropriate binomial error structure.
 nflMod <- glm(Success ~ Distance, data = NFL, family = binomial)
 ```
 
-As usual, we should look at the model diagnostics. These look pretty bad. One reason that these diagnostics (e.g. the QQ plot) can look bad is when we are missing important variables in the model. In this case, for example, the distribution could look "off" because we don't include important information on other aspects of the game (e.g. was the team winning or losing at the time? how many minutes until the end of the game? how experienced is the player?). We can be fairly sure that `binomial` is the most appropriate variance structure because of the nature of the 0/1 data so let's stick with it for now!
+As usual, we should look at the model diagnostics. These look pretty bad. One reason that these diagnostics (e.g. the QQ plot) can look bad is when we are missing important variables in the model. In this case, for example, the distribution could look "off" because we don't include important information on other aspects of the game (e.g. was the team winning or losing at the time? how many minutes until the end of the game? how experienced is the player?).However, another important reason for the weirdness in these plots is that they were not designed with logistic regression in mind. 
+
+Indeed, these diagnostic plots can be misleading when applied to logistic regression because they are designed for linear models with normally distributed errors. In fact, it may be best to avoid relying on these plots for logistic regression diagnostics and to instead focus on making your choice of model based on principals about the bounding of the response variable.
+
+We can be fairly sure that `binomial` is the most appropriate variance structure because of the nature of the 0/1 data so let's stick with it for now!
 
 ```{r, echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message = FALSE, warning = FALSE}
 library(ggfortify)

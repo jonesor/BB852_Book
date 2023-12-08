@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 18 n-way ANOVA: Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 18 n-way ANOVA: Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-12-04" />
+<meta name="date" content="2023-12-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -121,10 +121,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -478,7 +474,7 @@ Figure 18.2: The effect of diet protein content and genotype on adult size of an
 <p>Then we can look at diagnostic plots, as with ANOVA etc.:</p>
 <div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb418-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb418-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb418-2" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/unnamed-chunk-279-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/unnamed-chunk-280-1.png" width="672" /></p>
 <p>These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots) now any major outliers.</p>
 </div>
 <div id="summarising-the-model-anova" class="section level2 hasAnchor" number="18.2">
@@ -545,11 +541,11 @@ To answer that question we need to use a post-hoc test</p>
 ## 
 ## diet:genotype,  means
 ## 
-##                 lengthMM      std  r        se Min Max   Q25  Q50   Q75
-## highProtein:gt1 25.83333 2.329000 12 0.5971048  23  31 24.75 25.5 26.25
-## highProtein:gt2 17.75000 2.416797 12 0.5971048  14  22 15.75 18.0 19.25
-## lowProtein:gt1  20.66667 1.825742 12 0.5971048  17  24 19.75 21.0 22.00
-## lowProtein:gt2  16.83333 1.585923 12 0.5971048  14  19 16.00 16.5 18.00
+##                 lengthMM      std  r Min Max
+## highProtein:gt1 25.83333 2.329000 12  23  31
+## highProtein:gt2 17.75000 2.416797 12  14  22
+## lowProtein:gt1  20.66667 1.825742 12  17  24
+## lowProtein:gt2  16.83333 1.585923 12  14  19
 ## 
 ## Alpha: 0.05 ; DF Error: 44 
 ## Critical Value of Studentized Range: 3.775958 
