@@ -194,6 +194,12 @@ for(i in 1:nrow(parameters)) {
   all_data <- rbind(all_data, line_data)
 }
 
+all_data <- all_data %>% 
+  select(-probability) %>% 
+  mutate(food = round(food,2))
+
+names(all_data) <- c("foodAvailability", "nestSuccess", "habitatType")
+
 # Write out the combined dataset
 write.csv(all_data, "DataSetLibrary/bird_nesting_success.csv", row.names = FALSE)
 
