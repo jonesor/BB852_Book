@@ -1,9 +1,11 @@
 ## Question 2: Foraging in Blackbird
 
+### Introduction
+
 This analysis aims to understand the impact of rising winter temperatures, a consequence of climate change, on the foraging behavior of the Eurasian Blackbird (*Turdus merula*). My hypothesis suggests that warmer temperatures would reduce the time these birds spend foraging due to lower energy demands for thermoregulation.
 
 
-### a)
+#### a)
 
 ```{r}
 blackbirdData <- read.csv("DataSetLibrary/blackbird_foraging.csv")
@@ -28,7 +30,7 @@ blackbirdData <- blackbirdData %>%
 
 Now the data are ready to analyse.
 
-### b)
+#### b)
 
 I first want to plot the data:
 
@@ -45,7 +47,7 @@ ggplot(blackbirdData, aes(x = group, y = foragingTime)) +
 ```
 It looks like there is a difference between groups. But I want to confirm this with a randomisation test.
 
-### c)
+#### c)
 
 
 **Method**

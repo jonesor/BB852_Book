@@ -1,5 +1,8 @@
 ## Question 4: 
 
+### Introduction
+
+
 This question examines the relationship between habitat characteristics, specifically habitat type and food availability, and bird nesting success in urban and suburban settings. Understanding this interplay is key to grasping ecological dynamics like resource availability and habitat suitability in increasingly urbanized landscapes.
 
 
@@ -16,7 +19,7 @@ summary(nesting)
 table(nesting$habitat)
 ```
 
-### a) 
+#### a) 
 
 For this part, I make a plot showing the relationship between nesting success and food availability. There is more than one approach to this.
 
@@ -46,9 +49,9 @@ There seems to be a variation in food availability across different habitat type
 
 For each habitat type, there is a comparison of food availability between nests that were successful and those that were not. Successful nests tend to have more food availability. This difference is quite small in parks though.
 
-### b) and (c)
+#### b) and (c)
 
-#### Methods
+##### Methods
 
 In a report, I'd write this for the methods:
 
@@ -57,7 +60,7 @@ In a report, I'd write this for the methods:
 *In this study, I used a GLM to fit a logistic regression to evaluate the impact of habitat type and food availability on nesting success probabilities among urban bird populations. A logistic GLM is particularly suitable for models where the dependent variable is binary. Here, the response variable, 'nestSuccess', is defined as binary: '1' denoting a successful nest and '0' denoting an unsuccessful one. The explanatory variables in this model were 'habitatType' and 'foodAvailability'. 'HabitatType' is a categorical variable categorizing urban habitats into distinct types: urban forest, park, and urban garden. 'FoodAvailability', a continuous variable, quantifies the biomass of insects in grams, serving as an indicator of resource abundance. I included an interaction term between 'habitatType' and 'foodAvailability'. This term is needed to assessing whether habitat type influences the effect of food availability on nesting success. This interaction potentially reveals whether certain urban habitats provide a buffering effect or exacerbate the influence of resource availability on nesting success.*
 
 
-#### Fitting the model
+##### Fitting the model
 
 Here's how I fit this model:
 
@@ -75,7 +78,7 @@ I can first look at some diagnostic plots to check that it is OK. It is hard to 
   autoplot(mod1)
 ```
 
-#### Summmarising the model
+##### Summmarising the model
 
 Then I can summarise the model to see what it tells us about nesting success.
 

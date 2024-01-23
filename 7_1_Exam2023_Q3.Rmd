@@ -1,10 +1,13 @@
 ## Question 3: Habitat restoration
 
+### Introduction
+
+
 The aim of this question was to test the hypothesis that habitat restoration leads to an increase in the average body mass of a specific bird species. I hypothesize that restored habitats may support healthier bird populations, reflected in larger body mass.
 
 The form of the expected data lends itself to a t-test. So I will use that method. 
 
-### a) 
+#### a) 
 
 First I will import the data to examine it.
 
@@ -28,7 +31,7 @@ Or using `dplyr` like this:
   summarise(meanVal = mean(BodySize), sdVal = sd(BodySize)))
 ```
 
-### b) 
+#### b) 
 
 I now conduct a power analysis to get the required sample size for 80% power.
 
@@ -104,4 +107,5 @@ ggplot(simulData, aes(x = sampleSize, y = Power)) +
   geom_line() +
   geom_hline(yintercept = 0.8, linetype = "dashed")
 ```
+
 I could then read of the graph, the best sample size for any desired power level. I could also adjust the "alpha value", i.e. the significance threshold, so that it is more strict. For example I could change from 0.05 to 0.01 for a more convincing study.
