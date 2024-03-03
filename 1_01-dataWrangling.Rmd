@@ -104,7 +104,7 @@ So both species lay the same maximum number of eggs, but maybe this is just caus
 
 How can we calculate the average? We cannot simply ask for the `mean` because the data run through time following the development in each nest. We need to calculate the maximum `nEggs` for each nest, and then calculate the average of those. We can do this in two steps. 
 
-We first calculate the clutch size for each box for each species in each year:
+We first calculate the clutch size as the maximum (`max`) number of eggs in each box for each species in each year:
 
 ```{r}
 sduBirds <- group_by(sduBirds, species, Year, boxNumber)
@@ -125,6 +125,7 @@ hist(sduBirds$clutchSize)
 ```
 
 That looks better.
+
 Now we can plot them again but this time split apart the species (again - this plot is ugly and we'll learn to plot nicer ones soon).
 
 ```{r}
@@ -163,6 +164,18 @@ points(sduBirds2$Year[sduBirds2$species == "GT"],
 So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have large clutch sizes than great tits.
 
 This approach of using `group_by` followed by `summarise` can be used to summarise data in many different ways: maximum or minimum value (`max` or `min`), variance or standard deviation (`var` or `sd`), quantiles such as the 10% or 50% quantile etc. (see the section on **Distributions** below) (`quantile`), cumulative sums (`cumsum`) or counts (`n` or `length`) and so on.
+
+<!-- table -->
+
+```{r results = "asis", echo = FALSE}
+my_data <- data.frame(
+  Command = c("min(x)", "max(x)", "n()", "length(x)", "var(x)", "sd(x)", "quantile(x,y)"),
+  What = c("minimum value", "maximum value", "number of records, see ?n", "number of records", "variance", "std. devation","a quantile, e.g. quantile(x, 0.25)"))
+
+knitr::kable(my_data)
+```
+
+
 
 ## Using pipes, saving data.
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Data wrangling with dplyr | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Data wrangling with dplyr | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2023-11-16" />
+<meta name="date" content="2023-12-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -121,10 +121,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -148,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#data-visualisation"><i class="fa fa-check"></i><b>1.2</b> Data visualisation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#statistics"><i class="fa fa-check"></i><b>1.3</b> Statistics</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#data-sources"><i class="fa fa-check"></i><b>1.4</b> Data sources</a></li>
-<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#your-instructors"><i class="fa fa-check"></i><b>1.5</b> Your instructors</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#your-instructors"><i class="fa fa-check"></i><b>1.5</b> Your instructor(s)</a></li>
 <li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#expectations"><i class="fa fa-check"></i><b>1.6</b> Expectations</a></li>
 <li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#your-feedback"><i class="fa fa-check"></i><b>1.7</b> Your feedback</a></li>
 <li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#assessment"><i class="fa fa-check"></i><b>1.8</b> Assessment</a></li>
@@ -367,25 +363,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="23.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>23.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="an-example-of-a-past-exam-2020.html"><a href="an-example-of-a-past-exam-2020.html"><i class="fa fa-check"></i><b>24</b> An example of a past Exam (2020)</a></li>
-<li class="part"><span><b>V Exam</b></span></li>
-<li class="chapter" data-level="25" data-path="exam-december-2023.html"><a href="exam-december-2023.html"><i class="fa fa-check"></i><b>25</b> Exam December 2023</a></li>
-<li class="part"><span><b>VI Solutions</b></span></li>
-<li class="chapter" data-level="26" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>26</b> Exercise Solutions</a>
+<li class="chapter" data-level="25" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>25</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
-<li class="chapter" data-level="26.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#californian-bird-diversity"><i class="fa fa-check"></i><b>26.1</b> Californian bird diversity</a></li>
-<li class="chapter" data-level="26.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>26.2</b> Wrangling the Amniote Life History Database</a></li>
-<li class="chapter" data-level="26.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>26.3</b> Temperature effects on egg laying dates</a></li>
-<li class="chapter" data-level="26.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#virtual-dice"><i class="fa fa-check"></i><b>26.4</b> Virtual dice</a></li>
-<li class="chapter" data-level="26.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>26.5</b> Sexual selection in Hercules beetles</a></li>
-<li class="chapter" data-level="26.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>26.6</b> Sex differences in fine motor skills</a></li>
-<li class="chapter" data-level="26.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>26.7</b> Therapy for anorexia</a></li>
-<li class="chapter" data-level="26.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>26.8</b> Compare t-tests with randomisation tests</a></li>
-<li class="chapter" data-level="26.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>26.9</b> Apple tree crop yield</a></li>
-<li class="chapter" data-level="26.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>26.10</b> Chirping crickets</a></li>
-<li class="chapter" data-level="26.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>26.11</b> Fish behaviour</a></li>
-<li class="chapter" data-level="26.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#maze-runner"><i class="fa fa-check"></i><b>26.12</b> Maze runner</a></li>
-<li class="chapter" data-level="26.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>26.13</b> Snails on the move</a></li>
-<li class="chapter" data-level="26.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>26.14</b> Mouse lemur strength</a></li>
+<li class="chapter" data-level="25.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#overview"><i class="fa fa-check"></i><b>25.2</b> Overview</a></li>
+<li class="chapter" data-level="25.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#what-is-a-large-language-model-llm-and-how-do-they-work"><i class="fa fa-check"></i><b>25.3</b> What is a Large Language Model (LLM) and how do they work?</a></li>
+<li class="chapter" data-level="25.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limitations"><i class="fa fa-check"></i><b>25.4</b> Limitations</a>
+<ul>
+<li class="chapter" data-level="25.4.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limited-knowledge"><i class="fa fa-check"></i><b>25.4.1</b> Limited knowledge</a></li>
+<li class="chapter" data-level="25.4.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#hallucination"><i class="fa fa-check"></i><b>25.4.2</b> Hallucination</a></li>
+<li class="chapter" data-level="25.4.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#numerical-ability"><i class="fa fa-check"></i><b>25.4.3</b> Numerical ability</a></li>
+</ul></li>
+<li class="chapter" data-level="25.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#ethics-of-using-llms-in-education"><i class="fa fa-check"></i><b>25.5</b> Ethics of using LLMs in education</a></li>
+<li class="chapter" data-level="25.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#use-cases-in-r"><i class="fa fa-check"></i><b>25.6</b> Use cases in R</a>
+<ul>
+<li class="chapter" data-level="25.6.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-errors."><i class="fa fa-check"></i><b>25.6.1</b> Finding errors.</a></li>
+<li class="chapter" data-level="25.6.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#explaining-code"><i class="fa fa-check"></i><b>25.6.2</b> Explaining code</a></li>
+<li class="chapter" data-level="25.6.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#interpreting-output"><i class="fa fa-check"></i><b>25.6.3</b> Interpreting output</a></li>
+<li class="chapter" data-level="25.6.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#solving-modelling-problems"><i class="fa fa-check"></i><b>25.6.4</b> Solving modelling problems</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>V Exam</b></span></li>
+<li class="chapter" data-level="26" data-path="exam-december-2023.html"><a href="exam-december-2023.html"><i class="fa fa-check"></i><b>26</b> Exam December 2023</a>
+<ul>
+<li class="chapter" data-level="26.1" data-path="exam-december-2023.html"><a href="exam-december-2023.html#question-1-wine-quality-and-climate-10-points"><i class="fa fa-check"></i><b>26.1</b> Question 1: Wine quality and climate (10 points)</a></li>
+<li class="chapter" data-level="26.2" data-path="exam-december-2023.html"><a href="exam-december-2023.html#question-2-foraging-in-blackbird-10-points"><i class="fa fa-check"></i><b>26.2</b> Question 2: Foraging in Blackbird (10 points)</a></li>
+<li class="chapter" data-level="26.3" data-path="exam-december-2023.html"><a href="exam-december-2023.html#question-3-habitat-restoration-10-points"><i class="fa fa-check"></i><b>26.3</b> Question 3: Habitat restoration (10 points)</a></li>
+<li class="chapter" data-level="26.4" data-path="exam-december-2023.html"><a href="exam-december-2023.html#question-4-nesting-success-in-urban-areas"><i class="fa fa-check"></i><b>26.4</b> Question 4: Nesting success in urban areas</a></li>
+</ul></li>
+<li class="part"><span><b>VI Solutions</b></span></li>
+<li class="chapter" data-level="27" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>27</b> Exercise Solutions</a>
+<ul>
+<li class="chapter" data-level="27.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#californian-bird-diversity"><i class="fa fa-check"></i><b>27.1</b> Californian bird diversity</a></li>
+<li class="chapter" data-level="27.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>27.2</b> Wrangling the Amniote Life History Database</a></li>
+<li class="chapter" data-level="27.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>27.3</b> Temperature effects on egg laying dates</a></li>
+<li class="chapter" data-level="27.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#virtual-dice"><i class="fa fa-check"></i><b>27.4</b> Virtual dice</a></li>
+<li class="chapter" data-level="27.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>27.5</b> Sexual selection in Hercules beetles</a></li>
+<li class="chapter" data-level="27.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>27.6</b> Sex differences in fine motor skills</a></li>
+<li class="chapter" data-level="27.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>27.7</b> Therapy for anorexia</a></li>
+<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="27.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>27.9</b> Apple tree crop yield</a></li>
+<li class="chapter" data-level="27.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>27.10</b> Chirping crickets</a></li>
+<li class="chapter" data-level="27.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>27.11</b> Fish behaviour</a></li>
+<li class="chapter" data-level="27.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#maze-runner"><i class="fa fa-check"></i><b>27.12</b> Maze runner</a></li>
+<li class="chapter" data-level="27.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>27.13</b> Snails on the move</a></li>
+<li class="chapter" data-level="27.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>27.14</b> Mouse lemur strength</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -519,7 +541,7 @@ See the earlier material for how to do this, or ask for help.</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-wrangling-with-dplyr.html#cb148-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">ungroup</span>(sduBirds)</span></code></pre></div>
 <p>So both species lay the same maximum number of eggs, but maybe this is just caused by outliers for one of the species. We’ll need to dig deeper.</p>
 <p>How can we calculate the average? We cannot simply ask for the <code>mean</code> because the data run through time following the development in each nest. We need to calculate the maximum <code>nEggs</code> for each nest, and then calculate the average of those. We can do this in two steps.</p>
-<p>We first calculate the clutch size for each box for each species in each year:</p>
+<p>We first calculate the clutch size as the maximum (<code>max</code>) number of eggs in each box for each species in each year:</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="data-wrangling-with-dplyr.html#cb149-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">group_by</span>(sduBirds, species, Year, boxNumber)</span>
 <span id="cb149-2"><a href="data-wrangling-with-dplyr.html#cb149-2" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">summarise</span>(sduBirds, <span class="at">clutchSize =</span> <span class="fu">max</span>(nEggs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p>Let’s first look at all the clutch size data:</p>
@@ -529,8 +551,8 @@ See the earlier material for how to do this, or ask for help.</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="data-wrangling-with-dplyr.html#cb151-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">filter</span>(sduBirds, clutchSize <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb151-2"><a href="data-wrangling-with-dplyr.html#cb151-2" tabindex="-1"></a><span class="fu">hist</span>(sduBirds<span class="sc">$</span>clutchSize)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
-<p>That looks better.
-Now we can plot them again but this time split apart the species (again - this plot is ugly and we’ll learn to plot nicer ones soon).</p>
+<p>That looks better.</p>
+<p>Now we can plot them again but this time split apart the species (again - this plot is ugly and we’ll learn to plot nicer ones soon).</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="data-wrangling-with-dplyr.html#cb152-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.factor</span>(sduBirds<span class="sc">$</span>species), sduBirds<span class="sc">$</span>clutchSize)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 <p>From these distributions it looks like the average clutch size is greater in the blue tit. We can use <code>summarise</code> to calculate the means.</p>
@@ -568,6 +590,45 @@ Now we can plot them again but this time split apart the species (again - this p
 <p><img src="BB852_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
 <p>So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have large clutch sizes than great tits.</p>
 <p>This approach of using <code>group_by</code> followed by <code>summarise</code> can be used to summarise data in many different ways: maximum or minimum value (<code>max</code> or <code>min</code>), variance or standard deviation (<code>var</code> or <code>sd</code>), quantiles such as the 10% or 50% quantile etc. (see the section on <strong>Distributions</strong> below) (<code>quantile</code>), cumulative sums (<code>cumsum</code>) or counts (<code>n</code> or <code>length</code>) and so on.</p>
+<!-- table -->
+<table>
+<thead>
+<tr class="header">
+<th align="left">Command</th>
+<th align="left">What</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">min(x)</td>
+<td align="left">minimum value</td>
+</tr>
+<tr class="even">
+<td align="left">max(x)</td>
+<td align="left">maximum value</td>
+</tr>
+<tr class="odd">
+<td align="left">n()</td>
+<td align="left">number of records, see ?n</td>
+</tr>
+<tr class="even">
+<td align="left">length(x)</td>
+<td align="left">number of records</td>
+</tr>
+<tr class="odd">
+<td align="left">var(x)</td>
+<td align="left">variance</td>
+</tr>
+<tr class="even">
+<td align="left">sd(x)</td>
+<td align="left">std. devation</td>
+</tr>
+<tr class="odd">
+<td align="left">quantile(x,y)</td>
+<td align="left">a quantile, e.g. quantile(x, 0.25)</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="using-pipes-saving-data." class="section level2 hasAnchor" number="7.5">
 <h2><span class="header-section-number">7.5</span> Using pipes, saving data.<a href="data-wrangling-with-dplyr.html#using-pipes-saving-data." class="anchor-section" aria-label="Anchor link to header"></a></h2>
