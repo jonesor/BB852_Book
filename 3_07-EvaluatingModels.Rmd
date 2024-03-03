@@ -10,7 +10,7 @@ During the 2+ way ANOVA (multiple regression) section you may have realised that
 
 We will use the class data to look at these topics (download the latest version please!). In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or this year's data. 
 
-```{r}
+```{r 3-07-EvaluatingModels-1}
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019) %>% # you can edit this to look at particular years.
   filter(Gender %in% c("Male", "Female")) %>%
@@ -20,7 +20,7 @@ classData <- read.csv("CourseData/classData.csv") %>%
 
 Let's fit a simple model: `Height ~ HandWidth + Gender`
 
-```{r}
+```{r 3-07-EvaluatingModels-2}
 mod1 <- lm(Height ~ HandWidth + Gender, data = classData)
 summary(mod1)
 ```
@@ -31,7 +31,7 @@ There are two type of R-squared value shown in this summary: Multiple R-squared 
 
 We'll look at multiple R-squared first. This value is calculated as the amount of explained variation divided by the total amount of variation. Take a look at the anova summary table:
 
-```{r}
+```{r 3-07-EvaluatingModels-3}
 anova(mod1)
 ```
 
@@ -43,7 +43,7 @@ Multiple R-squared is a measure of R-squared value for models that can have mult
 
 You can test this by adding terms to the model. Let's start with something silly - we'll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?
 
-```{r}
+```{r 3-07-EvaluatingModels-4}
 classData <- classData %>%
   mutate(randomVariable = rnorm(nrow(classData)))
 
@@ -53,7 +53,7 @@ summary(mod2)
 
 We can ask for the more precise multiple R-squared values like this:
 
-```{r}
+```{r 3-07-EvaluatingModels-5}
 summary(mod1)$r.squared
 summary(mod2)$r.squared
 ```
@@ -72,7 +72,7 @@ You can get R to tell you the AIC value for a model using the function `AIC()` e
 
 Here's a simple example of use in practice:
 
-```{r}
+```{r 3-07-EvaluatingModels-6}
 mod1 <- lm(Height ~ HandWidth + Gender, data = classData)
 mod2 <- lm(Height ~ HandWidth * Gender, data = classData)
 mod3 <- lm(Height ~ HandWidth, data = classData)
@@ -100,7 +100,7 @@ This is done by examining the anova summary (e.g. `anova(mod1)`), using the `Sum
 
 
 
-```{r}
+```{r 3-07-EvaluatingModels-7}
 anova(mod1)
 ```
 

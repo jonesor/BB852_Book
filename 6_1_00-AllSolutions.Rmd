@@ -6,14 +6,14 @@ These are the solutions to the exercises used in the course.
 
 1. First import the data. Check that the columns look as they should. (e.g. use `summary` or `str` functions). Tip: use the "Wizard" in RStudio to guide you.
 
-```{r}
+```{r 6-1-00-AllSolutions-1}
 birds <- read.csv("CourseData/suburbanBirds.csv")
 ```
 
 
 2. What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)*
 
-```{r}
+```{r 6-1-00-AllSolutions-2}
 mean(birds$nSpecies)
 min(birds$nSpecies)
 max(birds$nSpecies)
@@ -24,20 +24,20 @@ summary(birds$nSpecies)
 
 3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)
 
-```{r}
+```{r 6-1-00-AllSolutions-3}
 1975 - min(birds$Year)
 1975 - max(birds$Year)
 ```
 
 4. Plot the relationship between `Year` and `nSpecies` as a scatterplot using base-R graphics (using the `plot` function).
 
-```{r}
+```{r 6-1-00-AllSolutions-4}
 plot(birds$Year, birds$nSpecies)
 ```
 
 5. The pattern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `birds$Age <- 1975 - birds$Year)`). Re-plot your results.
 
-```{r}
+```{r 6-1-00-AllSolutions-5}
 birds$Age <- 1975 - birds$Year
 plot(birds$Age, birds$nSpecies)
 ```
@@ -56,13 +56,13 @@ You can do this with several methods. My favourite *quick* method is to click th
 
 1. When you have imported the data, use `dim` to check the dimensions of the whole data frame (you should see that there are `r ncol(amniote)` columns and `r nrow(amniote)` rows). Use `names` to look at the names of all columns in the data in `amniote`.
 
-```{r}
+```{r 6-1-00-AllSolutions-6}
 amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv",
   na.strings = "-999"
 )
 ```
 
-```{r}
+```{r 6-1-00-AllSolutions-7}
 dim(amniote)
 names(amniote)
 ```
@@ -71,7 +71,7 @@ names(amniote)
 The relevant columns are the taxonomic variables (`class`, `species`) and `longevity_y`, `litter_or_clutch_size_n`, `litters_or_clutches_per_y`, and `adult_body_mass_g`.
 
 
-```{r}
+```{r 6-1-00-AllSolutions-8}
 x <- amniote %>%
   select(
     class, genus, species,
@@ -84,7 +84,7 @@ x <- amniote %>%
 Use `mutate` and `paste` to convert the `species` column to a *Genus_species* by pasting the data in `genus` and `species` together. To see how this works, try out the following command, `paste(1:3, 4:6)`. After you have created the new column, remove the `genus` column (using `select` and `-genus`).
 
 
-```{r}
+```{r 6-1-00-AllSolutions-9}
 x <- x %>%
   mutate(species = paste(genus, species)) %>%
   select(-genus)
@@ -93,21 +93,21 @@ head(x)
 
 4. What is the longest living species in the record? Use `arrange` to sort the data from longest to shortest longevity (`longevity_y`), and then look at the top of the file using `head` to find out. (hint: you will need to use reverse sort (`-`)). Cut and paste the species name into Google to find out more!
 
-```{r}
+```{r 6-1-00-AllSolutions-10}
 x <- x %>% arrange(-longevity_y)
 head(x)
 ```
 
 5. Do the same thing but this time find the shortest lived species.
 
-```{r}
+```{r 6-1-00-AllSolutions-11}
 x <- x %>% arrange(longevity_y)
 head(x)
 ```
 
 6. Use `summarise` and `group_by` to make a table summarising `min`, `median` and `max` life spans (`longevity_y`) for the three taxonomic classes in the database. Remember that you need to tell R to remove the `NA` values using a `na.rm = TRUE` argument.
 
-```{r}
+```{r 6-1-00-AllSolutions-12}
 x %>%
   group_by(class) %>%
   summarise(
@@ -119,13 +119,13 @@ x %>%
 
 7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
 
-```{r}
+```{r 6-1-00-AllSolutions-13}
 plot(x$adult_body_mass_g, x$longevity_y)
 ```
 
 8. Use `mutate` to create a new `log`-transformed variables, `logMass` and `logLongevity`. Use these to make a "log-log" plot. You should see that makes the relationship more linear, and easier to "read".
 
-```{r}
+```{r 6-1-00-AllSolutions-14}
 x <- x %>%
   mutate(
     logMass = log(adult_body_mass_g),
@@ -137,7 +137,7 @@ plot(x$logMass, x$logLongevity)
 
 9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot `logOffspring` vs. `logLongevity`.
 
-```{r}
+```{r 6-1-00-AllSolutions-15}
 x <- x %>%
   mutate(logOffspring = log(
     litter_or_clutch_size_n * litters_or_clutches_per_y
@@ -148,7 +148,7 @@ plot(x$logOffspring, x$logLongevity)
 
 10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationships holds universally. 
 
-```{r}
+```{r 6-1-00-AllSolutions-16}
 aves <- x %>%
   filter(class == "Aves")
 
@@ -156,7 +156,7 @@ plot(aves$logOffspring, aves$logLongevity)
 title("Aves")
 ```
 
-```{r}
+```{r 6-1-00-AllSolutions-17}
 mammalia <- x %>%
   filter(class == "Mammalia")
 
@@ -164,7 +164,7 @@ plot(mammalia$logOffspring, mammalia$logLongevity)
 title("Mammalia")
 ```
 
-```{r}
+```{r 6-1-00-AllSolutions-18}
 reptilia <- x %>%
   filter(class == "Reptilia")
 
@@ -176,7 +176,7 @@ title("Reptilia")
 
 1. Import the data and take a look at it  with `head` or `str`.
 
-```{r, eval=TRUE}
+```{r 6-1-00-AllSolutions-19, eval=TRUE}
 eggDates <- read.csv("CourseData/eggDates.csv")
 head(eggDates)
 ```
@@ -189,7 +189,7 @@ You should also make sure that the `Year` column is recognised as being a numeri
 
 You should end up with a dataset with three columns as described above.
 
-```{r}
+```{r 6-1-00-AllSolutions-20}
 eggDates <- eggDates %>% pivot_longer(
   cols = starts_with("y"),
   names_to = "Year", values_to = "day"
@@ -200,7 +200,7 @@ head(eggDates)
 
 3. Ensure that year is coded as numeric variable using `mutate`. [Hint, you can use the command `as.numeric`, but first remove the "y" in the name using `gsub`].
 
-```{r}
+```{r 6-1-00-AllSolutions-21}
 eggDates <- eggDates %>%
   mutate(Year = gsub(pattern = "y", replacement = "", Year)) %>%
   mutate(Year = as.numeric(Year))
@@ -209,7 +209,7 @@ head(eggDates)
 
 4. Calculate the mean egg date per year using `summarise` (remember to `group_by` the year first). Take a look at the data.
 
-```{r}
+```{r 6-1-00-AllSolutions-22}
 meanEgg <- eggDates %>%
   group_by(Year) %>%
   summarise(meanEggDate = mean(day, na.rm = TRUE))
@@ -222,14 +222,14 @@ meanEgg
 
 5. Import the weather data and take a look at it with `head` or `str`.
 
-```{r,eval=TRUE}
+```{r 6-1-00-AllSolutions-23,eval=TRUE}
 weather <- read.csv("CourseData/AarslevTemperature.csv")
 str(weather)
 ```
 
 6. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `YEAR` and `meanSpringTemp`. 
 
-```{r}
+```{r 6-1-00-AllSolutions-24}
 weather <- weather %>%
   filter(MONTH %in% 2:4) %>%
   group_by(YEAR) %>%
@@ -243,7 +243,7 @@ head(weather)
 
 7. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
 
-```{r}
+```{r 6-1-00-AllSolutions-25}
 joinedData <- left_join(meanEgg, weather, c("Year" = "YEAR"))
 head(joinedData)
 ```
@@ -253,7 +253,7 @@ head(joinedData)
 
 8. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
 
-```{r}
+```{r 6-1-00-AllSolutions-26}
 plot(joinedData$meanAprilTemp, joinedData$meanEggDate)
 ```
 
@@ -265,7 +265,7 @@ Let's try the same kind of thing with the roll of (virtual) dice.
 
 Here's how to do one roll of the dice:
 
-```{r, echo=-1, results='asis',cache = TRUE}
+```{r 6-1-00-AllSolutions-27, echo=-1, results='asis',cache = TRUE}
 set.seed(123)
 diceRoll <- 1:6
 sample(diceRoll, 1)
@@ -273,7 +273,7 @@ sample(diceRoll, 1)
 
 1) Simulate 10 rolls of the dice, and make a table of results.
 
-```{r, echo=-1,cache = TRUE}
+```{r 6-1-00-AllSolutions-28, echo=-1,cache = TRUE}
 set.seed(123)
 result <- sample(diceRoll, 10, replace = TRUE)
 table(result)
@@ -284,7 +284,7 @@ Your table will probably look different to this, because it is a random process.
 2) Now simulate 90 rolls of the dice, and plot the results as a bar plot using `geom_bar` in `ggplot`. Add a horizontal line using `geom_abline` to show the **expected** result based on what you know about probability.
 
 
-```{r, echo=-1,fig.cap=('Barplot of 90 simulated dice throws'),cache = TRUE}
+```{r 6-1-00-AllSolutions-29, echo=-1,fig.cap=('Barplot of 90 simulated dice throws'),cache = TRUE}
 set.seed(2)
 n <- 90
 result <- data.frame(result = sample(diceRoll, n, replace = TRUE))
@@ -304,7 +304,7 @@ The main message here is that as sample size increases you are more likely to ob
 This is because of the different number of possibilities: as the range of possible outcomes increases, the sample size requirements increase. In other words, choosing a good sample size is context-dependent.
 
 
-```{r, echo= FALSE,fig.cap=('Barplots of 30 and 9000 simulated dice throws'),cache = TRUE}
+```{r 6-1-00-AllSolutions-30, echo= FALSE,fig.cap=('Barplots of 30 and 9000 simulated dice throws'),cache = TRUE}
 set.seed(2)
 n <- 30
 result <- data.frame(result = sample(diceRoll, n, replace = TRUE))
@@ -338,13 +338,13 @@ A + B
 *Alternative Hypothesis - Males have larger widths than females.*
 
 3. Import the data.
-```{r}
+```{r 6-1-00-AllSolutions-31}
 hercules <- read.csv("CourseData/herculesBeetle.csv")
 ```
 
 4. Calculate the mean for each sex (either using `tapply` or using `dplyr` tools)
 
-```{r}
+```{r 6-1-00-AllSolutions-32}
 # With dplyr
 hercules %>%
   group_by(sex) %>%
@@ -356,7 +356,7 @@ tapply(hercules$width, hercules$sex, mean)
 
 5. Plot the data as a histogram.
 
-```{r,message=FALSE}
+```{r 6-1-00-AllSolutions-33,message=FALSE}
 # Let's look at the male and female data
 (plot1 <- ggplot(hercules, aes(x = width, fill = sex)) +
   geom_histogram(position = "identity", alpha = .7))
@@ -364,7 +364,7 @@ tapply(hercules$width, hercules$sex, mean)
 
 6. Add vertical lines to the plot to indicate the mean values.
 
-```{r,message=FALSE}
+```{r 6-1-00-AllSolutions-34,message=FALSE}
 hercules %>%
   group_by(sex) %>%
   summarise(mean = mean(width)) %>%
@@ -375,7 +375,7 @@ plot1 + geom_vline(xintercept = meanVals, colour = c("red", "blue"))
 
 7. Now calculate the difference between the mean values using `dplyr` tools, or `tapply`.
 
-```{r}
+```{r 6-1-00-AllSolutions-35}
 # with dplyr
 hercules %>%
   group_by(sex) %>%
@@ -390,7 +390,7 @@ diff(as.vector(tapply(hercules$width, hercules$sex, mean)))
 
 8. Use `sample` to randomise the sex column of the data, and recalculate the difference between the mean.
 
-```{r}
+```{r 6-1-00-AllSolutions-36}
 # with dplyr
 hercules %>%
   mutate(sex = sample(sex)) %>%
@@ -405,7 +405,7 @@ diff(as.vector(tapply(hercules$width, sample(hercules$sex), mean)))
 
 9. Use `replicate` to repeat this 10 times (to ensure that you code works).
 
-```{r}
+```{r 6-1-00-AllSolutions-37}
 # with dplyr
 replicate(
   10,
@@ -429,7 +429,7 @@ replicate(
 
 10. When your code is working, use `replicate` again, but this time with 1000 replicates and pass the results into a data frame.
 
-```{r}
+```{r 6-1-00-AllSolutions-38}
 # with dplyr
 diffs <- data.frame(
   diffs =
@@ -458,7 +458,7 @@ diffs <- data.frame(
 
 11. Use `ggplot` to plot the null distribution you have just created, and add the observed difference.
 
-```{r,message=FALSE}
+```{r 6-1-00-AllSolutions-39,message=FALSE}
 ggplot(diffs, aes(x = diffs)) +
   geom_histogram() +
   geom_vline(xintercept = observedDiff)
@@ -466,7 +466,7 @@ ggplot(diffs, aes(x = diffs)) +
 
 12. Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.
 
-```{r}
+```{r 6-1-00-AllSolutions-40}
 sum(diffs$diffs >= observedDiff)
 sum(diffs$diffs >= observedDiff) / 1000
 ```
@@ -483,7 +483,7 @@ Carry out a two-sample t-test.
 
 1) Plot the data (e.g. with a box plot, or histogram)
 
-```{r,echo = -1,cache=TRUE}
+```{r 6-1-00-AllSolutions-41,echo = -1,cache=TRUE}
 set.seed(12)
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Gender %in% c("Male", "Female")) %>% 
@@ -503,12 +503,12 @@ Alternative hypothesis - there is a significant difference between male and fema
 3) Use the `t.test` function to do the test.
 
 
-```{r}
+```{r 6-1-00-AllSolutions-42}
 t.test(Precision ~ Gender, data = classData)
 ```
 
 4) Write a sentence or two describing the results.
-```{r, echo = FALSE}
+```{r 6-1-00-AllSolutions-43, echo = FALSE}
 x <- t.test(Precision ~ Gender, data = classData)
 ```
 There was no significant difference in mean precision between the two genders (t-test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = `r sprintf(x$conf.int[1], fmt = '%#.3f')`-`r sprintf(x$conf.int[2], fmt = '%#.3f')`). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.
@@ -524,7 +524,7 @@ The data are in "wide format". You may wish to convert it to "long format" depen
 
 1) Plot the data (e.g. with an interaction plot like Figure \@ref(fig:toolData))
 
-```{r,echo=TRUE,message=FALSE}
+```{r 6-1-00-AllSolutions-44,echo=TRUE,message=FALSE}
 anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv",
   header = TRUE
 )
@@ -536,7 +536,7 @@ anorexiaCBT_long <- anorexiaCBT %>%
   )
 ```
 
-```{r}
+```{r 6-1-00-AllSolutions-45}
 ggplot(anorexiaCBT_long, aes(
   x = time, y = weight,
   group = Subject
@@ -558,13 +558,13 @@ Alternative Hypothesis = There is a significant change in weight between the two
 
 The method here depends on whether you use the "long" data or not:
 
-```{r}
+```{r 6-1-00-AllSolutions-46}
 t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
 ```
 
 or
 
-```{r}
+```{r 6-1-00-AllSolutions-47}
 anorexiaCBT_long <- anorexiaCBT_long %>%
   arrange(Subject, time)
 
@@ -574,7 +574,7 @@ t.test(weight ~ time, data = anorexiaCBT_long, paired = TRUE)
 
 4) Write a couple of sentences to report your result.
 
-```{r}
+```{r 6-1-00-AllSolutions-48}
 x <- t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
 ```
 
@@ -582,7 +582,7 @@ There was a significant difference in weight of `r sprintf(x$estimate, fmt= '%#.
 
 ## Compare t-tests with randomisation tests
 
-```{block, type="do-something"}
+```{block 6-1-00-AllSolutions-49, type="do-something"}
 Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give approximately the same results? 
 
 Then try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `classData.csv`. Can you think of any problems with this analysis?
@@ -596,14 +596,14 @@ Import the data (`apples.csv`) and analyse it using the techniques you have lear
 
 1. Import and look at the data (e.g. `summary` or `str` or `head`)
 
-```{r}
+```{r 6-1-00-AllSolutions-50}
 apples <- read.csv("CourseData/apples.csv")
 summary(apples)
 ```
 
 2. Ensure that the explanatory variable (`spacing`) is defined as a categorical variable (i.e. a "factor", in R-speak). You can use `mutate` and `as.factor` functions for this.
 
-```{r}
+```{r 6-1-00-AllSolutions-51}
 apples <- apples %>%
   mutate(spacing = as.factor(spacing))
 ```
@@ -612,7 +612,7 @@ apples <- apples %>%
 
 3. Plot the data using `ggplot` (a box plot with (optionally) added jittered points would be good).
 
-```{r, echo = -1,cache=TRUE}
+```{r 6-1-00-AllSolutions-52, echo = -1,cache=TRUE}
 set.seed(42)
 ggplot(apples, aes(x = spacing, y = yield)) +
   geom_boxplot() +
@@ -623,13 +623,13 @@ ggplot(apples, aes(x = spacing, y = yield)) +
 4. Fit an ANOVA model using `lm`. 
 
 
-```{r}
+```{r 6-1-00-AllSolutions-53}
 apple_mod <- lm(yield ~ spacing, data = apples)
 ```
 
 5. Check the model using a diagnostic plot (i.e. using `autoplot` from the `ggfortify` package).
 
-```{r,message = FALSE, warning = FALSE}
+```{r 6-1-00-AllSolutions-54,message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(apple_mod)
 ```
@@ -637,19 +637,19 @@ autoplot(apple_mod)
 
 6. Use `anova` to get the ANOVA summary.
 
-```{r}
+```{r 6-1-00-AllSolutions-55}
 anova(apple_mod)
 ```
 
 7. You should see that there are differences among treatments. But where are those differences? Use `summary` on  your model to find out.
 
-```{r}
+```{r 6-1-00-AllSolutions-56}
 summary(apple_mod)
 ```
 
 8. Use a Tukey test to make all the pairwise comparisons among the treatments.
 
-```{r}
+```{r 6-1-00-AllSolutions-57}
 library(agricolae)
 HSD.test(apple_mod, "spacing", console = TRUE)
 ```
@@ -657,7 +657,7 @@ HSD.test(apple_mod, "spacing", console = TRUE)
 
 9. Write a few sentences that summarise your findings. What biological processes do you think drive the effects that you have detected?
 
-```{r,echo = FALSE}
+```{r 6-1-00-AllSolutions-58,echo = FALSE}
 x <- anova(apple_mod)
 ```
 
@@ -669,7 +669,7 @@ Or, more simply: *The 6-10ft and 6-14ft comparisons showed significant differenc
 
 10. Optional. Instead of using a Tukey test, use the alternative "relevel" approach to make the missing comparison.
 
-```{r}
+```{r 6-1-00-AllSolutions-59}
 apples2 <- apples %>%
   mutate(spacing = relevel(spacing, ref = "10"))
 apple_mod2 <- lm(yield ~ spacing, data = apples2)
@@ -685,13 +685,13 @@ If you get this far, try using the ANOVA approach on one of the previous t-test 
 
 1. Import the data
 
-```{r}
+```{r 6-1-00-AllSolutions-60}
 chirps <- read.csv("CourseData/chirps.csv")
 ```
 
 2. Use `mutate` to convert Fahrenheit to Celsius (Google it)
 
-```{r}
+```{r 6-1-00-AllSolutions-61}
 chirps <- chirps %>%
   mutate(temperatureC = (temperature - 32) * (5 / 9))
 head(chirps)
@@ -699,33 +699,33 @@ head(chirps)
 
 3. Plot the data
 
-```{r}
+```{r 6-1-00-AllSolutions-62}
 (A <- ggplot(chirps, aes(x = temperatureC, y = chirps)) +
   geom_point())
 ```
 
 4. Fit a linear regression model with `lm`
 
-```{r}
+```{r 6-1-00-AllSolutions-63}
 chirp_mod <- lm(chirps ~ temperatureC, data = chirps)
 ```
 
 5. Look at diagnostic plots to evaluate the model
 
-```{r,message = FALSE, warning = FALSE}
+```{r 6-1-00-AllSolutions-64,message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(chirp_mod)
 ```
 
 6. Use `anova` to figure out if the effect of temperature is statistically significant.
 
-```{r}
+```{r 6-1-00-AllSolutions-65}
 anova(chirp_mod)
 ```
 
 7. Use `summary` to obtain information about the coefficients and $R^2$-value.
 
-```{r}
+```{r 6-1-00-AllSolutions-66}
 summary(chirp_mod)
 ```
 
@@ -735,7 +735,7 @@ summary(chirp_mod)
 
 9. Add model fit line to the plot.
 
-```{r}
+```{r 6-1-00-AllSolutions-67}
 A + geom_smooth(method = "lm")
 ```
 
@@ -748,13 +748,13 @@ Yes, using the equation from the model. Ask an instructor if you can't figure th
 
 1. Import the data set, `fishPersonality.csv`
 
-```{r}
+```{r 6-1-00-AllSolutions-68}
 fishPersonality <- read.csv("CourseData/fishPersonality.csv")
 ```
 
 2. Plot the data (e.g. as a box plot)
 
-```{r}
+```{r 6-1-00-AllSolutions-69}
 ggplot(fishPersonality, aes(
   x = colouration, y = spawning,
   fill = personality
@@ -764,7 +764,7 @@ ggplot(fishPersonality, aes(
 
 3. Fit an ANOVA model using `lm`.
 
-```{r}
+```{r 6-1-00-AllSolutions-70}
 mod_A <- lm(spawning ~ personality + colouration +
   personality:colouration, data = fishPersonality)
 ```
@@ -773,20 +773,20 @@ mod_A <- lm(spawning ~ personality + colouration +
 
 5. Use `anova` to get an Analysis of Variance summary table, and interpret the results.
 
-```{r}
+```{r 6-1-00-AllSolutions-71}
 anova(mod_A)
 ```
 
 
 6. Get the coefficient summary (`summary`) and interpret the output.
 
-```{r}
+```{r 6-1-00-AllSolutions-72}
 summary(mod_A)
 ```
 
 7. Do post-hoc Tukey tests (e.g. using `HSD.test` from the `agricolae` package). Interpret the results.
 
-```{r}
+```{r 6-1-00-AllSolutions-73}
 library(agricolae)
 HSD.test(mod_A, c("personality", "colouration"), console = TRUE)
 ```
@@ -806,7 +806,7 @@ HSD.test(mod_A, c("personality", "colouration"), console = TRUE)
 1. Import the data and graph it (`geom_boxplot`). Try adding the points to the `ggplot` using the new (to you) function `geom_dotplot(binaxis = "y", stackdir = "center")`.
 
 
-```{r}
+```{r 6-1-00-AllSolutions-74}
 maze <- read.csv("CourseData/maze.csv", stringsAsFactors = TRUE)
 head(maze)
 
@@ -817,33 +817,33 @@ head(maze)
 
 2. Fit an appropriate GLM.
 
-```{r}
+```{r 6-1-00-AllSolutions-75}
 mod_A <- glm(nErrors ~ Age, data = maze, family = poisson)
 ```
 
 3. Examine the diagnostic plots of the model (`autoplot`).
 
-```{r,message = FALSE, warning = FALSE}
+```{r 6-1-00-AllSolutions-76,message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(mod_A)
 ```
 
 4. Get the analysis of variance (deviance) table (`anova`). What does this tell you?
 
-```{r}
+```{r 6-1-00-AllSolutions-77}
 anova(mod_A, test = "Chi")
 ```
 
 
 5. Obtain the `summary` table. What does this tell you?
 
-```{r}
+```{r 6-1-00-AllSolutions-78}
 summary(mod_A)
 ```
 
 6. Use the coefficient information in the `summary` table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations "by hand", or using the `predict` function. Ask for help if you get stuck.
 
-```{r}
+```{r 6-1-00-AllSolutions-79}
 newData <- data.frame(Age = c("Child", "Adult"))
 pv <- predict(mod_A, newData, se.fit = TRUE)
 
@@ -876,7 +876,7 @@ A + geom_point(
 Simulate a t-test-based analysis in R to figure out what sample size would result in 80% power.
 
 
-```{r}
+```{r 6-1-00-AllSolutions-80}
 sampleSize <- 40 # vary this until power > 0.8
 result <- replicate(
   1000,
@@ -894,7 +894,7 @@ You should find that you need a sample size of about 40 per group.
 
 What difference in strength could you reliably detect (with power >80%) with these sample sizes?
 
-```{r}
+```{r 6-1-00-AllSolutions-81}
 diff <- 185 # Vary this to give a difference to 2nd group t-test
 result <- replicate(
   1000,

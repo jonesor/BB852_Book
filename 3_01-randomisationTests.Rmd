@@ -10,19 +10,19 @@ To conduct a randomisation test using R, you will have the opportunity to put yo
 
 A new drug has been developed that is supposed to reduce cholesterol levels in men. An experiment has been carried out where 12 human test subjects have been assigned randomly to two groups: "Control" and "Drug". The pharmaceutical company is hoping that the "Drug" group will have lower cholesterol than the "Control" group. The aim here is to do a randomisation test to check that.
 
-```{block, type="do-something"}
+```{block 3-01-randomisationTests-1, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
 Import the data, called `cholesterol.csv`. 
 
-```{r, echo=TRUE}
+```{r 3-01-randomisationTests-2, echo=TRUE}
 ch <- read.csv("CourseData/cholesterol.csv")
 ```
 
 Let's first take a look at the data by plotting it. I will first plot a boxplot first, and add the jittered points for clarity.
 
-```{r, echo = -1, cache=TRUE}
+```{r 3-01-randomisationTests-3, echo = -1, cache=TRUE}
 set.seed(42)
 ggplot(ch, aes(x = Treatment, y = Cholesterol)) +
   geom_boxplot() +
@@ -40,14 +40,14 @@ The *alternative hypothesis* is that the mean of the drug group should be less t
 
 There are a few ways of doing this. In base-R you can use the function `tapply` ("table apply"), followed by `diff` ("difference").
 
-```{r}
+```{r 3-01-randomisationTests-4}
 tapply(ch$Cholesterol, ch$Treatment, mean)
 diff(tapply(ch$Cholesterol, ch$Treatment, mean))
 ```
 
 Because we are focusing on learning `dplyr`, you can also calculate the means like like this:
 
-```{r}
+```{r 3-01-randomisationTests-5}
 ch %>% # ch is the cholesterol data
   group_by(Treatment) %>% # group the data by treatment
   summarise(mean = mean(Cholesterol)) # calculate means
@@ -56,7 +56,7 @@ ch %>% # ch is the cholesterol data
 Here the pipes (`%>%`) are passing the result of each function on as input to the next. 
 You can use further commands, `pull` to get the `mean` vector from the summary table, and then use `diff` to calculate the difference between the groups, before passing that to a value called "`observedDiff`". 
 
-```{r}
+```{r 3-01-randomisationTests-6}
 observedDiff <- ch %>%
   group_by(Treatment) %>% # group the data by treatment
   summarise(mean = mean(Cholesterol)) %>% # calculate means
@@ -72,7 +72,7 @@ Now we ask, what would the world look like if our null hypothesis was *true*. To
 
 Let's try that one time:
 
-```{r, warning=FALSE, cache=TRUE, echo = -1}
+```{r 3-01-randomisationTests-7, warning=FALSE, cache=TRUE, echo = -1}
 set.seed(666)
 
 ch %>%
@@ -84,7 +84,7 @@ ch %>%
   diff()
 ```
 
-```{r, warning=FALSE, cache=TRUE, echo = FALSE}
+```{r 3-01-randomisationTests-8, warning=FALSE, cache=TRUE, echo = FALSE}
 set.seed(666)
 
 shuffDiff_temp <- ch %>%
@@ -103,7 +103,7 @@ Doing this one time is not much help though - we need to repeat this many times.
 We can do this easily in R using the function `replicate` which simply a kind of wrapper that tells R to repeat a command `n` times and then pass the result to a vector.
 Let's try it first 10 times to see how it works:
 
-```{r, warning=FALSE, cache=TRUE, echo=-1}
+```{r 3-01-randomisationTests-9, warning=FALSE, cache=TRUE, echo=-1}
 set.seed(42)
 replicate(
   10,
@@ -121,7 +121,7 @@ You can see that the `replicate` command simply does the sampling-recalculation 
 In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a `data.frame` called `shuffledData`. This data frame initially has a variable called `rep` which consists of the numbers 1-1000. I then use `mutate` to add the 1000 shuffled differences. 
 
 
-```{r, replicate, warning=FALSE, cache=TRUE, echo = -1}
+```{r 3-01-randomisationTests-10, replicate, warning=FALSE, cache=TRUE, echo = -1}
 set.seed(43)
 shuffledData <- data.frame(rep = 1:1000) %>%
   mutate(shuffledDiffs = replicate(
@@ -136,7 +136,7 @@ shuffledData <- data.frame(rep = 1:1000) %>%
 ```
 
 
-```{block, type="do-something"}
+```{block 3-01-randomisationTests-11, type="do-something"}
 
 When you use `summarise`, R will give you a message like this:
 
@@ -156,7 +156,7 @@ I suggest to put this code at the beginning of your script if the messages annoy
 
 Before formally testing the hypothesis it is useful to visualise what we have created in a histogram. I can use `ggplot` to do this, to create a plot called `p1`. Note that by putting the command in brackets R will both create the plot object, and print it to the screen. Note that because the shuffling of the data is random process your graph will look slightly different to mine.
 
-```{r, message = FALSE}
+```{r 3-01-randomisationTests-12, message = FALSE}
 (p1 <- ggplot(shuffledData, aes(x = shuffledDiffs)) +
   geom_histogram() +
   theme_minimal() +
@@ -165,7 +165,7 @@ Before formally testing the hypothesis it is useful to visualise what we have cr
 
 You can now add your observed difference (calculated above) to this plot like this:
 
-```{r, message=FALSE}
+```{r 3-01-randomisationTests-13, message=FALSE}
 p1 + geom_vline(xintercept = observedDiff)
 ```
 
@@ -175,7 +175,7 @@ Recall that the alternative hypothesis is that the observed difference (control 
 
 You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.
 
-```{r}
+```{r 3-01-randomisationTests-14}
 table(shuffledData$shuffledDiffs <= observedDiff)
 ```
 So that is `r sum(shuffledData$shuffledDiffs<=observedDiff)` of the shuffled values that are equal to or less than the observed difference. The p-value is then simply `r sum(shuffledData$shuffledDiffs<=observedDiff)`/1000 = `r sum(shuffledData$shuffledDiffs<=observedDiff)/1000`. 
@@ -209,7 +209,7 @@ The paired randomisation test is a **one-sample** randomisation test where the d
 
 I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. Everitt collected data on weights of people before and after therapy. These data are in the file `anorexiaCBT.csv`
 
-```{r}
+```{r 3-01-randomisationTests-15}
 # Remember to set your working directory first
 an <- read.csv("CourseData/anorexiaCBT.csv")
 head(an)
@@ -217,7 +217,7 @@ head(an)
 
 These data are arranged in a so-called "wide" format. To make plotting and analysis data need to be rearranged into a tidy "long" format so that each observation is on a row. We can do this using the `pivot_longer` function:
 
-```{r}
+```{r 3-01-randomisationTests-16}
 an <- an %>%
   pivot_longer(
     cols = starts_with("Week"), names_to = "time",
@@ -228,7 +228,7 @@ head(an)
 
 We should *always* plot the data. So here goes.
 
-```{r, message=FALSE}
+```{r 3-01-randomisationTests-17, message=FALSE}
 (p1 <- ggplot(an, aes(x = weight, fill = time)) +
   geom_histogram(position = "identity", alpha = .7)
 )
@@ -236,14 +236,14 @@ We should *always* plot the data. So here goes.
 
 Another useful way to plot this data is to use an **interaction plot**. In these plots the matched pairs (grouped by `Subject`) are joined together with lines. You can plot one like this:
 
-```{r, message=FALSE}
+```{r 3-01-randomisationTests-18, message=FALSE}
 (p2 <- ggplot(an, aes(x = time, y = weight, group = Subject)) +
   geom_point() +
   geom_line(size = 1, alpha = 0.5)
 )
 ```
 
-```{r, echo=FALSE}
+```{r 3-01-randomisationTests-19, echo=FALSE}
 an2 <- an %>%
   group_by(Subject) %>%
   mutate(time = sample(time))
@@ -257,20 +257,20 @@ What we are interested in is whether there has been a change in weight of the su
 
 The starting point for the analysis is to calculate the observed change in weight.
 
-```{r, warning=FALSE}
+```{r 3-01-randomisationTests-20, warning=FALSE}
 an <- an %>%
   group_by(Subject) %>%
   summarise(change = diff(weight))
 ```
 You have created a dataset that looks like this:
 
-```{r}
+```{r 3-01-randomisationTests-21}
 head(an)
 ```
 
 And you can calculate the observed change like this:
 
-```{r}
+```{r 3-01-randomisationTests-22}
 obsChange <- mean(an$change)
 obsChange
 ```
@@ -281,7 +281,7 @@ The logic of this test is that if the experimental treatment has no effect on we
 
 Therefore, to carry out this test, we can permute the SIGN of the change in weight (i.e. we randomly flip values from positive to negative and vice versa). We can do this by multiplying by 1 or -1, randomly.
 
-```{r, echo =-1, cache = TRUE}
+```{r 3-01-randomisationTests-23, echo =-1, cache = TRUE}
 set.seed(123)
 head(an)
 
@@ -295,13 +295,13 @@ anShuffled <- an %>%
 
 Let's take a look at this new shuffled dataset:
 
-```{r}
+```{r 3-01-randomisationTests-24}
 head(anShuffled)
 ```
 
 We need to calculate the mean of this shuffled vector. We can do this by `pull` to get the vector, and then `mean`.
 
-```{r, echo = -1, cache = TRUE}
+```{r 3-01-randomisationTests-25, echo = -1, cache = TRUE}
 set.seed(42)
 an %>%
   mutate(sign = sample(c(1, -1),
@@ -315,7 +315,7 @@ an %>%
 
 Now we will build a null distribution of changes in weight by repeating this 1000 times. We can do this using the `replicate` function to "wrap" around the function, passing the result into a data frame. We can then compare this null distribution to the observed change.
 
-```{r, cache=TRUE, echo=-1}
+```{r 3-01-randomisationTests-26, cache=TRUE, echo=-1}
 set.seed(42)
 nullDist <- data.frame(
   change =
@@ -334,14 +334,14 @@ nullDist <- data.frame(
 
 ### Null distribution
 
-```{r, message=FALSE}
+```{r 3-01-randomisationTests-27, message=FALSE}
 (nullDistPlot <- ggplot(nullDist, aes(x = change)) +
   geom_histogram())
 ```
 
 We can add the observed change as a line to this:
 
-```{r, message=FALSE}
+```{r 3-01-randomisationTests-28, message=FALSE}
 nullDistPlot + geom_vline(xintercept = obsChange)
 ```
 
@@ -349,7 +349,7 @@ nullDistPlot + geom_vline(xintercept = obsChange)
 
 The formal test of significance then works by asking how many of the null distribution replicates are as extreme as the observed change. 
 
-```{r}
+```{r 3-01-randomisationTests-29}
 table(nullDist$change >= obsChange)
 ```
 So we can see that `r table(nullDist$change>=obsChange)[2]` of `r sum(table(nullDist$change>=obsChange))` replicates were greater than or equal to the observed change. This translates to a p-value of `r table(nullDist$change>=obsChange)[2]/sum(table(nullDist$change>=obsChange))`. We can therefore say that the observed change in weight after CBT was significantly greater than what we would expect from chance.

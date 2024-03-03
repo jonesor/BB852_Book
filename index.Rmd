@@ -12,7 +12,7 @@ documentclass: book
 description: "Course book for BB852 at the Biology Department, University of Southern Denmark"
 ---
 
-```{r, setOptions, include=FALSE}
+```{r index-1, setOptions, include=FALSE}
 knitr::opts_chunk$set(
   warning = FALSE, message = FALSE
 )
@@ -24,7 +24,7 @@ set.seed(183975)
 I wrote this online book to accompany the course *BB852 - Data Handling, Visualisation and Statistics*.
 
 
-```{block, type="do-something"}
+```{block index-2, type="do-something"}
 **Note:** The book is a "work in progress" and will change during the course. The latest version can always be found at the website. 
 
 Please let me know ([jones@biology.sdu.dk](mailto:jones@biology.sdu.dk)) if you spot any errors, omissions or if you have suggestions for improvement.
@@ -47,7 +47,7 @@ Statistics is a *huge* field; I don't attempt to cover more than a small fractio
 My general approach with communicating these methods and ideas is to teach using examples. Therefore, the bulk of the text here consists of walk-throughs of manipulating, plotting and analysing real data. For the statistics section I focus on communicating the "gist" of the underlying mathematical machinery rather than the mathematical details. If you find yourself interested in these details then there are more specialist textbooks available. 
 
 
-```{block, type="do-something"}
+```{block index-3, type="do-something"}
 This book accompanies the course lectures. The general idea is that there will be a lecture, followed by computer work where you work through the examples in the relevant chapter of this book. At the end of most chapters there are also exercises to test your new skills. It is very important that you do these to gradually build up your skill level and confidence.
 ```
 
@@ -84,12 +84,12 @@ Your final grade will be determined by a multiple choice question (MCQ) exam, wo
 These materials are inspired by the excellent textbook, "Getting Started With R"^[Beckerman, Childs & Petchey (2017) *Getting Started With R*. Oxford University Press (2nd edition)], which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" (https://dzchilds.github.io/stats-for-bio/). For your convenience, the data sets for the Beckerman et al. book are available at this course's data Dropbox link (above), in a folder called "GSWR_datasets".
 
 
-```{r, echo = FALSE, message=FALSE, results='hide'}
+```{r index-4, echo = FALSE, message=FALSE, results='hide'}
 # Simulate data
 source("SimulateData.R")
 ```
 
-```{r, which datasets imported, echo = FALSE, message=FALSE, results='hide'}
+```{r index-5, echo = FALSE, message=FALSE, results='hide'}
 rmdFiles <- list.files(pattern = "*.Rmd")
 
 course_data_files <- NULL
@@ -115,7 +115,7 @@ course_data_files <- data.frame(file_name = c(course_data_files, "birds.csv")) %
 write.csv(x = course_data_files, file = "course_data_files.csv", row.names = FALSE)
 ```
 
-```{r, echo = FALSE, message=FALSE, results='hide'}
+```{r index-6, echo = FALSE, message=FALSE, results='hide'}
 #Delete all files in CourseData
 unlink("CourseData/*", recursive = FALSE)
 
@@ -150,14 +150,14 @@ if (nrow(datasets_missing) > 0) {
 }
 ```
 
-```{r, echo = FALSE, message = FALSE}
+```{r index-7, echo = FALSE, message = FALSE}
 source("CopyDataToDropbox.R")
 ```
 
 
 # Schedule
 
-```{r echo = FALSE}
+```{r index-8, echo = FALSE}
 # Get current year and use it to build the link to the official time table.
 current_year <- format(Sys.Date(), "%Y")
 link_to_schedule <- paste0("https://mitsdu.sdu.dk/skema/activity/N110040101/e",substr(current_year,3,4))
@@ -168,13 +168,13 @@ This is the schedule for the course. You can check itsLearning for the dates, ti
 
 Also check itsLearning for details of other tasks/assignments/reading etc.
 
-```{r, echo = FALSE, message=FALSE, warning=FALSE}
+```{r index-9, echo = FALSE, message=FALSE, warning=FALSE}
 schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 ```
 
 
 
-```{r, echo = FALSE, message=FALSE,eval=knitr::is_html_output(), warning=FALSE}
+```{r index-10, echo = FALSE, message=FALSE,eval=knitr::is_html_output(), warning=FALSE}
 schedule2 <- schedule %>%
   select(Part, Session, Type, Topic, Instructor)
 

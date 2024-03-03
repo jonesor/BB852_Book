@@ -39,14 +39,14 @@ There are several ways to estimate statistical power, required sample sizes etc.
 
 In an experiment, researchers would like to test a hypothesis that a high protein diet increases the size of adult insects from a pest species. Previous work has shown that the average size on a normal diet is 12mm with a standard deviation of 4mm. 
 
-```{block, type="do-something"}
+```{block 3-10-Power-Analysis-1, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
 
 We can simulate a distribution of measurements from this distribution using the `rnorm` function. This draws `n` numbers from a theoretical normal distribution with a particular `mean` and standard deviation (`sd`). For example:
 
-```{r,echo=-1,cache=TRUE}
+```{r 3-10-Power-Analysis-2,echo=-1,cache=TRUE}
 set.seed(42)
 (control <- rnorm(n = 10, mean = 12, sd = 3))
 ```
@@ -54,26 +54,26 @@ Because this is a random process your results will be different (and they will b
 
 Suppose that other studies on a different species has shown that a high protein diet leads to a 20% increase in size. This means that we expect our treatment group to have a body length of 12 $\times$ 1.2 = 14.4mm. If we assume the standard deviation will be the same, we can simulate a distribution for a high protein treatment group in the same way as for the control group:
 
-```{r,echo = -1,cache=TRUE}
+```{r 3-10-Power-Analysis-3,echo = -1,cache=TRUE}
 set.seed(142)
 (treatment <- rnorm(n = 10, mean = 14.4, sd = 3))
 ```
 
 Now we have two simulated samples, and we can conduct a t-test on those samples and store the result:
 
-```{r}
+```{r 3-10-Power-Analysis-4}
 res <- t.test(control, treatment)
 ```
 
 We can print this result to the screen like this:
 
-```{r}
+```{r 3-10-Power-Analysis-5}
 res
 ```
 
 Or just get the p-value like this:
 
-```{r}
+```{r 3-10-Power-Analysis-6}
 res$p.value
 ```
 
@@ -85,7 +85,7 @@ You have come across this sort of simulation approach before when we talked abou
 
 We first set up our simulation by defining the mean, standard deviation, and sample size of our simulated experiment.
 
-```{r}
+```{r 3-10-Power-Analysis-7}
 controlMean <- 12
 treatmentMean <- 14.4
 sdValue <- 3
@@ -94,7 +94,7 @@ sampleSize <- 10
 
 Now we can "wrap" a `t.test` on simulated control and treatment data sets within a `replicate` function like this. Take some time to study this part of the script - it is important that you understand what it is doing. In this case the replicate command is telling R to repeat the t-test 5 times.
 
-```{r, echo=-1, cache=TRUE}
+```{r 3-10-Power-Analysis-8, echo=-1, cache=TRUE}
 set.seed(123)
 replicate(
   5,
@@ -109,7 +109,7 @@ Let's repeat the t-test 1000 times so we can get a good idea of the number of ti
 
 I don't want to print 1000 p-values to the screen so I will collect them in a vector called `powerResults`.
 
-```{r,echo=-1,cache=TRUE}
+```{r 3-10-Power-Analysis-9,echo=-1,cache=TRUE}
 set.seed(123)
 powerResults <- replicate(
   1000,
@@ -122,7 +122,7 @@ powerResults <- replicate(
 
 I can now ask how many of the p-values stored in `powerResults` were less than 0.05.
 
-```{r}
+```{r 3-10-Power-Analysis-10}
 sum(powerResults < 0.05)
 ```
 
@@ -130,7 +130,7 @@ So in this case, `r sum(powerResults<0.05)` of the 1000 tests were correct. The 
 
 We can ask what sample size do we need to get a better power, e.g. 90%, by increasing sample size incrementally. For example, here I increase sample size to 15: 
 
-```{r,echo=-1,cache=TRUE}
+```{r 3-10-Power-Analysis-11,echo=-1,cache=TRUE}
 set.seed(123)
 controlMean <- 12
 treatmentMean <- 14.4
@@ -169,7 +169,7 @@ Simulation can be a powerful tool to help design and understand the results of h
 
 
 
-```{block, type="do-something"}
+```{block 3-10-Power-Analysis-12, type="do-something"}
 This section is for illustration only. It is intended to show the utility of using R to quickly address experimental design questions but it goes beyond what you are expected to learn.I hope you find it interesting nevertheless. To this you will need to add the `purrr` library (using `install.packages("purrr")`). This package includes a useful function, `map_dbl`, which allows you to repeatedly apply functions over many different input values. I use the double colon (`::`) notation like this `purrr::map_dbl` to use this function without the need to load the whole package.
 ```
 
@@ -177,7 +177,7 @@ One can extend the simulation to cover a range of sample sizes (or differences b
 
 I illustrate this below by varying sample size between 5 and 40.
 
-```{r,echo=-1,cache=TRUE}
+```{r 3-10-Power-Analysis-13,echo=-1,cache=TRUE}
 set.seed(123)
 
 # Set up a data frame for the simulation results
@@ -205,7 +205,7 @@ simulData$Power <- purrr::map_dbl(simulData$sampleSize, pwr)
 ```
 These results can then be graphed with `ggplot`.
 
-```{r}
+```{r 3-10-Power-Analysis-14}
 # Plot the output
 ggplot(simulData, aes(x = sampleSize, y = Power)) +
   geom_point() +

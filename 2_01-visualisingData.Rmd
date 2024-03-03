@@ -4,18 +4,18 @@
 In this chapter you will be guided through using the `ggplot2` package to make some pretty plots. You will therefore need the `ggplot2` package to make this work. Remember, you can load packages like this:
 
 
-```{r,message=FALSE}
+```{r 2-01-visualisingData-1,message=FALSE}
 library(ggplot2)
 ```
 
 We will use the SDU birds clutch size data that we produced at the end of the "[Data wrangling with dplyr]" chapter for these examples. You can find the data set via the Course Data Dropbox link.
 
 
-```{block, type="do-something"}
+```{block 2-01-visualisingData-2, type="do-something"}
 Remember to set your working directory, and start a new script. I am assuming that you have saved your data in a folder called "CourseData" inside your working directory. 
 ```
 
-```{r}
+```{r 2-01-visualisingData-3}
 clutch <- read.csv("CourseData/SDUClutchSize.csv")
 ```
 
@@ -27,19 +27,19 @@ After setting up the plot the graphics are added as **geometric layers** or **ge
 
 I will illustrate the construction of a simple plot by making a histogram of the clutch size of all the nests in the dataset.
 
-```{r}
+```{r 2-01-visualisingData-4}
 ggplot(clutch, aes(x = clutchSize))
 ```
 
 This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set `binwidth` to be 1 because we know we are dealing with counts between just 1 and 14. Try altering the `binwidth`.
 
-```{r}
+```{r 2-01-visualisingData-5}
 ggplot(clutch, aes(x = clutchSize)) +
   geom_histogram(binwidth = 1)
 ```
 We know that we have two species here and we would like to compare them. This is done within the aesthetic argument. The default is that the bars for different categories are stacked on top of each other. This is good in some cases, but probably not here.
 
-```{r}
+```{r 2-01-visualisingData-6}
 ggplot(clutch, aes(x = clutchSize, fill = species)) +
   geom_histogram(binwidth = 1, position = "dodge")
 ```
@@ -49,14 +49,14 @@ You can immediately see that there are far fewer blue tit nests than great tit o
 To make it easier to compare distributions with very different counts, we can put density on the y-axis instead of the default count using the argument `stat(density)`.
 
 
-```{r}
+```{r 2-01-visualisingData-7}
 ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
   geom_histogram(binwidth = 1, position = "dodge")
 ```
 
 An alternative approach would be to overlay the two sets of bars (using `position = "identity"`) and set the colours to be slightly transparent (using `alpha = 0.7`) so that you can see the overlapping region clearly. 
 
-```{r}
+```{r 2-01-visualisingData-8}
 ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
   geom_histogram(binwidth = 1, position = "identity", alpha = 0.7)
 ```
@@ -68,7 +68,7 @@ It is very clear from this plot that blue tits tend to have bigger clutch sizes 
 You should recall that there were several years of data represented here.
 `ggplot` has a very clever way of splitting up the plot to examine this.
 
-```{r}
+```{r 2-01-visualisingData-9}
 ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
   geom_histogram(
     binwidth = 1, position = "identity",
@@ -79,13 +79,13 @@ ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
 
 You could split the data up by species in a similar way, as yet another way of visualising the difference between species:
 
-```{r}
+```{r 2-01-visualisingData-10}
 ggplot(clutch, aes(x = clutchSize)) +
   geom_histogram(binwidth = 1) +
   facet_grid(species ~ .)
 ```
 
-```{block, type="do-something"}
+```{block 2-01-visualisingData-11, type="do-something"}
 You can change whether the separate graphs are presented in a rows or columns by changing the order of the argument: ` facet_grid(species~.)` or ` facet_grid(.~species)`. Try it.
 ```
 
@@ -100,7 +100,7 @@ In a box plot the box shows the quartiles (i.e. the 25% and 75% quantiles) withi
 To plot them using `ggplot` you must use a `geom_boxplot` layer. 
 The categorical variable is normally placed on the x-axis so is placed as `x` in the `aes` argument, while the continuous variable is on the `y` axis.
 
-```{r}
+```{r 2-01-visualisingData-12}
 ggplot(clutch, aes(x = species, y = clutchSize)) +
   geom_boxplot()
 ```
@@ -108,14 +108,14 @@ ggplot(clutch, aes(x = species, y = clutchSize)) +
 
 Some researchers argue that it is a good idea to add the data as points to these plots as "full disclosure" of what the underlying data look like. These can be added with a `geom_jitter` layer (jitter is random noise added in this case to the horizontal axis). You should set `width` and `alpha` arguments to make it look nice.
 
-```{r,echo = -1,cache = TRUE}
+```{r 2-01-visualisingData-13,echo = -1,cache = TRUE}
 set.seed(42)
 ggplot(clutch, aes(x = species, y = clutchSize)) +
   geom_boxplot() +
   geom_jitter(width = .2, alpha = 0.5, colour = "black", fill = "black")
 ```
 
-```{block, type="do-something"}
+```{block 2-01-visualisingData-14, type="do-something"}
 Try splitting the data into different years using `facet_grid` with the box plot. 
 ```
 
@@ -127,7 +127,7 @@ To illustrate this we will make a plot showing how clutch size changes among yea
 First we will use `summarise` to create a dataset with the mean clutch size. We'll start simply, by looking at only great tits.
 
 
-```{r}
+```{r 2-01-visualisingData-15}
 GTclutch <- clutch %>%
   filter(species == "GT") %>%
   group_by(Year) %>%
@@ -136,7 +136,7 @@ GTclutch <- clutch %>%
 
 Then you can plot this like this.
 
-```{r}
+```{r 2-01-visualisingData-16}
 ggplot(GTclutch, aes(x = Year, y = meanClutchSize)) +
   geom_line()
 ```
@@ -144,7 +144,7 @@ ggplot(GTclutch, aes(x = Year, y = meanClutchSize)) +
 I think this looks OK, but we should add both species. I'll first need to produce a mean clutch size dataset that includes both species.
 
 
-```{r}
+```{r 2-01-visualisingData-17}
 meanClutch <- clutch %>%
   group_by(species, Year) %>%
   summarise(meanClutchSize = mean(clutchSize))
@@ -152,7 +152,7 @@ meanClutch <- clutch %>%
 
 Now I can do the plot again. The only difference to the command is that I need to tell R that I want to colour the lines by species (`colour = species`).
 
-```{r}
+```{r 2-01-visualisingData-18}
 ggplot(meanClutch, aes(
   x = Year, y = meanClutchSize,
   colour = species
@@ -162,7 +162,7 @@ ggplot(meanClutch, aes(
 
 I can improve on this by (1) changing the y axis limits (using `ylim`) so that it goes through the full range of my data (0 - 14); (2) adding points (using a `geom_point` layer) where my actual data values are; (3) adding a nicely formatted axis label (using `ylab`); adding a title (`ggtitle`)
 
-```{r}
+```{r 2-01-visualisingData-19}
 ggplot(meanClutch, aes(
   x = Year, y = meanClutchSize,
   colour = species
@@ -179,13 +179,13 @@ ggplot(meanClutch, aes(
 Let's now make a scatter plot.
 The SDU bird data are not suitable for this type of plot so we'll use the data from a few days ago on suburban bird diversity.
 
-```{r}
+```{r 2-01-visualisingData-20}
 birds <- read.csv("CourseData/suburbanBirds.csv")
 ```
 
 Take a look at the data to remind ourselves what it looks like
 
-```{r}
+```{r 2-01-visualisingData-21}
 head(birds)
 ```
 
@@ -193,13 +193,13 @@ These data show the result of standardised bird surveys at housing developments 
 
 To investigate this we should first add a new variable for `Age` to the data set. We can do this using the `mutate` function from `dplyr`. This function creates new variables, for example by manipulating existing ones.
 
-```{r}
+```{r 2-01-visualisingData-22}
 birds <- mutate(birds, Age = 1975 - Year)
 ```
 
 When we have created this variable we can plot the data. For aesthetic reasons I also would like to set the limits on the y-axis to go extend to zero, and I would like to include proper labels on the axes.
 
-```{r}
+```{r 2-01-visualisingData-23}
 ggplot(birds, aes(x = Age, y = nSpecies)) +
   geom_point() +
   ylim(0, 15) +
@@ -228,7 +228,7 @@ Figure \@ref(fig:barplot1) illustrates this with two plots showing two distribut
 
 Box plots are simply better than bar plots (unless you are trying to hide something!).
 
-```{r, barplot1, echo = FALSE, fig.width = 6, fig.height = 2, fig.align = 'center', fig.cap = "Problems with bar plots."}
+```{r 2-01-visualisingData-24, barplot1, echo = FALSE, fig.width = 6, fig.height = 2, fig.align = 'center', fig.cap = "Problems with bar plots."}
 library(patchwork)
 set.seed(42)
 n = 50
@@ -282,17 +282,17 @@ So when CAN you use bar plots?
 
 I would argue that bar plots can be useful for presenting summaries of counts. For example, sample sizes.
 
-```{r}
+```{r 2-01-visualisingData-25}
 clutch <- read.csv("CourseData/SDUClutchSize.csv")
 ```
 
 Next we can summarise the data to get the sample sizes for each year
 
-```{r}
+```{r 2-01-visualisingData-26}
 table(clutch$species)
 ```
 
-```{r}
+```{r 2-01-visualisingData-27}
 (sampleSize <- as.data.frame(table(clutch$species)))
 
 #rename columns
@@ -301,7 +301,7 @@ names(sampleSize) <- c("Species", "SampleSize")
 
 Here's how to plot these data in `ggplot`, using `geom_bar`. The `stat = "identity"` argument tells `ggplot2` to use the actual values from the data column for the height of the bars.  
 
-```{r}
+```{r 2-01-visualisingData-28}
 ggplot(sampleSize, aes(x = Species, y = SampleSize)) +
   geom_bar(stat = "identity") +
   labs(title = "Barplot Example", x = "Category", y = "Sample Size")
@@ -309,7 +309,7 @@ ggplot(sampleSize, aes(x = Species, y = SampleSize)) +
 
 With the same data set you might think about making a bar plot for sample size per year like this 
 
-```{r}
+```{r 2-01-visualisingData-29}
 (sampleSize <- as.data.frame(table(clutch$Year)))
 
 #rename columns
@@ -320,7 +320,7 @@ ggplot(sampleSize, aes(x = Year, y = SampleSize)) +
 ```
 In this case, I would strongly argue that a line plot is much more appropriate, because it captures the fact that "year" is NOT a discrete category and shows that neighbouring years are connected:
 
-```{r}
+```{r 2-01-visualisingData-30}
 sampleSize$Year <- as.numeric(as.character(sampleSize$Year))
 
 ggplot(sampleSize, aes(x = as.numeric(Year), y = SampleSize)) +

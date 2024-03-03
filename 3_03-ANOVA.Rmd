@@ -9,7 +9,7 @@ The answer is to use a one-way analysis of variance (ANOVA). Conceptually, this 
 The one-way ANOVA is illustrated below with two cases (Figure \@ref(fig:anovaVis)). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether *at least one* of the groups is different from the others.
 
 
-```{r, anovaVis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
+```{r 3-03-ANOVA-1, anovaVis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
 d1 <- c(40, 10)
 d2 <- c(45, 10)
 d3 <- c(50, 10)
@@ -49,7 +49,7 @@ A + ggtitle("A") + B + ggtitle("B")
 
 
 
-```{r, echo = FALSE,fig.show="hide",cache=TRUE}
+```{r 3-03-ANOVA-2, echo = FALSE,fig.show="hide",cache=TRUE}
 # Makes boxplot version of the above for presentation
 set.seed(124)
 dfA <- data.frame(
@@ -82,21 +82,21 @@ After figuring out if at least one of the groups is significantly different from
 
 New coffee machines use "pods" to make espresso. These have become much more popular than the traditional "bar machines". This data looks at the amount of "crema" or foam produced (a sign of quality!) using three methods: bar machines (BM), Hyper Espresso Pods (HIP) and Illy Espresso System (IES). Are any of these methods better than the others?
 
-```{block, type="do-something"}
+```{block 3-03-ANOVA-3, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
 
 Import the data (`espresso.csv`) and look at it.
 
-```{r}
+```{r 3-03-ANOVA-4}
 espresso <- read.csv("CourseData/espresso.csv",
   stringsAsFactors = TRUE
 )
 head(espresso)
 ```
 
-```{r, coffee,echo=-1,fig.width=4,fig.height=3,fig.align='center', fig.cap="A box and whisker plot, with jittered points, for the espresso foam data.",cache=TRUE}
+```{r 3-03-ANOVA-5, coffee,echo=-1,fig.width=4,fig.height=3,fig.align='center', fig.cap="A box and whisker plot, with jittered points, for the espresso foam data.",cache=TRUE}
 set.seed(43)
 (ggplot(espresso, aes(x = method, y = foamIndx)) +
   geom_boxplot() +
@@ -107,13 +107,13 @@ You can see in Figure \@ref(fig:coffee) that the categorical explanatory variabl
 
 Let's first fit the ANOVA using R. One way ANOVAs are fitted using the `lm` function (`lm` stands for "linear model" - yes, an ANOVA is a type of linear model).
 
-```{r}
+```{r 3-03-ANOVA-6}
 foam_mod <- lm(foamIndx ~ method, data = espresso)
 ```
 
 Before proceeding, we need to check the assumptions of the model. This can be done visually using the `autoplot` function in the `ggfortify` package. If you don't have the package installed, install it now (`install.packages("ggfortify"`)). 
 
-```{r, diagnostic,echo=TRUE,fig.width=5,fig.height=4,fig.align='center', fig.cap="Diagnostic plots for the ANOVA model. This looks great.",message = FALSE, warning = FALSE}
+```{r 3-03-ANOVA-7, diagnostic,echo=TRUE,fig.width=5,fig.height=4,fig.align='center', fig.cap="Diagnostic plots for the ANOVA model. This looks great.",message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(foam_mod)
 ```
@@ -126,11 +126,11 @@ Now let's evaluate our ANOVA model. We do this using two functions: `anova` and 
 
 First, the `anova`. This gives us the following summary:
 
-```{r}
+```{r 3-03-ANOVA-8}
 anova(foam_mod)
 ```
 
-```{r, echo=FALSE}
+```{r 3-03-ANOVA-9, echo=FALSE}
 x <- anova(foam_mod)
 ```
 
@@ -155,7 +155,7 @@ There are several ways to do this and we'll look at one of them.
 
 We do this using the `summary` function.
 
-```{r}
+```{r 3-03-ANOVA-10}
 summary(foam_mod)
 ```
 
@@ -163,7 +163,7 @@ To properly interpret this output you need to understand something called "treat
 
 They are a bit hard to wrap your head aroudn and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use `group_by` and `summarise` to calculate the means for your the levels of your explanatory variable.
 
-```{r}
+```{r 3-03-ANOVA-11}
 espresso %>%
   group_by(method) %>%
   summarise(gp_mean = mean(foamIndx))
@@ -189,7 +189,7 @@ You can see that it is very important to understand the levels of your explanato
 
 For example, we can `relevel` the method variable so that the levels are re-ordered as HIP, BM, then IES so that the comparisons are between zero-HIP, HIP-BM and HIP-IES. (make sure that you understand this before proceeding).
 
-```{r}
+```{r 3-03-ANOVA-12}
 # This is what the original data looks like:
 levels(espresso$method)
 
@@ -201,7 +201,7 @@ levels(espresso_2$method)
 
 Now we can refit the model with this modified data set and see what difference that made:
 
-```{r}
+```{r 3-03-ANOVA-13}
 foam_mod2 <- lm(foamIndx ~ method, data = espresso_2)
 anova(foam_mod2)
 summary(foam_mod2)
@@ -210,7 +210,7 @@ summary(foam_mod2)
 Now the coefficients in the model summary look different, but the model is actually the same. Compare the two graphs in Figure \@ref(fig:differentReferences) - can you see the differences/similarities?
 
 
-```{r, differentReferences, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.",cache=TRUE}
+```{r 3-03-ANOVA-14, differentReferences, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.",cache=TRUE}
 set.seed(31)
 
 temp <- data.frame(
@@ -271,13 +271,13 @@ e.g. *The foam index varied significantly among groups (ANOVA: F = `r formatC(x$
 
 An alternative way to approach these comparisons between groups is to use something called a **post-hoc multiple comparison test**. The words "post-hoc" mean "after the event" -- i.e. after the ANOVA in this case -- while the "multiple comparison" refers to the (potentially many) pairwise comparisons that you would like to make with an ANOVA. One of the most widely used post-hoc tests is called Tukey’s Honestly Significant Difference (Tukey HSD) test. There is a convenient R package called `agricolae` that will do these for you.
 
-```{r, eval=FALSE}
+```{r 3-03-ANOVA-15, eval=FALSE}
 # You only need to do this once!
 install.packages("agricolae")
 ```
 When you have the package installed, you can load it (using `library`). Then you can run the Tukey HSD test using the function `HSD.test`. The first argument for the function is the name of the model, followed by the name of the variable you are comparing (in this case `method`) and finally `console = TRUE` tells the function to print the output to your computer screen.
 
-```{r}
+```{r 3-03-ANOVA-16}
 library(agricolae)
 HSD.test(foam_mod2, "method", console = TRUE)
 ```
@@ -289,7 +289,7 @@ You could include these in a figure or a table with text like, *"Means followed 
 ## ANOVA calculation "by hand".
 
 
-```{block, type="do-something"}
+```{block 3-03-ANOVA-17, type="do-something"}
 The following is an optional exercise designed to help you understand how ANOVA works.
 ```
 
@@ -306,7 +306,7 @@ The difference between those values is called the *Treatment Sum of Squares (SST
 If that doesn't make sense yet, picture the case where the treatment-specific means are all very similar, and are therefore very close to the overall mean. Now the difference between the *Total Sum of Squares* and the *Error Sum of Squares* will be small. Sketch out a couple of examples with pen on paper if that helps. You should now see that you can investigate differences among means by looking at variation.
 
 
-```{r, ANOVAbyhand, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
+```{r 3-03-ANOVA-18, ANOVAbyhand, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
 overallMean <- espresso %>%
   summarise(overallMean = mean(foamIndx)) %>%
   pull()
@@ -352,14 +352,14 @@ Here goes...
 
 First, calculate the total sum of squares:
 
-```{r}
+```{r 3-03-ANOVA-19}
 overallMean <- mean(espresso$foamIndx)
 (SSTotal <- sum((overallMean - espresso$foamIndx)^2))
 ```
 
 Now calculate the group-specific means:
 
-```{r}
+```{r 3-03-ANOVA-20}
 (groupMeans <- espresso %>%
   group_by(method) %>%
   summarise(groupMean = mean(foamIndx)) %>%
@@ -368,7 +368,7 @@ Now calculate the group-specific means:
 
 Now add those group-specific mean values to the dataset using `left_join` so that you can calculate the group-specific errors.
 
-```{r}
+```{r 3-03-ANOVA-21}
 espresso <- left_join(espresso, espresso %>%
   group_by(method) %>%
   summarise(groupMean = mean(foamIndx))) %>%
@@ -379,7 +379,7 @@ head(espresso)
 
 Then, to calculate the errors:
 
-```{r}
+```{r 3-03-ANOVA-22}
 (SSError <- espresso %>%
   summarise(sum(groupSS)) %>%
   pull())
@@ -387,7 +387,7 @@ Then, to calculate the errors:
 
 From there, you can calculate the **Treatment Sum of Squares**
 
-```{r}
+```{r 3-03-ANOVA-23}
 (SSTreatment <- SSTotal - SSError)
 ```
 
@@ -397,20 +397,20 @@ We need to take account of sample size (degrees of freedom) by dividing these su
 
 Now we need to correct for degrees of freedom, which will give us variances.
 
-```{r}
+```{r 3-03-ANOVA-24}
 (meanSSTreatment <- SSTreatment / 2)
 (meanSSError <- SSError / 24)
 ```
 
 The F-statistic is then the ratio of these values.
 
-```{r}
+```{r 3-03-ANOVA-25}
 (Fstat <- meanSSTreatment / meanSSError)
 ```
 
 We can "look up" the p-value associated with this F-statistic using the `pf` function (`pf` stands for probability of f) like this:
 
-```{r}
+```{r 3-03-ANOVA-26}
 1 - pf(Fstat, df1 = 2, df2 = 24)
 ```
 
@@ -418,7 +418,7 @@ As you can see, the method is a bit laborious and time consuming but it is conce
 
 
 
-```{r, echo=FALSE}
+```{r 3-03-ANOVA-27, echo=FALSE}
 # the following is some code to make a plot with shuffled data as an illustration of how the ANOVA works
 espressoShuffled <- espresso %>%
   mutate(foamIndx = sample(foamIndx))
@@ -490,6 +490,6 @@ Import the data (`apples.csv`) and analyse it using the techniques you have lear
 10) Optional. Instead of using a Tukey test, use the alternative "relevel" approach to make the missing comparison.
 
 
-```{block, type="do-something"}
+```{block 3-03-ANOVA-28, type="do-something"}
 If you get this far, try using the ANOVA approach on one of the previous t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the `t.test` function or the ANOVA approach with `lm`.
 ```

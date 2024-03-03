@@ -7,7 +7,7 @@ The two-way ANOVA is an extension of one-way ANOVA that allows you to investigat
 For example, one might have run an experiment investigating in the effect of two types of diet (*lowProtein* and *highProtein*), and genotype (*gt1* and *gt2*), on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these different possible outcomes are illustrated in Figure \@ref(fig:possibilities). the titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
 
 
-```{r, possibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
+```{r 3-06-n-way-ANOVA-1, possibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
 fakeData <- expand.grid(diet = c("lowP", "highP"), genotype = c("gt1", "gt2"))
 
 
@@ -103,13 +103,13 @@ In the model we aim to quantify these effects, and ask if they are statistically
 
 Let's use R to fit a two-way ANOVA model using data from the example I just described. As with one-way ANOVA, you can fit a two-way ANOVA model in R using `lm`. 
 
-```{block, type="do-something"}
+```{block 3-06-n-way-ANOVA-2, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
 First, import the `insectDiet.csv` data and plot it, to produce a plot like in Figure \@ref(fig:dietAndGenotype). From looking at the graph in Figure \@ref(fig:dietAndGenotype) you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a  high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the *difference* in size between the insects raised on the different diets) is larger for genotype 1 than it is for genotype 2. But are these differences statistically meaningful?
 
-```{r, dietAndGenotype,eval=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,fig.cap="The effect of diet protein content and genotype on adult size of an insect species"}
+```{r 3-06-n-way-ANOVA-3, dietAndGenotype,eval=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,fig.cap="The effect of diet protein content and genotype on adult size of an insect species"}
 insectDiet <- read.csv("CourseData/insectDiet.csv")
 
 ggplot(insectDiet, aes(x = genotype, y = lengthMM, fill = diet)) +
@@ -126,7 +126,7 @@ Let's try to understand this. The `genotype + diet` part represents the **main e
 
 So we fit the model like this - putting the formula first, then telling R which data to use:
 
-```{r}
+```{r 3-06-n-way-ANOVA-4}
 mod_A <- lm(lengthMM ~ genotype + diet + genotype:diet,
   data = insectDiet
 )
@@ -134,7 +134,7 @@ mod_A <- lm(lengthMM ~ genotype + diet + genotype:diet,
 
 Then we can look at diagnostic plots, as with ANOVA etc.:
 
-```{r,message = FALSE, warning = FALSE}
+```{r 3-06-n-way-ANOVA-5,message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(mod_A)
 ```
@@ -145,7 +145,7 @@ These all look OK. The slightly odd structure in the QQ-plot is caused by the fa
 
 Since we are satisfied with the diagnostic plots we can proceed by summarising the model using first `anova` and then `summary`.
 
-```{r}
+```{r 3-06-n-way-ANOVA-6}
 anova(mod_A)
 ```
 
@@ -158,7 +158,7 @@ But as you know, this summary table doesn't tell you the direction of the effect
 To do this you first need to create a summary table using `dplyr` tools `summarise` and `group_by` to get the mean and standard errors of the mean:
 
 
-```{r}
+```{r 3-06-n-way-ANOVA-7}
 insectDiet_means <-
   insectDiet %>%
   group_by(genotype, diet) %>% # <- remember to group by *both* factors
@@ -168,7 +168,7 @@ insectDiet_means
 
 Then you can make a simple plot of this information by plotting points, and lines joining them:
 
-```{r, interactionPlot,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
+```{r 3-06-n-way-ANOVA-8, interactionPlot,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
 (A <- ggplot(
   insectDiet_means,
   aes(x = genotype, y = MeanLength, colour = diet, group = diet)
@@ -179,7 +179,7 @@ Then you can make a simple plot of this information by plotting points, and line
 
 You could add error bars to the points by adding a line defining the `ymin` and `ymax` values from the data summary like this:
 
-```{r, errorBars,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
+```{r 3-06-n-way-ANOVA-9, errorBars,fig.width=5,fig.height=3,fig.align='center',fig.cap="", fig.pos = "ht",message=FALSE}
 ggplot(
   insectDiet_means,
   aes(
@@ -195,7 +195,7 @@ ggplot(
 But are these points statistically significantly different from each other?
 To answer that question we need to use a post-hoc test 
 
-```{r}
+```{r 3-06-n-way-ANOVA-10}
 library(agricolae)
 HSD.test(mod_A, trt = c("diet", "genotype"), console = TRUE)
 ```
@@ -207,7 +207,7 @@ The important part of this output is at the bottom where it tells us ` Treatment
 
 This (above) is generally enough information for a complete write up of results.  However, you can ask R to provide the model summary that includes the $R^2$ values, coefficient estimates and standard errors using `summary`.
 
-```{r}
+```{r 3-06-n-way-ANOVA-11}
 summary(mod_A)
 ```
 

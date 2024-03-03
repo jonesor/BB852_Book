@@ -33,12 +33,12 @@ There are other potential link and error families that *could* be used with this
 
 This example uses the `fox.csv` data set. This data set gives the number of offspring produced by a group of foxes, alongside the weight (in kg) of the mothers. Let's import and plot the data.
 
-```{block, type="do-something"}
+```{block 3-08-GLM-1-Poisson-1, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
 
-```{r,  echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r 3-08-GLM-1-Poisson-2,  echo=FALSE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 fox <- read.csv("CourseData/fox.csv")
 
 ggplot(fox, aes(x = weight, y = noffspring)) +
@@ -48,13 +48,13 @@ ggplot(fox, aes(x = weight, y = noffspring)) +
 The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).
 
 
-```{r}
+```{r 3-08-GLM-1-Poisson-3}
 mod1 <- glm(noffspring ~ weight, data = fox, family = poisson)
 ```
 
 After fitting the model it is a good idea to look at the model diagnostics, using `autoplot` from the `ggfortify` package.
 
-```{r, echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message = FALSE, warning = FALSE}
+```{r 3-08-GLM-1-Poisson-4, echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(mod1)
 ```
@@ -64,7 +64,7 @@ These diagnostic plots are, basically, the same as the ones you saw for `lm` mod
 Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using the `test = "F"` or `test = "Chi"`.  For Poisson and binomial GLMs the chi-squared test is most appropriate while for  Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
 
 
-```{r}
+```{r 3-08-GLM-1-Poisson-5}
 anova(mod1, test = "Chi")
 ```
 
@@ -72,11 +72,11 @@ This summary table tells us that the single explanatory variable (`weight`) is f
 
 We can then ask for the coefficient summary using `summary`.
 
-```{r}
+```{r 3-08-GLM-1-Poisson-6}
 summary(mod1)
 ```
 
-```{block, type="do-something"}
+```{block 3-08-GLM-1-Poisson-7, type="do-something"}
 GLM model coefficients and predicted values, are expressed on the scale of the *linear predictor* (i.e. the transformed data scale). It is usually desirable to "backtransform" to the natural scale before plotting. See below.
 ```
 
@@ -94,7 +94,7 @@ To do that we can use the following four steps:
 
 That's a lot! Let's put it all together. It is worth saving the code somewhere so you can cut-and-paste it (with some modification) for future use.
 
-```{r}
+```{r 3-08-GLM-1-Poisson-8}
 # (1) Create a data frame with a vector to predict from
 newData <- data.frame(weight = seq(1.7, 4.4, 0.01))
 
@@ -123,14 +123,14 @@ newData <- newData %>%
 
 Take a look at this data to make sure it looks OK.
 
-```{r}
+```{r 3-08-GLM-1-Poisson-9}
 head(newData)
 ```
 
 This looks OK. Now we can plot the data and add a the model fit line, and a "ribbon" representing the errors (the 95% confidence interval for the line). Because the data used to draw the ribbon are not from the original dataset, we need to tell the `geom_ribbon` function NOT to use the same aesthetics (`inherit.aes = FALSE`). The geom layers are applied sequentially, so I add the real points last so they are not obscured by the ribbon or line.
 
 
-```{r, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r 3-08-GLM-1-Poisson-10, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 (A <- ggplot(fox, aes(x = weight, y = noffspring)) +
   geom_ribbon(data = newData, 
               aes(x = weight, ymin = lowerCI, ymax = upperCI), 
@@ -141,7 +141,7 @@ This looks OK. Now we can plot the data and add a the model fit line, and a "rib
 ```
 
 
-```{block, type="do-something"}
+```{block 3-08-GLM-1-Poisson-11, type="do-something"}
 As you can see, this procedure is long-winded and error-prone. I therefore recommend that you save this code somewhere so you can cut-and-paste it (with some modifications) for future use!
 ```
 
@@ -162,7 +162,7 @@ Let's first import the data (`cancer.csv`) and use summary to examine it by plot
 
 First we can see that there are no negative count values.
 
-```{r, echo=TRUE ,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r 3-08-GLM-1-Poisson-12, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 cancer <- read.csv("CourseData/cancer.csv")
 
 ggplot(cancer, aes(x = Distance, y = Cancers)) +
@@ -173,13 +173,13 @@ Again, you will notice that the data are formed into horizontal rows of integer 
 
 Let's fit a Generalised Linear Model to find out. As before will assume that the error is Poisson (that they variance increases directly in proportion to the mean), and we will use the standard log link to ensure that we don't predict negative values:
 
-```{r}
+```{r 3-08-GLM-1-Poisson-13}
 mod1 <- glm(Cancers ~ Distance, data = cancer, family = poisson)
 ```
 
 Next, plot the diagnostic plots.
 
-```{r, echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
+```{r 3-08-GLM-1-Poisson-14, echo=FALSE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
 autoplot(mod1)
 ```
 
@@ -187,7 +187,7 @@ These look a bit dodgy, but we'll stick with it for the moment.
 
 Next ask for the Analysis of Variance table.
 
-```{r}
+```{r 3-08-GLM-1-Poisson-15}
 anova(mod1, test = "Chi")
 ```
 
@@ -196,7 +196,7 @@ The ANOVA table tells us that there is no significant effect of the Distance var
 
 We needn't go further with this model, but go ahead and plot the model in any case (just for practice). 
 
-```{r}
+```{r 3-08-GLM-1-Poisson-16}
 summary(mod1)
 ```
 

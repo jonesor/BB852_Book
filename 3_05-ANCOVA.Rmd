@@ -6,7 +6,7 @@ In a simple case, you might be interested in a model with a continuous response 
 
 Some of these different possible outcomes of this type of analysis are illustrated in Figure \@ref(fig:possibilities). We might see that neither of the two explanatory variables has a significant effect. We might see that one of them does but not the other one. We might see an interaction effect (where the effect of one variable (e.g. hand width) depends on the other (e.g gender). We might also see an interaction effect but no main effect.
 
-```{r, ANCOVApossibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
+```{r 3-05-ANCOVA-1, ANCOVApossibilities, echo=FALSE,fig.width=10,fig.height=4,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
 fakeData <- expand.grid(contVar = c(1, 5), categVar = c("A", "B"))
 
 # No effect of contVar nor categVar
@@ -103,7 +103,7 @@ In a previous class (linear regression) you explored the relationship between ha
 
 Here we will extend that example by asking whether there are differences between males and females. I am restricting my analysis to 2019 data, but you could do it for any year (or all years, but you might need to first get rid of some outliers using `filter`).
 
-```{block, type="do-something"}
+```{block 3-05-ANCOVA-2, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
@@ -111,7 +111,7 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 We'll begin by plotting the data (Figure \@ref(fig:exampleANCOVA)).
 
 
-```{r, exampleANCOVA, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="ANCOVA on hand width vs. height data in males and females", fig.pos = "ht"}
+```{r 3-05-ANCOVA-3, exampleANCOVA, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="ANCOVA on hand width vs. height data in males and females", fig.pos = "ht"}
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
@@ -130,13 +130,13 @@ This shows the results of the ANCOVA model before we have even fit it! You can s
 
 Now we can fit our model using the `lm` function. The model formula is `Height ~ HandWidth + Gender + HandWidth:Gender`. The `HandWidth` and `Gender` are the so called **main effects** while `HandWidth:Gender` represents the interaction between them (i.e. it is used to address the question "*does the effect of hand width differ between the sexes?*"). R knows that is fitting an ANCOVA type model rather than a two-way ANOVA because it knows the type of variables that it is dealing with. You can see this if you ask R to tell you what the `class` of the variables are:
 
-```{r}
+```{r 3-05-ANCOVA-4}
 class(classData$Gender)
 class(classData$HandWidth)
 ```
 
 
-```{r}
+```{r 3-05-ANCOVA-5}
 mod_A <- lm(Height ~ HandWidth + Gender + HandWidth:Gender,
   data = classData
 )
@@ -145,7 +145,7 @@ mod_A <- lm(Height ~ HandWidth + Gender + HandWidth:Gender,
 
 The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size.  Nevertheless, lets keep with good habits:
 
-```{r,message = FALSE, warning = FALSE}
+```{r 3-05-ANCOVA-6,message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(mod_A)
 ```
@@ -156,13 +156,13 @@ These look good. No evidence of non-normality in the residuals, no heteroscedast
 
 Now we can get the `anova` table of our ANCOVA model (yes, I know that sounds strange).
 
-```{r}
+```{r 3-05-ANCOVA-7}
 anova(mod_A)
 ```
 
 This type of *sequential sum of squares* Analysis of Variance table should be getting fairly familiar to you now, but let's unpack what this means. There are four rows in the summary table - one for each of the terms in the model (`HandWidth`, `Gender` and `HandWidth:Gender`), and one for the `Residuals` (the unexplained variation that remains after fitting the model). The table includes degrees of freedom (`Df`), sum of squares (`Sum Sq`), mean sum of squares (`Mean Sq`) and the associated F and p-values (`F value` and `Pr(>F)`. 
 
-```{r echo = FALSE}
+```{r 3-05-ANCOVA-8, echo = FALSE}
 x <- anova(mod_A)
 ```
 
@@ -170,7 +170,7 @@ You can interpret the mean sum of squares column in terms of the amount of varia
 
 You would report from this table something like this:
 
-```{r, echo=FALSE}
+```{r 3-05-ANCOVA-9, echo=FALSE}
 mod_A_anova <- anova(mod_A)
 mod_A_summary <- summary(mod_A)
 ```
@@ -184,7 +184,7 @@ It is of course useful to take the interpretation a bit further. You could do th
 
 To put some quantitative numbers on this description of the pattern we need to get the summary from R.
 
-```{r}
+```{r 3-05-ANCOVA-10}
 summary(mod_A)
 ```
 
