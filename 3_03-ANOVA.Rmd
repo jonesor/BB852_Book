@@ -6,10 +6,10 @@ The answer is to use a one-way analysis of variance (ANOVA). Conceptually, this 
 
 ## One-way ANOVA 
 
-The one-way ANOVA is illustrated below with two cases (Figure \@ref(fig:anovaVis)). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether *at least one* of the groups is different from the others.
+The one-way ANOVA is illustrated below with two cases (Figure \@ref(fig:3-03-ANOVA-1)). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether *at least one* of the groups is different from the others.
 
 
-```{r 3-03-ANOVA-1, anovaVis, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
+```{r 3-03-ANOVA-1, echo=FALSE,fig.width=7,fig.height=3,fig.align='left',fig.cap="Visualising an ANOVA.", fig.pos = "ht",cache=TRUE}
 d1 <- c(40, 10)
 d2 <- c(45, 10)
 d3 <- c(50, 10)
@@ -96,14 +96,14 @@ espresso <- read.csv("CourseData/espresso.csv",
 head(espresso)
 ```
 
-```{r 3-03-ANOVA-5, coffee,echo=-1,fig.width=4,fig.height=3,fig.align='center', fig.cap="A box and whisker plot, with jittered points, for the espresso foam data.",cache=TRUE}
+```{r 3-03-ANOVA-5, echo=-1,fig.width=4,fig.height=3,fig.align='center', fig.cap="A box and whisker plot, with jittered points, for the espresso foam data.",cache=TRUE}
 set.seed(43)
 (ggplot(espresso, aes(x = method, y = foamIndx)) +
   geom_boxplot() +
   geom_jitter(width = 0.2))
 ```
 
-You can see in Figure \@ref(fig:coffee) that the categorical explanatory variable ("method") defines the three treatment groups and has the three levels representing the different coffee types: BM, HIP and IES.
+You can see in Figure \@ref(fig:3-03-ANOVA-5) that the categorical explanatory variable ("method") defines the three treatment groups and has the three levels representing the different coffee types: BM, HIP and IES.
 
 Let's first fit the ANOVA using R. One way ANOVAs are fitted using the `lm` function (`lm` stands for "linear model" - yes, an ANOVA is a type of linear model).
 
@@ -113,12 +113,12 @@ foam_mod <- lm(foamIndx ~ method, data = espresso)
 
 Before proceeding, we need to check the assumptions of the model. This can be done visually using the `autoplot` function in the `ggfortify` package. If you don't have the package installed, install it now (`install.packages("ggfortify"`)). 
 
-```{r 3-03-ANOVA-7, diagnostic,echo=TRUE,fig.width=5,fig.height=4,fig.align='center', fig.cap="Diagnostic plots for the ANOVA model. This looks great.",message = FALSE, warning = FALSE}
+```{r 3-03-ANOVA-7, echo=TRUE,fig.width=5,fig.height=4,fig.align='center', fig.cap="Diagnostic plots for the ANOVA model. This looks great.",message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(foam_mod)
 ```
 
-The main thing to look at here in Figure \@ref(fig:diagnostic) is the "Q-Q" plot on the top right. We want those points to be approximately along the line. If that is the case, then it tells us that the model's residuals are normally distributed (this is one of the assumptions of ANOVA). We may cover these diagnostic plots more thoroughly later. You can find more details on pages 112-113 of the Beckerman et al textbook, or at the following if you are interested: https://data.library.virginia.edu/diagnostic-plots/.
+The main thing to look at here in Figure \@ref(fig:3-03-ANOVA-7) is the "Q-Q" plot on the top right. We want those points to be approximately along the line. If that is the case, then it tells us that the model's residuals are normally distributed (this is one of the assumptions of ANOVA). We may cover these diagnostic plots more thoroughly later. You can find more details on pages 112-113 of the Beckerman et al textbook, or at the following if you are interested: https://data.library.virginia.edu/diagnostic-plots/.
 
 Trust me, everything here looks great.
 
@@ -174,7 +174,7 @@ Look at the coefficients of the model. Remember that you have three levels in yo
 
 The "missing" group is the first one alphabetically (i.e. BM). The estimate (of the mean) for this group is labelled "`(Intercept)`" (with a value of `r foam_mod$coefficients[1]`. This is like a baseline or reference value, and the estimates for the other groups (HIP and IES), are *differences* between this baseline value and the estimated mean for those groups. In other words, the second group (HIP) is `r foam_mod$coefficients[2]` more than `r foam_mod$coefficients[1]` (`r foam_mod$coefficients[1]` + `r foam_mod$coefficients[2]` = `r sum(foam_mod$coefficients[1:2])`). Similarly, the third group (IES) is `r foam_mod$coefficients[3]` more than `r foam_mod$coefficients[1]` (`r foam_mod$coefficients[1]` + `r foam_mod$coefficients[3]` = `r sum(foam_mod$coefficients[c(1,3)])`). Compare these values with the ones you got above using `summarise` - they should be the same. 
 
-This is illustrated in Figure \@ref(fig:diagnostic)A. You can see that the coefficients of the model are the same as the lengths of the arrows that run from 0 (for the first level of method (BM), the Intercept) or *from* this reference value. It is often a good idea to sketch something like this on paper when you are trying to understand your model outputs!
+This is illustrated in Figure \@ref(fig:3-03-ANOVA-7)A. You can see that the coefficients of the model are the same as the lengths of the arrows that run from 0 (for the first level of method (BM), the Intercept) or *from* this reference value. It is often a good idea to sketch something like this on paper when you are trying to understand your model outputs!
 
 <!---
 Source: A. Parenti, L. Guerrini, P. Masella, S. Spinelli, L. Calamai,
@@ -207,10 +207,10 @@ anova(foam_mod2)
 summary(foam_mod2)
 ```
 
-Now the coefficients in the model summary look different, but the model is actually the same. Compare the two graphs in Figure \@ref(fig:differentReferences) - can you see the differences/similarities?
+Now the coefficients in the model summary look different, but the model is actually the same. Compare the two graphs in Figure \@ref(fig:3-03-ANOVA-14) - can you see the differences/similarities?
 
 
-```{r 3-03-ANOVA-14, differentReferences, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.",cache=TRUE}
+```{r 3-03-ANOVA-14, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.",cache=TRUE}
 set.seed(31)
 
 temp <- data.frame(
@@ -263,7 +263,7 @@ A + ggtitle("A - default,\nBM reference") + B + ggtitle("B - releveled,\nHIP ref
 ```
 
 
-So, from the first of the model outputs above you can say that BM is significantly different than HIP (t= 7.248, p < 0.0001), but that BM is not significantly different from IES (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP is significantly different from IES (t=-5.417, p < 0.0001). You could write this into the main text, include the information in a figure caption (i.e. add it to Figure \@ref(fig:coffee)). 
+So, from the first of the model outputs above you can say that BM is significantly different than HIP (t= 7.248, p < 0.0001), but that BM is not significantly different from IES (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP is significantly different from IES (t=-5.417, p < 0.0001). You could write this into the main text, include the information in a figure caption (i.e. add it to the figure). 
 
 e.g. *The foam index varied significantly among groups (ANOVA: F = `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p = `r formatC(x$"Pr(>F)"[1], digits = 3, format = "f")`). The pairwise comparisons in the ANOVA model showed that means of BM and HIP were significantly different (t= 7.248, p < 0.0001), as were those of HIP and IES (t=-5.417, p < 0.0001), but the BM-IES comparison showed no significant difference (t= 1.831, p= 0.0796)*.
 
@@ -297,16 +297,16 @@ The ANOVA calculation involves calculating something called an F-value or F-stat
 
 What does that mean? Let's consider the espresso data set again. 
 
-In Figure \@ref(fig:differentReferences), you can see on the left (A) the black horizontal line which is the overall mean foam index. The vertical lines are the "errors" or departures from the overall mean value, colour coded by treatment (i.e. method). These can be quantified by summing up their square values (squaring ensures that the summed values are all positive). We call this quantity the *Total Sum of Squares (SSTotal)*. If there is a lot of variation, the sum of squares will be large, if there is little variation the sum of squares will be small. 
+In Figure \@ref(fig:3-03-ANOVA-14), you can see on the left (A) the black horizontal line which is the overall mean foam index. The vertical lines are the "errors" or departures from the overall mean value, colour coded by treatment (i.e. method). These can be quantified by summing up their square values (squaring ensures that the summed values are all positive). We call this quantity the *Total Sum of Squares (SSTotal)*. If there is a lot of variation, the sum of squares will be large, if there is little variation the sum of squares will be small. 
 
-On the right hand side (Figure \@ref(fig:differentReferences)B) we see the same data points. However, this time the horizontal lines represent the treatment-specific mean values, and the vertical lines illustrate the errors from these mean values. Again we can sum up these as sum of squares, which we call the *Error Sum of Squares (SSError)*. 
+On the right hand side (Figure \@ref(fig:3-03-ANOVA-14)B) we see the same data points. However, this time the horizontal lines represent the treatment-specific mean values, and the vertical lines illustrate the errors from these mean values. Again we can sum up these as sum of squares, which we call the *Error Sum of Squares (SSError)*. 
 
 The difference between those values is called the *Treatment Sum of Squares (SSTreatment)* and is the key to ANOVA - it represents the importance of the treatment: $$SSTreatment = SSTotal - SSError$$.
 
 If that doesn't make sense yet, picture the case where the treatment-specific means are all very similar, and are therefore very close to the overall mean. Now the difference between the *Total Sum of Squares* and the *Error Sum of Squares* will be small. Sketch out a couple of examples with pen on paper if that helps. You should now see that you can investigate differences among means by looking at variation.
 
 
-```{r 3-03-ANOVA-18, ANOVAbyhand, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
+```{r 3-03-ANOVA-18, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
 overallMean <- espresso %>%
   summarise(overallMean = mean(foamIndx)) %>%
   pull()

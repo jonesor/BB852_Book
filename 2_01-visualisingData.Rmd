@@ -224,11 +224,11 @@ Firstly, various data distributions can yield the same bar chart, and analyzing 
 
 Secondly, summarizing data using the mean and measures of variation can mislead readers into assuming that the data follow a normal distribution without any outliers. These statistics can distort the data, particularly in studies with small sample sizes where outliers are common and there isn't enough data to assess the distribution of the sample. For example, a bar chart with standard error bars can hide the fact that the data might be skewed.
 
-Figure \@ref(fig:barplot1) illustrates this with two plots showing two distributions, G1 and G2: Plot A is a classic bar plot with standard error bars, and plot B is a box plot with jittered points placed on top. There are differences in the distributions of data in G1 and G2 (G2 is skewed, and includes an outlier). This difference between distributions is captured quite well in plot B (even without the addition of the jittered points, look at the "whiskers" of the box plot), but is not captured well with plot B. 
+Figure \@ref(fig:2-01-visualisingData-24) illustrates this with two plots showing two distributions, G1 and G2: Plot A is a classic bar plot with standard error bars, and plot B is a box plot with jittered points placed on top. There are differences in the distributions of data in G1 and G2 (G2 is skewed, and includes an outlier). This difference between distributions is captured quite well in plot B (even without the addition of the jittered points, look at the "whiskers" of the box plot), but is not captured well with plot B. 
 
 Box plots are simply better than bar plots (unless you are trying to hide something!).
 
-```{r 2-01-visualisingData-24, barplot1, echo = FALSE, fig.width = 6, fig.height = 2, fig.align = 'center', fig.cap = "Problems with bar plots."}
+```{r 2-01-visualisingData-24, echo = FALSE, fig.width = 6, fig.height = 2, fig.align = 'center', fig.cap = "Problems with bar plots."}
 library(patchwork)
 set.seed(42)
 n = 50

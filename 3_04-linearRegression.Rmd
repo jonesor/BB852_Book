@@ -1,10 +1,10 @@
 # Linear regression: models with a single continuous explanatory variable
 
-Linear regression models, at their simplest, are a method of estimating the linear (straight line) relationships between two continuous variables. As an example, picture the relationship between two variables height and hand width (Figure \@ref(fig:exampleRegression)). In this figure there is a clear  relationship between the two variables, and the straight line running through the cloud of data points is the fitted linear regression model. 
+Linear regression models, at their simplest, are a method of estimating the linear (straight line) relationships between two continuous variables. As an example, picture the relationship between two variables height and hand width (Figure \@ref(fig:3-04-linearRegression-1)). In this figure there is a clear  relationship between the two variables, and the straight line running through the cloud of data points is the fitted linear regression model. 
 
 The aim of linear regression is to (1) determine if there is a meaningful statistical relationship between the explanatory variable(s) and the response variable, and (2) to quantify those relationships by estimating the characteristics of those relationships. These characteristics include the slope and intercepts of fitted models, and the amount of variation explained by variables in the model.
 
-```{r 3-04-linearRegression-1, exampleRegression, echo=FALSE,fig.width=3,fig.height=3,fig.align='center',fig.cap="A linear regression model fitted through data points.", fig.pos = "ht"}
+```{r 3-04-linearRegression-1, echo=FALSE,fig.width=3,fig.height=3,fig.align='center',fig.cap="A linear regression model fitted through data points.", fig.pos = "ht"}
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
@@ -16,11 +16,11 @@ ggplot(classData, aes(x = HandWidth, y = Height)) +
 
 ## Some theory
 
-To understand linear regression models it is important to know that the equation of a straight line is $y = ax+b$. In this equation, $y$ is the response variable and $x$ is the explanatory variable, and $a$ and $b$ are the slope and intercept of the line with the vertical axis (y-axis). These ($a$ and $b$) are called **coefficients**. These are illustrated  in Figure \@ref(fig:lineEquation).
+To understand linear regression models it is important to know that the equation of a straight line is $y = ax+b$. In this equation, $y$ is the response variable and $x$ is the explanatory variable, and $a$ and $b$ are the slope and intercept of the line with the vertical axis (y-axis). These ($a$ and $b$) are called **coefficients**. These are illustrated  in Figure \@ref(fig:3-04-linearRegression-2).
 
 
 
-```{r 3-04-linearRegression-2, lineEquation, echo=FALSE,fig.width=7,fig.height=3,fig.align='center',fig.cap="The equation of straight lines.", fig.pos = "ht"}
+```{r 3-04-linearRegression-2, echo=FALSE,fig.width=7,fig.height=3,fig.align='center',fig.cap="The equation of straight lines.", fig.pos = "ht"}
 # An example showing regression equation
 a1 <- 2
 b1 <- 1
@@ -86,9 +86,9 @@ A + B
 
 When looking at data points on a graph, unless all of the data points are arranged perfectly along a straight line, there will be some distance between the points and the line. These distances, measured parallel to the vertical axis, are called residuals (you have encountered them before in this course). These residuals represent the variation left after fitting the line (a linear model) through the data. Because we want to fit a model that explains as much variation as possible, it is intuitive that we should wish to minimise this residual variation. 
 
-One way of doing this is by minimising the sum of squares of the residuals (again, you have come across this concept a few times before). In other words, we add up the squares of each of the residuals. We square the values, rather than simply adding up the residuals themselves because we want to ensure that the positive and negative values don't cancel each other out (a square of a negative number is positive). This method is called **least squares** regression and is illustrated in Figure \@ref(fig:leastSquares): Which is the best fitting line?
+One way of doing this is by minimising the sum of squares of the residuals (again, you have come across this concept a few times before). In other words, we add up the squares of each of the residuals. We square the values, rather than simply adding up the residuals themselves because we want to ensure that the positive and negative values don't cancel each other out (a square of a negative number is positive). This method is called **least squares** regression and is illustrated in Figure \@ref(fig:3-04-linearRegression-3): Which is the best fitting line?
 
-```{r 3-04-linearRegression-3, leastSquares, echo=FALSE,fig.width=4.8,fig.height=4,fig.align='center',fig.cap="Residuals and least squares: which is the best fitting line?",fig.pos = "ht"}
+```{r 3-04-linearRegression-3, echo=FALSE,fig.width=4.8,fig.height=4,fig.align='center',fig.cap="Residuals and least squares: which is the best fitting line?",fig.pos = "ht"}
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
@@ -195,9 +195,9 @@ The aim of this section is to give you some intuition on how the hypothesis test
 
 We can address the slope hypothesis by calculating an F-value in a similar way to how we used them in ANOVA. Recall that F-values are ratios of variances. To understand how these work in the context of a linear regression we need to think clearly about the slope hypothesis: The **null hypothesis** is that the slope is **not** significantly different to 0 (that the data can be explained by random variation). The **alternative hypothesis** is that the slope is significantly different from 0. 
 
-The first step in evaluating these hypotheses is to calculate what the **total sum of squares**^[sum of squares is simply a way to estimate variation.] is when the null hypothesis is true (Figure \@ref(fig:slopeHypo)A) - this value is the total variation that the model is trying to explain. 
+The first step in evaluating these hypotheses is to calculate what the **total sum of squares**^[sum of squares is simply a way to estimate variation.] is when the null hypothesis is true (Figure \@ref(fig:3-04-linearRegression-4)A) - this value is the total variation that the model is trying to explain. 
 
-Then we fit our model using least squares and figure out what the **residual sum of squares** is from this model (Figure \@ref(fig:slopeHypo)B). This is the amount of variation left after the model has explained *some* of the total variation - it is sometimes called *residual error*, or simply *error*.
+Then we fit our model using least squares and figure out what the **residual sum of squares** is from this model (Figure \@ref(fig:3-04-linearRegression-4)B). This is the amount of variation left after the model has explained *some* of the total variation - it is sometimes called *residual error*, or simply *error*.
 
 The difference between these two values is the **explained sum of squares**, which measures the amount of variation in $y$ explained by variation in $x$. The rationale for this is that the model is trying to explain total variation. After fitting the model there will always be some unexplained variation ("*residual error*") left. If we can estimate total variation and unexplained variation, then the amount of variation explained can be calculated with a simple subtraction:
 
@@ -212,7 +212,7 @@ $$F = \frac{mESS}{mRSS}$$
 
 If the *explained variance* (mESS) is large compared to the *residual error variance* (mRSS), then F will be large. The size of F tells us how likely or unlikely it is that the null hypothesis is true. When F is large, the probability that the slope is significantly different from 0 is high. To obtain the actual probabilities, the F-value must be compared to a theoretical distribution which depends on the two degrees of freedom (explained and residual d.f.). Once upon a time you would have looked this up in a printed table, but now R makes this very straightforward.
 
-```{r 3-04-linearRegression-4, slopeHypo, echo=FALSE,fig.width=8,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
+```{r 3-04-linearRegression-4, echo=FALSE,fig.width=8,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
@@ -327,10 +327,10 @@ This summary has a lot of information. First we see `Call` which reminds us what
 
 Then we get to the important part of the table - the `Coefficients`. This lists the coefficients of the model and shows first the `Intercept` and then the slope, which is given by the name of the explanatory variable (`HandWidth` here). For each coefficient we get the `Estimate` of its value, and the uncertainty in that estimate (the standard error (`Std. Error)).
 
-These estimates and errors are each followed by a `t value` and a p-value (`Pr(>|t|`)). These values provide a test of whether the slope/intercept is different from zero. In this case they both are. The t-tests are indeed doing t-tests of these estimates, in the same way that a regular t-test works, so that the significance depends on the ratio between signal (the estimate) and the noise (the standard error).  This is illustrated for the coefficient estimates for our model in Figure \@ref(fig:coefPlot).
+These estimates and errors are each followed by a `t value` and a p-value (`Pr(>|t|`)). These values provide a test of whether the slope/intercept is different from zero. In this case they both are. The t-tests are indeed doing t-tests of these estimates, in the same way that a regular t-test works, so that the significance depends on the ratio between signal (the estimate) and the noise (the standard error).  This is illustrated for the coefficient estimates for our model in Figure \@ref(fig:3-04-linearRegression-12).
 
 
-```{r 3-04-linearRegression-12, coefPlot, echo=FALSE,fig.width=6,fig.height=3,fig.align='center',fig.cap="Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.", fig.pos = "ht"}
+```{r 3-04-linearRegression-12, echo=FALSE,fig.width=6,fig.height=3,fig.align='center',fig.cap="Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.", fig.pos = "ht"}
 classData <- read.csv("CourseData/classData.csv") %>%
   filter(Year == 2019)
 
@@ -381,7 +381,7 @@ slopePlot + interceptPlot
 
 The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the $\epsilon$ term in the equations at the start of this chapter). Then we are told what the $R^2$ value is `r formatC( summary(mod_A)$r.squared, digits = 4, format = "f")`. The adjusted $R^2$ is for use in multiple regression models, where there are many explanatory variables and should not be used for this simple regression model. So what does $R^2$ actually mean? 
 
-$R^2$ is the square of the correlation coefficient $r$ and is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the $R^2$ value would be 1. This idea is illustrated in Figure \@ref(fig:rSquared).
+$R^2$ is the square of the correlation coefficient $r$ and is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the $R^2$ value would be 1. This idea is illustrated in Figure \@ref(fig:3-04-linearRegression-13).
 
 We could describe the model like this:
 
@@ -390,7 +390,7 @@ We could describe the model like this:
 ... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand width and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[1,3], digits = 2,format = "f")`, p < 0.01)*
 
 
-```{r 3-04-linearRegression-13, rSquared, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}
+```{r 3-04-linearRegression-13, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}
 set.seed(7645)
 
 df1 <- data.frame(x = runif(30, 1, 10)) %>%

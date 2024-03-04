@@ -68,6 +68,7 @@ Despite these issues, LLMs like ChatGPT can be very useful in R programming. In 
 * Explaining complex code
 * Interpreting output (e.g. what does this model summary mean?)
 * Improving code (finding better ways to do things)
+* Translating code from another language
 * Solving modelling problems (e.g. I have this set-up, how do i model it?)
 
 ### Finding errors.
@@ -112,7 +113,28 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Improving code
 ```
 
+### Translating code (e.g. from Python/Matlab to R)
 
+
+
+*translate the following Python code into R:*
+
+```
+import numpy as np
+from scipy import stats 
+from numpy.random import seed
+from numpy.random import randn
+from numpy.random import normal
+from scipy.stats import ttest_1samp
+
+seed=(1)
+sample =normal(150,10,20)
+print('Sample: ', sample)
+
+t_stat, p_value = ttest_1samp(sample, popmean=155)
+print("T-statistic value: ", t_stat)
+print("P-Value: ", p_value)
+```
 
 
 ### Solving modelling problems

@@ -22,15 +22,15 @@ The mean gives an estimate of location, and the standard error of the mean (whic
 
 The t-test then works by comparing your estimated distribution with some fixed value. Sometimes you are asking "is my mean *different* from the value?", other times you are asking "is my mean less than/greater than the value?". This depends on the hypothesis. The default that R-uses is that it tests whether the mean of your distribution is *different* to the fixed value, but in many cases you should really be framing a **directional** hypothesis.
 
-It is helpful to visualise this, so some examples of the pollution threshold test are shown in the figure below (Figure \@ref(fig:oneSampleVis) ). The curves illustrate the estimated normal distributions that describe our estimate of the mean pollution level from some data (e.g. each curve might represent samples from different locations). We are interested in whether the mean values (the vertical dashed lines) are significantly **greater** than the threshold of 100mg/m^2^ (solid vertical black line) (this gives us a directional hypothesis).
+It is helpful to visualise this, so some examples of the pollution threshold test are shown in the figure below (Figure \@ref(fig:3-02-t-tests-1) ). The curves illustrate the estimated normal distributions that describe our estimate of the mean pollution level from some data (e.g. each curve might represent samples from different locations). We are interested in whether the mean values (the vertical dashed lines) are significantly **greater** than the threshold of 100mg/m^2^ (solid vertical black line) (this gives us a directional hypothesis).
 
 Formally we do this by establishing two hypotheses a **null hypothesis** and an **alternative hypothesis**. In this case, the null hypothesis is that the mean of the sample measurements is **not** significantly different from the threshold value we define. The alternative hypothesis is that the sample mean is significantly **greater** than this threshold value.
 
 The degree of confidence that we can have that the mean pollution values are different from the threshold value depend on (A) the position of the distribution relative to the threshold value and (B) on the spread of the distribution (the standard deviation/error).
 
-Based on Figure \@ref(fig:oneSampleVis), which of these four different samples shows a mean value **significantly** greater than 100? (you should be looking at the amount of the normal distribution curve that is overlapping the threshold value.)
+Based on Figure \@ref(fig:3-02-t-tests-1), which of these four different samples shows a mean value **significantly** greater than 100? (you should be looking at the amount of the normal distribution curve that is overlapping the threshold value.)
 
-```{r 3-02-t-tests-1, oneSampleVis, echo=FALSE,fig.width=6,fig.height=2,fig.align='center',fig.cap ="Visualisation of a t-test."}
+```{r 3-02-t-tests-1, echo=FALSE,fig.width=6,fig.height=2,fig.align='center',fig.cap ="Visualisation of a t-test."}
 d1 <- c(150, 40)
 d2 <- c(200, 40)
 
@@ -103,12 +103,12 @@ Another useful way to think about t-tests is that it is a way of distinguishing 
 
 The larger the signal is compared to the noise, the higher the t-value will be. e.g. a t-value of 2 means that the signal was 2 times the variability in the data. A t-value of zero, or close to zero, means that the signal is "drowned out" by the noise. Therefore, high t-values give you more confidence that the difference is true.
 
-To know if the t-value means that the difference is significant, the t-value is compared to a known theoretical distribution (the t-distribution). The area under the curve of the distribution is 1, but its shape depends on the degrees of freedom (i.e. sample size - 1). The plot below (Figure \@ref(fig:tDist)) shows three t-distributions of different degrees of freedom (d.f.). 
+To know if the t-value means that the difference is significant, the t-value is compared to a known theoretical distribution (the t-distribution). The area under the curve of the distribution is 1, but its shape depends on the degrees of freedom (i.e. sample size - 1). The plot below (Figure \@ref(fig:3-02-t-tests-2)) shows three t-distributions of different degrees of freedom (d.f.). 
 
 What R is doing when it figures out the p-value is calculating the area under the curve *beyond* the positive/negative values of the t-statistic. If t is small, then this value is large (p-value). If t is large then the area (and the p-value) is small. In the olden-days (>15 years ago) you would have looked these values up in printed tables, but now R does that for us.
 
 
-```{r 3-02-t-tests-2, tDist, echo=FALSE,fig.width=3,fig.height=2,fig.align='center',fig.cap="The t-distribution"}
+```{r 3-02-t-tests-2, echo=FALSE,fig.width=3,fig.height=2,fig.align='center',fig.cap="The t-distribution"}
 (ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
   stat_function(fun = dt, args = list(df = 5), aes(colour = "05")) +
   stat_function(fun = dt, args = list(df = 10), aes(colour = "10")) +
@@ -139,9 +139,9 @@ pollution <- data.frame(mgm3 = c(
 ))
 ```
 
-First I plot the data (Figure \@ref(fig:pollution)). One reason for doing this is to check that the data look approximately normally distributed. These data are slightly left-skewed but they are close enough.
+First I plot the data (Figure \@ref(fig:3-02-t-tests-5)). One reason for doing this is to check that the data look approximately normally distributed. These data are slightly left-skewed but they are close enough.
 
-```{r 3-02-t-tests-5, pollution, fig.width=4,fig.height=3,fig.align='center',fig.cap="Histogram of the pollution data."}
+```{r 3-02-t-tests-5, fig.width=4,fig.height=3,fig.align='center',fig.cap="Histogram of the pollution data."}
 ggplot(pollution, aes(x = mgm3)) +
   geom_histogram(bins = 8) +
   geom_vline(xintercept = 100)
@@ -193,9 +193,9 @@ Again, this matches the value from the `t.test` function above.
 
 ## Paired t-test 
 
-It's actually quite hard to find examples of one-sample t-tests in biology. In most cases, the one-sample t-tests are really paired t-tests, which are a special case of the one sample test where rather than using the actual values measured, we use the difference between them instead (Figure \@ref(fig:pairedT)). 
+It's actually quite hard to find examples of one-sample t-tests in biology. In most cases, the one-sample t-tests are really paired t-tests, which are a special case of the one sample test where rather than using the actual values measured, we use the difference between them instead (Figure \@ref(fig:3-02-t-tests-9)). 
 
-```{r 3-02-t-tests-9, pairedT,echo=FALSE,fig.width=3,fig.height=2,fig.align='center',fig.cap="Visualising a paired t-test."}
+```{r 3-02-t-tests-9, echo=FALSE,fig.width=3,fig.height=2,fig.align='center',fig.cap="Visualising a paired t-test."}
 (ggplot(data = data.frame(x = c(-10, 90)), aes(x)) +
   stat_function(fun = dnorm, n = 101, args = list(mean = 40, sd = 20)) +
   ylab("Probability density") +
@@ -224,9 +224,9 @@ toolUse <- read.csv("CourseData/toolUse.csv")
 toolUse
 ```
 
-We should now plot our data (Figure \@ref(fig:toolData)). A nice way of doing this for paired data is to plot points with lines joining the pairs. This way, the slope of the lines is a striking visual indication of the effect.
+We should now plot our data (Figure \@ref(fig:3-02-t-tests-11)). A nice way of doing this for paired data is to plot points with lines joining the pairs. This way, the slope of the lines is a striking visual indication of the effect.
 
-```{r 3-02-t-tests-11, toolData,fig.width=4.5,fig.height=3, fig.align='center',fig.cap="An interaction plot for the tool use data"}
+```{r 3-02-t-tests-11, fig.width=4.5,fig.height=3, fig.align='center',fig.cap="An interaction plot for the tool use data"}
 ggplot(toolUse, aes(x = tool, y = amount, group = subjectID)) +
   geom_line() +
   geom_point() +
@@ -292,13 +292,13 @@ t.test(x = difference, mu = 0)
 
 The two sample t-test is used for comparing the means of two samples [no shit!? :)]
 
-You can visualise this by picturing your two distributions (Figure \@ref(fig:twosample)) and thinking about their overlap. If they overlap a lot the difference between means will not be significant. If they don't overlap very much then the difference between means *will* be significant. 
+You can visualise this by picturing your two distributions (Figure \@ref(fig:3-02-t-tests-17)) and thinking about their overlap. If they overlap a lot the difference between means will not be significant. If they don't overlap very much then the difference between means *will* be significant. 
 
 The underlying mathematical machinery for the two-sample t-test is similar to the one-sample and paired t-tests. 
 Again, the important value is the t-statistic, which can be thought of as a measure of signal:noise ratio (*see above*). It is harder to detect a signal (the true difference between means) if there is a lot of noise (the variability, or spread of the distributions), or if the signal is small (the difference between means is small).
 
 
-```{r 3-02-t-tests-17, twosample, echo=FALSE, fig.width=6,fig.height=2,fig.align='center',fig.cap="A two-sample t-test.", fig.pos="ht"}
+```{r 3-02-t-tests-17,  echo=FALSE, fig.width=6,fig.height=2,fig.align='center',fig.cap="A two-sample t-test.", fig.pos="ht"}
 d1 <- c(40, 10)
 d2 <- c(60, 10)
 
@@ -368,9 +368,9 @@ x <- read.csv("CourseData/classData.csv") %>%
   filter(Gender %in% c("Male", "Female"))
 ```
 
-Then look at the data. Here I do this using a box plot with jittered points (a nice way of plotting data with small sample sizes) (Figure \@ref(fig:reactionData)). From  Figure \@ref(fig:reactionData) it looks like males have a faster reaction time than females, but there is a lot of variation. We need to apply the t-test in a similar way to above.
+Then look at the data. Here I do this using a box plot with jittered points (a nice way of plotting data with small sample sizes) (Figure \@ref(fig:3-02-t-tests-19)). From this figure, it looks like males have a faster reaction time than females, but there is a lot of variation. We need to apply the t-test in a similar way to above.
 
-```{r 3-02-t-tests-19, reactionData, fig.width=4,fig.height=3,fig.align='center',fig.cap="Reaction time of both sexes", fig.pos="ht", echo = -1,cache=TRUE}
+```{r 3-02-t-tests-19, fig.width=4,fig.height=3,fig.align='center',fig.cap="Reaction time of both sexes", fig.pos="ht", echo = -1,cache=TRUE}
 set.seed(42)
 ggplot(x, aes(x = Gender, y = Reaction)) +
   geom_boxplot() +
@@ -453,7 +453,7 @@ anorexiaCBT_long <- anorexiaCBT %>%
     values_to = "weight"
   )
 ```
-1) Plot the data (e.g. with an interaction plot like Figure \@ref(fig:toolData))
+1) Plot the data (e.g. with an interaction plot).
 
 2) Formulate a null and alternative hypothesis.
 
