@@ -562,15 +562,6 @@ The method here depends on whether you use the "long" data or not:
 t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
 ```
 
-or
-
-```{r 6-1-00-AllSolutions-47}
-anorexiaCBT_long <- anorexiaCBT_long %>%
-  arrange(Subject, time)
-
-t.test(weight ~ time, data = anorexiaCBT_long, paired = TRUE)
-```
-
 
 4) Write a couple of sentences to report your result.
 

@@ -242,20 +242,14 @@ toolUse %>%
   summarise(meanAmount = mean(amount), sdAmount = sd(amount))
 ```
 
-Now lets do a paired t-test to compare the means using the two tools. There are several ways to do a paired t-test. The first is to use a model formula in the command. The formula takes the form `measurements ~ group`. You must also specify the name of the `data.frame` and that the data are paired (`paired = TRUE`). 
+Now lets do a paired t-test to compare the means using the two tools. The best way to do this is to provide the two samples separately in the `t.test` command. To do this you will need to create two vectors containing the data from the two groups like this, using the `dplyr` command `pull` to extract the variable along with `filter` to subset the data. 
 
-**IMPORTANT:** it is very important that the pairs are grouped together in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use `arrange` to sort the data by first the pairing variable (in this case, `subjectID`), and then the explanatory variable (the variable that defines the group - in this case, `tool`.
+**IMPORTANT:** it is very important that the pairs are arranged in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use `arrange` to sort the data by first the pairing variable (in this case, `subjectID`), and then the explanatory variable (the variable that defines the group - in this case, `tool`.
 
-```{r 3-02-t-tests-13}
+```{r 3-02-t-tests-14}
 toolUse <- toolUse %>%
   arrange(subjectID, tool)
 
-t.test(amount ~ tool, data = toolUse, paired = TRUE)
-```
-
-An alternative way is to give the two samples separately in the `t.test` command. To do this you will need to create two vectors containing the data from the two groups like this, using the `dplyr` command `pull` to extract the variable along with `filter` to subset the data:
-
-```{r 3-02-t-tests-14}
 A <- toolUse %>%
   filter(tool == "machete") %>%
   pull(amount)
@@ -264,7 +258,7 @@ B <- toolUse %>%
   filter(tool == "bow") %>%
   pull(amount)
 
-t.test(A, B, data = toolUse, paired = TRUE)
+t.test(A, B, paired = TRUE)
 ```
 
 You would report these results something like this: *"Women harvested cassava more efficiently with a machete (168.2 kg/hr) than with a wooden tool (82.8kg/hr). The difference of 85.4 kg/hr (95% CI 72.2-98.6 kg) was statistically significant (paired t-test: t = 17.98, df = 4, p-value = 5.625e-05)."*

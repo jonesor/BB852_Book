@@ -1,0 +1,92 @@
+# An example of a past Written Assignment (2020) 
+
+**This is a previous year's exam!**
+
+I am leaving this here so you can see what the Written Assignment part of the exam will look like.
+
+
+```{block 4-02-Past-Exam-2020-1, type="do-something"}
+
+This assignment includes four questions that test different aspects of your learning during this course: data wrangling, data visualisation and statistics. Each question is broken down into a number sub-questions. 
+
+Your work should be handed in as a single PDF. 
+The number of each question should be clearly indicated, and the answer to each question should start on a new page.
+
+For each question you must provide the R code you used to answer the question. The code should include comments to explain what you are doing. The code should be provided as text using a fixed-width font such as `Courier`. The rest of your answers should be in another font (e.g. Times New Roman, Cambria). Please use *text* rather than a screenshot of your code.
+
+
+* Plots and tables should have appropriate captions. 
+* Plots should be produced using `ggplot`.
+* Remember that you can make "panels" of plots (e.g. Fig 1A, B)
+* Axis labels are important. Sometimes you may want to edit them to be different from a data column name.
+* Reporting of any statistics should be appropriate to the type of analysis you have done. There are examples in the course materials.
+* Reporting of methods and results should be written in the style of a scientific paper (again, there are examples in the course materials).
+
+
+```
+
+```{r 4-02-Past-Exam-2020-2,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(ggfortify)
+
+options(dplyr.summarise.inform = FALSE)
+```
+
+*****
+
+**1) Amazonian fires (10 points)**
+
+
+The dataset `amazon.csv` is a record of fire occurrence in the Amazon rainforest. The data set has columns for year, the state where the fire occurred, the month, and the number of fires reported. The month is recorded in Portuguese, so you will probably want to either create a "look up table" and use `left_join` to convert the month to a number, or use the `dplyr` function `recode`. There are many states and it might be useful to group them. For example the legal Amazon includes the states of Acre, Amapá, Pará, Amazonas, Rondonia, Roraima, Mato Grosso, Tocantins, and Maranhão.
+
+a) Produce a graph showing the the total number of fires per year through time as points joined by lines.
+
+b) Produce a table showing the minimum, maximum, mean and median number of fires per month in the legally-defined Amazon.
+
+c) Produce a graph using box plots to show the distribution of the number of fires per month in the Amazon (i.e. month on x-axis, number of fires on y-axis).
+
+*****
+
+**2) Coral bleaching (10 points)**
+
+Coral bleaching is when coral polyps expel the endosymbiotic algae that live within their tissues. Although the coral can survive bleaching events, their algae provide most of their energy, so the coral can eventually starve and die. It is thought that deeper corals (from the mesophotic zone) might be protected from bleaching events because the depth offers more stable conditions with fewer stressors. This is known as the "deep reef refugia hypothesis".
+
+To test this idea, a transplant experiment was carried out on the coral *Agaricia lamarcki* at the island of Utila, Honduras. In the study, intact samples of the coral were moved from deep (mesophotic) reefs to the shallow reef and *vice versa*. They were left there for 8 months and then their colouration was measured to assess bleaching: lower colour intensity means more bleaching. The data are provided in `coral.csv`.
+
+a) plot the data (e.g. with a box plot)
+
+b) carry out a randomisation test to determine if there is a significant difference in the colour intensity in the two habitats. Write (i) a brief method description and (ii) a summary of the results. 
+
+******
+
+
+**3) Power in a field experiment (10 points)**
+
+Scientists have developed a new eco-friendly fertiliser made from seaweed extract. You are planning a outdoor field experiment to test how effective it is at increasing crop yield in oilseed rape (*Brassica napus*). A standard industrial chemical fertiliser can increase yield by 30%, and you would like to know if the new seaweed fertiliser has a similar effect. You will grow the plant in a number of 4m x 4m field plots with two treatments: (i) control, with no additional fertiliser (ii) addition of seaweed fertiliser. 
+
+You have some preliminary data from an older study (`oilseed.csv`) which shows the normal crop yield (in $kg/ha$). Use this data to do your power analysis
+
+
+a) Summarise the older study data to obtain mean and standard deviation.
+
+b) Conduct a power analysis based on the pilot study data to estimate the number of samples required to carry out your experiment with 80% power. Describe the results of this power analysis.
+
+c) Briefly describe a simple proposed experiment design to test the new seaweed fertiliser.
+
+***********
+
+**4) Biodiversity (20 points)**
+
+There is a well-known relationship between habitat area and biodiversity - the "species-area relationship". In a nutshell, the number of species tends to increase as the area available increases. This relationship is clearly seen, for example, if we look at island biodiversity: larger islands support more species then small ones. One potential mechanism for this observed pattern is that larger islands tend to have more variety of different habitats, and therefore more niches available for species to occupy (more niches = more species).
+
+The dataset `roundabouts.csv` shows the results of a study carried out in an urban environment to investigate these ideas.  During the study, the number of beetle species (`nSpecies`) living on roundabouts and other "islands" of vegetation of different sizes (`area` in $m^2$) in a sea of concrete and tarmac was counted. Some of these islands had "complex" vegetation (e.g. trees, bushes, shrubs, ponds and rocks) while others were "simple" (only grass), indicated by the variable `habitatType`,   
+
+Use an appropriate statistical model to explore the relationship between area and species richness. Does this relationship differ depending on habitat complexity?
+
+
+a) Plot the data to show the relationship between the the number of species and the area of the "island". Colour code the points by whether the habitat type.
+
+b) Fit a suitable statistical model to estimate the statistical relationship between area, habitat type, and species richness. Describe the method and then summarise the results produced by the model as if you were writing a report/thesis.
+
+c) Produce a plot that shows (in addition to the raw data points) the fitted values produced by your model and the uncertainty in those estimates. 
+
