@@ -7,47 +7,54 @@ This chapter covers two broad topics: the concept of statistical distributions a
 A statistical distribution is a description of the relative number of times (the *frequency*) possible outcomes will occur if repeated samples were to be taken. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, statistical analyses often assume that **residuals** are normally distributed. The normal distribution is symmetrical (centred on the mean) and 68% of observations fall within 1 standard deviation (s.d.), and 95% of observations fall within 2 s.d..
 
 ```{r 2-02-distributionsSummaryStats-1, echo = FALSE, fig.height=3, fig.width = 4,fig.align='center'}
-normData <- data.frame(x = seq(-3, 3, 0.1)) %>%
-  mutate(dens = dnorm(x, mean = 0, sd = 1)) %>%
-  mutate(sd1 = ifelse(x <= 1 & x >= -1, TRUE, FALSE)) %>%
-  mutate(sd2 = ifelse(x <= 2 & x >= -2, TRUE, FALSE))
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
 
+# Create the data frame with normal distribution density and highlight regions for 1 and 2 SDs
+normData <- data.frame(x = seq(-3, 3, 0.1)) %>%
+  mutate(
+    dens = dnorm(x, mean = 0, sd = 1),
+    sd1 = between(x, -1, 1),
+    sd2 = between(x, -2, 2)
+  )
+
+# Create the plot
 ggplot(normData, aes(x = x, y = dens)) +
-  geom_line() +
-  geom_ribbon(
-    data = normData %>% filter(sd2 == TRUE),
-    aes(x = x, ymax = dens, ymin = 0), fill = "#00517f"
+  geom_line() +  # Line for the normal distribution
+  geom_ribbon(  # Area for 2 SD region
+    data = filter(normData, sd2),
+    aes(ymax = dens, ymin = 0), fill = "#00517f"
   ) +
-  geom_ribbon(
-    data = normData %>% filter(sd1 == TRUE),
-    aes(x = x, ymax = dens, ymin = 0), fill = "#0072B2"
+  geom_ribbon(  # Area for 1 SD region
+    data = filter(normData, sd1),
+    aes(ymax = dens, ymin = 0), fill = "#0072B2"
   ) +
-  geom_line() +
-  geom_segment(
-    aes(
-      x = -1, xend = 1,
-      y = .22, yend = .22
-    ),
+  # Use annotate for the 1 SD segment and label
+  annotate(
+    "segment", x = -1, xend = 1, y = 0.22, yend = 0.22,
     colour = "#FFFFFF", size = 1.5
   ) +
-  geom_label(aes(label = "1 SD: 68%", x = 0, y = .22),
+  annotate(
+    "label", label = "1 SD: 68%", x = 0, y = 0.22,
     colour = "gray10", fill = "#FFFFFF"
   ) +
-  geom_segment(
-    aes(
-      x = -2, xend = 2,
-      y = 0.05, yend = 0.05
-    ),
+  # Use annotate for the 2 SD segment and label
+  annotate(
+    "segment", x = -2, xend = 2, y = 0.05, yend = 0.05,
     colour = "#FFFFFF", size = 1.5
   ) +
-  geom_label(aes(label = "2 SD: 95%", x = 0, y = 0.05),
+  annotate(
+    "label", label = "2 SD: 95%", x = 0, y = 0.05,
     colour = "gray10", fill = "#FFFFFF"
   ) +
+  # Axis labels and title
   xlab("Standard deviation (SD)") +
   ylab("Density") +
-  scale_x_continuous(breaks = seq(from = -4, to = 4, by = 1)) +
-  theme_minimal() +
-  ggtitle("The normal distribution")
+  scale_x_continuous(breaks = seq(-4, 4, 1)) +
+  ggtitle("The Normal Distribution") +
+  theme_minimal()  # Use a clean theme
+
 ```
 
 
