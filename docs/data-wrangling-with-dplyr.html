@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-09-12" />
+<meta name="date" content="2024-09-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -519,29 +519,15 @@ See the earlier material for how to do this, or ask for help.</p>
 ##   &lt;chr&gt;        &lt;int&gt;
 ## 1 BT              14
 ## 2 GT              14</code></pre>
-<p>We can see how the data are grouped by asking for a summary:</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-wrangling-with-dplyr.html#cb146-1" tabindex="-1"></a><span class="fu">summary</span>(sduBirds)</span></code></pre></div>
-<pre><code>##    species               Year           Day          boxNumber     
-##  Length:5604        Min.   :2013   Min.   : 60.0   Min.   :  1.00  
-##  Class :character   1st Qu.:2014   1st Qu.:116.0   1st Qu.: 29.75  
-##  Mode  :character   Median :2014   Median :133.0   Median : 57.00  
-##                     Mean   :2015   Mean   :133.2   Mean   : 55.83  
-##                     3rd Qu.:2017   3rd Qu.:148.0   3rd Qu.: 85.00  
-##                     Max.   :2019   Max.   :212.0   Max.   :101.00  
-##                                                                    
-##      nEggs       
-##  Min.   : 0.000  
-##  1st Qu.: 0.000  
-##  Median : 0.000  
-##  Mean   : 2.326  
-##  3rd Qu.: 4.000  
-##  Max.   :14.000  
-##  NA&#39;s   :613</code></pre>
+<p>We can see how the data are grouped by using the <code>groups</code> function:</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="data-wrangling-with-dplyr.html#cb146-1" tabindex="-1"></a><span class="fu">groups</span>(sduBirds)</span></code></pre></div>
+<pre><code>## [[1]]
+## species</code></pre>
 <p>We can ungroup the data again like this:</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="data-wrangling-with-dplyr.html#cb148-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">ungroup</span>(sduBirds)</span></code></pre></div>
 <p>So both species lay the same maximum number of eggs, but maybe this is just caused by outliers for one of the species. We’ll need to dig deeper.</p>
 <p>How can we calculate the average? We cannot simply ask for the <code>mean</code> because the data run through time following the development in each nest. We need to calculate the maximum <code>nEggs</code> for each nest, and then calculate the average of those. We can do this in two steps.</p>
-<p>We first calculate the clutch size as the maximum (<code>max</code>) number of eggs in each box for each species in each year:</p>
+<p>We calculate the clutch size as the maximum (<code>max</code>) number of eggs in each box, for each species, in each year. A warning message appears because R attempts to calculate the maximum number of eggs for all combinations of species, year, and box number, but some of these combinations contain no data (i.e., all <code>NA</code> values), making it impossible to compute a maximum. This warning can be safely ignored in this case.</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="data-wrangling-with-dplyr.html#cb149-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">group_by</span>(sduBirds, species, Year, boxNumber)</span>
 <span id="cb149-2"><a href="data-wrangling-with-dplyr.html#cb149-2" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">summarise</span>(sduBirds, <span class="at">clutchSize =</span> <span class="fu">max</span>(nEggs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p>Let’s first look at all the clutch size data:</p>

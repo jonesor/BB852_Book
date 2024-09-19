@@ -88,10 +88,10 @@ sduBirds <- group_by(sduBirds, species)
 summarise(sduBirds, clutchSize = max(nEggs, na.rm = TRUE))
 ```
 
-We can see how the data are grouped by asking for a summary:
+We can see how the data are grouped by using the `groups` function:
 
 ```{r 1-01-dataWrangling-8}
-summary(sduBirds)
+groups(sduBirds)
 ```
 
 We can ungroup the data again like this:
@@ -104,12 +104,14 @@ So both species lay the same maximum number of eggs, but maybe this is just caus
 
 How can we calculate the average? We cannot simply ask for the `mean` because the data run through time following the development in each nest. We need to calculate the maximum `nEggs` for each nest, and then calculate the average of those. We can do this in two steps. 
 
-We first calculate the clutch size as the maximum (`max`) number of eggs in each box for each species in each year:
+We calculate the clutch size as the maximum (`max`) number of eggs in each box, for each species, in each year. A warning message appears because R attempts to calculate the maximum number of eggs for all combinations of species, year, and box number, but some of these combinations contain no data (i.e., all `NA` values), making it impossible to compute a maximum. This warning can be safely ignored in this case.
 
 ```{r 1-01-dataWrangling-10}
 sduBirds <- group_by(sduBirds, species, Year, boxNumber)
 sduBirds <- summarise(sduBirds, clutchSize = max(nEggs, na.rm = TRUE))
 ```
+
+
 
 Let's first look at all the clutch size data:
 
