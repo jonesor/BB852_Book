@@ -527,14 +527,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb259-9"><a href="pimping-your-plots.html#cb259-9" tabindex="-1"></a>  )</span>
 <span id="cb259-10"><a href="pimping-your-plots.html#cb259-10" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-9-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>If you don’t like the scientific notation (e.g. 1e+03 instead of 1000), you can tell R to use natural numbers as follows, by using the <code>label_number</code> function from the <code>scales</code> package.</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="pimping-your-plots.html#cb260-1" tabindex="-1"></a><span class="co">#First install the scales package, if necessary</span></span>
+<span id="cb260-2"><a href="pimping-your-plots.html#cb260-2" tabindex="-1"></a><span class="co">#install.packages(&quot;scales&quot;)</span></span>
+<span id="cb260-3"><a href="pimping-your-plots.html#cb260-3" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb260-4"><a href="pimping-your-plots.html#cb260-4" tabindex="-1"></a></span>
+<span id="cb260-5"><a href="pimping-your-plots.html#cb260-5" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
+<span id="cb260-6"><a href="pimping-your-plots.html#cb260-6" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb260-7"><a href="pimping-your-plots.html#cb260-7" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>, </span>
+<span id="cb260-8"><a href="pimping-your-plots.html#cb260-8" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>),</span>
+<span id="cb260-9"><a href="pimping-your-plots.html#cb260-9" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)</span>
+<span id="cb260-10"><a href="pimping-your-plots.html#cb260-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb260-11"><a href="pimping-your-plots.html#cb260-11" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb260-12"><a href="pimping-your-plots.html#cb260-12" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb260-13"><a href="pimping-your-plots.html#cb260-13" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>),</span>
+<span id="cb260-14"><a href="pimping-your-plots.html#cb260-14" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)</span>
+<span id="cb260-15"><a href="pimping-your-plots.html#cb260-15" tabindex="-1"></a>  )</span>
+<span id="cb260-16"><a href="pimping-your-plots.html#cb260-16" tabindex="-1"></a></span>
+<span id="cb260-17"><a href="pimping-your-plots.html#cb260-17" tabindex="-1"></a>p2</span></code></pre></div>
+<p><img src="BB852_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 <div id="axis-labels" class="section level2 hasAnchor" number="11.5">
 <h2><span class="header-section-number">11.5</span> Axis labels<a href="pimping-your-plots.html#axis-labels" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now, let’s think about the axis labels. The labels in the plots so far have no units indicated, and might not be easy to interpret for the reader. Let’s add units, and also spell out more fully what “BMR” and “Mass” means (the axes is basal metabolic rate in Watts and adult body mass in kg).</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="pimping-your-plots.html#cb260-1" tabindex="-1"></a>(p3 <span class="ot">&lt;-</span> p2 <span class="sc">+</span></span>
-<span id="cb260-2"><a href="pimping-your-plots.html#cb260-2" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Adult body mass (kg)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb260-3"><a href="pimping-your-plots.html#cb260-3" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Basal metabolic rate (W)&quot;</span>)</span>
-<span id="cb260-4"><a href="pimping-your-plots.html#cb260-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="pimping-your-plots.html#cb261-1" tabindex="-1"></a>(p3 <span class="ot">&lt;-</span> p2 <span class="sc">+</span></span>
+<span id="cb261-2"><a href="pimping-your-plots.html#cb261-2" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Adult body mass (kg)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb261-3"><a href="pimping-your-plots.html#cb261-3" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Basal metabolic rate (W)&quot;</span>)</span>
+<span id="cb261-4"><a href="pimping-your-plots.html#cb261-4" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-10-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="colours" class="section level2 hasAnchor" number="11.6">
@@ -542,22 +561,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>What about those colours? The <code>ggplot</code> package uses some default colours that are OK, but sometimes you will want to make a change.</p>
 <p>You can “manually” adjust colours using the <code>scale_colour_manual</code> function. You can either name individual colours (e.g. “red”,“green”,“orange”,“black”)<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>, or you can find their so-called “hex-codes” from a site like <a href="http://colorbrewer2.org/" class="uri">http://colorbrewer2.org/</a> or <a href="https://htmlcolorcodes.com/color-picker/" class="uri">https://htmlcolorcodes.com/color-picker/</a>. You can add a two digit number after the hex code to set the “opaqueness” of the colour. For example “#FF000075” is red, with 75% opacity.</p>
 <p>With colour names…</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="pimping-your-plots.html#cb261-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
-<span id="cb261-2"><a href="pimping-your-plots.html#cb261-2" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb261-3"><a href="pimping-your-plots.html#cb261-3" tabindex="-1"></a>    <span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>,</span>
-<span id="cb261-4"><a href="pimping-your-plots.html#cb261-4" tabindex="-1"></a>    <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;black&quot;</span></span>
-<span id="cb261-5"><a href="pimping-your-plots.html#cb261-5" tabindex="-1"></a>  ))</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-03-pimpYourPlots-11-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>And with some hex codes…</p>
 <div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="pimping-your-plots.html#cb262-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb262-2"><a href="pimping-your-plots.html#cb262-2" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb262-3"><a href="pimping-your-plots.html#cb262-3" tabindex="-1"></a>    <span class="st">&quot;#33FF6475&quot;</span>, <span class="st">&quot;#3368FF75&quot;</span>, <span class="st">&quot;#FF33CE75&quot;</span>,</span>
-<span id="cb262-4"><a href="pimping-your-plots.html#cb262-4" tabindex="-1"></a>    <span class="st">&quot;#FFCA3375&quot;</span></span>
+<span id="cb262-3"><a href="pimping-your-plots.html#cb262-3" tabindex="-1"></a>    <span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb262-4"><a href="pimping-your-plots.html#cb262-4" tabindex="-1"></a>    <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;black&quot;</span></span>
 <span id="cb262-5"><a href="pimping-your-plots.html#cb262-5" tabindex="-1"></a>  ))</span></code></pre></div>
+<p><img src="BB852_files/figure-html/2-03-pimpYourPlots-11-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>And with some hex codes…</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="pimping-your-plots.html#cb263-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
+<span id="cb263-2"><a href="pimping-your-plots.html#cb263-2" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb263-3"><a href="pimping-your-plots.html#cb263-3" tabindex="-1"></a>    <span class="st">&quot;#33FF6475&quot;</span>, <span class="st">&quot;#3368FF75&quot;</span>, <span class="st">&quot;#FF33CE75&quot;</span>,</span>
+<span id="cb263-4"><a href="pimping-your-plots.html#cb263-4" tabindex="-1"></a>    <span class="st">&quot;#FFCA3375&quot;</span></span>
+<span id="cb263-5"><a href="pimping-your-plots.html#cb263-5" tabindex="-1"></a>  ))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-12-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Another alternative is to use some of <code>ggplot</code>’s built in “palettes” of colour combinations. For example, there are several palettes called “<code>viridis</code>”.</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="pimping-your-plots.html#cb263-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
-<span id="cb263-2"><a href="pimping-your-plots.html#cb263-2" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;D&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="pimping-your-plots.html#cb264-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
+<span id="cb264-2"><a href="pimping-your-plots.html#cb264-2" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;D&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-13-1.png" width="480" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
@@ -567,100 +586,100 @@ argument for transparency <code>alpha = 0.5</code>.
 </p>
 </div>
 <p>Here’s a couple more palettes. There’s one for shades of grey…</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="pimping-your-plots.html#cb264-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
-<span id="cb264-2"><a href="pimping-your-plots.html#cb264-2" tabindex="-1"></a>  <span class="fu">scale_colour_grey</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="pimping-your-plots.html#cb265-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
+<span id="cb265-2"><a href="pimping-your-plots.html#cb265-2" tabindex="-1"></a>  <span class="fu">scale_colour_grey</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-15-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>There’s another one for various colour schemes, called “colour brewer”. Try using “RdGy”, “RdYlBu” and “Spectral” see <code>?scale_colour_brewer</code> for more options.</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="pimping-your-plots.html#cb265-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
-<span id="cb265-2"><a href="pimping-your-plots.html#cb265-2" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;BrBG&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="pimping-your-plots.html#cb266-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
+<span id="cb266-2"><a href="pimping-your-plots.html#cb266-2" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;BrBG&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-16-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="themes" class="section level2 hasAnchor" number="11.7">
 <h2><span class="header-section-number">11.7</span> Themes<a href="pimping-your-plots.html#themes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Finally, <code>ggplot</code> includes the option to set a <strong>theme</strong> for the plots. “Themes”” make adjustments to the “look” of the plot. It is possible to write your own themes, but I recommend to use some ready-made ones. You can implement them by adding them as you would any other addition to the <code>ggplot</code> command (e.g. <code>+ theme_light()</code>.</p>
 <p>There are several themes included with <code>ggplot</code>. Try my favourite, <code>theme_minimal()</code>. Then try <code>theme_classic()</code> and <code>theme_dark()</code>.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="pimping-your-plots.html#cb266-1" tabindex="-1"></a>(p4 <span class="ot">&lt;-</span> p3 <span class="sc">+</span></span>
-<span id="cb266-2"><a href="pimping-your-plots.html#cb266-2" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb266-3"><a href="pimping-your-plots.html#cb266-3" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="pimping-your-plots.html#cb267-1" tabindex="-1"></a>(p4 <span class="ot">&lt;-</span> p3 <span class="sc">+</span></span>
+<span id="cb267-2"><a href="pimping-your-plots.html#cb267-2" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb267-3"><a href="pimping-your-plots.html#cb267-3" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-17-1.png" width="480" style="display: block; margin: auto;" />
 For more theme fun, you can install packages that include more themes. The best one is called <code>ggthemes</code> (remember that you only need to install the package once). Try <code>theme_economist()</code>, <code>theme_tufte()</code> and (ugh!) <code>theme_excel()</code>. You can see what other themes there in this package at <a href="https://jrnold.github.io/ggthemes/reference/index.html" class="uri">https://jrnold.github.io/ggthemes/reference/index.html</a> (some of them are really ugly in my opinion!).</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="pimping-your-plots.html#cb267-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggthemes&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="pimping-your-plots.html#cb268-1" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb268-2"><a href="pimping-your-plots.html#cb268-2" tabindex="-1"></a>p3 <span class="sc">+</span></span>
-<span id="cb268-3"><a href="pimping-your-plots.html#cb268-3" tabindex="-1"></a>  <span class="fu">theme_economist</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="pimping-your-plots.html#cb268-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggthemes&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="pimping-your-plots.html#cb269-1" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb269-2"><a href="pimping-your-plots.html#cb269-2" tabindex="-1"></a>p3 <span class="sc">+</span></span>
+<span id="cb269-3"><a href="pimping-your-plots.html#cb269-3" tabindex="-1"></a>  <span class="fu">theme_economist</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-19-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>This package also includes some useful colour scales, including some for colour blind people.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="pimping-your-plots.html#cb269-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
-<span id="cb269-2"><a href="pimping-your-plots.html#cb269-2" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="pimping-your-plots.html#cb270-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
+<span id="cb270-2"><a href="pimping-your-plots.html#cb270-2" tabindex="-1"></a>  <span class="fu">scale_color_colorblind</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-20-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="moving-the-legend" class="section level2 hasAnchor" number="11.8">
 <h2><span class="header-section-number">11.8</span> Moving the legend<a href="pimping-your-plots.html#moving-the-legend" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>By default, the legend is placed on the right. You can move it around by adding a <code>theme</code> argument to your plot commands. It can also be placed on the “<code>top</code>”, “<code>bottom</code>”, or “<code>left</code>”. You can also remove the legend altogether by using <code>legend.position = "none"</code>. You might also want to remove the legend title using the theme argument <code>legend.title = element_blank()</code>.</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="pimping-your-plots.html#cb270-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
-<span id="cb270-2"><a href="pimping-your-plots.html#cb270-2" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="pimping-your-plots.html#cb271-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
+<span id="cb271-2"><a href="pimping-your-plots.html#cb271-2" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-21-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="combining-multiple-plots" class="section level2 hasAnchor" number="11.9">
 <h2><span class="header-section-number">11.9</span> Combining multiple plots<a href="pimping-your-plots.html#combining-multiple-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It is often useful to combine two or more plots into a single figure. For example, many journals have strict limits on the number of plots so it is useful to combine plots into “Figure 1A and B” etc.</p>
 <p>There are several R packages that can do this and my favourite is called <code>patchwork</code>.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="pimping-your-plots.html#cb271-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;patchwork&quot;</span>) <span class="co"># only need to do this once</span></span></code></pre></div>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="pimping-your-plots.html#cb272-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="pimping-your-plots.html#cb272-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;patchwork&quot;</span>) <span class="co"># only need to do this once</span></span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="pimping-your-plots.html#cb273-1" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code></pre></div>
 <p>I will illustrate it by first making another plot, this time showing the relationship between body mass and <em>standardised</em> BMR (BMR per kg). Because I am combining the plots into a smaller space I have decided to remove the figure legend (I could put it in the figure caption instead).</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="pimping-your-plots.html#cb273-1" tabindex="-1"></a><span class="co"># PlotA (this is what you have already created above)</span></span>
-<span id="cb273-2"><a href="pimping-your-plots.html#cb273-2" tabindex="-1"></a>plotA <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anage, <span class="fu">aes</span>(<span class="at">x =</span> Mass, <span class="at">y =</span> BMR, <span class="at">colour =</span> Class)) <span class="sc">+</span></span>
-<span id="cb273-3"><a href="pimping-your-plots.html#cb273-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb273-4"><a href="pimping-your-plots.html#cb273-4" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb273-5"><a href="pimping-your-plots.html#cb273-5" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
-<span id="cb273-6"><a href="pimping-your-plots.html#cb273-6" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)</span>
-<span id="cb273-7"><a href="pimping-your-plots.html#cb273-7" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb273-8"><a href="pimping-your-plots.html#cb273-8" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb273-9"><a href="pimping-your-plots.html#cb273-9" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
-<span id="cb273-10"><a href="pimping-your-plots.html#cb273-10" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)</span>
-<span id="cb273-11"><a href="pimping-your-plots.html#cb273-11" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb273-12"><a href="pimping-your-plots.html#cb273-12" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Adult body mass (kg)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb273-13"><a href="pimping-your-plots.html#cb273-13" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Basal metabolic rate (W)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb273-14"><a href="pimping-your-plots.html#cb273-14" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb273-15"><a href="pimping-your-plots.html#cb273-15" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb273-16"><a href="pimping-your-plots.html#cb273-16" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
-<span id="cb273-17"><a href="pimping-your-plots.html#cb273-17" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb273-18"><a href="pimping-your-plots.html#cb273-18" tabindex="-1"></a>  )</span>
-<span id="cb273-19"><a href="pimping-your-plots.html#cb273-19" tabindex="-1"></a></span>
-<span id="cb273-20"><a href="pimping-your-plots.html#cb273-20" tabindex="-1"></a>(plotB <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anage, <span class="fu">aes</span>(</span>
-<span id="cb273-21"><a href="pimping-your-plots.html#cb273-21" tabindex="-1"></a>  <span class="at">x =</span> Mass, <span class="at">y =</span> BMRperKg,</span>
-<span id="cb273-22"><a href="pimping-your-plots.html#cb273-22" tabindex="-1"></a>  <span class="at">colour =</span> Class</span>
-<span id="cb273-23"><a href="pimping-your-plots.html#cb273-23" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb273-24"><a href="pimping-your-plots.html#cb273-24" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb273-25"><a href="pimping-your-plots.html#cb273-25" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
-<span id="cb273-26"><a href="pimping-your-plots.html#cb273-26" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
-<span id="cb273-27"><a href="pimping-your-plots.html#cb273-27" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)</span>
-<span id="cb273-28"><a href="pimping-your-plots.html#cb273-28" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb273-29"><a href="pimping-your-plots.html#cb273-29" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb273-30"><a href="pimping-your-plots.html#cb273-30" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
-<span id="cb273-31"><a href="pimping-your-plots.html#cb273-31" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span>
-<span id="cb273-32"><a href="pimping-your-plots.html#cb273-32" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb273-33"><a href="pimping-your-plots.html#cb273-33" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Adult body mass (kg)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb273-34"><a href="pimping-your-plots.html#cb273-34" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Basal metabolic rate (W/kg)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb273-35"><a href="pimping-your-plots.html#cb273-35" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb273-36"><a href="pimping-your-plots.html#cb273-36" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb273-37"><a href="pimping-your-plots.html#cb273-37" tabindex="-1"></a>) <span class="co"># This one is wrapped in brackets so that R shows it</span></span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="pimping-your-plots.html#cb274-1" tabindex="-1"></a><span class="co"># PlotA (this is what you have already created above)</span></span>
+<span id="cb274-2"><a href="pimping-your-plots.html#cb274-2" tabindex="-1"></a>plotA <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anage, <span class="fu">aes</span>(<span class="at">x =</span> Mass, <span class="at">y =</span> BMR, <span class="at">colour =</span> Class)) <span class="sc">+</span></span>
+<span id="cb274-3"><a href="pimping-your-plots.html#cb274-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb274-4"><a href="pimping-your-plots.html#cb274-4" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb274-5"><a href="pimping-your-plots.html#cb274-5" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb274-6"><a href="pimping-your-plots.html#cb274-6" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)</span>
+<span id="cb274-7"><a href="pimping-your-plots.html#cb274-7" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb274-8"><a href="pimping-your-plots.html#cb274-8" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb274-9"><a href="pimping-your-plots.html#cb274-9" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb274-10"><a href="pimping-your-plots.html#cb274-10" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)</span>
+<span id="cb274-11"><a href="pimping-your-plots.html#cb274-11" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb274-12"><a href="pimping-your-plots.html#cb274-12" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Adult body mass (kg)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb274-13"><a href="pimping-your-plots.html#cb274-13" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Basal metabolic rate (W)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb274-14"><a href="pimping-your-plots.html#cb274-14" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb274-15"><a href="pimping-your-plots.html#cb274-15" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb274-16"><a href="pimping-your-plots.html#cb274-16" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb274-17"><a href="pimping-your-plots.html#cb274-17" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb274-18"><a href="pimping-your-plots.html#cb274-18" tabindex="-1"></a>  )</span>
+<span id="cb274-19"><a href="pimping-your-plots.html#cb274-19" tabindex="-1"></a></span>
+<span id="cb274-20"><a href="pimping-your-plots.html#cb274-20" tabindex="-1"></a>(plotB <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anage, <span class="fu">aes</span>(</span>
+<span id="cb274-21"><a href="pimping-your-plots.html#cb274-21" tabindex="-1"></a>  <span class="at">x =</span> Mass, <span class="at">y =</span> BMRperKg,</span>
+<span id="cb274-22"><a href="pimping-your-plots.html#cb274-22" tabindex="-1"></a>  <span class="at">colour =</span> Class</span>
+<span id="cb274-23"><a href="pimping-your-plots.html#cb274-23" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb274-24"><a href="pimping-your-plots.html#cb274-24" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb274-25"><a href="pimping-your-plots.html#cb274-25" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb274-26"><a href="pimping-your-plots.html#cb274-26" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb274-27"><a href="pimping-your-plots.html#cb274-27" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)</span>
+<span id="cb274-28"><a href="pimping-your-plots.html#cb274-28" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb274-29"><a href="pimping-your-plots.html#cb274-29" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb274-30"><a href="pimping-your-plots.html#cb274-30" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
+<span id="cb274-31"><a href="pimping-your-plots.html#cb274-31" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb274-32"><a href="pimping-your-plots.html#cb274-32" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb274-33"><a href="pimping-your-plots.html#cb274-33" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Adult body mass (kg)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb274-34"><a href="pimping-your-plots.html#cb274-34" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Basal metabolic rate (W/kg)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb274-35"><a href="pimping-your-plots.html#cb274-35" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb274-36"><a href="pimping-your-plots.html#cb274-36" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb274-37"><a href="pimping-your-plots.html#cb274-37" tabindex="-1"></a>) <span class="co"># This one is wrapped in brackets so that R shows it</span></span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-24-1.png" width="672" /></p>
 <p>Now I can combine these using the very simple syntax like this:</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="pimping-your-plots.html#cb274-1" tabindex="-1"></a>plotA <span class="sc">+</span> plotB</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="pimping-your-plots.html#cb275-1" tabindex="-1"></a>plotA <span class="sc">+</span> plotB</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-25-1.png" width="672" /></p>
 <p>I can add titles using the <code>ggtitle</code> command like this.</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="pimping-your-plots.html#cb275-1" tabindex="-1"></a>plotA <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;A&quot;</span>) <span class="sc">+</span> plotB <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;B&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="pimping-your-plots.html#cb276-1" tabindex="-1"></a>plotA <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;A&quot;</span>) <span class="sc">+</span> plotB <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;B&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-26-1.png" width="672" /></p>
 <p>You could place the sub-plots on top of each other like this.</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="pimping-your-plots.html#cb276-1" tabindex="-1"></a>(plotA <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;A&quot;</span>)) <span class="sc">/</span> (plotB <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;B&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="pimping-your-plots.html#cb277-1" tabindex="-1"></a>(plotA <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;A&quot;</span>)) <span class="sc">/</span> (plotB <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">&quot;B&quot;</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-27-1.png" width="384" /></p>
 </div>
 <div id="saving-your-plot" class="section level2 hasAnchor" number="11.10">
 <h2><span class="header-section-number">11.10</span> Saving your plot<a href="pimping-your-plots.html#saving-your-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You should, I think, already know about using the “Export” button in RStudio to save out your plot. This is useful and easy, but you should know that you can also save the plots using a typed command (<code>ggsave</code>) in your script. This command is handy because it allows you to automatically set the size, and file name of your plot.</p>
 <p>The default setting for <code>ggsave</code> is that it will save the last plot that was printed to your computer screen to a file name that you specify. Therefore easiest way to use the command is to simply place the <code>ggsave</code> command immediately after your <code>ggplot</code> command. You should set the width and height of the plot and the units (the default is inches). It usually takes a few attempts and a bit of trial-and-error to choose the dimensions so that the plot looks nice.</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="pimping-your-plots.html#cb277-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;MySavedPlot1.png&quot;</span>, <span class="at">width =</span> <span class="dv">18</span>, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="pimping-your-plots.html#cb278-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;MySavedPlot1.png&quot;</span>, <span class="at">width =</span> <span class="dv">18</span>, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
 <p>The command can save to various file types including <code>png</code>, <code>jpeg</code>, <code>pdf</code> (see the <code>ggplot</code> help file for more). R knows what file file type is chosen by checking the file extension in the file name (e.g. <code>.png</code>). I advise to use <code>png</code>.</p>
 </div>
 <div id="final-word-on-plots" class="section level2 hasAnchor" number="11.11">
