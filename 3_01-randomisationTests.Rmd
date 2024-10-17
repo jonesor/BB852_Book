@@ -239,7 +239,7 @@ Another useful way to plot this data is to use an **interaction plot**. In these
 ```{r 3-01-randomisationTests-18, message=FALSE}
 (p2 <- ggplot(an, aes(x = time, y = weight, group = Subject)) +
   geom_point() +
-  geom_line(size = 1, alpha = 0.5)
+  geom_line(linewidth = 1, alpha = 0.5)
 )
 ```
 
@@ -249,7 +249,7 @@ an2 <- an %>%
   mutate(time = sample(time))
 p2.shuffled <- ggplot(an2, aes(x = time, y = weight, group = Subject)) +
   geom_point() +
-  geom_line(size = 1, alpha = 0.5)
+  geom_line(linewidth = 1, alpha = 0.5)
 ```
 
 

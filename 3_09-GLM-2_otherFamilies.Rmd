@@ -109,8 +109,7 @@ Let's make sure that works by creating a set of predicted data from this equatio
 ```{r 3-09-GLM-2-otherFamilies-9, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 d1 <- data.frame(x = 10:50) %>%
   mutate(y = 1 / (1 + exp(-(5.690 - 0.131 * x))))
-A +
-  geom_line(data = d1, aes(x, y), colour = "red")
+A + geom_line(data = d1, aes(x, y), colour = "red")
 ```
 
 Rather than using the equation, there is an easier way by using the **R**'s `predict` function. This was covered in the previous chapter, but for convenience, here are the steps:

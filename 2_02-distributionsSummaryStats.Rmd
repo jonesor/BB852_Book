@@ -33,7 +33,7 @@ ggplot(normData, aes(x = x, y = dens)) +
   # Use annotate for the 1 SD segment and label
   annotate(
     "segment", x = -1, xend = 1, y = 0.22, yend = 0.22,
-    colour = "#FFFFFF", size = 1.5
+    colour = "#FFFFFF", linewidth = 1.5
   ) +
   annotate(
     "label", label = "1 SD: 68%", x = 0, y = 0.22,
@@ -42,7 +42,7 @@ ggplot(normData, aes(x = x, y = dens)) +
   # Use annotate for the 2 SD segment and label
   annotate(
     "segment", x = -2, xend = 2, y = 0.05, yend = 0.05,
-    colour = "#FFFFFF", size = 1.5
+    colour = "#FFFFFF", linewidth = 1.5
   ) +
   annotate(
     "label", label = "2 SD: 95%", x = 0, y = 0.05,
@@ -111,9 +111,9 @@ Let's use the function `geom_vline` to add some markers to the plot from above t
 
 ```{r 2-02-distributionsSummaryStats-7, message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 (p2 <- p1 +
-  geom_vline(xintercept = sv$meanEst, size = 2) + # mean
-  geom_vline(xintercept = sv$meanEst + sv$sdEst, size = 1) + # high
-  geom_vline(xintercept = sv$meanEst - sv$sdEst, size = 1) # low
+  geom_vline(xintercept = sv$meanEst, linewidth = 2) + # mean
+  geom_vline(xintercept = sv$meanEst + sv$sdEst, linewidth = 1) + # high
+  geom_vline(xintercept = sv$meanEst - sv$sdEst, linewidth = 1) # low
 )
 ```
 
@@ -121,9 +121,9 @@ We can compare these with the true values (the values we set when we generated t
 
 ```{r 2-02-distributionsSummaryStats-8, message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 (p3 <- p2 +
-  geom_vline(xintercept = 5, size = 2, colour = "red") + # mean
-  geom_vline(xintercept = 5 + 2, size = 1, colour = "red") + # high
-  geom_vline(xintercept = 5 - 2, size = 1, colour = "red") # low
+  geom_vline(xintercept = 5, linewidth = 2, colour = "red") + # mean
+  geom_vline(xintercept = 5 + 2, linewidth = 1, colour = "red") + # high
+  geom_vline(xintercept = 5 - 2, linewidth = 1, colour = "red") # low
 )
 ```
 
@@ -236,9 +236,9 @@ Now lets plot the mean and the 2 times the standard deviation on the graph. Reme
 
 ```{r 2-02-distributionsSummaryStats-18, fig.height=3, fig.width = 4,fig.align='center'}
 p1 +
-  geom_vline(xintercept = sv$meanEst, size = 2) +
-  geom_vline(xintercept = sv$meanEst + 2 * sv$sdEst, size = 1) +
-  geom_vline(xintercept = sv$meanEst - 2 * sv$sdEst, size = 1)
+  geom_vline(xintercept = sv$meanEst, linewidth = 2) +
+  geom_vline(xintercept = sv$meanEst + 2 * sv$sdEst, linewidth = 1) +
+  geom_vline(xintercept = sv$meanEst - 2 * sv$sdEst, linewidth = 1)
 ```
 
 This looks like a TERRIBLE fit: The mean is not close to the most common value in the data set and the lower limit of the standard deviation indicates we should expect some negative values - this is impossible for Poisson data. The reason for this is that mean and standard deviation, and therefore standard error, are intended for normally distributed data. When the data come from other distributions we must take another approach.

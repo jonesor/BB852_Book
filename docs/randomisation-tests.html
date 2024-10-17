@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-10-10" />
+<meta name="date" content="2024-10-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -507,8 +507,7 @@ Let’s try it first 10 times to see how it works:</p>
 <span id="cb290-7"><a href="randomisation-tests.html#cb290-7" tabindex="-1"></a>    <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
 <span id="cb290-8"><a href="randomisation-tests.html#cb290-8" tabindex="-1"></a>    <span class="fu">diff</span>()</span>
 <span id="cb290-9"><a href="randomisation-tests.html#cb290-9" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##  [1]  11.500000  -6.500000 -19.166667  -1.833333  -7.833333  21.166667
-##  [7] -11.500000 -21.833333  28.833333  -5.833333</code></pre>
+<pre><code>##  [1]  11.500000  -6.500000 -19.166667  -1.833333  -7.833333  21.166667 -11.500000 -21.833333  28.833333  -5.833333</code></pre>
 <p>You can see that the <code>replicate</code> command simply does the sampling-recalculation of the mean 10 times.</p>
 <p>In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a <code>data.frame</code> called <code>shuffledData</code>. This data frame initially has a variable called <code>rep</code> which consists of the numbers 1-1000. I then use <code>mutate</code> to add the 1000 shuffled differences.</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="randomisation-tests.html#cb292-1" tabindex="-1"></a>shuffledData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rep =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
@@ -620,7 +619,7 @@ messages annoy you!
 <p>Another useful way to plot this data is to use an <strong>interaction plot</strong>. In these plots the matched pairs (grouped by <code>Subject</code>) are joined together with lines. You can plot one like this:</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="randomisation-tests.html#cb302-1" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(an, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> weight, <span class="at">group =</span> Subject)) <span class="sc">+</span></span>
 <span id="cb302-2"><a href="randomisation-tests.html#cb302-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb302-3"><a href="randomisation-tests.html#cb302-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb302-3"><a href="randomisation-tests.html#cb302-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
 <span id="cb302-4"><a href="randomisation-tests.html#cb302-4" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/3-01-randomisationTests-18-1.png" width="672" /></p>
 <p>What we are interested in is whether there has been a change in weight of the subjects after CBT. The null hypothesis is that there is zero change in weight. The alternative hypothesis is that weight has increased.</p>

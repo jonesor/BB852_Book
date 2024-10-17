@@ -722,7 +722,7 @@ summary(chirp_mod)
 
 8. Summarise the model in words.
 
-*There is a statistically significant association between temperature and chirp frequency (F = `r formatC( anova(chirp_mod)$F[1], digits = 4, format = "f")`, d.f. = `r anova(chirp_mod)$Df[1]`,`r anova(chirp_mod)$Df[2]`, p < 0.001) The equation of the fitted model is: Chirp Freq = `r formatC(summary(chirp_mod)$coef[1,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(chirp_mod)$coef[1,2], digits = 2,format = "f")`) $\times$ Temp + `r formatC(summary(chirp_mod)$coef[2,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(chirp_mod)$coef[2,2], digits = 2,format = "f")`). The model explains `r formatC( summary(chirp_mod)$r.squared*100, digits = 0, format = "f")`% of the variation in chirp frequency ($R^2$ = `r formatC( summary(chirp_mod)$r.squared, digits = 3, format = "f")`).*
+*There is a statistically significant association between temperature and chirp frequency (F = `r formatC( anova(chirp_mod)$F[1], digits = 4, format = "f")`, d.f. = `r anova(chirp_mod)$Df[1]`,`r anova(chirp_mod)$Df[2]`, p < 0.001). The equation of the fitted model is: Chirp Freq = `r formatC(summary(chirp_mod)$coef[2,1], digits = 2, format = "f")`($\pm$ `r formatC(summary(chirp_mod)$coef[2,2], digits = 2, format = "f")`) $\times$ Temp + `r formatC(summary(chirp_mod)$coef[1,1], digits = 2, format = "f")`($\pm$ `r formatC(summary(chirp_mod)$coef[1,2], digits = 2, format = "f")`). The model explains `r formatC( summary(chirp_mod)$r.squared*100, digits = 0, format = "f")`% of the variation in chirp frequency ($R^2$ = `r formatC( summary(chirp_mod)$r.squared, digits = 3, format = "f")`).*
 
 9. Add model fit line to the plot.
 

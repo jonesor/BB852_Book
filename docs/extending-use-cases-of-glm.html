@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-10-10" />
+<meta name="date" content="2024-10-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -516,8 +516,7 @@ correctly.
 <p>Let’s make sure that works by creating a set of predicted data from this equation and plotting it onto the graph:</p>
 <div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="extending-use-cases-of-glm.html#cb466-1" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb466-2"><a href="extending-use-cases-of-glm.html#cb466-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>(<span class="fl">5.690</span> <span class="sc">-</span> <span class="fl">0.131</span> <span class="sc">*</span> x))))</span>
-<span id="cb466-3"><a href="extending-use-cases-of-glm.html#cb466-3" tabindex="-1"></a>A <span class="sc">+</span></span>
-<span id="cb466-4"><a href="extending-use-cases-of-glm.html#cb466-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> d1, <span class="fu">aes</span>(x, y), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<span id="cb466-3"><a href="extending-use-cases-of-glm.html#cb466-3" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">data =</span> d1, <span class="fu">aes</span>(x, y), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/3-09-GLM-2-otherFamilies-9-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Rather than using the equation, there is an easier way by using the <strong>R</strong>’s <code>predict</code> function. This was covered in the previous chapter, but for convenience, here are the steps:</p>
 <ol style="list-style-type: decimal">
