@@ -112,7 +112,7 @@ course_data_files <- unlist(str_extract_all(course_data_files,
   unique()
 
 course_data_files <- data.frame(file_name = c(course_data_files, "birds.csv")) %>% 
-  dplyr::filter(!file_name %in% c("write.csv", "read.csv", "course_data_files.csv", "datasets_missing.csv"))
+  dplyr::filter(!file_name %in% c("write.csv", "read.csv", "myData.csv", "course_data_files.csv", "datasets_missing.csv"))
 
 write.csv(x = course_data_files, file = "course_data_files.csv", row.names = FALSE)
 ```
