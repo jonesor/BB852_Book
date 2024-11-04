@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 ANCOVA: Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 ANCOVA: Linear models with categorical and continuous explanatory variables | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-10-18" />
+<meta name="date" content="2024-11-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -192,13 +192,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="paths-and-projects.html"><a href="paths-and-projects.html"><i class="fa fa-check"></i><b>6</b> Paths and projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-structure"><i class="fa fa-check"></i><b>6.1</b> File structure</a></li>
-<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#paths-and-the-command-line"><i class="fa fa-check"></i><b>6.2</b> Paths and the command line</a></li>
-<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.3</b> R and file structure</a>
+<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-paths"><i class="fa fa-check"></i><b>6.1</b> File paths</a></li>
+<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-organisation"><i class="fa fa-check"></i><b>6.2</b> File organisation</a></li>
+<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#two-types-of-paths"><i class="fa fa-check"></i><b>6.3</b> Two types of paths</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory"><i class="fa fa-check"></i><b>6.3.1</b> Setting the working directory</a></li>
+<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#absolute-paths-the-exact-location"><i class="fa fa-check"></i><b>6.3.1</b> 1. Absolute Paths: The Exact Location</a></li>
+<li class="chapter" data-level="6.3.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#relative-paths-paths-that-start-from-the-project-folder"><i class="fa fa-check"></i><b>6.3.2</b> 2. Relative Paths: Paths That Start from the Project Folder</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#projects-in-r"><i class="fa fa-check"></i><b>6.4</b> Projects in R</a></li>
+<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.4</b> R and file structure</a></li>
+<li class="chapter" data-level="6.5" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory-in-r"><i class="fa fa-check"></i><b>6.5</b> Setting the Working Directory in R</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#finding-your-current-working-directory"><i class="fa fa-check"></i><b>6.5.1</b> Finding Your Current Working Directory</a></li>
+<li class="chapter" data-level="6.5.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#changing-the-working-directory"><i class="fa fa-check"></i><b>6.5.2</b> Changing the Working Directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -452,42 +463,42 @@ correctly.
 </p>
 </div>
 <p>We’ll begin by plotting the data (Figure <a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#fig:3-05-ANCOVA-3">17.2</a>).</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb402-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-2" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>)</span>
-<span id="cb402-3"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-3" tabindex="-1"></a></span>
-<span id="cb402-4"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-4" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(</span>
-<span id="cb402-5"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-5" tabindex="-1"></a>  <span class="at">x =</span> HandWidth, <span class="at">y =</span> Height,</span>
-<span id="cb402-6"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-6" tabindex="-1"></a>  <span class="at">colour =</span> Gender</span>
-<span id="cb402-7"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-7" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb402-8"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-8" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb402-9"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb402-9" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb408-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-2" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>)</span>
+<span id="cb408-3"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-3" tabindex="-1"></a></span>
+<span id="cb408-4"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-4" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(</span>
+<span id="cb408-5"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-5" tabindex="-1"></a>  <span class="at">x =</span> HandWidth, <span class="at">y =</span> Height,</span>
+<span id="cb408-6"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-6" tabindex="-1"></a>  <span class="at">colour =</span> Gender</span>
+<span id="cb408-7"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-7" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb408-8"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-8" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb408-9"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-9" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:3-05-ANCOVA-3"></span>
 <img src="BB852_files/figure-html/3-05-ANCOVA-3-1.png" alt="ANCOVA on hand width vs. height data in males and females" width="432" />
 <p class="caption">
 Figure 17.2: ANCOVA on hand width vs. height data in males and females
 </p>
 </div>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb403-1" tabindex="-1"></a><span class="co"># This shows the ANCOVA model</span></span>
-<span id="cb403-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb403-2" tabindex="-1"></a><span class="co"># before we have even fit it!</span></span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb409-1" tabindex="-1"></a><span class="co"># This shows the ANCOVA model</span></span>
+<span id="cb409-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb409-2" tabindex="-1"></a><span class="co"># before we have even fit it!</span></span></code></pre></div>
 <p>This shows the results of the ANCOVA model before we have even fit it! You can see that our two continuous variables, <code>Height</code> (the response variable) and <code>HandWidth</code> (one of the explanatory variables) are associated: There is an overall positive relationship between <code>HandWidth</code> and <code>Height</code> You can also see that <code>Gender</code> (the categorical explanatory variable) is important: males tend to be taller than females for any given hand width. For example, a female with hand width of 9cm is ~172cm tall while a male would be about 180cm tall. This shows us that males have a higher <strong>intercept</strong> than females. There is also a <strong>slight</strong> difference in the slope of the relationship, with males having a slightly steeper slope than females. We already know that the overall relationship between hand width and height is significant (from the linear regression chapter). These new observations leave us with the following additional questions: (1) are the intercepts for males and females significantly different? (2) are the slopes for males and females significantly different (or would a model with a single slope, but different intercepts be better)?</p>
 <p>Now we can fit our model using the <code>lm</code> function. The model formula is <code>Height ~ HandWidth + Gender + HandWidth:Gender</code>. The <code>HandWidth</code> and <code>Gender</code> are the so called <strong>main effects</strong> while <code>HandWidth:Gender</code> represents the interaction between them (i.e. it is used to address the question “<em>does the effect of hand width differ between the sexes?</em>”). R knows that is fitting an ANCOVA type model rather than a two-way ANOVA because it knows the type of variables that it is dealing with. You can see this if you ask R to tell you what the <code>class</code> of the variables are:</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb404-1" tabindex="-1"></a><span class="fu">class</span>(classData<span class="sc">$</span>Gender)</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb410-1" tabindex="-1"></a><span class="fu">class</span>(classData<span class="sc">$</span>Gender)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb406-1" tabindex="-1"></a><span class="fu">class</span>(classData<span class="sc">$</span>HandWidth)</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb412-1" tabindex="-1"></a><span class="fu">class</span>(classData<span class="sc">$</span>HandWidth)</span></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-1" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender <span class="sc">+</span> HandWidth<span class="sc">:</span>Gender,</span>
-<span id="cb408-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-2" tabindex="-1"></a>  <span class="at">data =</span> classData</span>
-<span id="cb408-3"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb408-3" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb414-1" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender <span class="sc">+</span> HandWidth<span class="sc">:</span>Gender,</span>
+<span id="cb414-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb414-2" tabindex="-1"></a>  <span class="at">data =</span> classData</span>
+<span id="cb414-3"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb414-3" tabindex="-1"></a>)</span></code></pre></div>
 <p>The first step should, as before, be to check out the diagnostic plots. We should not read to much into these in this case, because we have a small sample size. Nevertheless, lets keep with good habits:</p>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb409-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb409-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb409-2" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb415-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb415-2"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb415-2" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/3-05-ANCOVA-6-1.png" width="672" /></p>
 <p>These look good. No evidence of non-normality in the residuals, no heteroscedasticity and no weird outliers.</p>
 </div>
 <div id="summarising-with-anova" class="section level2 hasAnchor" number="17.2">
 <h2><span class="header-section-number">17.2</span> Summarising with <code>anova</code><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#summarising-with-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now we can get the <code>anova</code> table of our ANCOVA model (yes, I know that sounds strange).</p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb410-1" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb416-1" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Height
@@ -507,7 +518,7 @@ Figure 17.2: ANCOVA on hand width vs. height data in males and females
 <div id="the-summary-of-coefficients-summary" class="section level2 hasAnchor" number="17.3">
 <h2><span class="header-section-number">17.3</span> The summary of coefficients (<code>summary</code>)<a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#the-summary-of-coefficients-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To put some quantitative numbers on this description of the pattern we need to get the summary from R.</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb412-1" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#cb418-1" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Height ~ HandWidth + Gender + HandWidth:Gender, 

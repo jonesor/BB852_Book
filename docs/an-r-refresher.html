@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 An R refresher | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 An R refresher | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-10-18" />
+<meta name="date" content="2024-11-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -192,13 +192,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="paths-and-projects.html"><a href="paths-and-projects.html"><i class="fa fa-check"></i><b>6</b> Paths and projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-structure"><i class="fa fa-check"></i><b>6.1</b> File structure</a></li>
-<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#paths-and-the-command-line"><i class="fa fa-check"></i><b>6.2</b> Paths and the command line</a></li>
-<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.3</b> R and file structure</a>
+<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-paths"><i class="fa fa-check"></i><b>6.1</b> File paths</a></li>
+<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-organisation"><i class="fa fa-check"></i><b>6.2</b> File organisation</a></li>
+<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#two-types-of-paths"><i class="fa fa-check"></i><b>6.3</b> Two types of paths</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory"><i class="fa fa-check"></i><b>6.3.1</b> Setting the working directory</a></li>
+<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#absolute-paths-the-exact-location"><i class="fa fa-check"></i><b>6.3.1</b> 1. Absolute Paths: The Exact Location</a></li>
+<li class="chapter" data-level="6.3.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#relative-paths-paths-that-start-from-the-project-folder"><i class="fa fa-check"></i><b>6.3.2</b> 2. Relative Paths: Paths That Start from the Project Folder</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#projects-in-r"><i class="fa fa-check"></i><b>6.4</b> Projects in R</a></li>
+<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.4</b> R and file structure</a></li>
+<li class="chapter" data-level="6.5" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory-in-r"><i class="fa fa-check"></i><b>6.5</b> Setting the Working Directory in R</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#finding-your-current-working-directory"><i class="fa fa-check"></i><b>6.5.1</b> Finding Your Current Working Directory</a></li>
+<li class="chapter" data-level="6.5.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#changing-the-working-directory"><i class="fa fa-check"></i><b>6.5.2</b> Changing the Working Directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -432,7 +443,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="an-r-refresher" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">Chapter 4</span> An R refresher<a href="an-r-refresher.html#an-r-refresher" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this course we will be learning how manipulate, visualise and analyse data statistically using <strong>R</strong>. <strong>R</strong> is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every conceivable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.</p>
-<p>Before proceeding you will need to ensure you have a recent version of <strong>R</strong> installed on your computer (the version I am using right now is 4.4.1).</p>
+<p>Before proceeding you will need to ensure you have a recent version of <strong>R</strong> installed on your computer (the version I am using right now is 4.4.2).</p>
 <div class="do-something">
 <p>
 <strong>Do this:</strong> Check your R version, and/or install R on

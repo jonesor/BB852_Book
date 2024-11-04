@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 22 Power analysis by simulation | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 22 Power analysis by simulation | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-10-18" />
+<meta name="date" content="2024-11-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -192,13 +192,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="paths-and-projects.html"><a href="paths-and-projects.html"><i class="fa fa-check"></i><b>6</b> Paths and projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-structure"><i class="fa fa-check"></i><b>6.1</b> File structure</a></li>
-<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#paths-and-the-command-line"><i class="fa fa-check"></i><b>6.2</b> Paths and the command line</a></li>
-<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.3</b> R and file structure</a>
+<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-paths"><i class="fa fa-check"></i><b>6.1</b> File paths</a></li>
+<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-organisation"><i class="fa fa-check"></i><b>6.2</b> File organisation</a></li>
+<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#two-types-of-paths"><i class="fa fa-check"></i><b>6.3</b> Two types of paths</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory"><i class="fa fa-check"></i><b>6.3.1</b> Setting the working directory</a></li>
+<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#absolute-paths-the-exact-location"><i class="fa fa-check"></i><b>6.3.1</b> 1. Absolute Paths: The Exact Location</a></li>
+<li class="chapter" data-level="6.3.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#relative-paths-paths-that-start-from-the-project-folder"><i class="fa fa-check"></i><b>6.3.2</b> 2. Relative Paths: Paths That Start from the Project Folder</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#projects-in-r"><i class="fa fa-check"></i><b>6.4</b> Projects in R</a></li>
+<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.4</b> R and file structure</a></li>
+<li class="chapter" data-level="6.5" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory-in-r"><i class="fa fa-check"></i><b>6.5</b> Setting the Working Directory in R</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#finding-your-current-working-directory"><i class="fa fa-check"></i><b>6.5.1</b> Finding Your Current Working Directory</a></li>
+<li class="chapter" data-level="6.5.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#changing-the-working-directory"><i class="fa fa-check"></i><b>6.5.2</b> Changing the Working Directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -470,16 +481,18 @@ correctly.
 </p>
 </div>
 <p>We can simulate a distribution of measurements from this distribution using the <code>rnorm</code> function. This draws <code>n</code> numbers from a theoretical normal distribution with a particular <code>mean</code> and standard deviation (<code>sd</code>). For example:</p>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="power-analysis-by-simulation.html#cb500-1" tabindex="-1"></a>(control <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>##  [1] 16.11288 10.30591 13.08939 13.89859 13.21280 11.68163 16.53457 11.71602 18.05527 11.81186</code></pre>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="power-analysis-by-simulation.html#cb506-1" tabindex="-1"></a>(control <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>##  [1] 16.11288 10.30591 13.08939 13.89859 13.21280 11.68163 16.53457 11.71602
+##  [9] 18.05527 11.81186</code></pre>
 <p>Because this is a random process your results will be different (and they will be different each time you run the code).</p>
 <p>Suppose that other studies on a different species has shown that a high protein diet leads to a 20% increase in size. This means that we expect our treatment group to have a body length of 12 <span class="math inline">\(\times\)</span> 1.2 = 14.4mm. If we assume the standard deviation will be the same, we can simulate a distribution for a high protein treatment group in the same way as for the control group:</p>
-<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="power-analysis-by-simulation.html#cb502-1" tabindex="-1"></a>(treatment <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="fl">14.4</span>, <span class="at">sd =</span> <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>##  [1] 18.16416 19.51226 17.04097 12.65537 13.89243 17.59434 16.55513 14.51473 11.25101 15.03694</code></pre>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="power-analysis-by-simulation.html#cb508-1" tabindex="-1"></a>(treatment <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="fl">14.4</span>, <span class="at">sd =</span> <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>##  [1] 18.16416 19.51226 17.04097 12.65537 13.89243 17.59434 16.55513 14.51473
+##  [9] 11.25101 15.03694</code></pre>
 <p>Now we have two simulated samples, and we can conduct a t-test on those samples and store the result:</p>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="power-analysis-by-simulation.html#cb504-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(control, treatment)</span></code></pre></div>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="power-analysis-by-simulation.html#cb510-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">t.test</span>(control, treatment)</span></code></pre></div>
 <p>We can print this result to the screen like this:</p>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="power-analysis-by-simulation.html#cb505-1" tabindex="-1"></a>res</span></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="power-analysis-by-simulation.html#cb511-1" tabindex="-1"></a>res</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -492,54 +505,54 @@ correctly.
 ## mean of x mean of y 
 ##  13.64189  15.62173</code></pre>
 <p>Or just get the p-value like this:</p>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="power-analysis-by-simulation.html#cb507-1" tabindex="-1"></a>res<span class="sc">$</span>p.value</span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="power-analysis-by-simulation.html#cb513-1" tabindex="-1"></a>res<span class="sc">$</span>p.value</span></code></pre></div>
 <pre><code>## [1] 0.1000936</code></pre>
 <div id="the-simulation" class="section level3 hasAnchor" number="22.3.1">
 <h3><span class="header-section-number">22.3.1</span> The simulation<a href="power-analysis-by-simulation.html#the-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The idea with power analysis by simulation is to repeat this procedure many times (at least 1000) to estimate the probability that you get it right (that you detect a significant difference between groups when you know there is a difference<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>).</p>
 <p>You have come across this sort of simulation approach before when we talked about randomisation tests. As before we will use the <code>replicate</code> function to repeatedly do t-tests on randomly generated data with the characteristics you select (i.e. sample size, mean, and standard deviation).</p>
 <p>We first set up our simulation by defining the mean, standard deviation, and sample size of our simulated experiment.</p>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="power-analysis-by-simulation.html#cb509-1" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb509-2"><a href="power-analysis-by-simulation.html#cb509-2" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> <span class="fl">14.4</span></span>
-<span id="cb509-3"><a href="power-analysis-by-simulation.html#cb509-3" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb509-4"><a href="power-analysis-by-simulation.html#cb509-4" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
-<p>Now we can “wrap” a <code>t.test</code> on simulated control and treatment data sets within a <code>replicate</code> function like this. Take some time to study this part of the script - it is important that you understand what it is doing. In this case the replicate command is telling R to repeat the t-test 5 times.</p>
-<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="power-analysis-by-simulation.html#cb510-1" tabindex="-1"></a><span class="fu">replicate</span>(</span>
-<span id="cb510-2"><a href="power-analysis-by-simulation.html#cb510-2" tabindex="-1"></a>  <span class="dv">5</span>,</span>
-<span id="cb510-3"><a href="power-analysis-by-simulation.html#cb510-3" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
-<span id="cb510-4"><a href="power-analysis-by-simulation.html#cb510-4" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, controlMean, sdValue),</span>
-<span id="cb510-5"><a href="power-analysis-by-simulation.html#cb510-5" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, treatmentMean, sdValue)</span>
-<span id="cb510-6"><a href="power-analysis-by-simulation.html#cb510-6" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
-<span id="cb510-7"><a href="power-analysis-by-simulation.html#cb510-7" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>## [1] 0.0506748916 0.0004174904 0.0303818981 0.4768898365 0.0296402507</code></pre>
-<p>Let’s repeat the t-test 1000 times so we can get a good idea of the number of times that the test correctly detects that there is a difference between the two groups.</p>
-<p>I don’t want to print 1000 p-values to the screen so I will collect them in a vector called <code>powerResults</code>.</p>
-<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="power-analysis-by-simulation.html#cb512-1" tabindex="-1"></a>powerResults <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb512-2"><a href="power-analysis-by-simulation.html#cb512-2" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
-<span id="cb512-3"><a href="power-analysis-by-simulation.html#cb512-3" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
-<span id="cb512-4"><a href="power-analysis-by-simulation.html#cb512-4" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, controlMean, sdValue),</span>
-<span id="cb512-5"><a href="power-analysis-by-simulation.html#cb512-5" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, treatmentMean, sdValue)</span>
-<span id="cb512-6"><a href="power-analysis-by-simulation.html#cb512-6" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
-<span id="cb512-7"><a href="power-analysis-by-simulation.html#cb512-7" tabindex="-1"></a>)</span></code></pre></div>
-<p>I can now ask how many of the p-values stored in <code>powerResults</code> were less than 0.05.</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="power-analysis-by-simulation.html#cb513-1" tabindex="-1"></a><span class="fu">sum</span>(powerResults <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<pre><code>## [1] 393</code></pre>
-<p>So in this case, 393 of the 1000 tests were correct. The statistical power can be calculated by turning this into a percentage - i.e. Power = 39.3%.</p>
-<p>We can ask what sample size do we need to get a better power, e.g. 90%, by increasing sample size incrementally. For example, here I increase sample size to 15:</p>
 <div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="power-analysis-by-simulation.html#cb515-1" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> <span class="dv">12</span></span>
 <span id="cb515-2"><a href="power-analysis-by-simulation.html#cb515-2" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> <span class="fl">14.4</span></span>
 <span id="cb515-3"><a href="power-analysis-by-simulation.html#cb515-3" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb515-4"><a href="power-analysis-by-simulation.html#cb515-4" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">15</span> <span class="co"># Increased</span></span>
-<span id="cb515-5"><a href="power-analysis-by-simulation.html#cb515-5" tabindex="-1"></a></span>
-<span id="cb515-6"><a href="power-analysis-by-simulation.html#cb515-6" tabindex="-1"></a>powerResults <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
-<span id="cb515-7"><a href="power-analysis-by-simulation.html#cb515-7" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
-<span id="cb515-8"><a href="power-analysis-by-simulation.html#cb515-8" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
-<span id="cb515-9"><a href="power-analysis-by-simulation.html#cb515-9" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, controlMean, sdValue),</span>
-<span id="cb515-10"><a href="power-analysis-by-simulation.html#cb515-10" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, treatmentMean, sdValue)</span>
-<span id="cb515-11"><a href="power-analysis-by-simulation.html#cb515-11" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
-<span id="cb515-12"><a href="power-analysis-by-simulation.html#cb515-12" tabindex="-1"></a>)</span>
-<span id="cb515-13"><a href="power-analysis-by-simulation.html#cb515-13" tabindex="-1"></a></span>
-<span id="cb515-14"><a href="power-analysis-by-simulation.html#cb515-14" tabindex="-1"></a>(<span class="fu">sum</span>(powerResults <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span>) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
+<span id="cb515-4"><a href="power-analysis-by-simulation.html#cb515-4" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
+<p>Now we can “wrap” a <code>t.test</code> on simulated control and treatment data sets within a <code>replicate</code> function like this. Take some time to study this part of the script - it is important that you understand what it is doing. In this case the replicate command is telling R to repeat the t-test 5 times.</p>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="power-analysis-by-simulation.html#cb516-1" tabindex="-1"></a><span class="fu">replicate</span>(</span>
+<span id="cb516-2"><a href="power-analysis-by-simulation.html#cb516-2" tabindex="-1"></a>  <span class="dv">5</span>,</span>
+<span id="cb516-3"><a href="power-analysis-by-simulation.html#cb516-3" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
+<span id="cb516-4"><a href="power-analysis-by-simulation.html#cb516-4" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, controlMean, sdValue),</span>
+<span id="cb516-5"><a href="power-analysis-by-simulation.html#cb516-5" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, treatmentMean, sdValue)</span>
+<span id="cb516-6"><a href="power-analysis-by-simulation.html#cb516-6" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
+<span id="cb516-7"><a href="power-analysis-by-simulation.html#cb516-7" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## [1] 0.0506748916 0.0004174904 0.0303818981 0.4768898365 0.0296402507</code></pre>
+<p>Let’s repeat the t-test 1000 times so we can get a good idea of the number of times that the test correctly detects that there is a difference between the two groups.</p>
+<p>I don’t want to print 1000 p-values to the screen so I will collect them in a vector called <code>powerResults</code>.</p>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="power-analysis-by-simulation.html#cb518-1" tabindex="-1"></a>powerResults <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb518-2"><a href="power-analysis-by-simulation.html#cb518-2" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
+<span id="cb518-3"><a href="power-analysis-by-simulation.html#cb518-3" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
+<span id="cb518-4"><a href="power-analysis-by-simulation.html#cb518-4" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, controlMean, sdValue),</span>
+<span id="cb518-5"><a href="power-analysis-by-simulation.html#cb518-5" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, treatmentMean, sdValue)</span>
+<span id="cb518-6"><a href="power-analysis-by-simulation.html#cb518-6" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
+<span id="cb518-7"><a href="power-analysis-by-simulation.html#cb518-7" tabindex="-1"></a>)</span></code></pre></div>
+<p>I can now ask how many of the p-values stored in <code>powerResults</code> were less than 0.05.</p>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="power-analysis-by-simulation.html#cb519-1" tabindex="-1"></a><span class="fu">sum</span>(powerResults <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<pre><code>## [1] 393</code></pre>
+<p>So in this case, 393 of the 1000 tests were correct. The statistical power can be calculated by turning this into a percentage - i.e. Power = 39.3%.</p>
+<p>We can ask what sample size do we need to get a better power, e.g. 90%, by increasing sample size incrementally. For example, here I increase sample size to 15:</p>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="power-analysis-by-simulation.html#cb521-1" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb521-2"><a href="power-analysis-by-simulation.html#cb521-2" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> <span class="fl">14.4</span></span>
+<span id="cb521-3"><a href="power-analysis-by-simulation.html#cb521-3" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb521-4"><a href="power-analysis-by-simulation.html#cb521-4" tabindex="-1"></a>sampleSize <span class="ot">&lt;-</span> <span class="dv">15</span> <span class="co"># Increased</span></span>
+<span id="cb521-5"><a href="power-analysis-by-simulation.html#cb521-5" tabindex="-1"></a></span>
+<span id="cb521-6"><a href="power-analysis-by-simulation.html#cb521-6" tabindex="-1"></a>powerResults <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb521-7"><a href="power-analysis-by-simulation.html#cb521-7" tabindex="-1"></a>  <span class="dv">1000</span>,</span>
+<span id="cb521-8"><a href="power-analysis-by-simulation.html#cb521-8" tabindex="-1"></a>  <span class="fu">t.test</span>(</span>
+<span id="cb521-9"><a href="power-analysis-by-simulation.html#cb521-9" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, controlMean, sdValue),</span>
+<span id="cb521-10"><a href="power-analysis-by-simulation.html#cb521-10" tabindex="-1"></a>    <span class="fu">rnorm</span>(sampleSize, treatmentMean, sdValue)</span>
+<span id="cb521-11"><a href="power-analysis-by-simulation.html#cb521-11" tabindex="-1"></a>  )<span class="sc">$</span>p.value</span>
+<span id="cb521-12"><a href="power-analysis-by-simulation.html#cb521-12" tabindex="-1"></a>)</span>
+<span id="cb521-13"><a href="power-analysis-by-simulation.html#cb521-13" tabindex="-1"></a></span>
+<span id="cb521-14"><a href="power-analysis-by-simulation.html#cb521-14" tabindex="-1"></a>(<span class="fu">sum</span>(powerResults <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span>) <span class="sc">*</span> <span class="dv">100</span></span></code></pre></div>
 <pre><code>## [1] 54.9</code></pre>
 <p>The power has increased to 54.9%.</p>
 </div>
@@ -574,34 +587,34 @@ this function without the need to load the whole package.
 </div>
 <p>One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) using by turning the calculations of the t-test into a function, and then applying that function over a range of values.</p>
 <p>I illustrate this below by varying sample size between 5 and 40.</p>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="power-analysis-by-simulation.html#cb517-1" tabindex="-1"></a><span class="co"># Set up a data frame for the simulation results</span></span>
-<span id="cb517-2"><a href="power-analysis-by-simulation.html#cb517-2" tabindex="-1"></a>simulData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleSize =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">40</span>)</span>
-<span id="cb517-3"><a href="power-analysis-by-simulation.html#cb517-3" tabindex="-1"></a></span>
-<span id="cb517-4"><a href="power-analysis-by-simulation.html#cb517-4" tabindex="-1"></a><span class="co"># Set basic values</span></span>
-<span id="cb517-5"><a href="power-analysis-by-simulation.html#cb517-5" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> <span class="dv">12</span></span>
-<span id="cb517-6"><a href="power-analysis-by-simulation.html#cb517-6" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> <span class="fl">14.4</span></span>
-<span id="cb517-7"><a href="power-analysis-by-simulation.html#cb517-7" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb517-8"><a href="power-analysis-by-simulation.html#cb517-8" tabindex="-1"></a></span>
-<span id="cb517-9"><a href="power-analysis-by-simulation.html#cb517-9" tabindex="-1"></a><span class="co"># Function to do the t-test</span></span>
-<span id="cb517-10"><a href="power-analysis-by-simulation.html#cb517-10" tabindex="-1"></a>pwr <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb517-11"><a href="power-analysis-by-simulation.html#cb517-11" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">replicate</span>(</span>
-<span id="cb517-12"><a href="power-analysis-by-simulation.html#cb517-12" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
-<span id="cb517-13"><a href="power-analysis-by-simulation.html#cb517-13" tabindex="-1"></a>    <span class="fu">t.test</span>(</span>
-<span id="cb517-14"><a href="power-analysis-by-simulation.html#cb517-14" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, controlMean, sdValue),</span>
-<span id="cb517-15"><a href="power-analysis-by-simulation.html#cb517-15" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, treatmentMean, sdValue)</span>
-<span id="cb517-16"><a href="power-analysis-by-simulation.html#cb517-16" tabindex="-1"></a>    )<span class="sc">$</span>p.value</span>
-<span id="cb517-17"><a href="power-analysis-by-simulation.html#cb517-17" tabindex="-1"></a>  ) <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span></span>
-<span id="cb517-18"><a href="power-analysis-by-simulation.html#cb517-18" tabindex="-1"></a>}</span>
-<span id="cb517-19"><a href="power-analysis-by-simulation.html#cb517-19" tabindex="-1"></a></span>
-<span id="cb517-20"><a href="power-analysis-by-simulation.html#cb517-20" tabindex="-1"></a><span class="co"># map_dbl applying the function for every value of</span></span>
-<span id="cb517-21"><a href="power-analysis-by-simulation.html#cb517-21" tabindex="-1"></a><span class="co"># simulData$sampleSize</span></span>
-<span id="cb517-22"><a href="power-analysis-by-simulation.html#cb517-22" tabindex="-1"></a>simulData<span class="sc">$</span>Power <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(simulData<span class="sc">$</span>sampleSize, pwr)</span></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="power-analysis-by-simulation.html#cb523-1" tabindex="-1"></a><span class="co"># Set up a data frame for the simulation results</span></span>
+<span id="cb523-2"><a href="power-analysis-by-simulation.html#cb523-2" tabindex="-1"></a>simulData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleSize =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">40</span>)</span>
+<span id="cb523-3"><a href="power-analysis-by-simulation.html#cb523-3" tabindex="-1"></a></span>
+<span id="cb523-4"><a href="power-analysis-by-simulation.html#cb523-4" tabindex="-1"></a><span class="co"># Set basic values</span></span>
+<span id="cb523-5"><a href="power-analysis-by-simulation.html#cb523-5" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb523-6"><a href="power-analysis-by-simulation.html#cb523-6" tabindex="-1"></a>treatmentMean <span class="ot">&lt;-</span> <span class="fl">14.4</span></span>
+<span id="cb523-7"><a href="power-analysis-by-simulation.html#cb523-7" tabindex="-1"></a>sdValue <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb523-8"><a href="power-analysis-by-simulation.html#cb523-8" tabindex="-1"></a></span>
+<span id="cb523-9"><a href="power-analysis-by-simulation.html#cb523-9" tabindex="-1"></a><span class="co"># Function to do the t-test</span></span>
+<span id="cb523-10"><a href="power-analysis-by-simulation.html#cb523-10" tabindex="-1"></a>pwr <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb523-11"><a href="power-analysis-by-simulation.html#cb523-11" tabindex="-1"></a>  <span class="fu">sum</span>(<span class="fu">replicate</span>(</span>
+<span id="cb523-12"><a href="power-analysis-by-simulation.html#cb523-12" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
+<span id="cb523-13"><a href="power-analysis-by-simulation.html#cb523-13" tabindex="-1"></a>    <span class="fu">t.test</span>(</span>
+<span id="cb523-14"><a href="power-analysis-by-simulation.html#cb523-14" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, controlMean, sdValue),</span>
+<span id="cb523-15"><a href="power-analysis-by-simulation.html#cb523-15" tabindex="-1"></a>      <span class="fu">rnorm</span>(n, treatmentMean, sdValue)</span>
+<span id="cb523-16"><a href="power-analysis-by-simulation.html#cb523-16" tabindex="-1"></a>    )<span class="sc">$</span>p.value</span>
+<span id="cb523-17"><a href="power-analysis-by-simulation.html#cb523-17" tabindex="-1"></a>  ) <span class="sc">&lt;</span> <span class="fl">0.05</span>) <span class="sc">/</span> <span class="dv">1000</span></span>
+<span id="cb523-18"><a href="power-analysis-by-simulation.html#cb523-18" tabindex="-1"></a>}</span>
+<span id="cb523-19"><a href="power-analysis-by-simulation.html#cb523-19" tabindex="-1"></a></span>
+<span id="cb523-20"><a href="power-analysis-by-simulation.html#cb523-20" tabindex="-1"></a><span class="co"># map_dbl applying the function for every value of</span></span>
+<span id="cb523-21"><a href="power-analysis-by-simulation.html#cb523-21" tabindex="-1"></a><span class="co"># simulData$sampleSize</span></span>
+<span id="cb523-22"><a href="power-analysis-by-simulation.html#cb523-22" tabindex="-1"></a>simulData<span class="sc">$</span>Power <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(simulData<span class="sc">$</span>sampleSize, pwr)</span></code></pre></div>
 <p>These results can then be graphed with <code>ggplot</code>.</p>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="power-analysis-by-simulation.html#cb518-1" tabindex="-1"></a><span class="co"># Plot the output</span></span>
-<span id="cb518-2"><a href="power-analysis-by-simulation.html#cb518-2" tabindex="-1"></a><span class="fu">ggplot</span>(simulData, <span class="fu">aes</span>(<span class="at">x =</span> sampleSize, <span class="at">y =</span> Power)) <span class="sc">+</span></span>
-<span id="cb518-3"><a href="power-analysis-by-simulation.html#cb518-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb518-4"><a href="power-analysis-by-simulation.html#cb518-4" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb518-5"><a href="power-analysis-by-simulation.html#cb518-5" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.8</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="power-analysis-by-simulation.html#cb524-1" tabindex="-1"></a><span class="co"># Plot the output</span></span>
+<span id="cb524-2"><a href="power-analysis-by-simulation.html#cb524-2" tabindex="-1"></a><span class="fu">ggplot</span>(simulData, <span class="fu">aes</span>(<span class="at">x =</span> sampleSize, <span class="at">y =</span> Power)) <span class="sc">+</span></span>
+<span id="cb524-3"><a href="power-analysis-by-simulation.html#cb524-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb524-4"><a href="power-analysis-by-simulation.html#cb524-4" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb524-5"><a href="power-analysis-by-simulation.html#cb524-5" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.8</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/3-10-Power-Analysis-14-1.png" width="672" /></p>
 </div>
 <div id="exercise-1-snails-on-the-move" class="section level2 hasAnchor" number="22.6">

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Distributions and summarising data | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Distributions and summarising data | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-10-18" />
+<meta name="date" content="2024-11-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -192,13 +192,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="paths-and-projects.html"><a href="paths-and-projects.html"><i class="fa fa-check"></i><b>6</b> Paths and projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-structure"><i class="fa fa-check"></i><b>6.1</b> File structure</a></li>
-<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#paths-and-the-command-line"><i class="fa fa-check"></i><b>6.2</b> Paths and the command line</a></li>
-<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.3</b> R and file structure</a>
+<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-paths"><i class="fa fa-check"></i><b>6.1</b> File paths</a></li>
+<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-organisation"><i class="fa fa-check"></i><b>6.2</b> File organisation</a></li>
+<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#two-types-of-paths"><i class="fa fa-check"></i><b>6.3</b> Two types of paths</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory"><i class="fa fa-check"></i><b>6.3.1</b> Setting the working directory</a></li>
+<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#absolute-paths-the-exact-location"><i class="fa fa-check"></i><b>6.3.1</b> 1. Absolute Paths: The Exact Location</a></li>
+<li class="chapter" data-level="6.3.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#relative-paths-paths-that-start-from-the-project-folder"><i class="fa fa-check"></i><b>6.3.2</b> 2. Relative Paths: Paths That Start from the Project Folder</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#projects-in-r"><i class="fa fa-check"></i><b>6.4</b> Projects in R</a></li>
+<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.4</b> R and file structure</a></li>
+<li class="chapter" data-level="6.5" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory-in-r"><i class="fa fa-check"></i><b>6.5</b> Setting the Working Directory in R</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#finding-your-current-working-directory"><i class="fa fa-check"></i><b>6.5.1</b> Finding Your Current Working Directory</a></li>
+<li class="chapter" data-level="6.5.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#changing-the-working-directory"><i class="fa fa-check"></i><b>6.5.2</b> Changing the Working Directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -443,7 +454,7 @@ R has functions for generating random numbers from different kinds of distributi
 <h2><span class="header-section-number">10.2</span> Normal distribution<a href="distributions-and-summarising-data.html#normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>rnorm</code> function has three arguments. The first argument is simply the number of values you want to generate. Then, the second and third arguments specify the the mean and standard deviation values of the distribution (i.e. where the distribution is centred and how spread out it is).</p>
 <p>The following command will produce 6 numbers from a distribution with a mean value of 5 and a standard deviation of 2.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="distributions-and-summarising-data.html#cb220-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="distributions-and-summarising-data.html#cb226-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8860899 5.9511727 0.4674129 6.2696362 3.0969106 5.3058671</code></pre>
 <div class="do-something">
 <p>
@@ -452,8 +463,8 @@ values you generate, and to alter the mean and standard deviation.
 </p>
 </div>
 <p>Let’s use this to generate a larger data frame, and then place markers for the various measures of “spread” onto a plot. <em>Note that here I put a set of parentheses around the plot code to both display the result AND save the plot as an R object called <code>p1</code></em></p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="distributions-and-summarising-data.html#cb222-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">d1 =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">5</span>, <span class="dv">2</span>))</span>
-<span id="cb222-2"><a href="distributions-and-summarising-data.html#cb222-2" tabindex="-1"></a><span class="fu">summary</span>(rn) <span class="co"># Take a look</span></span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="distributions-and-summarising-data.html#cb228-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">d1 =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">5</span>, <span class="dv">2</span>))</span>
+<span id="cb228-2"><a href="distributions-and-summarising-data.html#cb228-2" tabindex="-1"></a><span class="fu">summary</span>(rn) <span class="co"># Take a look</span></span></code></pre></div>
 <pre><code>##        d1         
 ##  Min.   :-0.9862  
 ##  1st Qu.: 3.6789  
@@ -461,36 +472,36 @@ values you generate, and to alter the mean and standard deviation.
 ##  Mean   : 4.9399  
 ##  3rd Qu.: 6.2712  
 ##  Max.   :10.9317</code></pre>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="distributions-and-summarising-data.html#cb224-1" tabindex="-1"></a><span class="co"># Plot the data</span></span>
-<span id="cb224-2"><a href="distributions-and-summarising-data.html#cb224-2" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rn, <span class="fu">aes</span>(<span class="at">x =</span> d1)) <span class="sc">+</span></span>
-<span id="cb224-3"><a href="distributions-and-summarising-data.html#cb224-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
-<span id="cb224-4"><a href="distributions-and-summarising-data.html#cb224-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="distributions-and-summarising-data.html#cb230-1" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb230-2"><a href="distributions-and-summarising-data.html#cb230-2" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rn, <span class="fu">aes</span>(<span class="at">x =</span> d1)) <span class="sc">+</span></span>
+<span id="cb230-3"><a href="distributions-and-summarising-data.html#cb230-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb230-4"><a href="distributions-and-summarising-data.html#cb230-4" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-5-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>We can calculate the mean and standard deviation using <code>summarise</code> (along with other estimates of “spread”). The mean and standard deviation values will be close (but not identical) to the values you set when you generated the distribution.</p>
 <p><em>Note that here I put a set of parentheses around the code to both display the result AND save the result in an object called <code>sv</code></em></p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="distributions-and-summarising-data.html#cb225-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rn <span class="sc">%&gt;%</span></span>
-<span id="cb225-2"><a href="distributions-and-summarising-data.html#cb225-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb225-3"><a href="distributions-and-summarising-data.html#cb225-3" tabindex="-1"></a>    <span class="at">meanEst =</span> <span class="fu">mean</span>(d1),</span>
-<span id="cb225-4"><a href="distributions-and-summarising-data.html#cb225-4" tabindex="-1"></a>    <span class="at">sdEst =</span> <span class="fu">sd</span>(d1),</span>
-<span id="cb225-5"><a href="distributions-and-summarising-data.html#cb225-5" tabindex="-1"></a>    <span class="at">varEst =</span> <span class="fu">var</span>(d1),</span>
-<span id="cb225-6"><a href="distributions-and-summarising-data.html#cb225-6" tabindex="-1"></a>    <span class="at">semEst =</span> <span class="fu">sd</span>(d1) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
-<span id="cb225-7"><a href="distributions-and-summarising-data.html#cb225-7" tabindex="-1"></a>  )</span>
-<span id="cb225-8"><a href="distributions-and-summarising-data.html#cb225-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="distributions-and-summarising-data.html#cb231-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rn <span class="sc">%&gt;%</span></span>
+<span id="cb231-2"><a href="distributions-and-summarising-data.html#cb231-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb231-3"><a href="distributions-and-summarising-data.html#cb231-3" tabindex="-1"></a>    <span class="at">meanEst =</span> <span class="fu">mean</span>(d1),</span>
+<span id="cb231-4"><a href="distributions-and-summarising-data.html#cb231-4" tabindex="-1"></a>    <span class="at">sdEst =</span> <span class="fu">sd</span>(d1),</span>
+<span id="cb231-5"><a href="distributions-and-summarising-data.html#cb231-5" tabindex="-1"></a>    <span class="at">varEst =</span> <span class="fu">var</span>(d1),</span>
+<span id="cb231-6"><a href="distributions-and-summarising-data.html#cb231-6" tabindex="-1"></a>    <span class="at">semEst =</span> <span class="fu">sd</span>(d1) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
+<span id="cb231-7"><a href="distributions-and-summarising-data.html#cb231-7" tabindex="-1"></a>  )</span>
+<span id="cb231-8"><a href="distributions-and-summarising-data.html#cb231-8" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##    meanEst    sdEst   varEst     semEst
 ## 1 4.939908 1.944357 3.780523 0.08695428</code></pre>
 <p>Let’s use the function <code>geom_vline</code> to add some markers to the plot from above to show these values…</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="distributions-and-summarising-data.html#cb227-1" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
-<span id="cb227-2"><a href="distributions-and-summarising-data.html#cb227-2" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="co"># mean</span></span>
-<span id="cb227-3"><a href="distributions-and-summarising-data.html#cb227-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst <span class="sc">+</span> sv<span class="sc">$</span>sdEst, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co"># high</span></span>
-<span id="cb227-4"><a href="distributions-and-summarising-data.html#cb227-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst <span class="sc">-</span> sv<span class="sc">$</span>sdEst, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="co"># low</span></span>
-<span id="cb227-5"><a href="distributions-and-summarising-data.html#cb227-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="distributions-and-summarising-data.html#cb233-1" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
+<span id="cb233-2"><a href="distributions-and-summarising-data.html#cb233-2" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="co"># mean</span></span>
+<span id="cb233-3"><a href="distributions-and-summarising-data.html#cb233-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst <span class="sc">+</span> sv<span class="sc">$</span>sdEst, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="co"># high</span></span>
+<span id="cb233-4"><a href="distributions-and-summarising-data.html#cb233-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst <span class="sc">-</span> sv<span class="sc">$</span>sdEst, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="co"># low</span></span>
+<span id="cb233-5"><a href="distributions-and-summarising-data.html#cb233-5" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-7-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>We can compare these with the true values (the values we set when we generated the data), by adding them to the plot in a different colour (mean=5, sd=2).</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="distributions-and-summarising-data.html#cb228-1" tabindex="-1"></a>(p3 <span class="ot">&lt;-</span> p2 <span class="sc">+</span></span>
-<span id="cb228-2"><a href="distributions-and-summarising-data.html#cb228-2" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">5</span>, <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> <span class="co"># mean</span></span>
-<span id="cb228-3"><a href="distributions-and-summarising-data.html#cb228-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> <span class="co"># high</span></span>
-<span id="cb228-4"><a href="distributions-and-summarising-data.html#cb228-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">5</span> <span class="sc">-</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># low</span></span>
-<span id="cb228-5"><a href="distributions-and-summarising-data.html#cb228-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="distributions-and-summarising-data.html#cb234-1" tabindex="-1"></a>(p3 <span class="ot">&lt;-</span> p2 <span class="sc">+</span></span>
+<span id="cb234-2"><a href="distributions-and-summarising-data.html#cb234-2" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">5</span>, <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> <span class="co"># mean</span></span>
+<span id="cb234-3"><a href="distributions-and-summarising-data.html#cb234-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> <span class="co"># high</span></span>
+<span id="cb234-4"><a href="distributions-and-summarising-data.html#cb234-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">5</span> <span class="sc">-</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># low</span></span>
+<span id="cb234-5"><a href="distributions-and-summarising-data.html#cb234-5" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-8-1.png" width="384" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
@@ -512,8 +523,8 @@ histograms.
 <h2><span class="header-section-number">10.3</span> Comparing normal distributions<a href="distributions-and-summarising-data.html#comparing-normal-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Because normal distributions all have the same shape, it can be hard to grasp the effect of changing the distribution’s parameters viewing them in isolation. In this section you will write some code to compare two normal distributions. This approach can be useful when considering whether a proposed experiment will successfully detect a difference between treatment groups. We’ll look at this topic, known as “power analysis”, in greater detail in a later class. For now we will simply use <code>ggplot</code> to get a better feel for the normal distribution.</p>
 <p>Let’s use <code>rnorm</code> to generate a larger data frame with two sets of numbers from different distributions: (d1: mean = 5, sd = 2; d2: mean = 8, sd = 1).</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="distributions-and-summarising-data.html#cb229-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">d1 =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="at">d2 =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">8</span>, <span class="dv">1</span>))</span>
-<span id="cb229-2"><a href="distributions-and-summarising-data.html#cb229-2" tabindex="-1"></a><span class="fu">summary</span>(rn)</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="distributions-and-summarising-data.html#cb235-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">d1 =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="at">d2 =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">8</span>, <span class="dv">1</span>))</span>
+<span id="cb235-2"><a href="distributions-and-summarising-data.html#cb235-2" tabindex="-1"></a><span class="fu">summary</span>(rn)</span></code></pre></div>
 <pre><code>##        d1                d2        
 ##  Min.   :-0.9862   Min.   : 4.628  
 ##  1st Qu.: 3.6789   1st Qu.: 7.305  
@@ -522,14 +533,14 @@ histograms.
 ##  3rd Qu.: 6.2712   3rd Qu.: 8.719  
 ##  Max.   :10.9317   Max.   :11.495</code></pre>
 <p>The summaries (above) show that the mean and the width of the distributions vary, but we should always plot our data. So lets make a plot in <code>ggplot</code>. In the dataset I created I have the data arranged by columns side-by-side, but <code>ggplot</code> needs the values to be arranged in a single column, and the identifier of the sample ID in a second column. I can use the function <code>pivot_longer</code> to rearrange the data into the required format.</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="distributions-and-summarising-data.html#cb231-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(rn,</span>
-<span id="cb231-2"><a href="distributions-and-summarising-data.html#cb231-2" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(d1, d2), <span class="at">names_to =</span> <span class="st">&quot;sampleID&quot;</span>,</span>
-<span id="cb231-3"><a href="distributions-and-summarising-data.html#cb231-3" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
-<span id="cb231-4"><a href="distributions-and-summarising-data.html#cb231-4" tabindex="-1"></a>) <span class="co"># rearrange data</span></span>
-<span id="cb231-5"><a href="distributions-and-summarising-data.html#cb231-5" tabindex="-1"></a></span>
-<span id="cb231-6"><a href="distributions-and-summarising-data.html#cb231-6" tabindex="-1"></a><span class="co"># Plot histograms using &quot;identity&quot;, and make them transparent</span></span>
-<span id="cb231-7"><a href="distributions-and-summarising-data.html#cb231-7" tabindex="-1"></a><span class="fu">ggplot</span>(rn, <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">fill =</span> sampleID)) <span class="sc">+</span></span>
-<span id="cb231-8"><a href="distributions-and-summarising-data.html#cb231-8" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="distributions-and-summarising-data.html#cb237-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(rn,</span>
+<span id="cb237-2"><a href="distributions-and-summarising-data.html#cb237-2" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(d1, d2), <span class="at">names_to =</span> <span class="st">&quot;sampleID&quot;</span>,</span>
+<span id="cb237-3"><a href="distributions-and-summarising-data.html#cb237-3" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb237-4"><a href="distributions-and-summarising-data.html#cb237-4" tabindex="-1"></a>) <span class="co"># rearrange data</span></span>
+<span id="cb237-5"><a href="distributions-and-summarising-data.html#cb237-5" tabindex="-1"></a></span>
+<span id="cb237-6"><a href="distributions-and-summarising-data.html#cb237-6" tabindex="-1"></a><span class="co"># Plot histograms using &quot;identity&quot;, and make them transparent</span></span>
+<span id="cb237-7"><a href="distributions-and-summarising-data.html#cb237-7" tabindex="-1"></a><span class="fu">ggplot</span>(rn, <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">fill =</span> sampleID)) <span class="sc">+</span></span>
+<span id="cb237-8"><a href="distributions-and-summarising-data.html#cb237-8" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-12-1.png" width="384" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
@@ -543,8 +554,8 @@ the number of samples, the mean values and the standard deviations).
 <p>The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the “<code>lambda</code>” parameter, which is the arithmetic mean of the distribution. Due to the zero bounds, small values of <code>lambda</code> will give more skewed distributions.</p>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-14-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>Let’s generate and plot some Poisson distributed data.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="distributions-and-summarising-data.html#cb232-1" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">d1 =</span> <span class="fu">rpois</span>(<span class="dv">500</span>, <span class="fl">2.4</span>))</span>
-<span id="cb232-2"><a href="distributions-and-summarising-data.html#cb232-2" tabindex="-1"></a><span class="fu">summary</span>(rp) <span class="co"># Take a look</span></span></code></pre></div>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="distributions-and-summarising-data.html#cb238-1" tabindex="-1"></a>rp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">d1 =</span> <span class="fu">rpois</span>(<span class="dv">500</span>, <span class="fl">2.4</span>))</span>
+<span id="cb238-2"><a href="distributions-and-summarising-data.html#cb238-2" tabindex="-1"></a><span class="fu">summary</span>(rp) <span class="co"># Take a look</span></span></code></pre></div>
 <pre><code>##        d1       
 ##  Min.   :0.000  
 ##  1st Qu.:1.000  
@@ -552,10 +563,10 @@ the number of samples, the mean values and the standard deviations).
 ##  Mean   :2.396  
 ##  3rd Qu.:3.000  
 ##  Max.   :7.000</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="distributions-and-summarising-data.html#cb234-1" tabindex="-1"></a><span class="co"># Plot the data</span></span>
-<span id="cb234-2"><a href="distributions-and-summarising-data.html#cb234-2" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rp, <span class="fu">aes</span>(<span class="at">x =</span> d1)) <span class="sc">+</span></span>
-<span id="cb234-3"><a href="distributions-and-summarising-data.html#cb234-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="co"># we know the bins will be 1</span></span>
-<span id="cb234-4"><a href="distributions-and-summarising-data.html#cb234-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="distributions-and-summarising-data.html#cb240-1" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb240-2"><a href="distributions-and-summarising-data.html#cb240-2" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(rp, <span class="fu">aes</span>(<span class="at">x =</span> d1)) <span class="sc">+</span></span>
+<span id="cb240-3"><a href="distributions-and-summarising-data.html#cb240-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="co"># we know the bins will be 1</span></span>
+<span id="cb240-4"><a href="distributions-and-summarising-data.html#cb240-4" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-15-1.png" width="384" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
@@ -565,47 +576,47 @@ Calculate the mean values and compare those with <code>lambda</code>
 </p>
 </div>
 <p>Let’s calculate summary statistics of mean and standard deviation for this distribution</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="distributions-and-summarising-data.html#cb235-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span></span>
-<span id="cb235-2"><a href="distributions-and-summarising-data.html#cb235-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb235-3"><a href="distributions-and-summarising-data.html#cb235-3" tabindex="-1"></a>    <span class="at">meanEst =</span> <span class="fu">mean</span>(d1),</span>
-<span id="cb235-4"><a href="distributions-and-summarising-data.html#cb235-4" tabindex="-1"></a>    <span class="at">sdEst =</span> <span class="fu">sd</span>(d1)</span>
-<span id="cb235-5"><a href="distributions-and-summarising-data.html#cb235-5" tabindex="-1"></a>  )</span>
-<span id="cb235-6"><a href="distributions-and-summarising-data.html#cb235-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="distributions-and-summarising-data.html#cb241-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span></span>
+<span id="cb241-2"><a href="distributions-and-summarising-data.html#cb241-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb241-3"><a href="distributions-and-summarising-data.html#cb241-3" tabindex="-1"></a>    <span class="at">meanEst =</span> <span class="fu">mean</span>(d1),</span>
+<span id="cb241-4"><a href="distributions-and-summarising-data.html#cb241-4" tabindex="-1"></a>    <span class="at">sdEst =</span> <span class="fu">sd</span>(d1)</span>
+<span id="cb241-5"><a href="distributions-and-summarising-data.html#cb241-5" tabindex="-1"></a>  )</span>
+<span id="cb241-6"><a href="distributions-and-summarising-data.html#cb241-6" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##   meanEst    sdEst
 ## 1   2.396 1.470888</code></pre>
 <p>Now lets plot the mean and the 2 times the standard deviation on the graph. Remember that for the normal distribution (above) that 95% of the data were within 2 times the standard deviation.</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="distributions-and-summarising-data.html#cb237-1" tabindex="-1"></a>p1 <span class="sc">+</span></span>
-<span id="cb237-2"><a href="distributions-and-summarising-data.html#cb237-2" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb237-3"><a href="distributions-and-summarising-data.html#cb237-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> sv<span class="sc">$</span>sdEst, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb237-4"><a href="distributions-and-summarising-data.html#cb237-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> sv<span class="sc">$</span>sdEst, <span class="at">linewidth =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="distributions-and-summarising-data.html#cb243-1" tabindex="-1"></a>p1 <span class="sc">+</span></span>
+<span id="cb243-2"><a href="distributions-and-summarising-data.html#cb243-2" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb243-3"><a href="distributions-and-summarising-data.html#cb243-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> sv<span class="sc">$</span>sdEst, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb243-4"><a href="distributions-and-summarising-data.html#cb243-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sv<span class="sc">$</span>meanEst <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> sv<span class="sc">$</span>sdEst, <span class="at">linewidth =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-18-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>This looks like a TERRIBLE fit: The mean is not close to the most common value in the data set and the lower limit of the standard deviation indicates we should expect some negative values - this is impossible for Poisson data. The reason for this is that mean and standard deviation, and therefore standard error, are intended for normally distributed data. When the data come from other distributions we must take another approach.</p>
 <p>So how should we summarise this data?</p>
 <p>One approach is to report the median as a measure of “central tendency” instead of the mean, and to report “quantiles” of the data along with the range (i.e. minimum and maximum). Quantiles are simply the cut points that divide the data into parts. For example, the 25% quantile is the point where (if the data were arranged in order) one quarter of the values would fall below; the 50% quantile would mark the middle of the data (= the median); the 75% quantile would be the point when three-quarters of the data are below. You can calculate those things using <code>dplyr</code>’s <code>summarise</code>. However, you can also simply use the base R <code>summary</code> command.</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="distributions-and-summarising-data.html#cb238-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span></span>
-<span id="cb238-2"><a href="distributions-and-summarising-data.html#cb238-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb238-3"><a href="distributions-and-summarising-data.html#cb238-3" tabindex="-1"></a>    <span class="at">minVal =</span> <span class="fu">min</span>(d1),</span>
-<span id="cb238-4"><a href="distributions-and-summarising-data.html#cb238-4" tabindex="-1"></a>    <span class="at">q25 =</span> <span class="fu">quantile</span>(d1, <span class="fl">0.25</span>),</span>
-<span id="cb238-5"><a href="distributions-and-summarising-data.html#cb238-5" tabindex="-1"></a>    <span class="at">med =</span> <span class="fu">median</span>(d1),</span>
-<span id="cb238-6"><a href="distributions-and-summarising-data.html#cb238-6" tabindex="-1"></a>    <span class="at">q75 =</span> <span class="fu">quantile</span>(d1, <span class="fl">0.75</span>),</span>
-<span id="cb238-7"><a href="distributions-and-summarising-data.html#cb238-7" tabindex="-1"></a>    <span class="at">maxVal =</span> <span class="fu">max</span>(d1)</span>
-<span id="cb238-8"><a href="distributions-and-summarising-data.html#cb238-8" tabindex="-1"></a>  )</span>
-<span id="cb238-9"><a href="distributions-and-summarising-data.html#cb238-9" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="distributions-and-summarising-data.html#cb244-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span></span>
+<span id="cb244-2"><a href="distributions-and-summarising-data.html#cb244-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb244-3"><a href="distributions-and-summarising-data.html#cb244-3" tabindex="-1"></a>    <span class="at">minVal =</span> <span class="fu">min</span>(d1),</span>
+<span id="cb244-4"><a href="distributions-and-summarising-data.html#cb244-4" tabindex="-1"></a>    <span class="at">q25 =</span> <span class="fu">quantile</span>(d1, <span class="fl">0.25</span>),</span>
+<span id="cb244-5"><a href="distributions-and-summarising-data.html#cb244-5" tabindex="-1"></a>    <span class="at">med =</span> <span class="fu">median</span>(d1),</span>
+<span id="cb244-6"><a href="distributions-and-summarising-data.html#cb244-6" tabindex="-1"></a>    <span class="at">q75 =</span> <span class="fu">quantile</span>(d1, <span class="fl">0.75</span>),</span>
+<span id="cb244-7"><a href="distributions-and-summarising-data.html#cb244-7" tabindex="-1"></a>    <span class="at">maxVal =</span> <span class="fu">max</span>(d1)</span>
+<span id="cb244-8"><a href="distributions-and-summarising-data.html#cb244-8" tabindex="-1"></a>  )</span>
+<span id="cb244-9"><a href="distributions-and-summarising-data.html#cb244-9" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##   minVal q25 med q75 maxVal
 ## 1      0   1   2   3      7</code></pre>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="distributions-and-summarising-data.html#cb240-1" tabindex="-1"></a><span class="co"># base R summary is just as good.</span></span>
-<span id="cb240-2"><a href="distributions-and-summarising-data.html#cb240-2" tabindex="-1"></a><span class="fu">summary</span>(rp<span class="sc">$</span>d1)</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="distributions-and-summarising-data.html#cb246-1" tabindex="-1"></a><span class="co"># base R summary is just as good.</span></span>
+<span id="cb246-2"><a href="distributions-and-summarising-data.html#cb246-2" tabindex="-1"></a><span class="fu">summary</span>(rp<span class="sc">$</span>d1)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   0.000   1.000   2.000   2.396   3.000   7.000</code></pre>
 </div>
 <div id="comparing-normal-and-poisson-distributions" class="section level2 hasAnchor" number="10.5">
 <h2><span class="header-section-number">10.5</span> Comparing normal and Poisson distributions<a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To get a better feel for how these two distributions differ, lets use the same approach we used above to plot two distributions together.</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="distributions-and-summarising-data.html#cb242-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb242-2"><a href="distributions-and-summarising-data.html#cb242-2" tabindex="-1"></a>  <span class="at">normDist =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
-<span id="cb242-3"><a href="distributions-and-summarising-data.html#cb242-3" tabindex="-1"></a>  <span class="at">poisDist =</span> <span class="fu">rpois</span>(<span class="dv">500</span>, <span class="fl">2.4</span>)</span>
-<span id="cb242-4"><a href="distributions-and-summarising-data.html#cb242-4" tabindex="-1"></a>)</span>
-<span id="cb242-5"><a href="distributions-and-summarising-data.html#cb242-5" tabindex="-1"></a><span class="fu">summary</span>(rn)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="distributions-and-summarising-data.html#cb248-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb248-2"><a href="distributions-and-summarising-data.html#cb248-2" tabindex="-1"></a>  <span class="at">normDist =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb248-3"><a href="distributions-and-summarising-data.html#cb248-3" tabindex="-1"></a>  <span class="at">poisDist =</span> <span class="fu">rpois</span>(<span class="dv">500</span>, <span class="fl">2.4</span>)</span>
+<span id="cb248-4"><a href="distributions-and-summarising-data.html#cb248-4" tabindex="-1"></a>)</span>
+<span id="cb248-5"><a href="distributions-and-summarising-data.html#cb248-5" tabindex="-1"></a><span class="fu">summary</span>(rn)</span></code></pre></div>
 <pre><code>##     normDist          poisDist    
 ##  Min.   :-3.9862   Min.   :0.000  
 ##  1st Qu.: 0.6789   1st Qu.:1.000  
@@ -613,14 +624,14 @@ Calculate the mean values and compare those with <code>lambda</code>
 ##  Mean   : 1.9399   Mean   :2.314  
 ##  3rd Qu.: 3.2712   3rd Qu.:3.000  
 ##  Max.   : 7.9317   Max.   :9.000</code></pre>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="distributions-and-summarising-data.html#cb244-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(rn,</span>
-<span id="cb244-2"><a href="distributions-and-summarising-data.html#cb244-2" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(normDist, poisDist),</span>
-<span id="cb244-3"><a href="distributions-and-summarising-data.html#cb244-3" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">&quot;sampleID&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
-<span id="cb244-4"><a href="distributions-and-summarising-data.html#cb244-4" tabindex="-1"></a>) <span class="co"># rearrange data</span></span>
-<span id="cb244-5"><a href="distributions-and-summarising-data.html#cb244-5" tabindex="-1"></a></span>
-<span id="cb244-6"><a href="distributions-and-summarising-data.html#cb244-6" tabindex="-1"></a><span class="co"># Plot histograms using &quot;identity&quot;, and make them transparent</span></span>
-<span id="cb244-7"><a href="distributions-and-summarising-data.html#cb244-7" tabindex="-1"></a><span class="fu">ggplot</span>(rn, <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">fill =</span> sampleID)) <span class="sc">+</span></span>
-<span id="cb244-8"><a href="distributions-and-summarising-data.html#cb244-8" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">binwidth =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="distributions-and-summarising-data.html#cb250-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(rn,</span>
+<span id="cb250-2"><a href="distributions-and-summarising-data.html#cb250-2" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(normDist, poisDist),</span>
+<span id="cb250-3"><a href="distributions-and-summarising-data.html#cb250-3" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">&quot;sampleID&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb250-4"><a href="distributions-and-summarising-data.html#cb250-4" tabindex="-1"></a>) <span class="co"># rearrange data</span></span>
+<span id="cb250-5"><a href="distributions-and-summarising-data.html#cb250-5" tabindex="-1"></a></span>
+<span id="cb250-6"><a href="distributions-and-summarising-data.html#cb250-6" tabindex="-1"></a><span class="co"># Plot histograms using &quot;identity&quot;, and make them transparent</span></span>
+<span id="cb250-7"><a href="distributions-and-summarising-data.html#cb250-7" tabindex="-1"></a><span class="fu">ggplot</span>(rn, <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">fill =</span> sampleID)) <span class="sc">+</span></span>
+<span id="cb250-8"><a href="distributions-and-summarising-data.html#cb250-8" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">binwidth =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-20-1.png" width="384" style="display: block; margin: auto;" /></p>
 <div class="do-something">
 <p>
@@ -629,8 +640,8 @@ Try changing the arguments in the <code>rnorm</code> and
 </p>
 </div>
 <p>Finally, let’s take another view of these data and look at them using box plots. Box plots are a handy alternative to histograms and many people prefer them.</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="distributions-and-summarising-data.html#cb245-1" tabindex="-1"></a><span class="fu">ggplot</span>(rn, <span class="fu">aes</span>(<span class="at">x =</span> sampleID, <span class="at">y =</span> value, <span class="at">fill =</span> sampleID)) <span class="sc">+</span></span>
-<span id="cb245-2"><a href="distributions-and-summarising-data.html#cb245-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="distributions-and-summarising-data.html#cb251-1" tabindex="-1"></a><span class="fu">ggplot</span>(rn, <span class="fu">aes</span>(<span class="at">x =</span> sampleID, <span class="at">y =</span> value, <span class="at">fill =</span> sampleID)) <span class="sc">+</span></span>
+<span id="cb251-2"><a href="distributions-and-summarising-data.html#cb251-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-22-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer then the other) and cannot be &lt;0. Which graph to you prefer? (there’s no right answer!)</p>
 </div>
@@ -641,20 +652,20 @@ Try changing the arguments in the <code>rnorm</code> and
 <div id="coin-flipping" class="section level3 hasAnchor" number="10.6.1">
 <h3><span class="header-section-number">10.6.1</span> Coin flipping<a href="distributions-and-summarising-data.html#coin-flipping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here’s how to simulate a coin toss in R.</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="distributions-and-summarising-data.html#cb246-1" tabindex="-1"></a>coinToss <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Heads&quot;</span>, <span class="st">&quot;Tails&quot;</span>)</span>
-<span id="cb246-2"><a href="distributions-and-summarising-data.html#cb246-2" tabindex="-1"></a><span class="fu">sample</span>(coinToss, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="distributions-and-summarising-data.html#cb252-1" tabindex="-1"></a>coinToss <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Heads&quot;</span>, <span class="st">&quot;Tails&quot;</span>)</span>
+<span id="cb252-2"><a href="distributions-and-summarising-data.html#cb252-2" tabindex="-1"></a><span class="fu">sample</span>(coinToss, <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Tails&quot;</code></pre>
 <p>And here is how to simulate 6 coin tosses and make a table of the results. Note, we must use the <code>replace = TRUE</code> argument. Please ask if you don’t understand why this is necessary.</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="distributions-and-summarising-data.html#cb248-1" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">sample</span>(coinToss, <span class="dv">6</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb248-2"><a href="distributions-and-summarising-data.html#cb248-2" tabindex="-1"></a><span class="fu">table</span>(result)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="distributions-and-summarising-data.html#cb254-1" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">sample</span>(coinToss, <span class="dv">6</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb254-2"><a href="distributions-and-summarising-data.html#cb254-2" tabindex="-1"></a><span class="fu">table</span>(result)</span></code></pre></div>
 <pre><code>## result
 ## Heads Tails 
 ##     4     2</code></pre>
 <p>We can “wrap” the <code>table</code> function with the <code>as.data.frame</code> to turn the data into a data frame that works with <code>ggplot</code> You’ll probably get different results than me because this is a random process:</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="distributions-and-summarising-data.html#cb250-1" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">result =</span> <span class="fu">sample</span>(coinToss, <span class="dv">6</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb250-2"><a href="distributions-and-summarising-data.html#cb250-2" tabindex="-1"></a></span>
-<span id="cb250-3"><a href="distributions-and-summarising-data.html#cb250-3" tabindex="-1"></a><span class="fu">ggplot</span>(result, <span class="fu">aes</span>(<span class="at">x =</span> result)) <span class="sc">+</span></span>
-<span id="cb250-4"><a href="distributions-and-summarising-data.html#cb250-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="distributions-and-summarising-data.html#cb256-1" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">result =</span> <span class="fu">sample</span>(coinToss, <span class="dv">6</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb256-2"><a href="distributions-and-summarising-data.html#cb256-2" tabindex="-1"></a></span>
+<span id="cb256-3"><a href="distributions-and-summarising-data.html#cb256-3" tabindex="-1"></a><span class="fu">ggplot</span>(result, <span class="fu">aes</span>(<span class="at">x =</span> result)) <span class="sc">+</span></span>
+<span id="cb256-4"><a href="distributions-and-summarising-data.html#cb256-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:2-02-distributionsSummaryStats-25"></span>
 <img src="BB852_files/figure-html/2-02-distributionsSummaryStats-25-1.png" alt="Barplot of 6 simulated coin tosses" width="672" />
 <p class="caption">
@@ -678,8 +689,8 @@ happens to the proportions of heads/tails. What do you notice?
 <h2><span class="header-section-number">10.7</span> Exercise: Virtual dice<a href="distributions-and-summarising-data.html#exercise-virtual-dice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s try the same kind of thing with the roll of (virtual) dice.</p>
 <p>Here’s how to do one roll of the dice:</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="distributions-and-summarising-data.html#cb251-1" tabindex="-1"></a>diceRoll <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
-<span id="cb251-2"><a href="distributions-and-summarising-data.html#cb251-2" tabindex="-1"></a><span class="fu">sample</span>(diceRoll, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="distributions-and-summarising-data.html#cb257-1" tabindex="-1"></a>diceRoll <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb257-2"><a href="distributions-and-summarising-data.html#cb257-2" tabindex="-1"></a><span class="fu">sample</span>(diceRoll, <span class="dv">1</span>)</span></code></pre></div>
 <p>[1] 3</p>
 <p>Now it’s your turn…</p>
 <ol style="list-style-type: decimal">

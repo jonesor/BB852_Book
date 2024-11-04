@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Paths and projects | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Paths and projects | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-10-18" />
+<meta name="date" content="2024-11-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -192,13 +192,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="paths-and-projects.html"><a href="paths-and-projects.html"><i class="fa fa-check"></i><b>6</b> Paths and projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-structure"><i class="fa fa-check"></i><b>6.1</b> File structure</a></li>
-<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#paths-and-the-command-line"><i class="fa fa-check"></i><b>6.2</b> Paths and the command line</a></li>
-<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.3</b> R and file structure</a>
+<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-paths"><i class="fa fa-check"></i><b>6.1</b> File paths</a></li>
+<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-organisation"><i class="fa fa-check"></i><b>6.2</b> File organisation</a></li>
+<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#two-types-of-paths"><i class="fa fa-check"></i><b>6.3</b> Two types of paths</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory"><i class="fa fa-check"></i><b>6.3.1</b> Setting the working directory</a></li>
+<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#absolute-paths-the-exact-location"><i class="fa fa-check"></i><b>6.3.1</b> 1. Absolute Paths: The Exact Location</a></li>
+<li class="chapter" data-level="6.3.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#relative-paths-paths-that-start-from-the-project-folder"><i class="fa fa-check"></i><b>6.3.2</b> 2. Relative Paths: Paths That Start from the Project Folder</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#projects-in-r"><i class="fa fa-check"></i><b>6.4</b> Projects in R</a></li>
+<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.4</b> R and file structure</a></li>
+<li class="chapter" data-level="6.5" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory-in-r"><i class="fa fa-check"></i><b>6.5</b> Setting the Working Directory in R</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#finding-your-current-working-directory"><i class="fa fa-check"></i><b>6.5.1</b> Finding Your Current Working Directory</a></li>
+<li class="chapter" data-level="6.5.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#changing-the-working-directory"><i class="fa fa-check"></i><b>6.5.2</b> Changing the Working Directory</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+</ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
 <li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
@@ -431,55 +442,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="paths-and-projects" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Paths and projects<a href="paths-and-projects.html#paths-and-projects" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="file-structure" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> File structure<a href="paths-and-projects.html#file-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In R, understanding how to tell the program where to find or save data files on your computer is essential. This is done using file paths, which are like giving R specific directions to locate files in your computer’s filing system. Let’s explore the basics of paths and how you can use them in R.</p>
+<div id="file-paths" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> File paths<a href="paths-and-projects.html#file-paths" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Think of a file path like a map or set of directions to a location. If you wanted to tell someone where your favorite restaurant is, you’d give them directions from a common starting point, like a bus stop or a well-known landmark. Similarly, a file path gives R the directions it needs to find a file on your computer.</p>
 <p>Files on a computer are stored in hierarchical folders (also known as directories). On a Mac you can use the Finder program to navigate these folders while on a Windows machine you can use Windows Explorer.</p>
-<p>Try that now!</p>
-<p>When managing your research projects, it’s a good idea to keep your files organised in some sensible structure rather than simply dumping all your files chaotically into the same folder. Be kind to your future self and get organised!</p>
-<p>Exactly how you do that is a matter of personal taste but my own personal preference is to set up a folder per project, and then, within that folder to create folders for Data, Code (for my R scripts), Plots (graphs produced by R), and Writing (e.g. for Word documents with my project write-up).</p>
+<p>Try that now! Make sure that you can use these programs to navigate around your computer to find, move and rename files.</p>
 </div>
-<div id="paths-and-the-command-line" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Paths and the command line<a href="paths-and-projects.html#paths-and-the-command-line" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The Command Line Interface (CLI) is an program interface where you use text commands to operate the program rather than the now more commonplace Graphical User Interface (GUI). R and RStudio have a mix of CLI and GUI.</p>
-<p>To use files (e.g. data) in CLI you will need to know the path, which can be written in text with folder names separated by slashes</p>
-<p>e.g. .<code>C:/Users/Owen/Documents/ProjectX/Data/myData.txt</code></p>
+<div id="file-organisation" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> File organisation<a href="paths-and-projects.html#file-organisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When managing your research projects, it’s a good idea to keep your files organised in some sensible structure rather than simply dumping all your files chaotically into the same folder. Be kind to your future self and get organised! Exactly how you do that is a matter of personal taste but my own personal preference is to set up a folder per project, and then, within that folder to create folders for Data, Code (for my R scripts), Plots (graphs produced by R), and Writing (e.g. for Word documents with my project write-up).</p>
 </div>
-<div id="r-and-file-structure" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> R and file structure<a href="paths-and-projects.html#r-and-file-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>To load data into R using the CLI you need to use file paths which can be annoying to type.</p>
-<p>e.g. <code>x &lt;- read.csv(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/Data/myData.txt”)</code></p>
+<div id="two-types-of-paths" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Two types of paths<a href="paths-and-projects.html#two-types-of-paths" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are two types of file paths (1) Absolute Paths and (2) Relative Paths.</p>
+<div id="absolute-paths-the-exact-location" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> 1. Absolute Paths: The Exact Location<a href="paths-and-projects.html#absolute-paths-the-exact-location" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An <strong>absolute path</strong> gives the complete route to a file, starting from the “root” (or base) of your computer’s filing system.</p>
+<p>Here’s how they look on different systems:</p>
+<ul>
+<li><p><strong>On Windows</strong>: Paths begin with the drive letter, usually <code>C:/</code>. For example:</p>
+<pre><code>C:/Users/YourUsername/Documents/Project/myData.csv</code></pre></li>
+<li><p><strong>On macOS</strong>: Paths start from <code>/Users/</code>, like this:</p>
+<pre><code>/Users/YourUsername/Documents/Project/myData.csv</code></pre></li>
+</ul>
+<blockquote>
+<p><strong>Important Note:</strong> While Windows normally uses backslashes (<code>\</code>) in paths, R needs you to replace them with forward slashes (<code>/</code>). R will interpret forward slashes correctly on both Windows and Mac.</p>
+</blockquote>
+<p><strong>How to Copy an Absolute Path:</strong>
+- <strong>On Windows</strong>: Hold the <code>Shift</code> key, right-click the file, and select <strong>“Copy as path”</strong>.
+- <strong>On macOS</strong>: Hold down the <code>Option</code> key, right-click the file, and select <strong>“Copy [filename] as Pathname”</strong>.</p>
+<p>Using absolute paths tells R precisely where your file is located on your computer. However, absolute paths have a downside: they’re specific to each computer. If you share your code with someone else, they’d have to change the path to match their system.</p>
+</div>
+<div id="relative-paths-paths-that-start-from-the-project-folder" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> 2. Relative Paths: Paths That Start from the Project Folder<a href="paths-and-projects.html#relative-paths-paths-that-start-from-the-project-folder" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A <strong>relative path</strong> is a shortcut that starts from your <strong>current</strong> folder in R instead of from the root directory of your computer. It’s like giving directions from a specific starting point, like “turn left at the library,” instead of giving an address.</p>
+<p>For example:
+- If your project folder is at <code>/Users/YourUsername/Documents/Project/</code>, you could use a relative path to refer to files inside that folder.
+- So instead of typing the full absolute path, you might use: <code>data/myData.csv</code></p>
+<p>Using relative paths is particularly helpful because your code can be easily shared and used on other computers without needing changes to the file paths.</p>
+</div>
+</div>
+<div id="r-and-file-structure" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> R and file structure<a href="paths-and-projects.html#r-and-file-structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To load data into R you need to use file paths which can be annoying to type.</p>
+<p>e.g. <code>x &lt;- read.csv(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/Data/myData.csv”)</code></p>
 <p>There are two ways to make life easier for yourself: (1) you can set the “working directory” for your project; (2) you can set up an R Project.</p>
 <p>It is true that RStudio has a data import wizard to help with this, but setting a working directory or using Projects is recommended. I will briefly outline these two options.</p>
-<div id="setting-the-working-directory" class="section level3 hasAnchor" number="6.3.1">
-<h3><span class="header-section-number">6.3.1</span> Setting the working directory<a href="paths-and-projects.html#setting-the-working-directory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>R/RStudio use “relative paths” which means that you can tell R where you are working (i.e. the path). To understand what this means, is is useful to see what R sees:</p>
-<p>Open RStudio and type <code>getwd()</code> (“get working directory”) to get the working directory of your RStudio session. Any files within that working directory folder can be loaded <strong>without</strong> typing the full path. In other words, if a data file, <code>myData.csv</code>, is in the working directory folder you could load it by typing <code>x &lt;- read.csv(“myData.csv”)</code>rather than with the full path e.g. <code>x &lt;- read.csv(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/Data/myData.csv”)</code>.</p>
-<p>In R you can change the working directory with <code>setwd()</code> e.g. <code>setwd(“PATH_TO_NEW_DIRECTORY”)</code>.</p>
-<p>Basically, setting the working directory acts like a short cut.
-By setting the working directory to like this:</p>
-<p><code>setwd(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/“)</code>,</p>
-<p>the long command to read in data…</p>
-<p><code>x &lt;- read.csv(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/Data/myData.csv”)</code></p>
-<p>…becomes much shorter…</p>
-<p><code>x &lt;- read.csv(“Data/myData.txt”)</code>.</p>
+<p>Let’s refine it further for clarity. I’ll remove some technical jargon and break down the steps with simple language and context, aiming for a smooth flow for non-experts.</p>
+<hr />
 </div>
-</div>
-<div id="projects-in-r" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Projects in R<a href="paths-and-projects.html#projects-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Projects in RStudio are a very convenient way to automate the setting of the working directory. To set up a project do the following:</p>
-<ul>
-<li>Navigate in <em>Finder</em> (Mac) or <em>Windows Explorer</em> (Windows) to where you would like to put your work.</li>
-<li>Create a folder to contain your work (e.g. <code>BB852CourseWork</code>, this is your Working Directory.</li>
+<div id="setting-the-working-directory-in-r" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Setting the Working Directory in R<a href="paths-and-projects.html#setting-the-working-directory-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In R, the <strong>working directory</strong> is like the “home base” folder where R looks for files by default. Setting the working directory means you don’t have to type out the entire location (path) of a file each time you want to use it. This makes your code simpler and easier to manage.</p>
+<div id="finding-your-current-working-directory" class="section level3 hasAnchor" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Finding Your Current Working Directory<a href="paths-and-projects.html#finding-your-current-working-directory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To see where R is currently looking for files:</p>
+<ol style="list-style-type: decimal">
 <li>Open RStudio.</li>
-<li>Click <code>File &gt; New Project</code>.</li>
-<li>Click <code>Existing directory</code>.</li>
-<li>Browse to find the correct folder, click to enter the folder.</li>
-<li>Click <code>Create Project</code>. This will create a file called e.g. <code>BB852CourseWork.Rproj</code>. From now on, you can open RStudio by clicking this file. Doing so will automatically set your working directory and any other settings saved for your project.</li>
-<li>Close RStudio and try opening the <code>Rproj</code> file by clicking it.</li>
+<li>Type <code>getwd()</code> and press Enter.</li>
+</ol>
+<p>This command shows the “working directory” R is using right now. Any file in this folder can be loaded into R without typing the full file location.</p>
+<p>For example, if you have a file called <code>myData.csv</code> in the working directory, you can load it simply by typing:</p>
+<pre><code>x &lt;- read.csv(&quot;myData.csv&quot;)</code></pre>
+<p>instead of the longer path:</p>
+<pre><code>x &lt;- read.csv(&quot;C:/Users/YourName/Documents/Project/Data/myData.csv&quot;)</code></pre>
+</div>
+<div id="changing-the-working-directory" class="section level3 hasAnchor" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> Changing the Working Directory<a href="paths-and-projects.html#changing-the-working-directory" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If your files are in a different folder, you can change the working directory using the command <code>setwd()</code>. Just replace <code>"path/to/your/folder"</code> with the path to the folder you want to use.</p>
+<p>Example:</p>
+<pre><code>setwd(&quot;C:/Users/YourName/Documents/Project/&quot;)</code></pre>
+<p>After setting the working directory this way, you can access any files in that folder without typing out the full path. For example:</p>
+<pre><code>x &lt;- read.csv(&quot;Data/myData.csv&quot;)  # Shorter and easier to read</code></pre>
+<hr />
+</div>
+</div>
+<div id="using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Using Projects in RStudio: A Simpler Way to Set the Working Directory<a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>When you create an <strong>R Project</strong> in RStudio, it generates a file with an <code>.Rproj</code> suffix in your project folder. This <code>.Rproj</code> file not only serves as a shortcut to open the project but also ensures that RStudio sets the project folder as the working directory every time you open the project file. This feature simplifies managing file locations by keeping all paths relative to the project directory.</p>
+<div id="steps-to-create-an-r-project" class="section level3 hasAnchor" number="6.6.1">
+<h3><span class="header-section-number">6.6.1</span> Steps to Create an R Project<a href="paths-and-projects.html#steps-to-create-an-r-project" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>First, create a folder for your project files in <strong>Finder</strong> (Mac) or <strong>Windows Explorer</strong> (Windows). For example, create a folder called <code>MyProject</code>.</li>
+<li>Open RStudio and go to <code>File &gt; New Project</code>.</li>
+<li>Select <code>Existing Directory</code> and browse to your new folder.</li>
+<li>Click <code>Create Project</code>.</li>
+</ol>
+<p>This setup creates a file called <code>MyProject.Rproj</code>. From now on, open this file to start RStudio with the working directory automatically set to the project folder. You don’t need to use <code>setwd()</code> or worry about typing long paths.</p>
+<p>To double-check, you can type <code>getwd()</code> after opening the project, and it will show your project folder as the working directory.</p>
+<hr />
+</div>
+<div id="organizing-files-within-your-project" class="section level3 hasAnchor" number="6.6.2">
+<h3><span class="header-section-number">6.6.2</span> Organizing Files Within Your Project<a href="paths-and-projects.html#organizing-files-within-your-project" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now that your project is set up, you can organize your files within the project folder. Here’s a common way to organize:</p>
+<ul>
+<li><strong>data</strong> – for all data files</li>
+<li><strong>scripts</strong> – for R code files</li>
+<li><strong>plots</strong> – for graphs and images</li>
 </ul>
-<p>If you use the command <code>getwd()</code> you will see that the working directory is now automatically set as the project folder location. Awesome!</p>
-<p>After you have created a project folder (e.g. <code>BB852CourseWork</code>), you can add useful folders to keep yourself organised. As mentioned above, exactly how you do that is a matter of personal taste but you should at least have a folder here for <code>data</code> and <code>plots</code>.</p>
+<p>This folder organization makes it easy to find files, keeps everything related to the project in one place, and helps you share your work with others if needed.</p>
+<p>By using R Projects and organizing your folders, you’ll find that working with files in R becomes simpler and more efficient.</p>
 
+</div>
 </div>
 </div>
 
