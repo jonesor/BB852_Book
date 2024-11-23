@@ -447,19 +447,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="glm-families-and-use-cases" class="section level1 hasAnchor" number="22">
 <h1><span class="header-section-number">Chapter 22</span> GLM families and use cases<a href="glm-families-and-use-cases.html#glm-families-and-use-cases" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>As we have seen in the previous chapters, Generalised Linear Models (GLMs) extend the framework of linear regression by allowing for response variables that have non-normal distributions. GLMs are particularly useful in cases where the response variable exhibits properties such as boundedness, non-linearity, or non-constant variance. Each GLM family addresses specific data characteristics and includes a link function to relate the mean of the response variable (<span class="math inline">\(\mu\)</span>) to a linear predictor (<span class="math inline">\(\eta\)</span>).</p>
-<p>The choice of family and link function is important, to ensure proper modeling of the data. For example, binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When the variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood or alternative families like negative binomial or zero-inflated models may be employed.</p>
-<p>This brief section summarises properties of common GLM families and gives examples of applications. It also provides mathematical details about the link and inverse link functions, which form the core of GLM transformations.</p>
+<p>As we have seen in the previous chapters, Generalised Linear Models (GLMs) extend the linear regression framework by allowing for response variables with non-normal error distributions. GLMs are particularly useful in cases where the response variable exhibits properties such as boundedness, non-linearity, or non-constant variance. Each GLM family addresses specific data characteristics and includes a link function to relate the mean of the response variable (<span class="math inline">\(\mu\)</span>) to a linear predictor (<span class="math inline">\(\eta\)</span>).</p>
+<p>The choice of family and link function is essential for proper data modeling. Binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood families may be employed. This extra variation often arises from unaccounted-for heterogeneity in the data, such as omitted seasonal effects or other unmeasured variables that influence the response but are not included as predictors. In some cases, including these missing variables can reduce overdispersion and improve model fit.</p>
+<p>Overdispersion can be diagnosed from model summaries by comparing the residual deviance to the degrees of freedom. Specifically, dividing the residual deviance by the degrees of freedom yields a ratio where values significantly greater than 1 suggest overdispersion. Ratios above 2 often indicate the need for a quasi-likelihood model, such as a quasi-Poisson or quasi-Binomial family, which introduces a dispersion parameter to account for the extra variability. This adjustment ensures that standard errors are correctly estimated, leading to more reliable hypothesis tests and confidence intervals.</p>
+<p>This brief section summarises properties of common GLM families and gives examples of applications. It also provides mathematical details about the link and inverse link functions.</p>
 <hr />
 <div id="summary-table-of-glm-families" class="section level2 hasAnchor" number="22.1">
 <h2><span class="header-section-number">22.1</span> Summary Table of GLM Families<a href="glm-families-and-use-cases.html#summary-table-of-glm-families" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <table>
 <colgroup>
-<col width="13%" />
-<col width="19%" />
-<col width="11%" />
-<col width="27%" />
-<col width="27%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -472,6 +473,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
+<td><strong>Gaussian</strong></td>
+<td><span class="math inline">\((-\infty, \infty)\)</span></td>
+<td>Identity</td>
+<td><span class="math inline">\(g(\mu) = \mu\)</span></td>
+<td><span class="math inline">\(\mu = \eta\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Poisson</strong></td>
+<td><span class="math inline">\([0, \infty)\)</span></td>
+<td>Log</td>
+<td><span class="math inline">\(g(\mu) = \log(\mu)\)</span></td>
+<td><span class="math inline">\(\mu = \exp(\eta)\)</span></td>
+</tr>
+<tr class="odd">
 <td><strong>Binomial</strong></td>
 <td><span class="math inline">\([0, 1]\)</span></td>
 <td>Logit</td>
@@ -479,28 +494,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><span class="math inline">\(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)</span></td>
 </tr>
 <tr class="even">
-<td><strong>Gaussian</strong></td>
-<td><span class="math inline">\((-\infty, \infty)\)</span></td>
-<td>Identity</td>
-<td><span class="math inline">\(g(\mu) = \mu\)</span></td>
-<td><span class="math inline">\(\mu = \eta\)</span></td>
-</tr>
-<tr class="odd">
 <td><strong>Gamma</strong></td>
 <td><span class="math inline">\((0, \infty)\)</span></td>
 <td>Inverse</td>
 <td><span class="math inline">\(g(\mu) = \frac{1}{\mu}\)</span></td>
 <td><span class="math inline">\(\mu = \frac{1}{\eta}\)</span></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Inverse Gaussian</strong></td>
 <td><span class="math inline">\((0, \infty)\)</span></td>
 <td>Inverse Squared</td>
 <td><span class="math inline">\(g(\mu) = \frac{1}{\mu^2}\)</span></td>
 <td><span class="math inline">\(\mu = \frac{1}{\sqrt{\eta}}\)</span></td>
 </tr>
+<tr class="even">
+<td><strong>Quasibinomial</strong></td>
+<td><span class="math inline">\([0, 1]\)</span></td>
+<td>Logit</td>
+<td><span class="math inline">\(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\)</span></td>
+<td><span class="math inline">\(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)</span></td>
+</tr>
 <tr class="odd">
-<td><strong>Poisson</strong></td>
+<td><strong>Quasipoisson</strong></td>
 <td><span class="math inline">\([0, \infty)\)</span></td>
 <td>Log</td>
 <td><span class="math inline">\(g(\mu) = \log(\mu)\)</span></td>
@@ -513,75 +528,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><span class="math inline">\(g(\mu) = \mu\)</span></td>
 <td><span class="math inline">\(\mu = \eta\)</span></td>
 </tr>
-<tr class="odd">
-<td><strong>Quasibinomial</strong></td>
-<td><span class="math inline">\([0, 1]\)</span></td>
-<td>Logit</td>
-<td><span class="math inline">\(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\)</span></td>
-<td><span class="math inline">\(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)</span></td>
-</tr>
-<tr class="even">
-<td><strong>Quasipoisson</strong></td>
-<td><span class="math inline">\([0, \infty)\)</span></td>
-<td>Log</td>
-<td><span class="math inline">\(g(\mu) = \log(\mu)\)</span></td>
-<td><span class="math inline">\(\mu = \exp(\eta)\)</span></td>
-</tr>
 </tbody>
 </table>
 <p>This table provides a quick reference for understanding the key attributes of each GLM family, including the mathematical transformations that underpin their implementation. See below for more details and some examples.</p>
 </div>
 <div id="further-details-of-common-glm-families" class="section level2 hasAnchor" number="22.2">
 <h2><span class="header-section-number">22.2</span> Further details of common GLM Families<a href="glm-families-and-use-cases.html#further-details-of-common-glm-families" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>1. Binomial (link = “logit”)</strong></p>
+<p><strong>1. Gaussian (link = “identity”)</strong></p>
 <ul>
-<li><strong>Properties</strong>: Used for binary or proportion data where the response is a probability or fraction between 0 and 1. The response variable must lie within the bounds <span class="math inline">\([0, 1]\)</span>.</li>
-<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\)</span>, where <span class="math inline">\(\mu\)</span> is the expected probability.</li>
-<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)</span>, where <span class="math inline">\(\eta = g(\mu)\)</span> is the linear predictor.</li>
-<li><strong>Examples</strong>:
-<ol style="list-style-type: decimal">
-<li>The presence or absence of a species in different habitat types.</li>
-<li>Proportion of seeds that germinate under different soil conditions.</li>
-</ol></li>
-</ul>
-<hr />
-<p><strong>2. Gaussian (link = “identity”)</strong></p>
-<ul>
-<li><strong>Properties</strong>: Suitable for continuous response variables that are normally distributed. Gaussian data can, in theory, take any value <span class="math inline">\((-\infty, \infty)\)</span>.</li>
+<li><strong>Properties</strong>: Suitable for continuous response variables that are normally distributed. Gaussian data can, in theory, take any value <span class="math inline">\((-\infty, \infty)\)</span>. This is a trivial family in the sense the the <code>glm</code> model becomes mathematically identical to the regular <code>lm</code> model.</li>
 <li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \mu\)</span>.</li>
 <li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \eta\)</span>.</li>
 <li><strong>Examples</strong>:
 <ol style="list-style-type: decimal">
-<li>Plant height as a function of soil nutrients.</li>
-<li>Fish weight relative to water temperature.</li>
+<li>Plant height as a function of soil nutrient content.</li>
+<li>Fish weight relative to water temperature they grow in.</li>
 </ol></li>
 </ul>
-<hr />
-<p><strong>3. Gamma (link = “inverse”)</strong></p>
-<ul>
-<li><strong>Properties</strong>: Used for continuous, positive response variables with skewed distributions. The response variable must be strictly greater than 0 <span class="math inline">\((0, \infty)\)</span>.</li>
-<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \frac{1}{\mu}\)</span>.</li>
-<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \frac{1}{\eta}\)</span>.</li>
-<li><strong>Examples</strong>:
-<ol style="list-style-type: decimal">
-<li>Time to reach maturity for plants under varying light intensities.</li>
-<li>Energy expenditure of birds during migration.</li>
-</ol></li>
-</ul>
-<hr />
-<p><strong>4. Inverse Gaussian (link = “1/mu^2”)</strong></p>
-<ul>
-<li><strong>Properties</strong>: Suitable for strictly positive continuous data <span class="math inline">\((0, \infty)\)</span>, particularly when variability increases with the mean.</li>
-<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \frac{1}{\mu^2}\)</span>.</li>
-<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \frac{1}{\sqrt{\eta}}\)</span>.</li>
-<li><strong>Examples</strong>:
-<ol style="list-style-type: decimal">
-<li>Survival times of fish in polluted versus clean waters.</li>
-<li>Distance traveled by animals during foraging.</li>
-</ol></li>
-</ul>
-<hr />
-<p><strong>5. Poisson (link = “log”)</strong></p>
+<p><strong>2. Poisson (link = “log”)</strong></p>
 <ul>
 <li><strong>Properties</strong>: Used for count data, particularly for events occurring in a fixed space or time. The response variable must be non-negative integers <span class="math inline">\([0, \infty)\)</span>, though it is typically greater than or equal to zero.</li>
 <li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \log(\mu)\)</span>.</li>
@@ -589,22 +553,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>Examples</strong>:
 <ol style="list-style-type: decimal">
 <li>Number of flowers produced per plant under different water regimes.</li>
-<li>Bird counts in fixed-area plots over a season.</li>
+<li>Bird species counts on islands of different sizes.</li>
 </ol></li>
 </ul>
-<hr />
-<p><strong>6. Quasi (link = “identity”, variance = “constant”)</strong></p>
+<p><strong>3. Binomial (link = “logit”)</strong></p>
 <ul>
-<li><strong>Properties</strong>: Allows modeling of data with overdispersion without assuming a specific variance function. Overdispersion occurs when the observed variance is larger than what is predicted by the assumed distribution. The bounds of the data depend on the assumed variance structure but are often continuous <span class="math inline">\((-\infty, \infty)\)</span>.</li>
-<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \mu\)</span>.</li>
-<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \eta\)</span>.</li>
+<li><strong>Properties</strong>: Used for binary or proportion data where the response is a probability or fraction between 0 and 1. The response variable must lie within the bounds <span class="math inline">\([0, 1]\)</span>.</li>
+<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\)</span>, where <span class="math inline">\(\mu\)</span> is the expected probability.</li>
+<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)</span>, where <span class="math inline">\(\eta = g(\mu)\)</span> is the linear predictor.</li>
 <li><strong>Examples</strong>:
 <ol style="list-style-type: decimal">
-<li><strong>Variance in bacterial colony sizes across environmental conditions</strong>: Overdispersion might arise because bacterial growth is affected by many unmeasured environmental factors (e.g., humidity, nutrient variation), introducing additional variability.</li>
-<li><strong>Counts of insect larvae in different field plots</strong>: Overdispersion may occur if factors like plot microclimates or predator densities cause more variability than predicted by a simple Poisson distribution.</li>
+<li><p>The presence or absence (0/1) of a species in different habitat types, or along an ecological gradient.</p></li>
+<li><p>Proportion of seeds (successes vs. failures) that germinate under different soil conditions.</p></li>
 </ol></li>
 </ul>
-<hr />
+<p><strong>4. Gamma (link = “inverse”)</strong></p>
+<ul>
+<li><strong>Properties</strong>: Used for continuous, positive response variables with skewed distributions. The response variable must be strictly greater than 0, (i.e. no zero values) <span class="math inline">\((0, \infty)\)</span>.</li>
+<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \frac{1}{\mu}\)</span>.</li>
+<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \frac{1}{\eta}\)</span>.</li>
+<li><strong>Examples</strong>:
+<ol style="list-style-type: decimal">
+<li>Time to reach maturity for plants under varying light intensities.</li>
+<li>Energy expenditure of birds during migration under different conditions.</li>
+</ol></li>
+</ul>
+<p><strong>5. Inverse Gaussian (link = “1/mu^2”)</strong></p>
+<ul>
+<li><strong>Properties</strong>: Suitable for strictly positive continuous data <span class="math inline">\((0, \infty)\)</span>, particularly when variability increases with the mean.</li>
+<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \frac{1}{\mu^2}\)</span>.</li>
+<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \frac{1}{\sqrt{\eta}}\)</span>.</li>
+<li><strong>Examples</strong>:
+<ol style="list-style-type: decimal">
+<li>Survival times of fish in polluted versus clean waters.</li>
+<li>Distance traveled by animals during foraging in different habitats.</li>
+</ol></li>
+</ul>
+<p><strong>6. Quasipoisson (link = “log”)</strong></p>
+<ul>
+<li><strong>Properties</strong>: Similar to the Poisson family but for overdispersed count data. Overdispersion may arise when the variability in the count data exceeds the mean, violating the Poisson assumption that the mean equals the variance. The response variable must be non-negative integers <span class="math inline">\([0, \infty)\)</span>.</li>
+<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \log(\mu)\)</span>.</li>
+<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \exp(\eta)\)</span>.</li>
+<li><strong>Examples</strong>:
+<ol style="list-style-type: decimal">
+<li><p><strong>Number of insect visits to flowers under varying light conditions</strong>: Overdispersion occurs because different flowers might attract insects at varying rates due to unmeasured traits like nectar availability or competition from neighboring flowers.</p></li>
+<li><p><strong>Counts of trees in different forest patches</strong>: Overdispersion might arise from varying soil quality, seed dispersal patterns, or localized disturbances, leading to greater variability in counts than expected under a standard Poisson model.</p></li>
+</ol></li>
+</ul>
 <p><strong>7. Quasibinomial (link = “logit”)</strong></p>
 <ul>
 <li><strong>Properties</strong>: Similar to the binomial family but for overdispersed binary/proportion data. Overdispersion may arise when there is unaccounted-for heterogeneity in the probabilities of success across observations. The response variable must lie between <span class="math inline">\([0, 1]\)</span>.</li>
@@ -616,16 +611,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>Germination success rate under fluctuating temperature regimes</strong>: Overdispersion may result from heterogeneity in seed quality or local microclimatic differences that influence germination probabilities.</li>
 </ol></li>
 </ul>
-<hr />
-<p><strong>8. Quasipoisson (link = “log”)</strong></p>
+<p><strong>6. Quasi (link = “identity”, variance = “constant”)</strong></p>
+<p>In some cases, the variance-mean relationship may not align with binomial or Poisson assumptions, even after adjustment for overdispersion. The <code>Quasi</code> family offers a flexible framework where the variance can follow any user-specified function of the mean, providing additional flexibility in handling a range of data characteristics.</p>
 <ul>
-<li><strong>Properties</strong>: Similar to the Poisson family but for overdispersed count data. Overdispersion may arise when the variability in the count data exceeds the mean, violating the Poisson assumption that the mean equals the variance. The response variable must be non-negative integers <span class="math inline">\([0, \infty)\)</span>.</li>
-<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \log(\mu)\)</span>.</li>
-<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \exp(\eta)\)</span>.</li>
+<li><strong>Properties</strong>: Allows modeling of data with overdispersion without assuming a specific variance function. Overdispersion occurs when the observed variance is larger than what is predicted by the assumed distribution. The bounds of the data depend on the assumed variance structure but are often continuous <span class="math inline">\((-\infty, \infty)\)</span>.</li>
+<li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \mu\)</span>.</li>
+<li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \eta\)</span>.</li>
 <li><strong>Examples</strong>:
 <ol style="list-style-type: decimal">
-<li><strong>Number of insect visits to flowers under varying light conditions</strong>: Overdispersion occurs because different flowers might attract insects at varying rates due to unmeasured traits like nectar availability or competition from neighboring flowers.</li>
-<li><strong>Counts of trees in different forest patches</strong>: Overdispersion might arise from varying soil quality, seed dispersal patterns, or localized disturbances, leading to greater variability in counts than expected under a standard Poisson model.</li>
+<li><strong>Variance in bacterial colony sizes across environmental conditions</strong>: Overdispersion might arise because bacterial growth is affected by many unmeasured environmental factors (e.g., humidity, nutrient variation), introducing additional variability.</li>
+<li><strong>Counts of insect larvae in different field plots</strong>: Overdispersion may occur if factors like plot microclimates or predator densities cause more variability than predicted by a simple Poisson distribution.</li>
 </ol></li>
 </ul>
 

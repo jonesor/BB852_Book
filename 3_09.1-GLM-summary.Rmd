@@ -1,113 +1,104 @@
 # GLM families and use cases
 
-As we have seen in the previous chapters, Generalised Linear Models (GLMs) extend the framework of linear regression by allowing for response variables that have non-normal distributions. GLMs are particularly useful in cases where the response variable exhibits properties such as boundedness, non-linearity, or non-constant variance. Each GLM family addresses specific data characteristics and includes a link function to relate the mean of the response variable (\(\mu\)) to a linear predictor (\(\eta\)).
+As we have seen in the previous chapters, Generalised Linear Models (GLMs) extend the linear regression framework by allowing for response variables with non-normal error distributions. GLMs are particularly useful in cases where the response variable exhibits properties such as boundedness, non-linearity, or non-constant variance. Each GLM family addresses specific data characteristics and includes a link function to relate the mean of the response variable ($\mu$) to a linear predictor ($\eta$).
 
-The choice of family and link function is important, to ensure proper modeling of the data. For example, binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When the variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood or alternative families like negative binomial or zero-inflated models may be employed.
+The choice of family and link function is essential for proper data modeling. Binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood families may be employed. This extra variation often arises from unaccounted-for heterogeneity in the data, such as omitted seasonal effects or other unmeasured variables that influence the response but are not included as predictors. In some cases, including these missing variables can reduce overdispersion and improve model fit.
 
-This brief section summarises properties of common GLM families and gives examples of applications. It also provides mathematical details about the link and inverse link functions, which form the core of GLM transformations.
+Overdispersion can be diagnosed from model summaries by comparing the residual deviance to the degrees of freedom. Specifically, dividing the residual deviance by the degrees of freedom yields a ratio where values significantly greater than 1 suggest overdispersion. Ratios above 2 often indicate the need for a quasi-likelihood model, such as a quasi-Poisson or quasi-Binomial family, which introduces a dispersion parameter to account for the extra variability. This adjustment ensures that standard errors are correctly estimated, leading to more reliable hypothesis tests and confidence intervals.
 
----
+This brief section summarises properties of common GLM families and gives examples of applications. It also provides mathematical details about the link and inverse link functions.
+
+------------------------------------------------------------------------
 
 ## Summary Table of GLM Families
 
-| **Family Name**     | **Bounds of Response Variable** | **Link Name**     | **Link Equation**                            | **Inverse Link Equation**                     |
-|----------------------|---------------------------------|-------------------|-----------------------------------------------|-----------------------------------------------|
-| **Binomial**         | \([0, 1]\)                     | Logit            | \(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\) | \(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)   |
-| **Gaussian**         | \((-\infty, \infty)\)          | Identity         | \(g(\mu) = \mu\)                              | \(\mu = \eta\)                                |
-| **Gamma**            | \((0, \infty)\)                | Inverse          | \(g(\mu) = \frac{1}{\mu}\)                   | \(\mu = \frac{1}{\eta}\)                      |
-| **Inverse Gaussian** | \((0, \infty)\)                | Inverse Squared  | \(g(\mu) = \frac{1}{\mu^2}\)                 | \(\mu = \frac{1}{\sqrt{\eta}}\)               |
-| **Poisson**          | \([0, \infty)\)                | Log              | \(g(\mu) = \log(\mu)\)                       | \(\mu = \exp(\eta)\)                          |
-| **Quasi**            | Depends on variance structure  | Identity         | \(g(\mu) = \mu\)                              | \(\mu = \eta\)                                |
-| **Quasibinomial**    | \([0, 1]\)                     | Logit            | \(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\) | \(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)   |
-| **Quasipoisson**     | \([0, \infty)\)                | Log              | \(g(\mu) = \log(\mu)\)                       | \(\mu = \exp(\eta)\)                          |
+| **Family Name** | **Bounds of Response Variable** | **Link Name** | **Link Equation** | **Inverse Link Equation** |
+|---------------|---------------|---------------|---------------|---------------|
+| **Gaussian** | $(-\infty, \infty)$ | Identity | $g(\mu) = \mu$ | $\mu = \eta$ |
+| **Poisson** | $[0, \infty)$ | Log | $g(\mu) = \log(\mu)$ | $\mu = \exp(\eta)$ |
+| **Binomial** | $[0, 1]$ | Logit | $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$ | $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$ |
+| **Gamma** | $(0, \infty)$ | Inverse | $g(\mu) = \frac{1}{\mu}$ | $\mu = \frac{1}{\eta}$ |
+| **Inverse Gaussian** | $(0, \infty)$ | Inverse Squared | $g(\mu) = \frac{1}{\mu^2}$ | $\mu = \frac{1}{\sqrt{\eta}}$ |
+| **Quasibinomial** | $[0, 1]$ | Logit | $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$ | $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$ |
+| **Quasipoisson** | $[0, \infty)$ | Log | $g(\mu) = \log(\mu)$ | $\mu = \exp(\eta)$ |
+| **Quasi** | Depends on variance structure | Identity | $g(\mu) = \mu$ | $\mu = \eta$ |
 
 This table provides a quick reference for understanding the key attributes of each GLM family, including the mathematical transformations that underpin their implementation. See below for more details and some examples.
 
 ## Further details of common GLM Families
 
-**1. Binomial (link = "logit")**
+**1. Gaussian (link = "identity")**
 
-   - **Properties**: Used for binary or proportion data where the response is a probability or fraction between 0 and 1. The response variable must lie within the bounds \([0, 1]\).
-   - **Link function**: \( g(\mu) = \log\left(\frac{\mu}{1-\mu}\right) \), where \(\mu\) is the expected probability.
-   - **Inverse link**: \( \mu = \frac{\exp(\eta)}{1 + \exp(\eta)} \), where \(\eta = g(\mu)\) is the linear predictor.
-   - **Examples**:
-     1. The presence or absence of a species in different habitat types.
-     2. Proportion of seeds that germinate under different soil conditions.
+-   **Properties**: Suitable for continuous response variables that are normally distributed. Gaussian data can, in theory, take any value $(-\infty, \infty)$. This is a trivial family in the sense the the `glm` model becomes mathematically identical to the regular `lm` model.
+-   **Link function**: $g(\mu) = \mu$.
+-   **Inverse link**: $\mu = \eta$.
+-   **Examples**:
+    1.  Plant height as a function of soil nutrient content.
+    2.  Fish weight relative to water temperature they grow in.
 
----
+**2. Poisson (link = "log")**
 
-**2. Gaussian (link = "identity")**
+-   **Properties**: Used for count data, particularly for events occurring in a fixed space or time. The response variable must be non-negative integers $[0, \infty)$, though it is typically greater than or equal to zero.
+-   **Link function**: $g(\mu) = \log(\mu)$.
+-   **Inverse link**: $\mu = \exp(\eta)$.
+-   **Examples**:
+    1.  Number of flowers produced per plant under different water regimes.
+    2.  Bird species counts on islands of different sizes.
 
-   - **Properties**: Suitable for continuous response variables that are normally distributed. Gaussian data can, in theory, take any value \((-\infty, \infty)\).
-   - **Link function**: \( g(\mu) = \mu \).
-   - **Inverse link**: \( \mu = \eta \).
-   - **Examples**:
-     1. Plant height as a function of soil nutrients.
-     2. Fish weight relative to water temperature.
+**3. Binomial (link = "logit")**
 
----
+-   **Properties**: Used for binary or proportion data where the response is a probability or fraction between 0 and 1. The response variable must lie within the bounds $[0, 1]$.
+-   **Link function**: $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$, where $\mu$ is the expected probability.
+-   **Inverse link**: $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$, where $\eta = g(\mu)$ is the linear predictor.
+-   **Examples**:
+    1.  The presence or absence (0/1) of a species in different habitat types, or along an ecological gradient.
 
-**3. Gamma (link = "inverse")**
+    2.  Proportion of seeds (successes vs. failures) that germinate under different soil conditions.
 
-   - **Properties**: Used for continuous, positive response variables with skewed distributions. The response variable must be strictly greater than 0 \((0, \infty)\).
-   - **Link function**: \( g(\mu) = \frac{1}{\mu} \).
-   - **Inverse link**: \( \mu = \frac{1}{\eta} \).
-   - **Examples**:
-     1. Time to reach maturity for plants under varying light intensities.
-     2. Energy expenditure of birds during migration.
+**4. Gamma (link = "inverse")**
 
----
+-   **Properties**: Used for continuous, positive response variables with skewed distributions. The response variable must be strictly greater than 0, (i.e. no zero values) $(0, \infty)$.
+-   **Link function**: $g(\mu) = \frac{1}{\mu}$.
+-   **Inverse link**: $\mu = \frac{1}{\eta}$.
+-   **Examples**:
+    1.  Time to reach maturity for plants under varying light intensities.
+    2.  Energy expenditure of birds during migration under different conditions.
 
-**4. Inverse Gaussian (link = "1/mu^2")**
+**5. Inverse Gaussian (link = "1/mu\^2")**
 
-   - **Properties**: Suitable for strictly positive continuous data \((0, \infty)\), particularly when variability increases with the mean.
-   - **Link function**: \( g(\mu) = \frac{1}{\mu^2} \).
-   - **Inverse link**: \( \mu = \frac{1}{\sqrt{\eta}} \).
-   - **Examples**:
-     1. Survival times of fish in polluted versus clean waters.
-     2. Distance traveled by animals during foraging.
+-   **Properties**: Suitable for strictly positive continuous data $(0, \infty)$, particularly when variability increases with the mean.
+-   **Link function**: $g(\mu) = \frac{1}{\mu^2}$.
+-   **Inverse link**: $\mu = \frac{1}{\sqrt{\eta}}$.
+-   **Examples**:
+    1.  Survival times of fish in polluted versus clean waters.
+    2.  Distance traveled by animals during foraging in different habitats.
 
----
+**6. Quasipoisson (link = "log")**
 
-**5. Poisson (link = "log")**
+-   **Properties**: Similar to the Poisson family but for overdispersed count data. Overdispersion may arise when the variability in the count data exceeds the mean, violating the Poisson assumption that the mean equals the variance. The response variable must be non-negative integers $[0, \infty)$.
+-   **Link function**: $g(\mu) = \log(\mu)$.
+-   **Inverse link**: $\mu = \exp(\eta)$.
+-   **Examples**:
+    1.  **Number of insect visits to flowers under varying light conditions**: Overdispersion occurs because different flowers might attract insects at varying rates due to unmeasured traits like nectar availability or competition from neighboring flowers.
 
-   - **Properties**: Used for count data, particularly for events occurring in a fixed space or time. The response variable must be non-negative integers \([0, \infty)\), though it is typically greater than or equal to zero.
-   - **Link function**: \( g(\mu) = \log(\mu) \).
-   - **Inverse link**: \( \mu = \exp(\eta) \).
-   - **Examples**:
-     1. Number of flowers produced per plant under different water regimes.
-     2. Bird counts in fixed-area plots over a season.
-
----
-
-**6. Quasi (link = "identity", variance = "constant")**
-
-   - **Properties**: Allows modeling of data with overdispersion without assuming a specific variance function. Overdispersion occurs when the observed variance is larger than what is predicted by the assumed distribution. The bounds of the data depend on the assumed variance structure but are often continuous \((-\infty, \infty)\).
-   - **Link function**: \( g(\mu) = \mu \).
-   - **Inverse link**: \( \mu = \eta \).
-   - **Examples**:
-     1. **Variance in bacterial colony sizes across environmental conditions**: Overdispersion might arise because bacterial growth is affected by many unmeasured environmental factors (e.g., humidity, nutrient variation), introducing additional variability.
-     2. **Counts of insect larvae in different field plots**: Overdispersion may occur if factors like plot microclimates or predator densities cause more variability than predicted by a simple Poisson distribution.
-
----
+    2.  **Counts of trees in different forest patches**: Overdispersion might arise from varying soil quality, seed dispersal patterns, or localized disturbances, leading to greater variability in counts than expected under a standard Poisson model.
 
 **7. Quasibinomial (link = "logit")**
 
-   - **Properties**: Similar to the binomial family but for overdispersed binary/proportion data. Overdispersion may arise when there is unaccounted-for heterogeneity in the probabilities of success across observations. The response variable must lie between \([0, 1]\).
-   - **Link function**: \( g(\mu) = \log\left(\frac{\mu}{1-\mu}\right) \).
-   - **Inverse link**: \( \mu = \frac{\exp(\eta)}{1 + \exp(\eta)} \).
-   - **Examples**:
-     1. **Proportion of successful nesting attempts by birds**: Overdispersion might occur because success rates vary due to unmeasured factors like predation risk, food availability, or habitat quality.
-     2. **Germination success rate under fluctuating temperature regimes**: Overdispersion may result from heterogeneity in seed quality or local microclimatic differences that influence germination probabilities.
+-   **Properties**: Similar to the binomial family but for overdispersed binary/proportion data. Overdispersion may arise when there is unaccounted-for heterogeneity in the probabilities of success across observations. The response variable must lie between $[0, 1]$.
+-   **Link function**: $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$.
+-   **Inverse link**: $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$.
+-   **Examples**:
+    1.  **Proportion of successful nesting attempts by birds**: Overdispersion might occur because success rates vary due to unmeasured factors like predation risk, food availability, or habitat quality.
+    2.  **Germination success rate under fluctuating temperature regimes**: Overdispersion may result from heterogeneity in seed quality or local microclimatic differences that influence germination probabilities.
 
----
+**6. Quasi (link = "identity", variance = "constant")**
 
-**8. Quasipoisson (link = "log")**
+In some cases, the variance-mean relationship may not align with binomial or Poisson assumptions, even after adjustment for overdispersion. The `Quasi` family offers a flexible framework where the variance can follow any user-specified function of the mean, providing additional flexibility in handling a range of data characteristics.
 
-   - **Properties**: Similar to the Poisson family but for overdispersed count data. Overdispersion may arise when the variability in the count data exceeds the mean, violating the Poisson assumption that the mean equals the variance. The response variable must be non-negative integers \([0, \infty)\).
-   - **Link function**: \( g(\mu) = \log(\mu) \).
-   - **Inverse link**: \( \mu = \exp(\eta) \).
-   - **Examples**:
-     1. **Number of insect visits to flowers under varying light conditions**: Overdispersion occurs because different flowers might attract insects at varying rates due to unmeasured traits like nectar availability or competition from neighboring flowers.
-     2. **Counts of trees in different forest patches**: Overdispersion might arise from varying soil quality, seed dispersal patterns, or localized disturbances, leading to greater variability in counts than expected under a standard Poisson model.
-
+-   **Properties**: Allows modeling of data with overdispersion without assuming a specific variance function. Overdispersion occurs when the observed variance is larger than what is predicted by the assumed distribution. The bounds of the data depend on the assumed variance structure but are often continuous $(-\infty, \infty)$.
+-   **Link function**: $g(\mu) = \mu$.
+-   **Inverse link**: $\mu = \eta$.
+-   **Examples**:
+    1.  **Variance in bacterial colony sizes across environmental conditions**: Overdispersion might arise because bacterial growth is affected by many unmeasured environmental factors (e.g., humidity, nutrient variation), introducing additional variability.
+    2.  **Counts of insect larvae in different field plots**: Overdispersion may occur if factors like plot microclimates or predator densities cause more variability than predicted by a simple Poisson distribution.
