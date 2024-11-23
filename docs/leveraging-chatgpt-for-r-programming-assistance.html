@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 25 Leveraging ChatGPT for R Programming Assistance | BB852 - Data handling, visualisation and statistics</title>
+  <title>Chapter 26 Leveraging ChatGPT for R Programming Assistance | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 25 Leveraging ChatGPT for R Programming Assistance | BB852 - Data handling, visualisation and statistics" />
+  <meta property="og:title" content="Chapter 26 Leveraging ChatGPT for R Programming Assistance | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 25 Leveraging ChatGPT for R Programming Assistance | BB852 - Data handling, visualisation and statistics" />
+  <meta name="twitter:title" content="Chapter 26 Leveraging ChatGPT for R Programming Assistance | BB852 - Data handling, visualisation and statistics" />
   
   <meta name="twitter:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-11-07" />
+<meta name="date" content="2024-11-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -345,9 +345,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="20.1.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-number-of-offspring-in-foxes."><i class="fa fa-check"></i><b>20.1.1</b> Example: Number of offspring in foxes.</a></li>
 <li class="chapter" data-level="20.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>20.1.2</b> Example: Cancer clusters</a></li>
+<li class="chapter" data-level="20.1.3" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#overdispersion-what-it-is-and-why-it-matters"><i class="fa fa-check"></i><b>20.1.3</b> Overdispersion: What It Is and Why It Matters</a></li>
 </ul></li>
 <li class="chapter" data-level="20.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>20.2</b> Exercise: Maze runner</a></li>
-<li class="chapter" data-level="20.3" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#overdispersion"><i class="fa fa-check"></i><b>20.3</b> Overdispersion</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>21</b> Extending use cases of GLM</a>
 <ul>
@@ -356,69 +356,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.3" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-sex-ratio-in-turtles"><i class="fa fa-check"></i><b>21.3</b> Example: Sex ratio in turtles</a></li>
 <li class="chapter" data-level="21.4" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-smoking"><i class="fa fa-check"></i><b>21.4</b> Example: Smoking</a></li>
 </ul></li>
-<li class="chapter" data-level="22" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html"><i class="fa fa-check"></i><b>22</b> Power analysis by simulation</a>
+<li class="chapter" data-level="22" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html"><i class="fa fa-check"></i><b>22</b> GLM families and use cases</a>
 <ul>
-<li class="chapter" data-level="22.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#type-i-and-ii-errors-and-statistical-power"><i class="fa fa-check"></i><b>22.1</b> Type I and II errors and statistical power</a></li>
-<li class="chapter" data-level="22.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#what-determines-statistical-power"><i class="fa fa-check"></i><b>22.2</b> What determines statistical power?</a></li>
-<li class="chapter" data-level="22.3" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#an-example-of-calculating-statistical-power."><i class="fa fa-check"></i><b>22.3</b> An example of calculating statistical power.</a>
-<ul>
-<li class="chapter" data-level="22.3.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#the-simulation"><i class="fa fa-check"></i><b>22.3.1</b> The simulation</a></li>
-<li class="chapter" data-level="22.3.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#some-questions-for-you-to-address"><i class="fa fa-check"></i><b>22.3.2</b> Some questions for you to address:</a></li>
+<li class="chapter" data-level="22.1" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#summary-table-of-glm-families"><i class="fa fa-check"></i><b>22.1</b> Summary Table of GLM Families</a></li>
+<li class="chapter" data-level="22.2" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#further-details-of-common-glm-families"><i class="fa fa-check"></i><b>22.2</b> Further details of common GLM Families</a></li>
 </ul></li>
-<li class="chapter" data-level="22.4" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#summary"><i class="fa fa-check"></i><b>22.4</b> Summary</a></li>
-<li class="chapter" data-level="22.5" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#extending-the-simulation-optional-advanced"><i class="fa fa-check"></i><b>22.5</b> Extending the simulation (optional, advanced)</a></li>
-<li class="chapter" data-level="22.6" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-1-snails-on-the-move"><i class="fa fa-check"></i><b>22.6</b> Exercise 1: Snails on the move</a></li>
-<li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
+<li class="chapter" data-level="23" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html"><i class="fa fa-check"></i><b>23</b> Power analysis by simulation</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#type-i-and-ii-errors-and-statistical-power"><i class="fa fa-check"></i><b>23.1</b> Type I and II errors and statistical power</a></li>
+<li class="chapter" data-level="23.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#what-determines-statistical-power"><i class="fa fa-check"></i><b>23.2</b> What determines statistical power?</a></li>
+<li class="chapter" data-level="23.3" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#an-example-of-calculating-statistical-power."><i class="fa fa-check"></i><b>23.3</b> An example of calculating statistical power.</a>
+<ul>
+<li class="chapter" data-level="23.3.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#the-simulation"><i class="fa fa-check"></i><b>23.3.1</b> The simulation</a></li>
+<li class="chapter" data-level="23.3.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#some-questions-for-you-to-address"><i class="fa fa-check"></i><b>23.3.2</b> Some questions for you to address:</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#summary"><i class="fa fa-check"></i><b>23.4</b> Summary</a></li>
+<li class="chapter" data-level="23.5" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#extending-the-simulation-optional-advanced"><i class="fa fa-check"></i><b>23.5</b> Extending the simulation (optional, advanced)</a></li>
+<li class="chapter" data-level="23.6" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-1-snails-on-the-move"><i class="fa fa-check"></i><b>23.6</b> Exercise 1: Snails on the move</a></li>
+<li class="chapter" data-level="23.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>23.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Appendix</b></span></li>
-<li class="chapter" data-level="23" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html"><i class="fa fa-check"></i><b>23</b> Examples of statistics reporting</a>
+<li class="chapter" data-level="24" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html"><i class="fa fa-check"></i><b>24</b> Examples of statistics reporting</a>
 <ul>
-<li class="chapter" data-level="23.1" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#t-test"><i class="fa fa-check"></i><b>23.1</b> t-test</a></li>
-<li class="chapter" data-level="23.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>23.2</b> Simple linear regression model</a></li>
-<li class="chapter" data-level="23.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>23.3</b> A Generalised linear model (GLM)</a></li>
+<li class="chapter" data-level="24.1" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#t-test"><i class="fa fa-check"></i><b>24.1</b> t-test</a></li>
+<li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
+<li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="24" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>24</b> An example of a past Written Assignment (2020)</a></li>
-<li class="chapter" data-level="25" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>25</b> Leveraging ChatGPT for R Programming Assistance</a>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
-<li class="chapter" data-level="25.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
-<li class="chapter" data-level="25.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#overview"><i class="fa fa-check"></i><b>25.2</b> Overview</a></li>
-<li class="chapter" data-level="25.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#what-is-a-large-language-model-llm-and-how-do-they-work"><i class="fa fa-check"></i><b>25.3</b> What is a Large Language Model (LLM) and how do they work?</a></li>
-<li class="chapter" data-level="25.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limitations"><i class="fa fa-check"></i><b>25.4</b> Limitations</a>
+<li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
+<li class="chapter" data-level="26.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#overview"><i class="fa fa-check"></i><b>26.2</b> Overview</a></li>
+<li class="chapter" data-level="26.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#what-is-a-large-language-model-llm-and-how-do-they-work"><i class="fa fa-check"></i><b>26.3</b> What is a Large Language Model (LLM) and how do they work?</a></li>
+<li class="chapter" data-level="26.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limitations"><i class="fa fa-check"></i><b>26.4</b> Limitations</a>
 <ul>
-<li class="chapter" data-level="25.4.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limited-knowledge"><i class="fa fa-check"></i><b>25.4.1</b> Limited knowledge</a></li>
-<li class="chapter" data-level="25.4.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#hallucination"><i class="fa fa-check"></i><b>25.4.2</b> Hallucination</a></li>
-<li class="chapter" data-level="25.4.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#numerical-ability"><i class="fa fa-check"></i><b>25.4.3</b> Numerical ability</a></li>
+<li class="chapter" data-level="26.4.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limited-knowledge"><i class="fa fa-check"></i><b>26.4.1</b> Limited knowledge</a></li>
+<li class="chapter" data-level="26.4.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#hallucination"><i class="fa fa-check"></i><b>26.4.2</b> Hallucination</a></li>
+<li class="chapter" data-level="26.4.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#numerical-ability"><i class="fa fa-check"></i><b>26.4.3</b> Numerical ability</a></li>
 </ul></li>
-<li class="chapter" data-level="25.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#ethics-of-using-llms-in-education"><i class="fa fa-check"></i><b>25.5</b> Ethics of using LLMs in education</a></li>
-<li class="chapter" data-level="25.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#use-cases-in-r"><i class="fa fa-check"></i><b>25.6</b> Use cases in R</a>
+<li class="chapter" data-level="26.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#ethics-of-using-llms-in-education"><i class="fa fa-check"></i><b>26.5</b> Ethics of using LLMs in education</a></li>
+<li class="chapter" data-level="26.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#use-cases-in-r"><i class="fa fa-check"></i><b>26.6</b> Use cases in R</a>
 <ul>
-<li class="chapter" data-level="25.6.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-errors."><i class="fa fa-check"></i><b>25.6.1</b> Finding errors.</a></li>
-<li class="chapter" data-level="25.6.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#explaining-code"><i class="fa fa-check"></i><b>25.6.2</b> Explaining code</a></li>
-<li class="chapter" data-level="25.6.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#interpreting-output"><i class="fa fa-check"></i><b>25.6.3</b> Interpreting output</a></li>
-<li class="chapter" data-level="25.6.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#translating-code-e.g.-from-pythonmatlab-to-r"><i class="fa fa-check"></i><b>25.6.4</b> Translating code (e.g. from Python/Matlab to R)</a></li>
-<li class="chapter" data-level="25.6.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#solving-modelling-problems"><i class="fa fa-check"></i><b>25.6.5</b> Solving modelling problems</a></li>
-<li class="chapter" data-level="25.6.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#helping-with-documentationcomments"><i class="fa fa-check"></i><b>25.6.6</b> Helping with documentation/comments</a></li>
-<li class="chapter" data-level="25.6.7" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-alternativebetter-ways"><i class="fa fa-check"></i><b>25.6.7</b> Finding alternative/better ways</a></li>
+<li class="chapter" data-level="26.6.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-errors."><i class="fa fa-check"></i><b>26.6.1</b> Finding errors.</a></li>
+<li class="chapter" data-level="26.6.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#explaining-code"><i class="fa fa-check"></i><b>26.6.2</b> Explaining code</a></li>
+<li class="chapter" data-level="26.6.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#interpreting-output"><i class="fa fa-check"></i><b>26.6.3</b> Interpreting output</a></li>
+<li class="chapter" data-level="26.6.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#translating-code-e.g.-from-pythonmatlab-to-r"><i class="fa fa-check"></i><b>26.6.4</b> Translating code (e.g. from Python/Matlab to R)</a></li>
+<li class="chapter" data-level="26.6.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#solving-modelling-problems"><i class="fa fa-check"></i><b>26.6.5</b> Solving modelling problems</a></li>
+<li class="chapter" data-level="26.6.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#helping-with-documentationcomments"><i class="fa fa-check"></i><b>26.6.6</b> Helping with documentation/comments</a></li>
+<li class="chapter" data-level="26.6.7" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-alternativebetter-ways"><i class="fa fa-check"></i><b>26.6.7</b> Finding alternative/better ways</a></li>
 </ul></li>
-<li class="chapter" data-level="25.7" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#some-tips"><i class="fa fa-check"></i><b>25.7</b> Some tips</a></li>
+<li class="chapter" data-level="26.7" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#some-tips"><i class="fa fa-check"></i><b>26.7</b> Some tips</a></li>
 </ul></li>
 <li class="part"><span><b>V Solutions</b></span></li>
-<li class="chapter" data-level="26" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>26</b> Exercise Solutions</a>
+<li class="chapter" data-level="27" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>27</b> Exercise Solutions</a>
 <ul>
-<li class="chapter" data-level="26.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#californian-bird-diversity"><i class="fa fa-check"></i><b>26.1</b> Californian bird diversity</a></li>
-<li class="chapter" data-level="26.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>26.2</b> Wrangling the Amniote Life History Database</a></li>
-<li class="chapter" data-level="26.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>26.3</b> Temperature effects on egg laying dates</a></li>
-<li class="chapter" data-level="26.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#virtual-dice"><i class="fa fa-check"></i><b>26.4</b> Virtual dice</a></li>
-<li class="chapter" data-level="26.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>26.5</b> Sexual selection in Hercules beetles</a></li>
-<li class="chapter" data-level="26.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>26.6</b> Sex differences in fine motor skills</a></li>
-<li class="chapter" data-level="26.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>26.7</b> Therapy for anorexia</a></li>
-<li class="chapter" data-level="26.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>26.8</b> Compare t-tests with randomisation tests</a></li>
-<li class="chapter" data-level="26.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>26.9</b> Apple tree crop yield</a></li>
-<li class="chapter" data-level="26.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>26.10</b> Chirping crickets</a></li>
-<li class="chapter" data-level="26.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>26.11</b> Fish behaviour</a></li>
-<li class="chapter" data-level="26.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#maze-runner"><i class="fa fa-check"></i><b>26.12</b> Maze runner</a></li>
-<li class="chapter" data-level="26.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>26.13</b> Snails on the move</a></li>
-<li class="chapter" data-level="26.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>26.14</b> Mouse lemur strength</a></li>
+<li class="chapter" data-level="27.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#californian-bird-diversity"><i class="fa fa-check"></i><b>27.1</b> Californian bird diversity</a></li>
+<li class="chapter" data-level="27.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>27.2</b> Wrangling the Amniote Life History Database</a></li>
+<li class="chapter" data-level="27.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>27.3</b> Temperature effects on egg laying dates</a></li>
+<li class="chapter" data-level="27.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#virtual-dice"><i class="fa fa-check"></i><b>27.4</b> Virtual dice</a></li>
+<li class="chapter" data-level="27.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>27.5</b> Sexual selection in Hercules beetles</a></li>
+<li class="chapter" data-level="27.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>27.6</b> Sex differences in fine motor skills</a></li>
+<li class="chapter" data-level="27.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>27.7</b> Therapy for anorexia</a></li>
+<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="27.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>27.9</b> Apple tree crop yield</a></li>
+<li class="chapter" data-level="27.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>27.10</b> Chirping crickets</a></li>
+<li class="chapter" data-level="27.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>27.11</b> Fish behaviour</a></li>
+<li class="chapter" data-level="27.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#maze-runner"><i class="fa fa-check"></i><b>27.12</b> Maze runner</a></li>
+<li class="chapter" data-level="27.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>27.13</b> Snails on the move</a></li>
+<li class="chapter" data-level="27.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>27.14</b> Mouse lemur strength</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -440,33 +445,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="leveraging-chatgpt-for-r-programming-assistance" class="section level1 hasAnchor" number="25">
-<h1><span class="header-section-number">Chapter 25</span> Leveraging ChatGPT for R Programming Assistance<a href="leveraging-chatgpt-for-r-programming-assistance.html#leveraging-chatgpt-for-r-programming-assistance" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="introduction" class="section level2 hasAnchor" number="25.1">
-<h2><span class="header-section-number">25.1</span> Introduction<a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="leveraging-chatgpt-for-r-programming-assistance" class="section level1 hasAnchor" number="26">
+<h1><span class="header-section-number">Chapter 26</span> Leveraging ChatGPT for R Programming Assistance<a href="leveraging-chatgpt-for-r-programming-assistance.html#leveraging-chatgpt-for-r-programming-assistance" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction" class="section level2 hasAnchor" number="26.1">
+<h2><span class="header-section-number">26.1</span> Introduction<a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This class is a bit different to previous classes. Instead of a lecture, this will be a workshop with some discussion and plenty of hands-on use of new tools. Specifically we’ll be focussing on using ChatGPT, which is a Large Language Model (LLM) to help with R programming tasks.</p>
 </div>
-<div id="overview" class="section level2 hasAnchor" number="25.2">
-<h2><span class="header-section-number">25.2</span> Overview<a href="leveraging-chatgpt-for-r-programming-assistance.html#overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="overview" class="section level2 hasAnchor" number="26.2">
+<h2><span class="header-section-number">26.2</span> Overview<a href="leveraging-chatgpt-for-r-programming-assistance.html#overview" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>What is a Large Language Model (LLM) and how do they work?</li>
 <li>The ethics of using LLMs</li>
 <li>Use cases in R coding</li>
 </ul>
 </div>
-<div id="what-is-a-large-language-model-llm-and-how-do-they-work" class="section level2 hasAnchor" number="25.3">
-<h2><span class="header-section-number">25.3</span> What is a Large Language Model (LLM) and how do they work?<a href="leveraging-chatgpt-for-r-programming-assistance.html#what-is-a-large-language-model-llm-and-how-do-they-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-is-a-large-language-model-llm-and-how-do-they-work" class="section level2 hasAnchor" number="26.3">
+<h2><span class="header-section-number">26.3</span> What is a Large Language Model (LLM) and how do they work?<a href="leveraging-chatgpt-for-r-programming-assistance.html#what-is-a-large-language-model-llm-and-how-do-they-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>LLMs are a type of machine learning model that are designed to process and generate human-like language. They can be used to process and generate language in a way that is similar to how humans use language, but on a much larger scale and with the ability to process vast amounts of data quickly. These models use a neural network architecture, which is a type of algorithm that is loosely modeled on the structure of the human brain. LLMs are trained on massive datasets of text, such as books, news articles, and social media posts, in order to learn patterns and relationships within language. This process is known as pre-training, and it allows LLMs to develop a deep understanding of the structure and nuances of language. This is incredibly computationally intensive and costs MILLIONS of dollars to create a model. For example, it is said that OpenAI spent an estimated $4.6 million to train ChatGPT-3 on 285,000 processing cores and 10,000 graphics cards.</p>
 <p>After an LLM has been pre-trained, it is fine-tuned for specific tasks. A finished model can be used for tasks such as answering questions, summarising text or generating new text. When you ask a question to ChatGPT, it uses its knowledge of language to understand the meaning of the question, and then generates a response based on what it has learned from the training data.</p>
 </div>
-<div id="limitations" class="section level2 hasAnchor" number="25.4">
-<h2><span class="header-section-number">25.4</span> Limitations<a href="leveraging-chatgpt-for-r-programming-assistance.html#limitations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="limited-knowledge" class="section level3 hasAnchor" number="25.4.1">
-<h3><span class="header-section-number">25.4.1</span> Limited knowledge<a href="leveraging-chatgpt-for-r-programming-assistance.html#limited-knowledge" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="limitations" class="section level2 hasAnchor" number="26.4">
+<h2><span class="header-section-number">26.4</span> Limitations<a href="leveraging-chatgpt-for-r-programming-assistance.html#limitations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="limited-knowledge" class="section level3 hasAnchor" number="26.4.1">
+<h3><span class="header-section-number">26.4.1</span> Limited knowledge<a href="leveraging-chatgpt-for-r-programming-assistance.html#limited-knowledge" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>While LLMs like ChatGPT have impressive capabilities they also have limitations. One of the biggest concerns with LLMs is the potential for bias in their training data. In a nutshell, an LLM can be expected to reflect any bias that is present in its training dataset. Another important limitation, which is particularly important for a rapidly developing field like R and its many packages, is that the LLM will have no knowledge of developmnents that occur after the period of its training data. In this case, its usefulness to help, for example, with using packages produced after this date will be limited. In short, I would expect ChatGPT to be less useful for newer and less-used packages, because there will have been less input data for ChatGPT systems to work with.</p>
 </div>
-<div id="hallucination" class="section level3 hasAnchor" number="25.4.2">
-<h3><span class="header-section-number">25.4.2</span> Hallucination<a href="leveraging-chatgpt-for-r-programming-assistance.html#hallucination" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="hallucination" class="section level3 hasAnchor" number="26.4.2">
+<h3><span class="header-section-number">26.4.2</span> Hallucination<a href="leveraging-chatgpt-for-r-programming-assistance.html#hallucination" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Another important limitation is that LLMs can “hallucinate”. In the context of LLMs “hallucination” refers to a phenomenon where the model generates text that is not grounded in reality. Essentially, the model generates text that appears to be “imagined” or “made up” rather than being based on facts. For example, if you ask about something that the LLM has no knowledge of it will still often produce an answer, but the answer will be close to nonsense!</p>
 <p>To illustrate a hallucination try the following prompt in ChatGPT:</p>
 <pre><code>Explain the actuary package in R. 
@@ -474,8 +479,8 @@ Summarise what it is for and give an example of basic use.
 Describe any limitations.</code></pre>
 <p>There is no such package in R. So this entire answer is a hallucination.</p>
 </div>
-<div id="numerical-ability" class="section level3 hasAnchor" number="25.4.3">
-<h3><span class="header-section-number">25.4.3</span> Numerical ability<a href="leveraging-chatgpt-for-r-programming-assistance.html#numerical-ability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="numerical-ability" class="section level3 hasAnchor" number="26.4.3">
+<h3><span class="header-section-number">26.4.3</span> Numerical ability<a href="leveraging-chatgpt-for-r-programming-assistance.html#numerical-ability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Most LLMs are not good with numbers. This could have important consequences for helping with maths statistics, so bear it in mind!</p>
 <p>To illustrate that, try the following prompt.</p>
 <pre><code>Write a sentence about dogs that contains 8 + 2 words.</code></pre>
@@ -484,8 +489,8 @@ Describe any limitations.</code></pre>
 <pre><code>How many Rs are there in the word Strawberry?</code></pre>
 </div>
 </div>
-<div id="ethics-of-using-llms-in-education" class="section level2 hasAnchor" number="25.5">
-<h2><span class="header-section-number">25.5</span> Ethics of using LLMs in education<a href="leveraging-chatgpt-for-r-programming-assistance.html#ethics-of-using-llms-in-education" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ethics-of-using-llms-in-education" class="section level2 hasAnchor" number="26.5">
+<h2><span class="header-section-number">26.5</span> Ethics of using LLMs in education<a href="leveraging-chatgpt-for-r-programming-assistance.html#ethics-of-using-llms-in-education" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The use tools like ChatGPT in student coursework raises ethical concerns. On the one hand, students can use these tools to enhance their learning and understanding of complex concepts. For example, they can generate helpful insights and help with writing assignments. On the other hand, they can encourage plagiarism or cheating which could result in NOT learning.</p>
 <p>Some guidelines:</p>
 <ul>
@@ -499,8 +504,8 @@ Describe any limitations.</code></pre>
 <p>The Guidelines for SDU Biology Masters students are <a href="https://mitsdu.dk/en/mit_studie/kandidat/biologi_kandidat/vejledning-og-support/aipaasdu">here</a></p>
 <p>Despite these issues, LLMs like ChatGPT can be very useful in R programming. In the next part of the workshop we’ll cover some use cases. I provide some examples here but during the workshop we’ll work through others that are relevant to the course. You could also try using your own project code.</p>
 </div>
-<div id="use-cases-in-r" class="section level2 hasAnchor" number="25.6">
-<h2><span class="header-section-number">25.6</span> Use cases in R<a href="leveraging-chatgpt-for-r-programming-assistance.html#use-cases-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="use-cases-in-r" class="section level2 hasAnchor" number="26.6">
+<h2><span class="header-section-number">26.6</span> Use cases in R<a href="leveraging-chatgpt-for-r-programming-assistance.html#use-cases-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li>Finding errors (debugging)</li>
 <li>Explaining complex code</li>
@@ -509,8 +514,8 @@ Describe any limitations.</code></pre>
 <li>Translating code from another language</li>
 <li>Solving modelling problems (e.g. I have this set-up, how do i model it?)</li>
 </ul>
-<div id="finding-errors." class="section level3 hasAnchor" number="25.6.1">
-<h3><span class="header-section-number">25.6.1</span> Finding errors.<a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-errors." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="finding-errors." class="section level3 hasAnchor" number="26.6.1">
+<h3><span class="header-section-number">26.6.1</span> Finding errors.<a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-errors." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It can be frustrating to deal with error messages in R.
 Use ChatGPT to find the error and make it work.</p>
 <p>A suitable prompt could be:</p>
@@ -519,8 +524,8 @@ Use ChatGPT to find the error and make it work.</p>
 mod1 &lt;- glm(noffspring ~ weight, data = fox family = poisson)
 </code></pre>
 </div>
-<div id="explaining-code" class="section level3 hasAnchor" number="25.6.2">
-<h3><span class="header-section-number">25.6.2</span> Explaining code<a href="leveraging-chatgpt-for-r-programming-assistance.html#explaining-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="explaining-code" class="section level3 hasAnchor" number="26.6.2">
+<h3><span class="header-section-number">26.6.2</span> Explaining code<a href="leveraging-chatgpt-for-r-programming-assistance.html#explaining-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can ask for help understanding what code does</p>
 <pre><code>I don’t understand what this code does. Please explain it to me. 
 I&#39;m a total beginner in using R and in statistics in general
@@ -528,8 +533,8 @@ I&#39;m a total beginner in using R and in statistics in general
 
 mod1 &lt;- glm(noffspring ~ weight, data = fox, family = poisson)</code></pre>
 </div>
-<div id="interpreting-output" class="section level3 hasAnchor" number="25.6.3">
-<h3><span class="header-section-number">25.6.3</span> Interpreting output<a href="leveraging-chatgpt-for-r-programming-assistance.html#interpreting-output" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="interpreting-output" class="section level3 hasAnchor" number="26.6.3">
+<h3><span class="header-section-number">26.6.3</span> Interpreting output<a href="leveraging-chatgpt-for-r-programming-assistance.html#interpreting-output" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can ask for help interpreting model outputs.</p>
 <pre><code>I have the following model output summary. Please explain it to me:
 I&#39;m a total beginner in using R and in statistics in general
@@ -547,8 +552,8 @@ Residuals     44 188.25    4.28
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 </code></pre>
 </div>
-<div id="translating-code-e.g.-from-pythonmatlab-to-r" class="section level3 hasAnchor" number="25.6.4">
-<h3><span class="header-section-number">25.6.4</span> Translating code (e.g. from Python/Matlab to R)<a href="leveraging-chatgpt-for-r-programming-assistance.html#translating-code-e.g.-from-pythonmatlab-to-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="translating-code-e.g.-from-pythonmatlab-to-r" class="section level3 hasAnchor" number="26.6.4">
+<h3><span class="header-section-number">26.6.4</span> Translating code (e.g. from Python/Matlab to R)<a href="leveraging-chatgpt-for-r-programming-assistance.html#translating-code-e.g.-from-pythonmatlab-to-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can ask it to translate code from one language to another. This can be useful if you can find code in e.g. Python or Matlab and you need to make it work with the rest of your analysis.</p>
 <pre><code>Translate the following Python code into R. 
 
@@ -567,21 +572,21 @@ t_stat, p_value = ttest_1samp(sample, popmean=155)
 print(&quot;T-statistic value: &quot;, t_stat)
 print(&quot;P-Value: &quot;, p_value)</code></pre>
 </div>
-<div id="solving-modelling-problems" class="section level3 hasAnchor" number="25.6.5">
-<h3><span class="header-section-number">25.6.5</span> Solving modelling problems<a href="leveraging-chatgpt-for-r-programming-assistance.html#solving-modelling-problems" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="solving-modelling-problems" class="section level3 hasAnchor" number="26.6.5">
+<h3><span class="header-section-number">26.6.5</span> Solving modelling problems<a href="leveraging-chatgpt-for-r-programming-assistance.html#solving-modelling-problems" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can describe your data to ChatGPT, and ask it to help you with modelling choices. This is probably quite error prone, so it is good practice to ask follow up questions to make sure you understand WHY it is advising certain approaches. In a nutshell, be suspicious and treat ChatGPT as an advisor/sparring partner rather than blindly listening too it. Engage your own brain!</p>
 </div>
-<div id="helping-with-documentationcomments" class="section level3 hasAnchor" number="25.6.6">
-<h3><span class="header-section-number">25.6.6</span> Helping with documentation/comments<a href="leveraging-chatgpt-for-r-programming-assistance.html#helping-with-documentationcomments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="helping-with-documentationcomments" class="section level3 hasAnchor" number="26.6.6">
+<h3><span class="header-section-number">26.6.6</span> Helping with documentation/comments<a href="leveraging-chatgpt-for-r-programming-assistance.html#helping-with-documentationcomments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sometimes you will have written a long script without bothering to comment it. This can be troublesome to “future you” and to collaborators who will struggle to understand what your code is doing. You can ask ChatGPT to add (or improve) comments to your code. Try it on scripts you have already written during the course.</p>
 </div>
-<div id="finding-alternativebetter-ways" class="section level3 hasAnchor" number="25.6.7">
-<h3><span class="header-section-number">25.6.7</span> Finding alternative/better ways<a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-alternativebetter-ways" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="finding-alternativebetter-ways" class="section level3 hasAnchor" number="26.6.7">
+<h3><span class="header-section-number">26.6.7</span> Finding alternative/better ways<a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-alternativebetter-ways" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Sometimes you will have written a script which works but is too complicated and hard to follow. You could ask ChatGPT if there is an easier/better/alternative way to do it. Try it with some code you have already written.</p>
 </div>
 </div>
-<div id="some-tips" class="section level2 hasAnchor" number="25.7">
-<h2><span class="header-section-number">25.7</span> Some tips<a href="leveraging-chatgpt-for-r-programming-assistance.html#some-tips" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="some-tips" class="section level2 hasAnchor" number="26.7">
+<h2><span class="header-section-number">26.7</span> Some tips<a href="leveraging-chatgpt-for-r-programming-assistance.html#some-tips" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Set package constraints</strong>: When using ChatGPT to help solve R problems, it often suggests using various R packages, including some that may not exist. To avoid confusion and ensure the advice aligns with your needs, it’s helpful to specify which packages you want to use.</p>
 <p>For instance, if you’re focusing on data handling with the <code>Tidyverse</code> (which we use in the course), you can guide ChatGPT by adding “<code>...Please use Tidyverse packages</code>” to your request. If you prefer to work without additional packages, simply say “<code>... use base R</code>”.</p>
 <p><strong>Be Specific with Your Questions</strong>: Clearly describe your problem, including the desired outcome and any error messages or unexpected behaviour you encounter. The more details you provide, the more precise the help can be.</p>

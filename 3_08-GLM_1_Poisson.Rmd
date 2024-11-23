@@ -202,6 +202,33 @@ summary(mod1)
 
 Use the approach from the fox example as guidance to make a plot with a fit line.
 
+
+### Overdispersion: What It Is and Why It Matters
+
+**Overdispersion** occurs when the observed variance in the response variable exceeds what is expected under the model's assumptions. For example, in a **Poisson model**, the variance is expected to equal the mean. If the actual variance is significantly larger, overdispersion is present. There's a nice intuitive description of this in the textbook (Getting Started With R, section 7.5.1). To diagnose overdispersion, you compare the `Residual deviance` to the `degrees of freedom`.  In a perfect Poisson model, these values will be equal, so we can generate a useful index of overdispersion by dividing the residual deviance by the degrees of freedom. The "rule of thumb" is that an overdispersion index >2 is problematic.
+
+**Causes of Overdispersion**:
+
+1. **Unobserved Heterogeneity**: Variability in the data that is not captured by the predictors in the model (e.g., different groups or subpopulations behaving differently).
+2. **Clustering or Correlation**: When observations are not independent but are instead grouped or correlated (e.g., measurements from the same individual or location).
+3. **Excess Zeros or Outliers**: An unusually high number of zero observations or extreme values in the data.
+
+**Why Overdispersion Matters**:
+If overdispersion is ignored, standard errors of the estimated coefficients will be underestimated, leading to overly optimistic confidence intervals and \(p\)-values. This increases the risk of drawing incorrect conclusions about the effects of predictors.
+
+
+**What to do about overdispersion**
+
+The solution to overdispersion in a GLM framework is often to use a **quasi-likelihood model**. For count data, this corresponds to using the `quasipoisson` family (`family = quasipoisson`). With this family, the model works in the same way as the regular `poisson` model, except that it **does not assume the variance equals the mean** (as in the Poisson case). Instead, it allows the variance to increase as a function of the mean, estimating a dispersion parameter that accounts for overdispersion. This adjustment affects the standard errors and p-values but does not alter the coefficient estimates.
+
+Another approach to addressing overdispersion is to use a **negative binomial model**, which can be fitted using the `glm.nb` function from the `MASS` package. This model introduces an additional parameter that explicitly models the relationship between the mean and variance, allowing the variance to grow quadratically with the mean.
+
+A further, slightly more involved option, is to use a **zero-inflated model**, which is particularly useful when overdispersion arises due to an excessive number of zeros in the data. These models assume the data-generating process has two components: one generating the zeros (often modeled with a logistic component) and another generating the counts (often modeled as Poisson or negative binomial). Zero-inflated models can be fitted using specialized functions such as `zeroinfl` from the `pscl` package.
+
+While these methods require slightly different implementation, they are conceptually similar to regular GLMs and are interpreted in comparable ways.
+
+
+
 ## Exercise: Maze runner
 
 In an experiment, researchers studied the ability of children and adults to navigate through a maze. They recorded the number of mistakes each person made before successfully completing the maze. The data (`maze.csv`) has two columns: `Age` (a categorical variable with two levels - Adult and Child) and `nErrors` a count of the number of errors that each subject makes.
@@ -214,10 +241,4 @@ In this example, you will be fitting a GLM equivalent of a t-test that is approp
 4) Get the analysis of variance (deviance) table (`anova`). What does this tell you?
 5) Obtain the `summary` table. What does this tell you?
 6) Use the coefficient information in the `summary` table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations "by hand", or using the `predict` function. Ask for help if you get stuck.
-
-## Overdispersion
-
-I mentioned above that in Poisson models, the variance is assumed to increase linearly with the mean. In some cases, especially where there are important unmeasured variables, the variance might increase more rapidly than this 1:1 relationship with the mean. This is called OVERDISPERSION. There's a nice intuitive description of this in the textbook (Getting Started With R, section 7.5.1), but in a nutshell if the data are overdispersed you need to account for that extra variation using a different GLM "family". To diagnose overdispersion, you compare the `Residual deviance` to the `degrees of freedom`.  In a perfect Poisson model, these values will be equal, so we can generate a useful index of overdispersion by dividing the residual deviance by the degrees of freedom. The "rule of thumb" is that an overdispersion index >2 is problematic.
-
-The solution is to use a different GLM family. The easiest approach is to use the `quasipoisson` family (`family = quasipoisson`). With this family, the the model works in exactly the same way, except that it ALSO estimates the way that variance increases with the mean, and adjusts the p-values and standard errors accordingly. Another way is to use a so-called **negative binomial** model, fitted using `glm.nb` instead of `glm`.  Another useful option is the "zero inflated" model, which is useful where the overdispersion is caused by having an excessive amount of zero-values in your data. We won't go any further into these models here, but it is good to know that they exist and that they are fitted and interpreted in similar ways to regular GLMs.
 
