@@ -2,7 +2,7 @@
 
 As we have seen in the previous chapters, Generalised Linear Models (GLMs) extend the linear regression framework by allowing for response variables with non-normal error distributions. GLMs are particularly useful in cases where the response variable exhibits properties such as boundedness, non-linearity, or non-constant variance. Each GLM family addresses specific data characteristics and includes a link function to relate the mean of the response variable ($\mu$) to a linear predictor ($\eta$).
 
-The choice of family and link function is essential for proper data modeling. Binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood families may be employed. This extra variation often arises from unaccounted-for heterogeneity in the data, such as omitted seasonal effects or other unmeasured variables that influence the response but are not included as predictors. In some cases, including these missing variables can reduce overdispersion and improve model fit.
+The choice of family and link function is important for proper data modeling. Binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood families may be employed. This extra variation often arises from unaccounted-for heterogeneity in the data, such as omitted seasonal effects or other unmeasured variables that influence the response but are not included as predictors. In some cases, including these missing variables can reduce overdispersion and improve model fit.
 
 Overdispersion can be diagnosed from model summaries by comparing the residual deviance to the degrees of freedom. Specifically, dividing the residual deviance by the degrees of freedom yields a ratio where values significantly greater than 1 suggest overdispersion. Ratios above 2 often indicate the need for a quasi-likelihood model, such as a quasi-Poisson or quasi-Binomial family, which introduces a dispersion parameter to account for the extra variability. This adjustment ensures that standard errors are correctly estimated, leading to more reliable hypothesis tests and confidence intervals.
 
@@ -14,18 +14,18 @@ This brief section summarises properties of common GLM families and gives exampl
 
 | **Family Name** | **Bounds of Response Variable** | **Link Name** | **Link Equation** | **Inverse Link Equation** |
 |---------------|---------------|---------------|---------------|---------------|
-| **Gaussian** | $(-\infty, \infty)$ | Identity | $g(\mu) = \mu$ | $\mu = \eta$ |
-| **Poisson** | $[0, \infty)$ | Log | $g(\mu) = \log(\mu)$ | $\mu = \exp(\eta)$ |
-| **Binomial** | $[0, 1]$ | Logit | $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$ | $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$ |
+| **gaussian** | $(-\infty, \infty)$ | Identity | $g(\mu) = \mu$ | $\mu = \eta$ |
+| **poisson** | $[0, \infty)$ | Log | $g(\mu) = \log(\mu)$ | $\mu = \exp(\eta)$ |
+| **binomial** | $[0, 1]$ | Logit | $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$ | $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$ |
 | **Gamma** | $(0, \infty)$ | Inverse | $g(\mu) = \frac{1}{\mu}$ | $\mu = \frac{1}{\eta}$ |
-| **Inverse Gaussian** | $(0, \infty)$ | Inverse Squared | $g(\mu) = \frac{1}{\mu^2}$ | $\mu = \frac{1}{\sqrt{\eta}}$ |
-| **Quasibinomial** | $[0, 1]$ | Logit | $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$ | $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$ |
-| **Quasipoisson** | $[0, \infty)$ | Log | $g(\mu) = \log(\mu)$ | $\mu = \exp(\eta)$ |
-| **Quasi** | Depends on variance structure | Identity | $g(\mu) = \mu$ | $\mu = \eta$ |
+| **inverse.gaussian** | $(0, \infty)$ | Inverse Squared | $g(\mu) = \frac{1}{\mu^2}$ | $\mu = \frac{1}{\sqrt{\eta}}$ |
+| **quasibinomial** | $[0, 1]$ | Logit | $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$ | $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$ |
+| **quasipoisson** | $[0, \infty)$ | Log | $g(\mu) = \log(\mu)$ | $\mu = \exp(\eta)$ |
+| **quasi** | Depends on variance structure | Identity | $g(\mu) = \mu$ | $\mu = \eta$ |
 
-This table provides a quick reference for understanding the key attributes of each GLM family, including the mathematical transformations that underpin their implementation. See below for more details and some examples.
+This table provides a quick reference for understanding the key attributes of each GLM family, including the canonical links and the transformations that underpin their implementation. See below for more details and some examples.
 
-## Further details of common GLM Families
+## Common GLM Families
 
 **1. Gaussian (link = "identity")**
 
@@ -73,28 +73,27 @@ This table provides a quick reference for understanding the key attributes of ea
     1.  Survival times of fish in polluted versus clean waters.
     2.  Distance traveled by animals during foraging in different habitats.
 
-**6. Quasipoisson (link = "log")**
 
--   **Properties**: Similar to the Poisson family but for overdispersed count data. Overdispersion may arise when the variability in the count data exceeds the mean, violating the Poisson assumption that the mean equals the variance. The response variable must be non-negative integers $[0, \infty)$.
+## Quasi-family models
+
+As described above, sometimes the variance in the data exceeds the assumptions of the specified family. In those cases, the following models are available in the `glm` framework. 
+
+**1. Quasipoisson (link = "log")**
+
+-   **Properties**: Similar to the `Poisson` family but for overdispersed count data. Overdispersion may arise when the variability in the count data exceeds the mean, violating the Poisson assumption that the mean equals the variance. The response variable must be non-negative integers $[0, \infty)$.
 -   **Link function**: $g(\mu) = \log(\mu)$.
 -   **Inverse link**: $\mu = \exp(\eta)$.
--   **Examples**:
-    1.  **Number of insect visits to flowers under varying light conditions**: Overdispersion occurs because different flowers might attract insects at varying rates due to unmeasured traits like nectar availability or competition from neighboring flowers.
 
-    2.  **Counts of trees in different forest patches**: Overdispersion might arise from varying soil quality, seed dispersal patterns, or localized disturbances, leading to greater variability in counts than expected under a standard Poisson model.
+**2. Quasibinomial (link = "logit")**
 
-**7. Quasibinomial (link = "logit")**
-
--   **Properties**: Similar to the binomial family but for overdispersed binary/proportion data. Overdispersion may arise when there is unaccounted-for heterogeneity in the probabilities of success across observations. The response variable must lie between $[0, 1]$.
+-   **Properties**: Similar to the `binomial` family but for overdispersed binary/proportion data. Overdispersion may arise when there is unaccounted-for heterogeneity in the probabilities of success across observations. The response variable must lie between $[0, 1]$.
 -   **Link function**: $g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)$.
 -   **Inverse link**: $\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}$.
--   **Examples**:
-    1.  **Proportion of successful nesting attempts by birds**: Overdispersion might occur because success rates vary due to unmeasured factors like predation risk, food availability, or habitat quality.
-    2.  **Germination success rate under fluctuating temperature regimes**: Overdispersion may result from heterogeneity in seed quality or local microclimatic differences that influence germination probabilities.
 
-**6. Quasi (link = "identity", variance = "constant")**
 
-In some cases, the variance-mean relationship may not align with binomial or Poisson assumptions, even after adjustment for overdispersion. The `Quasi` family offers a flexible framework where the variance can follow any user-specified function of the mean, providing additional flexibility in handling a range of data characteristics.
+**3. Quasi (link = "identity", variance = "constant")**
+
+In some cases, the variance-mean relationship may not align with binomial or Poisson assumptions, even after adjustment for overdispersion. The `quasi` family offers a flexible framework where the variance can follow *any* user-specified function of the mean, providing additional flexibility in handling a range of data characteristics.
 
 -   **Properties**: Allows modeling of data with overdispersion without assuming a specific variance function. Overdispersion occurs when the observed variance is larger than what is predicted by the assumed distribution. The bounds of the data depend on the assumed variance structure but are often continuous $(-\infty, \infty)$.
 -   **Link function**: $g(\mu) = \mu$.

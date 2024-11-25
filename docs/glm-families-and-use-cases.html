@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-11-23" />
+<meta name="date" content="2024-11-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -352,14 +352,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>21</b> Extending use cases of GLM</a>
 <ul>
 <li class="chapter" data-level="21.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#binomial-response-data"><i class="fa fa-check"></i><b>21.1</b> Binomial response data</a></li>
-<li class="chapter" data-level="21.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-nfl-field-goals"><i class="fa fa-check"></i><b>21.2</b> Example: NFL field goals</a></li>
+<li class="chapter" data-level="21.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-nfl-field-goals"><i class="fa fa-check"></i><b>21.2</b> Example: NFL field goals</a>
+<ul>
+<li class="chapter" data-level="21.2.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#dharma"><i class="fa fa-check"></i><b>21.2.1</b> DHARMa</a></li>
+<li class="chapter" data-level="21.2.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#continuuing-the-analysis"><i class="fa fa-check"></i><b>21.2.2</b> Continuuing the analysis</a></li>
+</ul></li>
 <li class="chapter" data-level="21.3" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-sex-ratio-in-turtles"><i class="fa fa-check"></i><b>21.3</b> Example: Sex ratio in turtles</a></li>
 <li class="chapter" data-level="21.4" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-smoking"><i class="fa fa-check"></i><b>21.4</b> Example: Smoking</a></li>
 </ul></li>
 <li class="chapter" data-level="22" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html"><i class="fa fa-check"></i><b>22</b> GLM families and use cases</a>
 <ul>
 <li class="chapter" data-level="22.1" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#summary-table-of-glm-families"><i class="fa fa-check"></i><b>22.1</b> Summary Table of GLM Families</a></li>
-<li class="chapter" data-level="22.2" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#further-details-of-common-glm-families"><i class="fa fa-check"></i><b>22.2</b> Further details of common GLM Families</a></li>
+<li class="chapter" data-level="22.2" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#common-glm-families"><i class="fa fa-check"></i><b>22.2</b> Common GLM Families</a></li>
+<li class="chapter" data-level="22.3" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#quasi-family-models"><i class="fa fa-check"></i><b>22.3</b> Quasi-family models</a></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html"><i class="fa fa-check"></i><b>23</b> Power analysis by simulation</a>
 <ul>
@@ -448,7 +453,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="glm-families-and-use-cases" class="section level1 hasAnchor" number="22">
 <h1><span class="header-section-number">Chapter 22</span> GLM families and use cases<a href="glm-families-and-use-cases.html#glm-families-and-use-cases" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>As we have seen in the previous chapters, Generalised Linear Models (GLMs) extend the linear regression framework by allowing for response variables with non-normal error distributions. GLMs are particularly useful in cases where the response variable exhibits properties such as boundedness, non-linearity, or non-constant variance. Each GLM family addresses specific data characteristics and includes a link function to relate the mean of the response variable (<span class="math inline">\(\mu\)</span>) to a linear predictor (<span class="math inline">\(\eta\)</span>).</p>
-<p>The choice of family and link function is essential for proper data modeling. Binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood families may be employed. This extra variation often arises from unaccounted-for heterogeneity in the data, such as omitted seasonal effects or other unmeasured variables that influence the response but are not included as predictors. In some cases, including these missing variables can reduce overdispersion and improve model fit.</p>
+<p>The choice of family and link function is important for proper data modeling. Binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood families may be employed. This extra variation often arises from unaccounted-for heterogeneity in the data, such as omitted seasonal effects or other unmeasured variables that influence the response but are not included as predictors. In some cases, including these missing variables can reduce overdispersion and improve model fit.</p>
 <p>Overdispersion can be diagnosed from model summaries by comparing the residual deviance to the degrees of freedom. Specifically, dividing the residual deviance by the degrees of freedom yields a ratio where values significantly greater than 1 suggest overdispersion. Ratios above 2 often indicate the need for a quasi-likelihood model, such as a quasi-Poisson or quasi-Binomial family, which introduces a dispersion parameter to account for the extra variability. This adjustment ensures that standard errors are correctly estimated, leading to more reliable hypothesis tests and confidence intervals.</p>
 <p>This brief section summarises properties of common GLM families and gives examples of applications. It also provides mathematical details about the link and inverse link functions.</p>
 <hr />
@@ -473,21 +478,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Gaussian</strong></td>
+<td><strong>gaussian</strong></td>
 <td><span class="math inline">\((-\infty, \infty)\)</span></td>
 <td>Identity</td>
 <td><span class="math inline">\(g(\mu) = \mu\)</span></td>
 <td><span class="math inline">\(\mu = \eta\)</span></td>
 </tr>
 <tr class="even">
-<td><strong>Poisson</strong></td>
+<td><strong>poisson</strong></td>
 <td><span class="math inline">\([0, \infty)\)</span></td>
 <td>Log</td>
 <td><span class="math inline">\(g(\mu) = \log(\mu)\)</span></td>
 <td><span class="math inline">\(\mu = \exp(\eta)\)</span></td>
 </tr>
 <tr class="odd">
-<td><strong>Binomial</strong></td>
+<td><strong>binomial</strong></td>
 <td><span class="math inline">\([0, 1]\)</span></td>
 <td>Logit</td>
 <td><span class="math inline">\(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\)</span></td>
@@ -501,28 +506,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td><span class="math inline">\(\mu = \frac{1}{\eta}\)</span></td>
 </tr>
 <tr class="odd">
-<td><strong>Inverse Gaussian</strong></td>
+<td><strong>inverse.gaussian</strong></td>
 <td><span class="math inline">\((0, \infty)\)</span></td>
 <td>Inverse Squared</td>
 <td><span class="math inline">\(g(\mu) = \frac{1}{\mu^2}\)</span></td>
 <td><span class="math inline">\(\mu = \frac{1}{\sqrt{\eta}}\)</span></td>
 </tr>
 <tr class="even">
-<td><strong>Quasibinomial</strong></td>
+<td><strong>quasibinomial</strong></td>
 <td><span class="math inline">\([0, 1]\)</span></td>
 <td>Logit</td>
 <td><span class="math inline">\(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\)</span></td>
 <td><span class="math inline">\(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)</span></td>
 </tr>
 <tr class="odd">
-<td><strong>Quasipoisson</strong></td>
+<td><strong>quasipoisson</strong></td>
 <td><span class="math inline">\([0, \infty)\)</span></td>
 <td>Log</td>
 <td><span class="math inline">\(g(\mu) = \log(\mu)\)</span></td>
 <td><span class="math inline">\(\mu = \exp(\eta)\)</span></td>
 </tr>
 <tr class="even">
-<td><strong>Quasi</strong></td>
+<td><strong>quasi</strong></td>
 <td>Depends on variance structure</td>
 <td>Identity</td>
 <td><span class="math inline">\(g(\mu) = \mu\)</span></td>
@@ -530,10 +535,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>This table provides a quick reference for understanding the key attributes of each GLM family, including the mathematical transformations that underpin their implementation. See below for more details and some examples.</p>
+<p>This table provides a quick reference for understanding the key attributes of each GLM family, including the canonical links and the transformations that underpin their implementation. See below for more details and some examples.</p>
 </div>
-<div id="further-details-of-common-glm-families" class="section level2 hasAnchor" number="22.2">
-<h2><span class="header-section-number">22.2</span> Further details of common GLM Families<a href="glm-families-and-use-cases.html#further-details-of-common-glm-families" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="common-glm-families" class="section level2 hasAnchor" number="22.2">
+<h2><span class="header-section-number">22.2</span> Common GLM Families<a href="glm-families-and-use-cases.html#common-glm-families" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>1. Gaussian (link = “identity”)</strong></p>
 <ul>
 <li><strong>Properties</strong>: Suitable for continuous response variables that are normally distributed. Gaussian data can, in theory, take any value <span class="math inline">\((-\infty, \infty)\)</span>. This is a trivial family in the sense the the <code>glm</code> model becomes mathematically identical to the regular <code>lm</code> model.</li>
@@ -589,30 +594,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Distance traveled by animals during foraging in different habitats.</li>
 </ol></li>
 </ul>
-<p><strong>6. Quasipoisson (link = “log”)</strong></p>
+</div>
+<div id="quasi-family-models" class="section level2 hasAnchor" number="22.3">
+<h2><span class="header-section-number">22.3</span> Quasi-family models<a href="glm-families-and-use-cases.html#quasi-family-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As described above, sometimes the variance in the data exceeds the assumptions of the specified family. In those cases, the following models are available in the <code>glm</code> framework.</p>
+<p><strong>1. Quasipoisson (link = “log”)</strong></p>
 <ul>
-<li><strong>Properties</strong>: Similar to the Poisson family but for overdispersed count data. Overdispersion may arise when the variability in the count data exceeds the mean, violating the Poisson assumption that the mean equals the variance. The response variable must be non-negative integers <span class="math inline">\([0, \infty)\)</span>.</li>
+<li><strong>Properties</strong>: Similar to the <code>Poisson</code> family but for overdispersed count data. Overdispersion may arise when the variability in the count data exceeds the mean, violating the Poisson assumption that the mean equals the variance. The response variable must be non-negative integers <span class="math inline">\([0, \infty)\)</span>.</li>
 <li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \log(\mu)\)</span>.</li>
 <li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \exp(\eta)\)</span>.</li>
-<li><strong>Examples</strong>:
-<ol style="list-style-type: decimal">
-<li><p><strong>Number of insect visits to flowers under varying light conditions</strong>: Overdispersion occurs because different flowers might attract insects at varying rates due to unmeasured traits like nectar availability or competition from neighboring flowers.</p></li>
-<li><p><strong>Counts of trees in different forest patches</strong>: Overdispersion might arise from varying soil quality, seed dispersal patterns, or localized disturbances, leading to greater variability in counts than expected under a standard Poisson model.</p></li>
-</ol></li>
 </ul>
-<p><strong>7. Quasibinomial (link = “logit”)</strong></p>
+<p><strong>2. Quasibinomial (link = “logit”)</strong></p>
 <ul>
-<li><strong>Properties</strong>: Similar to the binomial family but for overdispersed binary/proportion data. Overdispersion may arise when there is unaccounted-for heterogeneity in the probabilities of success across observations. The response variable must lie between <span class="math inline">\([0, 1]\)</span>.</li>
+<li><strong>Properties</strong>: Similar to the <code>binomial</code> family but for overdispersed binary/proportion data. Overdispersion may arise when there is unaccounted-for heterogeneity in the probabilities of success across observations. The response variable must lie between <span class="math inline">\([0, 1]\)</span>.</li>
 <li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \log\left(\frac{\mu}{1-\mu}\right)\)</span>.</li>
 <li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \frac{\exp(\eta)}{1 + \exp(\eta)}\)</span>.</li>
-<li><strong>Examples</strong>:
-<ol style="list-style-type: decimal">
-<li><strong>Proportion of successful nesting attempts by birds</strong>: Overdispersion might occur because success rates vary due to unmeasured factors like predation risk, food availability, or habitat quality.</li>
-<li><strong>Germination success rate under fluctuating temperature regimes</strong>: Overdispersion may result from heterogeneity in seed quality or local microclimatic differences that influence germination probabilities.</li>
-</ol></li>
 </ul>
-<p><strong>6. Quasi (link = “identity”, variance = “constant”)</strong></p>
-<p>In some cases, the variance-mean relationship may not align with binomial or Poisson assumptions, even after adjustment for overdispersion. The <code>Quasi</code> family offers a flexible framework where the variance can follow any user-specified function of the mean, providing additional flexibility in handling a range of data characteristics.</p>
+<p><strong>3. Quasi (link = “identity”, variance = “constant”)</strong></p>
+<p>In some cases, the variance-mean relationship may not align with binomial or Poisson assumptions, even after adjustment for overdispersion. The <code>quasi</code> family offers a flexible framework where the variance can follow <em>any</em> user-specified function of the mean, providing additional flexibility in handling a range of data characteristics.</p>
 <ul>
 <li><strong>Properties</strong>: Allows modeling of data with overdispersion without assuming a specific variance function. Overdispersion occurs when the observed variance is larger than what is predicted by the assumed distribution. The bounds of the data depend on the assumed variance structure but are often continuous <span class="math inline">\((-\infty, \infty)\)</span>.</li>
 <li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \mu\)</span>.</li>

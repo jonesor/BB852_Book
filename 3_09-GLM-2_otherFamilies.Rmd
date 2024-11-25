@@ -1,21 +1,40 @@
 # Extending use cases of GLM
 
 
-In the previous chapter we used the case of modelling count data, which is bounded at 0 and takes integer values, to understand how Generalised Linear Models work. In this chapter we extend our understanding by looking at another type of data, namely *binomial* data. 
+In the previous chapter, we used the case of modelling count data, which is bounded at 0 and takes integer values, to understand how generalised linear models work. This chapter extends our understanding by looking at another data type: *binomial* data. 
 
 ## Binomial response data
 
-There are three types of Binomial data, but all three types have the idea of "success" and "failure" at their heart. It is up to you, the modeller, to decide what these successes and failures are, but they can be any kind of data that can be coerced into two discrete categories. Common examples include pass/fail, survived/died, presence/absence and yes/no.
+There are three common formats for representing Binomial data, all of which involve the fundamental concepts of "success" and "failure." It is up to you, the modeller, to define what constitutes a success or failure. These can be any data that can be grouped into two discrete categories, such as pass/fail, survived/died, presence/absence,  yes/no, male/female, red/green.
 
-The three data types are as follows:
+The three formats, provide flexibility for modeling binomial data in various contexts and are as follows:
 
-1) The data can be in the form of a two-level factor - often coded as zeros and ones (0/1 data). For example, this could represent whether an died (0) or survived (1) in a study; or it could represent male (`M`) or female (`F`) in a study trying to predict sex from other variables (e.g. size or morphology). 
-2) The data could be expressed as a numeric vector of proportions, bounded between 0 and 1 (i.e. can take any value between 0 and 1). For example these data could be percentages expressed as proportion, such as proportion (or percent) of individuals in a group surviving. In this case, the total number of cases that contributed to the proportion can be optionally included as `weights` in the regression model ^[weights allow some data points to be more influential than others - for example you would want to give more importance to points that represent large sample sizes].
-3) Finally, the data could be expressed as numbers in a two column matrix where the first column gives the number of "successes" and the second column gives the number of "failures".
+1. **Binary Data (0/1)**: The data can be a two-level factor, often coded as zeros and ones. For example, this could represent whether an individual died (0) or survived (1) in a study, or two sexes (male or female) in a study predicting sex based on other variables (e.g., size, morphology).
 
-The aim of the GLM is usually to estimate probability of "success" (e.g. survival, passing, scoring a goal...). Thus, the outcome (the predicted response, or fit, of the model) is a value between 0 and 1 on the natural scale, that can be interpreted as a probability (e.g. of survival, of success, of presence etc.)
+2. **Proportions**: The data can be a numeric vector of proportions bounded between 0 and 1. For instance, the proportion of individuals in a group that survive some event can be represented this way. In such cases, the total number of trials contributing to the proportion can be included as `weights` in the regression model, ensuring that points representing larger sample sizes have more influence.
 
-The link function used for a binomial GLM is usually the *logit* transformation, and therefore another name for this type of regression is **logistic regression**. The logit transformation linearises an S-shaped curve and therefore allows a linear regression line to be fitted from data that follows this pattern. The function is $y = log(\frac{p}{1-p})$, where $p$ is the probability or proportion. The inverse logit (the anti-logit) is $p = \frac{exp(y)}{exp(y)+1}$.
+3. **Success/Failure Counts (Two-Column Matrix)**: The data can be expressed as a two-column matrix, where the first column gives the number of "successes" and the second gives the number of "failures." For example, 25 successes and 15 failures in a study can be represented as `cbind(successes, failures)`. This format is commonly used when raw counts are available. 
+
+
+The aim of a generalized linear model (GLM) for binomial data is usually to estimate the probability of "success" (e.g., survival, passing, scoring a goal, presence). The predicted response (fit of the model) is a value between 0 and 1 on the natural scale, which can be interpreted as the probability of success.
+
+To achieve this, binomial GLMs commonly use the **logit** link function, which transforms probabilities (\(p\)) from the range (0, 1) to the range \((- \infty, \infty)\). This transformation linearizes the S-shaped relationship between predictors and probabilities, allowing a linear regression line to be fitted. This type of regression is known as **logistic regression**.
+
+The logit transformation is defined as:
+
+\[
+y = \log\left(\frac{p}{1-p}\right),
+\]
+
+where \( p \) is the probability of success. Its inverse, the **anti-logit**, maps linear predictions (\(y\)) back to probabilities and is defined as:
+
+\[
+p = \frac{\exp(y)}{1 + \exp(y)}.
+\]
+
+This transformation enables logistic regression to handle binary or proportional data effectively, with predictions that are interpretable as probabilities (e.g., of survival, success, or presence).
+
+
 
 ```{r 3-09-GLM-2-otherFamilies-1, echo=FALSE,fig.width=7,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
 datBinom <- data.frame(x = 1:10) %>%
@@ -38,7 +57,7 @@ B <- ggplot(datBinom, aes(x = x, y = tValue)) +
 A + B
 ```
 
-We **could** linearise the data and then fit an ordinary linear model using `lm` but (like with the Poisson regression) the other assumption of the ordinary linear model, homoscedasticity, would cause problems. With S-shaped binomial relationships the expected variance is small at the two ends of the range and large in the middle of the range. This contrasts strongly with the constant variance assumption of ordinary linear models. Therefore it is wise to account for this using a Generalised Linear Model that explicitly accounts for this variance structure.
+We **could** linearise the data and then fit an ordinary linear model using `lm`, but (like with the Poisson regression) the other assumption of the ordinary linear model, homoscedasticity, would cause problems. With S-shaped binomial relationships, the expected variance is small at the two ends of the range and large in the middle of the range. This contrasts strongly with the constant variance assumption of ordinary linear models. Therefore it is wise to account for this using a Generalised Linear Model that explicitly accounts for this variance structure.
 
 Let's try a couple of examples.
 
@@ -73,16 +92,46 @@ Now we can fit a GLM using an appropriate binomial error structure.
 nflMod <- glm(Success ~ Distance, data = NFL, family = binomial)
 ```
 
-As usual, we should look at the model diagnostics. These look pretty bad. One reason that these diagnostics (e.g. the QQ plot) can look bad is when we are missing important variables in the model. In this case, for example, the distribution could look "off" because we don't include important information on other aspects of the game (e.g. was the team winning or losing at the time? how many minutes until the end of the game? how experienced is the player?).However, another important reason for the weirdness in these plots is that they were not designed with logistic regression in mind. 
+As is standard practice, we begin by examining the model diagnostics. In this case, they look quite problematic. One common reason for poor diagnostics (e.g., a skewed Q-Q plot) is the omission of important variables in the model. For example, the unusual patterns observed here might be due to missing key information about other aspects of the game, such as whether the team was winning or losing, the time remaining in the game, or the player's level of experience.
 
-Indeed, these diagnostic plots can be misleading when applied to logistic regression because they are designed for linear models with normally distributed errors. In fact, it may be best to avoid relying on these plots for logistic regression diagnostics and to instead focus on making your choice of model based on principals about the bounding of the response variable.
+However, another significant reason for the odd patterns in these diagnostic plots is their inherent limitations when applied to logistic regression. These plots were originally designed for linear models with normally distributed errors and may provide misleading results when used with logistic regression.
 
-We can be fairly sure that `binomial` is the most appropriate variance structure because of the nature of the 0/1 data so let's stick with it for now!
 
 ```{r 3-09-GLM-2-otherFamilies-6, echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message = FALSE, warning = FALSE}
 library(ggfortify)
 autoplot(nflMod)
 ```
+
+
+Given these limitations, it is often better to avoid relying heavily on traditional diagnostic plots for logistic regression. Instead, it is more prudent to evaluate your model choice based on theoretical principles, particularly those addressing the bounded nature of the response variable.
+
+**However**, a newer diagnostic method specifically suited to models like logistic regression exists: the `DHARMa` package offers an alternative simulation-based that provides clearer and more reliable insights.
+
+### DHARMa
+
+The **DHARMa** package is an alternative more approach to model diagnostics, particularly excelling where traditional tools like `agricolae::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
+
+At the heart of DHARMa’s approach is the `simulateResiduals()` function. The function simulates standardised residuals based on the model's assumptions, including the specified error distribution and link function. DHARMa then constructs intuitive diagnostic plots that would reveal model deficiencies such as mismatched link functions, unmodeled predictors, and overdispersion.
+
+The two plots are the **Q-Q plot** and the **residuals versus predicted values plot**. The **Q-Q plot** compares the observed residuals against an expected distribution generated from the simulations. A well-fitted model is reflected by points aligning along the diagonal. The **residuals versus predicted values plot** allows users to check for patterns in residuals, with a random scatter indicating a well-fitting model. Deviations from these expectations signal issues like incorrect link functions, overdispersion, or omitted variables.
+
+Here is how to implement this approach (note that you will likely need to install the `DHARMa` package first using `install.packages("DHARMa") :
+
+```{r 3-09-GLM-2-DHARMa}
+library(DHARMa)
+sim_res <- simulateResiduals(fittedModel = nflMod)
+plot(sim_res)
+```
+
+The text on the Q-Q plot reports the results of three tests: the KS test, Dispersion test, and Outlier test, each targeting specific aspects of model fit. The KS (Kolmogorov-Smirnov) test checks whether the distribution of residuals aligns with the expected distribution, flagging deviations that suggest model misspecifications. The Dispersion test evaluates whether the variance in the residuals matches the model’s assumptions, identifying overdispersion or underdispersion. Finally, the Outlier test highlights residuals that fall outside expected ranges, pointing to potential anomalies or influential data points. Together, these tests provide a comprehensive diagnostic of model performance and in this case indicate that there are no problems.
+
+
+As you can see, the two plots, and the in-built tests, indicate that the model structure is appropriate: The observed and expected points fall on the QQ diagonal line and the residuals versus predicted values plot looks like a random star-field without any patterns.
+
+### Continuuing the analysis
+
+
+So, based on theoretical principles based on the response variable's bounds or the results of this DHARMa analysis, we can be pretty sure that the binomial family is the most appropriate family to use. Let's continue.
 
 We proceed in the normal way by obtaining the ANOVA table for the model. We need to specify that we want to calculated p-values using a "Chi" squared test. This shows us that indeed distance is an important variable in determining probability of success (not so surprising!)
 
