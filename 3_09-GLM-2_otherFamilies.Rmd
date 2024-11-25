@@ -7,7 +7,7 @@ In the previous chapter, we used the case of modelling count data, which is boun
 
 There are three common formats for representing Binomial data, all of which involve the fundamental concepts of "success" and "failure." It is up to you, the modeller, to define what constitutes a success or failure. These can be any data that can be grouped into two discrete categories, such as pass/fail, survived/died, presence/absence,  yes/no, male/female, red/green.
 
-The three formats, provide flexibility for modeling binomial data in various contexts and are as follows:
+The three formats, provide flexibility for modelling binomial data in various contexts and are as follows:
 
 1. **Binary Data (0/1)**: The data can be a two-level factor, often coded as zeros and ones. For example, this could represent whether an individual died (0) or survived (1) in a study, or two sexes (male or female) in a study predicting sex based on other variables (e.g., size, morphology).
 
@@ -18,7 +18,7 @@ The three formats, provide flexibility for modeling binomial data in various con
 
 The aim of a generalized linear model (GLM) for binomial data is usually to estimate the probability of "success" (e.g., survival, passing, scoring a goal, presence). The predicted response (fit of the model) is a value between 0 and 1 on the natural scale, which can be interpreted as the probability of success.
 
-To achieve this, binomial GLMs commonly use the **logit** link function, which transforms probabilities (\(p\)) from the range (0, 1) to the range \((- \infty, \infty)\). This transformation linearizes the S-shaped relationship between predictors and probabilities, allowing a linear regression line to be fitted. This type of regression is known as **logistic regression**.
+To achieve this, binomial GLMs commonly use the **logit** link function, which transforms probabilities (\(p\)) from the range (0, 1) to the range \((- \infty, \infty)\). This transformation linearises the S-shaped relationship between predictors and probabilities, allowing a linear regression line to be fitted. This type of regression is known as **logistic regression**.
 
 The logit transformation is defined as:
 
@@ -111,7 +111,7 @@ Given these limitations, it is often better to avoid relying heavily on traditio
 
 The **DHARMa** package is an alternative more approach to model diagnostics, particularly excelling where traditional tools like `agricolae::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
 
-At the heart of DHARMa’s approach is the `simulateResiduals()` function. The function simulates standardised residuals based on the model's assumptions, including the specified error distribution and link function. DHARMa then constructs intuitive diagnostic plots that would reveal model deficiencies such as mismatched link functions, unmodeled predictors, and overdispersion.
+At the heart of DHARMa’s approach is the `simulateResiduals()` function. The function simulates standardised residuals based on the model's assumptions, including the specified error distribution and link function. DHARMa then constructs intuitive diagnostic plots that would reveal model deficiencies such as mismatched link functions, unmodelled predictors, and overdispersion.
 
 The two plots are the **Q-Q plot** and the **residuals versus predicted values plot**. The **Q-Q plot** compares the observed residuals against an expected distribution generated from the simulations. A well-fitted model is reflected by points aligning along the diagonal. The **residuals versus predicted values plot** allows users to check for patterns in residuals, with a random scatter indicating a well-fitting model. Deviations from these expectations signal issues like incorrect link functions, overdispersion, or omitted variables.
 
@@ -128,7 +128,7 @@ The text on the Q-Q plot reports the results of three tests: the KS test, Disper
 
 As you can see, the two plots, and the in-built tests, indicate that the model structure is appropriate: The observed and expected points fall on the QQ diagonal line and the residuals versus predicted values plot looks like a random star-field without any patterns.
 
-### Continuuing the analysis
+### Continuing the analysis
 
 
 So, based on theoretical principles based on the response variable's bounds or the results of this DHARMa analysis, we can be pretty sure that the binomial family is the most appropriate family to use. Let's continue.

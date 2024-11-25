@@ -223,7 +223,7 @@ The solution to overdispersion in a GLM framework is often to use a **quasi-like
 
 Another approach to addressing overdispersion is to use a **negative binomial model**, which can be fitted using the `glm.nb` function from the `MASS` package. This model introduces an additional parameter that explicitly models the relationship between the mean and variance, allowing the variance to grow quadratically with the mean.
 
-A further, slightly more involved option, is to use a **zero-inflated model**, which is particularly useful when overdispersion arises due to an excessive number of zeros in the data. These models assume the data-generating process has two components: one generating the zeros (often modeled with a logistic component) and another generating the counts (often modeled as Poisson or negative binomial). Zero-inflated models can be fitted using specialized functions such as `zeroinfl` from the `pscl` package.
+A further, slightly more involved option, is to use a **zero-inflated model**, which is particularly useful when overdispersion arises due to an excessive number of zeros in the data. These models assume the data-generating process has two components: one generating the zeros (often modelled with a logistic component) and another generating the counts (often modelled as Poisson or negative binomial). Zero-inflated models can be fitted using specialized functions such as `zeroinfl` from the `pscl` package.
 
 While these methods require slightly different implementation, they are conceptually similar to regular GLMs and are interpreted in comparable ways.
 
