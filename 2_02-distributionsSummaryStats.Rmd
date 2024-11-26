@@ -1,8 +1,43 @@
 # Distributions and summarising data
 
-This chapter covers two broad topics: the concept of statistical distributions and summarising data. It ends with a brief look at the "law of large numbers".
+When you collect data in biology—whether it’s measuring bird wing lengths, tracking flowering times, or measuring the effect physiological stressors in the lab—you’re dealing with distributions. The first step to making sense of these distributions is to summarise and explore them. Summarising helps us uncover patterns, identify variability, and ask meaningful questions. For example: 
 
-## Distributions
+- Are larger ponds home to more amphibian species?  
+- Does temperature influence flowering time in plants?  
+- Is body mass correlated with lifespan in mammals?  
+
+To answer these questions, we need to understand the data we’re working with. This chapter will guide you through key concepts in exploring and summarising biological data, including how to define variables, avoid common pitfalls like bias, and use R to visualise and summarise distributions. We'll end with a brief look at the "law of large numbers".
+
+## Relationships in Data: Response and Explanatory Variables
+
+In biological studies, one of the most common goals is to explore relationships between variables. For example, how does island size affect species diversity? Or how does temperature influence metabolic rate? Answering these types of questions involves two key types of variables:
+
+- **Response Variable**: The variable you measure or aim to explain. This could be species diversity, metabolic rate, or population growth. By convention, it’s plotted on the **y-axis** of a graph.
+- **Explanatory Variable**: The variable you suspect influences the response variable, such as os;amd size or temperature. 
+
+These variables are also known as **dependent** (response) and **independent** (explanatory) variables. However, in biology, we prefer the terms "response" and "explanatory" because these terms are more neutral about causation. For example, an increase in temperature might correlate with earlier flowering times in plants, but this relationship could also be influenced by other factors, like changes in soil moisture or pollinator activity rather than being a direct causal relationship.
+
+Think of it like this: the response variable is the outcome, and the explanatory variable is what you suspect drives that outcome. These roles are crucial to keep straight, not only when you analyse your data but also when you visualise it. For instance, by convention, the response variable is plotted on the y-axis and the explanatory variable on the x-axis.
+
+## Populations, samples and bias
+
+In our studies, we often want to make generalisations about a **population**—the entire group of individuals, sites, or events we’re interested in. For instance, you might study a population of birds in a forest or all individual trees of a particular species in a forest. Since it’s rarely feasible to measure every individual in a population, we collect a **sample**, a smaller subset.
+
+A good sample is:
+
+- **Representative**: It captures the variability present in the population.
+- **Random**: Every individual or site has an equal chance of being included, reducing **selection bias**.
+
+#### Example: Avoiding Sampling Bias in Bird Surveys
+If you only survey birds near hiking trails, you might overestimate the abundance of species that prefer disturbed habitats, like robins or jays. Randomly selecting survey locations across the entire area ensures your data reflect the true bird community.
+
+
+
+
+
+
+
+### Distributions
 
 A statistical distribution is a description of the relative number of times (the *frequency*) possible outcomes will occur if repeated samples were to be taken. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, statistical analyses often assume that **residuals** are normally distributed. The normal distribution is symmetrical (centred on the mean) and 68% of observations fall within 1 standard deviation (s.d.), and 95% of observations fall within 2 s.d..
 
