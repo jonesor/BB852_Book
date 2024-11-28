@@ -2,7 +2,7 @@
 
 When you collect data in biology—whether it’s measuring bird wing lengths, tracking flowering times, or measuring the effect physiological stressors in the lab—you’re dealing with distributions. The first step to making sense of these distributions is to summarise and explore them. Summarising helps us uncover patterns, identify variability, and ask meaningful questions. For example: 
 
-- Are larger ponds home to more amphibian species?  
+- Are larger ponds home to more invertebrate species?  
 - Does temperature influence flowering time in plants?  
 - Is body mass correlated with lifespan in mammals?  
 
@@ -15,31 +15,38 @@ In biological studies, one of the most common goals is to explore relationships 
 - **Response Variable**: The variable you measure or aim to explain. This could be species diversity, metabolic rate, or population growth. By convention, it’s plotted on the **y-axis** of a graph.
 - **Explanatory Variable**: The variable you suspect influences the response variable, such as os;amd size or temperature. 
 
-These variables are also known as **dependent** (response) and **independent** (explanatory) variables. However, in biology, we prefer the terms "response" and "explanatory" because these terms are more neutral about causation. For example, an increase in temperature might correlate with earlier flowering times in plants, but this relationship could also be influenced by other factors, like changes in soil moisture or pollinator activity rather than being a direct causal relationship.
+These variables are also known as **dependent** (response) and **independent** (explanatory) variables. However, I prefer the terms 'response' and 'explanatory' because they avoid implying causation. For instance, in some areas, higher animal population densities (response variable) might be observed near roads, which serve as a source of roadkill (explanatory variable). This pattern reflects resource availability rather than roads directly causing increased population growth.
 
-Think of it like this: the response variable is the outcome, and the explanatory variable is what you suspect drives that outcome. These roles are crucial to keep straight, not only when you analyse your data but also when you visualise it. For instance, by convention, the response variable is plotted on the y-axis and the explanatory variable on the x-axis.
-
-## Populations, samples and bias
-
-In our studies, we often want to make generalisations about a **population**—the entire group of individuals, sites, or events we’re interested in. For instance, you might study a population of birds in a forest or all individual trees of a particular species in a forest. Since it’s rarely feasible to measure every individual in a population, we collect a **sample**, a smaller subset.
-
-A good sample is:
-
-- **Representative**: It captures the variability present in the population.
-- **Random**: Every individual or site has an equal chance of being included, reducing **selection bias**.
-
-#### Example: Avoiding Sampling Bias in Bird Surveys
-If you only survey birds near hiking trails, you might overestimate the abundance of species that prefer disturbed habitats, like robins or jays. Randomly selecting survey locations across the entire area ensures your data reflect the true bird community.
+Think of it like this: the response variable is the outcome you are measuring, while the explanatory variable is the factor you are examining for patterns or associations with that outcome. These roles are crucial to keep clear, not only during data analysis but also when visualizing results. For instance, by convention, the response variable is plotted on the y-axis, and the explanatory variable is plotted on the x-axis. This convention does not suggest that the explanatory variable determines or causes the response—it simply reflects the structure of the analysis.
 
 
 
+## Populations, Samples, and Bias
 
+In our studies, we often want to make generalisations about a statistical **population**. In statistics, the term **population** can describe any collection of individuals, items, or events that are of interest for some question. This goes beyond traditional biological populations defined as the individuals of species in a particular area. For example, if we are studying cuckoo migration, the population might be defined as all the migration routes taken by all cuckoo individuals over a 2-year period. Similarly, if we are studying bird song in skylark, the population may consist of all songs produced by all skylark individuals in Denmark over a 1-year period.
 
+The limits of a population are defined by the researcher, either for practical reasons or to align with a specific theory or question. These limits are critical because they determine the scope of the study and the generalisability of its findings. In most cases, studying an entire population is impractical due to constraints of time, resources, or logistics. Instead, we collect data from a **sample**, a smaller subset of the population, to make inferences about the larger group.
+
+For these inferences to be reliable, the sample should be **representative**: it should capture the variability of the population. A representative sample ensures that the characteristics of the sample closely mirror those of the population, minimizing the risk of biased conclusions. Representativeness can often be achieved by **sampling randomly** from the population, where every observation has an equal chance of being included. However, randomness alone does not guarantee representativeness, especially in populations with significant variability or subgroups. Thoughtful sampling strategies, such as stratified sampling, may be necessary to account for these complexities. In stratified sampling, the population is divided into subgroups (**strata**) based on key characteristics (e.g., sex, habitat type, day/night), and samples are taken randomly from each subgroup to ensure that the subgroups are adequately represented.
+
+**Selection bias** occurs when certain observations are more likely to be included in the sample than others, leading to a systematic overrepresentation or underrepresentation of particular traits or subgroups. This bias can distort inferences about the population. Eliminating selection bias requires careful planning and consideration of the study design. Even with careful planning, selection bias can still arise in unexpected ways, as illustrated by these common examples from biological studies:
+
+* Butterfly surveys conducted only on sunny days may overestimate the abundance of sun-loving species while missing shade-tolerant species.
+* Wildlife surveys conducted near roads or trails may overrepresent species tolerant of human disturbance and underestimate those in remote or undisturbed habitats.
+* Monitoring flowering times only in urban areas might overestimate responses to warmer temperatures and miss important dynamics in natural environments.
+* Estimating insect biodiversity using light traps exclusively may overrepresent moths and other light-attracted insects, while neglecting species not drawn to light.
+* Behavioural research on captive animals may overrepresent behaviours suited to confined spaces, failing to reflect the natural behaviours seen in the wild.
+
+Recogniing and addressing these biases is essential for ensuring that insights derived from a sample are representative of the broader population. A good understanding of potential bias will clarify the study’s limitations in generalisability. While achieving representativeness is a critical goal, it is noteworthy that the sample size required to capture population variability and detect meaningful effects or differences may often be smaller than expected. This topic will be explored in the later [Chapter on power analysis](https://jonesor.github.io/BB852_Book/power-analysis-by-simulation.html).
+
+Once a representative sample is collected, the next step is often to explore and summarise the data to uncover patterns or relationships. Statistical distributions provide a framework for describing this variability and later for testing hypotheses about the population.
 
 
 ### Distributions
 
-A statistical distribution is a description of the relative number of times (the *frequency*) possible outcomes will occur if repeated samples were to be taken. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, statistical analyses often assume that **residuals** are normally distributed. The normal distribution is symmetrical (centred on the mean) and 68% of observations fall within 1 standard deviation (s.d.), and 95% of observations fall within 2 s.d..
+A statistical distribution describes the relative frequency or probability of possible outcomes, either from observed data or a theoretical model, if repeated samples were taken or if the process occurred many times. Distributions are important because (1) they provide a framework for summarising and describing patterns in the data, and (2) they underpin assumptions in many statistical approaches. For example, some statistical analyses assume that **residuals** (the differences between observed and predicted values) follow a normal distribution.
+
+The **normal distribution**, also called the Gaussian distribution, is a symmetrical bell-shaped curve centered on the mean. It is characterized by two parameters: the mean (average) and the standard deviation (s.d.), which measures the spread of the data. Approximately 68% of observations fall within 1 s.d. of the mean, and 95% fall within 2 s.d..
 
 ```{r 2-02-distributionsSummaryStats-1, echo = FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 # Load necessary libraries

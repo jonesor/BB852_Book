@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-11-25" />
+<meta name="date" content="2024-11-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -239,16 +239,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html"><i class="fa fa-check"></i><b>10</b> Distributions and summarising data</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#distributions"><i class="fa fa-check"></i><b>10.1</b> Distributions</a></li>
-<li class="chapter" data-level="10.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#normal-distribution"><i class="fa fa-check"></i><b>10.2</b> Normal distribution</a></li>
-<li class="chapter" data-level="10.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-distributions"><i class="fa fa-check"></i><b>10.3</b> Comparing normal distributions</a></li>
-<li class="chapter" data-level="10.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#poisson-distribution"><i class="fa fa-check"></i><b>10.4</b> Poisson distribution</a></li>
-<li class="chapter" data-level="10.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>10.5</b> Comparing normal and Poisson distributions</a></li>
-<li class="chapter" data-level="10.6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#the-law-of-large-numbers"><i class="fa fa-check"></i><b>10.6</b> The law of large numbers</a>
+<li class="chapter" data-level="10.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#relationships-in-data-response-and-explanatory-variables"><i class="fa fa-check"></i><b>10.1</b> Relationships in Data: Response and Explanatory Variables</a></li>
+<li class="chapter" data-level="10.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#populations-samples-and-bias"><i class="fa fa-check"></i><b>10.2</b> Populations, Samples, and Bias</a>
 <ul>
-<li class="chapter" data-level="10.6.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#coin-flipping"><i class="fa fa-check"></i><b>10.6.1</b> Coin flipping</a></li>
+<li class="chapter" data-level="10.2.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#distributions"><i class="fa fa-check"></i><b>10.2.1</b> Distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="10.7" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#exercise-virtual-dice"><i class="fa fa-check"></i><b>10.7</b> Exercise: Virtual dice</a></li>
+<li class="chapter" data-level="10.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#normal-distribution"><i class="fa fa-check"></i><b>10.3</b> Normal distribution</a></li>
+<li class="chapter" data-level="10.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-distributions"><i class="fa fa-check"></i><b>10.4</b> Comparing normal distributions</a></li>
+<li class="chapter" data-level="10.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#poisson-distribution"><i class="fa fa-check"></i><b>10.5</b> Poisson distribution</a></li>
+<li class="chapter" data-level="10.6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>10.6</b> Comparing normal and Poisson distributions</a></li>
+<li class="chapter" data-level="10.7" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#the-law-of-large-numbers"><i class="fa fa-check"></i><b>10.7</b> The law of large numbers</a>
+<ul>
+<li class="chapter" data-level="10.7.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#coin-flipping"><i class="fa fa-check"></i><b>10.7.1</b> Coin flipping</a></li>
+</ul></li>
+<li class="chapter" data-level="10.8" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#exercise-virtual-dice"><i class="fa fa-check"></i><b>10.8</b> Exercise: Virtual dice</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html"><i class="fa fa-check"></i><b>11</b> Pimping your plots</a>
 <ul>
@@ -452,16 +456,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="distributions-and-summarising-data" class="section level1 hasAnchor" number="10">
 <h1><span class="header-section-number">Chapter 10</span> Distributions and summarising data<a href="distributions-and-summarising-data.html#distributions-and-summarising-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>This chapter covers two broad topics: the concept of statistical distributions and summarising data. It ends with a brief look at the “law of large numbers”.</p>
-<div id="distributions" class="section level2 hasAnchor" number="10.1">
-<h2><span class="header-section-number">10.1</span> Distributions<a href="distributions-and-summarising-data.html#distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A statistical distribution is a description of the relative number of times (the <em>frequency</em>) possible outcomes will occur if repeated samples were to be taken. They are important because (1) they are useful descriptors of data and (2) they form the basis for assumptions in some statistical approaches. For example, statistical analyses often assume that <strong>residuals</strong> are normally distributed. The normal distribution is symmetrical (centred on the mean) and 68% of observations fall within 1 standard deviation (s.d.), and 95% of observations fall within 2 s.d..</p>
+<p>When you collect data in biology—whether it’s measuring bird wing lengths, tracking flowering times, or measuring the effect physiological stressors in the lab—you’re dealing with distributions. The first step to making sense of these distributions is to summarise and explore them. Summarising helps us uncover patterns, identify variability, and ask meaningful questions. For example:</p>
+<ul>
+<li>Are larger ponds home to more invertebrate species?<br />
+</li>
+<li>Does temperature influence flowering time in plants?<br />
+</li>
+<li>Is body mass correlated with lifespan in mammals?</li>
+</ul>
+<p>To answer these questions, we need to understand the data we’re working with. This chapter will guide you through key concepts in exploring and summarising biological data, including how to define variables, avoid common pitfalls like bias, and use R to visualise and summarise distributions. We’ll end with a brief look at the “law of large numbers”.</p>
+<div id="relationships-in-data-response-and-explanatory-variables" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Relationships in Data: Response and Explanatory Variables<a href="distributions-and-summarising-data.html#relationships-in-data-response-and-explanatory-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In biological studies, one of the most common goals is to explore relationships between variables. For example, how does island size affect species diversity? Or how does temperature influence metabolic rate? Answering these types of questions involves two key types of variables:</p>
+<ul>
+<li><strong>Response Variable</strong>: The variable you measure or aim to explain. This could be species diversity, metabolic rate, or population growth. By convention, it’s plotted on the <strong>y-axis</strong> of a graph.</li>
+<li><strong>Explanatory Variable</strong>: The variable you suspect influences the response variable, such as os;amd size or temperature.</li>
+</ul>
+<p>These variables are also known as <strong>dependent</strong> (response) and <strong>independent</strong> (explanatory) variables. However, I prefer the terms ‘response’ and ‘explanatory’ because they avoid implying causation. For instance, in some areas, higher animal population densities (response variable) might be observed near roads, which serve as a source of roadkill (explanatory variable). This pattern reflects resource availability rather than roads directly causing increased population growth.</p>
+<p>Think of it like this: the response variable is the outcome you are measuring, while the explanatory variable is the factor you are examining for patterns or associations with that outcome. These roles are crucial to keep clear, not only during data analysis but also when visualizing results. For instance, by convention, the response variable is plotted on the y-axis, and the explanatory variable is plotted on the x-axis. This convention does not suggest that the explanatory variable determines or causes the response—it simply reflects the structure of the analysis.</p>
+</div>
+<div id="populations-samples-and-bias" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Populations, Samples, and Bias<a href="distributions-and-summarising-data.html#populations-samples-and-bias" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In our studies, we often want to make generalisations about a statistical <strong>population</strong>. In statistics, the term <strong>population</strong> can describe any collection of individuals, items, or events that are of interest for some question. This goes beyond traditional biological populations defined as the individuals of species in a particular area. For example, if we are studying cuckoo migration, the population might be defined as all the migration routes taken by all cuckoo individuals over a 2-year period. Similarly, if we are studying bird song in skylark, the population may consist of all songs produced by all skylark individuals in Denmark over a 1-year period.</p>
+<p>The limits of a population are defined by the researcher, either for practical reasons or to align with a specific theory or question. These limits are critical because they determine the scope of the study and the generalisability of its findings. In most cases, studying an entire population is impractical due to constraints of time, resources, or logistics. Instead, we collect data from a <strong>sample</strong>, a smaller subset of the population, to make inferences about the larger group.</p>
+<p>For these inferences to be reliable, the sample should be <strong>representative</strong>: it should capture the variability of the population. A representative sample ensures that the characteristics of the sample closely mirror those of the population, minimizing the risk of biased conclusions. Representativeness can often be achieved by <strong>sampling randomly</strong> from the population, where every observation has an equal chance of being included. However, randomness alone does not guarantee representativeness, especially in populations with significant variability or subgroups. Thoughtful sampling strategies, such as stratified sampling, may be necessary to account for these complexities. In stratified sampling, the population is divided into subgroups (<strong>strata</strong>) based on key characteristics (e.g., sex, habitat type, day/night), and samples are taken randomly from each subgroup to ensure that the subgroups are adequately represented.</p>
+<p><strong>Selection bias</strong> occurs when certain observations are more likely to be included in the sample than others, leading to a systematic overrepresentation or underrepresentation of particular traits or subgroups. This bias can distort inferences about the population. Eliminating selection bias requires careful planning and consideration of the study design. Even with careful planning, selection bias can still arise in unexpected ways, as illustrated by these common examples from biological studies:</p>
+<ul>
+<li>Butterfly surveys conducted only on sunny days may overestimate the abundance of sun-loving species while missing shade-tolerant species.</li>
+<li>Wildlife surveys conducted near roads or trails may overrepresent species tolerant of human disturbance and underestimate those in remote or undisturbed habitats.</li>
+<li>Monitoring flowering times only in urban areas might overestimate responses to warmer temperatures and miss important dynamics in natural environments.</li>
+<li>Estimating insect biodiversity using light traps exclusively may overrepresent moths and other light-attracted insects, while neglecting species not drawn to light.</li>
+<li>Behavioural research on captive animals may overrepresent behaviours suited to confined spaces, failing to reflect the natural behaviours seen in the wild.</li>
+</ul>
+<p>Recogniing and addressing these biases is essential for ensuring that insights derived from a sample are representative of the broader population. A good understanding of potential bias will clarify the study’s limitations in generalisability. While achieving representativeness is a critical goal, it is noteworthy that the sample size required to capture population variability and detect meaningful effects or differences may often be smaller than expected. This topic will be explored in the later <a href="https://jonesor.github.io/BB852_Book/power-analysis-by-simulation.html">Chapter on power analysis</a>.</p>
+<p>Once a representative sample is collected, the next step is often to explore and summarise the data to uncover patterns or relationships. Statistical distributions provide a framework for describing this variability and later for testing hypotheses about the population.</p>
+<div id="distributions" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Distributions<a href="distributions-and-summarising-data.html#distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A statistical distribution describes the relative frequency or probability of possible outcomes, either from observed data or a theoretical model, if repeated samples were taken or if the process occurred many times. Distributions are important because (1) they provide a framework for summarising and describing patterns in the data, and (2) they underpin assumptions in many statistical approaches. For example, some statistical analyses assume that <strong>residuals</strong> (the differences between observed and predicted values) follow a normal distribution.</p>
+<p>The <strong>normal distribution</strong>, also called the Gaussian distribution, is a symmetrical bell-shaped curve centered on the mean. It is characterized by two parameters: the mean (average) and the standard deviation (s.d.), which measures the spread of the data. Approximately 68% of observations fall within 1 s.d. of the mean, and 95% fall within 2 s.d..</p>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-1-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>We will use R to simulate some distributions, and explore these to get a feel for them.
 R has functions for generating random numbers from different kinds of distributions. For example, the function <code>rnorm</code> will generate numbers from a normal distribution and <code>rpois</code> will generate numbers from a Poisson distribution.</p>
 </div>
-<div id="normal-distribution" class="section level2 hasAnchor" number="10.2">
-<h2><span class="header-section-number">10.2</span> Normal distribution<a href="distributions-and-summarising-data.html#normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="normal-distribution" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Normal distribution<a href="distributions-and-summarising-data.html#normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>rnorm</code> function has three arguments. The first argument is simply the number of values you want to generate. Then, the second and third arguments specify the the mean and standard deviation values of the distribution (i.e. where the distribution is centred and how spread out it is).</p>
 <p>The following command will produce 6 numbers from a distribution with a mean value of 5 and a standard deviation of 2.</p>
 <div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="distributions-and-summarising-data.html#cb226-1" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">2</span>)</span></code></pre></div>
@@ -529,8 +568,8 @@ histograms.
 </p>
 </div>
 </div>
-<div id="comparing-normal-distributions" class="section level2 hasAnchor" number="10.3">
-<h2><span class="header-section-number">10.3</span> Comparing normal distributions<a href="distributions-and-summarising-data.html#comparing-normal-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="comparing-normal-distributions" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Comparing normal distributions<a href="distributions-and-summarising-data.html#comparing-normal-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Because normal distributions all have the same shape, it can be hard to grasp the effect of changing the distribution’s parameters viewing them in isolation. In this section you will write some code to compare two normal distributions. This approach can be useful when considering whether a proposed experiment will successfully detect a difference between treatment groups. We’ll look at this topic, known as “power analysis”, in greater detail in a later class. For now we will simply use <code>ggplot</code> to get a better feel for the normal distribution.</p>
 <p>Let’s use <code>rnorm</code> to generate a larger data frame with two sets of numbers from different distributions: (d1: mean = 5, sd = 2; d2: mean = 8, sd = 1).</p>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="distributions-and-summarising-data.html#cb235-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">d1 =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="at">d2 =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">8</span>, <span class="dv">1</span>))</span>
@@ -559,8 +598,8 @@ the number of samples, the mean values and the standard deviations).
 </p>
 </div>
 </div>
-<div id="poisson-distribution" class="section level2 hasAnchor" number="10.4">
-<h2><span class="header-section-number">10.4</span> Poisson distribution<a href="distributions-and-summarising-data.html#poisson-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="poisson-distribution" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Poisson distribution<a href="distributions-and-summarising-data.html#poisson-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the “<code>lambda</code>” parameter, which is the arithmetic mean of the distribution. Due to the zero bounds, small values of <code>lambda</code> will give more skewed distributions.</p>
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-14-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>Let’s generate and plot some Poisson distributed data.</p>
@@ -619,8 +658,8 @@ Calculate the mean values and compare those with <code>lambda</code>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   0.000   1.000   2.000   2.396   3.000   7.000</code></pre>
 </div>
-<div id="comparing-normal-and-poisson-distributions" class="section level2 hasAnchor" number="10.5">
-<h2><span class="header-section-number">10.5</span> Comparing normal and Poisson distributions<a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="comparing-normal-and-poisson-distributions" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> Comparing normal and Poisson distributions<a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To get a better feel for how these two distributions differ, lets use the same approach we used above to plot two distributions together.</p>
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="distributions-and-summarising-data.html#cb248-1" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb248-2"><a href="distributions-and-summarising-data.html#cb248-2" tabindex="-1"></a>  <span class="at">normDist =</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
@@ -655,12 +694,12 @@ Try changing the arguments in the <code>rnorm</code> and
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-22-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer then the other) and cannot be &lt;0. Which graph to you prefer? (there’s no right answer!)</p>
 </div>
-<div id="the-law-of-large-numbers" class="section level2 hasAnchor" number="10.6">
-<h2><span class="header-section-number">10.6</span> The law of large numbers<a href="distributions-and-summarising-data.html#the-law-of-large-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-law-of-large-numbers" class="section level2 hasAnchor" number="10.7">
+<h2><span class="header-section-number">10.7</span> The law of large numbers<a href="distributions-and-summarising-data.html#the-law-of-large-numbers" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <strong>law of large numbers</strong> is one of the most important ideas in probability. It states that <em>As sample grows large, the sample mean converges to the population mean</em>. In other words, as sample size increases, you get a better idea what the true value of the mean is.</p>
 <p>In this section you will demonstrate this law using coin tosses or dice throws. Since it is tiresome to toss coins hundreds of times it is convenient to simulate the data using <strong>R</strong>. Conceptually, what we are trying to do here is treat the dice rolling/coin tossing as experiments where the aim is to find the probability of getting a head/tail, or a particular number on the dice. It is useful to use dice and coins because we are pretty sure that we know what the “true” answer is: the probability of throwing a 1 on a fair dice is 1/6, while the probability of throwing a head/tail with a flipped coin is 0.5.</p>
-<div id="coin-flipping" class="section level3 hasAnchor" number="10.6.1">
-<h3><span class="header-section-number">10.6.1</span> Coin flipping<a href="distributions-and-summarising-data.html#coin-flipping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="coin-flipping" class="section level3 hasAnchor" number="10.7.1">
+<h3><span class="header-section-number">10.7.1</span> Coin flipping<a href="distributions-and-summarising-data.html#coin-flipping" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here’s how to simulate a coin toss in R.</p>
 <div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="distributions-and-summarising-data.html#cb252-1" tabindex="-1"></a>coinToss <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Heads&quot;</span>, <span class="st">&quot;Tails&quot;</span>)</span>
 <span id="cb252-2"><a href="distributions-and-summarising-data.html#cb252-2" tabindex="-1"></a><span class="fu">sample</span>(coinToss, <span class="dv">1</span>)</span></code></pre></div>
@@ -695,8 +734,8 @@ happens to the proportions of heads/tails. What do you notice?
 </div>
 </div>
 </div>
-<div id="exercise-virtual-dice" class="section level2 hasAnchor" number="10.7">
-<h2><span class="header-section-number">10.7</span> Exercise: Virtual dice<a href="distributions-and-summarising-data.html#exercise-virtual-dice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="exercise-virtual-dice" class="section level2 hasAnchor" number="10.8">
+<h2><span class="header-section-number">10.8</span> Exercise: Virtual dice<a href="distributions-and-summarising-data.html#exercise-virtual-dice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s try the same kind of thing with the roll of (virtual) dice.</p>
 <p>Here’s how to do one roll of the dice:</p>
 <div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="distributions-and-summarising-data.html#cb257-1" tabindex="-1"></a>diceRoll <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
