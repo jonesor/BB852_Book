@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-11-28" />
+<meta name="date" content="2024-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -467,7 +467,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>These type of questions are closely related to the two types of error that one can make when testing hypotheses:</p>
 <ul>
 <li>A <strong>Type I</strong> error is the rejection of a true null hypothesis. For example, when there truly is no effect of an experimental treatment, but you detect one in error.</li>
-<li>A <strong>Type II</strong> error is the failure to reject a false null hypothesis. For example, when there truly is an effect of an experimental treatment, but you fail to detect it.<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a></li>
+<li>A <strong>Type II</strong> error is the failure to reject a false null hypothesis. For example, when there truly is an effect of an experimental treatment, but you fail to detect it.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></li>
 </ul>
 <p>The probability of making these errors depends on the <strong>statistical power</strong> of your study. Statistical power ranges between 0 and 1 and, for a simple hypothesis test, it is defined as <strong>the probability that the test rejects the null hypothesis (<span class="math inline">\(H_0\)</span>) when the alternative hypothesis (<span class="math inline">\(H_1\)</span>) is true</strong>. In other words it is the probability of NOT making a Type II error.</p>
 <p>For example, a power of 0.80 means that you have an 80% chance of correctly detecting that <span class="math inline">\(H_1\)</span> is true and a 20% chance (1.0-0.8 = 0.2) of making a Type II error. As power decreases, the probability of making a Type II error increases.</p>
@@ -523,7 +523,7 @@ correctly.
 <pre><code>## [1] 0.1000936</code></pre>
 <div id="the-simulation" class="section level3 hasAnchor" number="23.3.1">
 <h3><span class="header-section-number">23.3.1</span> The simulation<a href="power-analysis-by-simulation.html#the-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The idea with power analysis by simulation is to repeat this procedure many times (at least 1000) to estimate the probability that you get it right (that you detect a significant difference between groups when you know there is a difference<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>).</p>
+<p>The idea with power analysis by simulation is to repeat this procedure many times (at least 1000) to estimate the probability that you get it right (that you detect a significant difference between groups when you know there is a difference<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>).</p>
 <p>You have come across this sort of simulation approach before when we talked about randomisation tests. As before we will use the <code>replicate</code> function to repeatedly do t-tests on randomly generated data with the characteristics you select (i.e. sample size, mean, and standard deviation).</p>
 <p>We first set up our simulation by defining the mean, standard deviation, and sample size of our simulated experiment.</p>
 <div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="power-analysis-by-simulation.html#cb517-1" tabindex="-1"></a>controlMean <span class="ot">&lt;-</span> <span class="dv">12</span></span>
@@ -639,7 +639,7 @@ this function without the need to load the whole package.
 </div>
 <div id="exercise-2-mouse-lemur-strength" class="section level2 hasAnchor" number="23.7">
 <h2><span class="header-section-number">23.7</span> Exercise 2: Mouse lemur strength<a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Previous work on grey mouse lemurs (<em>Microcebus murinus</em>) has found that they are quite strong. They can lift and hold 10 times their own body weight!<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a></p>
+<p>Previous work on grey mouse lemurs (<em>Microcebus murinus</em>) has found that they are quite strong. They can lift and hold 10 times their own body weight!<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a></p>
 <p>This work was done on prime-age animals. Researchers believe that older individuals will have experienced physiological senescence and that their strength will have deteriorated. The body weight of these lemurs is about 60grams. The prime-age animals could lift and hold 600grams with a standard deviation of 145grams.</p>
 <p>A research institute has agreed to you carrying out this study for your masters project. They have 25 young age lemurs, but only have 8 old aged animals. You can assume the standard deviation is the same in both age classes.</p>
 <p><strong>What difference in strength could you reliably detect (with power &gt;80%) with these sample sizes?</strong></p>
@@ -652,10 +652,10 @@ this function without the need to load the whole package.
 </div>
 <div class="footnotes">
 <hr />
-<ol start="15">
-<li id="fn15"><p>To remember this, think of the story about “<em>the boy who cried wolf</em>”. First the villagers believe the boy when there was no wolf (Type I error). Second, the villagers don’t believe the boy but there IS a wolf (Type II error).<a href="power-analysis-by-simulation.html#fnref15" class="footnote-back">↩︎</a></p></li>
-<li id="fn16"><p>You know there is a difference because you have set this difference!<a href="power-analysis-by-simulation.html#fnref16" class="footnote-back">↩︎</a></p></li>
-<li id="fn17"><p>Thomas, P., Pouydebat, E., Brazidec, M., Aujard, F., &amp; Herrel, A. (2015). Determinants of pull strength in captive grey mouse lemurs Journal of Zoology DOI: 10.1111/jzo.12292<a href="power-analysis-by-simulation.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<ol start="16">
+<li id="fn16"><p>To remember this, think of the story about “<em>the boy who cried wolf</em>”. First the villagers believe the boy when there was no wolf (Type I error). Second, the villagers don’t believe the boy but there IS a wolf (Type II error).<a href="power-analysis-by-simulation.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>You know there is a difference because you have set this difference!<a href="power-analysis-by-simulation.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>Thomas, P., Pouydebat, E., Brazidec, M., Aujard, F., &amp; Herrel, A. (2015). Determinants of pull strength in captive grey mouse lemurs Journal of Zoology DOI: 10.1111/jzo.12292<a href="power-analysis-by-simulation.html#fnref18" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

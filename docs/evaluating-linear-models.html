@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2024-11-28" />
+<meta name="date" content="2024-12-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -503,8 +503,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Here, the column labelled <code>Sum Sq</code> is telling us what the variance EXPLAINED by each of the terms is. The final entry, for <code>Residuals</code>, is the amount <strong>not</strong> explained (hence “residual”). Therefore we can calculate R-squared from this as (881.6 + 471.1) / (881.6 + 471.1 + 766) = 0.6384575. You can check that this matches the figure indicated by <code>summary(mod1)</code>.</p>
-<p>But what is the Adjusted R-squared?</p>
-<p>Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. Therefore it accurately measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will <em>always</em> increase because terms will <em>always</em> explain some portion of the variance, even if it is vary small. This behaviour can be a bit annoying, and so adjusted R-squared controls against this increase, by adding penalties for the number of predictors in the model. When reporting R-squared values for models with &gt;1 term you should report the adjusted R-squared value.</p>
+<p><strong>But what is the Adjusted R-squared?</strong></p>
+<p>Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. Therefore it accurately measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will <em>always</em> increase because terms will <em>always</em> explain some portion of the variance, even if it is vary small. This behaviour can be a bit annoying, and so adjusted R-squared controls against this increase, by adding a penalty based on the number of predictors in the model, and the sample size<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>. When reporting R-squared values for models with &gt;1 term you should report the adjusted R-squared value.</p>
 <p>You can test this by adding terms to the model. Let’s start with something silly - we’ll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?</p>
 <div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="evaluating-linear-models.html#cb439-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> classData <span class="sc">%&gt;%</span></span>
 <span id="cb439-2"><a href="evaluating-linear-models.html#cb439-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">randomVariable =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(classData)))</span>
@@ -591,6 +591,12 @@ The proportion of variance explained by HandWidth is 881.6/(881.6 + 471.1) = 0.6
 Variance partitioning can be used as a handy way to sum up your model (in addition to significance, and coefficient values.)</p>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="14">
+<li id="fn14"><p>The formula is: <span class="math inline">\(R^2_{adj} = 1 - \left( \frac{(1 - R^2)(n - 1)}{n - k - 1} \right)\)</span>, where <em>n</em> is the sample size and <em>k</em> is the number of predictors in the model.<a href="evaluating-linear-models.html#fnref14" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
