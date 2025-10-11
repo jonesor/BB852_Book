@@ -59,7 +59,7 @@ library(ggfortify)
 autoplot(mod1)
 ```
 
-These diagnostic plots are, basically, the same as the ones you saw for `lm` models. There is one difference and that is that the plots use something called standardised *deviance* residuals instead of just standardised residuals. These are transformed versions of the residuals that will look *normal* (in the statistical sense) if the family of hte GLM is appropriate. So, if "poisson" is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.
+These diagnostic plots are, basically, the same as the ones you saw for `lm` models. There is one difference and that is that the plots use something called standardised *deviance* residuals instead of just standardised residuals. These are transformed versions of the residuals that will look *normal* (in the statistical sense) if the family of the GLM is appropriate. So, if "poisson" is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.
 
 Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using the `test = "F"` or `test = "Chi"`.  For Poisson and binomial GLMs the chi-squared test is most appropriate while for  Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
 
