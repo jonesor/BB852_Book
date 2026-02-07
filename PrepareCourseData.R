@@ -58,5 +58,8 @@ if (nrow(datasets_missing) > 0) {
   stop("One or more datasets mentioned in the text are missing. \n       Check datasets_missing.csv")
 }
 
-# Optional: sync to Dropbox
-source("CopyDataToDropbox.R")
+# Optional: sync to Dropbox (only on the course maintainer's machine)
+current_user <- Sys.info()[["user"]]
+if (!is.na(current_user) && current_user == "jones") {
+  source("CopyDataToDropbox.R")
+}
