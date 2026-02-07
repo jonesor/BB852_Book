@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -457,22 +457,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="anova-linear-models-with-a-single-categorical-explanatory-variable" class="section level1 hasAnchor" number="15">
 <h1><span class="header-section-number">Chapter 15</span> ANOVA: Linear models with a single categorical explanatory variable<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-linear-models-with-a-single-categorical-explanatory-variable" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>With the previous work on t-tests (and also with randomisation tests), you are now equipped to test for differences between two groups, or between one group and some fixed value. But what if there are more than two groups?</p>
+<p>With the previous work on t-tests (and also randomisation tests), you are now equipped to test for differences between two groups, or between one group and some fixed value. But what if there are more than two groups?</p>
 <p>The answer is to use a one-way analysis of variance (ANOVA). Conceptually, this works the same way as a t-test.</p>
 <div id="one-way-anova" class="section level2 hasAnchor" number="15.1">
 <h2><span class="header-section-number">15.1</span> One-way ANOVA<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The one-way ANOVA is illustrated below with two cases (Figure <a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fig:3-03-ANOVA-1">15.1</a>). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser addition to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, there is one group that stands apart from the others. The ANOVA will tell us whether <em>at least one</em> of the groups is different from the others.</p>
+<p>The one-way ANOVA is illustrated below with two cases (Figure <a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fig:3-03-ANOVA-1">15.1</a>). In both cases there are three groups. These could represent treatment groups in an experiment (e.g. different fertiliser additions to plants). In figure A, the three groups are very close, and the means are not significantly different from each other. In figure B, one group stands apart from the others. The ANOVA will tell us whether <em>at least one</em> of the groups is different from the others.</p>
 <div class="figure" style="text-align: left"><span style="display:block;" id="fig:3-03-ANOVA-1"></span>
 <img src="BB852_files/figure-html/3-03-ANOVA-1-1.png" alt="Visualising an ANOVA." width="672" />
 <p class="caption">
 Figure 15.1: Visualising an ANOVA.
 </p>
 </div>
-<p>After figuring out if at least one of the groups is significantly different from the others it is often enough to examine plots (or summary statistics) to see where the differences are (e.g. which group(s) are different from each other). In other cases it might be necessary to do follow up <em>post-hoc multiple comparison</em> tests. We will come to those later.</p>
+<p>After figuring out if at least one of the groups is significantly different from the others, it is often enough to examine plots (or summary statistics) to see where the differences are (e.g. which group(s) differ). In other cases it may be necessary to do follow up <em>post-hoc multiple comparison</em> tests. We will come to those later.</p>
 </div>
 <div id="fitting-an-anova-in-r" class="section level2 hasAnchor" number="15.2">
 <h2><span class="header-section-number">15.2</span> Fitting an ANOVA in R<a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fitting-an-anova-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>New coffee machines use “pods” to make espresso. These have become much more popular than the traditional “bar machines”. This data looks at the amount of “crema” or foam produced (a sign of quality!) using three methods: bar machines (BM), Hyper Espresso Pods (HIP) and Illy Espresso System (IES). Are any of these methods better than the others?</p>
+<p>New coffee machines use “pods” to make espresso. These have become much more popular than traditional “bar machines”. This data looks at the amount of “crema” or foam produced (a sign of quality) using three methods: bar machines (BM), Hyper Espresso Pods (HIP) and Illy Espresso System (IES). Are any of these methods better than the others?</p>
 <div class="do-something">
 <p>
 Remember to load the <code>dplyr</code>, <code>magrittr</code> and
@@ -504,7 +504,7 @@ Figure 15.2: A box and whisker plot, with jittered points, for the espresso foam
 <p>You can see in Figure <a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fig:3-03-ANOVA-5">15.2</a> that the categorical explanatory variable (“method”) defines the three treatment groups and has the three levels representing the different coffee types: BM, HIP and IES.</p>
 <p>Let’s first fit the ANOVA using R. One way ANOVAs are fitted using the <code>lm</code> function (<code>lm</code> stands for “linear model” - yes, an ANOVA is a type of linear model).</p>
 <div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb362-1" tabindex="-1"></a>foam_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(foamIndx <span class="sc">~</span> method, <span class="at">data =</span> espresso)</span></code></pre></div>
-<p>Before proceeding, we need to check the assumptions of the model. This can be done visually using the <code>autoplot</code> function in the <code>ggfortify</code> package. If you don’t have the package installed, install it now (<code>install.packages("ggfortify"</code>)).</p>
+<p>Before proceeding, we need to check the assumptions of the model. This can be done visually using the <code>autoplot</code> function in the <code>ggfortify</code> package. If you don’t have the package installed, install it now (<code>install.packages("ggfortify")</code>).</p>
 <div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb363-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb363-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb363-2" tabindex="-1"></a><span class="fu">autoplot</span>(foam_mod)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:3-03-ANOVA-7"></span>
@@ -513,7 +513,7 @@ Figure 15.2: A box and whisker plot, with jittered points, for the espresso foam
 Figure 15.3: Diagnostic plots for the ANOVA model. This looks great.
 </p>
 </div>
-<p>The main thing to look at here in Figure <a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fig:3-03-ANOVA-7">15.3</a> is the “Q-Q” plot on the top right. We want those points to be approximately along the line. If that is the case, then it tells us that the model’s residuals are normally distributed (this is one of the assumptions of ANOVA). We may cover these diagnostic plots more thoroughly later. You can find more details on pages 112-113 of the Beckerman et al textbook, or at the following if you are interested: <a href="https://data.library.virginia.edu/diagnostic-plots/" class="uri">https://data.library.virginia.edu/diagnostic-plots/</a>.</p>
+<p>The main thing to look at here in Figure <a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fig:3-03-ANOVA-7">15.3</a> is the “Q-Q” plot on the top right. We want those points to be approximately along the line. If that is the case, then it tells us that the model’s residuals are normally distributed (this is one of the assumptions of ANOVA). We may cover these diagnostic plots more thoroughly later. You can find more details on pages 112-113 of the Beckerman et al textbook, or at the following if you are interested: <a href="https://data.library.virginia.edu/diagnostic-plots/">https://data.library.virginia.edu/diagnostic-plots/</a>.</p>
 <p>Trust me, everything here looks great.</p>
 <p>Now let’s evaluate our ANOVA model. We do this using two functions: <code>anova</code> and <code>summary</code> (it sounds strange, but yes we do use a function called <code>anova</code> on our ANOVA model).</p>
 <p>First, the <code>anova</code>. This gives us the following summary:</p>

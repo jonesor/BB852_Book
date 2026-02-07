@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -457,7 +457,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="glm-families-and-use-cases" class="section level1 hasAnchor" number="22">
 <h1><span class="header-section-number">Chapter 22</span> GLM families and use cases<a href="glm-families-and-use-cases.html#glm-families-and-use-cases" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>As we have seen in the previous chapters, Generalised Linear Models (GLMs) extend the linear regression framework by allowing for response variables with non-normal error distributions. GLMs are particularly useful in cases where the response variable exhibits properties such as boundedness, non-linearity, or non-constant variance. Each GLM family addresses specific data characteristics and includes a link function to relate the mean of the response variable (<span class="math inline">\(\mu\)</span>) to a linear predictor (<span class="math inline">\(\eta\)</span>).</p>
+<p>As we have seen in the previous chapters, Generalised Linear Models (GLMs) extend the linear regression framework by allowing response variables with non-normal error distributions. GLMs are particularly useful in cases where the response variable exhibits properties such as boundedness, non-linearity, or non-constant variance. Each GLM family addresses specific data characteristics and includes a link function to relate the mean of the response variable (<span class="math inline">\(\mu\)</span>) to a linear predictor (<span class="math inline">\(\eta\)</span>).</p>
 <p>The choice of family and link function is important for proper data modelling. Binomial families are suited for binary or proportional data, while Poisson families are ideal for count data. When variability in the data exceeds the assumptions of the specified family (e.g., overdispersion), quasi-likelihood families may be employed. This extra variation often arises from unaccounted-for heterogeneity in the data, such as omitted seasonal effects or other unmeasured variables that influence the response but are not included as predictors. In some cases, including these missing variables can reduce overdispersion and improve model fit.</p>
 <p>Overdispersion can be diagnosed from model summaries by comparing the residual deviance to the degrees of freedom. Specifically, dividing the residual deviance by the degrees of freedom yields a ratio where values significantly greater than 1 suggest overdispersion. Ratios above 2 often indicate the need for a quasi-likelihood model, such as a quasi-Poisson or quasi-Binomial family, which introduces a dispersion parameter to account for the extra variability. This adjustment ensures that standard errors are correctly estimated, leading to more reliable hypothesis tests and confidence intervals.</p>
 <p>This brief section summarises properties of common GLM families and gives examples of applications. It also provides mathematical details about the link and inverse link functions.</p>
@@ -546,7 +546,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">22.2</span> Common GLM Families<a href="glm-families-and-use-cases.html#common-glm-families" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>1. Gaussian (link = “identity”)</strong></p>
 <ul>
-<li><strong>Properties</strong>: Suitable for continuous response variables that are normally distributed. Gaussian data can, in theory, take any value <span class="math inline">\((-\infty, \infty)\)</span>. This is a trivial family in the sense the the <code>glm</code> model becomes mathematically identical to the regular <code>lm</code> model.</li>
+<li><strong>Properties</strong>: Suitable for continuous response variables that are normally distributed. Gaussian data can, in theory, take any value <span class="math inline">\((-\infty, \infty)\)</span>. This is a trivial family in the sense the <code>glm</code> model becomes mathematically identical to the regular <code>lm</code> model.</li>
 <li><strong>Link function</strong>: <span class="math inline">\(g(\mu) = \mu\)</span>.</li>
 <li><strong>Inverse link</strong>: <span class="math inline">\(\mu = \eta\)</span>.</li>
 <li><strong>Examples</strong>:

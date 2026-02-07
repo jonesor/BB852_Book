@@ -1,5 +1,30 @@
 ## READ ME
 
+### Build workflow
+
+- Prepare datasets and validate references: run `Rscript -e "source('PrepareCourseData.R')"` (this syncs `CourseData/` from `DataSetLibrary/`, writes `course_data_files.csv`, and fails if a referenced dataset is missing).
+- Build the book: run `_build.sh` (which now runs the preparation step, then renders the gitbook).
+
+### Build/release notes
+
+- The published site is served from `docs/` (GitHub Pages).
+- `bookdown::gitbook` output is written to `docs/` per `_bookdown.yml`.
+- Use `_clean.sh` to remove caches and generated artifacts before a clean rebuild.
+- Hand-authored images can live in `assets/`; generated plots should go in `generated/` (ignored by git).
+
+### Data provenance
+
+- `DataSetLibrary/` is the source-of-truth library (e.g., synced from Dropbox).
+- `CourseData/` is the curated subset used by the book, populated by `PrepareCourseData.R`.
+- `course_data_files.csv` and `datasets_missing.csv` are generated during prep to track usage and missing files.
+
+### Contributor checklist
+
+- Run `_clean.sh` before a release build if the output looks stale.
+- Run `_build.sh` and confirm `docs/` updates as expected.
+- Verify `CourseData/` contents match current references in `.Rmd` files.
+- Check annual items in the “Things to do each year” section below.
+
 ### Things to do each year:
 
 - Check schedule times are OK. Edit the line: `savingsTimeSwitch <- with_tz(lubridate::as_datetime("2021-10-31 03:00:00"),"Europe/Copenhagen")`, which is in the `Index.Rmd` and `personalCalendar.R` files.

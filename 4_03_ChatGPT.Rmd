@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This class is a bit different to previous classes. Instead of a lecture, this will be a workshop with some discussion and plenty of hands-on use of new tools. Specifically we’ll be focussing on using ChatGPT, which is a Large Language Model (LLM) to help with R programming tasks.
+This class is a bit different from previous classes. Instead of a lecture, this will be a workshop with some discussion and plenty of hands-on use of new tools. Specifically we’ll be focusing on using ChatGPT, which is a Large Language Model (LLM), to help with R programming tasks.
 
 ## Overview
 
@@ -11,7 +11,7 @@ This class is a bit different to previous classes. Instead of a lecture, this wi
 * Use cases in R coding
 
 ## What is a Large Language Model (LLM) and how do they work?
-LLMs are a type of machine learning model that are designed to process and generate human-like language. They can be used to process and generate language in a way that is similar to how humans use language, but on a much larger scale and with the ability to process vast amounts of data quickly. These models use a neural network architecture, which is a type of algorithm that is loosely modelled on the structure of the human brain. LLMs are trained on massive datasets of text, such as books, news articles, and social media posts, in order to learn patterns and relationships within language. This process is known as pre-training, and it allows LLMs to develop a deep understanding of the structure and nuances of language. This is incredibly computationally intensive and costs MILLIONS of dollars to create a model. For example, it is said that OpenAI spent an estimated $4.6 million to train ChatGPT-3 on 285,000 processing cores and 10,000 graphics cards.
+LLMs are a type of machine learning model that are designed to process and generate human-like language. They can be used to process and generate language in a way that is similar to how humans use language, but on a much larger scale and with the ability to process vast amounts of data quickly. These models use a neural network architecture, which is a type of algorithm that is loosely modelled on the structure of the human brain. LLMs are trained on massive datasets of text, such as books, news articles, and social media posts, in order to learn patterns and relationships within language. This process is known as pre-training, and it allows LLMs to develop a deep understanding of the structure and nuances of language. This is computationally intensive and can be very expensive. For example, it is said that OpenAI spent an estimated $4.6 million to train ChatGPT-3 on 285,000 processing cores and 10,000 graphics cards.
 
 After an LLM has been pre-trained, it is fine-tuned for specific tasks. A finished model can be used for tasks such as answering questions, summarising text or generating new text. When you ask a question to ChatGPT, it uses its knowledge of language to understand the meaning of the question, and then generates a response based on what it has learned from the training data.
 
@@ -19,11 +19,11 @@ After an LLM has been pre-trained, it is fine-tuned for specific tasks. A finish
 
 ### Limited knowledge
 
-While LLMs like ChatGPT have impressive capabilities they also have limitations. One of the biggest concerns with LLMs is the potential for bias in their training data. In a nutshell, an LLM can be expected to reflect any bias that is present in its training dataset. Another important limitation, which is particularly important for a rapidly developing field like R and its many packages, is that the LLM will have no knowledge of developments that occur after the period of its training data. In this case, its usefulness to help, for example, with using packages produced after this date will be limited. In short, I would expect ChatGPT to be less useful for newer and less-used packages, because there will have been less input data for ChatGPT systems to work with.
+While LLMs like ChatGPT have impressive capabilities, they also have limitations. One of the biggest concerns with LLMs is the potential for bias in their training data. In a nutshell, an LLM can be expected to reflect any bias that is present in its training dataset. Another important limitation, which is particularly relevant for a rapidly developing field like R and its many packages, is that the LLM will have no knowledge of developments that occur after the period of its training data. In this case, its usefulness for help with packages released after this date will be limited. In short, I would expect ChatGPT to be less useful for newer and less-used packages, because there will have been less input data for ChatGPT systems to work with.
 
 ### Hallucination
 
-Another important limitation is that LLMs can  “hallucinate”. In the context of LLMs “hallucination” refers to a phenomenon where the model generates text that is not grounded in reality. Essentially, the model generates text that appears to be “imagined” or “made up” rather than being based on facts. For example, if you ask about something that the LLM has no knowledge of it will still often produce an answer, but the answer will be close to nonsense!
+Another important limitation is that LLMs can “hallucinate”. In the context of LLMs, “hallucination” refers to a phenomenon where the model generates text that is not grounded in reality. Essentially, the model generates text that appears to be “imagined” or “made up” rather than based on facts. For example, if you ask about something that the LLM has no knowledge of it will still often produce an answer, but the answer will be close to nonsense.
 
 To illustrate a hallucination try the following prompt in ChatGPT:
 
@@ -37,7 +37,7 @@ There is no such package in R. So this entire answer is a hallucination.
 
 ### Numerical ability
 
-Most LLMs are not good with numbers. This could have important consequences for helping with maths statistics, so bear it in mind!
+Most LLMs are not good with numbers. This could have important consequences for helping with maths and statistics, so bear it in mind.
 
 To illustrate that, try the following prompt.
 
@@ -55,7 +55,9 @@ How many Rs are there in the word Strawberry?
 
 ## Ethics of using LLMs in education
 
-The use tools like ChatGPT in student coursework raises ethical concerns. On the one hand, students can use these tools to enhance their learning and understanding of complex concepts. For example, they can generate helpful insights and help with writing assignments. On the other hand, they can encourage plagiarism or cheating which could result in NOT learning.
+The use of tools like ChatGPT in student coursework raises ethical concerns. On the one hand, students can use these tools to enhance their learning and understanding of complex concepts. For example, they can generate helpful insights and help with writing assignments. On the other hand, they can encourage plagiarism or cheating, which could result in NOT learning.
+
+LLMs are tools, not substitutes for learning. They can help you move faster (e.g. by explaining concepts, spotting bugs, or suggesting alternative code), but in a university setting the main risk is outsourcing your learning. If you let the tool do the thinking, you may complete tasks without building the underlying skills. Use ChatGPT to support your learning, not to replace it. A good rule of thumb: if you cannot explain the output in your own words, you should not use it in your work.
 
 Some guidelines:
 
@@ -77,7 +79,7 @@ Despite these issues, LLMs like ChatGPT can be very useful in R programming. In 
 * Interpreting output (e.g. what does this model summary mean?)
 * Improving code (finding better ways to do things)
 * Translating code from another language
-* Solving modelling problems (e.g. I have this set-up, how do i model it?)
+* Solving modelling problems (e.g. I have this set-up, how do I model it?)
 
 ### Finding errors.
 
@@ -95,7 +97,7 @@ mod1 <- glm(noffspring ~ weight, data = fox family = poisson)
 
 ### Explaining code
 
-You can ask for help understanding what code does
+You can ask for help understanding what code does.
 
 ```
 I don’t understand what this code does. Please explain it to me. 
@@ -153,7 +155,7 @@ print("P-Value: ", p_value)
 
 ### Solving modelling problems
 
-You can describe your data to ChatGPT, and ask it to help you with modelling choices. This is probably quite error prone, so it is good practice to ask follow up questions to make sure you understand WHY it is advising certain approaches. In a nutshell, be suspicious and treat ChatGPT as an advisor/sparring partner rather than blindly listening too it. Engage your own brain!
+You can describe your data to ChatGPT, and ask it to help you with modelling choices. This is probably quite error prone, so it is good practice to ask follow up questions to make sure you understand WHY it is advising certain approaches. In a nutshell, be suspicious and treat ChatGPT as an advisor/sparring partner rather than blindly listening to it. Engage your own brain!
 
 
 ### Helping with documentation/comments
@@ -179,7 +181,4 @@ For instance, if you're focusing on data handling with the `Tidyverse` (which we
 **Iterative Approach**: Use an iterative approach by testing small pieces of advice and asking follow-up questions. This is particularly useful for complex problems, but also for simpler questions when you don't quite grasp the explanation or answer given.
 
 **Consider Reproducibility**: When sharing data, use small, reproducible examples (often called a "reprex") to illustrate your issue. This helps in providing more targeted help.
-
-
-
 

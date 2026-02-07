@@ -1,27 +1,26 @@
 # Data wrangling with `dplyr`
 
-This chapter focuses on using the package `dplyr`, which is designed to make working with data in R easier. 
+This chapter focuses on the package `dplyr`, which is designed to make working with data in R easier. 
 The package has several key "workhorse" functions, sometimes called **verbs**. These are: `filter`, `select`, `mutate`, `arrange` and `summarise`. I covered these in the lecture, and they are also discussed in the textbook. This chapter guides you through worked examples to illustrate their use.
 
-We will also be using **pipes** from the `magrittr` package. These are implemented using the command `%>%`. 
+We will also be using **pipes** from the `magrittr` package, implemented using the command `%>%`. 
 
 ```{r 1-01-dataWrangling-1}
 library("dplyr")
 library("magrittr")
 ```
 
-To get to know `dplyr` and its functions we'll use a data set 
-collected from the university campus at University of Southern Denmark (SDU) The SDU bird project follows the fate of mainly great tits (musvit) and blue tits (blåmejse) in about 100 nest boxes in the woods around the main SDU campus. 
+To get to know `dplyr` and its functions we'll use a data set collected from the University of Southern Denmark (SDU) campus. The SDU bird project follows the fate of mainly great tits (musvit) and blue tits (blåmejse) in about 100 nest boxes in the woods around the main SDU campus. 
 
-We will address two questions concerning clutch size (the number of eggs laid into the nest) - 
+We will address two questions concerning clutch size (the number of eggs laid into the nest): 
 
 1. How does clutch size differ between blue tits and great tits?
 2. How does average clutch size vary among years?
 
-To answer these questions we need to calculate the average clutch size (number of eggs) for each nest in each year. The data are in a file called (`sduBirds.csv`) and are raw data collected while visiting the nests. The data will need to be processed to answer those questions.
+To answer these questions we need to calculate the average clutch size (number of eggs) for each nest in each year. The data are in a file called `sduBirds.csv` and are raw data collected while visiting the nests. The data will need to be processed to answer those questions.
 
 Let's import the data and take a look at it. Make sure your data looks OK before moving on.
-You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data etc.), and set it (with `setwd`)).
+You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data), and set it with `setwd()`.
 See the earlier material for how to do this, or ask for help.
 
 ```{r 1-01-dataWrangling-2}
@@ -39,11 +38,11 @@ sduBirds <- select(sduBirds, species, Year, Day, boxNumber, nEggs)
 head(sduBirds)
 ```
 
-The output of `head` shows you the first few rows of the data set. You can see that each row represents a visit of a researcher to a particular nest. The researcher records the bird species if it is known (GT = Great tit, BT = Blue tit, NH = Nuthatch etc.), and then records the number of eggs, number of chicks, activity of the adults and so on. We need to convert this huge dataset into one which contains clutch size for each nest, for each year of the study. 
+The output of `head` shows you the first few rows of the data set. Each row represents a visit to a particular nest. The researcher records the bird species if it is known (GT = Great tit, BT = Blue tit, NH = Nuthatch etc.), and then records the number of eggs, number of chicks, activity of the adults and so on. We need to convert this large dataset into one that contains clutch size for each nest, for each year of the study. 
 
 The information given by `str` (above) shows that there are data on species other than our target species. We are only interested in the great tits and blue tits so we can first filter the others out using the `species` variable. 
 
-We can check what the make up of this part of the data is using the `table` function which will count up all of the entries.
+We can check the make-up of this part of the data using the `table` function, which counts the entries.
 
 ```{r 1-01-dataWrangling-4}
 table(sduBirds$species)
@@ -61,7 +60,7 @@ table(sduBirds$species)
 
 ## `arrange`
 
-Recall that the data are records of visits to each nest a few times per week. To ensure that the data are in time order I can first `arrange` by first `Year` and then `Day`. To illustrate this we can make a temporary data set (called `temp`) to look at a particular nest in a particular year to get a record of the progress for that particular nest, and then plot it (this is an ugly plot and we will learn how to make beautiful ones soon):
+Recall that the data are records of visits to each nest a few times per week. To ensure that the data are in time order we can `arrange` by `Year` and then `Day`. To illustrate this we can make a temporary data set (called `temp`) to look at a particular nest in a particular year, and then plot it (this is an ugly plot and we will learn how to make beautiful ones soon):
 
 ```{r 1-01-dataWrangling-6}
 sduBirds <- arrange(sduBirds, Year, Day)
@@ -71,13 +70,13 @@ max(temp$nEggs) # get the max value
 plot(temp$Day, temp$nEggs, type = "b")
 ```
 
-Eggs are usually laid one per day, and the clutch size is the maximum number of eggs reached for each nest box. In this case, the clutch size is `r max(temp$nEggs)` eggs. The rapid decline in number of eggs after this peak value shows when the eggs have hatched and the researcher finds chicks instead of eggs!
+Eggs are usually laid one per day, and the clutch size is the maximum number of eggs reached for each nest box. In this case, the clutch size is `r max(temp$nEggs)` eggs. The rapid decline in number of eggs after this peak value shows when the eggs have hatched and the researcher finds chicks instead of eggs.
 
 ## `summarise` and `group_by`
 
 The next part is the crucial part of our investigation. We need to get the maximum number of eggs seen at each nest. Of course we could repeatedly use `filter`, followed by `max`, for each nest-year combination but this would be incredibly tedious.
 
-Instead, we will use the `dplyr` function, `summarise`, to do this by asking for the maximum value of `nEggs` using `max`. To make this work we need to first use the `group_by` function tell R to group the data by the variables we are interested in. If we don't do this we just get the overall maximum. We can ungroup the data using the `ungroup` function. 
+Instead, we will use the `dplyr` function `summarise` to do this by asking for the maximum value of `nEggs` using `max`. To make this work we first need to use the `group_by` function to tell R to group the data by the variables we are interested in. If we don't do this we just get the overall maximum. We can ungroup the data using the `ungroup` function. 
 
 Because there are missing data (`NA` values) we need to specify `na.rm = TRUE` in the argument.
 
@@ -163,9 +162,9 @@ points(sduBirds2$Year[sduBirds2$species == "GT"],
 )
 ```
 
-So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have large clutch sizes than great tits.
+So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have larger clutch sizes than great tits.
 
-This approach of using `group_by` followed by `summarise` can be used to summarise data in many different ways: maximum or minimum value (`max` or `min`), variance or standard deviation (`var` or `sd`), quantiles such as the 10% or 50% quantile etc. (see the section on **Distributions** below) (`quantile`), cumulative sums (`cumsum`) or counts (`n` or `length`) and so on.
+This approach of using `group_by` followed by `summarise` can be used to summarise data in many different ways: maximum or minimum value (`max` or `min`), variance or standard deviation (`var` or `sd`), quantiles such as the 10% or 50% quantile (see the section on **Distributions** below) (`quantile`), cumulative sums (`cumsum`) or counts (`n` or `length`) and so on.
 
 <!-- table -->
 
@@ -181,10 +180,10 @@ knitr::kable(my_data)
 
 ## Using pipes, saving data.
 
-I have walked you through a step-by-step data manipulation. During that process you made made (and replaced) new data sets at each step. In practice this can be done more smoothly using *pipes* (`%>%`) to pass the result of one function into the next, and the next, and the next...
+I have walked you through a step-by-step data manipulation. During that process you made (and replaced) new data sets at each step. In practice this can be done more smoothly using *pipes* (`%>%`) to pass the result of one function into the next, and the next, and the next...
 
-You'll get some more practice with this as we go on.
-Below I show how do do this to create a clutch size data set from the raw data (note that your file path will differ from mine):
+You'll get more practice with this as we go on.
+Below I show how to do this to create a clutch size data set from the raw data (note that your file path will differ from mine):
 
 ```{r 1-01-dataWrangling-18}
 # Import and process data using pipes
@@ -209,7 +208,7 @@ write.csv(
 
 ## Exercise: Wrangling the Amniote Life History Database
 
-In this exercise the aim is to use the "Amniote Life History Database" ^[https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1] to investigate some questions about life history evolution.
+In this exercise the aim is to use the "Amniote Life History Database" ^[See [https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1)] to investigate some questions about life history evolution.
 
 The questions are:
 (1) what are the records and typical life spans in different taxonomic classes? [*what is the longest, shortest and median life span in birds, mammals and reptiles?*]

@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -457,21 +457,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="data-wrangling-with-dplyr" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Data wrangling with <code>dplyr</code><a href="data-wrangling-with-dplyr.html#data-wrangling-with-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>This chapter focuses on using the package <code>dplyr</code>, which is designed to make working with data in R easier.
+<p>This chapter focuses on the package <code>dplyr</code>, which is designed to make working with data in R easier.
 The package has several key “workhorse” functions, sometimes called <strong>verbs</strong>. These are: <code>filter</code>, <code>select</code>, <code>mutate</code>, <code>arrange</code> and <code>summarise</code>. I covered these in the lecture, and they are also discussed in the textbook. This chapter guides you through worked examples to illustrate their use.</p>
-<p>We will also be using <strong>pipes</strong> from the <code>magrittr</code> package. These are implemented using the command <code>%&gt;%</code>.</p>
+<p>We will also be using <strong>pipes</strong> from the <code>magrittr</code> package, implemented using the command <code>%&gt;%</code>.</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="data-wrangling-with-dplyr.html#cb138-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
 <span id="cb138-2"><a href="data-wrangling-with-dplyr.html#cb138-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;magrittr&quot;</span>)</span></code></pre></div>
-<p>To get to know <code>dplyr</code> and its functions we’ll use a data set
-collected from the university campus at University of Southern Denmark (SDU) The SDU bird project follows the fate of mainly great tits (musvit) and blue tits (blåmejse) in about 100 nest boxes in the woods around the main SDU campus.</p>
-<p>We will address two questions concerning clutch size (the number of eggs laid into the nest) -</p>
+<p>To get to know <code>dplyr</code> and its functions we’ll use a data set collected from the University of Southern Denmark (SDU) campus. The SDU bird project follows the fate of mainly great tits (musvit) and blue tits (blåmejse) in about 100 nest boxes in the woods around the main SDU campus.</p>
+<p>We will address two questions concerning clutch size (the number of eggs laid into the nest):</p>
 <ol style="list-style-type: decimal">
 <li>How does clutch size differ between blue tits and great tits?</li>
 <li>How does average clutch size vary among years?</li>
 </ol>
 <p>To answer these questions we need to calculate the average clutch size (number of eggs) for each nest in each year. The data are in a file called (<code>sduBirds.csv</code>) and are raw data collected while visiting the nests. The data will need to be processed to answer those questions.</p>
 <p>Let’s import the data and take a look at it. Make sure your data looks OK before moving on.
-You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data etc.), and set it (with <code>setwd</code>)).
+You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data), and set it with <code>setwd()</code>.
 See the earlier material for how to do this, or ask for help.</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-wrangling-with-dplyr.html#cb139-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/sduBirds.csv&quot;</span>)</span>
 <span id="cb139-2"><a href="data-wrangling-with-dplyr.html#cb139-2" tabindex="-1"></a><span class="fu">str</span>(sduBirds)</span></code></pre></div>
@@ -505,7 +504,7 @@ See the earlier material for how to do this, or ask for help.</p>
 ## 6      BT 2013 112         1     0</code></pre>
 <p>The output of <code>head</code> shows you the first few rows of the data set. You can see that each row represents a visit of a researcher to a particular nest. The researcher records the bird species if it is known (GT = Great tit, BT = Blue tit, NH = Nuthatch etc.), and then records the number of eggs, number of chicks, activity of the adults and so on. We need to convert this huge dataset into one which contains clutch size for each nest, for each year of the study.</p>
 <p>The information given by <code>str</code> (above) shows that there are data on species other than our target species. We are only interested in the great tits and blue tits so we can first filter the others out using the <code>species</code> variable.</p>
-<p>We can check what the make up of this part of the data is using the <code>table</code> function which will count up all of the entries.</p>
+<p>We can check the make-up of this part of the data using the <code>table</code> function, which counts the entries.</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="data-wrangling-with-dplyr.html#cb143-1" tabindex="-1"></a><span class="fu">table</span>(sduBirds<span class="sc">$</span>species)</span></code></pre></div>
 <pre><code>## 
 ##   BT   GT   MT   NH   WR 
@@ -535,7 +534,7 @@ See the earlier material for how to do this, or ask for help.</p>
 <div id="summarise-and-group_by" class="section level2 hasAnchor" number="7.4">
 <h2><span class="header-section-number">7.4</span> <code>summarise</code> and <code>group_by</code><a href="data-wrangling-with-dplyr.html#summarise-and-group_by" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The next part is the crucial part of our investigation. We need to get the maximum number of eggs seen at each nest. Of course we could repeatedly use <code>filter</code>, followed by <code>max</code>, for each nest-year combination but this would be incredibly tedious.</p>
-<p>Instead, we will use the <code>dplyr</code> function, <code>summarise</code>, to do this by asking for the maximum value of <code>nEggs</code> using <code>max</code>. To make this work we need to first use the <code>group_by</code> function tell R to group the data by the variables we are interested in. If we don’t do this we just get the overall maximum. We can ungroup the data using the <code>ungroup</code> function.</p>
+<p>Instead, we will use the <code>dplyr</code> function <code>summarise</code> to do this by asking for the maximum value of <code>nEggs</code> using <code>max</code>. To make this work we first need to use the <code>group_by</code> function to tell R to group the data by the variables we are interested in. If we don’t do this we just get the overall maximum. We can ungroup the data using the <code>ungroup</code> function.</p>
 <p>Because there are missing data (<code>NA</code> values) we need to specify <code>na.rm = TRUE</code> in the argument.</p>
 <p>So first, let’s get the max per species, just to illustrate how this works:</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="data-wrangling-with-dplyr.html#cb150-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">group_by</span>(sduBirds, species)</span>
@@ -644,9 +643,9 @@ See the earlier material for how to do this, or ask for help.</p>
 </div>
 <div id="using-pipes-saving-data." class="section level2 hasAnchor" number="7.5">
 <h2><span class="header-section-number">7.5</span> Using pipes, saving data.<a href="data-wrangling-with-dplyr.html#using-pipes-saving-data." class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>I have walked you through a step-by-step data manipulation. During that process you made made (and replaced) new data sets at each step. In practice this can be done more smoothly using <em>pipes</em> (<code>%&gt;%</code>) to pass the result of one function into the next, and the next, and the next…</p>
+<p>I have walked you through a step-by-step data manipulation. During that process you made (and replaced) new data sets at each step. In practice this can be done more smoothly using <em>pipes</em> (<code>%&gt;%</code>) to pass the result of one function into the next, and the next, and the next…</p>
 <p>You’ll get some more practice with this as we go on.
-Below I show how do do this to create a clutch size data set from the raw data (note that your file path will differ from mine):</p>
+Below I show how to do this to create a clutch size data set from the raw data (note that your file path will differ from mine):</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="data-wrangling-with-dplyr.html#cb164-1" tabindex="-1"></a><span class="co"># Import and process data using pipes</span></span>
 <span id="cb164-2"><a href="data-wrangling-with-dplyr.html#cb164-2" tabindex="-1"></a>SDUClutchSize <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/sduBirds.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb164-3"><a href="data-wrangling-with-dplyr.html#cb164-3" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;GT&quot;</span>, <span class="st">&quot;BT&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co"># include only GT and BT</span></span>
@@ -706,7 +705,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <div class="footnotes">
 <hr />
 <ol start="5">
-<li id="fn5"><p><a href="https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1" class="uri">https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1</a><a href="data-wrangling-with-dplyr.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>See <a href="https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1">https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1</a><a href="data-wrangling-with-dplyr.html#fnref5" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

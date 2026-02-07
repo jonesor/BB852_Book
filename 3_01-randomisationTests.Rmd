@@ -1,8 +1,8 @@
 # Randomisation Tests
 
-When conducting simple experiments to compare mean values between two groups, the null hypothesis typically assumes no difference between the groups. The alternative hypothesis, on the other hand, can vary. Sometimes, it simply states that the two groups are different, without specifying the direction of the difference. In other cases, the alternative hypothesis asserts that the mean of Group A is either less than or greater than the mean of Group B.
+When conducting simple experiments to compare mean values between two groups, the null hypothesis typically assumes no difference between the groups. The alternative hypothesis can vary. Sometimes it simply states that the two groups are different, without specifying the direction of the difference. In other cases, it asserts that the mean of Group A is either less than or greater than the mean of Group B.
 
-Randomisation tests provide an intuitive approach to testing these hypotheses, although they can be computationally intensive. These tests have a long history and were initially proposed by R.A. Fisher in the 1930s. However, they only became widely practical with the advent of high-speed computers capable of performing the necessary calculations.
+Randomisation tests provide an intuitive approach to testing these hypotheses, although they can be computationally intensive. These tests have a long history and were initially proposed by R.A. Fisher in the 1930s. They only became widely practical with the advent of high-speed computers capable of performing the necessary calculations.
 
 To conduct a randomisation test using R, you will have the opportunity to put your `dplyr` skills to the test. In the following example, you will be guided through the process step by step, gaining a better understanding of how randomisation tests work and how they can be applied to biological research.
 
@@ -20,7 +20,7 @@ Import the data, called `cholesterol.csv`.
 ch <- read.csv("CourseData/cholesterol.csv")
 ```
 
-Let's first take a look at the data by plotting it. I will first plot a boxplot first, and add the jittered points for clarity.
+Let's first take a look at the data by plotting it. I will plot a boxplot and add jittered points for clarity.
 
 ```{r 3-01-randomisationTests-3, echo = -1, cache=TRUE}
 set.seed(42)
@@ -30,7 +30,7 @@ ggplot(ch, aes(x = Treatment, y = Cholesterol)) +
 ```
 
 It looks like there might be a difference between the groups.
-Now let's consider our test statistic and our hypotheses. Our test statistic is the difference in mean cholesterol levels between the two groups: mean of control group minus the mean of the drug group.
+Now let's consider our test statistic and our hypotheses. Our test statistic is the difference in mean cholesterol levels between the two groups: mean of the control group minus the mean of the drug group.
 
 The *null hypothesis* is that there is no difference between these two groups (i.e. the difference should be close to 0).
 
@@ -38,14 +38,14 @@ The *alternative hypothesis* is that the mean of the drug group should be less t
 
 ### Calculate the observed difference
 
-There are a few ways of doing this. In base-R you can use the function `tapply` ("table apply"), followed by `diff` ("difference").
+There are a few ways of doing this. In base R you can use the function `tapply` ("table apply"), followed by `diff` ("difference").
 
 ```{r 3-01-randomisationTests-4}
 tapply(ch$Cholesterol, ch$Treatment, mean)
 diff(tapply(ch$Cholesterol, ch$Treatment, mean))
 ```
 
-Because we are focusing on learning `dplyr`, you can also calculate the means like like this:
+Because we are focusing on learning `dplyr`, you can also calculate the means like this:
 
 ```{r 3-01-randomisationTests-5}
 ch %>% # ch is the cholesterol data
@@ -53,8 +53,8 @@ ch %>% # ch is the cholesterol data
   summarise(mean = mean(Cholesterol)) # calculate means
 ```
 
-Here the pipes (`%>%`) are passing the result of each function on as input to the next. 
-You can use further commands, `pull` to get the `mean` vector from the summary table, and then use `diff` to calculate the difference between the groups, before passing that to a value called "`observedDiff`". 
+Here the pipes (`%>%`) pass the result of each function on as input to the next. 
+You can use further commands, `pull` to get the `mean` vector from the summary table, and then use `diff` to calculate the difference between the groups, before assigning that to `observedDiff`. 
 
 ```{r 3-01-randomisationTests-6}
 observedDiff <- ch %>%
@@ -64,11 +64,11 @@ observedDiff <- ch %>%
   diff()
 ```
 
-This is a complicated set of commands. To make sure that you understand it, try running it bit-by-bit to see what is going on.
+This is a complicated set of commands. To make sure you understand it, try running it bit by bit to see what is going on.
 
 ### Null distribution
 
-Now we ask, what would the world look like if our null hypothesis was *true*. To do this we can disassociate the treatment group variable from the measured cholesterol values. We do this using by using the `mutate` function to replace the `Treatment` variable with a shuffled version of itself with the `sample` function. 
+Now we ask, what would the world look like if our null hypothesis was *true*? To do this we can disassociate the treatment group variable from the measured cholesterol values. We do this by using the `mutate` function to replace the `Treatment` variable with a shuffled version of itself using the `sample` function. 
 
 Let's try that one time:
 
@@ -100,7 +100,7 @@ In this instance, the difference with the shuffled `Treatment` values of `r roun
 
 Doing this one time is not much help though - we need to repeat this many times. I suggest that you do it 1000 times here, but some statisticians would suggest 5000 or even 10000 replicates. 
 
-We can do this easily in R using the function `replicate` which simply a kind of wrapper that tells R to repeat a command `n` times and then pass the result to a vector.
+We can do this easily in R using the function `replicate`, which is a kind of wrapper that tells R to repeat a command `n` times and then pass the result to a vector.
 Let's try it first 10 times to see how it works:
 
 ```{r 3-01-randomisationTests-9, warning=FALSE, cache=TRUE, echo=-1}
@@ -362,7 +362,7 @@ A Hercules beetle is a large rainforest species from South America. Researchers 
 
 The data are called `herculesBeetle.csv` and can be found via the course data Dropbox link. 
 
-[^1]: This example is from: https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html
+[^1]: This example is from: [https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html](https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html)
 
 
 **Follow the following prompts to get to your answer:**

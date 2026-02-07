@@ -1,14 +1,14 @@
 # Evaluating linear models
 
-We have now covered a range of linear models, that are all fitted using the same tool in R (`lm`): t-tests, 1-way ANOVA, 2+ way ANOVA, ordinary linear regression, multiple regression.
+We have now covered a range of linear models that are all fitted using the same tool in R (`lm`): t-tests, 1-way ANOVA, 2+ way ANOVA, ordinary linear regression, and multiple regression.
 
-The models are all fitted in the same way, and have the same assumptions. We have already covered the four key diagnostic plots (see the ANOVA and linear regression sections, and the GSWR textbook), how to evaluate the significance of parameters, and the meaning of the coefficients. 
+The models are all fitted in the same way and have the same assumptions. We have already covered the four key diagnostic plots (see the ANOVA and linear regression sections, and the GSWR textbook), how to evaluate the significance of parameters, and the meaning of the coefficients. 
 
-There are some additional useful points to consider: proportion of variance explained (R-squared value), proportion of variance explained *by different variables in the model*, Akaike's Information Criterion (and likelihood).
+There are some additional useful points to consider: proportion of variance explained (R-squared value), proportion of variance explained *by different variables in the model*, and Akaike's Information Criterion (and likelihood).
 
-During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? which ones should you include? Would a log-transformed explanatory variable be better? 
+During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? Which ones should you include? Would a log-transformed explanatory variable be better? 
 
-We will use the class data to look at these topics (download the latest version please!). In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or this year's data. 
+We will use the class data to look at these topics (download the latest version please). In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or this year's data. 
 
 ```{r 3-07-EvaluatingModels-1}
 classData <- read.csv("CourseData/classData.csv") %>%
@@ -27,7 +27,7 @@ summary(mod1)
 
 The model summary here shows us the R-squared value, which is a measure of the proportion of variation in the response variable that is explained by variation in the explanatory variable(s). In a linear regression, an r-squared value of 1 (100%) would mean that all data points fall on the line. As the r-squared value declines, there exists more noise in the relationship (i.e. the points become more spread out around the line).
 
-There are two type of R-squared value shown in this summary: Multiple R-squared (`r round(summary(mod1)$r.squared,4)`) and Adjusted R-squared `r round(summary(mod1)$adj.r.squared,4)`. 
+There are two types of R-squared value shown in this summary: Multiple R-squared (`r round(summary(mod1)$r.squared,4)`) and Adjusted R-squared (`r round(summary(mod1)$adj.r.squared,4)`). 
 
 We'll look at multiple R-squared first. This value is calculated as the amount of explained variation divided by the total amount of variation. Take a look at the anova summary table:
 
@@ -39,7 +39,7 @@ Here, the column labelled `Sum Sq` is telling us what the variance EXPLAINED by 
 
 **But what is the Adjusted R-squared?**
 
-Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. Therefore it accurately measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will *always* increase because terms will *always* explain some portion of the variance, even if it is vary small. This behaviour can be a bit annoying, and so adjusted R-squared controls against this increase, by adding a penalty based on the number of predictors in the model, and the sample size^[The formula is: $R^2_{adj} = 1 - \left( \frac{(1 - R^2)(n - 1)}{n - k - 1} \right)$, where *n* is the sample size and *k* is the number of predictors in the model.]. When reporting R-squared values for models with >1 term you should report the adjusted R-squared value.
+Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. It measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will *always* increase because terms will *always* explain some portion of the variance, even if it is very small. This behaviour can be a bit annoying, so adjusted R-squared controls against this increase by adding a penalty based on the number of predictors in the model and the sample size^[The formula is: $R^2_{adj} = 1 - \left( \frac{(1 - R^2)(n - 1)}{n - k - 1} \right)$, where *n* is the sample size and *k* is the number of predictors in the model.]. When reporting R-squared values for models with >1 term you should report the adjusted R-squared value.
 
 You can test this by adding terms to the model. Let's start with something silly - we'll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?
 
@@ -61,12 +61,12 @@ summary(mod2)$r.squared
 
 If you subtract one from the other, you will see that the Multiple R-squared has "improved" by `r  format(round(summary(mod2)$r.squared-summary(mod1)$r.squared,7),scientific = FALSE)`. In contrast, the Adjusted R-squared has decreased slightly (`r format(round(summary(mod2)$adj.r.squared,4)-round(summary(mod1)$adj.r.squared,4),scientific = FALSE)`), from `r round(summary(mod1)$adj.r.squared,4)` to `r round(summary(mod2)$adj.r.squared,4)`. This, hopefully, is enough evidence to make you favour reporting adjusted rather than multiple R-squared values.
 
-The adjusted-R-squared value can be used as a one number summary of model explanatory power.
+The adjusted R-squared value can be used as a single-number summary of model explanatory power.
 
 
 ## Akaike Information Criterion (AIC)
 
-The Akaike information criterion (AIC) is an estimator of prediction error in a statistical model developed in 1970 by a Japanese statistician called Hirotugu Akaike. In a nutshell, it is a measure of the relative quality of statistical models *for a given set of data*. This last part is important. AIC is only comparable among statistical models that use the same data (and which have the same response variable). In other words, given a collection of various plausible models that use the same data set, AIC estimates the quality of each model, relative to each of the other models. If you are interested in the mysterious details of what this quantity is you can read further on Wikipedia, or a more advanced statistics book, otherwise you can simply trust that AIC estimates the relative quality of model, with lower values being better.
+The Akaike information criterion (AIC) is an estimator of prediction error in a statistical model developed in 1970 by a Japanese statistician called Hirotugu Akaike. In a nutshell, it is a measure of the relative quality of statistical models *for a given set of data*. This last part is important. AIC is only comparable among statistical models that use the same data (and which have the same response variable). In other words, given a collection of plausible models that use the same data set, AIC estimates the quality of each model relative to the others. If you are interested in the details you can read further on Wikipedia or a more advanced statistics book; otherwise you can simply trust that AIC estimates the relative quality of models, with lower values being better.
 
 You can get R to tell you the AIC value for a model using the function `AIC()` e.g. `AIC(mod1)`.
 
@@ -119,4 +119,4 @@ The logical process is the same for Generalised Linear Models (GLM), which we wi
 ## Conclusion
 
 In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary to tell you how much variation is explained - a high R2 value indicates a good model. It can be used to compare models that use different data. AIC is another measure of model "quality" but can only compare models that use the same data set. Low AIC values are better than high ones.
-Variance partitioning can be used as a handy way to sum up your model (in addition to significance, and coefficient values.)
+Variance partitioning can be used as a handy way to sum up your model (in addition to significance and coefficient values).

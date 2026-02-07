@@ -1,7 +1,6 @@
 # Visualising data with `ggplot2`
 
-
-In this chapter you will be guided through using the `ggplot2` package to make some pretty plots. You will therefore need the `ggplot2` package to make this work. Remember, you can load packages like this:
+In this chapter you will be guided through using the `ggplot2` package to make clear, publication-ready plots. You will need the `ggplot2` package to make this work. Remember, you can load packages like this:
 
 
 ```{r 2-01-visualisingData-1,message=FALSE}
@@ -12,7 +11,7 @@ We will use the SDU birds clutch size data that we produced at the end of the "[
 
 
 ```{block 2-01-visualisingData-2, type="do-something"}
-Remember to set your working directory, and start a new script. I am assuming that you have saved your data in a folder called "CourseData" inside your working directory. 
+Remember to set your working directory and start a new script. I am assuming that you have saved your data in a folder called "CourseData" inside your working directory. 
 ```
 
 ```{r 2-01-visualisingData-3}
@@ -21,9 +20,9 @@ clutch <- read.csv("CourseData/SDUClutchSize.csv")
 
 ## Histograms
 
-The `ggplot` function expects two main arguments (1) the data and (2) the **aesthetics**. The aesthetics are the variables you want to plot, and associated characteristics like colours, groupings etc. The first argument is for the data, then the aesthetics are specified within the `aes(...)` argument. These usually include an argument for `x` which is normally the variable that appears on the horizontal axis, and (often) `y` which is usually the variable on the vertical axis. The details of this depend on the type of plot you are making.
+The `ggplot` function expects two main arguments: (1) the data and (2) the **aesthetics**. The aesthetics are the variables you want to plot, and associated characteristics like colours and groupings. The first argument is the data, then the aesthetics are specified within the `aes(...)` argument. These usually include an argument for `x` (the variable on the horizontal axis), and often `y` (the variable on the vertical axis). The details depend on the type of plot you are making.
 
-After setting up the plot the graphics are added as **geometric layers** or **geoms**. There are many of these available including `geom_histogram`, `geom_line`, `geom_point` etc.
+After setting up the plot, the graphics are added as **geometric layers** or **geoms**. There are many of these available including `geom_histogram`, `geom_line`, `geom_point` etc.
 
 I will illustrate the construction of a simple plot by making a histogram of the clutch size of all the nests in the dataset.
 
@@ -31,7 +30,7 @@ I will illustrate the construction of a simple plot by making a histogram of the
 ggplot(clutch, aes(x = clutchSize))
 ```
 
-This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set `binwidth` to be 1 because we know we are dealing with counts between just 1 and 14. Try altering the `binwidth`.
+This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set `binwidth` to 1 because we know we are dealing with counts between 1 and 14. Try altering the `binwidth`.
 
 ```{r 2-01-visualisingData-5}
 ggplot(clutch, aes(x = clutchSize)) +
@@ -46,7 +45,7 @@ ggplot(clutch, aes(x = clutchSize, fill = species)) +
 
 You can immediately see that there are far fewer blue tit nests than great tit ones. But you can also see that the centre of mass for blue tits is further to the right than great tits.
 
-To make it easier to compare distributions with very different counts, we can put density on the y-axis instead of the default count using the argument `stat(density)`.
+To make it easier to compare distributions with very different counts, we can put density on the y-axis instead of the default count using `stat(density)`.
 
 
 ```{r 2-01-visualisingData-7}
@@ -65,8 +64,7 @@ It is very clear from this plot that blue tits tend to have bigger clutch sizes 
 
 ## "Facets" - splitting data across panels
 
-You should recall that there were several years of data represented here.
-`ggplot` has a very clever way of splitting up the plot to examine this.
+You should recall that there were several years of data represented here. `ggplot` has a very clever way of splitting up the plot to examine this.
 
 ```{r 2-01-visualisingData-9}
 ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
@@ -77,7 +75,7 @@ ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
   facet_grid(. ~ Year)
 ```
 
-You could split the data up by species in a similar way, as yet another way of visualising the difference between species:
+You could split the data up by species in a similar way, as another way of visualising the difference between species:
 
 ```{r 2-01-visualisingData-10}
 ggplot(clutch, aes(x = clutchSize)) +
@@ -86,7 +84,7 @@ ggplot(clutch, aes(x = clutchSize)) +
 ```
 
 ```{block 2-01-visualisingData-11, type="do-something"}
-You can change whether the separate graphs are presented in a rows or columns by changing the order of the argument: ` facet_grid(species~.)` or ` facet_grid(.~species)`. Try it.
+You can change whether the separate graphs are presented in rows or columns by changing the order of the argument: `facet_grid(species~.)` or `facet_grid(.~species)`. Try it.
 ```
 
 
@@ -95,10 +93,10 @@ You can change whether the separate graphs are presented in a rows or columns by
 
 Box plots are suitable for cases where one variable is categorical with 2+ levels, and the other is continuous. Therefore, another way to look at these distributions is to use a box plot.
 
-In a box plot the box shows the quartiles (i.e. the 25% and 75% quantiles) within which 50% of the data are found. The horizontal line in the box is the *median*, Then the whiskers extend from the smallest to largest value *unless they are further than 1.5 times the interquartile range (the length of the box)* away from the edge of the box, in which case they are individually shown as outlier points.
+In a box plot the box shows the quartiles (i.e. the 25% and 75% quantiles) within which 50% of the data are found. The horizontal line in the box is the *median*. The whiskers extend from the smallest to largest value *unless they are further than 1.5 times the interquartile range (the length of the box)* away from the edge of the box, in which case they are shown as outlier points.
 
 To plot them using `ggplot` you must use a `geom_boxplot` layer. 
-The categorical variable is normally placed on the x-axis so is placed as `x` in the `aes` argument, while the continuous variable is on the `y` axis.
+The categorical variable is normally placed on the x-axis, so it is placed as `x` in the `aes` argument, while the continuous variable is on the `y` axis.
 
 ```{r 2-01-visualisingData-12}
 ggplot(clutch, aes(x = species, y = clutchSize)) +
@@ -328,5 +326,3 @@ ggplot(sampleSize, aes(x = as.numeric(Year), y = SampleSize)) +
   geom_point() +
   labs(title = "A better plot", x = "Year", y = "Sample Size")
 ```
-
-

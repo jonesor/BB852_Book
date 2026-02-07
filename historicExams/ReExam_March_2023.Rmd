@@ -6,9 +6,9 @@
 
 **Read these instructions carefully**
 
-This exam includes four questions that test different aspects of your learning during this course: data wrangling, data visualisation and statistics. Each question is broken down into a number sub-questions. 
+This exam includes four questions that test different aspects of your learning during this course: data wrangling, data visualisation and statistics. Each question is broken down into a number of sub-questions. 
 
-Your work should be handed in as a single PDF, and the filename should include your name or username (e.g. "__BB852 Exam Owen Jones.pdf__". 
+Your work should be handed in as a single PDF, and the filename should include your name or username (e.g. "__BB852 Exam Owen Jones.pdf__"). 
 The number of each question should be clearly indicated, and the answer to each question should start on a new page.
 
 For each question you must provide the R code you used to answer the question. The code should include comments to explain what you are doing. The code should be provided as text using a fixed-width font such as `Courier`. The rest of your answers should be in another font (e.g. Times New Roman, Cambria). Please use *text* rather than a screenshot of your code.
@@ -38,7 +38,7 @@ options(dplyr.summarise.inform = FALSE)
 **1) Moths and butterflies (10 points)**
 
 
-The dataset `lepi.csv` is a subset of Lepidoptera (moths and butterflies) species occurrence data for Denmark held by the Global Biodiversity Information Facility (GBIF) (https://www.gbif.org). It includes columns for taxonomy, geographic location, and time. The column called `dayOfYear` is the numeric day of the year (i.e. January 1st is day 1). Use your R skills in the `ggplot2` and `dplyr` packages to do the following:
+The dataset `lepi.csv` is a subset of Lepidoptera (moths and butterflies) species occurrence data for Denmark held by the Global Biodiversity Information Facility (GBIF) ([https://www.gbif.org](https://www.gbif.org)). It includes columns for taxonomy, geographic location, and time. The column called `dayOfYear` is the numeric day of the year (i.e. January 1st is day 1). Use your R skills in the `ggplot2` and `dplyr` packages to do the following:
 
 a) First, identify the four commonest species in the dataset (based on number of observations) and filter the data to just these species. 
 
@@ -120,7 +120,7 @@ Surveys were carried out in the Danube Basin (Czech Republic) to examine the abu
 
 Use an appropriate statistical model to explore the relationship between water depth and mussel density. Does this relationship differ depending on habitat type?
 
-a) Plot the data to show the relationship between the the mussel density and water depth. Colour code the points by habitat type.
+a) Plot the data to show the relationship between the mussel density and water depth. Colour code the points by habitat type.
 
 b) Fit a suitable statistical model to estimate the statistical relationship between water depth, habitat type, and mussel density. Describe the method and then summarise the results produced by the model as if you were writing a report/thesis. Include a statement about what proportion of variance in mussel density is explained by the model, and the relative importance of the explanatory variables in the model.
 
@@ -155,4 +155,3 @@ musselSurvey <- bind_rows(df1, df2, df3)
 write.csv(musselSurvey, file = "CourseData/musselSurvey.csv", row.names = FALSE)
 set.seed(Sys.time())
 ```
-

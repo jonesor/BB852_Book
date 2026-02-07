@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -457,9 +457,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="ancova-linear-models-with-categorical-and-continuous-explanatory-variables" class="section level1 hasAnchor" number="17">
 <h1><span class="header-section-number">Chapter 17</span> ANCOVA: Linear models with categorical and continuous explanatory variables<a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#ancova-linear-models-with-categorical-and-continuous-explanatory-variables" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In the previous chapter we looked at linear models where there is a continuous response variable and two categorical explanatory variables (we call this type of linear model two-way ANOVA). In this chapter we will look at linear models where the explanatory variables are both continuous and categorical. You can think of these as a kind of cross between ANOVA and linear regression. These type of models are often given the name “<em>ANCOVA</em>” or <em>Analysis of Covariance</em>.</p>
-<p>In a simple case, you might be interested in a model with a continuous response variable (e.g. height) and continuous and a categorical explanatory variables (e.g. hand width and gender). The categorical variable may have any number of levels, but the simplest case is with two (e.g. gender with male and female levels).</p>
-<p>Some of these different possible outcomes of this type of analysis are illustrated in Figure <a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#fig:3-05-ANCOVA-1">17.1</a>. We might see that neither of the two explanatory variables has a significant effect. We might see that one of them does but not the other one. We might see an interaction effect (where the effect of one variable (e.g. hand width) depends on the other (e.g gender). We might also see an interaction effect but no main effect.</p>
+<p>In the previous chapter we looked at linear models where there is a continuous response variable and two categorical explanatory variables (we call this type of linear model two-way ANOVA). In this chapter we will look at linear models where the explanatory variables are both continuous and categorical. You can think of these as a cross between ANOVA and linear regression. These types of models are often called “<em>ANCOVA</em>” or <em>Analysis of Covariance</em>.</p>
+<p>In a simple case, you might be interested in a model with a continuous response variable (e.g. height) and a continuous and a categorical explanatory variable (e.g. hand width and gender). The categorical variable may have any number of levels, but the simplest case is two (e.g. gender with male and female levels).</p>
+<p>Some of these possible outcomes are illustrated in Figure <a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#fig:3-05-ANCOVA-1">17.1</a>. We might see that neither of the two explanatory variables has a significant effect. We might see that one does but not the other. We might see an interaction effect (where the effect of one variable, e.g. hand width, depends on the other, e.g. gender). We might also see an interaction effect but no main effect.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:3-05-ANCOVA-1"></span>
 <img src="BB852_files/figure-html/3-05-ANCOVA-1-1.png" alt="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not)." width="960" />
 <p class="caption">
@@ -468,7 +468,7 @@ Figure 17.1: Some potential results of the experiment. There may be a significan
 </div>
 <div id="the-height-hand-width-example." class="section level2 hasAnchor" number="17.1">
 <h2><span class="header-section-number">17.1</span> The height ~ hand width example.<a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#the-height-hand-width-example." class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In a previous class (linear regression) you explored the relationship between hand width and height. The aim there was (1) to determine if the relationship (i.e. the slope) was significantly different from 0. and (2) to make an estimate of what the equation of the relationship would be so you could make predictions of height from hand width.</p>
+<p>In a previous class (linear regression) you explored the relationship between hand width and height. The aim there was (1) to determine if the relationship (i.e. the slope) was significantly different from 0, and (2) to estimate the equation of the relationship so you could make predictions of height from hand width.</p>
 <p>Here we will extend that example by asking whether there are differences between males and females. I am restricting my analysis to 2019 data, but you could do it for any year (or all years, but you might need to first get rid of some outliers using <code>filter</code>).</p>
 <div class="do-something">
 <p>

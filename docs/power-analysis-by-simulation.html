@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -460,18 +460,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This chapter will first focus on how we can answer questions like “<em>what sample size should I use in my experiment?</em>” and “<em>with this sample size, what difference could I detect?</em>”</p>
 <p>As you learned in the chapters on t-tests and ANOVA, the detection of a significant difference between treatment groups (if there is one) depends on two things: (1) the <em>actual</em> difference between mean values for the groups (the “<em>signal</em>”) and (2) the amount of variation there is in the groups (the “<em>noise</em>”). When there is a lot of noise it is hard to detect the signal.</p>
 <p>In most cases we will already have some idea about what to expect when doing a study. Previous work on similar topics, or pilot studies, will have given us an idea of typical values for the response variable, and will give us a ballpark estimate of how much variation to expect. This information can be used to conduct a <strong>power analysis by simulation</strong>.</p>
-<p>The basic idea of this approach is to simulate the experiment, by drawing random numbers from appropriate distributions, before actually carrying out the experiment.</p>
+<p>The basic idea of this approach is to simulate the experiment by drawing random numbers from appropriate distributions before actually carrying it out.</p>
 <div id="type-i-and-ii-errors-and-statistical-power" class="section level2 hasAnchor" number="23.1">
 <h2><span class="header-section-number">23.1</span> Type I and II errors and statistical power<a href="power-analysis-by-simulation.html#type-i-and-ii-errors-and-statistical-power" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Before setting out to run an experiment or an observational study is is natural to wonder “<em>how much work do I really need to do here?</em>” In other words, “<em>what sample size do I need in order to address the hypothesis?</em></p>
-<p>Similar questions are also relevant <strong>after</strong> running an experiment. For example, imagine you have run an experiment that failed to find a significant effect of your treatment. There are two explanations for this finding (i) there really is no effect of your treatment; (ii) there <strong>is</strong> an effect of your treatment but you did not have enough power to detect it. So the question arising is: “what difference <strong>could</strong> you have detected, based on the results you have?” The answer could be “<em>Based on my experiment I can see that if there <strong>is</strong> really a difference it must be smaller than <span class="math inline">\(X\)</span></em>” and/or “I would need to increase my sample size to X to detect a difference if the difference is <span class="math inline">\(Y\)</span>”</p>
-<p>These type of questions are closely related to the two types of error that one can make when testing hypotheses:</p>
+<p>Before setting out to run an experiment or an observational study it is natural to wonder “<em>how much work do I really need to do here?</em>” In other words, “<em>what sample size do I need in order to address the hypothesis?</em>”</p>
+<p>Similar questions are also relevant <strong>after</strong> running an experiment. For example, imagine you have run an experiment that failed to find a significant effect of your treatment. There are two explanations for this finding: (i) there really is no effect of your treatment; (ii) there <strong>is</strong> an effect of your treatment but you did not have enough power to detect it. So the question arises: “what difference <strong>could</strong> you have detected, based on the results you have?” The answer could be “<em>Based on my experiment I can see that if there <strong>is</strong> really a difference it must be smaller than <span class="math inline">\(X\)</span></em>” and/or “I would need to increase my sample size to X to detect a difference if the difference is <span class="math inline">\(Y\)</span>”.</p>
+<p>These types of questions are closely related to the two types of error that one can make when testing hypotheses:</p>
 <ul>
 <li>A <strong>Type I</strong> error is the rejection of a true null hypothesis. For example, when there truly is no effect of an experimental treatment, but you detect one in error.</li>
 <li>A <strong>Type II</strong> error is the failure to reject a false null hypothesis. For example, when there truly is an effect of an experimental treatment, but you fail to detect it.<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a></li>
 </ul>
 <p>The probability of making these errors depends on the <strong>statistical power</strong> of your study. Statistical power ranges between 0 and 1 and, for a simple hypothesis test, it is defined as <strong>the probability that the test rejects the null hypothesis (<span class="math inline">\(H_0\)</span>) when the alternative hypothesis (<span class="math inline">\(H_1\)</span>) is true</strong>. In other words it is the probability of NOT making a Type II error.</p>
-<p>For example, a power of 0.80 means that you have an 80% chance of correctly detecting that <span class="math inline">\(H_1\)</span> is true and a 20% chance (1.0-0.8 = 0.2) of making a Type II error. As power decreases, the probability of making a Type II error increases.</p>
+<p>For example, a power of 0.80 means that you have an 80% chance of correctly detecting that <span class="math inline">\(H_1\)</span> is true and a 20% chance (1.0 - 0.8 = 0.2) of making a Type II error. As power decreases, the probability of making a Type II error increases.</p>
 </div>
 <div id="what-determines-statistical-power" class="section level2 hasAnchor" number="23.2">
 <h2><span class="header-section-number">23.2</span> What determines statistical power?<a href="power-analysis-by-simulation.html#what-determines-statistical-power" class="anchor-section" aria-label="Anchor link to header"></a></h2>

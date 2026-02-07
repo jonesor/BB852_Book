@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -457,23 +457,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="an-r-refresher" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">Chapter 4</span> An R refresher<a href="an-r-refresher.html#an-r-refresher" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this course we will be learning how manipulate, visualise and analyse data statistically using <strong>R</strong>. <strong>R</strong> is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base which means that there are hundreds of contributed packages for every conceivable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.</p>
-<p>Before proceeding you will need to ensure you have a recent version of <strong>R</strong> installed on your computer (the version I am using right now is 4.5.1).</p>
+<p>In this course we will learn how to manipulate, visualise and analyse data statistically using <strong>R</strong>. <strong>R</strong> is a programming language for data analysis and statistics. It is free and widely used. One of its strengths is its large user base, which means there are hundreds of contributed packages for almost every type of analysis. The aim of these introductory sections is to give a basic introduction to the language as a tool for importing, manipulating and exploring data. In later sections we will learn more about statistical analysis.</p>
+<p>Before proceeding you will need to ensure you have a recent version of <strong>R</strong> installed on your computer (the version I am using right now is 4.5.2).</p>
 <div class="do-something">
 <p>
 <strong>Do this:</strong> Check your R version, and/or install R on
 your own computer now.
 </p>
 </div>
-<p>In this course we will not be using <strong>R</strong> on its own. Instead, we will be using it with RStudio.</p>
-<p><strong>R</strong> and RStudio are not the same thing. It is possible to run R without RStudio, but RStudio will not work if <strong>R</strong> is not installed. So what is RStudio? RStudio, essentially, is a helpful piece of software that makes <strong>R</strong> easier to use. The three most useful features are:</p>
+<p>In this course we will not be using <strong>R</strong> on its own. Instead, we will use it with RStudio.</p>
+<p><strong>R</strong> and RStudio are not the same thing. You can run R without RStudio, but RStudio will not work if <strong>R</strong> is not installed. So what is RStudio? It is a helpful piece of software that makes <strong>R</strong> easier to use. The three most useful features are:</p>
 <ul>
 <li><p>The R Console - this is where <strong>R</strong> runs inside RStudio. We can work <em>directly</em> with <strong>R</strong> by typing commands into this “console”. It is also where outputs (results) from <strong>R</strong> are printed to the screen.</p></li>
-<li><p>The Code Editor - this is where you can write <strong>R</strong> programs (called “scripts”)“, which are a set of commands/instructions in the <strong>R</strong> language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will”auto-complete” some text to speed up your work.</p></li>
-<li><p>Useful “point-and-click” tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in <em>just</em> <strong>R</strong>: RStudio just makes things easier!</p></li>
+<li><p>The Code Editor - this is where you can write <strong>R</strong> programs (called “scripts”), which are a set of commands/instructions in the <strong>R</strong> language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will “auto-complete” some text to speed up your work.</p></li>
+<li><p>Useful “point-and-click” tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in <em>just</em> <strong>R</strong>: RStudio makes things easier.</p></li>
 </ul>
 <p>You should do your coding from within RStudio.</p>
-<p>You can download <strong>RStudio Desktop</strong> from <a href="https://rstudio.com/products/rstudio/download/" class="uri">https://rstudio.com/products/rstudio/download/</a>. Select the correct version for your computer (Mac/Windows) and follow the usual instructions.</p>
+<p>You can download <strong>RStudio Desktop</strong> from <a href="https://rstudio.com/products/rstudio/download/">https://rstudio.com/products/rstudio/download/</a>. Select the correct version for your computer (Mac/Windows) and follow the usual instructions.</p>
 <div class="do-something">
 <p>
 <strong>Do this:</strong> Install <strong>RStudio Desktop</strong> on
@@ -482,12 +482,12 @@ your computer.
 </div>
 <div id="getting-started-with-r" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Getting started with R<a href="an-r-refresher.html#getting-started-with-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In RStudio, create a new “R Script” file. <em>Scripts</em> are essentially programs that can be saved to allow you to return to your work in the future. They also make debugging of errors much easier.</p>
-<p>You can use the menu to do create a new R Script (<code>File &gt; New File &gt; R Script</code>), but there’s also a keyboard shortcut (Windows: <code>Ctrl+Shift+N</code>; Mac: <code>Cmd+Shift+N</code>). If you save (Windows: <code>Ctrl+S</code>; Mac: <code>Cmd+S</code>), you will be prompted for a file name. Make sure it has the suffix “.R” which denotes an R script file. Save the file in a folder with a memorable name (e.g. <code>BB852_Work</code>).</p>
-<p>When you double click on this file in future, it should automatically open in RStudio (if it doesn’t you should be able to right-click and select <code>Open with...</code>).</p>
-<p>In RStudio you can execute commands using the “run” icon at the top of the script window, or by selecting the text and typing the shortcut <code>Ctrl+Enter</code> (Windows) or <code>Cmd+Enter</code> (Mac). Another helpful feature of RStudio is that it will colour-code the syntax that you type, making it easier to read and debug. Note that the colours you see may be different from the ones shown in this handout.</p>
-<p>You can customise the look of RStudio using by clicking <strong>Tools → Options</strong> menu on Windows or <strong>RStudio → Preferences</strong> on a Mac. I will point out some of this in the lecture, or you can ask me to show you.</p>
-<p>Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensuring that you understand what the commands are doing. It is impossible to “break” R by typing the wrong command so I encourage you to experiment and explore the R language I introduce to you here as much as possible - it really is the best way to learn!</p>
+<p>In RStudio, create a new “R Script” file. <em>Scripts</em> are programs that can be saved so you can return to your work later. They also make debugging much easier.</p>
+<p>You can use the menu to create a new R Script (<code>File &gt; New File &gt; R Script</code>), but there’s also a keyboard shortcut (Windows: <code>Ctrl+Shift+N</code>; Mac: <code>Cmd+Shift+N</code>). If you save (Windows: <code>Ctrl+S</code>; Mac: <code>Cmd+S</code>), you will be prompted for a file name. Make sure it has the suffix “.R” which denotes an R script file. Save the file in a folder with a memorable name (e.g. <code>BB852_Work</code>).</p>
+<p>When you double click on this file in future, it should automatically open in RStudio (if it doesn’t, you can right-click and select <code>Open with...</code>).</p>
+<p>In RStudio you can execute commands using the “run” icon at the top of the script window, or by selecting the text and typing the shortcut <code>Ctrl+Enter</code> (Windows) or <code>Cmd+Enter</code> (Mac). Another helpful feature is syntax highlighting, which makes it easier to read and debug code. Note that the colours you see may be different from the ones shown in this handout.</p>
+<p>You can customise the look of RStudio by clicking <strong>Tools → Options</strong> on Windows or <strong>RStudio → Preferences</strong> on a Mac. I will point out some of this in the lecture, or you can ask me to show you.</p>
+<p>Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensure you understand what the commands are doing. It is impossible to “break” R by typing the wrong command, so I encourage you to experiment and explore as much as possible. It really is the best way to learn!</p>
 <div class="do-something">
 <p>
 The “look” of RStudio can be modified by changing the Preferences
@@ -500,7 +500,7 @@ Keyboard Shortcuts Help</strong>).
 </div>
 <div id="getting-help" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Getting help<a href="an-r-refresher.html#getting-help" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>R</strong> features a wealth of commands, which are more properly termed <strong>functions</strong>. You will learn many of these over the next few weeks. Functions often feature a several options which are specified with <strong>arguments</strong>. For example, the function <code>sum</code>, has the argument <code>...</code>, which is intended to be one or more <strong>vectors</strong> of numbers (see below), and the argument <code>na.rm</code>, which is a logical argument specifying whether or not missing values should be removed or not. Usually the arguments have default options which are used you choose not to specify them. In addition, you don’t necessarily need to fully-specify the argument if they are specified in the <em>correct order</em>.</p>
+<p><strong>R</strong> features a wealth of commands, more properly termed <strong>functions</strong>. You will learn many of these over the next few weeks. Functions often have several options specified with <strong>arguments</strong>. For example, the function <code>sum</code> has the argument <code>...</code>, which is intended to be one or more <strong>vectors</strong> of numbers (see below), and the argument <code>na.rm</code>, which specifies whether missing values should be removed. Usually arguments have default options that are used when you do not specify them. In addition, you do not necessarily need to fully specify the argument name if you provide arguments in the <em>correct order</em>.</p>
 <p>You can get <strong>help</strong> on R functions from within R/RStudio with the <code>?</code> and <code>help.search</code> commands. <code>?</code> requires that you know the function name while <em>help.search</em> will search all the available help files for a particular word or phrase. <code>??</code> is a synonym for <em>help.search</em>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="an-r-refresher.html#cb1-1" tabindex="-1"></a>?rep</span>
 <span id="cb1-2"><a href="an-r-refresher.html#cb1-2" tabindex="-1"></a><span class="fu">help.search</span>(<span class="st">&quot;bar plot&quot;</span>)</span>

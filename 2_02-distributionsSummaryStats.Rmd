@@ -1,23 +1,23 @@
 # Distributions and summarising data
 
-When you collect data in biology—whether it’s measuring bird wing lengths, tracking flowering times, or measuring the effect physiological stressors in the lab—you’re dealing with distributions. The first step to making sense of these distributions is to summarise and explore them. Summarising helps us uncover patterns, identify variability, and ask meaningful questions. For example: 
+When you collect data in biology—whether it’s measuring bird wing lengths, tracking flowering times, or measuring the effect of physiological stressors in the lab—you’re dealing with distributions. The first step to making sense of these distributions is to summarise and explore them. Summarising helps us uncover patterns, identify variability, and ask meaningful questions. For example: 
 
 - Are larger ponds home to more invertebrate species?  
 - Does temperature influence flowering time in plants?  
 - Is body mass correlated with lifespan in mammals?  
 
-To answer these questions, we need to understand the data we’re working with. This chapter will guide you through key concepts in exploring and summarising biological data, including how to define variables, avoid common pitfalls like bias, and use R to visualise and summarise distributions. We'll end with a brief look at the "law of large numbers".
+To answer these questions, we need to understand the data we’re working with. This chapter guides you through key concepts in exploring and summarising biological data, including how to define variables, avoid common pitfalls like bias, and use R to visualise and summarise distributions. We'll end with a brief look at the "law of large numbers".
 
 ## Relationships in Data: Response and Explanatory Variables
 
-In biological studies, one of the most common goals is to explore relationships between variables. For example, how does island size affect species diversity? Or how does temperature influence metabolic rate? Answering these types of questions involves two key types of variables:
+In biological studies, one of the most common goals is to explore relationships between variables. For example, how does island size affect species diversity? Or how does temperature influence metabolic rate? Answering these questions involves two key types of variables:
 
 - **Response Variable**: The variable you measure or aim to explain. This could be species diversity, metabolic rate, or population growth. By convention, it’s plotted on the **y-axis** of a graph.
-- **Explanatory Variable**: The variable you suspect influences the response variable, such as os;amd size or temperature. 
+- **Explanatory Variable**: The variable you suspect influences the response variable, such as island size or temperature. 
 
 These variables are also known as **dependent** (response) and **independent** (explanatory) variables. However, I prefer the terms 'response' and 'explanatory' because they avoid implying causation. For instance, in some areas, higher animal population densities (response variable) might be observed near roads, which serve as a source of roadkill (explanatory variable). This pattern reflects resource availability rather than roads directly causing increased population growth.
 
-Think of it like this: the response variable is the outcome you are measuring, while the explanatory variable is the factor you are examining for patterns or associations with that outcome. These roles are crucial to keep clear, not only during data analysis but also when visualizing results. For instance, by convention, the response variable is plotted on the y-axis, and the explanatory variable is plotted on the x-axis. This convention does not suggest that the explanatory variable determines or causes the response—it simply reflects the structure of the analysis.
+Think of it like this: the response variable is the outcome you are measuring, while the explanatory variable is the factor you are examining for patterns or associations with that outcome. These roles are crucial to keep clear, not only during data analysis but also when visualising results. By convention, the response variable is plotted on the y-axis, and the explanatory variable on the x-axis. This convention does not suggest causation; it simply reflects the structure of the analysis.
 
 
 
@@ -105,7 +105,7 @@ R has functions for generating random numbers from different kinds of distributi
 
 ## Normal distribution
 
-The `rnorm` function has three arguments. The first argument is simply the number of values you want to generate. Then, the second and third arguments specify the the mean and standard deviation values of the distribution (i.e. where the distribution is centred and how spread out it is).
+The `rnorm` function has three arguments. The first argument is simply the number of values you want to generate. Then, the second and third arguments specify the mean and standard deviation values of the distribution (i.e. where the distribution is centred and how spread out it is).
 
 The following command will produce 6 numbers from a distribution with a mean value of 5 and a standard deviation of 2. 
 
@@ -405,4 +405,3 @@ Now it's your turn...
 2) Now simulate 90 rolls of the dice. Put the results into a `data.frame` (see the chapter __An R refresher__ for help with this). Plot the results as a bar plot using `geom_bar` in `ggplot`. Add a line using `geom_abline` to show the **expected** result based on what you know about probability.
 
 3) Try adjusting the code to simulate dice rolls with small (say, 30) and large (say, 600, or 6000, or 9000) samples. Observe what happens to the proportions, and compare them to the expected value. What does this tell you about the importance of sample size when trying to estimate real phenomena?
-

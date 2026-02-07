@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -457,7 +457,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="pimping-your-plots" class="section level1 hasAnchor" number="11">
 <h1><span class="header-section-number">Chapter 11</span> Pimping your plots<a href="pimping-your-plots.html#pimping-your-plots" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this chapter you will learn, by following examples, how to customise plots made with <code>ggplot</code> to improve “readability”, or just for aesthetic reasons.</p>
+<p>In this chapter you will learn, by following examples, how to customise plots made with <code>ggplot</code> to improve readability or for aesthetic reasons.</p>
 <p>We will cover the following:</p>
 <ol style="list-style-type: decimal">
 <li>Modifying axes (log transform, different tick marks/ranges etc.).</li>
@@ -466,7 +466,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Multiple sub-plots in a plot.</li>
 <li>Saving your plots.</li>
 </ol>
-<p>For these examples I will use the dataset on animal life history, <code>Anage</code>.</p>
+<p>For these examples I will use the animal life-history data set <code>Anage</code>.</p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="pimping-your-plots.html#cb258-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/anage_data.csv&quot;</span>)</span></code></pre></div>
 <p>You can remind yourself what this data looks like using commands like <code>summary</code>, <code>str</code> and <code>names</code>.</p>
 <p>I will process the data a bit to make it easier to work with. One of the commands might be new to you - <code>rename</code>. This is simply a way of renaming columns, in this case to make them more “user friendly” (e.g. I want to rename the column “Metabolic.rate..W.” to “BMR” (for basal metabolic rate)).</p>
@@ -508,7 +508,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-3-1.png" width="480" style="display: block; margin: auto;" /></p>
 <div id="a-basic-plot" class="section level2 hasAnchor" number="11.1">
 <h2><span class="header-section-number">11.1</span> A basic plot<a href="pimping-your-plots.html#a-basic-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Now lets start with a basic plot. You will see a warning about removing rows with missing values. This is just a warning to let you know that there are missing (<code>NA</code>) values in the data you are plotting.</p>
+<p>Now let’s start with a basic plot. You will see a warning about removing rows with missing values. This is just a warning to let you know that there are missing (<code>NA</code>) values in the data you are plotting.</p>
 <div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="pimping-your-plots.html#cb261-1" tabindex="-1"></a>(p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(anage, <span class="fu">aes</span>(<span class="at">x =</span> Mass, <span class="at">y =</span> BMR, <span class="at">colour =</span> Class)) <span class="sc">+</span></span>
 <span id="cb261-2"><a href="pimping-your-plots.html#cb261-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>)) <span class="co"># use alpha for transparent points</span></span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-4-1.png" width="480" style="display: block; margin: auto;" /></p>
@@ -523,7 +523,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="transforming-the-axis-log-scale" class="section level2 hasAnchor" number="11.3">
 <h2><span class="header-section-number">11.3</span> Transforming the axis (log scale)<a href="pimping-your-plots.html#transforming-the-axis-log-scale" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In this particular case though use of a log scale would be best because even after focusing on a smaller part of the range of values you can see that the points are still concentrated at smaller values. In a moment, you will also see that log-transforming the data makes the cloud of points pleasingly linear.</p>
+<p>In this particular case, a log scale is best because even after focusing on a smaller part of the range of values you can see that the points are still concentrated at smaller values. In a moment you will also see that log-transforming the data makes the cloud of points pleasingly linear.</p>
 <p>You can set a log scale by using the commands <code>scale_x_continuous(trans = "log")</code> and <code>scale_y_continuous(trans = "log")</code>.</p>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="pimping-your-plots.html#cb263-1" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
 <span id="cb263-2"><a href="pimping-your-plots.html#cb263-2" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="sc">+</span></span>
@@ -533,7 +533,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="changing-the-axis-tick-marks" class="section level2 hasAnchor" number="11.4">
 <h2><span class="header-section-number">11.4</span> Changing the axis tick marks<a href="pimping-your-plots.html#changing-the-axis-tick-marks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>This looks nice. But the numbers on the axis are not very nice. Using <code>summary(anage$BMR)</code> tells us that the range of data is from 0.0001 to 2336.5. We could place tick marks anywhere on this axis, but let’s try 0.0001, 0.001,0.1, 1,10, 100, 1000.</p>
+<p>This looks nice, but the numbers on the axis are not very nice. Using <code>summary(anage$BMR)</code> tells us that the range of data is from 0.0001 to 2336.5. We could place tick marks anywhere on this axis, but let’s try 0.0001, 0.001, 0.1, 1, 10, 100, 1000.</p>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="pimping-your-plots.html#cb264-1" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
 <span id="cb264-2"><a href="pimping-your-plots.html#cb264-2" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="st">&quot;log&quot;</span>) <span class="sc">+</span></span>
 <span id="cb264-3"><a href="pimping-your-plots.html#cb264-3" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
@@ -541,7 +541,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb264-5"><a href="pimping-your-plots.html#cb264-5" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">0.0001</span>, <span class="fl">0.001</span>, <span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>)</span>
 <span id="cb264-6"><a href="pimping-your-plots.html#cb264-6" tabindex="-1"></a>  ))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-8-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>Using <code>summary(anage$Mass)</code> tells us that the range of data is from 0.001 to 3672. We could place tick marks anywhere on this axis, but let’s try 0.001,0.1, 1,10, 100, 1000.</p>
+<p>Using <code>summary(anage$Mass)</code> tells us that the range of data is from 0.001 to 3672. We could place tick marks anywhere on this axis, but let’s try 0.001, 0.1, 1, 10, 100, 1000.</p>
 <div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="pimping-your-plots.html#cb265-1" tabindex="-1"></a>(p2 <span class="ot">&lt;-</span> p1 <span class="sc">+</span></span>
 <span id="cb265-2"><a href="pimping-your-plots.html#cb265-2" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
 <span id="cb265-3"><a href="pimping-your-plots.html#cb265-3" tabindex="-1"></a>    <span class="at">trans =</span> <span class="st">&quot;log&quot;</span>,</span>
@@ -585,7 +585,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="colours" class="section level2 hasAnchor" number="11.6">
 <h2><span class="header-section-number">11.6</span> Colours<a href="pimping-your-plots.html#colours" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>What about those colours? The <code>ggplot</code> package uses some default colours that are OK, but sometimes you will want to make a change.</p>
-<p>You can “manually” adjust colours using the <code>scale_colour_manual</code> function. You can either name individual colours (e.g. “red”,“green”,“orange”,“black”)<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>, or you can find their so-called “hex-codes” from a site like <a href="http://colorbrewer2.org/" class="uri">http://colorbrewer2.org/</a> or <a href="https://htmlcolorcodes.com/color-picker/" class="uri">https://htmlcolorcodes.com/color-picker/</a>. You can add a two digit number after the hex code to set the “opaqueness” of the colour. For example “#FF000075” is red, with 75% opacity.</p>
+<p>You can “manually” adjust colours using the <code>scale_colour_manual</code> function. You can either name individual colours (e.g. “red”,“green”,“orange”,“black”)<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>, or you can find their so-called “hex-codes” from a site like <a href="http://colorbrewer2.org/">http://colorbrewer2.org/</a> or <a href="https://htmlcolorcodes.com/color-picker/">https://htmlcolorcodes.com/color-picker/</a>. You can add a two digit number after the hex code to set the “opaqueness” of the colour. For example “#FF000075” is red, with 75% opacity.</p>
 <p>With colour names…</p>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="pimping-your-plots.html#cb268-1" tabindex="-1"></a>p3 <span class="sc">+</span></span>
 <span id="cb268-2"><a href="pimping-your-plots.html#cb268-2" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
@@ -628,7 +628,7 @@ argument for transparency <code>alpha = 0.5</code>.
 <span id="cb273-2"><a href="pimping-your-plots.html#cb273-2" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
 <span id="cb273-3"><a href="pimping-your-plots.html#cb273-3" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-17-1.png" width="480" style="display: block; margin: auto;" />
-For more theme fun, you can install packages that include more themes. The best one is called <code>ggthemes</code> (remember that you only need to install the package once). Try <code>theme_economist()</code>, <code>theme_tufte()</code> and (ugh!) <code>theme_excel()</code>. You can see what other themes there in this package at <a href="https://jrnold.github.io/ggthemes/reference/index.html" class="uri">https://jrnold.github.io/ggthemes/reference/index.html</a> (some of them are really ugly in my opinion!).</p>
+For more theme fun, you can install packages that include more themes. The best one is called <code>ggthemes</code> (remember that you only need to install the package once). Try <code>theme_economist()</code>, <code>theme_tufte()</code> and (ugh!) <code>theme_excel()</code>. You can see what other themes there in this package at <a href="https://jrnold.github.io/ggthemes/reference/index.html">https://jrnold.github.io/ggthemes/reference/index.html</a> (some of them are really ugly in my opinion!).</p>
 <div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="pimping-your-plots.html#cb274-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggthemes&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="pimping-your-plots.html#cb275-1" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
 <span id="cb275-2"><a href="pimping-your-plots.html#cb275-2" tabindex="-1"></a>p3 <span class="sc">+</span></span>
@@ -706,12 +706,12 @@ For more theme fun, you can install packages that include more themes. The best 
 <p>You should, I think, already know about using the “Export” button in RStudio to save out your plot. This is useful and easy, but you should know that you can also save the plots using a typed command (<code>ggsave</code>) in your script. This command is handy because it allows you to automatically set the size, and file name of your plot.</p>
 <p>The default setting for <code>ggsave</code> is that it will save the last plot that was printed to your computer screen to a file name that you specify. Therefore easiest way to use the command is to simply place the <code>ggsave</code> command immediately after your <code>ggplot</code> command. You should set the width and height of the plot and the units (the default is inches). It usually takes a few attempts and a bit of trial-and-error to choose the dimensions so that the plot looks nice.</p>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="pimping-your-plots.html#cb284-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;MySavedPlot1.png&quot;</span>, <span class="at">width =</span> <span class="dv">18</span>, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
-<p>The command can save to various file types including <code>png</code>, <code>jpeg</code>, <code>pdf</code> (see the <code>ggplot</code> help file for more). R knows what file file type is chosen by checking the file extension in the file name (e.g. <code>.png</code>). I advise to use <code>png</code>.</p>
+<p>The command can save to various file types including <code>png</code>, <code>jpeg</code>, <code>pdf</code> (see the <code>ggplot</code> help file for more). R knows what file type is chosen by checking the file extension in the file name (e.g. <code>.png</code>). I advise to use <code>png</code>.</p>
 </div>
 <div id="final-word-on-plots" class="section level2 hasAnchor" number="11.11">
 <h2><span class="header-section-number">11.11</span> Final word on plots<a href="pimping-your-plots.html#final-word-on-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We have covered a lot of ground here. There is a lot to learn, but don’t feel like you have to remember all of these commands (I don’t). Mostly it is simply a case of remembering that it is <em>possible</em> to do these things, and knowing where to look up the commands. Obvious starting points are this course book, and the text book (including the online version!). You can also usually find help by Googling “ggplot” followed by what you are trying to do (e.g. “ggplot change axis ticks”). One of my frequently used web sites is this one <a href="http://www.sthda.com/english/" class="uri">http://www.sthda.com/english/</a> which has an extensive section on <code>ggplot</code> (<a href="http://www.sthda.com/english/wiki/ggplot2-essentials" class="uri">http://www.sthda.com/english/wiki/ggplot2-essentials</a>).</p>
-<p>Even though we have covered a lot of ground we have still only gotten a taster of what <code>ggplot</code> is capable of. I encourage you to learn more. A useful resource for learning is the online R graph gallery” at <a href="https://www.r-graph-gallery.com/" class="uri">https://www.r-graph-gallery.com/</a>, which shows you how to make and modify many types of plot.</p>
+<p>We have covered a lot of ground here. There is a lot to learn, but don’t feel like you have to remember all of these commands (I don’t). Mostly it is simply a case of remembering that it is <em>possible</em> to do these things, and knowing where to look up the commands. Obvious starting points are this course book, and the text book (including the online version!). You can also usually find help by Googling “ggplot” followed by what you are trying to do (e.g. “ggplot change axis ticks”). One of my frequently used web sites is this one <a href="http://www.sthda.com/english/">http://www.sthda.com/english/</a> which has an extensive section on <code>ggplot</code> (<a href="http://www.sthda.com/english/wiki/ggplot2-essentials">http://www.sthda.com/english/wiki/ggplot2-essentials</a>).</p>
+<p>Even though we have covered a lot of ground we have still only gotten a taster of what <code>ggplot</code> is capable of. I encourage you to learn more. A useful resource for learning is the online R graph gallery” at <a href="https://www.r-graph-gallery.com/">https://www.r-graph-gallery.com/</a>, which shows you how to make and modify many types of plot.</p>
 <!-- ## A note about the order of point layers -->
 <!-- Sometimes the points end up obscuring each other. For example, here the points for birds (Aves) are mostly hidden by the points for mammals. This happens because `ggplot` places the points in the order that they appear in the data frame. Therefore, one way to deal with that would be to change the order of the rows (e.g. so Aves appears last) or to randomise the rows using a new command called `slice` in concert with the `sample` function. -->
 <!-- ```{r} -->
@@ -742,7 +742,7 @@ For more theme fun, you can install packages that include more themes. The best 
 <div class="footnotes">
 <hr />
 <ol start="8">
-<li id="fn8"><p>See <a href="https://www.r-graph-gallery.com/42-colors-names.html" class="uri">https://www.r-graph-gallery.com/42-colors-names.html</a><a href="pimping-your-plots.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>See <a href="https://www.r-graph-gallery.com/42-colors-names.html">https://www.r-graph-gallery.com/42-colors-names.html</a><a href="pimping-your-plots.html#fnref8" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

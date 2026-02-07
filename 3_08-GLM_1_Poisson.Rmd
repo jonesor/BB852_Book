@@ -2,15 +2,15 @@
 
 The models we have covered so far are ordinary linear models (including ANOVA, ANCOVA, ordinary linear regression etc.) that assume that the relationship between the explanatory variables and the response variable is linear, and that the systematic error in the model is constant (homoscedastic, i.e. the standard deviation of the data does not depend on the magnitude of the explanatory variable). 
 
-In many cases this will not be the case. Non-linearity and heteroscedasticity tend to go hand-in-hand. Sometimes, for example, the data show an exponential growth type of pattern, and/or may be bounded in such a way that the errors cannot be homoscedastic. For example, counts of number of species on islands of different sizes have a lower bound at zero (you can't have negative numbers of species!) and increase exponentially while the standard deviations are are small for small islands and large for large islands.; ratio data or percentage data such as proportion of individuals dying/surviving is bounded between 0 and 1 (0 - 100%).
+In many cases this will not be the case. Non-linearity and heteroscedasticity tend to go hand-in-hand. Sometimes, for example, the data show an exponential growth type of pattern, and/or may be bounded in such a way that the errors cannot be homoscedastic. For example, counts of number of species on islands of different sizes have a lower bound at zero (you can't have negative numbers of species!) and increase exponentially while the standard deviations are small for small islands and large for large islands. Ratio data or percentage data such as proportion of individuals dying/surviving is bounded between 0 and 1 (0 - 100%).
 
-Transformation of the response variable could an option to linearise these data (although there would be problems with 0 values (because log(0) = -Infinity)), but a second problem is that the ordinary linear model assumes "homoscedasticity" - that the errors in the model are evenly distributed along the explanatory variables. This assumption will be violated in most cases. For example, with count data (e.g. number of species in relation to island size), the errors for very small islands will be smaller than those for large islands. In fact, even if we transform the response variable, for example by log transformation, the predictions of the model will allow errors that include negative counts. This is clearly a problem!
+Transformation of the response variable could be an option to linearise these data (although there would be problems with 0 values because log(0) = -Infinity), but a second problem is that the ordinary linear model assumes "homoscedasticity" - that the errors in the model are evenly distributed along the explanatory variables. This assumption will be violated in most cases. For example, with count data (e.g. number of species in relation to island size), the errors for very small islands will be smaller than those for large islands. In fact, even if we transform the response variable, for example by log transformation, the predictions of the model will allow errors that include negative counts. This is clearly a problem!
 
 Generalised linear models (GLMs) solve these problems by not only applying a transformation but also explicitly altering the error assumption. They do this using a **link function** to carry out the transformation and by choosing an **error structure** (sometimes referred to as **family**, or **variance function**). The choice of link and error structure can be a bit confusing, but there are so-called "canonical links" that are commonly associated with particular error structures. For example, a model for count data would usually have a log link and a Poisson error structure.
 
 The flexibility of the GLM approach means that one can fit GLM versions of all of the models you have already learned about until this point: ANOVA-like GLMs, ANCOVA-like GLMs, ordinary regression-like GLMs and so on. 
 
-In this chapter I will focus on this count data and in the next chapter I will broaden the focus to illustrate uses of other data types.
+In this chapter I will focus on count data, and in the next chapter I will broaden the focus to illustrate uses of other data types.
 
 ## Count data with Poisson errors.
 
@@ -26,7 +26,7 @@ In these cases:
 
 The standard ("canonical") link used with the Poisson error family is the log link. The log link ensures that all fitted (i.e. predicted) values are positive, while the Poisson errors take account of the fact that the data are integer and the variance scales 1:1 with the mean (i.e. variance increases linearly and is equal to the mean). 
 
-There are other potential link and error families that *could* be used with this kind of data, but we'll stick with the standard ones here. Lets look at a couple of examples...
+There are other potential link and error families that *could* be used with this kind of data, but we'll stick with the standard ones here. Let's look at a couple of examples...
 
 
 ### Example: Number of offspring in foxes.
@@ -45,7 +45,7 @@ ggplot(fox, aes(x = weight, y = noffspring)) +
   geom_point()
 ```
 
-The first thing to notice is that, like all count data, the data are formed into horizontal rows of data reflecting the fact that the response data are integer values. There is clearly an increasing pattern, but how can we formally test for a statistical relationship. It is obvious that fitting an ordinary linear model though this data would not be the right approach: this would lead to the prediction of negative number of offspring for small foxes, and also, the variance appears to increase with weight/number of offspring. Therefore this is a good candidate for a GLM. The data are bounded at 0, and are integer values, and for this reason the usual approach would be to fit a GLM with Poisson errors (and the standard log link).
+The first thing to notice is that, like all count data, the data form horizontal rows reflecting the fact that the response values are integers. There is clearly an increasing pattern, but how can we formally test for a statistical relationship? It is obvious that fitting an ordinary linear model to these data would not be the right approach: this would lead to the prediction of negative numbers of offspring for small foxes, and the variance appears to increase with weight/number of offspring. Therefore this is a good candidate for a GLM. The data are bounded at 0 and are integer values, so the usual approach is to fit a GLM with Poisson errors (and the standard log link).
 
 
 ```{r 3-08-GLM-1-Poisson-3}
@@ -59,9 +59,9 @@ library(ggfortify)
 autoplot(mod1)
 ```
 
-These diagnostic plots are, basically, the same as the ones you saw for `lm` models. There is one difference and that is that the plots use something called standardised *deviance* residuals instead of just standardised residuals. These are transformed versions of the residuals that will look *normal* (in the statistical sense) if the family of the GLM is appropriate. So, if "poisson" is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.
+These diagnostic plots are basically the same as the ones you saw for `lm` models. There is one difference: the plots use standardised *deviance* residuals instead of standardised residuals. These are transformed versions of the residuals that will look *normal* (in the statistical sense) if the family of the GLM is appropriate. So, if "poisson" is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.
 
-Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs one must also specify that you would like to see the results of significance tests using the `test = "F"` or `test = "Chi"`.  For Poisson and binomial GLMs the chi-squared test is most appropriate while for  Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
+Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs you must also specify that you would like to see the results of significance tests using `test = "F"` or `test = "Chi"`. For Poisson and binomial GLMs the chi-squared test is most appropriate, while for Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
 
 
 ```{r 3-08-GLM-1-Poisson-5}
@@ -241,4 +241,3 @@ In this example, you will be fitting a GLM equivalent of a t-test that is approp
 4) Get the analysis of variance (deviance) table (`anova`). What does this tell you?
 5) Obtain the `summary` table. What does this tell you?
 6) Use the coefficient information in the `summary` table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations "by hand", or using the `predict` function. Ask for help if you get stuck.
-

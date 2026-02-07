@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -457,13 +457,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="examples-of-statistics-reporting" class="section level1 hasAnchor" number="24">
 <h1><span class="header-section-number">Chapter 24</span> Examples of statistics reporting<a href="examples-of-statistics-reporting.html#examples-of-statistics-reporting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this section I give some examples of how one can describe methods and report results of statistical analyses.
-These are not “set in stone”. The are certainly other ways to write these up, but these examples will give you an idea to base your own reporting on.</p>
+<p>In this section I give some examples of how one can describe methods and report results of statistical analyses. These are not “set in stone”. There are certainly other ways to write these up, but these examples will give you an idea to base your own reporting on.</p>
 <div id="t-test" class="section level2 hasAnchor" number="24.1">
 <h2><span class="header-section-number">24.1</span> t-test<a href="examples-of-statistics-reporting.html#t-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This example concerns a t-test where the mean heights of plants after a set amount of growing time was compared across two groups (control and treatment).</p>
 <p>The methods could be reported like this:</p>
-<p><em>To asses whether there Was a significant difference in mean height between the two groups I used two-sample t-test where the variances of the two groups were assumed to be equal.</em></p>
+<p><em>To assess whether there was a significant difference in mean height between the two groups I used a two-sample t-test where the variances of the two groups were assumed to be equal.</em></p>
 <p>Based on the following t-test result:</p>
 <pre><code>&gt; results &lt;- t.test(control, treatment, var.equal = TRUE)
 &gt; print(results)
@@ -522,9 +521,9 @@ F-statistic: 1593 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="a-generalised-linear-model-glm" class="section level2 hasAnchor" number="24.3">
 <h2><span class="header-section-number">24.3</span> A Generalised linear model (GLM)<a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In this fictitious example we are looking at the results of a Poisson GLM that is used to study the number of offspring produced by arctic fox of different weights. We use a Poisson GLM because these are count data (number of babies). The model will help us understand how weight is associated with the reproductive success.</p>
+<p>In this fictitious example we are looking at the results of a Poisson GLM that is used to study the number of offspring produced by arctic foxes of different weights. We use a Poisson GLM because these are count data (number of babies). The model will help us understand how weight is associated with reproductive success.</p>
 <p>For the methods, I might write something like this:</p>
-<p><em>We fitted a Poisson generalized linear model (GLM) to study the number of offspring produced by a population of arctic fox. The model included the factor <code>weight</code> as a predictor. We then summarised the fitted model using <code>anova()</code> and <code>summary()</code> to produce the ANOVA summary and summary of coefficients respectively.</em></p>
+<p><em>We fitted a Poisson generalised linear model (GLM) to study the number of offspring produced by a population of arctic foxes. The model included the factor <code>weight</code> as a predictor. We then summarised the fitted model using <code>anova()</code> and <code>summary()</code> to produce the ANOVA summary and summary of coefficients respectively.</em></p>
 <p>Here’s what the <code>anova()</code> output shows:</p>
 <pre><code>## Analysis of Deviance Table
 ## 

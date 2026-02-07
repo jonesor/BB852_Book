@@ -1,13 +1,13 @@
 # Extending use cases of GLM
 
 
-In the previous chapter, we used the case of modelling count data, which is bounded at 0 and takes integer values, to understand how generalised linear models work. This chapter extends our understanding by looking at another data type: *binomial* data. 
+In the previous chapter, we used count data (bounded at 0 and integer-valued) to understand how generalised linear models work. This chapter extends our understanding by looking at another data type: *binomial* data. 
 
 ## Binomial response data
 
-There are three common formats for representing Binomial data, all of which involve the fundamental concepts of "success" and "failure." It is up to you, the modeller, to define what constitutes a success or failure. These can be any data that can be grouped into two discrete categories, such as pass/fail, survived/died, presence/absence,  yes/no, male/female, red/green.
+There are three common formats for representing binomial data, all of which involve the fundamental concepts of "success" and "failure." It is up to you, the modeller, to define what constitutes a success or failure. These can be any data that can be grouped into two discrete categories, such as pass/fail, survived/died, presence/absence, yes/no, male/female, red/green.
 
-The three formats, provide flexibility for modelling binomial data in various contexts and are as follows:
+The three formats provide flexibility for modelling binomial data in various contexts:
 
 1. **Binary Data (0/1)**: The data can be a two-level factor, often coded as zeros and ones. For example, this could represent whether an individual died (0) or survived (1) in a study, or two sexes (male or female) in a study predicting sex based on other variables (e.g., size, morphology).
 
@@ -57,7 +57,7 @@ B <- ggplot(datBinom, aes(x = x, y = tValue)) +
 A + B
 ```
 
-We **could** linearise the data and then fit an ordinary linear model using `lm`, but (like with the Poisson regression) the other assumption of the ordinary linear model, homoscedasticity, would cause problems. With S-shaped binomial relationships, the expected variance is small at the two ends of the range and large in the middle of the range. This contrasts strongly with the constant variance assumption of ordinary linear models. Therefore it is wise to account for this using a Generalised Linear Model that explicitly accounts for this variance structure.
+We **could** linearise the data and then fit an ordinary linear model using `lm`, but (like with Poisson regression) the other assumption of the ordinary linear model, homoscedasticity, would cause problems. With S-shaped binomial relationships, the expected variance is small at the two ends of the range and large in the middle. This contrasts strongly with the constant variance assumption of ordinary linear models. Therefore it is wise to account for this using a Generalised Linear Model that explicitly models this variance structure.
 
 Let's try a couple of examples.
 
@@ -67,7 +67,7 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 
 ## Example: NFL field goals
 
-In this example you will be dealing with binary data (0/1, failure/success) from the American National Football League (NFL). The data are a record of field goals, which are a relatively rare method of scoring where someone kicks the ball through over the crossbar and through the uprights of the goal during play. 
+In this example you will be dealing with binary data (0/1, failure/success) from the American National Football League (NFL). The data are a record of field goals, which are a relatively rare method of scoring where someone kicks the ball over the crossbar and through the uprights of the goal during play. 
 
 Our aim is to estimate how the probability of success changes with distance from the goal. We already have a good idea that success probability will decline with increasing distance! But at what rate does the probability decline? And at what distance is there a probability of 0.5 (i.e. 50% chance of success)?
 
@@ -78,7 +78,7 @@ NFL <- read.csv("CourseData/NFLfieldgoal.csv") %>%
   mutate(Distance = Distance * 0.9144)
 ```
 
-Next, plot the data with `ggplot` (`geom_jitter` would be a good option, but you might like to adjust the `height` and `alpha` arguments. e.g. `geom_jitter(height = 0.05,alpha = 0.5)`). You can see that the data is distributed in two bands with 1 representing success and 0 representing failure.
+Next, plot the data with `ggplot` (`geom_jitter` would be a good option, but you might like to adjust the `height` and `alpha` arguments, e.g. `geom_jitter(height = 0.05,alpha = 0.5)`). You can see that the data are distributed in two bands with 1 representing success and 0 representing failure.
 
 ```{r 3-09-GLM-2-otherFamilies-4, echo=-1,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE,cache=TRUE}
 set.seed(12)
@@ -105,17 +105,17 @@ autoplot(nflMod)
 
 Given these limitations, it is often better to avoid relying heavily on traditional diagnostic plots for logistic regression. Instead, it is more prudent to evaluate your model choice based on theoretical principles, particularly those addressing the bounded nature of the response variable.
 
-**However**, a newer diagnostic method specifically suited to models like logistic regression exists: the `DHARMa` package offers an alternative simulation-based that provides clearer and more reliable insights.
+**However**, a newer diagnostic method specifically suited to models like logistic regression exists: the `DHARMa` package offers an alternative simulation-based approach that provides clearer and more reliable insights.
 
 ### DHARMa
 
-The **DHARMa** package is an alternative more approach to model diagnostics, particularly excelling where traditional tools like `agricolae::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
+The **DHARMa** package is an alternative approach to model diagnostics, particularly where traditional tools like `agricolae::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
 
-At the heart of DHARMa’s approach is the `simulateResiduals()` function. The function simulates standardised residuals based on the model's assumptions, including the specified error distribution and link function. DHARMa then constructs intuitive diagnostic plots that would reveal model deficiencies such as mismatched link functions, unmodelled predictors, and overdispersion.
+At the heart of DHARMa’s approach is the `simulateResiduals()` function. The function simulates standardised residuals based on the model's assumptions, including the specified error distribution and link function. DHARMa then constructs diagnostic plots that can reveal model deficiencies such as mismatched link functions, unmodelled predictors, and overdispersion.
 
 The two plots are the **Q-Q plot** and the **residuals versus predicted values plot**. The **Q-Q plot** compares the observed residuals against an expected distribution generated from the simulations. A well-fitted model is reflected by points aligning along the diagonal. The **residuals versus predicted values plot** allows users to check for patterns in residuals, with a random scatter indicating a well-fitting model. Deviations from these expectations signal issues like incorrect link functions, overdispersion, or omitted variables.
 
-Here is how to implement this approach (note that you will likely need to install the `DHARMa` package first using `install.packages("DHARMa") :
+Here is how to implement this approach (note that you will likely need to install the `DHARMa` package first using `install.packages("DHARMa")`):
 
 ```{r 3-09-GLM-2-DHARMa}
 library(DHARMa)
@@ -131,7 +131,7 @@ As you can see, the two plots, and the in-built tests, indicate that the model s
 ### Continuing the analysis
 
 
-So, based on theoretical principles based on the response variable's bounds or the results of this DHARMa analysis, we can be pretty sure that the binomial family is the most appropriate family to use. Let's continue.
+So, based on theoretical principles about the response variable's bounds or the results of this DHARMa analysis, we can be pretty sure that the binomial family is the most appropriate family to use. Let's continue.
 
 We proceed in the normal way by obtaining the ANOVA table for the model. We need to specify that we want to calculated p-values using a "Chi" squared test. This shows us that indeed distance is an important variable in determining probability of success (not so surprising!)
 

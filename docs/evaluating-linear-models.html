@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2025-10-11" />
+<meta name="date" content="2026-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
 <li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organizing-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organizing Files Within Your Project</a></li>
+<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
 <li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past Written Assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
 <li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
 <li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
@@ -457,11 +457,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="evaluating-linear-models" class="section level1 hasAnchor" number="19">
 <h1><span class="header-section-number">Chapter 19</span> Evaluating linear models<a href="evaluating-linear-models.html#evaluating-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>We have now covered a range of linear models, that are all fitted using the same tool in R (<code>lm</code>): t-tests, 1-way ANOVA, 2+ way ANOVA, ordinary linear regression, multiple regression.</p>
-<p>The models are all fitted in the same way, and have the same assumptions. We have already covered the four key diagnostic plots (see the ANOVA and linear regression sections, and the GSWR textbook), how to evaluate the significance of parameters, and the meaning of the coefficients.</p>
-<p>There are some additional useful points to consider: proportion of variance explained (R-squared value), proportion of variance explained <em>by different variables in the model</em>, Akaike’s Information Criterion (and likelihood).</p>
-<p>During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? which ones should you include? Would a log-transformed explanatory variable be better?</p>
-<p>We will use the class data to look at these topics (download the latest version please!). In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or this year’s data.</p>
+<p>We have now covered a range of linear models that are all fitted using the same tool in R (<code>lm</code>): t-tests, 1-way ANOVA, 2+ way ANOVA, ordinary linear regression, and multiple regression.</p>
+<p>The models are all fitted in the same way and have the same assumptions. We have already covered the four key diagnostic plots (see the ANOVA and linear regression sections, and the GSWR textbook), how to evaluate the significance of parameters, and the meaning of the coefficients.</p>
+<p>There are some additional useful points to consider: proportion of variance explained (R-squared value), proportion of variance explained <em>by different variables in the model</em>, and Akaike’s Information Criterion (and likelihood).</p>
+<p>During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? Which ones should you include? Would a log-transformed explanatory variable be better?</p>
+<p>We will use the class data to look at these topics (download the latest version please). In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or this year’s data.</p>
 <div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="evaluating-linear-models.html#cb434-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb434-2"><a href="evaluating-linear-models.html#cb434-2" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>) <span class="sc">%&gt;%</span> <span class="co"># you can edit this to look at particular years.</span></span>
 <span id="cb434-3"><a href="evaluating-linear-models.html#cb434-3" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span></span>
@@ -491,7 +491,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Multiple R-squared:  0.6385, Adjusted R-squared:  0.6144 
 ## F-statistic: 26.49 on 2 and 30 DF,  p-value: 2.357e-07</code></pre>
 <p>The model summary here shows us the R-squared value, which is a measure of the proportion of variation in the response variable that is explained by variation in the explanatory variable(s). In a linear regression, an r-squared value of 1 (100%) would mean that all data points fall on the line. As the r-squared value declines, there exists more noise in the relationship (i.e. the points become more spread out around the line).</p>
-<p>There are two type of R-squared value shown in this summary: Multiple R-squared (0.6385) and Adjusted R-squared 0.6144.</p>
+<p>There are two types of R-squared value shown in this summary: Multiple R-squared (0.6385) and Adjusted R-squared (0.6144).</p>
 <p>We’ll look at multiple R-squared first. This value is calculated as the amount of explained variation divided by the total amount of variation. Take a look at the anova summary table:</p>
 <div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="evaluating-linear-models.html#cb437-1" tabindex="-1"></a><span class="fu">anova</span>(mod1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
@@ -505,7 +505,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Here, the column labelled <code>Sum Sq</code> is telling us what the variance EXPLAINED by each of the terms is. The final entry, for <code>Residuals</code>, is the amount <strong>not</strong> explained (hence “residual”). Therefore we can calculate R-squared from this as (881.6 + 471.1) / (881.6 + 471.1 + 766) = 0.6384575. You can check that this matches the figure indicated by <code>summary(mod1)</code>.</p>
 <p><strong>But what is the Adjusted R-squared?</strong></p>
-<p>Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. Therefore it accurately measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will <em>always</em> increase because terms will <em>always</em> explain some portion of the variance, even if it is vary small. This behaviour can be a bit annoying, and so adjusted R-squared controls against this increase, by adding a penalty based on the number of predictors in the model, and the sample size<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>. When reporting R-squared values for models with &gt;1 term you should report the adjusted R-squared value.</p>
+<p>Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. It measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will <em>always</em> increase because terms will <em>always</em> explain some portion of the variance, even if it is very small. This behaviour can be a bit annoying, so adjusted R-squared controls against this increase by adding a penalty based on the number of predictors in the model and the sample size<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>. When reporting R-squared values for models with &gt;1 term you should report the adjusted R-squared value.</p>
 <p>You can test this by adding terms to the model. Let’s start with something silly - we’ll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?</p>
 <div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="evaluating-linear-models.html#cb439-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> classData <span class="sc">%&gt;%</span></span>
 <span id="cb439-2"><a href="evaluating-linear-models.html#cb439-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">randomVariable =</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(classData)))</span>
@@ -538,11 +538,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="evaluating-linear-models.html#cb443-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)<span class="sc">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.6398092</code></pre>
 <p>If you subtract one from the other, you will see that the Multiple R-squared has “improved” by 0.0013472. In contrast, the Adjusted R-squared has decreased slightly (-0.0119), from 0.6144 to 0.6025. This, hopefully, is enough evidence to make you favour reporting adjusted rather than multiple R-squared values.</p>
-<p>The adjusted-R-squared value can be used as a one number summary of model explanatory power.</p>
+<p>The adjusted R-squared value can be used as a single-number summary of model explanatory power.</p>
 </div>
 <div id="akaike-information-criterion-aic" class="section level2 hasAnchor" number="19.2">
 <h2><span class="header-section-number">19.2</span> Akaike Information Criterion (AIC)<a href="evaluating-linear-models.html#akaike-information-criterion-aic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The Akaike information criterion (AIC) is an estimator of prediction error in a statistical model developed in 1970 by a Japanese statistician called Hirotugu Akaike. In a nutshell, it is a measure of the relative quality of statistical models <em>for a given set of data</em>. This last part is important. AIC is only comparable among statistical models that use the same data (and which have the same response variable). In other words, given a collection of various plausible models that use the same data set, AIC estimates the quality of each model, relative to each of the other models. If you are interested in the mysterious details of what this quantity is you can read further on Wikipedia, or a more advanced statistics book, otherwise you can simply trust that AIC estimates the relative quality of model, with lower values being better.</p>
+<p>The Akaike information criterion (AIC) is an estimator of prediction error in a statistical model developed in 1970 by a Japanese statistician called Hirotugu Akaike. In a nutshell, it is a measure of the relative quality of statistical models <em>for a given set of data</em>. This last part is important. AIC is only comparable among statistical models that use the same data (and which have the same response variable). In other words, given a collection of plausible models that use the same data set, AIC estimates the quality of each model relative to the others. If you are interested in the details you can read further on Wikipedia or a more advanced statistics book; otherwise you can simply trust that AIC estimates the relative quality of models, with lower values being better.</p>
 <p>You can get R to tell you the AIC value for a model using the function <code>AIC()</code> e.g. <code>AIC(mod1)</code>.</p>
 <p>Here’s a simple example of use in practice:</p>
 <div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="evaluating-linear-models.html#cb445-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> HandWidth <span class="sc">+</span> Gender, <span class="at">data =</span> classData)</span>
@@ -589,7 +589,7 @@ The proportion of variance explained by HandWidth is 881.6/(881.6 + 471.1) = 0.6
 <div id="conclusion" class="section level2 hasAnchor" number="19.4">
 <h2><span class="header-section-number">19.4</span> Conclusion<a href="evaluating-linear-models.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary to tell you how much variation is explained - a high R2 value indicates a good model. It can be used to compare models that use different data. AIC is another measure of model “quality” but can only compare models that use the same data set. Low AIC values are better than high ones.
-Variance partitioning can be used as a handy way to sum up your model (in addition to significance, and coefficient values.)</p>
+Variance partitioning can be used as a handy way to sum up your model (in addition to significance and coefficient values).</p>
 
 </div>
 </div>
