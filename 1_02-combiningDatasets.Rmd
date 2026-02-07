@@ -1,6 +1,6 @@
 # Combining data sets
 
-Handling data is often not limited to single data sets. One common task is to combine two (or more) data sets. For example, one data set might include observations from a field study, while another might have information about the weather during the study period, or site-specific information. It is therefore useful to be able to combine these data sets to add information from the second table to the first.
+Handling data is often not limited to single data sets. One common task is to combine two (or more) data sets. For example, one data set might include observations from a field study, while another might have information about the weather during the study period or site-specific information. It is therefore useful to be able to combine these data sets to add information from the second table to the first.
 
 **R** does this with the `dplyr` function `join`. In the next section you will first learn how `join` works by following an example that asks a research question that can only be answered by combining two data sets. After that, you will work on your own to do a similar analysis without explicit instructions (i.e. you will need to figure out how to apply the method to new data).
 
@@ -60,7 +60,7 @@ names(redlist)
 unique(redlist$Red.List.status)
 ```
 
-There's a lot of information there but what we really need is simply the Latin binomial (for which we need `genus` and `species`) and the threat status `Red.List.status`. 
+There's a lot of information there but what we really need is the Latin binomial (for which we need `genus` and `species`) and the threat status `Red.List.status`. 
 
 R treats categorical variables (`factor` variables) as alphabetical, but in this case the red list status has a meaning going from low threat (Least Concern - LC) to Critically Endangered (CR) and even Extinct in the Wild (EX) at the other end of the spectrum. We can define this ordering using `mutate` with the `factor` function. 
 
@@ -88,9 +88,9 @@ head(x)
 summary(x)
 ```
 
-You can see that there are `r sum(is.na(x$Red.List.status))` missing values for the Red List status. These are either species that have not yet been assessed, or maybe where there are mismatches in the species names between the two databases. We will ignore this problem today. 
+You can see that there are `r sum(is.na(x$Red.List.status))` missing values for the Red List status. These are either species that have not yet been assessed, or cases where there are mismatches in the species names between the two databases. We will ignore this problem today. 
 
-Before plotting, I will also use `filter` remove species that are extinct (status = "EX" and "EW"). To do this I use the `%in%` argument to allow me to match a vector of variables. Because I want to NOT match them I negate the match using `!`. 
+Before plotting, I will also use `filter` to remove species that are extinct (status = "EX" and "EW"). To do this I use the `%in%` argument to match a vector of values. Because I want to NOT match them I negate the match using `!`. 
 
 ```{r 1-02-combiningDatasets-9}
 x <- x %>%
@@ -123,7 +123,7 @@ heights
 I would like to make a boxplot, but it is not possible to easily do it with the data arranged in this format. What I need to do is "unpack" or rearrange the data to add another column for sex. This will make the data frame twice as long, and less wide.
 
 There is a convenient function called `pivot_longer` in the `tidyr` package that will do this for you. 
-You can "pipe" data into the function, then tell it which columns you would like to move, and then give it the name of the new column that contains data that **was** in the column heading, and the name of the column containing the data. 
+You can pipe data into the function, then tell it which columns you would like to move, and then give it the name of the new column that contains data that **was** in the column heading, and the name of the column containing the data. 
 
 ```{r 1-02-combiningDatasets-13}
 newHeights <- heights %>%
@@ -137,7 +137,7 @@ newHeights
 
 We are nearly done. But this is not perfect because the names in the `Sex` column are not right. We can fix this in a couple ways. Here's one easy way using the function `gsub`. The `gsub` function ("**general substitution**) finds text and replaces it with other text. In this case we want to find "height" and replace it with nothing ("").
 
-So we can now complete the job with a `mutate` command, and make sure it is recognised as a categorical variable (a `factor`, like this:
+So we can now complete the job with a `mutate` command, and make sure it is recognised as a categorical variable (a `factor`), like this:
 
 ```{r 1-02-combiningDatasets-14}
 newHeights <- heights %>%
@@ -154,7 +154,7 @@ newHeights <- heights %>%
 newHeights
 ```
 
-Now we can plot those data more easily
+Now we can plot those data more easily.
 
 ```{r 1-02-combiningDatasets-15}
 plot(newHeights$Sex, newHeights$Height)
