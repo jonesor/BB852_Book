@@ -1,8 +1,8 @@
 # Linear regression: models with a single continuous explanatory variable
 
-Linear regression models, at their simplest, are a method of estimating the linear (straight line) relationships between two continuous variables. As an example, picture the relationship between two variables height and hand width (Figure \@ref(fig:3-04-linearRegression-1)). In this figure there is a clear  relationship between the two variables, and the straight line running through the cloud of data points is the fitted linear regression model. 
+Linear regression models, at their simplest, estimate linear (straight-line) relationships between two continuous variables. As an example, picture the relationship between height and hand width (Figure \@ref(fig:3-04-linearRegression-1)). In this figure there is a clear relationship between the two variables, and the straight line running through the cloud of data points is the fitted linear regression model. 
 
-The aim of linear regression is to (1) determine if there is a meaningful statistical relationship between the explanatory variable(s) and the response variable, and (2) to quantify those relationships by estimating the characteristics of those relationships. These characteristics include the slope and intercepts of fitted models, and the amount of variation explained by variables in the model.
+The aim of linear regression is to (1) determine whether there is a meaningful statistical relationship between the explanatory variable(s) and the response variable, and (2) quantify those relationships by estimating their characteristics. These characteristics include the slope and intercept of fitted models, and the amount of variation explained by variables in the model.
 
 ```{r 3-04-linearRegression-1, echo=FALSE,fig.width=3,fig.height=3,fig.align='center',fig.cap="A linear regression model fitted through data points.", fig.pos = "ht"}
 classData <- read.csv("CourseData/classData.csv") %>%
@@ -16,7 +16,7 @@ ggplot(classData, aes(x = HandWidth, y = Height)) +
 
 ## Some theory
 
-To understand linear regression models it is important to know that the equation of a straight line is $y = ax+b$. In this equation, $y$ is the response variable and $x$ is the explanatory variable, and $a$ and $b$ are the slope and intercept of the line with the vertical axis (y-axis). These ($a$ and $b$) are called **coefficients**. These are illustrated  in Figure \@ref(fig:3-04-linearRegression-2).
+To understand linear regression models it is important to know that the equation of a straight line is $y = ax + b$. In this equation, $y$ is the response variable and $x$ is the explanatory variable, and $a$ and $b$ are the slope and intercept of the line with the vertical axis (y-axis). These ($a$ and $b$) are called **coefficients**. These are illustrated in Figure \@ref(fig:3-04-linearRegression-2).
 
 
 
@@ -84,9 +84,9 @@ B <- ggplot(df_reg) +
 A + B
 ```
 
-When looking at data points on a graph, unless all of the data points are arranged perfectly along a straight line, there will be some distance between the points and the line. These distances, measured parallel to the vertical axis, are called residuals (you have encountered them before in this course). These residuals represent the variation left after fitting the line (a linear model) through the data. Because we want to fit a model that explains as much variation as possible, it is intuitive that we should wish to minimise this residual variation. 
+When looking at data points on a graph, unless all of the points are arranged perfectly along a straight line, there will be some distance between the points and the line. These distances, measured parallel to the vertical axis, are called residuals (you have encountered them before in this course). These residuals represent the variation left after fitting the line (a linear model) through the data. Because we want to fit a model that explains as much variation as possible, it is intuitive that we should wish to minimise this residual variation. 
 
-One way of doing this is by minimising the sum of squares of the residuals (again, you have come across this concept a few times before). In other words, we add up the squares of each of the residuals. We square the values, rather than simply adding up the residuals themselves because we want to ensure that the positive and negative values don't cancel each other out (a square of a negative number is positive). This method is called **least squares** regression and is illustrated in Figure \@ref(fig:3-04-linearRegression-3): Which is the best fitting line?
+One way of doing this is by minimising the sum of squares of the residuals (again, you have come across this concept a few times before). In other words, we add up the squares of each of the residuals. We square the values rather than simply adding up the residuals themselves because we want to ensure that the positive and negative values don't cancel each other out (a square of a negative number is positive). This method is called **least squares** regression and is illustrated in Figure \@ref(fig:3-04-linearRegression-3): Which is the best fitting line?
 
 ```{r 3-04-linearRegression-3, echo=FALSE,fig.width=4.8,fig.height=4,fig.align='center',fig.cap="Residuals and least squares: which is the best fitting line?",fig.pos = "ht"}
 classData <- read.csv("CourseData/classData.csv") %>%
