@@ -1,5 +1,10 @@
 ## READ ME
 
+### Build workflow
+
+- Prepare datasets and validate references: run `Rscript -e "source('PrepareCourseData.R')"` (this syncs `CourseData/` from `DataSetLibrary/`, writes `course_data_files.csv`, and fails if a referenced dataset is missing).
+- Build the book: run `_build.sh` (which now runs the preparation step, then renders the gitbook).
+
 ### Things to do each year:
 
 - Check schedule times are OK. Edit the line: `savingsTimeSwitch <- with_tz(lubridate::as_datetime("2021-10-31 03:00:00"),"Europe/Copenhagen")`, which is in the `Index.Rmd` and `personalCalendar.R` files.
