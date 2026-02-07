@@ -44,7 +44,7 @@ options(dplyr.summarise.inform = FALSE)
 
 The dataset `amazon.csv` is a record of fire occurrence in the Amazon rainforest. The data set has columns for year, the state where the fire occurred, the month, and the number of fires reported. The month is recorded in Portuguese, so you will probably want to either create a "look up table" and use `left_join` to convert the month to a number, or use the `dplyr` function `recode`. There are many states and it might be useful to group them. For example the legal Amazon includes the states of Acre, Amapá, Pará, Amazonas, Rondonia, Roraima, Mato Grosso, Tocantins, and Maranhão.
 
-a) Produce a graph showing the the total number of fires per year through time as points joined by lines.
+a) Produce a graph showing the total number of fires per year through time as points joined by lines.
 
 b) Produce a table showing the minimum, maximum, mean and median number of fires per month in the legally-defined Amazon.
 
@@ -52,7 +52,7 @@ c) Produce a graph using box plots to show the distribution of the number of fir
 
 ******
 
-__a) Produce a graph showing the the total number of fires per year through time as points joined by lines.__
+__a) Produce a graph showing the total number of fires per year through time as points joined by lines.__
 
 ```{r}
 # Import data
@@ -145,7 +145,7 @@ Here I am looking for a box plot of the number of fires per month in the Amazon 
 To check that you are on the right track you could look at the dimensions of the data frame you create - with 12 months per year and 20 years of data you can expect 240 rows of data (though perhaps not all years include all months of data). Nevertheless, it gives you a ballpark figure and if your dataset is not approximately this size, something has gone wrong!
 
 ```{r}
-# Use summarise to calculate the the total number of
+# Use summarise to calculate the total number of
 # fires per month.
 # In this case I use the legal amazon, but it is acceptable
 # to look at the whole data set. You need to make sure that
@@ -375,7 +375,7 @@ The dataset `roundabouts.csv` shows the results of a study carried out in an urb
 Use an appropriate statistical model to explore the relationship between area and species richness. Does this relationship differ depending on habitat complexity?
 
 
-a) Plot the data to show the relationship between the the number of species and the area of the "island". Colour code the points by whether the habitat type.
+a) Plot the data to show the relationship between the number of species and the area of the "island". Colour code the points by whether the habitat type.
 
 b) Fit a suitable statistical model to estimate the statistical relationship between area, habitat type, and species richness. Describe the method and then summarise the results produced by the model as if you were writing a report/thesis.
 
@@ -383,7 +383,7 @@ c) Produce a plot that shows (in addition to the raw data points) the fitted val
 
 ******
 
-__a) Plot the data to show the relationship between the the number of species and the area of the "island". Colour code the points by whether the habitat type.__
+__a) Plot the data to show the relationship between the number of species and the area of the "island". Colour code the points by whether the habitat type.__
 
 ```{r}
 roundabouts <- read.csv("CourseData/roundabouts.csv",

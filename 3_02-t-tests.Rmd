@@ -147,7 +147,7 @@ ggplot(pollution, aes(x = mgm3)) +
   geom_vline(xintercept = 100)
 ```
 
-Now we can run a t-test in R like this. The command is simple - the first two arguments are the data (`x`) and the the fixed value you are comparing the data to. The final argument defines the alternative hypothesis. This can take values of "`two.sided`", "`less`" or "`greater`" (the default is `two.sided`). In this example, the alternative hypothesis is that the mean of our sample is greater than the threshold of 100.
+Now we can run a t-test in R like this. The command is simple - the first two arguments are the data (`x`) and the fixed value you are comparing the data to. The final argument defines the alternative hypothesis. This can take values of "`two.sided`", "`less`" or "`greater`" (the default is `two.sided`). In this example, the alternative hypothesis is that the mean of our sample is greater than the threshold of 100.
 
 ```{r 3-02-t-tests-6}
 t.test(x = pollution$mgm3, mu = 100, alternative = "greater")
