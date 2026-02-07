@@ -1,7 +1,7 @@
 # Visualising data with `ggplot2`
 
 
-In this chapter you will be guided through using the `ggplot2` package to make some pretty plots. You will therefore need the `ggplot2` package to make this work. Remember, you can load packages like this:
+In this chapter you will be guided through using the `ggplot2` package to make clear, publication-ready plots. You will therefore need the `ggplot2` package to make this work. Remember, you can load packages like this:
 
 
 ```{r 2-01-visualisingData-1,message=FALSE}
@@ -21,7 +21,7 @@ clutch <- read.csv("CourseData/SDUClutchSize.csv")
 
 ## Histograms
 
-The `ggplot` function expects two main arguments (1) the data and (2) the **aesthetics**. The aesthetics are the variables you want to plot, and associated characteristics like colours, groupings etc. The first argument is for the data, then the aesthetics are specified within the `aes(...)` argument. These usually include an argument for `x` which is normally the variable that appears on the horizontal axis, and (often) `y` which is usually the variable on the vertical axis. The details of this depend on the type of plot you are making.
+The `ggplot` function expects two main arguments: (1) the data and (2) the **aesthetics**. The aesthetics are the variables you want to plot, and associated characteristics like colours and groupings. The first argument is the data, then the aesthetics are specified within the `aes(...)` argument. These usually include an argument for `x` (the variable on the horizontal axis), and often `y` (the variable on the vertical axis). The details depend on the type of plot you are making.
 
 After setting up the plot the graphics are added as **geometric layers** or **geoms**. There are many of these available including `geom_histogram`, `geom_line`, `geom_point` etc.
 
@@ -46,7 +46,7 @@ ggplot(clutch, aes(x = clutchSize, fill = species)) +
 
 You can immediately see that there are far fewer blue tit nests than great tit ones. But you can also see that the centre of mass for blue tits is further to the right than great tits.
 
-To make it easier to compare distributions with very different counts, we can put density on the y-axis instead of the default count using the argument `stat(density)`.
+To make it easier to compare distributions with very different counts, we can put density on the y-axis instead of the default count using `stat(density)`.
 
 
 ```{r 2-01-visualisingData-7}
@@ -328,5 +328,4 @@ ggplot(sampleSize, aes(x = as.numeric(Year), y = SampleSize)) +
   geom_point() +
   labs(title = "A better plot", x = "Year", y = "Sample Size")
 ```
-
 

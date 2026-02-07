@@ -18,15 +18,15 @@ If this assumption is true, you can use these data to estimate the parameters of
 
 We will talk more about model assumptions later.
 
-The mean gives an estimate of location, and the standard error of the mean (which is calculated as $s/ \sqrt{n}$, where *s* = standard deviation and *n* = sample size) gives an estimate of precision of this estimate (i.e. how certain is it that the mean value is really where you think it is?)
+The mean gives an estimate of location, and the standard error of the mean (calculated as $s/ \\sqrt{n}$, where *s* = standard deviation and *n* = sample size) gives an estimate of precision (i.e. how certain we are that the mean value is really where we think it is).
 
-The t-test then works by comparing your estimated distribution with some fixed value. Sometimes you are asking "is my mean *different* from the value?", other times you are asking "is my mean less than/greater than the value?". This depends on the hypothesis. The default that R-uses is that it tests whether the mean of your distribution is *different* to the fixed value, but in many cases you should really be framing a **directional** hypothesis.
+The t-test then works by comparing your estimated distribution with some fixed value. Sometimes you are asking "is my mean *different* from the value?", other times you are asking "is my mean less than/greater than the value?". This depends on the hypothesis. The default that R uses is that it tests whether the mean of your distribution is *different* to the fixed value, but in many cases you should be framing a **directional** hypothesis.
 
 It is helpful to visualise this, so some examples of the pollution threshold test are shown in the figure below (Figure \@ref(fig:3-02-t-tests-1) ). The curves illustrate the estimated normal distributions that describe our estimate of the mean pollution level from some data (e.g. each curve might represent samples from different locations). We are interested in whether the mean values (the vertical dashed lines) are significantly **greater** than the threshold of 100mg/m^2^ (solid vertical black line) (this gives us a directional hypothesis).
 
-Formally we do this by establishing two hypotheses a **null hypothesis** and an **alternative hypothesis**. In this case, the null hypothesis is that the mean of the sample measurements is **not** significantly different from the threshold value we define. The alternative hypothesis is that the sample mean is significantly **greater** than this threshold value.
+Formally we do this by establishing two hypotheses: a **null hypothesis** and an **alternative hypothesis**. In this case, the null hypothesis is that the mean of the sample measurements is **not** significantly different from the threshold value we define. The alternative hypothesis is that the sample mean is significantly **greater** than this threshold value.
 
-The degree of confidence that we can have that the mean pollution values are different from the threshold value depend on (A) the position of the distribution relative to the threshold value and (B) on the spread of the distribution (the standard deviation/error).
+The degree of confidence that we can have that the mean pollution values are different from the threshold value depends on (A) the position of the distribution relative to the threshold value and (B) the spread of the distribution (the standard deviation/error).
 
 Based on Figure \@ref(fig:3-02-t-tests-1), which of these four different samples shows a mean value **significantly** greater than 100? (you should be looking at the amount of the normal distribution curve that is overlapping the threshold value.)
 

@@ -1,6 +1,6 @@
 # Pimping your plots
 
-In this chapter you will learn, by following examples, how to customise plots made with `ggplot` to improve "readability", or just for aesthetic reasons. 
+In this chapter you will learn, by following examples, how to customise plots made with `ggplot` to improve readability or for aesthetic reasons. 
 
 We will cover the following:
 
@@ -11,7 +11,7 @@ We will cover the following:
 5. Saving your plots.
 
 
-For these examples I will use the dataset on animal life history, `Anage`. 
+For these examples I will use the animal life-history data set `Anage`. 
 
 ```{r 2-03-pimpYourPlots-1,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 x <- read.csv("CourseData/anage_data.csv")
@@ -50,7 +50,7 @@ plot(log(anage$Mass), log(anage$BMR))
 
 ## A basic plot
 
-Now lets start with a basic plot. You will see a warning about removing rows with missing values. This is just a warning to let you know that there are missing (`NA`) values in the data you are plotting.
+Now let's start with a basic plot. You will see a warning about removing rows with missing values. This is just a warning to let you know that there are missing (`NA`) values in the data you are plotting.
 
 ```{r 2-03-pimpYourPlots-4, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (p1 <- ggplot(anage, aes(x = Mass, y = BMR, colour = Class)) +
@@ -69,7 +69,7 @@ p1 +
 
 ## Transforming the axis (log scale)
 
-In this particular case though use of a log scale would be best because even after focusing on a smaller part of the range of values you can see that the points are still concentrated at smaller values. In a moment, you will also see that log-transforming the data makes the cloud of points pleasingly linear.
+In this particular case, a log scale is best because even after focusing on a smaller part of the range of values you can see that the points are still concentrated at smaller values. In a moment you will also see that log-transforming the data makes the cloud of points pleasingly linear.
 
 You can set a log scale by using the commands `scale_x_continuous(trans = "log")` and `scale_y_continuous(trans = "log")`.
 
@@ -85,7 +85,7 @@ Now though, the axis labels are not ideal. Let's change them.
 
 ## Changing the axis tick marks
 
-This looks nice. But the numbers on the axis are not very nice. Using `summary(anage$BMR)`  tells us that the range of data is from 0.0001 to 2336.5. We could place tick marks anywhere on this axis, but let's try 0.0001, 0.001,0.1, 1,10, 100, 1000.
+This looks nice, but the numbers on the axis are not very nice. Using `summary(anage$BMR)` tells us that the range of data is from 0.0001 to 2336.5. We could place tick marks anywhere on this axis, but let's try 0.0001, 0.001, 0.1, 1, 10, 100, 1000.
 
 ```{r 2-03-pimpYourPlots-8, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (p2 <- p1 +
@@ -96,7 +96,7 @@ This looks nice. But the numbers on the axis are not very nice. Using `summary(a
   ))
 ```
 
-Using `summary(anage$Mass)`  tells us that the range of data is from 0.001 to 3672. We could place tick marks anywhere on this axis, but let's try 0.001,0.1, 1,10, 100, 1000.
+Using `summary(anage$Mass)` tells us that the range of data is from 0.001 to 3672. We could place tick marks anywhere on this axis, but let's try 0.001, 0.1, 1, 10, 100, 1000.
 
 ```{r 2-03-pimpYourPlots-9,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (p2 <- p1 +

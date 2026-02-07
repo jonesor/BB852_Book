@@ -1,6 +1,6 @@
 # An R refresher
 
-In this course we will be learning how to manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and very widely used. One of its strengths is its very wide user base, which means that there are hundreds of contributed packages for every conceivable type of analysis. The aim of these introductory sections is to give a basic introduction to the programming language as a tool for importing, manipulating, and exploring data. In later sections we will learn more about statistical analysis.
+In this course we will learn how to manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and widely used. One of its strengths is its large user base, which means there are hundreds of contributed packages for almost every type of analysis. The aim of these introductory sections is to give a basic introduction to the language as a tool for importing, manipulating and exploring data. In later sections we will learn more about statistical analysis.
 
 Before proceeding you will need to ensure you have a recent version of **R** installed on your computer (the version I am using right now is `r paste0(R.Version()$major,".",R.Version()$minor)`).
 
@@ -8,15 +8,15 @@ Before proceeding you will need to ensure you have a recent version of **R** ins
 **Do this:** Check your R version, and/or install R on your own computer now.
 ```
 
-In this course we will not be using **R** on its own. Instead, we will be using it with RStudio.
+In this course we will not be using **R** on its own. Instead, we will use it with RStudio.
 
-**R** and RStudio are not the same thing. It is possible to run R without RStudio, but RStudio will not work if **R** is not installed. So what is RStudio? RStudio, essentially, is a helpful piece of software that makes **R** easier to use. The three most useful features are:
+**R** and RStudio are not the same thing. You can run R without RStudio, but RStudio will not work if **R** is not installed. So what is RStudio? It is a helpful piece of software that makes **R** easier to use. The three most useful features are:
 
 * The R Console - this is where **R** runs inside RStudio. We can work *directly* with **R** by typing commands into this "console". It is also where outputs (results) from **R** are printed to the screen.
 
 * The Code Editor - this is where you can write **R** programs (called "scripts"), which are a set of commands/instructions in the **R** language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will "auto-complete" some text to speed up your work.
 
-* Useful "point-and-click" tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in *just* **R**: RStudio just makes things easier!
+* Useful "point-and-click" tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in *just* **R**: RStudio makes things easier.
 
 You should do your coding from within RStudio.
 
@@ -29,17 +29,17 @@ You can download **RStudio Desktop** from [https://rstudio.com/products/rstudio/
 
 ## Getting started with R
 
-In RStudio, create a new "R Script" file. *Scripts* are essentially programs that can be saved to allow you to return to your work in the future. They also make debugging of errors much easier. 
+In RStudio, create a new "R Script" file. *Scripts* are programs that can be saved so you can return to your work later. They also make debugging much easier. 
 
 You can use the menu to create a new R Script (`File > New File > R Script`), but there's also a keyboard shortcut (Windows: `Ctrl+Shift+N`; Mac: `Cmd+Shift+N`). If you save (Windows: `Ctrl+S`; Mac: `Cmd+S`), you will be prompted for a file name. Make sure it has the suffix ".R" which denotes an R script file. Save the file in a folder with a memorable name (e.g. `BB852_Work`).
 
-When you double click on this file in future, it should automatically open in RStudio (if it doesn't you should be able to right-click and select `Open with...`).
+When you double click on this file in future, it should automatically open in RStudio (if it doesn't, you can right-click and select `Open with...`).
 
-In RStudio you can execute commands using the "run" icon at the top of the script window, or by selecting the text and typing the shortcut `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac). Another helpful feature of RStudio is that it will colour-code the syntax that you type, making it easier to read and debug. Note that the colours you see may be different from the ones shown in this handout.
+In RStudio you can execute commands using the "run" icon at the top of the script window, or by selecting the text and typing the shortcut `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac). Another helpful feature is syntax highlighting, which makes it easier to read and debug code. Note that the colours you see may be different from the ones shown in this handout.
 
 You can customise the look of RStudio by clicking **Tools → Options** on Windows or **RStudio → Preferences** on a Mac. I will point out some of this in the lecture, or you can ask me to show you.
 
-Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensuring that you understand what the commands are doing. It is impossible to "break" R by typing the wrong command so I encourage you to experiment and explore the R language I introduce to you here as much as possible - it really is the best way to learn!
+Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensure you understand what the commands are doing. It is impossible to "break" R by typing the wrong command, so I encourage you to experiment and explore as much as possible. It really is the best way to learn!
 
 ```{block 0-03-An-R-Refresher-3, type="do-something"}
 The "look" of RStudio can be modified by changing the Preferences (**RStudio → Preferences → Appearance**). 
@@ -48,7 +48,7 @@ Also, there are some useful keyboard shortcuts that are worth learning, to run c
 
 ## Getting help
 
-**R** features a wealth of commands, which are more properly termed **functions**. You will learn many of these over the next few weeks. Functions often feature several options which are specified with **arguments**. For example, the function `sum` has the argument `...`, which is intended to be one or more **vectors** of numbers (see below), and the argument `na.rm`, which is a logical argument specifying whether or not missing values should be removed or not. Usually the arguments have default options which are used when you choose not to specify them. In addition, you don't necessarily need to fully specify the argument if they are specified in the *correct order*. 
+**R** features a wealth of commands, more properly termed **functions**. You will learn many of these over the next few weeks. Functions often have several options specified with **arguments**. For example, the function `sum` has the argument `...`, which is intended to be one or more **vectors** of numbers (see below), and the argument `na.rm`, which specifies whether missing values should be removed. Usually arguments have default options that are used when you do not specify them. In addition, you do not necessarily need to fully specify the argument name if you provide arguments in the *correct order*. 
 
 You can get **help** on R functions from within R/RStudio with the `?` and `help.search` commands. `?` requires that you know the function name while *help.search* will search all the available help files for a particular word or phrase. `??` is a synonym for *help.search*:
 

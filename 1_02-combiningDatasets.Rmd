@@ -1,16 +1,16 @@
 # Combining data sets
 
-Handling data is often not limited to single data sets. One common task is to combine two (or more) datasets together. For example, one dataset might include a set of observations from a field study, while another might have information about the weather throughout the study period, or site-specific information. It is therefore useful to be able to combine these datasets to add the information from the second table to the first table.
+Handling data is often not limited to single data sets. One common task is to combine two (or more) data sets. For example, one data set might include observations from a field study, while another might have information about the weather during the study period, or site-specific information. It is therefore useful to be able to combine these data sets to add information from the second table to the first.
 
-**R** does this with the `dplyr` function `join`. In the next section you will first learn how `join` works by following an example that asks a research question that can only be answered by two data sets. After that, you will work on your own to do a similar analysis without explicit instructions (i.e. you will need to figure out how to apply the method to new data.
+**R** does this with the `dplyr` function `join`. In the next section you will first learn how `join` works by following an example that asks a research question that can only be answered by combining two data sets. After that, you will work on your own to do a similar analysis without explicit instructions (i.e. you will need to figure out how to apply the method to new data).
 
 ## Using `join`
 
-By following this example you will learn how to combine two data sets to create a new one of combined data to answer a conservation-related question: "**Does threat status vary with species' generation times?**" 
+By following this example you will learn how to combine two data sets to create a new data set for a conservation-related question: "**Does threat status vary with species' generation times?**" 
 
-This question is crucial to conservation biologists because it helps us to generalise our ideas about what drives extinction risks. In other words, if we can say "*species with slow life histories tend to be more threatened*" then this gives useful information that can help with planning. For example, imagine we have some species that have not yet been assessed (we don't know if they are threatened or not). Should we focus attention on the one with a short generation time, or long generation time?
+This question is crucial to conservation biologists because it helps us generalise our ideas about what drives extinction risk. In other words, if we can say "*species with slow life histories tend to be more threatened*", that gives useful information for planning. For example, imagine we have some species that have not yet been assessed (we don't know if they are threatened or not). Should we focus attention on the one with a short generation time, or the one with a long generation time?
 
-To answer the question we will need to import two large data sets, tidy them up a bit and then combine them for analysis.
+To answer the question we will need to import two large data sets, tidy them up a bit, and then combine them for analysis.
 
 Let's start with the "Amniote Life History Database" ^[See [https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1)], which is a good source of life history data. We have encountered this database before. Recall that the missing values (which are normally coded as `NA` in R) are coded as "`-999`". The easiest way to take care of this is to specify this when we import the data using the `na.strings` argument of the `read.csv` function. Thus we can import the data like this:
 
@@ -21,9 +21,9 @@ amniote <- read.csv("CourseData/Amniote_Database_Aug_2015.csv",
 )
 ```
 
-We can filter on the taxonomic `class` to subset to only mammals. Then, to address our question, we want data on generation time for mammals. Generation time is often measured as the average age at which females reproduce so we can get close to that with `female_maturity_d`. We will first `select` these columns, along with `genus` and `species`. We can combine these two taxonomic variables using `mutate` and `paste` to get our Latin binomial species name.
+We can filter on the taxonomic `class` to subset to mammals. Then, to address our question, we want data on generation time for mammals. Generation time is often measured as the average age at which females reproduce, so we can get close to that with `female_maturity_d`. We will first `select` these columns, along with `genus` and `species`. We can combine these two taxonomic variables using `mutate` and `paste` to get our Latin binomial species name.
 
-We have previously learned that log transforming such variables is a good thing to do, so we can use `mutate` again to do this transformation.
+We have previously learned that log transforming such variables is useful, so we can use `mutate` again to do this transformation.
 
 Finally, we can use `na.omit` to get rid of entries with missing values (which we cannot use). This is not essential, but keeps things more manageable.
 

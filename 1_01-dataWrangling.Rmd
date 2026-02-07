@@ -1,19 +1,18 @@
 # Data wrangling with `dplyr`
 
-This chapter focuses on using the package `dplyr`, which is designed to make working with data in R easier. 
+This chapter focuses on the package `dplyr`, which is designed to make working with data in R easier. 
 The package has several key "workhorse" functions, sometimes called **verbs**. These are: `filter`, `select`, `mutate`, `arrange` and `summarise`. I covered these in the lecture, and they are also discussed in the textbook. This chapter guides you through worked examples to illustrate their use.
 
-We will also be using **pipes** from the `magrittr` package. These are implemented using the command `%>%`. 
+We will also be using **pipes** from the `magrittr` package, implemented using the command `%>%`. 
 
 ```{r 1-01-dataWrangling-1}
 library("dplyr")
 library("magrittr")
 ```
 
-To get to know `dplyr` and its functions we'll use a data set 
-collected from the university campus at University of Southern Denmark (SDU) The SDU bird project follows the fate of mainly great tits (musvit) and blue tits (blåmejse) in about 100 nest boxes in the woods around the main SDU campus. 
+To get to know `dplyr` and its functions we'll use a data set collected from the University of Southern Denmark (SDU) campus. The SDU bird project follows the fate of mainly great tits (musvit) and blue tits (blåmejse) in about 100 nest boxes in the woods around the main SDU campus. 
 
-We will address two questions concerning clutch size (the number of eggs laid into the nest) - 
+We will address two questions concerning clutch size (the number of eggs laid into the nest): 
 
 1. How does clutch size differ between blue tits and great tits?
 2. How does average clutch size vary among years?
@@ -21,7 +20,7 @@ We will address two questions concerning clutch size (the number of eggs laid in
 To answer these questions we need to calculate the average clutch size (number of eggs) for each nest in each year. The data are in a file called (`sduBirds.csv`) and are raw data collected while visiting the nests. The data will need to be processed to answer those questions.
 
 Let's import the data and take a look at it. Make sure your data looks OK before moving on.
-You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data etc.), and set it (with `setwd`)).
+You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data), and set it with `setwd()`.
 See the earlier material for how to do this, or ask for help.
 
 ```{r 1-01-dataWrangling-2}
@@ -43,7 +42,7 @@ The output of `head` shows you the first few rows of the data set. You can see t
 
 The information given by `str` (above) shows that there are data on species other than our target species. We are only interested in the great tits and blue tits so we can first filter the others out using the `species` variable. 
 
-We can check what the make up of this part of the data is using the `table` function which will count up all of the entries.
+We can check the make-up of this part of the data using the `table` function, which counts the entries.
 
 ```{r 1-01-dataWrangling-4}
 table(sduBirds$species)
@@ -77,7 +76,7 @@ Eggs are usually laid one per day, and the clutch size is the maximum number of 
 
 The next part is the crucial part of our investigation. We need to get the maximum number of eggs seen at each nest. Of course we could repeatedly use `filter`, followed by `max`, for each nest-year combination but this would be incredibly tedious.
 
-Instead, we will use the `dplyr` function, `summarise`, to do this by asking for the maximum value of `nEggs` using `max`. To make this work we need to first use the `group_by` function tell R to group the data by the variables we are interested in. If we don't do this we just get the overall maximum. We can ungroup the data using the `ungroup` function. 
+Instead, we will use the `dplyr` function `summarise` to do this by asking for the maximum value of `nEggs` using `max`. To make this work we first need to use the `group_by` function to tell R to group the data by the variables we are interested in. If we don't do this we just get the overall maximum. We can ungroup the data using the `ungroup` function. 
 
 Because there are missing data (`NA` values) we need to specify `na.rm = TRUE` in the argument.
 
