@@ -132,8 +132,8 @@ dest_dir <- "CourseData"
 library_files <- list.files(path = "DataSetLibrary/", full.names = TRUE, recursive = TRUE)
 course_files <- library_files[basename(library_files) %in% course_data_files$file_name]
 
-# Copy all files from the source directory to the destination directory
-file.copy(from = library_files, file.path(dest_dir, basename(library_files)))
+# Copy only the files referenced in the Rmd files
+file.copy(from = course_files, file.path(dest_dir, basename(course_files)))
 
 # Missing files: mentioned in materials but not available
 current_files <- list.files("CourseData/")
@@ -200,4 +200,3 @@ ft <- flextable(schedule2, cwidth = c(2, .5, 1, 4, .75, .75)) %>%
 
 ft
 ```
-
