@@ -2,7 +2,7 @@
 
 **This is a previous year's exam!**
 
-I am leaving this here so you can see what the Written Assignment part of the course assessment will look like.
+I am leaving this here so you can see what the written assignment part of the course assessment will look like.
 
 
 ```{block 4-02-Past-Exam-2020-1, type="do-something"}
@@ -17,7 +17,7 @@ For each question you must provide the R code you used to answer the question. T
 
 * Plots and tables should have appropriate captions. 
 * Plots should be produced using `ggplot`.
-* Remember that you can make "panels" of plots (e.g. Fig 1A, B)
+* Remember that you can make "panels" of plots (e.g. Fig 1A, B).
 * Axis labels are important. Sometimes you may want to edit them to be different from a data column name.
 * Reporting of any statistics should be appropriate to the type of analysis you have done. There are examples in the course materials.
 * Reporting of methods and results should be written in the style of a scientific paper (again, there are examples in the course materials).
@@ -37,7 +37,7 @@ options(dplyr.summarise.inform = FALSE)
 **1) Amazonian fires (10 points)**
 
 
-The dataset `amazon.csv` is a record of fire occurrence in the Amazon rainforest. The data set has columns for year, the state where the fire occurred, the month, and the number of fires reported. The month is recorded in Portuguese, so you will probably want to either create a "look up table" and use `left_join` to convert the month to a number, or use the `dplyr` function `recode`. There are many states and it might be useful to group them. For example the legal Amazon includes the states of Acre, Amapá, Pará, Amazonas, Rondonia, Roraima, Mato Grosso, Tocantins, and Maranhão.
+The dataset `amazon.csv` is a record of fire occurrence in the Amazon rainforest. The data set has columns for year, the state where the fire occurred, the month, and the number of fires reported. The month is recorded in Portuguese, so you will probably want to either create a "look up table" and use `left_join` to convert the month to a number, or use the `dplyr` function `recode`. There are many states and it might be useful to group them. For example, the legal Amazon includes the states of Acre, Amapá, Pará, Amazonas, Rondonia, Roraima, Mato Grosso, Tocantins, and Maranhão.
 
 a) Produce a graph showing the total number of fires per year through time as points joined by lines.
 
@@ -62,7 +62,7 @@ b) carry out a randomisation test to determine if there is a significant differe
 
 **3) Power in a field experiment (10 points)**
 
-Scientists have developed a new eco-friendly fertiliser made from seaweed extract. You are planning a outdoor field experiment to test how effective it is at increasing crop yield in oilseed rape (*Brassica napus*). A standard industrial chemical fertiliser can increase yield by 30%, and you would like to know if the new seaweed fertiliser has a similar effect. You will grow the plant in a number of 4m x 4m field plots with two treatments: (i) control, with no additional fertiliser (ii) addition of seaweed fertiliser. 
+Scientists have developed a new eco-friendly fertiliser made from seaweed extract. You are planning an outdoor field experiment to test how effective it is at increasing crop yield in oilseed rape (*Brassica napus*). A standard industrial chemical fertiliser can increase yield by 30%, and you would like to know if the new seaweed fertiliser has a similar effect. You will grow the plant in a number of 4 m x 4 m field plots with two treatments: (i) control, with no additional fertiliser (ii) addition of seaweed fertiliser. 
 
 You have some preliminary data from an older study (`oilseed.csv`) which shows the normal crop yield (in $kg/ha$). Use this data to do your power analysis
 
@@ -77,9 +77,9 @@ c) Briefly describe a simple proposed experiment design to test the new seaweed 
 
 **4) Biodiversity (20 points)**
 
-There is a well-known relationship between habitat area and biodiversity - the "species-area relationship". In a nutshell, the number of species tends to increase as the area available increases. This relationship is clearly seen, for example, if we look at island biodiversity: larger islands support more species then small ones. One potential mechanism for this observed pattern is that larger islands tend to have more variety of different habitats, and therefore more niches available for species to occupy (more niches = more species).
+There is a well-known relationship between habitat area and biodiversity - the "species-area relationship". In a nutshell, the number of species tends to increase as the area available increases. This relationship is clearly seen, for example, if we look at island biodiversity: larger islands support more species than small ones. One potential mechanism for this observed pattern is that larger islands tend to have more variety of different habitats, and therefore more niches available for species to occupy (more niches = more species).
 
-The dataset `roundabouts.csv` shows the results of a study carried out in an urban environment to investigate these ideas.  During the study, the number of beetle species (`nSpecies`) living on roundabouts and other "islands" of vegetation of different sizes (`area` in $m^2$) in a sea of concrete and tarmac was counted. Some of these islands had "complex" vegetation (e.g. trees, bushes, shrubs, ponds and rocks) while others were "simple" (only grass), indicated by the variable `habitatType`,   
+The dataset `roundabouts.csv` shows the results of a study carried out in an urban environment to investigate these ideas. During the study, the number of beetle species (`nSpecies`) living on roundabouts and other "islands" of vegetation of different sizes (`area` in $m^2$) in a sea of concrete and tarmac was counted. Some of these islands had "complex" vegetation (e.g. trees, bushes, shrubs, ponds and rocks) while others were "simple" (only grass), indicated by the variable `habitatType`.   
 
 Use an appropriate statistical model to explore the relationship between area and species richness. Does this relationship differ depending on habitat complexity?
 
