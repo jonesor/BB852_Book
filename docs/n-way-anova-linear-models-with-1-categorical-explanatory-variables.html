@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 18 n-way ANOVA: Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
-  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 18 n-way ANOVA: Linear models with &gt;1 categorical explanatory variables | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-07" />
+<meta name="date" content="2026-02-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -478,12 +478,12 @@ correctly.
 </p>
 </div>
 <p>First, import the <code>insectDiet.csv</code> data and plot it, to produce a plot like in Figure <a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#fig:3-06-n-way-ANOVA-3">18.2</a>. From looking at the graph in this figure, you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the <em>difference</em> in size between insects raised on the different diets) is larger for genotype 1 than for genotype 2. But are these differences statistically meaningful?</p>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-1" tabindex="-1"></a>insectDiet <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/insectDiet.csv&quot;</span>)</span>
-<span id="cb421-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-2" tabindex="-1"></a></span>
-<span id="cb421-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-3" tabindex="-1"></a><span class="fu">ggplot</span>(insectDiet, <span class="fu">aes</span>(<span class="at">x =</span> genotype, <span class="at">y =</span> lengthMM, <span class="at">fill =</span> diet)) <span class="sc">+</span></span>
-<span id="cb421-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb421-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-5" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Genotype&quot;</span>) <span class="sc">+</span></span>
-<span id="cb421-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb421-6" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Length (mm)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-1" tabindex="-1"></a>insectDiet <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/insectDiet.csv&quot;</span>)</span>
+<span id="cb424-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-2" tabindex="-1"></a></span>
+<span id="cb424-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-3" tabindex="-1"></a><span class="fu">ggplot</span>(insectDiet, <span class="fu">aes</span>(<span class="at">x =</span> genotype, <span class="at">y =</span> lengthMM, <span class="at">fill =</span> diet)) <span class="sc">+</span></span>
+<span id="cb424-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb424-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-5" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Genotype&quot;</span>) <span class="sc">+</span></span>
+<span id="cb424-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-6" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Length (mm)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:3-06-n-way-ANOVA-3"></span>
 <img src="BB852_files/figure-html/3-06-n-way-ANOVA-3-1.png" alt="The effect of diet protein content and genotype on adult size of an insect species" width="480" />
 <p class="caption">
@@ -494,19 +494,19 @@ Figure 18.2: The effect of diet protein content and genotype on adult size of an
 <p>The model formula is <code>lengthMM ~ genotype + diet + genotype:diet</code>.</p>
 <p>Let’s try to understand this. The <code>genotype + diet</code> part represents the <strong>main effects</strong> of these two variables, and the <code>genotype:diet</code> part represents the <strong>interaction effect</strong> between them. This formula<em>can</em> be shortened to <code>lengthMM ~ genotype * diet</code> (i.e. this is exactly equivalent to the more complicated-looking formula), but I recommend to use the longer version because it is clearer.</p>
 <p>So we fit the model like this - putting the formula first, then telling R which data to use:</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb422-1" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(lengthMM <span class="sc">~</span> genotype <span class="sc">+</span> diet <span class="sc">+</span> genotype<span class="sc">:</span>diet,</span>
-<span id="cb422-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb422-2" tabindex="-1"></a>  <span class="at">data =</span> insectDiet</span>
-<span id="cb422-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb422-3" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb425-1" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(lengthMM <span class="sc">~</span> genotype <span class="sc">+</span> diet <span class="sc">+</span> genotype<span class="sc">:</span>diet,</span>
+<span id="cb425-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb425-2" tabindex="-1"></a>  <span class="at">data =</span> insectDiet</span>
+<span id="cb425-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb425-3" tabindex="-1"></a>)</span></code></pre></div>
 <p>Then we can look at diagnostic plots, as with ANOVA etc.:</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb423-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
-<span id="cb423-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb423-2" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/3-06-n-way-ANOVA-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
+<span id="cb426-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-2" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/3-06-n-way-ANOVA-5-1.png" alt="" width="672" /></p>
 <p>These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots) now any major outliers.</p>
 </div>
 <div id="summarising-the-model-anova" class="section level2 hasAnchor" number="18.2">
 <h2><span class="header-section-number">18.2</span> Summarising the model (<code>anova</code>)<a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Since we are satisfied with the diagnostic plots we can proceed by summarising the model using first <code>anova</code> and then <code>summary</code>.</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb424-1" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb427-1" tabindex="-1"></a><span class="fu">anova</span>(mod_A)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: lengthMM
@@ -521,11 +521,11 @@ Figure 18.2: The effect of diet protein content and genotype on adult size of an
 <p>This means that all of those terms in the model explain a significant proportion of the variation in insect length.</p>
 <p>But as you know, this summary table doesn’t tell you the direction of the effects. The obvious way to understand your data is to simply look at the plot you have already produced. You could also make an <strong>interaction plot</strong> which is a simplified version of the plot of the raw data.</p>
 <p>To do this you first need to create a summary table using <code>dplyr</code> tools <code>summarise</code> and <code>group_by</code> to get the mean and standard errors of the mean:</p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-1" tabindex="-1"></a>insectDiet_means <span class="ot">&lt;-</span></span>
-<span id="cb426-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-2" tabindex="-1"></a>  insectDiet <span class="sc">%&gt;%</span></span>
-<span id="cb426-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-3" tabindex="-1"></a>  <span class="fu">group_by</span>(genotype, diet) <span class="sc">%&gt;%</span> <span class="co"># &lt;- remember to group by *both* factors</span></span>
-<span id="cb426-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MeanLength =</span> <span class="fu">mean</span>(lengthMM), <span class="at">SELength =</span> <span class="fu">sd</span>(lengthMM) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()))</span>
-<span id="cb426-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-5" tabindex="-1"></a>insectDiet_means</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-1" tabindex="-1"></a>insectDiet_means <span class="ot">&lt;-</span></span>
+<span id="cb429-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-2" tabindex="-1"></a>  insectDiet <span class="sc">%&gt;%</span></span>
+<span id="cb429-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-3" tabindex="-1"></a>  <span class="fu">group_by</span>(genotype, diet) <span class="sc">%&gt;%</span> <span class="co"># &lt;- remember to group by *both* factors</span></span>
+<span id="cb429-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MeanLength =</span> <span class="fu">mean</span>(lengthMM), <span class="at">SELength =</span> <span class="fu">sd</span>(lengthMM) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()))</span>
+<span id="cb429-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-5" tabindex="-1"></a>insectDiet_means</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 4
 ## # Groups:   genotype [2]
 ##   genotype diet        MeanLength SELength
@@ -535,29 +535,29 @@ Figure 18.2: The effect of diet protein content and genotype on adult size of an
 ## 3 gt2      highProtein       17.8    0.698
 ## 4 gt2      lowProtein        16.8    0.458</code></pre>
 <p>Then you can make a simple plot of this information by plotting points, and lines joining them:</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb428-1" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
-<span id="cb428-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb428-2" tabindex="-1"></a>  insectDiet_means,</span>
-<span id="cb428-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb428-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> genotype, <span class="at">y =</span> MeanLength, <span class="at">colour =</span> diet, <span class="at">group =</span> diet)</span>
-<span id="cb428-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb428-4" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb428-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb428-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb428-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb428-6" tabindex="-1"></a>  <span class="fu">geom_line</span>())</span></code></pre></div>
-<p><img src="BB852_files/figure-html/3-06-n-way-ANOVA-8,%20interactionPlot-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb431-1" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb431-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb431-2" tabindex="-1"></a>  insectDiet_means,</span>
+<span id="cb431-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb431-3" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> genotype, <span class="at">y =</span> MeanLength, <span class="at">colour =</span> diet, <span class="at">group =</span> diet)</span>
+<span id="cb431-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb431-4" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb431-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb431-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb431-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb431-6" tabindex="-1"></a>  <span class="fu">geom_line</span>())</span></code></pre></div>
+<p><img src="BB852_files/figure-html/3-06-n-way-ANOVA-8,%20interactionPlot-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
 <p>You could add error bars to the points by adding a line defining the <code>ymin</code> and <code>ymax</code> values from the data summary like this:</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb429-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-2" tabindex="-1"></a>  insectDiet_means,</span>
-<span id="cb429-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-3" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
-<span id="cb429-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-4" tabindex="-1"></a>    <span class="at">x =</span> genotype, <span class="at">y =</span> MeanLength, <span class="at">colour =</span> diet, <span class="at">group =</span> diet,</span>
-<span id="cb429-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-5" tabindex="-1"></a>    <span class="at">ymin =</span> MeanLength <span class="sc">-</span> SELength, <span class="at">ymax =</span> MeanLength <span class="sc">+</span> SELength</span>
-<span id="cb429-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-6" tabindex="-1"></a>  )</span>
-<span id="cb429-7"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-7" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb429-8"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb429-9"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-9" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb429-10"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb429-10" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">width =</span> <span class="fl">0.1</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/3-06-n-way-ANOVA-9,%20errorBars-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-1" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb432-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-2" tabindex="-1"></a>  insectDiet_means,</span>
+<span id="cb432-3"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-3" tabindex="-1"></a>  <span class="fu">aes</span>(</span>
+<span id="cb432-4"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-4" tabindex="-1"></a>    <span class="at">x =</span> genotype, <span class="at">y =</span> MeanLength, <span class="at">colour =</span> diet, <span class="at">group =</span> diet,</span>
+<span id="cb432-5"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-5" tabindex="-1"></a>    <span class="at">ymin =</span> MeanLength <span class="sc">-</span> SELength, <span class="at">ymax =</span> MeanLength <span class="sc">+</span> SELength</span>
+<span id="cb432-6"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-6" tabindex="-1"></a>  )</span>
+<span id="cb432-7"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-7" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb432-8"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb432-9"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-9" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb432-10"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-10" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">width =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/3-06-n-way-ANOVA-9,%20errorBars-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
 <p>But are these points statistically significantly different from each other?
 To answer that question we need to use a post-hoc test</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb430-1" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
-<span id="cb430-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb430-2" tabindex="-1"></a><span class="fu">HSD.test</span>(mod_A, <span class="at">trt =</span> <span class="fu">c</span>(<span class="st">&quot;diet&quot;</span>, <span class="st">&quot;genotype&quot;</span>), <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb433-1" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb433-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb433-2" tabindex="-1"></a><span class="fu">HSD.test</span>(mod_A, <span class="at">trt =</span> <span class="fu">c</span>(<span class="st">&quot;diet&quot;</span>, <span class="st">&quot;genotype&quot;</span>), <span class="at">console =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ## Study: mod_A ~ c(&quot;diet&quot;, &quot;genotype&quot;)
 ## 
@@ -590,7 +590,7 @@ To answer that question we need to use a post-hoc test</p>
 <div id="summarising-the-model-summary" class="section level2 hasAnchor" number="18.3">
 <h2><span class="header-section-number">18.3</span> Summarising the model (<code>summary</code>)<a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This (above) is generally enough information for a complete write up of results. However, you can ask R to provide the model summary that includes the <span class="math inline">\(R^2\)</span> values, coefficient estimates and standard errors using <code>summary</code>.</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb432-1" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb435-1" tabindex="-1"></a><span class="fu">summary</span>(mod_A)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = lengthMM ~ genotype + diet + genotype:diet, data = insectDiet)
