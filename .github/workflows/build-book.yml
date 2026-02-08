@@ -1,7 +1,9 @@
-name: Build Bookdown
+name: Build Book
 
 on:
   push:
+    branches: ["main", "master"]
+  pull_request:
   schedule:
     # Every Monday at 06:00 UTC
     - cron: "0 6 * * 1"
@@ -9,27 +11,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RENV_CONFIG_AUTOLOAD: "FALSE"
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
         with:
-          r-version: "release"
+          use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            bookdown
-            rmarkdown
-            ggplot2
-            dplyr
-            magrittr
-            tidyr
-            readxl
-            flextable
-            ggfortify
-            DHARMa
-            scales
+      - name: Setup renv
+        uses: r-lib/actions/setup-renv@v2
 
       - name: Build book (gitbook)
-        run: Rscript -e "bookdown::render_book('index.Rmd','bookdown::gitbook')"
+        run: ./_build.sh

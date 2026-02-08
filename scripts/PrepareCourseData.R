@@ -61,5 +61,5 @@ if (nrow(datasets_missing) > 0) {
 # Optional: sync to Dropbox (only on the course maintainer's machine)
 current_user <- Sys.info()[["user"]]
 if (!is.na(current_user) && current_user == "jones") {
-  source("CopyDataToDropbox.R")
+  source("scripts/CopyDataToDropbox.R")
 }

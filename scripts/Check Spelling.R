@@ -2,6 +2,14 @@
 #install.packages("spelling")
 # usethis::use_spell_check()  # optional if this is an R package; creates inst/WORDLIST
 
+# 0) Ensure we run from the project root
+root <- if (!is.null(sys.frame(1)$ofile)) {
+  dirname(dirname(normalizePath(sys.frame(1)$ofile)))
+} else {
+  getwd()
+}
+setwd(root)
+
 # 2) Gather all .Rmd files (recursively)
 rmd_files <- list.files(pattern = "\\.Rmd$", recursive = TRUE, full.names = TRUE)
 
