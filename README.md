@@ -2,7 +2,7 @@
 
 ### Build workflow
 
-- Prepare datasets and validate references: run `Rscript -e "source('PrepareCourseData.R')"` (this syncs `CourseData/` from `DataSetLibrary/`, writes `course_data_files.csv`, and fails if a referenced dataset is missing).
+- Prepare datasets and validate references: run `Rscript -e "source('scripts/scripts/PrepareCourseData.R')"` (this syncs `CourseData/` from `DataSetLibrary/`, writes `course_data_files.csv`, and fails if a referenced dataset is missing).
 - Build the book: run `_build.sh` (which now runs the preparation step, then renders the gitbook).
 
 ### Build/release notes
@@ -12,10 +12,16 @@
 - Use `_clean.sh` to remove caches and generated artifacts before a clean rebuild.
 - Hand-authored images can live in `assets/`; generated plots should go in `generated/` (ignored by git).
 
+### QA
+
+- Style check: `scripts/style.R`
+- Lint: `scripts/lint.R`
+- Spell check: `scripts/SpellCheckScript.R`
+
 ### Data provenance
 
 - `DataSetLibrary/` is the source-of-truth library (e.g., synced from Dropbox).
-- `CourseData/` is the curated subset used by the book, populated by `PrepareCourseData.R`.
+- `CourseData/` is the curated subset used by the book, populated by `scripts/PrepareCourseData.R`.
 - `course_data_files.csv` and `datasets_missing.csv` are generated during prep to track usage and missing files.
 
 ### Contributor checklist
@@ -33,11 +39,11 @@
 - Edit the Excel schedule `BB852_Schedule.xlsx` to put the instructors in the correct place.
 - Remove/edit the old exam(s) and place in `historicExams` folder
 - Check/add/remove items in `ExtraReading.Rmd`
-- Style check: Run `styler::style_dir(filetype = "Rmd")`
-- Spell check: use `SpellCheckScript.R`
+- Style check: `scripts/style.R`
+- Spell check: `scripts/SpellCheckScript.R`
 - Rebuild GitHub site. (`bookdown::render_book("index.Rmd", "bookdown::pdf_book")` and `bookdown::render_book("index.Rmd", "bookdown::gitbook")`)
 
 ### Note:
 
 - New data sets (e.g. for the exam) should be added to the `DataSetLibrary` folder (OJ's personal dropbox). It will then be automatically transferred into the `CourseData` folder.
-- New simulated data should be created in the `SimulateData.R` script.
+- New simulated data should be created in the `scripts/SimulateData.R` script.
