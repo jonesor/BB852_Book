@@ -7,12 +7,11 @@ on:
   schedule:
     # Every Monday at 06:00 UTC
     - cron: "0 6 * * 1"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      RENV_CONFIG_AUTOLOAD: "FALSE"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,8 +21,21 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Setup renv
-        uses: r-lib/actions/setup-renv@v2
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::bookdown
+            any::rmarkdown
+            any::knitr
+            any::tidyverse
+            any::patchwork
+            any::ggthemes
+            any::ggfortify
+            any::agricolae
+            any::calendar
+            any::officer
+            any::flextable
 
       - name: Build book (gitbook)
         run: ./_build.sh
