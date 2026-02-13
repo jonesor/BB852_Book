@@ -1,328 +1,315 @@
 # Visualising data with `ggplot2`
 
-In this chapter you will be guided through using the `ggplot2` package to make clear, publication-ready plots. You will need the `ggplot2` package to make this work. Remember, you can load packages like this:
+**Learning goals**
 
+By the end of this chapter you should be able to:
 
-```{r 2-01-visualisingData-1,message=FALSE}
-library(ggplot2)
+- Build plots with `ggplot()` and geoms.
+- Compare groups using histograms and box plots.
+- Use facets to split plots into panels.
+- Plot trends over time with lines and points.
+- Decide when a bar plot is (and is not) appropriate.
+
+**Prerequisites**
+
+- You should be comfortable with importing data and using `filter()`, `select()`, `mutate()`, and `summarise()`.
+
+**A tiny motivating example**
+
+Let’s start with a simple scatter plot. Run this and see what happens:
+
+```{r 2-01-visualisingData-1, message=FALSE}
+library(tidyverse)
+
+mydata <- data.frame(
+  body_length_cm = c(4.2, 5.1, 5.6, 6.8, 7.4),
+  body_mass_g = c(9.5, 12.1, 14.0, 18.2, 21.5)
+)
+
+ggplot(mydata, aes(x = body_length_cm, y = body_mass_g)) +
+  geom_point()
 ```
 
-We will use the SDU birds clutch size data that we produced at the end of the "[Data wrangling with dplyr]" chapter for these examples. You can find the data set via the Course Data Dropbox link.
+We have already made a plot: data + aesthetics + geom. That pattern will repeat throughout the chapter.
 
+---
 
-```{block 2-01-visualisingData-2, type="do-something"}
-Remember to set your working directory and start a new script. I am assuming that you have saved your data in a folder called "CourseData" inside your working directory. 
+## The data we will use
+
+We will use the SDU clutch size data created at the end of the **Data wrangling** chapter. The file should be in `CourseData/SDUClutchSize.csv`.
+
+```{r 2-01-visualisingData-2}
+clutch <- readr::read_csv("CourseData/SDUClutchSize.csv")
 ```
 
-```{r 2-01-visualisingData-3}
-clutch <- read.csv("CourseData/SDUClutchSize.csv")
-```
+**Checkpoint:** You should see columns like `species`, `Year`, and `clutchSize`.
+
+---
 
 ## Histograms
 
-The `ggplot` function expects two main arguments: (1) the data and (2) the **aesthetics**. The aesthetics are the variables you want to plot, and associated characteristics like colours and groupings. The first argument is the data, then the aesthetics are specified within the `aes(...)` argument. These usually include an argument for `x` (the variable on the horizontal axis), and often `y` (the variable on the vertical axis). The details depend on the type of plot you are making.
+**What we’re about to do:** We will look at the distribution of clutch sizes. Histograms are the simplest way to see how values are spread.
 
-After setting up the plot, the graphics are added as **geometric layers** or **geoms**. There are many of these available including `geom_histogram`, `geom_line`, `geom_point` etc.
-
-I will illustrate the construction of a simple plot by making a histogram of the clutch size of all the nests in the dataset.
-
-```{r 2-01-visualisingData-4}
-ggplot(clutch, aes(x = clutchSize))
-```
-
-This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set `binwidth` to 1 because we know we are dealing with counts between 1 and 14. Try altering the `binwidth`.
-
-```{r 2-01-visualisingData-5}
-ggplot(clutch, aes(x = clutchSize)) +
+```{r 2-01-visualisingData-3}
+clutch %>%
+  ggplot(aes(x = clutchSize)) +
   geom_histogram(binwidth = 1)
 ```
-We know that we have two species here and we would like to compare them. This is done within the aesthetic argument. The default is that the bars for different categories are stacked on top of each other. This is good in some cases, but probably not here.
 
-```{r 2-01-visualisingData-6}
-ggplot(clutch, aes(x = clutchSize, fill = species)) +
+**What just happened:** Each bar shows how many nests have a particular clutch size (or range of sizes).
+
+- **What to look for:**
+  - Where is the distribution centred?
+  - Is it roughly symmetric or skewed?
+  - Are there values that are rare or extreme?
+
+**Try this:** Change `binwidth` to 0.5 or 2. What changes in the shape?
+
+**Common mistake:** If your plot is blank, check that `clutchSize` exists with `names(clutch)`.
+
+**Takeaway:** Histograms show the shape of a distribution quickly.
+
+---
+
+## Comparing groups in a histogram
+
+**What we’re about to do:** We will compare clutch sizes between species.
+
+```{r 2-01-visualisingData-4}
+clutch %>%
+  ggplot(aes(x = clutchSize, fill = species)) +
   geom_histogram(binwidth = 1, position = "dodge")
 ```
 
-You can immediately see that there are far fewer blue tit nests than great tit ones. But you can also see that the centre of mass for blue tits is further to the right than great tits.
+**What just happened:** The bars are separated by species, so you can compare their shapes.
 
-To make it easier to compare distributions with very different counts, we can put density on the y-axis instead of the default count using `stat(density)`.
+- **What to look for:**
+  - Do the peaks occur at different clutch sizes?
+  - Is one species more common (taller bars overall)?
 
+**Caution:** Counts depend on sample size. If one species has more nests, it will look bigger even if the *shape* is similar.
 
-```{r 2-01-visualisingData-7}
-ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
-  geom_histogram(binwidth = 1, position = "dodge")
-```
+**Try this:** Switch to densities so the shapes are comparable:
 
-An alternative approach would be to overlay the two sets of bars (using `position = "identity"`) and set the colours to be slightly transparent (using `alpha = 0.7`) so that you can see the overlapping region clearly. 
-
-```{r 2-01-visualisingData-8}
-ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
+```{r 2-01-visualisingData-5}
+clutch %>%
+  ggplot(aes(x = clutchSize, fill = species, y = after_stat(density))) +
   geom_histogram(binwidth = 1, position = "identity", alpha = 0.7)
 ```
 
-It is very clear from this plot that blue tits tend to have bigger clutch sizes than great tits. Is this difference *statistically significant*? We will look at testing this in a future class - for now we will be satisfied with our visualisation.
+**Takeaway:** Use densities when sample sizes differ.
 
-## "Facets" - splitting data across panels
+---
 
-You should recall that there were several years of data represented here. `ggplot` has a very clever way of splitting up the plot to examine this.
+## Facets (split across panels)
 
-```{r 2-01-visualisingData-9}
-ggplot(clutch, aes(x = clutchSize, fill = species, stat(density))) +
-  geom_histogram(
-    binwidth = 1, position = "identity",
-    alpha = 0.7
-  ) +
+**What we’re about to do:** We will split plots by year so each year gets its own panel.
+
+```{r 2-01-visualisingData-6}
+clutch %>%
+  ggplot(aes(x = clutchSize, fill = species, y = after_stat(density))) +
+  geom_histogram(binwidth = 1, position = "identity", alpha = 0.7) +
   facet_grid(. ~ Year)
 ```
 
-You could split the data up by species in a similar way, as another way of visualising the difference between species:
+**What just happened:** Each year is shown in a separate panel. This makes year-to-year differences easier to see.
 
-```{r 2-01-visualisingData-10}
-ggplot(clutch, aes(x = clutchSize)) +
+- **What to look for:**
+  - Does the distribution shift over time?
+  - Are some years more variable than others?
+
+**Try this:** Flip the facet so species are rows:
+
+```{r 2-01-visualisingData-7}
+clutch %>%
+  ggplot(aes(x = clutchSize)) +
   geom_histogram(binwidth = 1) +
   facet_grid(species ~ .)
 ```
 
-```{block 2-01-visualisingData-11, type="do-something"}
-You can change whether the separate graphs are presented in rows or columns by changing the order of the argument: `facet_grid(species~.)` or `facet_grid(.~species)`. Try it.
-```
+**Takeaway:** Facets let you compare groups without overplotting.
 
-
+---
 
 ## Box plots
 
-Box plots are suitable for cases where one variable is categorical with 2+ levels, and the other is continuous. Therefore, another way to look at these distributions is to use a box plot.
+**What we’re about to do:** We will compare clutch size between species using box plots.
 
-In a box plot the box shows the quartiles (i.e. the 25% and 75% quantiles) within which 50% of the data are found. The horizontal line in the box is the *median*. The whiskers extend from the smallest to largest value *unless they are further than 1.5 times the interquartile range (the length of the box)* away from the edge of the box, in which case they are shown as outlier points.
-
-To plot them using `ggplot` you must use a `geom_boxplot` layer. 
-The categorical variable is normally placed on the x-axis, so it is placed as `x` in the `aes` argument, while the continuous variable is on the `y` axis.
-
-```{r 2-01-visualisingData-12}
-ggplot(clutch, aes(x = species, y = clutchSize)) +
+```{r 2-01-visualisingData-8}
+clutch %>%
+  ggplot(aes(x = species, y = clutchSize)) +
   geom_boxplot()
 ```
 
+**What just happened:** The box shows the middle 50% of values; the line is the median.
 
-Some researchers argue that it is a good idea to add the data as points to these plots as "full disclosure" of what the underlying data look like. These can be added with a `geom_jitter` layer (jitter is random noise added in this case to the horizontal axis). You should set `width` and `alpha` arguments to make it look nice.
+- **What to look for:**
+  - Are medians different between species?
+  - Are spreads similar or very different?
 
-```{r 2-01-visualisingData-13,echo = -1,cache = TRUE}
+**Try this:** Add jittered points for transparency.
+
+```{r 2-01-visualisingData-9, echo = FALSE}
 set.seed(42)
-ggplot(clutch, aes(x = species, y = clutchSize)) +
+clutch %>%
+  ggplot(aes(x = species, y = clutchSize)) +
   geom_boxplot() +
-  geom_jitter(width = .2, alpha = 0.5, colour = "black", fill = "black")
+  geom_jitter(width = 0.2, alpha = 0.5)
 ```
 
-```{block 2-01-visualisingData-14, type="do-something"}
-Try splitting the data into different years using `facet_grid` with the box plot. 
-```
+**Common mistake:** If your points overlap too much, increase `width` or reduce `alpha`.
 
+**Takeaway:** Box plots are usually better than bar plots for comparing distributions.
 
-## Lines and points
+---
 
-Perhaps not surprisingly lines and points can be added with the geoms, `geom_line` and `geom_point` respectively.
-To illustrate this we will make a plot showing how clutch size changes among years.
-First we will use `summarise` to create a dataset with the mean clutch size. We'll start simply, by looking at only great tits.
+## Lines and points (trends over time)
 
+**What we’re about to do:** We will summarise clutch size by year and plot a time trend.
 
-```{r 2-01-visualisingData-15}
-GTclutch <- clutch %>%
-  filter(species == "GT") %>%
-  group_by(Year) %>%
-  summarise(meanClutchSize = mean(clutchSize))
-```
-
-Then you can plot this like this.
-
-```{r 2-01-visualisingData-16}
-ggplot(GTclutch, aes(x = Year, y = meanClutchSize)) +
-  geom_line()
-```
-
-I think this looks OK, but we should add both species. I'll first need to produce a mean clutch size dataset that includes both species.
-
-
-```{r 2-01-visualisingData-17}
-meanClutch <- clutch %>%
+```{r 2-01-visualisingData-10}
+mean_clutch <- clutch %>%
   group_by(species, Year) %>%
-  summarise(meanClutchSize = mean(clutchSize))
+  summarise(mean_clutch_size = mean(clutchSize), .groups = "drop")
 ```
 
-Now I can do the plot again. The only difference to the command is that I need to tell R that I want to colour the lines by species (`colour = species`).
-
-```{r 2-01-visualisingData-18}
-ggplot(meanClutch, aes(
-  x = Year, y = meanClutchSize,
-  colour = species
-)) +
-  geom_line()
-```
-
-I can improve on this by (1) changing the y axis limits (using `ylim`) so that it goes through the full range of my data (0 - 14); (2) adding points (using a `geom_point` layer) where my actual data values are; (3) adding a nicely formatted axis label (using `ylab`); adding a title (`ggtitle`)
-
-```{r 2-01-visualisingData-19}
-ggplot(meanClutch, aes(
-  x = Year, y = meanClutchSize,
-  colour = species
-)) +
+```{r 2-01-visualisingData-11}
+mean_clutch %>%
+  ggplot(aes(x = Year, y = mean_clutch_size, colour = species)) +
   geom_line() +
   geom_point() +
   ylim(0, 14) +
   ylab("Mean clutch size") +
-  ggtitle("Clutch size data from SDU Campus")
+  ggtitle("Clutch size data from SDU campus")
 ```
+
+**What just happened:** Each point is a year’s mean clutch size; lines connect years.
+
+- **What to look for:**
+  - Do the two species move together or differently?
+  - Are there years that stand out?
+
+**Caution:** A mean hides variability. For deeper analysis, check sample sizes or plot distributions per year.
+
+**Takeaway:** Lines are good for ordered values like time.
+
+---
 
 ## Scatter plots
 
-Let's now make a scatter plot.
-The SDU bird data are not suitable for this type of plot so we'll use the data from a few days ago on suburban bird diversity.
+**What we’re about to do:** We will plot how bird species richness changes with suburb age.
 
-```{r 2-01-visualisingData-20}
-birds <- read.csv("CourseData/suburbanBirds.csv")
+```{r 2-01-visualisingData-12}
+birds <- readr::read_csv("CourseData/suburbanBirds.csv") %>%
+  mutate(Age = 1975 - Year)
 ```
 
-Take a look at the data to remind ourselves what it looks like
-
-```{r 2-01-visualisingData-21}
-head(birds)
-```
-
-These data show the result of standardised bird surveys at housing developments of different ages in California. The surveys were carried out in 1975, and the data includes the `Year` and number of individual birds seen `nIndividuals` and number of species seen `nSpecies`. The question being addressed is "How does the age of the housing development affect the number of species?"
-
-To investigate this we should first add a new variable for `Age` to the data set. We can do this using the `mutate` function from `dplyr`. This function creates new variables, for example by manipulating existing ones.
-
-```{r 2-01-visualisingData-22}
-birds <- mutate(birds, Age = 1975 - Year)
-```
-
-When we have created this variable we can plot the data. For aesthetic reasons I also would like to set the limits on the y-axis to go extend to zero, and I would like to include proper labels on the axes.
-
-```{r 2-01-visualisingData-23}
-ggplot(birds, aes(x = Age, y = nSpecies)) +
+```{r 2-01-visualisingData-13}
+birds %>%
+  ggplot(aes(x = Age, y = nSpecies)) +
   geom_point() +
   ylim(0, 15) +
   xlab("Age of development") +
   ylab("Bird species richness")
 ```
 
-This shows very clearly that older developments have more species, but it also appears to show that there is an asymptote around 13 species.
+**What just happened:** Each point is a suburb. The plot shows older suburbs tend to have more species.
 
-Compare this plot to the one you made with base graphics in a previous class.
+- **What to look for:**
+  - Is the relationship roughly linear or does it level off?
+  - Are there outliers that might drive the pattern?
 
+**Try this:** Add a smooth trend line with `geom_smooth()` and see if the relationship looks curved.
 
-## Bar plots
+**Takeaway:** Scatter plots are the starting point for relationship questions.
 
-Finally, another common type of plot is the bar plot. These are often used poorly. 
+---
 
-**TLDR: you should probably be using box plots or line/point plots. Consider carefully!**
+## Bar plots (use with care)
 
-Bar charts are originally intended to represent categorical variables, but they are frequently employed to display continuous data. When bar charts are used for continuous data, they often serve as "visual tables" that typically depict the mean (and sometimes a measure of variation such as standard error or standard deviation). However, this approach presents some issues. 
+**What we’re about to do:** We will see why bar plots can be misleading and when they are acceptable.
 
-Firstly, various data distributions can yield the same bar chart, and analysing the complete dataset may lead to different conclusions compared to relying solely on summary statistics. For example, it is perfectly possible for several markedly different distributions to have very similar mean values: a bar chart would erroneously show them as being similar when they were not.
+Bar charts can hide the shape of data. They are fine for **counts**, but risky for **means**.
 
-Secondly, summarizing data using the mean and measures of variation can mislead readers into assuming that the data follow a normal distribution without any outliers. These statistics can distort the data, particularly in studies with small sample sizes where outliers are common and there isn't enough data to assess the distribution of the sample. For example, a bar chart with standard error bars can hide the fact that the data might be skewed.
-
-Figure \@ref(fig:2-01-visualisingData-24) illustrates this with two plots showing two distributions, G1 and G2: Plot A is a classic bar plot with standard error bars, and plot B is a box plot with jittered points placed on top. There are differences in the distributions of data in G1 and G2 (G2 is skewed, and includes an outlier). This difference between distributions is captured quite well in plot B (even without the addition of the jittered points, look at the "whiskers" of the box plot), but is not captured well with plot B. 
-
-Box plots are simply better than bar plots (unless you are trying to hide something!).
-
-```{r 2-01-visualisingData-24, echo = FALSE, fig.width = 6, fig.height = 2, fig.align = 'center', fig.cap = "Problems with bar plots."}
+```{r 2-01-visualisingData-14, echo = FALSE, fig.width = 6, fig.height = 2, fig.align = "center", fig.cap = "Problems with bar plots."}
 library(patchwork)
 set.seed(42)
-n = 50
+n <- 50
 mv <- 2
 v <- 3
-#Gamma
-shape = (mv^2)/v
-scale = v/mv
+shape <- (mv^2) / v
+scale <- v / mv
 
-df1 <- data.frame(x = rep(c("G1","G2"),each = n),
-                  y = c(rnorm(n,mean = mv),
-                        rgamma(n,shape = shape,scale = scale)))
+df1 <- data.frame(
+  x = rep(c("G1", "G2"), each = n),
+  y = c(rnorm(n, mean = mv), rgamma(n, shape = shape, scale = scale))
+)
 
-df2 <- df1 %>% 
-  group_by(x) %>% 
-  summarise(meanVal = mean(y), sdVal = sd(y))
+df2 <- df1 %>%
+  group_by(x) %>%
+  summarise(meanVal = mean(y), sdVal = sd(y), .groups = "drop")
 
-
-A<-ggplot(df2, aes(x = x, y = meanVal)) + 
-  geom_bar(stat = "identity", fill = "steelblue") + 
-  geom_errorbar(aes(ymin=meanVal-sdVal/sqrt(n), 
-                    ymax=meanVal+sdVal/sqrt(n)),
-                width=.2) + 
-  theme_minimal() + 
-  ggtitle("A") + 
+A <- ggplot(df2, aes(x = x, y = meanVal)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_errorbar(
+    aes(ymin = meanVal - sdVal / sqrt(n), ymax = meanVal + sdVal / sqrt(n)),
+    width = 0.2
+  ) +
+  theme_minimal() +
+  ggtitle("A") +
   ylab("y")
 
-B<- ggplot(df1,aes(x = x, y = y)) +
-  geom_boxplot(outlier.shape = NA) + 
+B <- ggplot(df1, aes(x = x, y = y)) +
+  geom_boxplot(outlier.shape = NA) +
   geom_jitter(size = 2, width = 0.2) +
-  theme_minimal() + 
+  theme_minimal() +
   ggtitle("B") +
   ylab("y")
 
-A|B
-
+A | B
 ```
 
+**Interpretation:** The bar plot hides the skew and outliers visible in the box plot.
 
+- **What to look for:**
+  - How much information disappears when you only show the mean?
 
-Furthermore, using bar charts to display paired or non-independent data poses an additional problem. Figures should ideally convey the study's design. Bar charts of paired data inaccurately imply that the compared groups are independent, and they fail to provide information about whether changes are consistent across individuals. 
+**When bar plots are OK:** Counts are a good example.
 
-These issues are covered in detail in Weissgerber et al. (2015)^[Weissgerber TL, Milic NM, Winham SJ,
-Garovic VD (2015) Beyond Bar and Line Graphs:
-Time for a New Data Presentation Paradigm. PLoS Biol 13(4): e1002128. doi:10.1371/journal.
-pbio.1002128]. 
-
-The short version is that in MOST cases, when you think you should use a bar plot, you should really be using a box plot with jittered points (see above).
-
-So when CAN you use bar plots?
-
-I would argue that bar plots can be useful for presenting summaries of counts. For example, sample sizes.
-
-```{r 2-01-visualisingData-25}
-clutch <- read.csv("CourseData/SDUClutchSize.csv")
-```
-
-Next we can summarise the data to get the sample sizes for each year
-
-```{r 2-01-visualisingData-26}
-table(clutch$species)
-```
-
-```{r 2-01-visualisingData-27}
-(sampleSize <- as.data.frame(table(clutch$species)))
-
-#rename columns
-names(sampleSize) <- c("Species", "SampleSize")
-```
-
-Here's how to plot these data in `ggplot`, using `geom_bar`. The `stat = "identity"` argument tells `ggplot2` to use the actual values from the data column for the height of the bars.  
-
-```{r 2-01-visualisingData-28}
-ggplot(sampleSize, aes(x = Species, y = SampleSize)) +
+```{r 2-01-visualisingData-15}
+clutch %>%
+  count(species, name = "sample_size") %>%
+  ggplot(aes(x = species, y = sample_size)) +
   geom_bar(stat = "identity") +
-  labs(title = "Barplot Example", x = "Category", y = "Sample Size")
+  labs(title = "Sample sizes by species", x = "Species", y = "Sample size")
 ```
 
-With the same data set you might think about making a bar plot for sample size per year like this 
+**Try this:** Plot counts by year and compare a bar plot to a line plot. Which tells the story more clearly?
 
-```{r 2-01-visualisingData-29}
-(sampleSize <- as.data.frame(table(clutch$Year)))
+**Takeaway:** Use bar plots for counts, not for means.
 
-#rename columns
-names(sampleSize) <- c("Year", "SampleSize")
-ggplot(sampleSize, aes(x = Year, y = SampleSize)) +
-  geom_bar(stat = "identity") +
-  labs(title = "Barplot Example", x = "Year", y = "Sample Size")
-```
-In this case, I would strongly argue that a line plot is much more appropriate, because it captures the fact that "year" is NOT a discrete category and shows that neighbouring years are connected:
+---
 
-```{r 2-01-visualisingData-30}
-sampleSize$Year <- as.numeric(as.character(sampleSize$Year))
+## Key takeaways
 
-ggplot(sampleSize, aes(x = as.numeric(Year), y = SampleSize)) +
-  geom_line() +
-  geom_point() +
-  labs(title = "A better plot", x = "Year", y = "Sample Size")
-```
+- `ggplot(data, aes(...)) + geom_*()` is the core pattern.
+- Use histograms and box plots to understand distributions.
+- Use facets to compare groups without clutter.
+- Use lines and points for ordered data like time.
+- Use bar plots mainly for counts.
+
+## Common pitfalls recap
+
+- Mapping the wrong variable to `x` or `y` (check your `aes()` call).
+- Forgetting `geom_*()` (you’ll get an empty plot).
+- Using bar plots for means without showing the distribution.
+
+## Mini-project
+
+Choose one dataset from `CourseData` and produce three plots:
+
+1. A distribution plot (histogram or box plot).
+2. A relationship plot (scatter or line).
+3. A grouped comparison (facets or colour).
+
+Write 2–3 sentences under each plot describing what it shows and one thing you would check next.

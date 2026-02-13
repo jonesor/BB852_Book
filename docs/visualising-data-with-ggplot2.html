@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics</title>
+  <title>Chapter 8 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics</title>
   <meta name="description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics" />
+  <meta property="og:title" content="Chapter 8 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics" />
+  <meta name="twitter:title" content="Chapter 8 Visualising data with ggplot2 | BB852 - Data handling, visualisation and statistics" />
   
   <meta name="twitter:description" content="Course book for BB852 at the Biology Department, University of Southern Denmark" />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-08" />
+<meta name="date" content="2026-02-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,8 +52,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
-<script src="libs/tabwid-1.1.3/tabwid.js"></script>
 
 
 <style type="text/css">
@@ -155,285 +153,289 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#assessment"><i class="fa fa-check"></i><b>1.8</b> Assessment</a></li>
 <li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.9</b> Acknowledgements</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="schedule.html"><a href="schedule.html"><i class="fa fa-check"></i><b>2</b> Schedule</a></li>
-<li class="chapter" data-level="3" data-path="additional-recommended-reading.html"><a href="additional-recommended-reading.html"><i class="fa fa-check"></i><b>3</b> Additional recommended reading</a></li>
-<li class="chapter" data-level="4" data-path="an-r-refresher.html"><a href="an-r-refresher.html"><i class="fa fa-check"></i><b>4</b> An R refresher</a>
+<li class="chapter" data-level="2" data-path="additional-recommended-reading.html"><a href="additional-recommended-reading.html"><i class="fa fa-check"></i><b>2</b> Additional recommended reading</a></li>
+<li class="chapter" data-level="3" data-path="an-r-refresher.html"><a href="an-r-refresher.html"><i class="fa fa-check"></i><b>3</b> An R refresher</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="an-r-refresher.html"><a href="an-r-refresher.html#getting-started-with-r"><i class="fa fa-check"></i><b>4.1</b> Getting started with R</a></li>
-<li class="chapter" data-level="4.2" data-path="an-r-refresher.html"><a href="an-r-refresher.html#getting-help"><i class="fa fa-check"></i><b>4.2</b> Getting help</a></li>
-<li class="chapter" data-level="4.3" data-path="an-r-refresher.html"><a href="an-r-refresher.html#r-as-a-fancy-calculator"><i class="fa fa-check"></i><b>4.3</b> R as a fancy calculator</a></li>
-<li class="chapter" data-level="4.4" data-path="an-r-refresher.html"><a href="an-r-refresher.html#objects-in-r"><i class="fa fa-check"></i><b>4.4</b> Objects in R</a></li>
-<li class="chapter" data-level="4.5" data-path="an-r-refresher.html"><a href="an-r-refresher.html#manipulating-objects"><i class="fa fa-check"></i><b>4.5</b> Manipulating objects</a></li>
-<li class="chapter" data-level="4.6" data-path="an-r-refresher.html"><a href="an-r-refresher.html#missing-values-infinity-and-non-numbers"><i class="fa fa-check"></i><b>4.6</b> Missing values, infinity and “non-numbers”</a></li>
-<li class="chapter" data-level="4.7" data-path="an-r-refresher.html"><a href="an-r-refresher.html#basic-information-about-objects"><i class="fa fa-check"></i><b>4.7</b> Basic information about objects</a></li>
-<li class="chapter" data-level="4.8" data-path="an-r-refresher.html"><a href="an-r-refresher.html#data-frames"><i class="fa fa-check"></i><b>4.8</b> Data frames</a></li>
-<li class="chapter" data-level="4.9" data-path="an-r-refresher.html"><a href="an-r-refresher.html#classes-in-r"><i class="fa fa-check"></i><b>4.9</b> Classes in R</a></li>
-<li class="chapter" data-level="4.10" data-path="an-r-refresher.html"><a href="an-r-refresher.html#organising-your-work"><i class="fa fa-check"></i><b>4.10</b> Organising your work</a></li>
-<li class="chapter" data-level="4.11" data-path="an-r-refresher.html"><a href="an-r-refresher.html#inspecting-the-data"><i class="fa fa-check"></i><b>4.11</b> Inspecting the data</a></li>
-<li class="chapter" data-level="4.12" data-path="an-r-refresher.html"><a href="an-r-refresher.html#classes-in-r-1"><i class="fa fa-check"></i><b>4.12</b> “Classes” in R</a></li>
-<li class="chapter" data-level="4.13" data-path="an-r-refresher.html"><a href="an-r-refresher.html#tables-and-summary-statistics"><i class="fa fa-check"></i><b>4.13</b> Tables and summary statistics</a></li>
-<li class="chapter" data-level="4.14" data-path="an-r-refresher.html"><a href="an-r-refresher.html#plotting-data"><i class="fa fa-check"></i><b>4.14</b> Plotting data</a></li>
-<li class="chapter" data-level="4.15" data-path="an-r-refresher.html"><a href="an-r-refresher.html#r-packages"><i class="fa fa-check"></i><b>4.15</b> R Packages</a></li>
-<li class="chapter" data-level="4.16" data-path="an-r-refresher.html"><a href="an-r-refresher.html#exercise-californian-bird-diversity"><i class="fa fa-check"></i><b>4.16</b> Exercise: Californian bird diversity</a>
+<li class="chapter" data-level="3.1" data-path="an-r-refresher.html"><a href="an-r-refresher.html#getting-started-with-r"><i class="fa fa-check"></i><b>3.1</b> Getting started with R</a></li>
+<li class="chapter" data-level="3.2" data-path="an-r-refresher.html"><a href="an-r-refresher.html#getting-help"><i class="fa fa-check"></i><b>3.2</b> Getting help</a></li>
+<li class="chapter" data-level="3.3" data-path="an-r-refresher.html"><a href="an-r-refresher.html#r-as-a-fancy-calculator"><i class="fa fa-check"></i><b>3.3</b> R as a fancy calculator</a></li>
+<li class="chapter" data-level="3.4" data-path="an-r-refresher.html"><a href="an-r-refresher.html#objects-in-r"><i class="fa fa-check"></i><b>3.4</b> Objects in R</a></li>
+<li class="chapter" data-level="3.5" data-path="an-r-refresher.html"><a href="an-r-refresher.html#manipulating-objects"><i class="fa fa-check"></i><b>3.5</b> Manipulating objects</a></li>
+<li class="chapter" data-level="3.6" data-path="an-r-refresher.html"><a href="an-r-refresher.html#missing-values-infinity-and-non-numbers"><i class="fa fa-check"></i><b>3.6</b> Missing values, infinity and “non-numbers”</a></li>
+<li class="chapter" data-level="3.7" data-path="an-r-refresher.html"><a href="an-r-refresher.html#basic-information-about-objects"><i class="fa fa-check"></i><b>3.7</b> Basic information about objects</a></li>
+<li class="chapter" data-level="3.8" data-path="an-r-refresher.html"><a href="an-r-refresher.html#data-frames"><i class="fa fa-check"></i><b>3.8</b> Data frames</a></li>
+<li class="chapter" data-level="3.9" data-path="an-r-refresher.html"><a href="an-r-refresher.html#classes-in-r"><i class="fa fa-check"></i><b>3.9</b> Classes in R</a></li>
+<li class="chapter" data-level="3.10" data-path="an-r-refresher.html"><a href="an-r-refresher.html#organising-your-work"><i class="fa fa-check"></i><b>3.10</b> Organising your work</a></li>
+<li class="chapter" data-level="3.11" data-path="an-r-refresher.html"><a href="an-r-refresher.html#inspecting-the-data"><i class="fa fa-check"></i><b>3.11</b> Inspecting the data</a></li>
+<li class="chapter" data-level="3.12" data-path="an-r-refresher.html"><a href="an-r-refresher.html#classes-in-r-1"><i class="fa fa-check"></i><b>3.12</b> “Classes” in R</a></li>
+<li class="chapter" data-level="3.13" data-path="an-r-refresher.html"><a href="an-r-refresher.html#tables-and-summary-statistics"><i class="fa fa-check"></i><b>3.13</b> Tables and summary statistics</a></li>
+<li class="chapter" data-level="3.14" data-path="an-r-refresher.html"><a href="an-r-refresher.html#plotting-data"><i class="fa fa-check"></i><b>3.14</b> Plotting data</a></li>
+<li class="chapter" data-level="3.15" data-path="an-r-refresher.html"><a href="an-r-refresher.html#r-packages"><i class="fa fa-check"></i><b>3.15</b> R Packages</a></li>
+<li class="chapter" data-level="3.16" data-path="an-r-refresher.html"><a href="an-r-refresher.html#exercise-californian-bird-diversity"><i class="fa fa-check"></i><b>3.16</b> Exercise: Californian bird diversity</a>
 <ul>
-<li class="chapter" data-level="4.16.1" data-path="an-r-refresher.html"><a href="an-r-refresher.html#the-data"><i class="fa fa-check"></i><b>4.16.1</b> The data</a></li>
-<li class="chapter" data-level="4.16.2" data-path="an-r-refresher.html"><a href="an-r-refresher.html#try-the-following"><i class="fa fa-check"></i><b>4.16.2</b> Try the following</a></li>
+<li class="chapter" data-level="3.16.1" data-path="an-r-refresher.html"><a href="an-r-refresher.html#the-data"><i class="fa fa-check"></i><b>3.16.1</b> The data</a></li>
+<li class="chapter" data-level="3.16.2" data-path="an-r-refresher.html"><a href="an-r-refresher.html#try-the-following"><i class="fa fa-check"></i><b>3.16.2</b> Try the following</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html"><i class="fa fa-check"></i><b>5</b> Tips and tricks</a>
+<li class="chapter" data-level="4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html"><i class="fa fa-check"></i><b>4</b> Tips and tricks</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#appearance"><i class="fa fa-check"></i><b>5.1</b> Appearance</a></li>
-<li class="chapter" data-level="5.2" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#shortcuts"><i class="fa fa-check"></i><b>5.2</b> Shortcuts</a></li>
-<li class="chapter" data-level="5.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#code-style"><i class="fa fa-check"></i><b>5.3</b> Code style</a></li>
-<li class="chapter" data-level="5.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>5.4</b> The plots pane</a></li>
-<li class="chapter" data-level="5.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>5.5</b> Tables</a></li>
-<li class="chapter" data-level="5.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>5.6</b> Importing data from text files</a></li>
-<li class="chapter" data-level="5.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>5.7</b> Importing data from Excel</a></li>
-<li class="chapter" data-level="5.8" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>5.8</b> Numbers</a></li>
+<li class="chapter" data-level="4.1" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#appearance"><i class="fa fa-check"></i><b>4.1</b> Appearance</a></li>
+<li class="chapter" data-level="4.2" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#shortcuts"><i class="fa fa-check"></i><b>4.2</b> Shortcuts</a></li>
+<li class="chapter" data-level="4.3" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#code-style"><i class="fa fa-check"></i><b>4.3</b> Code style</a></li>
+<li class="chapter" data-level="4.4" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#the-plots-pane"><i class="fa fa-check"></i><b>4.4</b> The plots pane</a></li>
+<li class="chapter" data-level="4.5" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#tables"><i class="fa fa-check"></i><b>4.5</b> Tables</a></li>
+<li class="chapter" data-level="4.6" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-text-files"><i class="fa fa-check"></i><b>4.6</b> Importing data from text files</a></li>
+<li class="chapter" data-level="4.7" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#importing-data-from-excel"><i class="fa fa-check"></i><b>4.7</b> Importing data from Excel</a></li>
+<li class="chapter" data-level="4.8" data-path="tips-and-tricks.html"><a href="tips-and-tricks.html#numbers"><i class="fa fa-check"></i><b>4.8</b> Numbers</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="paths-and-projects.html"><a href="paths-and-projects.html"><i class="fa fa-check"></i><b>6</b> Paths and projects</a>
+<li class="chapter" data-level="5" data-path="paths-and-projects.html"><a href="paths-and-projects.html"><i class="fa fa-check"></i><b>5</b> Paths and projects</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-paths"><i class="fa fa-check"></i><b>6.1</b> File paths</a></li>
-<li class="chapter" data-level="6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-organisation"><i class="fa fa-check"></i><b>6.2</b> File organisation</a></li>
-<li class="chapter" data-level="6.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#two-types-of-paths"><i class="fa fa-check"></i><b>6.3</b> Two types of paths</a>
+<li class="chapter" data-level="5.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-paths"><i class="fa fa-check"></i><b>5.1</b> File paths</a></li>
+<li class="chapter" data-level="5.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#file-organisation"><i class="fa fa-check"></i><b>5.2</b> File organisation</a></li>
+<li class="chapter" data-level="5.3" data-path="paths-and-projects.html"><a href="paths-and-projects.html#two-types-of-paths"><i class="fa fa-check"></i><b>5.3</b> Two types of paths</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#absolute-paths-the-exact-location"><i class="fa fa-check"></i><b>6.3.1</b> 1. Absolute Paths: The Exact Location</a></li>
-<li class="chapter" data-level="6.3.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#relative-paths-paths-that-start-from-the-project-folder"><i class="fa fa-check"></i><b>6.3.2</b> 2. Relative Paths: Paths That Start from the Project Folder</a></li>
+<li class="chapter" data-level="5.3.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#absolute-paths-the-exact-location"><i class="fa fa-check"></i><b>5.3.1</b> 1. Absolute Paths: The Exact Location</a></li>
+<li class="chapter" data-level="5.3.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#relative-paths-paths-that-start-from-the-project-folder"><i class="fa fa-check"></i><b>5.3.2</b> 2. Relative Paths: Paths That Start from the Project Folder</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>6.4</b> R and file structure</a></li>
-<li class="chapter" data-level="6.5" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory-in-r"><i class="fa fa-check"></i><b>6.5</b> Setting the Working Directory in R</a>
+<li class="chapter" data-level="5.4" data-path="paths-and-projects.html"><a href="paths-and-projects.html#r-and-file-structure"><i class="fa fa-check"></i><b>5.4</b> R and file structure</a></li>
+<li class="chapter" data-level="5.5" data-path="paths-and-projects.html"><a href="paths-and-projects.html#setting-the-working-directory-in-r"><i class="fa fa-check"></i><b>5.5</b> Setting the Working Directory in R</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#finding-your-current-working-directory"><i class="fa fa-check"></i><b>6.5.1</b> Finding Your Current Working Directory</a></li>
-<li class="chapter" data-level="6.5.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#changing-the-working-directory"><i class="fa fa-check"></i><b>6.5.2</b> Changing the Working Directory</a></li>
+<li class="chapter" data-level="5.5.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#finding-your-current-working-directory"><i class="fa fa-check"></i><b>5.5.1</b> Finding Your Current Working Directory</a></li>
+<li class="chapter" data-level="5.5.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#changing-the-working-directory"><i class="fa fa-check"></i><b>5.5.2</b> Changing the Working Directory</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>6.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
+<li class="chapter" data-level="5.6" data-path="paths-and-projects.html"><a href="paths-and-projects.html#using-projects-in-rstudio-a-simpler-way-to-set-the-working-directory"><i class="fa fa-check"></i><b>5.6</b> Using Projects in RStudio: A Simpler Way to Set the Working Directory</a>
 <ul>
-<li class="chapter" data-level="6.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>6.6.1</b> Steps to Create an R Project</a></li>
-<li class="chapter" data-level="6.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>6.6.2</b> Organising Files Within Your Project</a></li>
+<li class="chapter" data-level="5.6.1" data-path="paths-and-projects.html"><a href="paths-and-projects.html#steps-to-create-an-r-project"><i class="fa fa-check"></i><b>5.6.1</b> Steps to Create an R Project</a></li>
+<li class="chapter" data-level="5.6.2" data-path="paths-and-projects.html"><a href="paths-and-projects.html#organising-files-within-your-project"><i class="fa fa-check"></i><b>5.6.2</b> Organising Files Within Your Project</a></li>
 </ul></li>
 </ul></li>
 <li class="part"><span><b>I Data Wrangling</b></span></li>
-<li class="chapter" data-level="7" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data wrangling with <code>dplyr</code></a>
+<li class="chapter" data-level="6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html"><i class="fa fa-check"></i><b>6</b> Data wrangling with <code>dplyr</code></a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#select"><i class="fa fa-check"></i><b>7.1</b> <code>select</code></a></li>
-<li class="chapter" data-level="7.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>7.2</b> <code>filter</code></a></li>
-<li class="chapter" data-level="7.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>7.3</b> <code>arrange</code></a></li>
-<li class="chapter" data-level="7.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>7.4</b> <code>summarise</code> and <code>group_by</code></a></li>
-<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>7.5</b> Using pipes, saving data.</a></li>
-<li class="chapter" data-level="7.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercise-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>7.6</b> Exercise: Wrangling the Amniote Life History Database</a></li>
+<li class="chapter" data-level="6.1" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#select"><i class="fa fa-check"></i><b>6.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="6.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>6.2</b> <code>filter</code></a></li>
+<li class="chapter" data-level="6.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>6.3</b> <code>arrange</code></a></li>
+<li class="chapter" data-level="6.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>6.4</b> <code>summarise</code> and <code>group_by</code></a></li>
+<li class="chapter" data-level="6.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>6.5</b> Using pipes, saving data.</a></li>
+<li class="chapter" data-level="6.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercise-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>6.6</b> Exercise: Wrangling the Amniote Life History Database</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>8</b> Combining data sets</a>
+<li class="chapter" data-level="7" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>7</b> Combining data sets</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-join"><i class="fa fa-check"></i><b>8.1</b> Using <code>join</code></a></li>
-<li class="chapter" data-level="8.2" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-pivot_longer"><i class="fa fa-check"></i><b>8.2</b> Using <code>pivot_longer</code></a></li>
-<li class="chapter" data-level="8.3" data-path="combining-data-sets.html"><a href="combining-data-sets.html#exercise-temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>8.3</b> Exercise: Temperature effects on egg laying dates</a></li>
+<li class="chapter" data-level="7.1" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-join"><i class="fa fa-check"></i><b>7.1</b> Using <code>join</code></a></li>
+<li class="chapter" data-level="7.2" data-path="combining-data-sets.html"><a href="combining-data-sets.html#using-pivot_longer"><i class="fa fa-check"></i><b>7.2</b> Using <code>pivot_longer</code></a></li>
+<li class="chapter" data-level="7.3" data-path="combining-data-sets.html"><a href="combining-data-sets.html#exercise-temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>7.3</b> Exercise: Temperature effects on egg laying dates</a></li>
 </ul></li>
 <li class="part"><span><b>II Data visualisation</b></span></li>
-<li class="chapter" data-level="9" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html"><i class="fa fa-check"></i><b>9</b> Visualising data with <code>ggplot2</code></a>
+<li class="chapter" data-level="8" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html"><i class="fa fa-check"></i><b>8</b> Visualising data with <code>ggplot2</code></a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#histograms"><i class="fa fa-check"></i><b>9.1</b> Histograms</a></li>
-<li class="chapter" data-level="9.2" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#facets---splitting-data-across-panels"><i class="fa fa-check"></i><b>9.2</b> “Facets” - splitting data across panels</a></li>
-<li class="chapter" data-level="9.3" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>9.3</b> Box plots</a></li>
-<li class="chapter" data-level="9.4" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#lines-and-points"><i class="fa fa-check"></i><b>9.4</b> Lines and points</a></li>
-<li class="chapter" data-level="9.5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#scatter-plots"><i class="fa fa-check"></i><b>9.5</b> Scatter plots</a></li>
-<li class="chapter" data-level="9.6" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#bar-plots"><i class="fa fa-check"></i><b>9.6</b> Bar plots</a></li>
+<li class="chapter" data-level="8.1" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#the-data-we-will-use"><i class="fa fa-check"></i><b>8.1</b> The data we will use</a></li>
+<li class="chapter" data-level="8.2" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#histograms"><i class="fa fa-check"></i><b>8.2</b> Histograms</a></li>
+<li class="chapter" data-level="8.3" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#comparing-groups-in-a-histogram"><i class="fa fa-check"></i><b>8.3</b> Comparing groups in a histogram</a></li>
+<li class="chapter" data-level="8.4" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#facets-split-across-panels"><i class="fa fa-check"></i><b>8.4</b> Facets (split across panels)</a></li>
+<li class="chapter" data-level="8.5" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#box-plots"><i class="fa fa-check"></i><b>8.5</b> Box plots</a></li>
+<li class="chapter" data-level="8.6" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#lines-and-points-trends-over-time"><i class="fa fa-check"></i><b>8.6</b> Lines and points (trends over time)</a></li>
+<li class="chapter" data-level="8.7" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#scatter-plots"><i class="fa fa-check"></i><b>8.7</b> Scatter plots</a></li>
+<li class="chapter" data-level="8.8" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#bar-plots-use-with-care"><i class="fa fa-check"></i><b>8.8</b> Bar plots (use with care)</a></li>
+<li class="chapter" data-level="8.9" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#key-takeaways"><i class="fa fa-check"></i><b>8.9</b> Key takeaways</a></li>
+<li class="chapter" data-level="8.10" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#common-pitfalls-recap"><i class="fa fa-check"></i><b>8.10</b> Common pitfalls recap</a></li>
+<li class="chapter" data-level="8.11" data-path="visualising-data-with-ggplot2.html"><a href="visualising-data-with-ggplot2.html#mini-project"><i class="fa fa-check"></i><b>8.11</b> Mini-project</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html"><i class="fa fa-check"></i><b>10</b> Distributions and summarising data</a>
+<li class="chapter" data-level="9" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html"><i class="fa fa-check"></i><b>9</b> Distributions and summarising data</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#relationships-in-data-response-and-explanatory-variables"><i class="fa fa-check"></i><b>10.1</b> Relationships in Data: Response and Explanatory Variables</a></li>
-<li class="chapter" data-level="10.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#populations-samples-and-bias"><i class="fa fa-check"></i><b>10.2</b> Populations, Samples, and Bias</a>
+<li class="chapter" data-level="9.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#relationships-in-data-response-and-explanatory-variables"><i class="fa fa-check"></i><b>9.1</b> Relationships in Data: Response and Explanatory Variables</a></li>
+<li class="chapter" data-level="9.2" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#populations-samples-and-bias"><i class="fa fa-check"></i><b>9.2</b> Populations, Samples, and Bias</a>
 <ul>
-<li class="chapter" data-level="10.2.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#distributions"><i class="fa fa-check"></i><b>10.2.1</b> Distributions</a></li>
+<li class="chapter" data-level="9.2.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#distributions"><i class="fa fa-check"></i><b>9.2.1</b> Distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#normal-distribution"><i class="fa fa-check"></i><b>10.3</b> Normal distribution</a></li>
-<li class="chapter" data-level="10.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-distributions"><i class="fa fa-check"></i><b>10.4</b> Comparing normal distributions</a></li>
-<li class="chapter" data-level="10.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#poisson-distribution"><i class="fa fa-check"></i><b>10.5</b> Poisson distribution</a></li>
-<li class="chapter" data-level="10.6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>10.6</b> Comparing normal and Poisson distributions</a></li>
-<li class="chapter" data-level="10.7" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#the-law-of-large-numbers"><i class="fa fa-check"></i><b>10.7</b> The law of large numbers</a>
+<li class="chapter" data-level="9.3" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#normal-distribution"><i class="fa fa-check"></i><b>9.3</b> Normal distribution</a></li>
+<li class="chapter" data-level="9.4" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-distributions"><i class="fa fa-check"></i><b>9.4</b> Comparing normal distributions</a></li>
+<li class="chapter" data-level="9.5" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#poisson-distribution"><i class="fa fa-check"></i><b>9.5</b> Poisson distribution</a></li>
+<li class="chapter" data-level="9.6" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#comparing-normal-and-poisson-distributions"><i class="fa fa-check"></i><b>9.6</b> Comparing normal and Poisson distributions</a></li>
+<li class="chapter" data-level="9.7" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#the-law-of-large-numbers"><i class="fa fa-check"></i><b>9.7</b> The law of large numbers</a>
 <ul>
-<li class="chapter" data-level="10.7.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#coin-flipping"><i class="fa fa-check"></i><b>10.7.1</b> Coin flipping</a></li>
+<li class="chapter" data-level="9.7.1" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#coin-flipping"><i class="fa fa-check"></i><b>9.7.1</b> Coin flipping</a></li>
 </ul></li>
-<li class="chapter" data-level="10.8" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#exercise-virtual-dice"><i class="fa fa-check"></i><b>10.8</b> Exercise: Virtual dice</a></li>
+<li class="chapter" data-level="9.8" data-path="distributions-and-summarising-data.html"><a href="distributions-and-summarising-data.html#exercise-virtual-dice"><i class="fa fa-check"></i><b>9.8</b> Exercise: Virtual dice</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html"><i class="fa fa-check"></i><b>11</b> Pimping your plots</a>
+<li class="chapter" data-level="10" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html"><i class="fa fa-check"></i><b>10</b> Pimping your plots</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#a-basic-plot"><i class="fa fa-check"></i><b>11.1</b> A basic plot</a></li>
-<li class="chapter" data-level="11.2" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#axis-limits"><i class="fa fa-check"></i><b>11.2</b> Axis limits</a></li>
-<li class="chapter" data-level="11.3" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#transforming-the-axis-log-scale"><i class="fa fa-check"></i><b>11.3</b> Transforming the axis (log scale)</a></li>
-<li class="chapter" data-level="11.4" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#changing-the-axis-tick-marks"><i class="fa fa-check"></i><b>11.4</b> Changing the axis tick marks</a></li>
-<li class="chapter" data-level="11.5" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#axis-labels"><i class="fa fa-check"></i><b>11.5</b> Axis labels</a></li>
-<li class="chapter" data-level="11.6" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#colours"><i class="fa fa-check"></i><b>11.6</b> Colours</a></li>
-<li class="chapter" data-level="11.7" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#themes"><i class="fa fa-check"></i><b>11.7</b> Themes</a></li>
-<li class="chapter" data-level="11.8" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#moving-the-legend"><i class="fa fa-check"></i><b>11.8</b> Moving the legend</a></li>
-<li class="chapter" data-level="11.9" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#combining-multiple-plots"><i class="fa fa-check"></i><b>11.9</b> Combining multiple plots</a></li>
-<li class="chapter" data-level="11.10" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#saving-your-plot"><i class="fa fa-check"></i><b>11.10</b> Saving your plot</a></li>
-<li class="chapter" data-level="11.11" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#final-word-on-plots"><i class="fa fa-check"></i><b>11.11</b> Final word on plots</a></li>
+<li class="chapter" data-level="10.1" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#a-basic-plot"><i class="fa fa-check"></i><b>10.1</b> A basic plot</a></li>
+<li class="chapter" data-level="10.2" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#axis-limits"><i class="fa fa-check"></i><b>10.2</b> Axis limits</a></li>
+<li class="chapter" data-level="10.3" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#transforming-the-axis-log-scale"><i class="fa fa-check"></i><b>10.3</b> Transforming the axis (log scale)</a></li>
+<li class="chapter" data-level="10.4" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#changing-the-axis-tick-marks"><i class="fa fa-check"></i><b>10.4</b> Changing the axis tick marks</a></li>
+<li class="chapter" data-level="10.5" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#axis-labels"><i class="fa fa-check"></i><b>10.5</b> Axis labels</a></li>
+<li class="chapter" data-level="10.6" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#colours"><i class="fa fa-check"></i><b>10.6</b> Colours</a></li>
+<li class="chapter" data-level="10.7" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#themes"><i class="fa fa-check"></i><b>10.7</b> Themes</a></li>
+<li class="chapter" data-level="10.8" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#moving-the-legend"><i class="fa fa-check"></i><b>10.8</b> Moving the legend</a></li>
+<li class="chapter" data-level="10.9" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#combining-multiple-plots"><i class="fa fa-check"></i><b>10.9</b> Combining multiple plots</a></li>
+<li class="chapter" data-level="10.10" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#saving-your-plot"><i class="fa fa-check"></i><b>10.10</b> Saving your plot</a></li>
+<li class="chapter" data-level="10.11" data-path="pimping-your-plots.html"><a href="pimping-your-plots.html#final-word-on-plots"><i class="fa fa-check"></i><b>10.11</b> Final word on plots</a></li>
 </ul></li>
 <li class="part"><span><b>III Statistics</b></span></li>
-<li class="chapter" data-level="12" data-path="randomisation-tests.html"><a href="randomisation-tests.html"><i class="fa fa-check"></i><b>12</b> Randomisation Tests</a>
+<li class="chapter" data-level="11" data-path="randomisation-tests.html"><a href="randomisation-tests.html"><i class="fa fa-check"></i><b>11</b> Randomisation Tests</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#randomisation-test-in-r"><i class="fa fa-check"></i><b>12.1</b> Randomisation test in R</a>
+<li class="chapter" data-level="11.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#randomisation-test-in-r"><i class="fa fa-check"></i><b>11.1</b> Randomisation test in R</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#calculate-the-observed-difference"><i class="fa fa-check"></i><b>12.1.1</b> Calculate the observed difference</a></li>
-<li class="chapter" data-level="12.1.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution"><i class="fa fa-check"></i><b>12.1.2</b> Null distribution</a></li>
-<li class="chapter" data-level="12.1.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-significance"><i class="fa fa-check"></i><b>12.1.3</b> Testing significance</a></li>
-<li class="chapter" data-level="12.1.4" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-the-hypothesis"><i class="fa fa-check"></i><b>12.1.4</b> Testing the hypothesis</a></li>
-<li class="chapter" data-level="12.1.5" data-path="randomisation-tests.html"><a href="randomisation-tests.html#writing-it-up"><i class="fa fa-check"></i><b>12.1.5</b> Writing it up</a></li>
+<li class="chapter" data-level="11.1.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#calculate-the-observed-difference"><i class="fa fa-check"></i><b>11.1.1</b> Calculate the observed difference</a></li>
+<li class="chapter" data-level="11.1.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution"><i class="fa fa-check"></i><b>11.1.2</b> Null distribution</a></li>
+<li class="chapter" data-level="11.1.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-significance"><i class="fa fa-check"></i><b>11.1.3</b> Testing significance</a></li>
+<li class="chapter" data-level="11.1.4" data-path="randomisation-tests.html"><a href="randomisation-tests.html#testing-the-hypothesis"><i class="fa fa-check"></i><b>11.1.4</b> Testing the hypothesis</a></li>
+<li class="chapter" data-level="11.1.5" data-path="randomisation-tests.html"><a href="randomisation-tests.html#writing-it-up"><i class="fa fa-check"></i><b>11.1.5</b> Writing it up</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#paired-randomisation-tests"><i class="fa fa-check"></i><b>12.2</b> Paired Randomisation Tests</a>
+<li class="chapter" data-level="11.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#paired-randomisation-tests"><i class="fa fa-check"></i><b>11.2</b> Paired Randomisation Tests</a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-randomisation-test"><i class="fa fa-check"></i><b>12.2.1</b> The randomisation test</a></li>
-<li class="chapter" data-level="12.2.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution-1"><i class="fa fa-check"></i><b>12.2.2</b> Null distribution</a></li>
-<li class="chapter" data-level="12.2.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-formal-hypothesis-test"><i class="fa fa-check"></i><b>12.2.3</b> The formal hypothesis test</a></li>
+<li class="chapter" data-level="11.2.1" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-randomisation-test"><i class="fa fa-check"></i><b>11.2.1</b> The randomisation test</a></li>
+<li class="chapter" data-level="11.2.2" data-path="randomisation-tests.html"><a href="randomisation-tests.html#null-distribution-1"><i class="fa fa-check"></i><b>11.2.2</b> Null distribution</a></li>
+<li class="chapter" data-level="11.2.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#the-formal-hypothesis-test"><i class="fa fa-check"></i><b>11.2.3</b> The formal hypothesis test</a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#exercise-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>12.3</b> Exercise: Sexual selection in Hercules beetles</a></li>
+<li class="chapter" data-level="11.3" data-path="randomisation-tests.html"><a href="randomisation-tests.html#exercise-sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>11.3</b> Exercise: Sexual selection in Hercules beetles</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html"><i class="fa fa-check"></i><b>13</b> t-test: Comparing two means</a>
+<li class="chapter" data-level="12" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html"><i class="fa fa-check"></i><b>12</b> t-test: Comparing two means</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#some-theory"><i class="fa fa-check"></i><b>13.1</b> Some theory</a></li>
-<li class="chapter" data-level="13.2" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#one-sample-t-test"><i class="fa fa-check"></i><b>13.2</b> One sample t-test</a></li>
-<li class="chapter" data-level="13.3" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#doing-it-by-hand---where-does-the-t-statistic-come-from"><i class="fa fa-check"></i><b>13.3</b> Doing it “by hand” - where does the t-statistic come from?</a></li>
-<li class="chapter" data-level="13.4" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#paired-t-test"><i class="fa fa-check"></i><b>13.4</b> Paired t-test</a></li>
-<li class="chapter" data-level="13.5" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#a-paired-t-test-is-a-one-sample-test."><i class="fa fa-check"></i><b>13.5</b> A paired t-test is a one-sample test.</a></li>
-<li class="chapter" data-level="13.6" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#two-sample-t-test"><i class="fa fa-check"></i><b>13.6</b> Two sample t-test</a></li>
-<li class="chapter" data-level="13.7" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#t-tests-are-linear-models"><i class="fa fa-check"></i><b>13.7</b> t-tests are linear models</a></li>
-<li class="chapter" data-level="13.8" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#exercise-sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>13.8</b> Exercise: Sex differences in fine motor skills</a></li>
-<li class="chapter" data-level="13.9" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#exercise-therapy-for-anorexia"><i class="fa fa-check"></i><b>13.9</b> Exercise: Therapy for anorexia</a></li>
-<li class="chapter" data-level="13.10" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#exercise-compare-t-tests-with-randomisation-tests-optional"><i class="fa fa-check"></i><b>13.10</b> Exercise: Compare t-tests with randomisation tests (optional)</a></li>
+<li class="chapter" data-level="12.1" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#some-theory"><i class="fa fa-check"></i><b>12.1</b> Some theory</a></li>
+<li class="chapter" data-level="12.2" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#one-sample-t-test"><i class="fa fa-check"></i><b>12.2</b> One sample t-test</a></li>
+<li class="chapter" data-level="12.3" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#doing-it-by-hand---where-does-the-t-statistic-come-from"><i class="fa fa-check"></i><b>12.3</b> Doing it “by hand” - where does the t-statistic come from?</a></li>
+<li class="chapter" data-level="12.4" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#paired-t-test"><i class="fa fa-check"></i><b>12.4</b> Paired t-test</a></li>
+<li class="chapter" data-level="12.5" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#a-paired-t-test-is-a-one-sample-test."><i class="fa fa-check"></i><b>12.5</b> A paired t-test is a one-sample test.</a></li>
+<li class="chapter" data-level="12.6" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#two-sample-t-test"><i class="fa fa-check"></i><b>12.6</b> Two sample t-test</a></li>
+<li class="chapter" data-level="12.7" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#t-tests-are-linear-models"><i class="fa fa-check"></i><b>12.7</b> t-tests are linear models</a></li>
+<li class="chapter" data-level="12.8" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#exercise-sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>12.8</b> Exercise: Sex differences in fine motor skills</a></li>
+<li class="chapter" data-level="12.9" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#exercise-therapy-for-anorexia"><i class="fa fa-check"></i><b>12.9</b> Exercise: Therapy for anorexia</a></li>
+<li class="chapter" data-level="12.10" data-path="t-test-comparing-two-means.html"><a href="t-test-comparing-two-means.html#exercise-compare-t-tests-with-randomisation-tests-optional"><i class="fa fa-check"></i><b>12.10</b> Exercise: Compare t-tests with randomisation tests (optional)</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="assumptions-in-linear-models.html"><a href="assumptions-in-linear-models.html"><i class="fa fa-check"></i><b>14</b> Assumptions in linear models</a>
+<li class="chapter" data-level="13" data-path="assumptions-in-linear-models.html"><a href="assumptions-in-linear-models.html"><i class="fa fa-check"></i><b>13</b> Assumptions in linear models</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="assumptions-in-linear-models.html"><a href="assumptions-in-linear-models.html#the-assumptions"><i class="fa fa-check"></i><b>14.1</b> The assumptions</a></li>
+<li class="chapter" data-level="13.1" data-path="assumptions-in-linear-models.html"><a href="assumptions-in-linear-models.html#the-assumptions"><i class="fa fa-check"></i><b>13.1</b> The assumptions</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><i class="fa fa-check"></i><b>15</b> ANOVA: Linear models with a single categorical explanatory variable</a>
+<li class="chapter" data-level="14" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><i class="fa fa-check"></i><b>14</b> ANOVA: Linear models with a single categorical explanatory variable</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#one-way-anova"><i class="fa fa-check"></i><b>15.1</b> One-way ANOVA</a></li>
-<li class="chapter" data-level="15.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fitting-an-anova-in-r"><i class="fa fa-check"></i><b>15.2</b> Fitting an ANOVA in R</a>
+<li class="chapter" data-level="14.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#one-way-anova"><i class="fa fa-check"></i><b>14.1</b> One-way ANOVA</a></li>
+<li class="chapter" data-level="14.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#fitting-an-anova-in-r"><i class="fa fa-check"></i><b>14.2</b> Fitting an ANOVA in R</a>
 <ul>
-<li class="chapter" data-level="15.2.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>15.2.1</b> Where are the differences?</a></li>
-<li class="chapter" data-level="15.2.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>15.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
+<li class="chapter" data-level="14.2.1" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#where-are-the-differences"><i class="fa fa-check"></i><b>14.2.1</b> Where are the differences?</a></li>
+<li class="chapter" data-level="14.2.2" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#tukeys-honestly-significant-difference-hsd"><i class="fa fa-check"></i><b>14.2.2</b> Tukey’s Honestly Significant Difference (HSD)</a></li>
 </ul></li>
-<li class="chapter" data-level="15.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>15.3</b> ANOVA calculation “by hand”.</a></li>
-<li class="chapter" data-level="15.4" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>15.4</b> Exercise: Apple tree crop yield</a></li>
+<li class="chapter" data-level="14.3" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#anova-calculation-by-hand."><i class="fa fa-check"></i><b>14.3</b> ANOVA calculation “by hand”.</a></li>
+<li class="chapter" data-level="14.4" data-path="anova-linear-models-with-a-single-categorical-explanatory-variable.html"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#exercise-apple-tree-crop-yield"><i class="fa fa-check"></i><b>14.4</b> Exercise: Apple tree crop yield</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>16</b> Linear regression: models with a single continuous explanatory variable</a>
+<li class="chapter" data-level="15" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><i class="fa fa-check"></i><b>15</b> Linear regression: models with a single continuous explanatory variable</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#some-theory-1"><i class="fa fa-check"></i><b>16.1</b> Some theory</a></li>
-<li class="chapter" data-level="16.2" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#evaluating-a-hypothesis-with-a-linear-regression-model"><i class="fa fa-check"></i><b>16.2</b> Evaluating a hypothesis with a linear regression model</a></li>
-<li class="chapter" data-level="16.3" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#assumptions"><i class="fa fa-check"></i><b>16.3</b> Assumptions</a></li>
-<li class="chapter" data-level="16.4" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#worked-example-height-hand-width-relationship"><i class="fa fa-check"></i><b>16.4</b> Worked example: height-hand width relationship</a></li>
-<li class="chapter" data-level="16.5" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#exercise-chirping-crickets"><i class="fa fa-check"></i><b>16.5</b> Exercise: Chirping crickets</a></li>
+<li class="chapter" data-level="15.1" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#some-theory-1"><i class="fa fa-check"></i><b>15.1</b> Some theory</a></li>
+<li class="chapter" data-level="15.2" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#evaluating-a-hypothesis-with-a-linear-regression-model"><i class="fa fa-check"></i><b>15.2</b> Evaluating a hypothesis with a linear regression model</a></li>
+<li class="chapter" data-level="15.3" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#assumptions"><i class="fa fa-check"></i><b>15.3</b> Assumptions</a></li>
+<li class="chapter" data-level="15.4" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#worked-example-height-hand-width-relationship"><i class="fa fa-check"></i><b>15.4</b> Worked example: height-hand width relationship</a></li>
+<li class="chapter" data-level="15.5" data-path="linear-regression-models-with-a-single-continuous-explanatory-variable.html"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#exercise-chirping-crickets"><i class="fa fa-check"></i><b>15.5</b> Exercise: Chirping crickets</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><i class="fa fa-check"></i><b>17</b> ANCOVA: Linear models with categorical and continuous explanatory variables</a>
+<li class="chapter" data-level="16" data-path="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><i class="fa fa-check"></i><b>16</b> ANCOVA: Linear models with categorical and continuous explanatory variables</a>
 <ul>
-<li class="chapter" data-level="17.1" data-path="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#the-height-hand-width-example."><i class="fa fa-check"></i><b>17.1</b> The height ~ hand width example.</a></li>
-<li class="chapter" data-level="17.2" data-path="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#summarising-with-anova"><i class="fa fa-check"></i><b>17.2</b> Summarising with <code>anova</code></a></li>
-<li class="chapter" data-level="17.3" data-path="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#the-summary-of-coefficients-summary"><i class="fa fa-check"></i><b>17.3</b> The summary of coefficients (<code>summary</code>)</a></li>
+<li class="chapter" data-level="16.1" data-path="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#the-height-hand-width-example."><i class="fa fa-check"></i><b>16.1</b> The height ~ hand width example.</a></li>
+<li class="chapter" data-level="16.2" data-path="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#summarising-with-anova"><i class="fa fa-check"></i><b>16.2</b> Summarising with <code>anova</code></a></li>
+<li class="chapter" data-level="16.3" data-path="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html"><a href="ancova-linear-models-with-categorical-and-continuous-explanatory-variables.html#the-summary-of-coefficients-summary"><i class="fa fa-check"></i><b>16.3</b> The summary of coefficients (<code>summary</code>)</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><i class="fa fa-check"></i><b>18</b> n-way ANOVA: Linear models with &gt;1 categorical explanatory variables</a>
+<li class="chapter" data-level="17" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><i class="fa fa-check"></i><b>17</b> n-way ANOVA: Linear models with &gt;1 categorical explanatory variables</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#fitting-a-two-way-anova-model"><i class="fa fa-check"></i><b>18.1</b> Fitting a two-way ANOVA model</a></li>
-<li class="chapter" data-level="18.2" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-anova"><i class="fa fa-check"></i><b>18.2</b> Summarising the model (<code>anova</code>)</a></li>
-<li class="chapter" data-level="18.3" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-summary"><i class="fa fa-check"></i><b>18.3</b> Summarising the model (<code>summary</code>)</a></li>
-<li class="chapter" data-level="18.4" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#exercise-fish-behaviour"><i class="fa fa-check"></i><b>18.4</b> Exercise: Fish behaviour</a></li>
+<li class="chapter" data-level="17.1" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#fitting-a-two-way-anova-model"><i class="fa fa-check"></i><b>17.1</b> Fitting a two-way ANOVA model</a></li>
+<li class="chapter" data-level="17.2" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-anova"><i class="fa fa-check"></i><b>17.2</b> Summarising the model (<code>anova</code>)</a></li>
+<li class="chapter" data-level="17.3" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-summary"><i class="fa fa-check"></i><b>17.3</b> Summarising the model (<code>summary</code>)</a></li>
+<li class="chapter" data-level="17.4" data-path="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#exercise-fish-behaviour"><i class="fa fa-check"></i><b>17.4</b> Exercise: Fish behaviour</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html"><i class="fa fa-check"></i><b>19</b> Evaluating linear models</a>
+<li class="chapter" data-level="18" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html"><i class="fa fa-check"></i><b>18</b> Evaluating linear models</a>
 <ul>
-<li class="chapter" data-level="19.1" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html#r-squared-value"><i class="fa fa-check"></i><b>19.1</b> R-squared value</a></li>
-<li class="chapter" data-level="19.2" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html#akaike-information-criterion-aic"><i class="fa fa-check"></i><b>19.2</b> Akaike Information Criterion (AIC)</a></li>
-<li class="chapter" data-level="19.3" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html#variance-partitioning"><i class="fa fa-check"></i><b>19.3</b> Variance partitioning</a></li>
-<li class="chapter" data-level="19.4" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html#conclusion"><i class="fa fa-check"></i><b>19.4</b> Conclusion</a></li>
+<li class="chapter" data-level="18.1" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html#r-squared-value"><i class="fa fa-check"></i><b>18.1</b> R-squared value</a></li>
+<li class="chapter" data-level="18.2" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html#akaike-information-criterion-aic"><i class="fa fa-check"></i><b>18.2</b> Akaike Information Criterion (AIC)</a></li>
+<li class="chapter" data-level="18.3" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html#variance-partitioning"><i class="fa fa-check"></i><b>18.3</b> Variance partitioning</a></li>
+<li class="chapter" data-level="18.4" data-path="evaluating-linear-models.html"><a href="evaluating-linear-models.html#conclusion"><i class="fa fa-check"></i><b>18.4</b> Conclusion</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html"><i class="fa fa-check"></i><b>20</b> Generalised linear models</a>
+<li class="chapter" data-level="19" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html"><i class="fa fa-check"></i><b>19</b> Generalised linear models</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#count-data-with-poisson-errors."><i class="fa fa-check"></i><b>20.1</b> Count data with Poisson errors.</a>
+<li class="chapter" data-level="19.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#count-data-with-poisson-errors."><i class="fa fa-check"></i><b>19.1</b> Count data with Poisson errors.</a>
 <ul>
-<li class="chapter" data-level="20.1.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-number-of-offspring-in-foxes."><i class="fa fa-check"></i><b>20.1.1</b> Example: Number of offspring in foxes.</a></li>
-<li class="chapter" data-level="20.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>20.1.2</b> Example: Cancer clusters</a></li>
-<li class="chapter" data-level="20.1.3" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#overdispersion-what-it-is-and-why-it-matters"><i class="fa fa-check"></i><b>20.1.3</b> Overdispersion: What It Is and Why It Matters</a></li>
+<li class="chapter" data-level="19.1.1" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-number-of-offspring-in-foxes."><i class="fa fa-check"></i><b>19.1.1</b> Example: Number of offspring in foxes.</a></li>
+<li class="chapter" data-level="19.1.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#example-cancer-clusters"><i class="fa fa-check"></i><b>19.1.2</b> Example: Cancer clusters</a></li>
+<li class="chapter" data-level="19.1.3" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#overdispersion-what-it-is-and-why-it-matters"><i class="fa fa-check"></i><b>19.1.3</b> Overdispersion: What It Is and Why It Matters</a></li>
 </ul></li>
-<li class="chapter" data-level="20.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>20.2</b> Exercise: Maze runner</a></li>
+<li class="chapter" data-level="19.2" data-path="generalised-linear-models.html"><a href="generalised-linear-models.html#exercise-maze-runner"><i class="fa fa-check"></i><b>19.2</b> Exercise: Maze runner</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>21</b> Extending use cases of GLM</a>
+<li class="chapter" data-level="20" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html"><i class="fa fa-check"></i><b>20</b> Extending use cases of GLM</a>
 <ul>
-<li class="chapter" data-level="21.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#binomial-response-data"><i class="fa fa-check"></i><b>21.1</b> Binomial response data</a></li>
-<li class="chapter" data-level="21.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-nfl-field-goals"><i class="fa fa-check"></i><b>21.2</b> Example: NFL field goals</a>
+<li class="chapter" data-level="20.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#binomial-response-data"><i class="fa fa-check"></i><b>20.1</b> Binomial response data</a></li>
+<li class="chapter" data-level="20.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-nfl-field-goals"><i class="fa fa-check"></i><b>20.2</b> Example: NFL field goals</a>
 <ul>
-<li class="chapter" data-level="21.2.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#dharma"><i class="fa fa-check"></i><b>21.2.1</b> DHARMa</a></li>
-<li class="chapter" data-level="21.2.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#continuing-the-analysis"><i class="fa fa-check"></i><b>21.2.2</b> Continuing the analysis</a></li>
+<li class="chapter" data-level="20.2.1" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#dharma"><i class="fa fa-check"></i><b>20.2.1</b> DHARMa</a></li>
+<li class="chapter" data-level="20.2.2" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#continuing-the-analysis"><i class="fa fa-check"></i><b>20.2.2</b> Continuing the analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="21.3" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-sex-ratio-in-turtles"><i class="fa fa-check"></i><b>21.3</b> Example: Sex ratio in turtles</a></li>
-<li class="chapter" data-level="21.4" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-smoking"><i class="fa fa-check"></i><b>21.4</b> Example: Smoking</a></li>
+<li class="chapter" data-level="20.3" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-sex-ratio-in-turtles"><i class="fa fa-check"></i><b>20.3</b> Example: Sex ratio in turtles</a></li>
+<li class="chapter" data-level="20.4" data-path="extending-use-cases-of-glm.html"><a href="extending-use-cases-of-glm.html#example-smoking"><i class="fa fa-check"></i><b>20.4</b> Example: Smoking</a></li>
 </ul></li>
-<li class="chapter" data-level="22" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html"><i class="fa fa-check"></i><b>22</b> GLM families and use cases</a>
+<li class="chapter" data-level="21" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html"><i class="fa fa-check"></i><b>21</b> GLM families and use cases</a>
 <ul>
-<li class="chapter" data-level="22.1" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#summary-table-of-glm-families"><i class="fa fa-check"></i><b>22.1</b> Summary Table of GLM Families</a></li>
-<li class="chapter" data-level="22.2" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#common-glm-families"><i class="fa fa-check"></i><b>22.2</b> Common GLM Families</a></li>
-<li class="chapter" data-level="22.3" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#quasi-family-models"><i class="fa fa-check"></i><b>22.3</b> Quasi-family models</a></li>
+<li class="chapter" data-level="21.1" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#summary-table-of-glm-families"><i class="fa fa-check"></i><b>21.1</b> Summary Table of GLM Families</a></li>
+<li class="chapter" data-level="21.2" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#common-glm-families"><i class="fa fa-check"></i><b>21.2</b> Common GLM Families</a></li>
+<li class="chapter" data-level="21.3" data-path="glm-families-and-use-cases.html"><a href="glm-families-and-use-cases.html#quasi-family-models"><i class="fa fa-check"></i><b>21.3</b> Quasi-family models</a></li>
 </ul></li>
-<li class="chapter" data-level="23" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html"><i class="fa fa-check"></i><b>23</b> Power analysis by simulation</a>
+<li class="chapter" data-level="22" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html"><i class="fa fa-check"></i><b>22</b> Power analysis by simulation</a>
 <ul>
-<li class="chapter" data-level="23.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#type-i-and-ii-errors-and-statistical-power"><i class="fa fa-check"></i><b>23.1</b> Type I and II errors and statistical power</a></li>
-<li class="chapter" data-level="23.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#what-determines-statistical-power"><i class="fa fa-check"></i><b>23.2</b> What determines statistical power?</a></li>
-<li class="chapter" data-level="23.3" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#an-example-of-calculating-statistical-power."><i class="fa fa-check"></i><b>23.3</b> An example of calculating statistical power.</a>
+<li class="chapter" data-level="22.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#type-i-and-ii-errors-and-statistical-power"><i class="fa fa-check"></i><b>22.1</b> Type I and II errors and statistical power</a></li>
+<li class="chapter" data-level="22.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#what-determines-statistical-power"><i class="fa fa-check"></i><b>22.2</b> What determines statistical power?</a></li>
+<li class="chapter" data-level="22.3" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#an-example-of-calculating-statistical-power."><i class="fa fa-check"></i><b>22.3</b> An example of calculating statistical power.</a>
 <ul>
-<li class="chapter" data-level="23.3.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#the-simulation"><i class="fa fa-check"></i><b>23.3.1</b> The simulation</a></li>
-<li class="chapter" data-level="23.3.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#some-questions-for-you-to-address"><i class="fa fa-check"></i><b>23.3.2</b> Some questions for you to address:</a></li>
+<li class="chapter" data-level="22.3.1" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#the-simulation"><i class="fa fa-check"></i><b>22.3.1</b> The simulation</a></li>
+<li class="chapter" data-level="22.3.2" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#some-questions-for-you-to-address"><i class="fa fa-check"></i><b>22.3.2</b> Some questions for you to address:</a></li>
 </ul></li>
-<li class="chapter" data-level="23.4" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#summary"><i class="fa fa-check"></i><b>23.4</b> Summary</a></li>
-<li class="chapter" data-level="23.5" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#extending-the-simulation-optional-advanced"><i class="fa fa-check"></i><b>23.5</b> Extending the simulation (optional, advanced)</a></li>
-<li class="chapter" data-level="23.6" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-1-snails-on-the-move"><i class="fa fa-check"></i><b>23.6</b> Exercise 1: Snails on the move</a></li>
-<li class="chapter" data-level="23.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>23.7</b> Exercise 2: Mouse lemur strength</a></li>
+<li class="chapter" data-level="22.4" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#summary"><i class="fa fa-check"></i><b>22.4</b> Summary</a></li>
+<li class="chapter" data-level="22.5" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#extending-the-simulation-optional-advanced"><i class="fa fa-check"></i><b>22.5</b> Extending the simulation (optional, advanced)</a></li>
+<li class="chapter" data-level="22.6" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-1-snails-on-the-move"><i class="fa fa-check"></i><b>22.6</b> Exercise 1: Snails on the move</a></li>
+<li class="chapter" data-level="22.7" data-path="power-analysis-by-simulation.html"><a href="power-analysis-by-simulation.html#exercise-2-mouse-lemur-strength"><i class="fa fa-check"></i><b>22.7</b> Exercise 2: Mouse lemur strength</a></li>
 </ul></li>
 <li class="part"><span><b>IV Appendix</b></span></li>
-<li class="chapter" data-level="24" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html"><i class="fa fa-check"></i><b>24</b> Examples of statistics reporting</a>
+<li class="chapter" data-level="23" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html"><i class="fa fa-check"></i><b>23</b> Examples of statistics reporting</a>
 <ul>
-<li class="chapter" data-level="24.1" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#t-test"><i class="fa fa-check"></i><b>24.1</b> t-test</a></li>
-<li class="chapter" data-level="24.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>24.2</b> Simple linear regression model</a></li>
-<li class="chapter" data-level="24.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>24.3</b> A Generalised linear model (GLM)</a></li>
+<li class="chapter" data-level="23.1" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#t-test"><i class="fa fa-check"></i><b>23.1</b> t-test</a></li>
+<li class="chapter" data-level="23.2" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>23.2</b> Simple linear regression model</a></li>
+<li class="chapter" data-level="23.3" data-path="examples-of-statistics-reporting.html"><a href="examples-of-statistics-reporting.html#a-generalised-linear-model-glm"><i class="fa fa-check"></i><b>23.3</b> A Generalised linear model (GLM)</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>25</b> An example of a past written assignment (2020)</a></li>
-<li class="chapter" data-level="26" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>26</b> Leveraging ChatGPT for R Programming Assistance</a>
+<li class="chapter" data-level="24" data-path="an-example-of-a-past-written-assignment-2020.html"><a href="an-example-of-a-past-written-assignment-2020.html"><i class="fa fa-check"></i><b>24</b> An example of a past written assignment (2020)</a></li>
+<li class="chapter" data-level="25" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html"><i class="fa fa-check"></i><b>25</b> Leveraging ChatGPT for R Programming Assistance</a>
 <ul>
-<li class="chapter" data-level="26.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
-<li class="chapter" data-level="26.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#overview"><i class="fa fa-check"></i><b>26.2</b> Overview</a></li>
-<li class="chapter" data-level="26.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#what-is-a-large-language-model-llm-and-how-do-they-work"><i class="fa fa-check"></i><b>26.3</b> What is a Large Language Model (LLM) and how do they work?</a></li>
-<li class="chapter" data-level="26.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limitations"><i class="fa fa-check"></i><b>26.4</b> Limitations</a>
+<li class="chapter" data-level="25.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#introduction"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#overview"><i class="fa fa-check"></i><b>25.2</b> Overview</a></li>
+<li class="chapter" data-level="25.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#what-is-a-large-language-model-llm-and-how-do-they-work"><i class="fa fa-check"></i><b>25.3</b> What is a Large Language Model (LLM) and how do they work?</a></li>
+<li class="chapter" data-level="25.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limitations"><i class="fa fa-check"></i><b>25.4</b> Limitations</a>
 <ul>
-<li class="chapter" data-level="26.4.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limited-knowledge"><i class="fa fa-check"></i><b>26.4.1</b> Limited knowledge</a></li>
-<li class="chapter" data-level="26.4.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#hallucination"><i class="fa fa-check"></i><b>26.4.2</b> Hallucination</a></li>
-<li class="chapter" data-level="26.4.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#numerical-ability"><i class="fa fa-check"></i><b>26.4.3</b> Numerical ability</a></li>
+<li class="chapter" data-level="25.4.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#limited-knowledge"><i class="fa fa-check"></i><b>25.4.1</b> Limited knowledge</a></li>
+<li class="chapter" data-level="25.4.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#hallucination"><i class="fa fa-check"></i><b>25.4.2</b> Hallucination</a></li>
+<li class="chapter" data-level="25.4.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#numerical-ability"><i class="fa fa-check"></i><b>25.4.3</b> Numerical ability</a></li>
 </ul></li>
-<li class="chapter" data-level="26.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#ethics-of-using-llms-in-education"><i class="fa fa-check"></i><b>26.5</b> Ethics of using LLMs in education</a></li>
-<li class="chapter" data-level="26.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#use-cases-in-r"><i class="fa fa-check"></i><b>26.6</b> Use cases in R</a>
+<li class="chapter" data-level="25.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#ethics-of-using-llms-in-education"><i class="fa fa-check"></i><b>25.5</b> Ethics of using LLMs in education</a></li>
+<li class="chapter" data-level="25.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#use-cases-in-r"><i class="fa fa-check"></i><b>25.6</b> Use cases in R</a>
 <ul>
-<li class="chapter" data-level="26.6.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-errors."><i class="fa fa-check"></i><b>26.6.1</b> Finding errors.</a></li>
-<li class="chapter" data-level="26.6.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#explaining-code"><i class="fa fa-check"></i><b>26.6.2</b> Explaining code</a></li>
-<li class="chapter" data-level="26.6.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#interpreting-output"><i class="fa fa-check"></i><b>26.6.3</b> Interpreting output</a></li>
-<li class="chapter" data-level="26.6.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#translating-code-e.g.-from-pythonmatlab-to-r"><i class="fa fa-check"></i><b>26.6.4</b> Translating code (e.g. from Python/Matlab to R)</a></li>
-<li class="chapter" data-level="26.6.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#solving-modelling-problems"><i class="fa fa-check"></i><b>26.6.5</b> Solving modelling problems</a></li>
-<li class="chapter" data-level="26.6.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#helping-with-documentationcomments"><i class="fa fa-check"></i><b>26.6.6</b> Helping with documentation/comments</a></li>
-<li class="chapter" data-level="26.6.7" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-alternativebetter-ways"><i class="fa fa-check"></i><b>26.6.7</b> Finding alternative/better ways</a></li>
+<li class="chapter" data-level="25.6.1" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-errors."><i class="fa fa-check"></i><b>25.6.1</b> Finding errors.</a></li>
+<li class="chapter" data-level="25.6.2" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#explaining-code"><i class="fa fa-check"></i><b>25.6.2</b> Explaining code</a></li>
+<li class="chapter" data-level="25.6.3" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#interpreting-output"><i class="fa fa-check"></i><b>25.6.3</b> Interpreting output</a></li>
+<li class="chapter" data-level="25.6.4" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#translating-code-e.g.-from-pythonmatlab-to-r"><i class="fa fa-check"></i><b>25.6.4</b> Translating code (e.g. from Python/Matlab to R)</a></li>
+<li class="chapter" data-level="25.6.5" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#solving-modelling-problems"><i class="fa fa-check"></i><b>25.6.5</b> Solving modelling problems</a></li>
+<li class="chapter" data-level="25.6.6" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#helping-with-documentationcomments"><i class="fa fa-check"></i><b>25.6.6</b> Helping with documentation/comments</a></li>
+<li class="chapter" data-level="25.6.7" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#finding-alternativebetter-ways"><i class="fa fa-check"></i><b>25.6.7</b> Finding alternative/better ways</a></li>
 </ul></li>
-<li class="chapter" data-level="26.7" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#some-tips"><i class="fa fa-check"></i><b>26.7</b> Some tips</a></li>
+<li class="chapter" data-level="25.7" data-path="leveraging-chatgpt-for-r-programming-assistance.html"><a href="leveraging-chatgpt-for-r-programming-assistance.html#some-tips"><i class="fa fa-check"></i><b>25.7</b> Some tips</a></li>
 </ul></li>
 <li class="part"><span><b>V Solutions</b></span></li>
-<li class="chapter" data-level="27" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>27</b> Exercise Solutions</a>
+<li class="chapter" data-level="26" data-path="exercise-solutions.html"><a href="exercise-solutions.html"><i class="fa fa-check"></i><b>26</b> Exercise Solutions</a>
 <ul>
-<li class="chapter" data-level="27.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#californian-bird-diversity"><i class="fa fa-check"></i><b>27.1</b> Californian bird diversity</a></li>
-<li class="chapter" data-level="27.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>27.2</b> Wrangling the Amniote Life History Database</a></li>
-<li class="chapter" data-level="27.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>27.3</b> Temperature effects on egg laying dates</a></li>
-<li class="chapter" data-level="27.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#virtual-dice"><i class="fa fa-check"></i><b>27.4</b> Virtual dice</a></li>
-<li class="chapter" data-level="27.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>27.5</b> Sexual selection in Hercules beetles</a></li>
-<li class="chapter" data-level="27.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>27.6</b> Sex differences in fine motor skills</a></li>
-<li class="chapter" data-level="27.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>27.7</b> Therapy for anorexia</a></li>
-<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests</a></li>
-<li class="chapter" data-level="27.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>27.9</b> Apple tree crop yield</a></li>
-<li class="chapter" data-level="27.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>27.10</b> Chirping crickets</a></li>
-<li class="chapter" data-level="27.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>27.11</b> Fish behaviour</a></li>
-<li class="chapter" data-level="27.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#maze-runner"><i class="fa fa-check"></i><b>27.12</b> Maze runner</a></li>
-<li class="chapter" data-level="27.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>27.13</b> Snails on the move</a></li>
-<li class="chapter" data-level="27.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>27.14</b> Mouse lemur strength</a></li>
+<li class="chapter" data-level="26.1" data-path="exercise-solutions.html"><a href="exercise-solutions.html#californian-bird-diversity"><i class="fa fa-check"></i><b>26.1</b> Californian bird diversity</a></li>
+<li class="chapter" data-level="26.2" data-path="exercise-solutions.html"><a href="exercise-solutions.html#wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>26.2</b> Wrangling the Amniote Life History Database</a></li>
+<li class="chapter" data-level="26.3" data-path="exercise-solutions.html"><a href="exercise-solutions.html#temperature-effects-on-egg-laying-dates"><i class="fa fa-check"></i><b>26.3</b> Temperature effects on egg laying dates</a></li>
+<li class="chapter" data-level="26.4" data-path="exercise-solutions.html"><a href="exercise-solutions.html#virtual-dice"><i class="fa fa-check"></i><b>26.4</b> Virtual dice</a></li>
+<li class="chapter" data-level="26.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>26.5</b> Sexual selection in Hercules beetles</a></li>
+<li class="chapter" data-level="26.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>26.6</b> Sex differences in fine motor skills</a></li>
+<li class="chapter" data-level="26.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>26.7</b> Therapy for anorexia</a></li>
+<li class="chapter" data-level="26.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>26.8</b> Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="26.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>26.9</b> Apple tree crop yield</a></li>
+<li class="chapter" data-level="26.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>26.10</b> Chirping crickets</a></li>
+<li class="chapter" data-level="26.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>26.11</b> Fish behaviour</a></li>
+<li class="chapter" data-level="26.12" data-path="exercise-solutions.html"><a href="exercise-solutions.html#maze-runner"><i class="fa fa-check"></i><b>26.12</b> Maze runner</a></li>
+<li class="chapter" data-level="26.13" data-path="exercise-solutions.html"><a href="exercise-solutions.html#snails-on-the-move"><i class="fa fa-check"></i><b>26.13</b> Snails on the move</a></li>
+<li class="chapter" data-level="26.14" data-path="exercise-solutions.html"><a href="exercise-solutions.html#mouse-lemur-strength"><i class="fa fa-check"></i><b>26.14</b> Mouse lemur strength</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -455,224 +457,256 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="visualising-data-with-ggplot2" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Visualising data with <code>ggplot2</code><a href="visualising-data-with-ggplot2.html#visualising-data-with-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this chapter you will be guided through using the <code>ggplot2</code> package to make clear, publication-ready plots. You will need the <code>ggplot2</code> package to make this work. Remember, you can load packages like this:</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="visualising-data-with-ggplot2.html#cb194-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
-<p>We will use the SDU birds clutch size data that we produced at the end of the “[Data wrangling with dplyr]” chapter for these examples. You can find the data set via the Course Data Dropbox link.</p>
-<div class="do-something">
-<p>
-Remember to set your working directory and start a new script. I am
-assuming that you have saved your data in a folder called “CourseData”
-inside your working directory.
-</p>
+<div id="visualising-data-with-ggplot2" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Visualising data with <code>ggplot2</code><a href="visualising-data-with-ggplot2.html#visualising-data-with-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>Learning goals</strong></p>
+<p>By the end of this chapter you should be able to:</p>
+<ul>
+<li>Build plots with <code>ggplot()</code> and geoms.</li>
+<li>Compare groups using histograms and box plots.</li>
+<li>Use facets to split plots into panels.</li>
+<li>Plot trends over time with lines and points.</li>
+<li>Decide when a bar plot is (and is not) appropriate.</li>
+</ul>
+<p><strong>Prerequisites</strong></p>
+<ul>
+<li>You should be comfortable with importing data and using <code>filter()</code>, <code>select()</code>, <code>mutate()</code>, and <code>summarise()</code>.</li>
+</ul>
+<p><strong>A tiny motivating example</strong></p>
+<p>Let’s start with a simple scatter plot. Run this and see what happens:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="visualising-data-with-ggplot2.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="visualising-data-with-ggplot2.html#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="visualising-data-with-ggplot2.html#cb1-3" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-4"><a href="visualising-data-with-ggplot2.html#cb1-4" tabindex="-1"></a>  <span class="at">body_length_cm =</span> <span class="fu">c</span>(<span class="fl">4.2</span>, <span class="fl">5.1</span>, <span class="fl">5.6</span>, <span class="fl">6.8</span>, <span class="fl">7.4</span>),</span>
+<span id="cb1-5"><a href="visualising-data-with-ggplot2.html#cb1-5" tabindex="-1"></a>  <span class="at">body_mass_g =</span> <span class="fu">c</span>(<span class="fl">9.5</span>, <span class="fl">12.1</span>, <span class="fl">14.0</span>, <span class="fl">18.2</span>, <span class="fl">21.5</span>)</span>
+<span id="cb1-6"><a href="visualising-data-with-ggplot2.html#cb1-6" tabindex="-1"></a>)</span>
+<span id="cb1-7"><a href="visualising-data-with-ggplot2.html#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="visualising-data-with-ggplot2.html#cb1-8" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x =</span> body_length_cm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb1-9"><a href="visualising-data-with-ggplot2.html#cb1-9" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="BB852_files/figure-html/2-01-visualisingData-1-1.png" alt="" width="672" /></p>
+<p>We have already made a plot: data + aesthetics + geom. That pattern will repeat throughout the chapter.</p>
+<hr />
+<div id="the-data-we-will-use" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> The data we will use<a href="visualising-data-with-ggplot2.html#the-data-we-will-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will use the SDU clutch size data created at the end of the <strong>Data wrangling</strong> chapter. The file should be in <code>CourseData/SDUClutchSize.csv</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="visualising-data-with-ggplot2.html#cb2-1" tabindex="-1"></a>clutch <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;CourseData/SDUClutchSize.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 374 Columns: 4
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): species
+## dbl (3): Year, boxNumber, clutchSize
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p><strong>Checkpoint:</strong> You should see columns like <code>species</code>, <code>Year</code>, and <code>clutchSize</code>.</p>
+<hr />
 </div>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="visualising-data-with-ggplot2.html#cb195-1" tabindex="-1"></a>clutch <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/SDUClutchSize.csv&quot;</span>)</span></code></pre></div>
-<div id="histograms" class="section level2 hasAnchor" number="9.1">
-<h2><span class="header-section-number">9.1</span> Histograms<a href="visualising-data-with-ggplot2.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The <code>ggplot</code> function expects two main arguments: (1) the data and (2) the <strong>aesthetics</strong>. The aesthetics are the variables you want to plot, and associated characteristics like colours and groupings. The first argument is the data, then the aesthetics are specified within the <code>aes(...)</code> argument. These usually include an argument for <code>x</code> (the variable on the horizontal axis), and often <code>y</code> (the variable on the vertical axis). The details depend on the type of plot you are making.</p>
-<p>After setting up the plot, the graphics are added as <strong>geometric layers</strong> or <strong>geoms</strong>. There are many of these available including <code>geom_histogram</code>, <code>geom_line</code>, <code>geom_point</code> etc.</p>
-<p>I will illustrate the construction of a simple plot by making a histogram of the clutch size of all the nests in the dataset.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="visualising-data-with-ggplot2.html#cb196-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize))</span></code></pre></div>
+<div id="histograms" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Histograms<a href="visualising-data-with-ggplot2.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>What we’re about to do:</strong> We will look at the distribution of clutch sizes. Histograms are the simplest way to see how values are spread.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="visualising-data-with-ggplot2.html#cb4-1" tabindex="-1"></a>clutch <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="visualising-data-with-ggplot2.html#cb4-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> clutchSize)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="visualising-data-with-ggplot2.html#cb4-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/2-01-visualisingData-3-1.png" alt="" width="672" /></p>
+<p><strong>What just happened:</strong> Each bar shows how many nests have a particular clutch size (or range of sizes).</p>
+<ul>
+<li><strong>What to look for:</strong>
+<ul>
+<li>Where is the distribution centred?</li>
+<li>Is it roughly symmetric or skewed?</li>
+<li>Are there values that are rare or extreme?</li>
+</ul></li>
+</ul>
+<p><strong>Try this:</strong> Change <code>binwidth</code> to 0.5 or 2. What changes in the shape?</p>
+<p><strong>Common mistake:</strong> If your plot is blank, check that <code>clutchSize</code> exists with <code>names(clutch)</code>.</p>
+<p><strong>Takeaway:</strong> Histograms show the shape of a distribution quickly.</p>
+<hr />
+</div>
+<div id="comparing-groups-in-a-histogram" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Comparing groups in a histogram<a href="visualising-data-with-ggplot2.html#comparing-groups-in-a-histogram" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>What we’re about to do:</strong> We will compare clutch sizes between species.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="visualising-data-with-ggplot2.html#cb5-1" tabindex="-1"></a>clutch <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="visualising-data-with-ggplot2.html#cb5-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="visualising-data-with-ggplot2.html#cb5-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-01-visualisingData-4-1.png" alt="" width="672" /></p>
-<p>This produces an empty plot because we have not yet specified what kind of plot we want. We want a histogram, so we can add this as follows. I have set <code>binwidth</code> to 1 because we know we are dealing with counts between 1 and 14. Try altering the <code>binwidth</code>.</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="visualising-data-with-ggplot2.html#cb197-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize)) <span class="sc">+</span></span>
-<span id="cb197-2"><a href="visualising-data-with-ggplot2.html#cb197-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-5-1.png" alt="" width="672" />
-We know that we have two species here and we would like to compare them. This is done within the aesthetic argument. The default is that the bars for different categories are stacked on top of each other. This is good in some cases, but probably not here.</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="visualising-data-with-ggplot2.html#cb198-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
-<span id="cb198-2"><a href="visualising-data-with-ggplot2.html#cb198-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><strong>What just happened:</strong> The bars are separated by species, so you can compare their shapes.</p>
+<ul>
+<li><strong>What to look for:</strong>
+<ul>
+<li>Do the peaks occur at different clutch sizes?</li>
+<li>Is one species more common (taller bars overall)?</li>
+</ul></li>
+</ul>
+<p><strong>Caution:</strong> Counts depend on sample size. If one species has more nests, it will look bigger even if the <em>shape</em> is similar.</p>
+<p><strong>Try this:</strong> Switch to densities so the shapes are comparable:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="visualising-data-with-ggplot2.html#cb6-1" tabindex="-1"></a>clutch <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="visualising-data-with-ggplot2.html#cb6-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="visualising-data-with-ggplot2.html#cb6-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/2-01-visualisingData-5-1.png" alt="" width="672" /></p>
+<p><strong>Takeaway:</strong> Use densities when sample sizes differ.</p>
+<hr />
+</div>
+<div id="facets-split-across-panels" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Facets (split across panels)<a href="visualising-data-with-ggplot2.html#facets-split-across-panels" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>What we’re about to do:</strong> We will split plots by year so each year gets its own panel.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="visualising-data-with-ggplot2.html#cb7-1" tabindex="-1"></a>clutch <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="visualising-data-with-ggplot2.html#cb7-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="visualising-data-with-ggplot2.html#cb7-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="visualising-data-with-ggplot2.html#cb7-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Year)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-01-visualisingData-6-1.png" alt="" width="672" /></p>
-<p>You can immediately see that there are far fewer blue tit nests than great tit ones. But you can also see that the centre of mass for blue tits is further to the right than great tits.</p>
-<p>To make it easier to compare distributions with very different counts, we can put density on the y-axis instead of the default count using <code>stat(density)</code>.</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="visualising-data-with-ggplot2.html#cb199-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="fu">stat</span>(density))) <span class="sc">+</span></span>
-<span id="cb199-2"><a href="visualising-data-with-ggplot2.html#cb199-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><strong>What just happened:</strong> Each year is shown in a separate panel. This makes year-to-year differences easier to see.</p>
+<ul>
+<li><strong>What to look for:</strong>
+<ul>
+<li>Does the distribution shift over time?</li>
+<li>Are some years more variable than others?</li>
+</ul></li>
+</ul>
+<p><strong>Try this:</strong> Flip the facet so species are rows:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="visualising-data-with-ggplot2.html#cb8-1" tabindex="-1"></a>clutch <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="visualising-data-with-ggplot2.html#cb8-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> clutchSize)) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="visualising-data-with-ggplot2.html#cb8-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="visualising-data-with-ggplot2.html#cb8-4" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> .)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-01-visualisingData-7-1.png" alt="" width="672" /></p>
-<p>An alternative approach would be to overlay the two sets of bars (using <code>position = "identity"</code>) and set the colours to be slightly transparent (using <code>alpha = 0.7</code>) so that you can see the overlapping region clearly.</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="visualising-data-with-ggplot2.html#cb200-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="fu">stat</span>(density))) <span class="sc">+</span></span>
-<span id="cb200-2"><a href="visualising-data-with-ggplot2.html#cb200-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<p><strong>Takeaway:</strong> Facets let you compare groups without overplotting.</p>
+<hr />
+</div>
+<div id="box-plots" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Box plots<a href="visualising-data-with-ggplot2.html#box-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>What we’re about to do:</strong> We will compare clutch size between species using box plots.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="visualising-data-with-ggplot2.html#cb9-1" tabindex="-1"></a>clutch <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="visualising-data-with-ggplot2.html#cb9-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> clutchSize)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="visualising-data-with-ggplot2.html#cb9-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-01-visualisingData-8-1.png" alt="" width="672" /></p>
-<p>It is very clear from this plot that blue tits tend to have bigger clutch sizes than great tits. Is this difference <em>statistically significant</em>? We will look at testing this in a future class - for now we will be satisfied with our visualisation.</p>
-</div>
-<div id="facets---splitting-data-across-panels" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> “Facets” - splitting data across panels<a href="visualising-data-with-ggplot2.html#facets---splitting-data-across-panels" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>You should recall that there were several years of data represented here. <code>ggplot</code> has a very clever way of splitting up the plot to examine this.</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="visualising-data-with-ggplot2.html#cb201-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize, <span class="at">fill =</span> species, <span class="fu">stat</span>(density))) <span class="sc">+</span></span>
-<span id="cb201-2"><a href="visualising-data-with-ggplot2.html#cb201-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb201-3"><a href="visualising-data-with-ggplot2.html#cb201-3" tabindex="-1"></a>    <span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span>,</span>
-<span id="cb201-4"><a href="visualising-data-with-ggplot2.html#cb201-4" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span></span>
-<span id="cb201-5"><a href="visualising-data-with-ggplot2.html#cb201-5" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb201-6"><a href="visualising-data-with-ggplot2.html#cb201-6" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Year)</span></code></pre></div>
+<p><strong>What just happened:</strong> The box shows the middle 50% of values; the line is the median.</p>
+<ul>
+<li><strong>What to look for:</strong>
+<ul>
+<li>Are medians different between species?</li>
+<li>Are spreads similar or very different?</li>
+</ul></li>
+</ul>
+<p><strong>Try this:</strong> Add jittered points for transparency.</p>
 <p><img src="BB852_files/figure-html/2-01-visualisingData-9-1.png" alt="" width="672" /></p>
-<p>You could split the data up by species in a similar way, as another way of visualising the difference between species:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="visualising-data-with-ggplot2.html#cb202-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> clutchSize)) <span class="sc">+</span></span>
-<span id="cb202-2"><a href="visualising-data-with-ggplot2.html#cb202-2" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb202-3"><a href="visualising-data-with-ggplot2.html#cb202-3" tabindex="-1"></a>  <span class="fu">facet_grid</span>(species <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-10-1.png" alt="" width="672" /></p>
-<div class="do-something">
-<p>
-You can change whether the separate graphs are presented in rows or
-columns by changing the order of the argument:
-<code>facet_grid(species~.)</code> or
-<code>facet_grid(.~species)</code>. Try it.
-</p>
+<p><strong>Common mistake:</strong> If your points overlap too much, increase <code>width</code> or reduce <code>alpha</code>.</p>
+<p><strong>Takeaway:</strong> Box plots are usually better than bar plots for comparing distributions.</p>
+<hr />
 </div>
+<div id="lines-and-points-trends-over-time" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Lines and points (trends over time)<a href="visualising-data-with-ggplot2.html#lines-and-points-trends-over-time" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>What we’re about to do:</strong> We will summarise clutch size by year and plot a time trend.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="visualising-data-with-ggplot2.html#cb10-1" tabindex="-1"></a>mean_clutch <span class="ot">&lt;-</span> clutch <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="visualising-data-with-ggplot2.html#cb10-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="visualising-data-with-ggplot2.html#cb10-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_clutch_size =</span> <span class="fu">mean</span>(clutchSize), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="visualising-data-with-ggplot2.html#cb11-1" tabindex="-1"></a>mean_clutch <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="visualising-data-with-ggplot2.html#cb11-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> mean_clutch_size, <span class="at">colour =</span> species)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="visualising-data-with-ggplot2.html#cb11-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="visualising-data-with-ggplot2.html#cb11-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb11-5"><a href="visualising-data-with-ggplot2.html#cb11-5" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="visualising-data-with-ggplot2.html#cb11-6" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Mean clutch size&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-7"><a href="visualising-data-with-ggplot2.html#cb11-7" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Clutch size data from SDU campus&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/2-01-visualisingData-11-1.png" alt="" width="672" /></p>
+<p><strong>What just happened:</strong> Each point is a year’s mean clutch size; lines connect years.</p>
+<ul>
+<li><strong>What to look for:</strong>
+<ul>
+<li>Do the two species move together or differently?</li>
+<li>Are there years that stand out?</li>
+</ul></li>
+</ul>
+<p><strong>Caution:</strong> A mean hides variability. For deeper analysis, check sample sizes or plot distributions per year.</p>
+<p><strong>Takeaway:</strong> Lines are good for ordered values like time.</p>
+<hr />
 </div>
-<div id="box-plots" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Box plots<a href="visualising-data-with-ggplot2.html#box-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Box plots are suitable for cases where one variable is categorical with 2+ levels, and the other is continuous. Therefore, another way to look at these distributions is to use a box plot.</p>
-<p>In a box plot the box shows the quartiles (i.e. the 25% and 75% quantiles) within which 50% of the data are found. The horizontal line in the box is the <em>median</em>. The whiskers extend from the smallest to largest value <em>unless they are further than 1.5 times the interquartile range (the length of the box)</em> away from the edge of the box, in which case they are shown as outlier points.</p>
-<p>To plot them using <code>ggplot</code> you must use a <code>geom_boxplot</code> layer.
-The categorical variable is normally placed on the x-axis, so it is placed as <code>x</code> in the <code>aes</code> argument, while the continuous variable is on the <code>y</code> axis.</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="visualising-data-with-ggplot2.html#cb203-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> clutchSize)) <span class="sc">+</span></span>
-<span id="cb203-2"><a href="visualising-data-with-ggplot2.html#cb203-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-12-1.png" alt="" width="672" /></p>
-<p>Some researchers argue that it is a good idea to add the data as points to these plots as “full disclosure” of what the underlying data look like. These can be added with a <code>geom_jitter</code> layer (jitter is random noise added in this case to the horizontal axis). You should set <code>width</code> and <code>alpha</code> arguments to make it look nice.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="visualising-data-with-ggplot2.html#cb204-1" tabindex="-1"></a><span class="fu">ggplot</span>(clutch, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> clutchSize)) <span class="sc">+</span></span>
-<span id="cb204-2"><a href="visualising-data-with-ggplot2.html#cb204-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb204-3"><a href="visualising-data-with-ggplot2.html#cb204-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-13-1.png" width="672" /></p>
-<div class="do-something">
-<p>
-Try splitting the data into different years using
-<code>facet_grid</code> with the box plot.
-</p>
+<div id="scatter-plots" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Scatter plots<a href="visualising-data-with-ggplot2.html#scatter-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>What we’re about to do:</strong> We will plot how bird species richness changes with suburb age.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="visualising-data-with-ggplot2.html#cb12-1" tabindex="-1"></a>birds <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="visualising-data-with-ggplot2.html#cb12-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Age =</span> <span class="dv">1975</span> <span class="sc">-</span> Year)</span></code></pre></div>
+<pre><code>## Rows: 17 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): Name
+## dbl (4): Year, HabitatIndex, nIndividuals, nSpecies
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="visualising-data-with-ggplot2.html#cb14-1" tabindex="-1"></a>birds <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="visualising-data-with-ggplot2.html#cb14-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nSpecies)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="visualising-data-with-ggplot2.html#cb14-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a href="visualising-data-with-ggplot2.html#cb14-4" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="visualising-data-with-ggplot2.html#cb14-5" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Age of development&quot;</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="visualising-data-with-ggplot2.html#cb14-6" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Bird species richness&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/2-01-visualisingData-13-1.png" alt="" width="672" /></p>
+<p><strong>What just happened:</strong> Each point is a suburb. The plot shows older suburbs tend to have more species.</p>
+<ul>
+<li><strong>What to look for:</strong>
+<ul>
+<li>Is the relationship roughly linear or does it level off?</li>
+<li>Are there outliers that might drive the pattern?</li>
+</ul></li>
+</ul>
+<p><strong>Try this:</strong> Add a smooth trend line with <code>geom_smooth()</code> and see if the relationship looks curved.</p>
+<p><strong>Takeaway:</strong> Scatter plots are the starting point for relationship questions.</p>
+<hr />
 </div>
-</div>
-<div id="lines-and-points" class="section level2 hasAnchor" number="9.4">
-<h2><span class="header-section-number">9.4</span> Lines and points<a href="visualising-data-with-ggplot2.html#lines-and-points" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Perhaps not surprisingly lines and points can be added with the geoms, <code>geom_line</code> and <code>geom_point</code> respectively.
-To illustrate this we will make a plot showing how clutch size changes among years.
-First we will use <code>summarise</code> to create a dataset with the mean clutch size. We’ll start simply, by looking at only great tits.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="visualising-data-with-ggplot2.html#cb205-1" tabindex="-1"></a>GTclutch <span class="ot">&lt;-</span> clutch <span class="sc">%&gt;%</span></span>
-<span id="cb205-2"><a href="visualising-data-with-ggplot2.html#cb205-2" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;GT&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb205-3"><a href="visualising-data-with-ggplot2.html#cb205-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
-<span id="cb205-4"><a href="visualising-data-with-ggplot2.html#cb205-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanClutchSize =</span> <span class="fu">mean</span>(clutchSize))</span></code></pre></div>
-<p>Then you can plot this like this.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="visualising-data-with-ggplot2.html#cb206-1" tabindex="-1"></a><span class="fu">ggplot</span>(GTclutch, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> meanClutchSize)) <span class="sc">+</span></span>
-<span id="cb206-2"><a href="visualising-data-with-ggplot2.html#cb206-2" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-16-1.png" alt="" width="672" /></p>
-<p>I think this looks OK, but we should add both species. I’ll first need to produce a mean clutch size dataset that includes both species.</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="visualising-data-with-ggplot2.html#cb207-1" tabindex="-1"></a>meanClutch <span class="ot">&lt;-</span> clutch <span class="sc">%&gt;%</span></span>
-<span id="cb207-2"><a href="visualising-data-with-ggplot2.html#cb207-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species, Year) <span class="sc">%&gt;%</span></span>
-<span id="cb207-3"><a href="visualising-data-with-ggplot2.html#cb207-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanClutchSize =</span> <span class="fu">mean</span>(clutchSize))</span></code></pre></div>
-<p>Now I can do the plot again. The only difference to the command is that I need to tell R that I want to colour the lines by species (<code>colour = species</code>).</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="visualising-data-with-ggplot2.html#cb208-1" tabindex="-1"></a><span class="fu">ggplot</span>(meanClutch, <span class="fu">aes</span>(</span>
-<span id="cb208-2"><a href="visualising-data-with-ggplot2.html#cb208-2" tabindex="-1"></a>  <span class="at">x =</span> Year, <span class="at">y =</span> meanClutchSize,</span>
-<span id="cb208-3"><a href="visualising-data-with-ggplot2.html#cb208-3" tabindex="-1"></a>  <span class="at">colour =</span> species</span>
-<span id="cb208-4"><a href="visualising-data-with-ggplot2.html#cb208-4" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb208-5"><a href="visualising-data-with-ggplot2.html#cb208-5" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-18-1.png" alt="" width="672" /></p>
-<p>I can improve on this by (1) changing the y axis limits (using <code>ylim</code>) so that it goes through the full range of my data (0 - 14); (2) adding points (using a <code>geom_point</code> layer) where my actual data values are; (3) adding a nicely formatted axis label (using <code>ylab</code>); adding a title (<code>ggtitle</code>)</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="visualising-data-with-ggplot2.html#cb209-1" tabindex="-1"></a><span class="fu">ggplot</span>(meanClutch, <span class="fu">aes</span>(</span>
-<span id="cb209-2"><a href="visualising-data-with-ggplot2.html#cb209-2" tabindex="-1"></a>  <span class="at">x =</span> Year, <span class="at">y =</span> meanClutchSize,</span>
-<span id="cb209-3"><a href="visualising-data-with-ggplot2.html#cb209-3" tabindex="-1"></a>  <span class="at">colour =</span> species</span>
-<span id="cb209-4"><a href="visualising-data-with-ggplot2.html#cb209-4" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb209-5"><a href="visualising-data-with-ggplot2.html#cb209-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb209-6"><a href="visualising-data-with-ggplot2.html#cb209-6" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb209-7"><a href="visualising-data-with-ggplot2.html#cb209-7" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb209-8"><a href="visualising-data-with-ggplot2.html#cb209-8" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Mean clutch size&quot;</span>) <span class="sc">+</span></span>
-<span id="cb209-9"><a href="visualising-data-with-ggplot2.html#cb209-9" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Clutch size data from SDU Campus&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-19-1.png" alt="" width="672" /></p>
-</div>
-<div id="scatter-plots" class="section level2 hasAnchor" number="9.5">
-<h2><span class="header-section-number">9.5</span> Scatter plots<a href="visualising-data-with-ggplot2.html#scatter-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Let’s now make a scatter plot.
-The SDU bird data are not suitable for this type of plot so we’ll use the data from a few days ago on suburban bird diversity.</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="visualising-data-with-ggplot2.html#cb210-1" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/suburbanBirds.csv&quot;</span>)</span></code></pre></div>
-<p>Take a look at the data to remind ourselves what it looks like</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="visualising-data-with-ggplot2.html#cb211-1" tabindex="-1"></a><span class="fu">head</span>(birds)</span></code></pre></div>
-<pre><code>##          Name Year HabitatIndex nIndividuals nSpecies
-## 1    Alamotos 1946         10.0           48       12
-## 2      Ramona 1946          9.5           30       13
-## 3      Verona 1947          9.5           38       15
-## 4 Valle Vista 1950          9.5           42       11
-## 5    La Gonda 1955         11.0           44       13
-## 6     Belgian 1956          9.0           27       14</code></pre>
-<p>These data show the result of standardised bird surveys at housing developments of different ages in California. The surveys were carried out in 1975, and the data includes the <code>Year</code> and number of individual birds seen <code>nIndividuals</code> and number of species seen <code>nSpecies</code>. The question being addressed is “How does the age of the housing development affect the number of species?”</p>
-<p>To investigate this we should first add a new variable for <code>Age</code> to the data set. We can do this using the <code>mutate</code> function from <code>dplyr</code>. This function creates new variables, for example by manipulating existing ones.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="visualising-data-with-ggplot2.html#cb213-1" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">mutate</span>(birds, <span class="at">Age =</span> <span class="dv">1975</span> <span class="sc">-</span> Year)</span></code></pre></div>
-<p>When we have created this variable we can plot the data. For aesthetic reasons I also would like to set the limits on the y-axis to go extend to zero, and I would like to include proper labels on the axes.</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="visualising-data-with-ggplot2.html#cb214-1" tabindex="-1"></a><span class="fu">ggplot</span>(birds, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nSpecies)) <span class="sc">+</span></span>
-<span id="cb214-2"><a href="visualising-data-with-ggplot2.html#cb214-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb214-3"><a href="visualising-data-with-ggplot2.html#cb214-3" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">15</span>) <span class="sc">+</span></span>
-<span id="cb214-4"><a href="visualising-data-with-ggplot2.html#cb214-4" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Age of development&quot;</span>) <span class="sc">+</span></span>
-<span id="cb214-5"><a href="visualising-data-with-ggplot2.html#cb214-5" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Bird species richness&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-23-1.png" alt="" width="672" /></p>
-<p>This shows very clearly that older developments have more species, but it also appears to show that there is an asymptote around 13 species.</p>
-<p>Compare this plot to the one you made with base graphics in a previous class.</p>
-</div>
-<div id="bar-plots" class="section level2 hasAnchor" number="9.6">
-<h2><span class="header-section-number">9.6</span> Bar plots<a href="visualising-data-with-ggplot2.html#bar-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Finally, another common type of plot is the bar plot. These are often used poorly.</p>
-<p><strong>TLDR: you should probably be using box plots or line/point plots. Consider carefully!</strong></p>
-<p>Bar charts are originally intended to represent categorical variables, but they are frequently employed to display continuous data. When bar charts are used for continuous data, they often serve as “visual tables” that typically depict the mean (and sometimes a measure of variation such as standard error or standard deviation). However, this approach presents some issues.</p>
-<p>Firstly, various data distributions can yield the same bar chart, and analysing the complete dataset may lead to different conclusions compared to relying solely on summary statistics. For example, it is perfectly possible for several markedly different distributions to have very similar mean values: a bar chart would erroneously show them as being similar when they were not.</p>
-<p>Secondly, summarizing data using the mean and measures of variation can mislead readers into assuming that the data follow a normal distribution without any outliers. These statistics can distort the data, particularly in studies with small sample sizes where outliers are common and there isn’t enough data to assess the distribution of the sample. For example, a bar chart with standard error bars can hide the fact that the data might be skewed.</p>
-<p>Figure <a href="visualising-data-with-ggplot2.html#fig:2-01-visualisingData-24">9.1</a> illustrates this with two plots showing two distributions, G1 and G2: Plot A is a classic bar plot with standard error bars, and plot B is a box plot with jittered points placed on top. There are differences in the distributions of data in G1 and G2 (G2 is skewed, and includes an outlier). This difference between distributions is captured quite well in plot B (even without the addition of the jittered points, look at the “whiskers” of the box plot), but is not captured well with plot B.</p>
-<p>Box plots are simply better than bar plots (unless you are trying to hide something!).</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:2-01-visualisingData-24"></span>
-<img src="BB852_files/figure-html/2-01-visualisingData-24-1.png" alt="Problems with bar plots." width="576" />
+<div id="bar-plots-use-with-care" class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> Bar plots (use with care)<a href="visualising-data-with-ggplot2.html#bar-plots-use-with-care" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>What we’re about to do:</strong> We will see why bar plots can be misleading and when they are acceptable.</p>
+<p>Bar charts can hide the shape of data. They are fine for <strong>counts</strong>, but risky for <strong>means</strong>.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:2-01-visualisingData-14"></span>
+<img src="BB852_files/figure-html/2-01-visualisingData-14-1.png" alt="Problems with bar plots." width="576" />
 <p class="caption">
-Figure 9.1: Problems with bar plots.
+Figure 8.1: Problems with bar plots.
 </p>
 </div>
-<p>Furthermore, using bar charts to display paired or non-independent data poses an additional problem. Figures should ideally convey the study’s design. Bar charts of paired data inaccurately imply that the compared groups are independent, and they fail to provide information about whether changes are consistent across individuals.</p>
-<p>These issues are covered in detail in Weissgerber et al. (2015)<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</p>
-<p>The short version is that in MOST cases, when you think you should use a bar plot, you should really be using a box plot with jittered points (see above).</p>
-<p>So when CAN you use bar plots?</p>
-<p>I would argue that bar plots can be useful for presenting summaries of counts. For example, sample sizes.</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="visualising-data-with-ggplot2.html#cb215-1" tabindex="-1"></a>clutch <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/SDUClutchSize.csv&quot;</span>)</span></code></pre></div>
-<p>Next we can summarise the data to get the sample sizes for each year</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="visualising-data-with-ggplot2.html#cb216-1" tabindex="-1"></a><span class="fu">table</span>(clutch<span class="sc">$</span>species)</span></code></pre></div>
-<pre><code>## 
-##  BT  GT 
-##  74 300</code></pre>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="visualising-data-with-ggplot2.html#cb218-1" tabindex="-1"></a>(sampleSize <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">table</span>(clutch<span class="sc">$</span>species)))</span></code></pre></div>
-<pre><code>##   Var1 Freq
-## 1   BT   74
-## 2   GT  300</code></pre>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="visualising-data-with-ggplot2.html#cb220-1" tabindex="-1"></a><span class="co">#rename columns</span></span>
-<span id="cb220-2"><a href="visualising-data-with-ggplot2.html#cb220-2" tabindex="-1"></a><span class="fu">names</span>(sampleSize) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;SampleSize&quot;</span>)</span></code></pre></div>
-<p>Here’s how to plot these data in <code>ggplot</code>, using <code>geom_bar</code>. The <code>stat = "identity"</code> argument tells <code>ggplot2</code> to use the actual values from the data column for the height of the bars.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="visualising-data-with-ggplot2.html#cb221-1" tabindex="-1"></a><span class="fu">ggplot</span>(sampleSize, <span class="fu">aes</span>(<span class="at">x =</span> Species, <span class="at">y =</span> SampleSize)) <span class="sc">+</span></span>
-<span id="cb221-2"><a href="visualising-data-with-ggplot2.html#cb221-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
-<span id="cb221-3"><a href="visualising-data-with-ggplot2.html#cb221-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Barplot Example&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Category&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Sample Size&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-28-1.png" alt="" width="672" /></p>
-<p>With the same data set you might think about making a bar plot for sample size per year like this</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="visualising-data-with-ggplot2.html#cb222-1" tabindex="-1"></a>(sampleSize <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">table</span>(clutch<span class="sc">$</span>Year)))</span></code></pre></div>
-<pre><code>##   Var1 Freq
-## 1 2013   67
-## 2 2014   83
-## 3 2016   53
-## 4 2017   64
-## 5 2018   60
-## 6 2019   47</code></pre>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="visualising-data-with-ggplot2.html#cb224-1" tabindex="-1"></a><span class="co">#rename columns</span></span>
-<span id="cb224-2"><a href="visualising-data-with-ggplot2.html#cb224-2" tabindex="-1"></a><span class="fu">names</span>(sampleSize) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Year&quot;</span>, <span class="st">&quot;SampleSize&quot;</span>)</span>
-<span id="cb224-3"><a href="visualising-data-with-ggplot2.html#cb224-3" tabindex="-1"></a><span class="fu">ggplot</span>(sampleSize, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> SampleSize)) <span class="sc">+</span></span>
-<span id="cb224-4"><a href="visualising-data-with-ggplot2.html#cb224-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
-<span id="cb224-5"><a href="visualising-data-with-ggplot2.html#cb224-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Barplot Example&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Sample Size&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-29-1.png" alt="" width="672" />
-In this case, I would strongly argue that a line plot is much more appropriate, because it captures the fact that “year” is NOT a discrete category and shows that neighbouring years are connected:</p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="visualising-data-with-ggplot2.html#cb225-1" tabindex="-1"></a>sampleSize<span class="sc">$</span>Year <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(sampleSize<span class="sc">$</span>Year))</span>
-<span id="cb225-2"><a href="visualising-data-with-ggplot2.html#cb225-2" tabindex="-1"></a></span>
-<span id="cb225-3"><a href="visualising-data-with-ggplot2.html#cb225-3" tabindex="-1"></a><span class="fu">ggplot</span>(sampleSize, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(Year), <span class="at">y =</span> SampleSize)) <span class="sc">+</span></span>
-<span id="cb225-4"><a href="visualising-data-with-ggplot2.html#cb225-4" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb225-5"><a href="visualising-data-with-ggplot2.html#cb225-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb225-6"><a href="visualising-data-with-ggplot2.html#cb225-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;A better plot&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Sample Size&quot;</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/2-01-visualisingData-30-1.png" alt="" width="672" /></p>
+<p><strong>Interpretation:</strong> The bar plot hides the skew and outliers visible in the box plot.</p>
+<ul>
+<li><strong>What to look for:</strong>
+<ul>
+<li>How much information disappears when you only show the mean?</li>
+</ul></li>
+</ul>
+<p><strong>When bar plots are OK:</strong> Counts are a good example.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="visualising-data-with-ggplot2.html#cb15-1" tabindex="-1"></a>clutch <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="visualising-data-with-ggplot2.html#cb15-2" tabindex="-1"></a>  <span class="fu">count</span>(species, <span class="at">name =</span> <span class="st">&quot;sample_size&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="visualising-data-with-ggplot2.html#cb15-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> sample_size)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="visualising-data-with-ggplot2.html#cb15-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="visualising-data-with-ggplot2.html#cb15-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Sample sizes by species&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Sample size&quot;</span>)</span></code></pre></div>
+<p><img src="BB852_files/figure-html/2-01-visualisingData-15-1.png" alt="" width="672" /></p>
+<p><strong>Try this:</strong> Plot counts by year and compare a bar plot to a line plot. Which tells the story more clearly?</p>
+<p><strong>Takeaway:</strong> Use bar plots for counts, not for means.</p>
+<hr />
+</div>
+<div id="key-takeaways" class="section level2 hasAnchor" number="8.9">
+<h2><span class="header-section-number">8.9</span> Key takeaways<a href="visualising-data-with-ggplot2.html#key-takeaways" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><code>ggplot(data, aes(...)) + geom_*()</code> is the core pattern.</li>
+<li>Use histograms and box plots to understand distributions.</li>
+<li>Use facets to compare groups without clutter.</li>
+<li>Use lines and points for ordered data like time.</li>
+<li>Use bar plots mainly for counts.</li>
+</ul>
+</div>
+<div id="common-pitfalls-recap" class="section level2 hasAnchor" number="8.10">
+<h2><span class="header-section-number">8.10</span> Common pitfalls recap<a href="visualising-data-with-ggplot2.html#common-pitfalls-recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Mapping the wrong variable to <code>x</code> or <code>y</code> (check your <code>aes()</code> call).</li>
+<li>Forgetting <code>geom_*()</code> (you’ll get an empty plot).</li>
+<li>Using bar plots for means without showing the distribution.</li>
+</ul>
+</div>
+<div id="mini-project" class="section level2 hasAnchor" number="8.11">
+<h2><span class="header-section-number">8.11</span> Mini-project<a href="visualising-data-with-ggplot2.html#mini-project" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Choose one dataset from <code>CourseData</code> and produce three plots:</p>
+<ol style="list-style-type: decimal">
+<li>A distribution plot (histogram or box plot).</li>
+<li>A relationship plot (scatter or line).</li>
+<li>A grouped comparison (facets or colour).</li>
+</ol>
+<p>Write 2–3 sentences under each plot describing what it shows and one thing you would check next.</p>
 
 </div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="7">
-<li id="fn7"><p>Weissgerber TL, Milic NM, Winham SJ,
-Garovic VD (2015) Beyond Bar and Line Graphs:
-Time for a New Data Presentation Paradigm. PLoS Biol 13(4): e1002128. <a href="doi:10.1371/journal" class="uri">doi:10.1371/journal</a>.
-pbio.1002128<a href="visualising-data-with-ggplot2.html#fnref7" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 
@@ -735,20 +769,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
