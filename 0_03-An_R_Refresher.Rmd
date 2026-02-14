@@ -1,71 +1,82 @@
 # An R refresher
 
-In this course we will learn how to manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and widely used. One of its strengths is its large user base, which means there are hundreds of contributed packages for almost every type of analysis. The aim of these introductory sections is to give a basic introduction to the language as a tool for importing, manipulating and exploring data. In later sections we will learn more about statistical analysis.
+**Learning goals**
 
-Before proceeding you will need to ensure you have a recent version of **R** installed on your computer (the version I am using right now is `r paste0(R.Version()$major,".",R.Version()$minor)`).
+By the end of this chapter you should be able to:
 
-```{block 0-03-An-R-Refresher-1, type="do-something"}
-**Do this:** Check your R version, and/or install R on your own computer now.
+- Use RStudio to run code from scripts.
+- Create and inspect basic objects in R.
+- Work with vectors and data frames.
+- Import a CSV file using tidyverse tools.
+- Make simple plots and summaries.
+
+**Prerequisites**
+
+- You have R and RStudio installed.
+
+**A tiny motivating example**
+
+Let’s make a tiny plot so we know everything is working.
+
+```{r 0-03-An-R-Refresher-1, message=FALSE}
+library(tidyverse)
+
+mydata <- data.frame(
+  body_length_cm = c(4.2, 5.1, 5.6, 6.8, 7.4),
+  body_mass_g = c(9.5, 12.1, 14.0, 18.2, 21.5)
+)
+
+ggplot(mydata, aes(x = body_length_cm, y = body_mass_g)) +
+  geom_point()
 ```
 
-In this course we will not be using **R** on its own. Instead, we will use it with RStudio.
+**What just happened:** Each point is an individual. This matters because almost every plot in this course follows the same pattern: **data + aesthetics + geom**.
 
-**R** and RStudio are not the same thing. You can run R without RStudio, but RStudio will not work if **R** is not installed. So what is RStudio? It is a helpful piece of software that makes **R** easier to use. The three most useful features are:
+**Try this:** Change one value and re-run. What changes on the plot?
 
-* The R Console - this is where **R** runs inside RStudio. We can work *directly* with **R** by typing commands into this "console". It is also where outputs (results) from **R** are printed to the screen.
+---
 
-* The Code Editor - this is where you can write **R** programs (called "scripts"), which are a set of commands/instructions in the **R** language saved to a text file. It is much easier to work with scripts using RStudio than with ordinary text editors like Notepad. For example, it colour codes the text to make it easier to read and it will "auto-complete" some text to speed up your work.
+## Getting started with RStudio
 
-* Useful "point-and-click" tools - RStudio can help with tasks like importing data, managing files, reading help files, and managing/installing packages. Doing these things is trickier in *just* **R**: RStudio makes things easier.
+**What we’re about to do:** We will set up a simple workflow so your work is reproducible.
 
-You should do your coding from within RStudio.
-
-You can download **RStudio Desktop** from [https://rstudio.com/products/rstudio/download/](https://rstudio.com/products/rstudio/download/). Select the correct version for your computer (Mac/Windows) and follow the usual instructions.
+RStudio is not R itself. It is the interface where you write scripts, run code, and view results.
 
 ```{block 0-03-An-R-Refresher-2, type="do-something"}
-**Do this:** Install **RStudio Desktop** on your computer. 
+**Do this:** Open RStudio and create a new script (`File > New File > R Script`). Save it as `practice.R`.
 ```
 
+**Why this matters:** Scripts let you save, revisit, and debug your work. Copy-pasting into the console will not scale.
 
-## Getting started with R
+**Common mistake:** Running everything in the console and losing your work. If this happens, start a script and re-run your commands there.
 
-In RStudio, create a new "R Script" file. *Scripts* are programs that can be saved so you can return to your work later. They also make debugging much easier. 
+**Takeaway:** Work in scripts, not just the console.
 
-You can use the menu to create a new R Script (`File > New File > R Script`), but there's also a keyboard shortcut (Windows: `Ctrl+Shift+N`; Mac: `Cmd+Shift+N`). If you save (Windows: `Ctrl+S`; Mac: `Cmd+S`), you will be prompted for a file name. Make sure it has the suffix ".R" which denotes an R script file. Save the file in a folder with a memorable name (e.g. `BB852_Work`).
-
-When you double click on this file in future, it should automatically open in RStudio (if it doesn't, you can right-click and select `Open with...`).
-
-In RStudio you can execute commands using the "run" icon at the top of the script window, or by selecting the text and typing the shortcut `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac). Another helpful feature is syntax highlighting, which makes it easier to read and debug code. Note that the colours you see may be different from the ones shown in this handout.
-
-You can customise the look of RStudio by clicking **Tools → Options** on Windows or **RStudio → Preferences** on a Mac. I will point out some of this in the lecture, or you can ask me to show you.
-
-Over the next few pages I will introduce the basics of the R programming language. Try typing them into the scripting window (top left) in RStudio and ensure you understand what the commands are doing. It is impossible to "break" R by typing the wrong command, so I encourage you to experiment and explore as much as possible. It really is the best way to learn!
-
-```{block 0-03-An-R-Refresher-3, type="do-something"}
-The "look" of RStudio can be modified by changing the Preferences (**RStudio → Preferences → Appearance**). 
-Also, there are some useful keyboard shortcuts that are worth learning, to run code, save files etc. without needing to point-and-click (**Tools → Keyboard Shortcuts Help**).
-```
+---
 
 ## Getting help
 
-**R** features a wealth of commands, more properly termed **functions**. You will learn many of these over the next few weeks. Functions often have several options specified with **arguments**. For example, the function `sum` has the argument `...`, which is intended to be one or more **vectors** of numbers (see below), and the argument `na.rm`, which specifies whether missing values should be removed. Usually arguments have default options that are used when you do not specify them. In addition, you do not necessarily need to fully specify the argument name if you provide arguments in the *correct order*. 
+**What we’re about to do:** Learn how to ask R for help.
 
-You can get **help** on R functions from within R/RStudio with the `?` and `help.search` commands. `?` requires that you know the function name while *help.search* will search all the available help files for a particular word or phrase. `??` is a synonym for *help.search*:
-
-```{r 0-03-An-R-Refresher-4, eval=FALSE, echo=TRUE}
+```{r 0-03-An-R-Refresher-3, eval=FALSE}
 ?rep
 help.search("bar plot")
 ??"bar plot"
 ```
 
+**What just happened:** `?` opens a help page when you know a function name; `??` searches when you do not.
 
-In RStudio, the help results will appear in the lower right hand area.
+**Try this:** Look up `mean` or `plot` and read the arguments section.
 
-## R as a fancy calculator
+**Takeaway:** R has built-in help for almost everything.
 
-R features the usual arithmetic operations for addition, subtraction, division, multiplication: 
+---
 
-```{r 0-03-An-R-Refresher-5}
+## R as a calculator
+
+**What we’re about to do:** Use R for basic arithmetic and logic.
+
+```{r 0-03-An-R-Refresher-4}
 4 + 3
 9 - 12
 6 / 3
@@ -73,9 +84,7 @@ R features the usual arithmetic operations for addition, subtraction, division, 
 (2 * 7) + 2 - 0.4
 ```
 
-R also has commands for square root (`sqrt`), raising to powers (\^), taking the absolute value (`abs`), and rounding (`round`), natural log (`log`), anti-log (`exp`), log to base-10 (`log10`):
-
-```{r 0-03-An-R-Refresher-6}
+```{r 0-03-An-R-Refresher-5}
 sqrt(945)
 3^5
 abs(-23.4)
@@ -84,9 +93,10 @@ log(1.2)
 exp(1)
 log10(6)
 ```
-Another thing you can do is evaluate TRUE/FALSE conditions:
 
-```{r 0-03-An-R-Refresher-7}
+Logical comparisons:
+
+```{r 0-03-An-R-Refresher-6}
 3 < 10
 5 > 7
 5 == 5
@@ -95,30 +105,22 @@ Another thing you can do is evaluate TRUE/FALSE conditions:
 6 %in% c(1, 2, 3, 4, 5)
 ```
 
-## Objects in R
+**Takeaway:** R handles arithmetic and logical tests directly.
 
-R is an object oriented programming language. This means that it represents concepts as **objects** that have data fields describing the object. These objects can be manipulated by **functions**. Objects can include data, but also models. Don't worry about these distinctions too much for now - all will become clear as you proceed!
+---
 
-Objects are assigned names in R like this. The "`<-`" command is pronounced "*gets*" so I would pronounce the following as "*x gets four*":
+## Objects and vectors
 
-```{r 0-03-An-R-Refresher-8}
+**What we’re about to do:** Create objects and simple vectors.
+
+```{r 0-03-An-R-Refresher-7}
 x <- 4
-```
-
-To look at any object (function or data), just type its name.
-
-```{r 0-03-An-R-Refresher-9}
 x
 ```
 
-The main data object types in R are: *vectors*, *data frames*, *lists* and *matrices*. We will focus on the first two of these during this course.
+Vectors are simple sequences of values.
 
-A vector is simply a series of data (e.g. the sequence _1, 2, 3, 4, 5_ is a vector, so is the non-numeric sequence _Male, Female, Female, Male, Male_ ). Each item in a vector is called an **element**. Therefore, both of these examples contain 5 elements.
-
-There are several ways to create vectors in R. For example, you can make vectors of integers using the *colon* (`:`) function (e.g. `1:5`), or vectors of any kind of variable using the `c` function. `c` stands for *concatenate*, which means to *join (things) together in a chain or series*. Other convenient functions for making vectors are `seq`, which builds a sequence of numbers according to some rules, and `rep` which builds a vector by repeating elements a specified number of times.
-
-Try the following:
-```{r 0-03-An-R-Refresher-10}
+```{r 0-03-An-R-Refresher-8}
 A <- 1:5
 B <- c(1, 3, 6, 1, 7, 9)
 C <- seq(1, 12, 2)
@@ -127,101 +129,60 @@ E <- rep(c("Male", "Female"), each = 3)
 G <- rep(c("Male", "Female"), c(2, 4))
 ```
 
-
-
-
-```{block 0-03-An-R-Refresher-11, type="do-something"}
-Try modifying the commands to make sure you know what the commands are doing.
+```{block 0-03-An-R-Refresher-9, type="do-something"}
+Try changing `seq()` or `rep()` arguments. What changes?
 ```
 
+**Common mistake:** Forgetting `c()` when creating a list of values.
 
+**Takeaway:** Vectors are the building blocks of most data in R.
 
-## Manipulating objects
+---
 
-Objects can be manipulated (just like in real life). In R, we use **functions** to manipulate objects. 
+## Manipulating vectors
 
-For example, we can use the basic arithmetic functions (`*`, `+`, `/`,`-`) on a vector:
+**What we’re about to do:** Do arithmetic on vectors.
 
-```{r 0-03-An-R-Refresher-12}
+```{r 0-03-An-R-Refresher-10}
 B
 B * 3
 B - 2
-```
-
-You can *concatenate* entire vectors together using the `c` function. E.g. concatenating the vectors `A` and `B` from above:
-
-```{r 0-03-An-R-Refresher-13}
 c(A, B)
-```
-
-
-Other manipulations are also done "element-by-element". For example, here we multiply the first element of B by 1, the second by 2, the 3rd by 3 and so on...:
-
-```{r 0-03-An-R-Refresher-14}
 B * c(1, 2, 3, 4, 5, 6)
-```
-If the length of the vectors match, we can also multiply (or add/subtract/divide etc.) multiple vectors:
-
-
-```{r 0-03-An-R-Refresher-15}
 A / B
 ```
 
-## Missing values, infinity and "non-numbers"
+**What just happened:** R works element-by-element when vector lengths match.
 
+**Takeaway:** Vectorised operations are fast and convenient.
 
-By convention, *missing values* in R are coded by the value "NA". The way that particular functions handle missing values varies: sometimes the NA values are stripped out of the data, other times the function may fail.
+---
 
-For example, if we asked for the mean value of a vector of numbers with an NA value, it will fail:
+## Missing values, infinity, and NaN
 
-```{r 0-03-An-R-Refresher-16}
+**What we’re about to do:** See how R handles missing values and edge cases.
+
+```{r 0-03-An-R-Refresher-11}
 mean(c(1, 3, 6, 1, 7, 9, NA))
-```
-
-In this case you need to specify that any NA values should be removed before calculating the mean:
-```{r 0-03-An-R-Refresher-17}
 mean(c(1, 3, 6, 1, 7, 9, NA), na.rm = TRUE)
 ```
 
-Calculations can sometimes lead to answers that are plus, or minus, infinity. These values are represented in R by `Inf` or `-Inf`:
-
-```{r 0-03-An-R-Refresher-18}
+```{r 0-03-An-R-Refresher-12}
 5 / 0
 -4 / 0
-```
-
-Other calculations lead to answers that are not numbers, and these are represented by `NaN` in R:
-```{r 0-03-An-R-Refresher-19}
 0 / 0
 Inf - Inf
 ```
 
+**Takeaway:** Use `na.rm = TRUE` when you want to ignore missing values.
 
-
-## Basic information about objects
-
-
-You can obtain information about most objects using the `summary` function:
-
-```{r 0-03-An-R-Refresher-20}
-summary(B)
-```
-
-The functions `max`, `min`, `range`, and `length` are also useful:
-```{r 0-03-An-R-Refresher-21}
-max(B)
-min(B)
-range(B)
-length(B)
-```
+---
 
 ## Data frames
 
+**What we’re about to do:** Create and inspect a data frame.
 
-Data frames are the usual way of storing data in R. It is more-or-less the same as a worksheet in Excel. A data frame is usually made up of a number of vectors (of the same length) bound together in a single object. You can make a data frame by binding together vectors, or you can import them from outside R.
-
-This example shows the creation of a data frame in R, from 3 vectors:
-```{r 0-03-An-R-Refresher-22}
+```{r 0-03-An-R-Refresher-13}
 height <- c(173, 145, 187, 155, 179, 133)
 sex <- c("Male", "Female", "Male", "Female", "Male", "Female")
 age <- c(17, 22, 32, 20, 27, 30)
@@ -230,259 +191,201 @@ mydata <- data.frame(height = height, age = age, sex = sex)
 mydata
 ```
 
-Data frames can be summarised using the `summary` function (or the `str` function, which gives you a different view of the same data):
+Inspect a data frame:
 
-```{r 0-03-An-R-Refresher-23}
+```{r 0-03-An-R-Refresher-14}
 summary(mydata)
 str(mydata)
 ```
 
-Data frames can be subsetted using the square brackets `[]`, or `subset` functions. With the square brackets, the first number specifies the row number, while the second number specifies the column number:
+Subset rows/columns:
 
-```{r 0-03-An-R-Refresher-24}
+```{r 0-03-An-R-Refresher-15}
 mydata[1, ]
 mydata[, 2]
 mydata[1, 2]
 subset(mydata, sex == "Female")
 ```
 
-## Classes in R
+**Takeaway:** Data frames are tables: rows are observations, columns are variables.
 
-Every objects you create, or import into R, has a "type" called a `class`. You can ask what class an object has using the `class` function.
+---
 
-For example, the vectors you created above have types.
+## Classes and factors
 
-```{r 0-03-An-R-Refresher-25}
+**What we’re about to do:** Check classes and use factors for categories.
+
+```{r 0-03-An-R-Refresher-16}
 class(height)
 class(sex)
 class(mydata)
 ```
 
-You can find out the class of all columns in a `data.frame` by asking for a summary with `str`. For example, in this example, there are two numeric columns (`num`) and a character column (`chr`).
+Some functions need categorical data to be factors:
 
-```{r 0-03-An-R-Refresher-26}
-str(mydata)
-```
-
-There's another special class of vector called `factor`. In the small dataset above (`mydata`), sex is registered by R to be a `character` vector. For some functionality this is perfectly fine, but for others you will need to convert the data into a factor.
-
-For example, this code, to make a box plot, will not work:
-
-```{r 0-03-An-R-Refresher-27, eval = FALSE}
+```{r 0-03-An-R-Refresher-17, eval = FALSE}
 plot(mydata$sex, mydata$age)
 ```
 
-But this code will work fine:
-
-```{r 0-03-An-R-Refresher-28, eval = TRUE}
+```{r 0-03-An-R-Refresher-18}
 plot(as.factor(mydata$sex), mydata$age)
 ```
 
-Of course it might be easier to convert it to be a factor in the data frame itself, like this:
-
-```{r 0-03-An-R-Refresher-29}
+```{r 0-03-An-R-Refresher-19}
 mydata$sex <- as.factor(mydata$sex)
-str(mydata) # You can see that it is now registered as a factor
-plot(mydata$sex, mydata$age)
+str(mydata)
 ```
 
+**Common mistake:** Forgetting to convert characters to factors for categorical plots.
 
-```{block 0-03-An-R-Refresher-30, type="do-something"}
-If you are getting strange results from your code it is a good idea to check the structure of the data. Are the classes what they should be?
+**Takeaway:** Use factors for categorical variables when needed.
+
+---
+
+## Organising your work and importing data
+
+**What we’re about to do:** Import a CSV file using tidyverse tools.
+
+Keep your data in a `CourseData` folder inside your project. We will use **relative paths** throughout this course. If you do not have `CourseData`, download it from the course site.
+
+```{r 0-03-An-R-Refresher-20}
+carni <- readr::read_csv("CourseData/carnivora.csv")
 ```
 
-## Organising your work
+**What just happened:** `read_csv()` imported the data and guessed column types.
 
-It would be incredibly tedious to enter real data into **R** by typing it in!
+**Try this:** Run `glimpse(carni)` and compare it to `summary(carni)`.
 
-Thankfully, R can import data from a several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called *directories*) on your computer.
+**Common mistake:** File not found. Check spelling and folder names.
 
-The most commonly used data format is `comma separated value (CSV)` so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I'll cover this in a later class).
+**Takeaway:** `read_csv()` is the tidyverse way to import CSV files.
 
-For this course, I suggest that you make a folder somewhere on your computer called "IntroToR". We will use this as the `working directory` for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items **Session → Set Working Directory → Choose Directory**.
-
-You can also using the `setwd` function to do this, if you know where your files are stored (the *file path*). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\\). In windows you also need to define the drive (e.g. C:).
-
-So, to set the working directory in Apple OSX you would use something like this (obviously, you need to put *your* path!):
-
-```{r 0-03-An-R-Refresher-31, eval = FALSE}
-setwd("/Users/orj/Desktop/IntroToR")
-```
-
-While in Windows the equivalent command would be something like this (both of the following should work):
-
-```{r 0-03-An-R-Refresher-32, eval = FALSE}
-setwd("C:\\Users\\orj\\Desktop\\IntroToR")
-setwd("C:/Users/orj/Desktop/IntroToR")
-```
-
-Typing the path in can be annoying but there are ways to speed it up. In Windows you can copy paths from the Windows Explorer location/address bar, or you can hold down the Shift key as you right-click the file, and then choose Copy As Path.
-
-On a Mac you can copy file paths from Finder: Select your file/folder, Right click, Press the option key (on my keyboard this is the `alt` key) and click "Copy X as Pathname"
-
-
-I can check what the current working directory is using the `getwd` function:
-
-```{r 0-03-An-R-Refresher-33, eval = FALSE}
-getwd()
-```
-
-It is good practice to keep your files well-organised. I recommend that you create a folder in your working directory called `CourseData` (or similar). Store your data files in this folder. 
-
-I have put all the data for the course into a Dropbox folder - see the link in Chapter 1. In there you will find a file called "`carnivora.csv`". Download this to your new `CourseData` folder. 
-
-You can now import this file into R using the `read.csv` function. The specification of the argument `header = TRUE` signifies that the first row of our CSV file contains the column names. Note that your file path will be different to mine^[A note here about code formatting: You can see that I have written the code over several lines. This is not strictly necessary, but (I think) it can make long commands easier to read. R doesn't "see" the new lines. The plot command could be in a single long line.]:
-
-```{r 0-03-An-R-Refresher-34}
-carni <- read.csv("CourseData/carnivora.csv",
-  header = TRUE,
-  stringsAsFactors = TRUE
-)
-```
-
-The `stringsAsFactors` argument tells R to treat text-type data (technically known as "character **strings**") as a special kind of data called **factors**. Essentially, factors are *categorical* data where the data can take a limited number of discrete values. For example, "treatmentA", "treatmentB", "treatmentC". Although this may seem a little esoteric right now, it is important to ensure that your data is recognised by R in the correct way. In **most** cases, your text-type data will be factor data, so it is usually safe to set `stringsAsFactors = TRUE`. 
-
-```{block 0-03-An-R-Refresher-35, type="do-something"}
-**Tip:** RStudio also has a point-and-click "Wizard" to help import data. Look for "Import Dataset" in the top-right pane. 
-```
-
+---
 
 ## Inspecting the data
 
-We can get some basic information on your imported data (e.g. the `carni` data frame) using the `summary` function, but also the `dim` and `nrow/ncol` functions:
-
-```{r 0-03-An-R-Refresher-36, eval = FALSE}
+```{r 0-03-An-R-Refresher-21}
 summary(carni)
-```
-
-```{r 0-03-An-R-Refresher-37}
 dim(carni)
-nrow(carni)
-ncol(carni)
-```
-
-We can find the names of the columns of a data frame with the `names` function:
-
-```{r 0-03-An-R-Refresher-38}
 names(carni)
 ```
 
-The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
-SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).
+The dataset includes life history variables. For example:
 
-You can refer to the sub-parts of a `data.frame` (the columns) using the `$` syntax:
+- `FW` = Female body weight (kg)
+- `GL` = Gestation length (days)
+- `BW` = Birth weight (g)
 
-```{r 0-03-An-R-Refresher-39}
+```{r 0-03-An-R-Refresher-22}
 summary(carni$FW)
 ```
 
-
-## "Classes" in R
-
-
-I have already mentioned the different object types in R (e.g. vectors and data frames). The object types are technically known as "classes". You can find out what "class" an object is by using the `class` function:
-
-```{r 0-03-An-R-Refresher-40}
-class(carni)
-```
-
-In this case, the data frame is, unsurprisingly, of class "data.frame". However, the vectors that compose the data frame also have classes. There are several classes of vectors including "integer" (whole numbers), "numeric" (real numbers), "factor" (categorical variables) and "logical" (true/false values).
-
-I expect you have heard of the first two data types, but "factor" might be puzzling. Factors are defined as variables which can take on a *limited* number of different values. They are often referred to as `categorical variables`. For example, in the carnivore dataset, the taxonomic variables are factors. The different values that a factor can take are known as `levels` and you can check on the levels of a vector with the `levels` function.
-
-```{r 0-03-An-R-Refresher-41}
-class(carni$Family)
-levels(carni$Family)
-```
+---
 
 ## Tables and summary statistics
 
+```{r 0-03-An-R-Refresher-23}
+class(carni$Family)
+levels(as.factor(carni$Family))
+```
 
-For vectors of class "factor" you can use the `table` function to give the counts for each level:
-
-```{r 0-03-An-R-Refresher-42}
+```{r 0-03-An-R-Refresher-24}
 table(carni$Family)
+tapply(carni$FW, carni$Family, mean, na.rm = TRUE)
 ```
 
-You can use the function `tapply` ("table apply"), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument `mean`:
+**Takeaway:** Tables and summaries give you a quick sense of patterns before you plot.
 
-```{r 0-03-An-R-Refresher-43}
-tapply(carni$FW, carni$Family, mean)
-```
+---
 
+## Basic plotting
 
-## Plotting data
-
-
-Basic plots can be made using the `plot` command. For example, let's have a look at the relationship between log gestation length and log female body weight (see Figure \@ref(fig:0-03-An-R-Refresher-44), below):
-
-```{r 0-03-An-R-Refresher-44, fig.cap=('A simple scatter plot'), fig.show=('asis')}
+```{r 0-03-An-R-Refresher-25, fig.cap=('A simple scatter plot'), fig.show=('asis')}
 plot(log(carni$FW), log(carni$GL))
 ```
 
-## R Packages
+**Interpretation:** Species with larger female body mass tend to have longer gestation lengths.
 
-R packages are collections of software that add capabilities to "base R". In this course we use several packages including `dplyr`, which adds functionality for manipulating data, `ggplot2` which helps us make pretty plots and `magrittr` which adds tools to allow more "elegant" programming. Packages need to be installed using `install.packages` command before they can be used. You only need to install them once.
+- **What to look for:**
+  - Is the relationship roughly linear?
+  - Are there any clear outliers?
 
-```{r 0-03-An-R-Refresher-45,eval=FALSE}
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages("magrittr")
+**Try this:** Remove the log and compare the shape.
+
+---
+
+## R packages
+
+Packages extend base R. Install once, then load each session.
+
+```{r 0-03-An-R-Refresher-26, eval=FALSE}
+install.packages("tidyverse")
 ```
 
-To use the packages you need to load them with the `library` command, like this:
-
-```{r 0-03-An-R-Refresher-46}
-library(dplyr)
-library(ggplot2)
-library(magrittr)
+```{r 0-03-An-R-Refresher-27}
+library(tidyverse)
 ```
-We will be using these packages a lot, and you will need to remember to load them every session. It is therefore useful to add those `library` commands to the top of every script you write.
 
-<!-- Try the following -->
-<!-- ------------------------- -->
+```{block 0-03-An-R-Refresher-28, type="do-something"}
+Add your `library(...)` calls at the top of scripts so your code runs every time.
+```
 
-<!-- _Make sure you can do the following things successfully. If in doubt please ask for help!_ -->
-
-<!-- Q1. Make a table of the number of species in each Family of the Superfamily *Caniformia*. -->
-
-<!-- Q2. Using the carnivore data set, produce a box plot featuring female weight (FW) for the *Canidae*, *Felidae* and *Ursidae* together on the same plot. Hint: you will need to use `subset` and `droplevels` before plotting. -->
-
-<!-- Q3. Using the carnivore data set, make a table showing the average (mean) birth weight (BW) for Families in Superfamily *Feliformia*. Hint: Use `subset`, `droplevels` and `tapply`. -->
-
-<!-- Q4. Plot the relationship between log female weight (FW) and litter size (LS) in the *Mustelidae*. -->
-
-<!-- Q5. Identify the largest and smallest (by female weight (FW)) species in the *Viverridae* family. What are their brain sizes (FB)? Hint: use subset and the `which.min`/`which.max` functions (use help), and maybe square brackets [ ]. -->
-
+---
 
 ## Exercise: Californian bird diversity
 
-In the 1950s-1970s there was rapid growth in the number of houses being built in California, with suburbs sprawling out into the new sites in the countryside. What effect would this have on local bird communities? 
-
-Surveys on bird abundances were carried out in several locations near Oakland, California ^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.]. The locations were of different ages, enabling us to investigate what changes might happen through time. Although there were no surveys before the developments, we can regard the bird abundance in the very youngest housing developments as the baseline pre-development condition.
-
-Think about what you might expect to happen to bird species diversity through time in a newly developing suburb.
+Surveys on bird abundances were carried out near Oakland, California.^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.] The locations were of different ages, which lets us ask how species richness changes through time.
 
 ### The data
 
-The relevant data file is called `suburbanBirds.csv`. This file contains data on bird abundances surveyed in 1975. The columns of the data are `Name` (name of the suburb), `Year` (the year that the suburb was built), `HabitatIndex` (an index of habitat quality, related to tree height, garden maturity etc.), `nIndividuals` (number of individual birds seen in a standard survey) and `nSpecies` (number of species seen in a standard survey).
+The file is `suburbanBirds.csv`. Columns: `Name`, `Year`, `HabitatIndex`, `nIndividuals`, `nSpecies`.
 
-Additional surveys found an average species richness of 3.5 in nearby undisturbed habitats of grassland savanna.
+### Your tasks
 
-### Try the following
+**Level 1 (warm-up)**
 
-1. First import the data. Check that the columns look as they should (use `summary` or `str` functions).
+1. Import the data and check the columns with `str()`.
+   **Checkpoint:** You should see the five columns listed above.
 
-2. What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)
+2. Calculate the mean, minimum, and maximum of `nSpecies`.
+   **Checkpoint:** You should get three numbers.
 
-3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the maths!)
+**Level 2 (practice)**
 
-4. Plot the relationship between `Year` and `nSpecies` as a scatter plot using base-R graphics (using the `plot` function).
+3. Create a new column `Age = 1975 - Year` and check it looks sensible.
+   **Checkpoint:** Younger suburbs have smaller `Age` values.
 
-5. The pattern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Re-plot your results.
+4. Plot `Age` vs `nSpecies` with `plot()`.
+   **Checkpoint:** The x-axis is age and the y-axis is species richness.
 
-6. What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?
+**Level 3 (extension)**
 
-7. Export your plots and paste them into a Word Document.
+5. Re-plot with a smoother (e.g. `lines(lowess(Age, nSpecies))`). Does it change your interpretation?
 
-8. If you get this far, try plotting the other variables in the dataset.
+**Hint:** If your plot is empty, check your column names with `names()`.
+
+---
+
+## Key takeaways
+
+- Use scripts for reproducible work.
+- Vectors and data frames are the core data types.
+- `read_csv()` is the tidyverse way to import CSV files.
+- Check classes with `str()` and convert to `factor()` when needed.
+- Always inspect your data before analysing it.
+
+## Common pitfalls recap
+
+- Running code only in the console.
+- File paths that point to the wrong folder.
+- Treating categories as numbers or characters when they should be factors.
+
+## Mini-project
+
+Pick one dataset from `CourseData` and write a short script that:
+
+1. Imports the data.
+2. Summarises one column with `summary()`.
+3. Produces a simple plot.
+
+Write 3–4 sentences describing what you found.
