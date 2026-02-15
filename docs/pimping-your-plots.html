@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-08" />
+<meta name="date" content="2026-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>7.2</b> <code>filter</code></a></li>
 <li class="chapter" data-level="7.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>7.3</b> <code>arrange</code></a></li>
 <li class="chapter" data-level="7.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>7.4</b> <code>summarise</code> and <code>group_by</code></a></li>
-<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>7.5</b> Using pipes, saving data.</a></li>
+<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-and-saving-data"><i class="fa fa-check"></i><b>7.5</b> Using pipes and saving data</a></li>
 <li class="chapter" data-level="7.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercise-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>7.6</b> Exercise: Wrangling the Amniote Life History Database</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>8</b> Combining data sets</a>
@@ -489,14 +489,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb262-16"><a href="pimping-your-plots.html#cb262-16" tabindex="-1"></a>  )</span>
 <span id="cb262-17"><a href="pimping-your-plots.html#cb262-17" tabindex="-1"></a></span>
 <span id="cb262-18"><a href="pimping-your-plots.html#cb262-18" tabindex="-1"></a><span class="fu">summary</span>(anage)</span></code></pre></div>
-<pre><code>##     Class              Order             Species               Mass             Longevity           BMR               BMRperKg       
-##  Length:3231        Length:3231        Length:3231        Min.   :   0.0008   Min.   :  0.40   Min.   :   0.0001   Min.   : 0.04543  
-##  Class :character   Class :character   Class :character   1st Qu.:   0.0259   1st Qu.: 10.20   1st Qu.:   0.2655   1st Qu.: 2.21913  
-##  Mode  :character   Mode  :character   Mode  :character   Median :   0.1313   Median : 16.20   Median :   0.7050   Median : 4.57453  
-##                                                           Mean   :  13.1879   Mean   : 19.37   Mean   :  11.8309   Mean   : 7.04391  
-##                                                           3rd Qu.:   1.1112   3rd Qu.: 24.45   3rd Qu.:   3.1370   3rd Qu.: 9.86860  
-##                                                           Max.   :3672.0000   Max.   :211.00   Max.   :2336.5000   Max.   :45.76923  
-##                                                           NA&#39;s   :2604        NA&#39;s   :432      NA&#39;s   :2604        NA&#39;s   :2604</code></pre>
+<pre><code>##     Class              Order             Species               Mass          
+##  Length:3231        Length:3231        Length:3231        Min.   :   0.0008  
+##  Class :character   Class :character   Class :character   1st Qu.:   0.0259  
+##  Mode  :character   Mode  :character   Mode  :character   Median :   0.1313  
+##                                                           Mean   :  13.1879  
+##                                                           3rd Qu.:   1.1112  
+##                                                           Max.   :3672.0000  
+##                                                           NA&#39;s   :2604       
+##    Longevity           BMR               BMRperKg       
+##  Min.   :  0.40   Min.   :   0.0001   Min.   : 0.04543  
+##  1st Qu.: 10.20   1st Qu.:   0.2655   1st Qu.: 2.21913  
+##  Median : 16.20   Median :   0.7050   Median : 4.57453  
+##  Mean   : 19.37   Mean   :  11.8309   Mean   : 7.04391  
+##  3rd Qu.: 24.45   3rd Qu.:   3.1370   3rd Qu.: 9.86860  
+##  Max.   :211.00   Max.   :2336.5000   Max.   :45.76923  
+##  NA&#39;s   :432      NA&#39;s   :2604        NA&#39;s   :2604</code></pre>
 <p><img src="BB852_files/figure-html/2-03-pimpYourPlots-3-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
 <div id="a-basic-plot" class="section level2 hasAnchor" number="11.1">
 <h2><span class="header-section-number">11.1</span> A basic plot<a href="pimping-your-plots.html#a-basic-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>

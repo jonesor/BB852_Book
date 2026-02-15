@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-08" />
+<meta name="date" content="2026-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>7.2</b> <code>filter</code></a></li>
 <li class="chapter" data-level="7.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>7.3</b> <code>arrange</code></a></li>
 <li class="chapter" data-level="7.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>7.4</b> <code>summarise</code> and <code>group_by</code></a></li>
-<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>7.5</b> Using pipes, saving data.</a></li>
+<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-and-saving-data"><i class="fa fa-check"></i><b>7.5</b> Using pipes and saving data</a></li>
 <li class="chapter" data-level="7.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercise-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>7.6</b> Exercise: Wrangling the Amniote Life History Database</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>8</b> Combining data sets</a>
@@ -552,7 +552,7 @@ See the earlier material for how to do this, or ask for help.</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="data-wrangling-with-dplyr.html#cb154-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">ungroup</span>(sduBirds)</span></code></pre></div>
 <p>So both species lay the same maximum number of eggs, but maybe this is just caused by outliers for one of the species. We’ll need to dig deeper.</p>
 <p>How can we calculate the average? We cannot simply ask for the <code>mean</code> because the data run through time following the development in each nest. We need to calculate the maximum <code>nEggs</code> for each nest, and then calculate the average of those. We can do this in two steps.</p>
-<p>We calculate the clutch size as the maximum (<code>max</code>) number of eggs in each box, for each species, in each year. A warning message appears because R attempts to calculate the maximum number of eggs for all combinations of species, year, and box number, but some of these combinations contain no data (i.e., all <code>NA</code> values), making it impossible to compute a maximum. This warning can be safely ignored in this case.</p>
+<p>We calculate the clutch size as the maximum (<code>max</code>) number of eggs in each box, for each species, in each year. A warning message may appear if some nest-year groups contain only missing <code>nEggs</code> values, because <code>max(..., na.rm = TRUE)</code> then has no finite numbers to use. In this workflow we remove those non-laying nests in the next step.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="data-wrangling-with-dplyr.html#cb155-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">group_by</span>(sduBirds, species, Year, boxNumber)</span>
 <span id="cb155-2"><a href="data-wrangling-with-dplyr.html#cb155-2" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">summarise</span>(sduBirds, <span class="at">clutchSize =</span> <span class="fu">max</span>(nEggs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <p>Let’s first look at all the clutch size data:</p>
@@ -574,7 +574,7 @@ See the earlier material for how to do this, or ask for help.</p>
 ##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
 ## 1 BT       9.64  2.64
 ## 2 GT       7.89  2.19</code></pre>
-<p>Lets now turn to the other question - how does the clutch size vary with year?</p>
+<p>Let’s now turn to the other question - how does clutch size vary with year?</p>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="data-wrangling-with-dplyr.html#cb161-1" tabindex="-1"></a>sduBirds <span class="ot">&lt;-</span> <span class="fu">group_by</span>(sduBirds, species, Year)</span>
 <span id="cb161-2"><a href="data-wrangling-with-dplyr.html#cb161-2" tabindex="-1"></a>sduBirds2 <span class="ot">&lt;-</span> <span class="fu">summarise</span>(sduBirds, <span class="at">meanClutchSize =</span> <span class="fu">mean</span>(clutchSize))</span>
 <span id="cb161-3"><a href="data-wrangling-with-dplyr.html#cb161-3" tabindex="-1"></a><span class="fu">head</span>(sduBirds2)</span></code></pre></div>
@@ -632,17 +632,17 @@ See the earlier material for how to do this, or ask for help.</p>
 </tr>
 <tr class="even">
 <td align="left">sd(x)</td>
-<td align="left">std. devation</td>
+<td align="left">std. deviation</td>
 </tr>
 <tr class="odd">
-<td align="left">quantile(x,y)</td>
+<td align="left">quantile(x, y)</td>
 <td align="left">a quantile, e.g. quantile(x, 0.25)</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="using-pipes-saving-data." class="section level2 hasAnchor" number="7.5">
-<h2><span class="header-section-number">7.5</span> Using pipes, saving data.<a href="data-wrangling-with-dplyr.html#using-pipes-saving-data." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="using-pipes-and-saving-data" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Using pipes and saving data<a href="data-wrangling-with-dplyr.html#using-pipes-and-saving-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>I have walked you through a step-by-step data manipulation. During that process you made (and replaced) new data sets at each step. In practice this can be done more smoothly using <em>pipes</em> (<code>%&gt;%</code>) to pass the result of one function into the next, and the next, and the next…</p>
 <p>You’ll get more practice with this as we go on.
 Below I show how to do this to create a clutch size data set from the raw data (note that your file path will differ from mine):</p>
@@ -692,11 +692,11 @@ The relevant columns are the taxonomic variables (<code>class</code>, <code>genu
 Use <code>mutate</code> and <code>paste</code> to convert the <code>species</code> column to a <em>Genus_species</em> by pasting the data in <code>genus</code> and <code>species</code> together. To see how this works, try out the following command, <code>paste(1:3, 4:6)</code>. After you have created the new column, remove the <code>genus</code> column (using <code>select</code> and <code>-genus</code>).</p></li>
 <li><p>What is the longest living species in the record? Use <code>arrange</code> to sort the data from longest to shortest longevity (<code>longevity_y</code>), and then look at the top of the file using <code>head</code> to find out. (hint: you will need to use reverse sort (<code>-</code>)). Cut and paste the species name into Google to find out more!</p></li>
 <li><p>Do the same thing but this time find the shortest lived species.</p></li>
-<li><p>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>rm.rm = TRUE</code> argument.</p></li>
-<li><p>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</p></li>
+<li><p>Use <code>summarise</code> and <code>group_by</code> to make a table summarising <code>min</code>, <code>median</code> and <code>max</code> life spans (<code>longevity_y</code>) for the three taxonomic classes in the database. Remember that you need to tell R to remove the <code>NA</code> values using a <code>na.rm = TRUE</code> argument.</p></li>
+<li><p>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</p></li>
 <li><p>Use <code>mutate</code> to create new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that makes the relationship more linear, and easier to “read”.</p></li>
-<li><p>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</p></li>
-<li><p>To answer the final question (differences between taxonomic classes) you could now use <code>filter</code> to subset to particular classes and repeat the plot to see whether the relationships holds universally.</p></li>
+<li><p>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of the number of litters/clutches per year multiplied by the number of babies in each litter/clutch. Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</p></li>
+<li><p>To answer the final question (differences between taxonomic classes) you could now use <code>filter</code> to subset to particular classes and repeat the plot to see whether the relationship holds universally.</p></li>
 </ol>
 <p>Remember that if you struggle you can check back to previous work where you have used <code>dplyr</code> commands to manipulate data in a similar way. If you get truly stuck, ask for help from instructors or fellow students.</p>
 

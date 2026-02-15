@@ -103,7 +103,7 @@ So both species lay the same maximum number of eggs, but maybe this is just caus
 
 How can we calculate the average? We cannot simply ask for the `mean` because the data run through time following the development in each nest. We need to calculate the maximum `nEggs` for each nest, and then calculate the average of those. We can do this in two steps. 
 
-We calculate the clutch size as the maximum (`max`) number of eggs in each box, for each species, in each year. A warning message appears because R attempts to calculate the maximum number of eggs for all combinations of species, year, and box number, but some of these combinations contain no data (i.e., all `NA` values), making it impossible to compute a maximum. This warning can be safely ignored in this case.
+We calculate the clutch size as the maximum (`max`) number of eggs in each box, for each species, in each year. A warning message may appear if some nest-year groups contain only missing `nEggs` values, because `max(..., na.rm = TRUE)` then has no finite numbers to use. In this workflow we remove those non-laying nests in the next step.
 
 ```{r 1-01-dataWrangling-10}
 sduBirds <- group_by(sduBirds, species, Year, boxNumber)
@@ -140,7 +140,7 @@ sduBirds <- group_by(sduBirds, species)
 summarise(sduBirds, mean = mean(clutchSize), sd = sd(clutchSize))
 ```
 
-Lets now turn to the other question - how does the clutch size vary with year?
+Let's now turn to the other question - how does clutch size vary with year?
 
 ```{r 1-01-dataWrangling-15}
 sduBirds <- group_by(sduBirds, species, Year)
@@ -170,15 +170,23 @@ This approach of using `group_by` followed by `summarise` can be used to summari
 
 ```{r 1-01-dataWrangling-17, results = "asis", echo = FALSE}
 my_data <- data.frame(
-  Command = c("min(x)", "max(x)", "n()", "length(x)", "var(x)", "sd(x)", "quantile(x,y)"),
-  What = c("minimum value", "maximum value", "number of records, see ?n", "number of records", "variance", "std. devation","a quantile, e.g. quantile(x, 0.25)"))
+  Command = c(
+    "min(x)", "max(x)", "n()", "length(x)", "var(x)", "sd(x)",
+    "quantile(x, y)"
+  ),
+  What = c(
+    "minimum value", "maximum value", "number of records, see ?n",
+    "number of records", "variance", "std. deviation",
+    "a quantile, e.g. quantile(x, 0.25)"
+  )
+)
 
 knitr::kable(my_data)
 ```
 
 
 
-## Using pipes, saving data.
+## Using pipes and saving data
 
 I have walked you through a step-by-step data manipulation. During that process you made (and replaced) new data sets at each step. In practice this can be done more smoothly using *pipes* (`%>%`) to pass the result of one function into the next, and the next, and the next...
 
@@ -239,15 +247,15 @@ Use `mutate` and `paste` to convert the `species` column to a *Genus_species* by
 
 5. Do the same thing but this time find the shortest lived species.
 
-6. Use `summarise` and `group_by` to make a table summarising `min`, `median` and `max` life spans (`longevity_y`) for the three taxonomic classes in the database. Remember that you need to tell R to remove the `NA` values using a `rm.rm = TRUE` argument.
+6. Use `summarise` and `group_by` to make a table summarising `min`, `median` and `max` life spans (`longevity_y`) for the three taxonomic classes in the database. Remember that you need to tell R to remove the `NA` values using a `na.rm = TRUE` argument.
 
-7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
+7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
 
 8. Use `mutate` to create new `log`-transformed variables, `logMass` and `logLongevity`. Use these to make a "log-log" plot. You should see that makes the relationship more linear, and easier to "read".
 
-9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot `logOffspring` vs. `logLongevity`.
+9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: use `mutate` to create a variable called `logOffspring` which is the logarithm of the number of litters/clutches per year multiplied by the number of babies in each litter/clutch. Then plot `logOffspring` vs. `logLongevity`.
 
-10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationships holds universally. 
+10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationship holds universally.
 
 
 Remember that if you struggle you can check back to previous work where you have used `dplyr` commands to manipulate data in a similar way. If you get truly stuck, ask for help from instructors or fellow students.

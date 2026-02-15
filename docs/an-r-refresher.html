@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-08" />
+<meta name="date" content="2026-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>7.2</b> <code>filter</code></a></li>
 <li class="chapter" data-level="7.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>7.3</b> <code>arrange</code></a></li>
 <li class="chapter" data-level="7.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>7.4</b> <code>summarise</code> and <code>group_by</code></a></li>
-<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>7.5</b> Using pipes, saving data.</a></li>
+<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-and-saving-data"><i class="fa fa-check"></i><b>7.5</b> Using pipes and saving data</a></li>
 <li class="chapter" data-level="7.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercise-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>7.6</b> Exercise: Wrangling the Amniote Life History Database</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>8</b> Combining data sets</a>
@@ -677,7 +677,7 @@ are doing.
 </div>
 <div id="classes-in-r" class="section level2 hasAnchor" number="4.9">
 <h2><span class="header-section-number">4.9</span> Classes in R<a href="an-r-refresher.html#classes-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Every objects you create, or import into R, has a “type” called a <code>class</code>. You can ask what class an object has using the <code>class</code> function.</p>
+<p>Every object you create, or import into R, has a “type” called a <code>class</code>. You can ask what class an object has using the <code>class</code> function.</p>
 <p>For example, the vectors you created above have types.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="an-r-refresher.html#cb90-1" tabindex="-1"></a><span class="fu">class</span>(height)</span></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
@@ -717,17 +717,17 @@ be?
 <div id="organising-your-work" class="section level2 hasAnchor" number="4.10">
 <h2><span class="header-section-number">4.10</span> Organising your work<a href="an-r-refresher.html#organising-your-work" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It would be incredibly tedious to enter real data into <strong>R</strong> by typing it in!</p>
-<p>Thankfully, R can import data from a several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called <em>directories</em>) on your computer.</p>
+<p>Thankfully, R can import data from several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called <em>directories</em>) on your computer.</p>
 <p>The most commonly used data format is <code>comma separated value (CSV)</code> so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I’ll cover this in a later class).</p>
 <p>For this course, I suggest that you make a folder somewhere on your computer called “IntroToR”. We will use this as the <code>working directory</code> for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items <strong>Session → Set Working Directory → Choose Directory</strong>.</p>
-<p>You can also using the <code>setwd</code> function to do this, if you know where your files are stored (the <em>file path</em>). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\). In windows you also need to define the drive (e.g. C:).</p>
+<p>You can also use the <code>setwd</code> function to do this, if you know where your files are stored (the <em>file path</em>). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\). In Windows you also need to define the drive (e.g. C:).</p>
 <p>So, to set the working directory in Apple OSX you would use something like this (obviously, you need to put <em>your</em> path!):</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="an-r-refresher.html#cb103-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/orj/Desktop/IntroToR&quot;</span>)</span></code></pre></div>
 <p>While in Windows the equivalent command would be something like this (both of the following should work):</p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="an-r-refresher.html#cb104-1" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">orj</span><span class="sc">\\</span><span class="st">Desktop</span><span class="sc">\\</span><span class="st">IntroToR&quot;</span>)</span>
 <span id="cb104-2"><a href="an-r-refresher.html#cb104-2" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/orj/Desktop/IntroToR&quot;</span>)</span></code></pre></div>
 <p>Typing the path in can be annoying but there are ways to speed it up. In Windows you can copy paths from the Windows Explorer location/address bar, or you can hold down the Shift key as you right-click the file, and then choose Copy As Path.</p>
-<p>On a Mac you can copy file paths from Finder: Select your file/folder, Right click, Press the option key (on my keyboard this is the <code>alt</code> key) and click “Copy X as Pathname”</p>
+<p>On a Mac you can copy file paths from Finder: select your file/folder, right-click, press the Option key (on my keyboard this is the <code>alt</code> key), and click “Copy X as Pathname”.</p>
 <p>I can check what the current working directory is using the <code>getwd</code> function:</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="an-r-refresher.html#cb105-1" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div>
 <p>It is good practice to keep your files well-organised. I recommend that you create a folder in your working directory called <code>CourseData</code> (or similar). Store your data files in this folder.</p>
@@ -757,8 +757,10 @@ help import data. Look for “Import Dataset” in the top-right pane.
 <pre><code>## [1] 17</code></pre>
 <p>We can find the names of the columns of a data frame with the <code>names</code> function:</p>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="an-r-refresher.html#cb114-1" tabindex="-1"></a><span class="fu">names</span>(carni)</span></code></pre></div>
-<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;     &quot;FW&quot;          &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;         
-## [11] &quot;GL&quot;          &quot;BW&quot;          &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;          &quot;AM&quot;          &quot;IB&quot;</code></pre>
+<pre><code>##  [1] &quot;Order&quot;       &quot;SuperFamily&quot; &quot;Family&quot;      &quot;Genus&quot;       &quot;Species&quot;    
+##  [6] &quot;FW&quot;          &quot;SW&quot;          &quot;FB&quot;          &quot;SB&quot;          &quot;LS&quot;         
+## [11] &quot;GL&quot;          &quot;BW&quot;          &quot;WA&quot;          &quot;AI&quot;          &quot;LY&quot;         
+## [16] &quot;AM&quot;          &quot;IB&quot;</code></pre>
 <p>The first few columns are to do with the taxonomic placement of the species (Order, SuperFamily, Family, Genus and Species). There then follow several columns of life history variables: FW = Female body weight (kg),
 SW = Average body weight of adult male and adult female (kg), FB = Female brain weight (g), SB = Average brain weight of adult male and adult female (g), LS = Litter size, GL = Gestation length (days), BW = Birth weight (g), WA = Weaning age (days), AI = Age of independence (days), LY = Longevity (months), AM = Age of sexual maturity (days), IB = Inter-birth interval (months).</p>
 <p>You can refer to the sub-parts of a <code>data.frame</code> (the columns) using the <code>$</code> syntax:</p>
@@ -776,19 +778,24 @@ SW = Average body weight of adult male and adult female (kg), FB = Female brain 
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="an-r-refresher.html#cb120-1" tabindex="-1"></a><span class="fu">class</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="an-r-refresher.html#cb122-1" tabindex="-1"></a><span class="fu">levels</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
-<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot;  &quot;Procyonidae&quot; &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
+<pre><code>## [1] &quot;Ailuridae&quot;   &quot;Canidae&quot;     &quot;Felidae&quot;     &quot;Hyaenidae&quot;   &quot;Mustelidae&quot; 
+## [6] &quot;Procyonidae&quot; &quot;Ursidae&quot;     &quot;Viverridae&quot;</code></pre>
 </div>
 <div id="tables-and-summary-statistics" class="section level2 hasAnchor" number="4.13">
 <h2><span class="header-section-number">4.13</span> Tables and summary statistics<a href="an-r-refresher.html#tables-and-summary-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For vectors of class “factor” you can use the <code>table</code> function to give the counts for each level:</p>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="an-r-refresher.html#cb124-1" tabindex="-1"></a><span class="fu">table</span>(carni<span class="sc">$</span>Family)</span></code></pre></div>
 <pre><code>## 
-##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
-##           1          18          19           4          30           4           4          32</code></pre>
+##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
+##           1          18          19           4          30           4 
+##     Ursidae  Viverridae 
+##           4          32</code></pre>
 <p>You can use the function <code>tapply</code> (“table apply”), to get more complex summary information. For example, I could ask what the mean female weight (FW) is in each of the families using the argument <code>mean</code>:</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="an-r-refresher.html#cb126-1" tabindex="-1"></a><span class="fu">tapply</span>(carni<span class="sc">$</span>FW, carni<span class="sc">$</span>Family, mean)</span></code></pre></div>
-<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae     Ursidae  Viverridae 
-##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500  198.250000    2.672813</code></pre>
+<pre><code>##   Ailuridae     Canidae     Felidae   Hyaenidae  Mustelidae Procyonidae 
+##  120.000000    9.050000   31.432105   33.540000    3.989000    3.642500 
+##     Ursidae  Viverridae 
+##  198.250000    2.672813</code></pre>
 </div>
 <div id="plotting-data" class="section level2 hasAnchor" number="4.14">
 <h2><span class="header-section-number">4.14</span> Plotting data<a href="an-r-refresher.html#plotting-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -838,7 +845,7 @@ Figure 4.1: A simple scatter plot
 <li><p>What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)</p></li>
 <li><p>How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the maths!)</p></li>
 <li><p>Plot the relationship between <code>Year</code> and <code>nSpecies</code> as a scatter plot using base-R graphics (using the <code>plot</code> function).</p></li>
-<li><p>The pattern might be easier to see if you could replace <code>YearBuilt</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>df$Age &lt;- 1975 - Year)</code>). Re-plot your results.</p></li>
+<li><p>The pattern might be easier to see if you replace <code>Year</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>df$Age &lt;- 1975 - df$Year</code>). Re-plot your results.</p></li>
 <li><p>What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?</p></li>
 <li><p>Export your plots and paste them into a Word Document.</p></li>
 <li><p>If you get this far, try plotting the other variables in the dataset.</p></li>

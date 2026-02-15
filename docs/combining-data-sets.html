@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-08" />
+<meta name="date" content="2026-02-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -219,7 +219,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#filter"><i class="fa fa-check"></i><b>7.2</b> <code>filter</code></a></li>
 <li class="chapter" data-level="7.3" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#arrange"><i class="fa fa-check"></i><b>7.3</b> <code>arrange</code></a></li>
 <li class="chapter" data-level="7.4" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#summarise-and-group_by"><i class="fa fa-check"></i><b>7.4</b> <code>summarise</code> and <code>group_by</code></a></li>
-<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-saving-data."><i class="fa fa-check"></i><b>7.5</b> Using pipes, saving data.</a></li>
+<li class="chapter" data-level="7.5" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#using-pipes-and-saving-data"><i class="fa fa-check"></i><b>7.5</b> Using pipes and saving data</a></li>
 <li class="chapter" data-level="7.6" data-path="data-wrangling-with-dplyr.html"><a href="data-wrangling-with-dplyr.html#exercise-wrangling-the-amniote-life-history-database"><i class="fa fa-check"></i><b>7.6</b> Exercise: Wrangling the Amniote Life History Database</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="combining-data-sets.html"><a href="combining-data-sets.html"><i class="fa fa-check"></i><b>8</b> Combining data sets</a>
@@ -458,7 +458,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="combining-data-sets" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">Chapter 8</span> Combining data sets<a href="combining-data-sets.html#combining-data-sets" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Handling data is often not limited to single data sets. One common task is to combine two (or more) data sets. For example, one data set might include observations from a field study, while another might have information about the weather during the study period or site-specific information. It is therefore useful to be able to combine these data sets to add information from the second table to the first.</p>
-<p><strong>R</strong> does this with the <code>dplyr</code> function <code>join</code>. In the next section you will first learn how <code>join</code> works by following an example that asks a research question that can only be answered by combining two data sets. After that, you will work on your own to do a similar analysis without explicit instructions (i.e. you will need to figure out how to apply the method to new data).</p>
+<p><strong>R</strong> does this with <code>dplyr</code> join functions such as <code>left_join</code>. In the next section you will first learn how joins work by following an example that asks a research question that can only be answered by combining two data sets. After that, you will work on your own to do a similar analysis without explicit instructions (i.e. you will need to figure out how to apply the method to new data).</p>
 <div id="using-join" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> Using <code>join</code><a href="combining-data-sets.html#using-join" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>By following this example you will learn how to combine two data sets to create a new data set for a conservation-related question: “<strong>Does threat status vary with species’ generation times?</strong>”</p>
@@ -493,11 +493,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="combining-data-sets.html#cb172-1" tabindex="-1"></a>redlist <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/MammalRedList.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look at that.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="combining-data-sets.html#cb173-1" tabindex="-1"></a><span class="fu">names</span>(redlist)</span></code></pre></div>
-<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                   &quot;Phylum&quot;                    &quot;Class&quot;                     &quot;Order&quot;                    
-##  [6] &quot;Family&quot;                    &quot;Genus&quot;                     &quot;Species&quot;                   &quot;Authority&quot;                 &quot;Infraspecific.rank&quot;       
-## [11] &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;   &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                  &quot;Common.names..Eng.&quot;       
-## [16] &quot;Common.names..Fre.&quot;        &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;           &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot;
-## [21] &quot;Year.assessed&quot;             &quot;Population.trend&quot;          &quot;Petitioned&quot;</code></pre>
+<pre><code>##  [1] &quot;Species.ID&quot;                &quot;Kingdom&quot;                  
+##  [3] &quot;Phylum&quot;                    &quot;Class&quot;                    
+##  [5] &quot;Order&quot;                     &quot;Family&quot;                   
+##  [7] &quot;Genus&quot;                     &quot;Species&quot;                  
+##  [9] &quot;Authority&quot;                 &quot;Infraspecific.rank&quot;       
+## [11] &quot;Infraspecific.name&quot;        &quot;Infraspecific.authority&quot;  
+## [13] &quot;Stock.subpopulation&quot;       &quot;Synonyms&quot;                 
+## [15] &quot;Common.names..Eng.&quot;        &quot;Common.names..Fre.&quot;       
+## [17] &quot;Common.names..Spa.&quot;        &quot;Red.List.status&quot;          
+## [19] &quot;Red.List.criteria&quot;         &quot;Red.List.criteria.version&quot;
+## [21] &quot;Year.assessed&quot;             &quot;Population.trend&quot;         
+## [23] &quot;Petitioned&quot;</code></pre>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="combining-data-sets.html#cb175-1" tabindex="-1"></a><span class="fu">unique</span>(redlist<span class="sc">$</span>Red.List.status)</span></code></pre></div>
 <pre><code>## [1] &quot;DD&quot; &quot;LC&quot; &quot;CR&quot; &quot;NT&quot; &quot;EN&quot; &quot;VU&quot; &quot;EX&quot; &quot;EW&quot;</code></pre>
 <p>There’s a lot of information there but what we really need is the Latin binomial (for which we need <code>genus</code> and <code>species</code>) and the threat status <code>Red.List.status</code>.</p>
@@ -548,7 +555,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="using-pivot_longer" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Using <code>pivot_longer</code><a href="combining-data-sets.html#using-pivot_longer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Sometimes data are not arranged in a way that make them easy to use in R. For example, data could be arranged so that the column headings are themselves data (e.g. treatments, sex of individuals).</p>
+<p>Sometimes data are not arranged in a way that makes them easy to use in R. For example, data could be arranged so that the column headings are themselves data (e.g. treatments, sex of individuals).</p>
 <p>To illustrate this I will use a data set on heights of men and women.</p>
 <div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="combining-data-sets.html#cb186-1" tabindex="-1"></a>heights <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/heights.csv&quot;</span>)</span></code></pre></div>
 <p>Let’s take a look:</p>
@@ -608,7 +615,7 @@ You can pipe data into the function, then tell it which columns you would like t
 ##  9 London heightMale      177
 ## 10 London heightFemale    153
 ## # ℹ 50 more rows</code></pre>
-<p>We are nearly done. But this is not perfect because the names in the <code>Sex</code> column are not right. We can fix this in a couple ways. Here’s one easy way using the function <code>gsub</code>. The <code>gsub</code> function (“<strong>general substitution</strong>) finds text and replaces it with other text. In this case we want to find”height” and replace it with nothing (““).</p>
+<p>We are nearly done. But this is not perfect because the names in the <code>Sex</code> column are not right. We can fix this in a couple ways. Here’s one easy way using the function <code>gsub</code>. The <code>gsub</code> function (“general substitution”) finds text and replaces it with other text. In this case we want to find “height” and replace it with nothing (““).</p>
 <p>So we can now complete the job with a <code>mutate</code> command, and make sure it is recognised as a categorical variable (a <code>factor</code>), like this:</p>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="combining-data-sets.html#cb191-1" tabindex="-1"></a>newHeights <span class="ot">&lt;-</span> heights <span class="sc">%&gt;%</span></span>
 <span id="cb191-2"><a href="combining-data-sets.html#cb191-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
@@ -643,12 +650,12 @@ You can pipe data into the function, then tell it which columns you would like t
 </div>
 <div id="exercise-temperature-effects-on-egg-laying-dates" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> Exercise: Temperature effects on egg laying dates<a href="combining-data-sets.html#exercise-temperature-effects-on-egg-laying-dates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: <em>is egg laying date associated with spring temperature?</em> The idea here is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn’t keep pace with the change.</p>
+<p>Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: <em>is egg laying date associated with spring temperature?</em> The idea here is that warmer springs can lead to earlier egg laying, which could have negative consequences for the population if their caterpillar food source does not keep pace with the change.</p>
 <p>You are provided with two data sets: one on the birds and another on weather. You will need to process these using tools in the <code>dplyr</code> package, and combine them (using <code>left_join</code>) for analysis.</p>
 <p>The first data set, <code>eggDates.csv</code>, is data from the SDU birds project. The data are arranged in columns where each column is a year and each row is a nest. The data in each column is the day of the year that the first egg in the nest was laid.</p>
-<p>These data do NOT fulfil the “tidy data” standard where each variable gets a column. In this case,a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.</p>
-<p>You will need to use <code>pivot_longer</code> to fix this issue so that you produce a version of the data with three columns - <code>nestNumber</code>, <code>Year</code> and <code>dayNumber</code>.</p>
-<p>The second dataset, <code>AarslevTemperature.csv</code>, is a weather dataset from Årslev near Odense. This dataset includes daily temperatures records for several years. You will need to <code>summarise</code> this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.</p>
+<p>These data do NOT fulfil the “tidy data” standard where each variable gets a column. In this case, a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.</p>
+<p>You will need to use <code>pivot_longer</code> to fix this issue so that you produce a version of the data with three columns: <code>boxNumber</code>, <code>Year</code>, and <code>dayNumber</code> (or similar names).</p>
+<p>The second dataset, <code>AarslevTemperature.csv</code>, is a weather dataset from Årslev near Odense. This dataset includes daily temperature records for several years. You will need to <code>summarise</code> this data to obtain a small dataset that has the weather of interest - average temperature in the months of February to April for each year.</p>
 <p>To answer the question, you will need to join these data sets together.</p>
 <ol style="list-style-type: decimal">
 <li><p>Import the data and take a look at it with <code>head</code> or <code>str</code>.</p></li>
@@ -660,9 +667,9 @@ You can pipe data into the function, then tell it which columns you would like t
 <ol start="3" style="list-style-type: decimal">
 <li><p>Calculate the mean egg date per year using <code>summarise</code> (remember to <code>group_by</code> the year first). Take a look at the data.</p></li>
 <li><p>Import the weather data and take a look at it with <code>head</code> or <code>str</code>.</p></li>
-<li><p>Use <code>filter</code> subset to the months of interest (February-April) and then <code>summarise</code> the data to calculate the mean temperature in this period (remember to <code>group_by</code> year). Look at the data. You should end up with a dataset with two columns - <code>year</code> and <code>meanSpringTemp</code>.</p></li>
-<li><p>Join the two datasets together using <code>left_join</code>. You should now have a dataset with columns <code>nestNumber</code>, <code>Year</code>, <code>dayNumber</code> and <code>meanAprilTemp</code></p></li>
-<li><p>plot a graph of <code>meanAprilTemp</code> on the x-axis and <code>dayNumber</code> on the y-axis.</p></li>
+<li><p>Use <code>filter</code> to subset to the months of interest (February-April) and then <code>summarise</code> the data to calculate the mean temperature in this period (remember to <code>group_by</code> year). Look at the data. You should end up with a dataset with two columns - <code>year</code> and <code>meanSpringTemp</code>.</p></li>
+<li><p>Join the two datasets together using <code>left_join</code>. You should now have a dataset with columns <code>boxNumber</code>, <code>Year</code>, <code>dayNumber</code>, and <code>meanSpringTemp</code> (or equivalent names).</p></li>
+<li><p>Plot a graph of <code>meanSpringTemp</code> on the x-axis and <code>dayNumber</code> on the y-axis.</p></li>
 </ol>
 <p>Now you should be able to answer the question we started with: is laying date associated with spring temperatures.</p>
 

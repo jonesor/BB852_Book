@@ -2,7 +2,7 @@
 
 In this course we will learn how to manipulate, visualise and analyse data statistically using **R**. **R** is a programming language for data analysis and statistics. It is free and widely used. One of its strengths is its large user base, which means there are hundreds of contributed packages for almost every type of analysis. The aim of these introductory sections is to give a basic introduction to the language as a tool for importing, manipulating and exploring data. In later sections we will learn more about statistical analysis.
 
-Before proceeding you will need to ensure you have a recent version of **R** installed on your computer (the version I am using right now is `r paste0(R.Version()$major,".",R.Version()$minor)`).
+Before proceeding you will need to ensure you have a recent version of **R** installed on your computer (the version I am using right now is `r paste0(R.Version()$major, ".", R.Version()$minor)`).
 
 ```{block 0-03-An-R-Refresher-1, type="do-something"}
 **Do this:** Check your R version, and/or install R on your own computer now.
@@ -248,7 +248,7 @@ subset(mydata, sex == "Female")
 
 ## Classes in R
 
-Every objects you create, or import into R, has a "type" called a `class`. You can ask what class an object has using the `class` function.
+Every object you create, or import into R, has a "type" called a `class`. You can ask what class an object has using the `class` function.
 
 For example, the vectors you created above have types.
 
@@ -295,13 +295,13 @@ If you are getting strange results from your code it is a good idea to check the
 
 It would be incredibly tedious to enter real data into **R** by typing it in!
 
-Thankfully, R can import data from a several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called *directories*) on your computer.
+Thankfully, R can import data from several data formats, and it understands the file structure of your computer. Thus, you can use spreadsheet software (like Excel) to enter and store your data, and you can organise your project work in a sensible way in folders (sometimes called *directories*) on your computer.
 
 The most commonly used data format is `comma separated value (CSV)` so I will use that. You can also import from Excel, but the data must be formatted in a particular way to enable this (I'll cover this in a later class).
 
 For this course, I suggest that you make a folder somewhere on your computer called "IntroToR". We will use this as the `working directory` for the remainder of the session. In RStudio you can set the working directory by clicking through the menu items **Session → Set Working Directory → Choose Directory**.
 
-You can also using the `setwd` function to do this, if you know where your files are stored (the *file path*). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\\). In windows you also need to define the drive (e.g. C:).
+You can also use the `setwd` function to do this, if you know where your files are stored (the *file path*). File paths in Windows and Mac computers are expressed differently. Apple systems use the forward-slash (/) to separate folders whereas Windows can use the forward-slash (/) or double-backslash (\\). In Windows you also need to define the drive (e.g. C:).
 
 So, to set the working directory in Apple OSX you would use something like this (obviously, you need to put *your* path!):
 
@@ -318,7 +318,7 @@ setwd("C:/Users/orj/Desktop/IntroToR")
 
 Typing the path in can be annoying but there are ways to speed it up. In Windows you can copy paths from the Windows Explorer location/address bar, or you can hold down the Shift key as you right-click the file, and then choose Copy As Path.
 
-On a Mac you can copy file paths from Finder: Select your file/folder, Right click, Press the option key (on my keyboard this is the `alt` key) and click "Copy X as Pathname"
+On a Mac you can copy file paths from Finder: select your file/folder, right-click, press the Option key (on my keyboard this is the `alt` key), and click "Copy X as Pathname".
 
 
 I can check what the current working directory is using the `getwd` function:
@@ -479,7 +479,7 @@ Additional surveys found an average species richness of 3.5 in nearby undisturbe
 
 4. Plot the relationship between `Year` and `nSpecies` as a scatter plot using base-R graphics (using the `plot` function).
 
-5. The pattern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - Year)`). Re-plot your results.
+5. The pattern might be easier to see if you replace `Year` with suburb age. Create a new vector in your data frame for this variable (e.g. `df$Age <- 1975 - df$Year`). Re-plot your results.
 
 6. What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?
 
