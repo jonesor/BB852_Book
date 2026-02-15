@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-14" />
+<meta name="date" content="2026-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -558,7 +558,7 @@ Figure 15.3: Diagnostic plots for the ANOVA model. This looks great.
 ## Multiple R-squared:  0.7031, Adjusted R-squared:  0.6783 
 ## F-statistic: 28.41 on 2 and 24 DF,  p-value: 4.699e-07</code></pre>
 <p>To properly interpret this output you need to understand something called “treatment contrasts”. Essentially, contrasts define how model coefficients (the estimates made by the model) are presented in R outputs.</p>
-<p>They are a bit hard to wrap your head around and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use <code>group_by</code> and <code>summarise</code> to calculate the means for your the levels of your explanatory variable.</p>
+<p>They are a bit hard to wrap your head around and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use <code>group_by</code> and <code>summarise</code> to calculate the means for the levels of your explanatory variable.</p>
 <div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-1" tabindex="-1"></a>espresso <span class="sc">%&gt;%</span></span>
 <span id="cb371-2"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-2" tabindex="-1"></a>  <span class="fu">group_by</span>(method) <span class="sc">%&gt;%</span></span>
 <span id="cb371-3"><a href="anova-linear-models-with-a-single-categorical-explanatory-variable.html#cb371-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">gp_mean =</span> <span class="fu">mean</span>(foamIndx))</span></code></pre></div>
@@ -625,7 +625,7 @@ Journal of Food Engineering, Vol. 121, pp. 112-117.
 Figure 15.4: Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.
 </p>
 </div>
-<p>So, from the first of the model outputs above you can say that BM is significantly different than HIP (t= 7.248, p &lt; 0.0001), but that BM is not significantly different from IES (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP is significantly different from IES (t=-5.417, p &lt; 0.0001). You could write this into the main text, include the information in a figure caption (i.e. add it to the figure).</p>
+<p>So, from the first of the model outputs above you can say that BM is significantly different than HIP (t= 7.248, p &lt; 0.0001), but that BM is not significantly different from IES (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP is significantly different from IES (t=-5.417, p &lt; 0.0001). You could write this into the main text, or include the information in a figure caption (i.e. add it to the figure).</p>
 <p>e.g. <em>The foam index varied significantly among groups (ANOVA: F = 28.413, d.f. = 2 and 24, p = 0.000). The pairwise comparisons in the ANOVA model showed that means of BM and HIP were significantly different (t= 7.248, p &lt; 0.0001), as were those of HIP and IES (t=-5.417, p &lt; 0.0001), but the BM-IES comparison showed no significant difference (t= 1.831, p= 0.0796)</em>.</p>
 </div>
 <div id="tukeys-honestly-significant-difference-hsd" class="section level3 hasAnchor" number="15.2.2">

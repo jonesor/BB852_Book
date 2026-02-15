@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-14" />
+<meta name="date" content="2026-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -491,7 +491,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="exercise-solutions.html#cb559-1" tabindex="-1"></a><span class="fu">plot</span>(birds<span class="sc">$</span>Year, birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-4-1.png" alt="" width="672" /></p>
 <ol start="5" style="list-style-type: decimal">
-<li>The pattern might be easier to see if you could replace <code>YearBuilt</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>birds$Age &lt;- 1975 - birds$Year)</code>). Re-plot your results.</li>
+<li>The pattern might be easier to see if you replace <code>Year</code> with suburb age. Create a new vector in your data frame for this variable (e.g. <code>birds$Age &lt;- 1975 - birds$Year</code>). Re-plot your results.</li>
 </ol>
 <div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="exercise-solutions.html#cb560-1" tabindex="-1"></a>birds<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="dv">1975</span> <span class="sc">-</span> birds<span class="sc">$</span>Year</span>
 <span id="cb560-2"><a href="exercise-solutions.html#cb560-2" tabindex="-1"></a><span class="fu">plot</span>(birds<span class="sc">$</span>Age, birds<span class="sc">$</span>nSpecies)</span></code></pre></div>
@@ -563,7 +563,7 @@ The relevant columns are the taxonomic variables (<code>class</code>, <code>spec
 <span id="cb566-5"><a href="exercise-solutions.html#cb566-5" tabindex="-1"></a>    litter_or_clutch_size_n, litters_or_clutches_per_y</span>
 <span id="cb566-6"><a href="exercise-solutions.html#cb566-6" tabindex="-1"></a>  )</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
-<li>Take a look at the first few entries in the <code>species</code> column. You will see that it is only the <em>epithet</em>, the second part of the <em>Genus_species</em> name, that is given.<br />
+<li>Take a look at the first few entries in the <code>species</code> column. You will see that it is only the <em>epithet</em>, the second part of the <em>Genus_species</em> name, that is given.
 Use <code>mutate</code> and <code>paste</code> to convert the <code>species</code> column to a <em>Genus_species</em> by pasting the data in <code>genus</code> and <code>species</code> together. To see how this works, try out the following command, <code>paste(1:3, 4:6)</code>. After you have created the new column, remove the <code>genus</code> column (using <code>select</code> and <code>-genus</code>).</li>
 </ol>
 <div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="exercise-solutions.html#cb567-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
@@ -639,12 +639,12 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 ## 2 Mammalia 0.0833   8.67  122.
 ## 3 Reptilia 0.2     11.0   177</code></pre>
 <ol start="7" style="list-style-type: decimal">
-<li>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</li>
+<li>Body size is thought to be associated with life span. Let’s treat that as a hypothesis and test it graphically. Sketch what the graph would look like if the hypothesis were true, and if it was false. Plot <code>adult_body_mass_g</code> vs. <code>longevity_y</code> (using base R graphics). You should notice that this looks a bit messy.</li>
 </ol>
 <div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="exercise-solutions.html#cb575-1" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>adult_body_mass_g, x<span class="sc">$</span>longevity_y)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-13-1.png" alt="" width="672" /></p>
 <ol start="8" style="list-style-type: decimal">
-<li>Use <code>mutate</code> to create a new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that makes the relationship more linear, and easier to “read”.</li>
+<li>Use <code>mutate</code> to create two new <code>log</code>-transformed variables, <code>logMass</code> and <code>logLongevity</code>. Use these to make a “log-log” plot. You should see that this makes the relationship more linear, and easier to “read”.</li>
 </ol>
 <div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="exercise-solutions.html#cb576-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
 <span id="cb576-2"><a href="exercise-solutions.html#cb576-2" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -655,7 +655,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb576-7"><a href="exercise-solutions.html#cb576-7" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>logMass, x<span class="sc">$</span>logLongevity)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-14-1.png" alt="" width="672" /></p>
 <ol start="9" style="list-style-type: decimal">
-<li>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</li>
+<li>Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: use <code>mutate</code> to create a variable called <code>logOffspring</code> which is the logarithm of the number of litters/clutches per year multiplied by the number of babies in each litter/clutch. Then plot <code>logOffspring</code> vs. <code>logLongevity</code>.</li>
 </ol>
 <div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="exercise-solutions.html#cb577-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
 <span id="cb577-2"><a href="exercise-solutions.html#cb577-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logOffspring =</span> <span class="fu">log</span>(</span>
@@ -665,7 +665,7 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 <span id="cb577-6"><a href="exercise-solutions.html#cb577-6" tabindex="-1"></a><span class="fu">plot</span>(x<span class="sc">$</span>logOffspring, x<span class="sc">$</span>logLongevity)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-15-1.png" alt="" width="672" /></p>
 <ol start="10" style="list-style-type: decimal">
-<li>To answer the final question (differences between taxonomic classes) you could now use <code>filter</code> to subset to particular classes and repeat the plot to see whether the relationships holds universally.</li>
+<li>To answer the final question (differences between taxonomic classes) you could now use <code>filter</code> to subset to particular classes and repeat the plot to see whether the relationship holds universally.</li>
 </ol>
 <div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="exercise-solutions.html#cb578-1" tabindex="-1"></a>aves <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
 <span id="cb578-2"><a href="exercise-solutions.html#cb578-2" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Aves&quot;</span>)</span>
@@ -766,43 +766,43 @@ Use <code>mutate</code> and <code>paste</code> to convert the <code>species</cod
 ##  $ DAY  : int  11 12 13 14 15 16 17 18 19 20 ...
 ##  $ TEMP : num  8.1 6.6 5.9 6.2 6.5 4.3 4.3 7 8.9 6.5 ...</code></pre>
 <ol start="6" style="list-style-type: decimal">
-<li>Use <code>filter</code> subset to the months of interest (February-April) and then <code>summarise</code> the data to calculate the mean temperature in this period (remember to <code>group_by</code> year). Look at the data. You should end up with a dataset with two columns - <code>YEAR</code> and <code>meanSpringTemp</code>.</li>
+<li>Use <code>filter</code> to subset to the months of interest (February-April) and then <code>summarise</code> the data to calculate the mean temperature in this period (remember to <code>group_by</code> year). Look at the data. You should end up with a dataset with two columns - <code>YEAR</code> and <code>meanSpringTemp</code>.</li>
 </ol>
 <div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="exercise-solutions.html#cb591-1" tabindex="-1"></a>weather <span class="ot">&lt;-</span> weather <span class="sc">%&gt;%</span></span>
 <span id="cb591-2"><a href="exercise-solutions.html#cb591-2" tabindex="-1"></a>  <span class="fu">filter</span>(MONTH <span class="sc">%in%</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb591-3"><a href="exercise-solutions.html#cb591-3" tabindex="-1"></a>  <span class="fu">group_by</span>(YEAR) <span class="sc">%&gt;%</span></span>
-<span id="cb591-4"><a href="exercise-solutions.html#cb591-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanAprilTemp =</span> <span class="fu">mean</span>(TEMP))</span>
+<span id="cb591-4"><a href="exercise-solutions.html#cb591-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSpringTemp =</span> <span class="fu">mean</span>(TEMP))</span>
 <span id="cb591-5"><a href="exercise-solutions.html#cb591-5" tabindex="-1"></a></span>
 <span id="cb591-6"><a href="exercise-solutions.html#cb591-6" tabindex="-1"></a><span class="fu">head</span>(weather)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
-##    YEAR meanAprilTemp
-##   &lt;int&gt;         &lt;dbl&gt;
-## 1  2012          7.86
-## 2  2013          1.60
-## 3  2014          6.03
-## 4  2015          4.63
-## 5  2016          4.50
-## 6  2017          4.77</code></pre>
+##    YEAR meanSpringTemp
+##   &lt;int&gt;          &lt;dbl&gt;
+## 1  2012           7.86
+## 2  2013           1.60
+## 3  2014           6.03
+## 4  2015           4.63
+## 5  2016           4.50
+## 6  2017           4.77</code></pre>
 <p><strong>Bringing it together</strong></p>
 <ol start="7" style="list-style-type: decimal">
-<li>Join the two datasets together using <code>left_join</code>. You should now have a dataset with columns <code>nestNumber</code>, <code>Year</code>, <code>dayNumber</code> and <code>meanAprilTemp</code></li>
+<li>Join the two datasets together using <code>left_join</code>. You should now have a dataset with columns <code>Year</code>, <code>meanEggDate</code> and <code>meanSpringTemp</code>.</li>
 </ol>
 <div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="exercise-solutions.html#cb593-1" tabindex="-1"></a>joinedData <span class="ot">&lt;-</span> <span class="fu">left_join</span>(meanEgg, weather, <span class="fu">c</span>(<span class="st">&quot;Year&quot;</span> <span class="ot">=</span> <span class="st">&quot;YEAR&quot;</span>))</span>
 <span id="cb593-2"><a href="exercise-solutions.html#cb593-2" tabindex="-1"></a><span class="fu">head</span>(joinedData)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 3
-##    Year meanEggDate meanAprilTemp
-##   &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
-## 1  2013        125.          1.60
-## 2  2014        108.          6.03
-## 3  2016        115.          4.50
-## 4  2017        112.          4.77
-## 5  2018        117.          3.07
-## 6  2019        111.          6.12</code></pre>
+##    Year meanEggDate meanSpringTemp
+##   &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
+## 1  2013        125.           1.60
+## 2  2014        108.           6.03
+## 3  2016        115.           4.50
+## 4  2017        112.           4.77
+## 5  2018        117.           3.07
+## 6  2019        111.           6.12</code></pre>
 <p><strong>Plot the data</strong></p>
 <ol start="8" style="list-style-type: decimal">
-<li>plot a graph of <code>meanAprilTemp</code> on the x-axis and <code>dayNumber</code> on the y-axis.</li>
+<li>Plot a graph of <code>meanSpringTemp</code> on the x-axis and <code>meanEggDate</code> on the y-axis.</li>
 </ol>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="exercise-solutions.html#cb595-1" tabindex="-1"></a><span class="fu">plot</span>(joinedData<span class="sc">$</span>meanAprilTemp, joinedData<span class="sc">$</span>meanEggDate)</span></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="exercise-solutions.html#cb595-1" tabindex="-1"></a><span class="fu">plot</span>(joinedData<span class="sc">$</span>meanSpringTemp, joinedData<span class="sc">$</span>meanEggDate)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-26-1.png" alt="" width="672" /></p>
 <p>Now you should be able to answer the question we started with: is laying date associated with spring temperatures? Yes, there looks to be a negative relationship between temperature and egg laying date.</p>
 </div>
@@ -885,15 +885,15 @@ Figure 27.2: Barplots of 30 and 9000 simulated dice throws
 </ol>
 <div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="exercise-solutions.html#cb605-1" tabindex="-1"></a><span class="co"># Let&#39;s look at the male and female data</span></span>
 <span id="cb605-2"><a href="exercise-solutions.html#cb605-2" tabindex="-1"></a>(plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hercules, <span class="fu">aes</span>(<span class="at">x =</span> width, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
-<span id="cb605-3"><a href="exercise-solutions.html#cb605-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>))</span></code></pre></div>
+<span id="cb605-3"><a href="exercise-solutions.html#cb605-3" tabindex="-1"></a>   <span class="fu">geom_histogram</span>(<span class="at">position =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">alpha =</span> .<span class="dv">7</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-33-1.png" alt="" width="672" /></p>
 <ol start="6" style="list-style-type: decimal">
 <li>Add vertical lines to the plot to indicate the mean values.</li>
 </ol>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="exercise-solutions.html#cb606-1" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="exercise-solutions.html#cb606-1" tabindex="-1"></a>meanVals <span class="ot">&lt;-</span> hercules <span class="sc">%&gt;%</span></span>
 <span id="cb606-2"><a href="exercise-solutions.html#cb606-2" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
 <span id="cb606-3"><a href="exercise-solutions.html#cb606-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
-<span id="cb606-4"><a href="exercise-solutions.html#cb606-4" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="ot">-&gt;</span> meanVals</span>
+<span id="cb606-4"><a href="exercise-solutions.html#cb606-4" tabindex="-1"></a>  <span class="fu">pull</span>(mean)</span>
 <span id="cb606-5"><a href="exercise-solutions.html#cb606-5" tabindex="-1"></a></span>
 <span id="cb606-6"><a href="exercise-solutions.html#cb606-6" tabindex="-1"></a>plot1 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> meanVals, <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-34-1.png" alt="" width="672" /></p>
@@ -901,11 +901,11 @@ Figure 27.2: Barplots of 30 and 9000 simulated dice throws
 <li>Now calculate the difference between the mean values using <code>dplyr</code> tools, or <code>tapply</code>.</li>
 </ol>
 <div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="exercise-solutions.html#cb607-1" tabindex="-1"></a><span class="co"># with dplyr</span></span>
-<span id="cb607-2"><a href="exercise-solutions.html#cb607-2" tabindex="-1"></a>hercules <span class="sc">%&gt;%</span></span>
+<span id="cb607-2"><a href="exercise-solutions.html#cb607-2" tabindex="-1"></a>observedDiff <span class="ot">&lt;-</span> hercules <span class="sc">%&gt;%</span></span>
 <span id="cb607-3"><a href="exercise-solutions.html#cb607-3" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
 <span id="cb607-4"><a href="exercise-solutions.html#cb607-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(width)) <span class="sc">%&gt;%</span></span>
 <span id="cb607-5"><a href="exercise-solutions.html#cb607-5" tabindex="-1"></a>  <span class="fu">pull</span>(mean) <span class="sc">%&gt;%</span></span>
-<span id="cb607-6"><a href="exercise-solutions.html#cb607-6" tabindex="-1"></a>  <span class="fu">diff</span>() <span class="ot">-&gt;</span> observedDiff</span>
+<span id="cb607-6"><a href="exercise-solutions.html#cb607-6" tabindex="-1"></a>  <span class="fu">diff</span>()</span>
 <span id="cb607-7"><a href="exercise-solutions.html#cb607-7" tabindex="-1"></a>observedDiff</span></code></pre></div>
 <pre><code>## [1] 2.337433</code></pre>
 <div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="exercise-solutions.html#cb609-1" tabindex="-1"></a><span class="co"># with tapply</span></span>
@@ -1004,13 +1004,13 @@ Figure 27.2: Barplots of 30 and 9000 simulated dice throws
 <li>Plot the data (e.g. with a box plot, or histogram)</li>
 </ol>
 <div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="exercise-solutions.html#cb625-1" tabindex="-1"></a>classData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/classData.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb625-2"><a href="exercise-solutions.html#cb625-2" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb625-2"><a href="exercise-solutions.html#cb625-2" tabindex="-1"></a>  <span class="fu">filter</span>(Gender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb625-3"><a href="exercise-solutions.html#cb625-3" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2019</span>) <span class="co">#you may use a different filter</span></span>
 <span id="cb625-4"><a href="exercise-solutions.html#cb625-4" tabindex="-1"></a></span>
 <span id="cb625-5"><a href="exercise-solutions.html#cb625-5" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> Gender, <span class="at">y =</span> Precision)) <span class="sc">+</span></span>
 <span id="cb625-6"><a href="exercise-solutions.html#cb625-6" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb625-7"><a href="exercise-solutions.html#cb625-7" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="BB852_files/figure-html/6-1-00-AllSolutions-41-1.png" width="672" /></p>
+<p><img src="BB852_files/figure-html/6-1-00-AllSolutions-41-1.png" alt="" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Formulate null and alternative hypotheses.</li>
 </ol>
@@ -1087,7 +1087,7 @@ Alternative Hypothesis = There is a significant change in weight between the two
 <li>Write a couple of sentences to report your result.</li>
 </ol>
 <div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="exercise-solutions.html#cb632-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">t.test</span>(anorexiaCBT<span class="sc">$</span>Week01, anorexiaCBT<span class="sc">$</span>Week08, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<p>There was a significant difference in weight of -3.007kg between week 1 and week 8 (t.test: t = -2.22, df = 28.00, p = 0.035). The 95% confidence interval for the difference between weeks was between -5.787 and -0.227. Therefore, I reject the null hypotheses, that the difference is due to chance alone, and accept the alternative hypothesis.</p>
+<p>There was a significant difference in weight of -3.007kg between week 1 and week 8 (t.test: t = -2.22, df = 28.00, p = 0.035). The 95% confidence interval for the difference between weeks was between -5.787 and -0.227. Therefore, I reject the null hypothesis that the difference is due to chance alone, and accept the alternative hypothesis.</p>
 </div>
 <div id="compare-t-tests-with-randomisation-tests" class="section level2 hasAnchor" number="27.8">
 <h2><span class="header-section-number">27.8</span> Compare t-tests with randomisation tests<a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1270,7 +1270,7 @@ analysis?
 <li>Plot the data</li>
 </ol>
 <div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="exercise-solutions.html#cb650-1" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(chirps, <span class="fu">aes</span>(<span class="at">x =</span> temperatureC, <span class="at">y =</span> chirps)) <span class="sc">+</span></span>
-<span id="cb650-2"><a href="exercise-solutions.html#cb650-2" tabindex="-1"></a>  <span class="fu">geom_point</span>())</span></code></pre></div>
+<span id="cb650-2"><a href="exercise-solutions.html#cb650-2" tabindex="-1"></a>   <span class="fu">geom_point</span>())</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-62-1.png" alt="" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li>Fit a linear regression model with <code>lm</code></li>
@@ -1349,7 +1349,7 @@ analysis?
 <li>Fit an ANOVA model using <code>lm</code>.</li>
 </ol>
 <div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="exercise-solutions.html#cb660-1" tabindex="-1"></a>mod_A <span class="ot">&lt;-</span> <span class="fu">lm</span>(spawning <span class="sc">~</span> personality <span class="sc">+</span> colouration <span class="sc">+</span></span>
-<span id="cb660-2"><a href="exercise-solutions.html#cb660-2" tabindex="-1"></a>  personality<span class="sc">:</span>colouration, <span class="at">data =</span> fishPersonality)</span></code></pre></div>
+<span id="cb660-2"><a href="exercise-solutions.html#cb660-2" tabindex="-1"></a>              personality<span class="sc">:</span>colouration, <span class="at">data =</span> fishPersonality)</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li><p>Look at diagnostic plots from this model (<code>autoplot</code>)</p></li>
 <li><p>Use <code>anova</code> to get an Analysis of Variance summary table, and interpret the results.</p></li>
@@ -1451,8 +1451,8 @@ analysis?
 ## 5 Child       6
 ## 6 Child       0</code></pre>
 <div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="exercise-solutions.html#cb669-1" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(maze, <span class="fu">aes</span>(<span class="at">x =</span> Age, <span class="at">y =</span> nErrors)) <span class="sc">+</span></span>
-<span id="cb669-2"><a href="exercise-solutions.html#cb669-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb669-3"><a href="exercise-solutions.html#cb669-3" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">&quot;y&quot;</span>, <span class="at">stackdir =</span> <span class="st">&quot;center&quot;</span>))</span></code></pre></div>
+<span id="cb669-2"><a href="exercise-solutions.html#cb669-2" tabindex="-1"></a>   <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb669-3"><a href="exercise-solutions.html#cb669-3" tabindex="-1"></a>   <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">&quot;y&quot;</span>, <span class="at">stackdir =</span> <span class="st">&quot;center&quot;</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/6-1-00-AllSolutions-74-1.png" alt="" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Fit an appropriate GLM.</li>

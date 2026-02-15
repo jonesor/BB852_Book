@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-14" />
+<meta name="date" content="2026-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -590,8 +590,8 @@ correctly.
 <p>
 This section is for illustration only. It is intended to show the
 utility of using R to quickly address experimental design questions but
-it goes beyond what you are expected to learn.I hope you find it
-interesting nevertheless. To this you will need to add the
+it goes beyond what you are expected to learn. I hope you find it
+interesting nevertheless. For this you will need to add the
 <code>purrr</code> library (using
 <code>install.packages(“purrr”)</code>). This package includes a useful
 function, <code>map_dbl</code>, which allows you to repeatedly apply
@@ -600,7 +600,7 @@ functions over many different input values. I use the double colon
 this function without the need to load the whole package.
 </p>
 </div>
-<p>One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) using by turning the calculations of the t-test into a function, and then applying that function over a range of values.</p>
+<p>One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) by turning the calculations of the t-test into a function, and then applying that function over a range of values.</p>
 <p>I illustrate this below by varying sample size between 5 and 40.</p>
 <div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="power-analysis-by-simulation.html#cb529-1" tabindex="-1"></a><span class="co"># Set up a data frame for the simulation results</span></span>
 <span id="cb529-2"><a href="power-analysis-by-simulation.html#cb529-2" tabindex="-1"></a>simulData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sampleSize =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">40</span>)</span>

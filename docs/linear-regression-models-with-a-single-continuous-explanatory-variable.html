@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-14" />
+<meta name="date" content="2026-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -484,8 +484,8 @@ Figure 16.3: Residuals and least squares: which is the best fitting line?
 </div>
 <p>In fact, these residuals represent “error” caused by factors including measurement error, random variation, variation caused by unmeasured factors etc. This error term is given the label, <span class="math inline">\(\epsilon\)</span>. Thus we can write the model equation as:</p>
 <p><span class="math display">\[y = ax+b+\epsilon\]</span></p>
-<p>Sometimes, this equation is written with using the beta symbol (<span class="math inline">\(\beta\)</span>) for the coefficients, so that the slope is <span class="math inline">\(\beta_0\)</span> and the intercept is <span class="math inline">\(\beta_1\)</span> for example.</p>
-<p><span class="math display">\[y = \beta_0 x+\beta_1+\epsilon\]</span></p>
+<p>Sometimes, this equation is written using the beta symbol (<span class="math inline">\(\beta\)</span>) for the coefficients, so that the intercept is <span class="math inline">\(\beta_0\)</span> and the slope is <span class="math inline">\(\beta_1\)</span>, for example.</p>
+<p><span class="math display">\[y = \beta_0 + \beta_1 x+\epsilon\]</span></p>
 <p>The idea is that this equation, and its coefficients and error estimates, describe the relationship we are interested in (including the error or uncertainty).</p>
 <p>Together this information allows us to not only determine if there <strong>is</strong> a statistically significant relationship, but also what the nature of the relationship is, and the uncertainty in our estimates.</p>
 </div>
@@ -589,14 +589,14 @@ Figure 16.5: Illustration of the coefficient estimates for our model. The peak o
 <p><span class="math inline">\(R^2\)</span> is the square of the correlation coefficient <span class="math inline">\(r\)</span> and is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the <span class="math inline">\(R^2\)</span> value would be 1. This idea is illustrated in Figure <a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#fig:3-04-linearRegression-13">16.6</a>.</p>
 <p>We could describe the model like this:</p>
 <p><em>There is a statistically significant association between hand width and height (F = 22.0912, d.f. = 1,31, p &lt; 0.001) The equation of the fitted model is: Height = 3.88(<span class="math inline">\(\pm\)</span> 0.83) <span class="math inline">\(\times\)</span> HandWidth + 140.68(<span class="math inline">\(\pm\)</span> 7.40). The model explains 42% of the variation in height (<span class="math inline">\(R^2\)</span> = 0.416).</em></p>
-<p>… or maybe, <em>The model, which explained 42% of the variation in height, showed that the slope of the relationship between hand width and height is 3.88 <span class="math inline">\(\pm\)</span> 0.83 which is significantly greater than 0 (t = 19.00, p &lt; 0.01)</em></p>
+<p>… or maybe, <em>The model, which explained 42% of the variation in height, showed that the slope of the relationship between hand width and height is 3.88 <span class="math inline">\(\pm\)</span> 0.83 which is significantly greater than 0 (t = 4.70, p &lt; 0.01)</em></p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:3-04-linearRegression-13"></span>
 <img src="BB852_files/figure-html/3-04-linearRegression-13-1.png" alt="An illustration of different R-squared values." width="384" />
 <p class="caption">
 Figure 16.6: An illustration of different R-squared values.
 </p>
 </div>
-<p>A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The <code>ggplot2</code> package has a neat and simple function called <code>geom_smooth</code> which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use <code>method = "lm"</code>. This will plot the fitted regression model, and will add, by default” a shaded “ribbon” which represents the so called “95% confidence interval” for the fitted values. These are 2 time the standard error.</p>
+<p>A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The <code>ggplot2</code> package has a neat and simple function called <code>geom_smooth</code> which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use <code>method = "lm"</code>. This will plot the fitted regression model, and will add, by default, a shaded ribbon which represents the so-called “95% confidence interval” for the fitted values. These are approximately 2 times the standard error.</p>
 <div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb410-1" tabindex="-1"></a><span class="fu">ggplot</span>(classData, <span class="fu">aes</span>(<span class="at">x =</span> HandWidth, <span class="at">y =</span> Height)) <span class="sc">+</span></span>
 <span id="cb410-2"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb410-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb410-3"><a href="linear-regression-models-with-a-single-continuous-explanatory-variable.html#cb410-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>

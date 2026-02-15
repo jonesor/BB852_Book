@@ -89,11 +89,11 @@ In the AIC results table, the models are now ordered from best (lowest AIC) to w
 
 ## Variance partitioning
 
-When you have a model with numerous terms (e.g. a multiple regression model, or an 2-way ANOVA for example) it is often useful to express the results in term of variance explained. 
+When you have a model with numerous terms (e.g. a multiple regression model, or a 2-way ANOVA for example) it is often useful to express the results in terms of variance explained.
 
 We can do this using variance partitioning.
 
-Consider our earlier model `lm(Height ~ HandWidth + Gender`. What proportion of the variance in height is explained by hand width? And what proportion by Gender? (and so on, for more complicated models...)
+Consider our earlier model `lm(Height ~ HandWidth + Gender)`. What proportion of the variance in height is explained by hand width? And what proportion by Gender? (and so on, for more complicated models...)
 
 This is done by examining the anova summary (e.g. `anova(mod1)`), using the `Sum Sq` column.
 
@@ -110,7 +110,7 @@ The proportion of variance explained by HandWidth is `r round(unlist(anova(mod1)
 Similarly, the proportion of variance explained by Gender is `r round(unlist(anova(mod1)[2]),1)[2]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[2]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
 
 
-In more complicated multiple regression one could use this approach to further group variables into types so one could e.g., one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level, for example. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of "types", such as "genetic", "morphological" and "diet". Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.
+In more complicated multiple regression one could use this approach to further group variables into types. For example, one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of "types", such as "genetic", "morphological" and "diet". Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.
 
 
 The logical process is the same for Generalised Linear Models (GLM), which we will cover soon, except we use an analogous quantity called `Deviance` rather than Sum of Squares.
@@ -118,5 +118,5 @@ The logical process is the same for Generalised Linear Models (GLM), which we wi
 
 ## Conclusion
 
-In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary to tell you how much variation is explained - a high R2 value indicates a good model. It can be used to compare models that use different data. AIC is another measure of model "quality" but can only compare models that use the same data set. Low AIC values are better than high ones.
+In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary to tell you how much variation is explained - a high R2 value indicates a good model. It is most meaningful when comparing models fitted to the same response on the same dataset. AIC is another measure of model "quality" but can only compare models that use the same data set. Low AIC values are better than high ones.
 Variance partitioning can be used as a handy way to sum up your model (in addition to significance and coefficient values).

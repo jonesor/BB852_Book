@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-14" />
+<meta name="date" content="2026-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -566,9 +566,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="variance-partitioning" class="section level2 hasAnchor" number="19.3">
 <h2><span class="header-section-number">19.3</span> Variance partitioning<a href="evaluating-linear-models.html#variance-partitioning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>When you have a model with numerous terms (e.g. a multiple regression model, or an 2-way ANOVA for example) it is often useful to express the results in term of variance explained.</p>
+<p>When you have a model with numerous terms (e.g. a multiple regression model, or a 2-way ANOVA for example) it is often useful to express the results in terms of variance explained.</p>
 <p>We can do this using variance partitioning.</p>
-<p>Consider our earlier model <code>lm(Height ~ HandWidth + Gender</code>. What proportion of the variance in height is explained by hand width? And what proportion by Gender? (and so on, for more complicated models…)</p>
+<p>Consider our earlier model <code>lm(Height ~ HandWidth + Gender)</code>. What proportion of the variance in height is explained by hand width? And what proportion by Gender? (and so on, for more complicated models…)</p>
 <p>This is done by examining the anova summary (e.g. <code>anova(mod1)</code>), using the <code>Sum Sq</code> column.</p>
 <div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="evaluating-linear-models.html#cb450-1" tabindex="-1"></a><span class="fu">anova</span>(mod1)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
@@ -583,12 +583,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>So here we already know that the model explains 63.85% of variation in Height. We can partition this among the terms by using the Sums of Squares values.
 The proportion of variance explained by HandWidth is 881.6/(881.6 + 471.1) = 0.6517336.</p>
 <p>Similarly, the proportion of variance explained by Gender is 471.1/(881.6 + 471.1) = 0.3482664.</p>
-<p>In more complicated multiple regression one could use this approach to further group variables into types so one could e.g., one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level, for example. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of “types”, such as “genetic”, “morphological” and “diet”. Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.</p>
+<p>In more complicated multiple regression one could use this approach to further group variables into types. For example, one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of “types”, such as “genetic”, “morphological” and “diet”. Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.</p>
 <p>The logical process is the same for Generalised Linear Models (GLM), which we will cover soon, except we use an analogous quantity called <code>Deviance</code> rather than Sum of Squares.</p>
 </div>
 <div id="conclusion" class="section level2 hasAnchor" number="19.4">
 <h2><span class="header-section-number">19.4</span> Conclusion<a href="evaluating-linear-models.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary to tell you how much variation is explained - a high R2 value indicates a good model. It can be used to compare models that use different data. AIC is another measure of model “quality” but can only compare models that use the same data set. Low AIC values are better than high ones.
+<p>In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary to tell you how much variation is explained - a high R2 value indicates a good model. It is most meaningful when comparing models fitted to the same response on the same dataset. AIC is another measure of model “quality” but can only compare models that use the same data set. Low AIC values are better than high ones.
 Variance partitioning can be used as a handy way to sum up your model (in addition to significance and coefficient values).</p>
 
 </div>

@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-14" />
+<meta name="date" content="2026-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -511,7 +511,7 @@ correctly.
 <p><strong>However</strong>, a newer diagnostic method specifically suited to models like logistic regression exists: the <code>DHARMa</code> package offers an alternative simulation-based approach that provides clearer and more reliable insights.</p>
 <div id="dharma" class="section level3 hasAnchor" number="21.2.1">
 <h3><span class="header-section-number">21.2.1</span> DHARMa<a href="extending-use-cases-of-glm.html#dharma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The <strong>DHARMa</strong> package is an alternative approach to model diagnostics, particularly where traditional tools like <code>agricolae::autoplot</code> fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult.</p>
+<p>The <strong>DHARMa</strong> package is an alternative approach to model diagnostics, particularly where traditional tools like <code>ggfortify::autoplot</code> fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult.</p>
 <p>At the heart of DHARMa’s approach is the <code>simulateResiduals()</code> function. The function simulates standardised residuals based on the model’s assumptions, including the specified error distribution and link function. DHARMa then constructs diagnostic plots that can reveal model deficiencies such as mismatched link functions, unmodelled predictors, and overdispersion.</p>
 <p>The two plots are the <strong>Q-Q plot</strong> and the <strong>residuals versus predicted values plot</strong>. The <strong>Q-Q plot</strong> compares the observed residuals against an expected distribution generated from the simulations. A well-fitted model is reflected by points aligning along the diagonal. The <strong>residuals versus predicted values plot</strong> allows users to check for patterns in residuals, with a random scatter indicating a well-fitting model. Deviations from these expectations signal issues like incorrect link functions, overdispersion, or omitted variables.</p>
 <p>Here is how to implement this approach (note that you will likely need to install the <code>DHARMa</code> package first using <code>install.packages("DHARMa")</code>):</p>
@@ -525,7 +525,7 @@ correctly.
 <div id="continuing-the-analysis" class="section level3 hasAnchor" number="21.2.2">
 <h3><span class="header-section-number">21.2.2</span> Continuing the analysis<a href="extending-use-cases-of-glm.html#continuing-the-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>So, based on theoretical principles about the response variable’s bounds or the results of this DHARMa analysis, we can be pretty sure that the binomial family is the most appropriate family to use. Let’s continue.</p>
-<p>We proceed in the normal way by obtaining the ANOVA table for the model. We need to specify that we want to calculated p-values using a “Chi” squared test. This shows us that indeed distance is an important variable in determining probability of success (not so surprising!)</p>
+<p>We proceed in the normal way by obtaining the ANOVA table for the model. We need to specify that we want to calculate p-values using a “Chi” squared test. This shows us that indeed distance is an important variable in determining probability of success (not so surprising!)</p>
 <div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="extending-use-cases-of-glm.html#cb473-1" tabindex="-1"></a><span class="fu">anova</span>(nflMod, <span class="at">test =</span> <span class="st">&quot;Chi&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
@@ -562,7 +562,7 @@ correctly.
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>We could report this something like this:</p>
-<p><em>The binomial GLM showed that distance was significantly associated with the probability of goal success (GLM: Null Deviance = 955.38, Residual Deviance = 817.58, d.f. = 1 and 946 p &lt;0.001). The slope and intercept of the relationship is -0.131 and 5.690 respectively on the logit scale. The equation of the best fit line was therefore logit(nOffspring) = 5.690 - 0.131<span class="math inline">\(\times\)</span>distance (see Figure XXX)</em></p>
+<p><em>The binomial GLM showed that distance was significantly associated with the probability of goal success (GLM: Null Deviance = 955.38, Residual Deviance = 817.58, d.f. = 1 and 946, p &lt; 0.001). The slope and intercept of the relationship are -0.131 and 5.690 respectively on the logit scale. The equation of the best fit line was therefore logit(probability of success) = 5.690 - 0.131<span class="math inline">\(\times\)</span>distance (see Figure XXX).</em></p>
 <p>The equation of the model if you want to express it on the natural scale works out to be:</p>
 <p><span class="math inline">\(y =\frac{1}{1+exp(-(\beta_0 + \beta_1 x))}\)</span>, or <span class="math inline">\(probability =\frac{1}{1+exp(-(5.690 - 0.131\times distance))}\)</span>.</p>
 <p>Let’s make sure that works by creating a set of predicted data from this equation and plotting it onto the graph:</p>
@@ -574,7 +574,7 @@ correctly.
 <ol style="list-style-type: decimal">
 <li><p>create a data frame for the model what to predict <code>from</code>.</p></li>
 <li><p>use the <code>predict</code> function to predict fitted values and standard errors (SE).</p></li>
-<li><p>put these predicted values into a <code>newData</code> data frame, multiplying the SE values these by 1.96 to get the 95% confidence intervals of the fitted values.</p></li>
+<li><p>put these predicted values into a <code>newData</code> data frame, multiplying the SE values by 1.96 to get the 95% confidence intervals of the fitted values.</p></li>
 <li><p>back-transform the fitted values to the natural scale using the appropriate “inverse” of the link function.</p></li>
 </ol>
 <p>So, this how to do it in this case. First we obtain the predictions and CI on the scale of the linear predictor (logit scale). We calculate 95% CI from the standard errors simply by multiplying by 1.96.</p>
@@ -646,10 +646,10 @@ correctly.
 <span id="cb488-4"><a href="extending-use-cases-of-glm.html#cb488-4" tabindex="-1"></a>)) <span class="sc">+</span></span>
 <span id="cb488-5"><a href="extending-use-cases-of-glm.html#cb488-5" tabindex="-1"></a>  <span class="fu">geom_point</span>())</span></code></pre></div>
 <p><img src="BB852_files/figure-html/3-09-GLM-2-otherFamilies-17-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p>You can see that the proportion of females increases with temperature. Let’s fit a model to these data to better understand them. We could use the <code>propFemale</code> data as the response variable, but there is a big problem with that: we would be giving equal weight to each of the data points, even though the sample size for each one ranges from 10 to 31 This is not good because we would have much more faith in the very large sample sizes than the small ones.</p>
+<p>You can see that the proportion of females increases with temperature. Let’s fit a model to these data to better understand them. We could use the <code>propFemale</code> data as the response variable, but there is a big problem with that: we would be giving equal weight to each of the data points, even though the sample size for each one ranges from 10 to 31. This is not good because we would have much more faith in the very large sample sizes than the small ones.</p>
 <p>Instead we can bind the data into a two column matrix using <code>cbind</code>. The first column is our “success” and the second column is our “failure”. If we put <code>females</code> in the first column the model will predict “probability of being female”, which is what we want. This two-column approach provides the model with the sample size which it can use to weight the regression appropriately.</p>
 <div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="extending-use-cases-of-glm.html#cb489-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">cbind</span>(hawksbill<span class="sc">$</span>Nfemale, hawksbill<span class="sc">$</span>Nmale)</span></code></pre></div>
-<p>Now lets fit the model.</p>
+<p>Now let’s fit the model.</p>
 <div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="extending-use-cases-of-glm.html#cb490-1" tabindex="-1"></a>modA <span class="ot">&lt;-</span> <span class="fu">glm</span>(y <span class="sc">~</span> Temperature, <span class="at">data =</span> hawksbill, <span class="at">family =</span> binomial)</span></code></pre></div>
 <p>As ever, we should take a quick look at the model diagnostic plots - these look OK.</p>
 <div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="extending-use-cases-of-glm.html#cb491-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
@@ -729,7 +729,7 @@ correctly.
 <span id="cb499-13"><a href="extending-use-cases-of-glm.html#cb499-13" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb499-14"><a href="extending-use-cases-of-glm.html#cb499-14" tabindex="-1"></a>  <span class="fu">geom_point</span>())</span></code></pre></div>
 <p><img src="BB852_files/figure-html/3-09-GLM-2-otherFamilies-26-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p>Can you give read off the graph the approximate estimated temperature at which sex ratio is 50:50?</p>
+<p>Can you read off the graph the approximate estimated temperature at which sex ratio is 50:50?</p>
 <div class="do-something">
 <p>
 Try refitting the model using simply the proportion female
@@ -741,7 +741,7 @@ same way as shown for the NFL field goals example.
 </div>
 <div id="example-smoking" class="section level2 hasAnchor" number="21.4">
 <h2><span class="header-section-number">21.4</span> Example: Smoking<a href="extending-use-cases-of-glm.html#example-smoking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>As I mentioned above binomial regression can be applied to anything where there data can be classified into two groups. I’ll illustrate that now with an example about smoking.</p>
+<p>As I mentioned above, binomial regression can be applied to anything where the data can be classified into two groups. I’ll illustrate that now with an example about smoking.</p>
 <p>The data set is very small and looks like this:</p>
 <table>
 <thead>
@@ -766,7 +766,7 @@ same way as shown for the NFL field goals example.
 </table>
 <p>The dataset is the number of students smoking and not smoking grouped according to whether their parents smoke.
 These data are binomial/proportion data because the values in the cells of the table are constrained by the overall total and students must fall into one of the categories. We can use these data to calculate the probability of the student being a smoker.</p>
-<p>Before fitting a GLM lets just work out these probabilities by hand. What is the probability that a child of smoking parents is a smoker themselves? This is simply 816/(816+3203) = 0.2030. (i.e. it is the number of smokers divided by the total number). Similarly, the probability that the child of non-smokers smokes is 188/(188+1168) = 0.1386.</p>
+<p>Before fitting a GLM let’s just work out these probabilities by hand. What is the probability that a child of smoking parents is a smoker themselves? This is simply 816/(816+3203) = 0.2030. (i.e. it is the number of smokers divided by the total number). Similarly, the probability that the child of non-smokers smokes is 188/(188+1168) = 0.1386.</p>
 <p>But is this a significant difference? That is what we are trying to find out using a GLM.</p>
 <p>To do this, we can turn these data into a two column matrix of success (yes - smoker) and failure (no - non-smoker).</p>
 <div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="extending-use-cases-of-glm.html#cb500-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="st">&quot;1_yes&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">816</span>, <span class="dv">188</span>), <span class="st">&quot;0_no&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3203</span>, <span class="dv">1168</span>))</span>
@@ -774,7 +774,7 @@ These data are binomial/proportion data because the values in the cells of the t
 <pre><code>##      1_yes 0_no
 ## [1,]   816 3203
 ## [2,]   188 1168</code></pre>
-<p>So we can see “success” on the left and “failure” on the right”.
+<p>So we can see “success” on the left and “failure” on the right.
 We now create a (tiny) <code>data.frame</code> for the parental status (smoker = “1_yes”, non-smoker = “0_no”).</p>
 <div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="extending-use-cases-of-glm.html#cb502-1" tabindex="-1"></a>smoke <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">parentSmoke =</span> <span class="fu">c</span>(<span class="st">&quot;1_yes&quot;</span>, <span class="st">&quot;0_no&quot;</span>))</span></code></pre></div>
 <p>Now we can fit the model. Pause now and think about what the NULL hypothesis is here. It is that parental smoking does not have any influence on whether the child smokes, and that the probability that the student smokes is unrelated to parental smoking.</p>

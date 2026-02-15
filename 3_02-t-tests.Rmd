@@ -130,7 +130,7 @@ Enough theory. Here's how you would apply such a test in R.
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
 ```
 
-Firstly, lets load some data. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.
+Firstly, let's load some data. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.
 
 ```{r 3-02-t-tests-4}
 pollution <- data.frame(mgm3 = c(
@@ -231,7 +231,7 @@ ggplot(toolUse, aes(x = tool, y = amount, group = subjectID)) +
   geom_line() +
   geom_point() +
   xlab("Tool used") +
-  ylab("Casava harvested (kg/hr)")
+  ylab("Cassava harvested (kg/hr)")
 ```
 
 We can also look at the mean values and standard deviations:
@@ -242,9 +242,9 @@ toolUse %>%
   summarise(meanAmount = mean(amount), sdAmount = sd(amount))
 ```
 
-Now lets do a paired t-test to compare the means using the two tools. The best way to do this is to provide the two samples separately in the `t.test` command. To do this you will need to create two vectors containing the data from the two groups like this, using the `dplyr` command `pull` to extract the variable along with `filter` to subset the data. 
+Now let's do a paired t-test to compare the means using the two tools. The best way to do this is to provide the two samples separately in the `t.test` command. To do this you will need to create two vectors containing the data from the two groups like this, using the `dplyr` command `pull` to extract the variable along with `filter` to subset the data.
 
-**IMPORTANT:** it is very important that the pairs are arranged in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use `arrange` to sort the data by first the pairing variable (in this case, `subjectID`), and then the explanatory variable (the variable that defines the group - in this case, `tool`.
+**IMPORTANT:** it is very important that the pairs are arranged in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use `arrange` to sort the data by first the pairing variable (in this case, `subjectID`), and then the explanatory variable (the variable that defines the group - in this case, `tool`).
 
 ```{r 3-02-t-tests-14}
 toolUse <- toolUse %>%
@@ -284,7 +284,7 @@ t.test(x = difference, mu = 0)
 
 ## Two sample t-test
 
-The two sample t-test is used for comparing the means of two samples [no shit!? :)]
+The two sample t-test is used for comparing the means of two samples.
 
 You can visualise this by picturing your two distributions (Figure \@ref(fig:3-02-t-tests-17)) and thinking about their overlap. If they overlap a lot the difference between means will not be significant. If they don't overlap very much then the difference between means *will* be significant. 
 
@@ -383,7 +383,7 @@ t.test(Reaction ~ Gender, data = x, var.equal = FALSE)
 
 This output first tells us that we are using something called a "Welch Two Sample t-test". This is a form of the two-sample t-test that relaxes the assumption that the variance in the two groups is the same. This is a good thing. Although it *is* possible to fit a t-test with equal variances, I recommend that you stick with the default Welch's test and **not** make this limiting assumption. 
 
-Then we are told the t-statistic (`r formatC(temp$statistic, digits = 3, format = "f")`), the degrees of freedom (`r formatC(temp$parameter, digits = 3, format = "f")`) and the p-value (`r formatC(temp$p.value, digits = 3, format = "f")`). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are *not* faster than females. We could write report this something like this: 
+Then we are told the t-statistic (`r formatC(temp$statistic, digits = 3, format = "f")`), the degrees of freedom (`r formatC(temp$parameter, digits = 3, format = "f")`) and the p-value (`r formatC(temp$p.value, digits = 3, format = "f")`). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are *not* faster than females. We could report this something like this:
 
 "*Although females had a slightly slower reaction time than males (`r formatC(temp$estimate[1], digits = 3, format = "f")` seconds compared to `r formatC(temp$estimate[2], digits = 3, format = "f")` seconds), this difference was not statistically significant (Welch's     t-test: t= `r formatC(temp$statistic, digits = 3, format = "f")`, d.f.= `r formatC(temp$parameter, digits = 3, format = "f")`), p=`r formatC(temp$p.value, digits = 3, format = "f")`).*"
 
@@ -399,9 +399,9 @@ mod1 <- lm(difference ~ 1)
 summary(mod1)
 ```
 
-If you look at the summary will notice that the estimate of the intercept (the average difference between the two pairs), the degrees of freedom and the t-value and the p-value are all the same as the value reported when using `t.test`.
+If you look at the summary you will notice that the estimate of the intercept (the average difference between the two pairs), the degrees of freedom and the t-value and the p-value are all the same as the value reported when using `t.test`.
 
-In fact, all of the t-tests, and ANOVA (below) are kinds linear models and can be also fitted with `lm`.
+In fact, all of the t-tests, and ANOVA (below), are kinds of linear models and can also be fitted with `lm`.
 
 Here is the paired t-test investigating gender differences in reaction time. You can see that the test statistics and coefficients match those obtained from `t.test`.
 

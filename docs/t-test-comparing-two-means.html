@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-14" />
+<meta name="date" content="2026-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -504,7 +504,7 @@ Remember to load the <code>dplyr</code>, <code>magrittr</code> and
 correctly.
 </p>
 </div>
-<p>Firstly, lets load some data. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.</p>
+<p>Firstly, let’s load some data. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.</p>
 <div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="t-test-comparing-two-means.html#cb329-1" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mgm3 =</span> <span class="fu">c</span>(</span>
 <span id="cb329-2"><a href="t-test-comparing-two-means.html#cb329-2" tabindex="-1"></a>  <span class="dv">105</span>, <span class="dv">196</span>, <span class="dv">226</span>, <span class="dv">81</span>, <span class="dv">156</span>, <span class="dv">201</span>, <span class="dv">142</span>, <span class="dv">149</span>, <span class="dv">191</span>, <span class="dv">192</span>,</span>
 <span id="cb329-3"><a href="t-test-comparing-two-means.html#cb329-3" tabindex="-1"></a>  <span class="dv">178</span>, <span class="dv">185</span>, <span class="dv">231</span>, <span class="dv">76</span>, <span class="dv">207</span>, <span class="dv">138</span>, <span class="dv">146</span>, <span class="dv">175</span>, <span class="dv">114</span>, <span class="dv">155</span></span>
@@ -588,7 +588,7 @@ Figure 13.4: Visualising a paired t-test.
 <span id="cb343-2"><a href="t-test-comparing-two-means.html#cb343-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb343-3"><a href="t-test-comparing-two-means.html#cb343-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb343-4"><a href="t-test-comparing-two-means.html#cb343-4" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Tool used&quot;</span>) <span class="sc">+</span></span>
-<span id="cb343-5"><a href="t-test-comparing-two-means.html#cb343-5" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Casava harvested (kg/hr)&quot;</span>)</span></code></pre></div>
+<span id="cb343-5"><a href="t-test-comparing-two-means.html#cb343-5" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Cassava harvested (kg/hr)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:3-02-t-tests-11"></span>
 <img src="BB852_files/figure-html/3-02-t-tests-11-1.png" alt="An interaction plot for the tool use data" width="432" />
 <p class="caption">
@@ -604,8 +604,8 @@ Figure 13.5: An interaction plot for the tool use data
 ##   &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 bow           82.8     47.3
 ## 2 machete      168.      55.6</code></pre>
-<p>Now lets do a paired t-test to compare the means using the two tools. The best way to do this is to provide the two samples separately in the <code>t.test</code> command. To do this you will need to create two vectors containing the data from the two groups like this, using the <code>dplyr</code> command <code>pull</code> to extract the variable along with <code>filter</code> to subset the data.</p>
-<p><strong>IMPORTANT:</strong> it is very important that the pairs are arranged in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use <code>arrange</code> to sort the data by first the pairing variable (in this case, <code>subjectID</code>), and then the explanatory variable (the variable that defines the group - in this case, <code>tool</code>.</p>
+<p>Now let’s do a paired t-test to compare the means using the two tools. The best way to do this is to provide the two samples separately in the <code>t.test</code> command. To do this you will need to create two vectors containing the data from the two groups like this, using the <code>dplyr</code> command <code>pull</code> to extract the variable along with <code>filter</code> to subset the data.</p>
+<p><strong>IMPORTANT:</strong> it is very important that the pairs are arranged in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use <code>arrange</code> to sort the data by first the pairing variable (in this case, <code>subjectID</code>), and then the explanatory variable (the variable that defines the group - in this case, <code>tool</code>).</p>
 <div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="t-test-comparing-two-means.html#cb346-1" tabindex="-1"></a>toolUse <span class="ot">&lt;-</span> toolUse <span class="sc">%&gt;%</span></span>
 <span id="cb346-2"><a href="t-test-comparing-two-means.html#cb346-2" tabindex="-1"></a>  <span class="fu">arrange</span>(subjectID, tool)</span>
 <span id="cb346-3"><a href="t-test-comparing-two-means.html#cb346-3" tabindex="-1"></a></span>
@@ -653,7 +653,7 @@ Figure 13.5: An interaction plot for the tool use data
 </div>
 <div id="two-sample-t-test" class="section level2 hasAnchor" number="13.6">
 <h2><span class="header-section-number">13.6</span> Two sample t-test<a href="t-test-comparing-two-means.html#two-sample-t-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The two sample t-test is used for comparing the means of two samples [no shit!? :)]</p>
+<p>The two sample t-test is used for comparing the means of two samples.</p>
 <p>You can visualise this by picturing your two distributions (Figure <a href="t-test-comparing-two-means.html#fig:3-02-t-tests-17">13.6</a>) and thinking about their overlap. If they overlap a lot the difference between means will not be significant. If they don’t overlap very much then the difference between means <em>will</em> be significant.</p>
 <p>The underlying mathematical machinery for the two-sample t-test is similar to the one-sample and paired t-tests.
 Again, the important value is the t-statistic, which can be thought of as a measure of signal:noise ratio (<em>see above</em>). It is harder to detect a signal (the true difference between means) if there is a lot of noise (the variability, or spread of the distributions), or if the signal is small (the difference between means is small).</p>
@@ -694,7 +694,7 @@ Figure 13.7: Reaction time of both sexes
 ## mean in group Female   mean in group Male 
 ##            0.3483778            0.3035800</code></pre>
 <p>This output first tells us that we are using something called a “Welch Two Sample t-test”. This is a form of the two-sample t-test that relaxes the assumption that the variance in the two groups is the same. This is a good thing. Although it <em>is</em> possible to fit a t-test with equal variances, I recommend that you stick with the default Welch’s test and <strong>not</strong> make this limiting assumption.</p>
-<p>Then we are told the t-statistic (1.965), the degrees of freedom (30.528) and the p-value (0.059). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are <em>not</em> faster than females. We could write report this something like this:</p>
+<p>Then we are told the t-statistic (1.965), the degrees of freedom (30.528) and the p-value (0.059). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are <em>not</em> faster than females. We could report this something like this:</p>
 <p>“<em>Although females had a slightly slower reaction time than males (0.348 seconds compared to 0.304 seconds), this difference was not statistically significant (Welch’s t-test: t= 1.965, d.f.= 30.528), p=0.059).</em>”</p>
 <p>Note: With a t-test that <em>did</em> assume equal variances in the two groups, the d.f. is calculated as the sample size - 2 (the number of groups). You can do this by adding the argument “<code>var.equal = TRUE</code>” to the t-test command. With the Welch test, the appropriate degrees of freedom are estimated by looking at the sample sizes and variances in the two groups. The details of this are beyond the scope of this course.</p>
 </div>
@@ -718,8 +718,8 @@ Figure 13.7: Reaction time of both sexes
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 10.62 on 4 degrees of freedom</code></pre>
-<p>If you look at the summary will notice that the estimate of the intercept (the average difference between the two pairs), the degrees of freedom and the t-value and the p-value are all the same as the value reported when using <code>t.test</code>.</p>
-<p>In fact, all of the t-tests, and ANOVA (below) are kinds linear models and can be also fitted with <code>lm</code>.</p>
+<p>If you look at the summary you will notice that the estimate of the intercept (the average difference between the two pairs), the degrees of freedom and the t-value and the p-value are all the same as the value reported when using <code>t.test</code>.</p>
+<p>In fact, all of the t-tests, and ANOVA (below), are kinds of linear models and can also be fitted with <code>lm</code>.</p>
 <p>Here is the paired t-test investigating gender differences in reaction time. You can see that the test statistics and coefficients match those obtained from <code>t.test</code>.</p>
 <div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="t-test-comparing-two-means.html#cb357-1" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Reaction <span class="sc">~</span> Gender, <span class="at">data =</span> x)</span>
 <span id="cb357-2"><a href="t-test-comparing-two-means.html#cb357-2" tabindex="-1"></a><span class="fu">anova</span>(mod)</span></code></pre></div>

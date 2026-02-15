@@ -174,9 +174,9 @@ In fact, these residuals represent "error" caused by factors including measureme
 
 $$y = ax+b+\epsilon$$
 
-Sometimes, this equation is written with using the beta symbol ($\beta$) for the coefficients, so that the slope is $\beta_0$ and the intercept is $\beta_1$ for example.
+Sometimes, this equation is written using the beta symbol ($\beta$) for the coefficients, so that the intercept is $\beta_0$ and the slope is $\beta_1$, for example.
 
-$$y = \beta_0 x+\beta_1+\epsilon$$
+$$y = \beta_0 + \beta_1 x+\epsilon$$
 
 The idea is that this equation, and its coefficients and error estimates, describe the relationship we are interested in (including the error or uncertainty). 
 
@@ -254,7 +254,7 @@ B <- ggplot(residualDataError, aes(x = HandWidth, y = Height, xend = HandWidth, 
     yend = (slopeCoefError * max(HandWidth)) + interceptCoefError
   ), inherit.aes = FALSE, colour = "#b20000")
 
-A + ggtitle("A - total errors") + B + ggtitle("A - residual errors")
+A + ggtitle("A - total errors") + B + ggtitle("B - residual errors")
 ```
 
 
@@ -387,7 +387,7 @@ We could describe the model like this:
 
 *There is a statistically significant association between hand width and height (F = `r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001) The equation of the fitted model is: Height = `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")`) $\times$ HandWidth + `r formatC(summary(mod_A)$coef[1,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[1,2], digits = 2,format = "f")`). The model explains `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 3, format = "f")`).*
 
-... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand width and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[1,3], digits = 2,format = "f")`, p < 0.01)*
+... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand width and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[2,3], digits = 2,format = "f")`, p < 0.01)*
 
 
 ```{r 3-04-linearRegression-13, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}
@@ -449,7 +449,7 @@ D <- ggplot(df1, aes(x, y)) +
 (A + B) / (C + D)
 ```
 
-A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The `ggplot2` package has a neat and simple function called `geom_smooth` which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use `method = "lm"`. This will plot the fitted regression model, and will add, by default" a shaded "ribbon" which represents the so called "95% confidence interval" for the fitted values. These are 2 time the standard error.
+A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The `ggplot2` package has a neat and simple function called `geom_smooth` which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use `method = "lm"`. This will plot the fitted regression model, and will add, by default, a shaded ribbon which represents the so-called "95% confidence interval" for the fitted values. These are approximately 2 times the standard error.
 
 ```{r 3-04-linearRegression-14, fig.width=4.5,fig.height=3.5,fig.align='center', fig.pos = 'ht'}
 ggplot(classData, aes(x = HandWidth, y = Height)) +

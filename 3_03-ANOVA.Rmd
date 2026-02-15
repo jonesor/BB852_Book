@@ -161,7 +161,7 @@ summary(foam_mod)
 
 To properly interpret this output you need to understand something called "treatment contrasts". Essentially, contrasts define how model coefficients (the estimates made by the model) are presented in R outputs.
 
-They are a bit hard to wrap your head around and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use `group_by` and `summarise` to calculate the means for your the levels of your explanatory variable.
+They are a bit hard to wrap your head around and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use `group_by` and `summarise` to calculate the means for the levels of your explanatory variable.
 
 ```{r 3-03-ANOVA-11}
 espresso %>%
@@ -263,7 +263,7 @@ A + ggtitle("A - default,\nBM reference") + B + ggtitle("B - releveled,\nHIP ref
 ```
 
 
-So, from the first of the model outputs above you can say that BM is significantly different than HIP (t= 7.248, p < 0.0001), but that BM is not significantly different from IES (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP is significantly different from IES (t=-5.417, p < 0.0001). You could write this into the main text, include the information in a figure caption (i.e. add it to the figure). 
+So, from the first of the model outputs above you can say that BM is significantly different than HIP (t= 7.248, p < 0.0001), but that BM is not significantly different from IES (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP is significantly different from IES (t=-5.417, p < 0.0001). You could write this into the main text, or include the information in a figure caption (i.e. add it to the figure).
 
 e.g. *The foam index varied significantly among groups (ANOVA: F = `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p = `r formatC(x$"Pr(>F)"[1], digits = 3, format = "f")`). The pairwise comparisons in the ANOVA model showed that means of BM and HIP were significantly different (t= 7.248, p < 0.0001), as were those of HIP and IES (t=-5.417, p < 0.0001), but the BM-IES comparison showed no significant difference (t= 1.831, p= 0.0796)*.
 

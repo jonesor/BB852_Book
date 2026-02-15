@@ -35,7 +35,7 @@ summary(birds$nSpecies)
 plot(birds$Year, birds$nSpecies)
 ```
 
-5. The pattern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `birds$Age <- 1975 - birds$Year)`). Re-plot your results.
+5. The pattern might be easier to see if you replace `Year` with suburb age. Create a new vector in your data frame for this variable (e.g. `birds$Age <- 1975 - birds$Year`). Re-plot your results.
 
 ```{r 6-1-00-AllSolutions-5}
 birds$Age <- 1975 - birds$Year
@@ -67,8 +67,8 @@ dim(amniote)
 names(amniote)
 ```
 
-2. We are interested in longevity (lifespan), body size and reproductive effort, and how this might vary depending on the taxonomy (specifically, with Class). Use `select` to pick relevant columns of the dataset and discard the others. Call the new data frame `x`. 
-The relevant columns are the taxonomic variables (`class`, `species`) and `longevity_y`, `litter_or_clutch_size_n`, `litters_or_clutches_per_y`, and `adult_body_mass_g`.
+2. We are interested in longevity (lifespan), body size and reproductive effort, and how this might vary depending on the taxonomy (specifically, with Class). Use `select` to pick relevant columns of the dataset and discard the others. Call the new data frame `x`.
+The relevant columns are the taxonomic variables (`class`, `genus`, and `species`) and `longevity_y`, `litter_or_clutch_size_n`, `litters_or_clutches_per_y`, and `adult_body_mass_g`.
 
 
 ```{r 6-1-00-AllSolutions-8}
@@ -80,7 +80,7 @@ x <- amniote %>%
   )
 ```
 
-3. Take a look at the first few entries in the `species` column. You will see that it is only the *epithet*, the second part of the *Genus_species* name, that is given.  
+3. Take a look at the first few entries in the `species` column. You will see that it is only the *epithet*, the second part of the *Genus_species* name, that is given.
 Use `mutate` and `paste` to convert the `species` column to a *Genus_species* by pasting the data in `genus` and `species` together. To see how this works, try out the following command, `paste(1:3, 4:6)`. After you have created the new column, remove the `genus` column (using `select` and `-genus`).
 
 
@@ -117,13 +117,13 @@ x %>%
   )
 ```
 
-7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
+7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
 
 ```{r 6-1-00-AllSolutions-13}
 plot(x$adult_body_mass_g, x$longevity_y)
 ```
 
-8. Use `mutate` to create a new `log`-transformed variables, `logMass` and `logLongevity`. Use these to make a "log-log" plot. You should see that makes the relationship more linear, and easier to "read".
+8. Use `mutate` to create two new `log`-transformed variables, `logMass` and `logLongevity`. Use these to make a "log-log" plot. You should see that this makes the relationship more linear, and easier to "read".
 
 ```{r 6-1-00-AllSolutions-14}
 x <- x %>%
@@ -135,7 +135,7 @@ x <- x %>%
 plot(x$logMass, x$logLongevity)
 ```
 
-9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot `logOffspring` vs. `logLongevity`.
+9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: use `mutate` to create a variable called `logOffspring` which is the logarithm of the number of litters/clutches per year multiplied by the number of babies in each litter/clutch. Then plot `logOffspring` vs. `logLongevity`.
 
 ```{r 6-1-00-AllSolutions-15}
 x <- x %>%
@@ -146,7 +146,7 @@ x <- x %>%
 plot(x$logOffspring, x$logLongevity)
 ```
 
-10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationships holds universally. 
+10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationship holds universally.
 
 ```{r 6-1-00-AllSolutions-16}
 aves <- x %>%
@@ -181,7 +181,7 @@ eggDates <- read.csv("CourseData/eggDates.csv")
 head(eggDates)
 ```
 
-2. Use `pivot_longer` to reformat the data. This might take a bit of trial and error - don't give up! 
+2. Use `pivot_longer` to reformat the data. This might take a bit of trial and error - don't give up!
 
 Maybe this will help: The first argument in the `pivot_longer` command (`cols`) tells R which columns contain the data you are interested in (in this case, these are `y2013`,`y2014` etc). Then the `names_to` argument tells R what you want to name the new column from this data (in this case, `Year`). Then, the `values_to` argument tells R what the data column should be called (e.g. `Day`). In addition, there is a useful argument called `names_prefix` that will remove the part of the column name  (e.g. the `y` of `y2013`)
 
@@ -227,13 +227,13 @@ weather <- read.csv("CourseData/AarslevTemperature.csv")
 str(weather)
 ```
 
-6. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `YEAR` and `meanSpringTemp`. 
+6. Use `filter` to subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `YEAR` (or `year`) and `meanSpringTemp`.
 
 ```{r 6-1-00-AllSolutions-24}
 weather <- weather %>%
   filter(MONTH %in% 2:4) %>%
   group_by(YEAR) %>%
-  summarise(meanAprilTemp = mean(TEMP))
+  summarise(meanSpringTemp = mean(TEMP))
 
 head(weather)
 ```
@@ -241,7 +241,7 @@ head(weather)
 
 **Bringing it together**
 
-7. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
+7. Join the two datasets together using `left_join`. You should now have a dataset with columns equivalent to `boxNumber`, `Year`, `dayNumber`, and `meanSpringTemp` (in this solution we use yearly means, so this becomes `Year`, `meanEggDate`, and `meanSpringTemp`).
 
 ```{r 6-1-00-AllSolutions-25}
 joinedData <- left_join(meanEgg, weather, c("Year" = "YEAR"))
@@ -251,10 +251,10 @@ head(joinedData)
 
 **Plot the data**
 
-8. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
+8. Plot a graph of `meanSpringTemp` on the x-axis and `meanEggDate` on the y-axis.
 
 ```{r 6-1-00-AllSolutions-26}
-plot(joinedData$meanAprilTemp, joinedData$meanEggDate)
+plot(joinedData$meanSpringTemp, joinedData$meanEggDate)
 ```
 
 Now you should be able to answer the question we started with: is laying date associated with spring temperatures? Yes, there looks to be a negative relationship between temperature and egg laying date.
@@ -279,7 +279,7 @@ result <- sample(diceRoll, 10, replace = TRUE)
 table(result)
 ```
 
-Your table will probably look different to this, because it is a random process. You may notice that some numbers in the table are missing if some numbers were never rolled by our virtual dice. 
+Your table will probably look different to this, because it is a random process. You may notice that some numbers in the table are missing if some numbers were never rolled by our virtual dice.
 
 2) Now simulate 90 rolls of the dice, and plot the results as a bar plot using `geom_bar` in `ggplot`. Add a horizontal line using `geom_abline` to show the **expected** result based on what you know about probability.
 
@@ -359,16 +359,16 @@ tapply(hercules$width, hercules$sex, mean)
 ```{r 6-1-00-AllSolutions-33,message=FALSE}
 # Let's look at the male and female data
 (plot1 <- ggplot(hercules, aes(x = width, fill = sex)) +
-  geom_histogram(position = "identity", alpha = .7))
+   geom_histogram(position = "identity", alpha = .7))
 ```
 
 6. Add vertical lines to the plot to indicate the mean values.
 
 ```{r 6-1-00-AllSolutions-34,message=FALSE}
-hercules %>%
+meanVals <- hercules %>%
   group_by(sex) %>%
   summarise(mean = mean(width)) %>%
-  pull(mean) -> meanVals
+  pull(mean)
 
 plot1 + geom_vline(xintercept = meanVals, colour = c("red", "blue"))
 ```
@@ -377,11 +377,11 @@ plot1 + geom_vline(xintercept = meanVals, colour = c("red", "blue"))
 
 ```{r 6-1-00-AllSolutions-35}
 # with dplyr
-hercules %>%
+observedDiff <- hercules %>%
   group_by(sex) %>%
   summarise(mean = mean(width)) %>%
   pull(mean) %>%
-  diff() -> observedDiff
+  diff()
 observedDiff
 
 # with tapply
@@ -479,14 +479,14 @@ sum(diffs$diffs >= observedDiff) / 1000
 
 Some people have suggested that there might be sex differences in fine motor skills in humans. Use the data collected on the class to address this topic using t-tests. The relevant data set is called `classData.csv`, and the columns of interest are `Gender` and `Precision`.
 
-Carry out a two-sample t-test. 
+Carry out a two-sample t-test.
 
 1) Plot the data (e.g. with a box plot, or histogram)
 
 ```{r 6-1-00-AllSolutions-41,echo = -1,cache=TRUE}
 set.seed(12)
 classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Gender %in% c("Male", "Female")) %>% 
+  filter(Gender %in% c("Male", "Female")) %>%
   filter(Year == 2019) #you may use a different filter
 
 ggplot(classData, aes(x = Gender, y = Precision)) +
@@ -495,9 +495,9 @@ ggplot(classData, aes(x = Gender, y = Precision)) +
 ```
 
 
-2) Formulate null and alternative hypotheses. 
+2) Formulate null and alternative hypotheses.
 
-Null hypotheses - the differences in precision between male and female are due to chance alone.
+Null hypothesis - the differences in precision between male and female are due to chance alone.
 Alternative hypothesis - there is a significant difference between male and female precision scores.
 
 3) Use the `t.test` function to do the test.
@@ -569,12 +569,12 @@ t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
 x <- t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
 ```
 
-There was a significant difference in weight of `r sprintf(x$estimate, fmt= '%#.3f')`kg between week 1 and week 8 (t.test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between weeks was between `r sprintf(x$conf.int[1], fmt = '%#.3f')` and `r sprintf(x$conf.int[2], fmt = '%#.3f')`. Therefore, I reject the null hypotheses, that the difference is due to chance alone, and accept the alternative hypothesis.
+There was a significant difference in weight of `r sprintf(x$estimate, fmt= '%#.3f')`kg between week 1 and week 8 (t.test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between weeks was between `r sprintf(x$conf.int[1], fmt = '%#.3f')` and `r sprintf(x$conf.int[2], fmt = '%#.3f')`. Therefore, I reject the null hypothesis that the difference is due to chance alone, and accept the alternative hypothesis.
 
-## Compare t-tests with randomisation tests
+## Compare t-tests with randomisation tests (optional)
 
 ```{block 6-1-00-AllSolutions-49, type="do-something"}
-Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give approximately the same results? 
+Try re-fitting some of these tests as randomisation tests (or analyse the randomisation test data using `t.test`). Do they give approximately the same results?
 
 Then try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `classData.csv`. Can you think of any problems with this analysis?
 ```
@@ -583,7 +583,7 @@ The problem with the analysis is that it is "confounded". That is to say, gender
 
 ## Apple tree crop yield
 
-Import the data (`apples.csv`) and analyse it using the techniques you have learned in the ANOVA lecture, and the previous worksheet, to answer the question "What is the effect of tree spacing on apple yields?"
+Import the data (`apples.csv`) and analyse it using the techniques you have learned in the ANOVA lecture, and the previous chapter, to answer the question "What is the effect of tree spacing on apple yields?"
 
 1. Import and look at the data (e.g. `summary` or `str` or `head`)
 
@@ -611,7 +611,7 @@ ggplot(apples, aes(x = spacing, y = yield)) +
   ylab("Yield (kg per tree)")
 ```
 
-4. Fit an ANOVA model using `lm`. 
+4. Fit an ANOVA model using `lm`.
 
 
 ```{r 6-1-00-AllSolutions-53}
@@ -692,7 +692,7 @@ head(chirps)
 
 ```{r 6-1-00-AllSolutions-62}
 (A <- ggplot(chirps, aes(x = temperatureC, y = chirps)) +
-  geom_point())
+   geom_point())
 ```
 
 4. Fit a linear regression model with `lm`
@@ -757,7 +757,7 @@ ggplot(fishPersonality, aes(
 
 ```{r 6-1-00-AllSolutions-70}
 mod_A <- lm(spawning ~ personality + colouration +
-  personality:colouration, data = fishPersonality)
+              personality:colouration, data = fishPersonality)
 ```
 
 4. Look at diagnostic plots from this model (`autoplot`)
@@ -802,8 +802,8 @@ maze <- read.csv("CourseData/maze.csv", stringsAsFactors = TRUE)
 head(maze)
 
 (A <- ggplot(maze, aes(x = Age, y = nErrors)) +
-  geom_boxplot() +
-  geom_dotplot(binaxis = "y", stackdir = "center"))
+   geom_boxplot() +
+   geom_dotplot(binaxis = "y", stackdir = "center"))
 ```
 
 2. Fit an appropriate GLM.

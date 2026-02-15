@@ -170,10 +170,10 @@ Simulation can be a powerful tool to help design and understand the results of h
 
 
 ```{block 3-10-Power-Analysis-12, type="do-something"}
-This section is for illustration only. It is intended to show the utility of using R to quickly address experimental design questions but it goes beyond what you are expected to learn.I hope you find it interesting nevertheless. To this you will need to add the `purrr` library (using `install.packages("purrr")`). This package includes a useful function, `map_dbl`, which allows you to repeatedly apply functions over many different input values. I use the double colon (`::`) notation like this `purrr::map_dbl` to use this function without the need to load the whole package.
+This section is for illustration only. It is intended to show the utility of using R to quickly address experimental design questions but it goes beyond what you are expected to learn. I hope you find it interesting nevertheless. For this you will need to add the `purrr` library (using `install.packages("purrr")`). This package includes a useful function, `map_dbl`, which allows you to repeatedly apply functions over many different input values. I use the double colon (`::`) notation like this `purrr::map_dbl` to use this function without the need to load the whole package.
 ```
 
-One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) using by turning the calculations of the t-test into a function, and then applying that function over a range of values. 
+One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) by turning the calculations of the t-test into a function, and then applying that function over a range of values.
 
 I illustrate this below by varying sample size between 5 and 40.
 

@@ -194,7 +194,7 @@ rn <- data.frame(d1 = rnorm(500, 5, 2), d2 = rnorm(500, 8, 1))
 summary(rn)
 ```
 
-The summaries (above) show that the mean and the width of the distributions vary, but we should always plot our data. So lets make a plot in `ggplot`. In the dataset I created I have the data arranged by columns side-by-side, but `ggplot` needs the values to be arranged in a single column, and the identifier of the sample ID in a second column. I can use the function `pivot_longer` to rearrange the data into the required format.
+The summaries (above) show that the mean and the width of the distributions vary, but we should always plot our data. So let's make a plot in `ggplot`. In the dataset I created I have the data arranged by columns side-by-side, but `ggplot` needs the values to be arranged in a single column, and the identifier of the sample ID in a second column. I can use the function `pivot_longer` to rearrange the data into the required format.
 
 ```{r 2-02-distributionsSummaryStats-12, message=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 rn <- pivot_longer(rn,
@@ -274,7 +274,7 @@ Let's calculate summary statistics of mean and standard deviation for this distr
   )
 )
 ```
-Now lets plot the mean and the 2 times the standard deviation on the graph. Remember that for the normal distribution (above) that 95% of the data were within 2 times the standard deviation.
+Now let's plot the mean and the 2 times the standard deviation on the graph. Remember that for the normal distribution (above) that 95% of the data were within 2 times the standard deviation.
 
 ```{r 2-02-distributionsSummaryStats-18, fig.height=3, fig.width = 4,fig.align='center'}
 p1 +
@@ -306,7 +306,7 @@ summary(rp$d1)
 
 ## Comparing normal and Poisson distributions
 
-To get a better feel for how these two distributions differ, lets use the same approach we used above to plot two distributions together.
+To get a better feel for how these two distributions differ, let's use the same approach we used above to plot two distributions together.
 
 ```{r 2-02-distributionsSummaryStats-20, fig.height=3, fig.width = 4,fig.align='center',echo=-1,cache = TRUE}
 set.seed(42)
@@ -338,15 +338,15 @@ ggplot(rn, aes(x = sampleID, y = value, fill = sampleID)) +
   geom_boxplot()
 ```
 
-You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer then the other) and cannot be <0. Which graph to you prefer? (there's no right answer!)
+You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer than the other) and cannot be <0. Which graph do you prefer? (there's no right answer!)
 
 
 ## The law of large numbers
 
 
-The **law of large numbers** is one of the most important ideas in probability. It states that *As sample grows large, the sample mean converges to the population mean*. In other words, as sample size increases, you get a better idea what the true value of the mean is. 
+The **law of large numbers** is one of the most important ideas in probability. It states that *as sample size grows, the sample mean converges to the population mean*. In other words, as sample size increases, you get a better idea of what the true value of the mean is.
 
-In this section you will demonstrate this law using coin tosses or dice throws. Since it is tiresome to toss coins hundreds of times it is convenient to simulate the data using **R**. Conceptually, what we are trying to do here is treat the dice rolling/coin tossing as experiments where the aim is to find the probability of getting a head/tail, or a particular number on the dice. It is useful to use dice and coins because we are pretty sure that we know what the "true" answer is: the probability of throwing a 1 on a fair dice is 1/6, while the probability of throwing a head/tail with a flipped coin is 0.5.
+In this section you will demonstrate this law using coin tosses or dice throws. Since it is tiresome to toss coins hundreds of times it is convenient to simulate the data using **R**. Conceptually, what we are trying to do here is treat dice rolling/coin tossing as experiments where the aim is to find the probability of getting a head/tail, or a particular number on a die. It is useful to use dice and coins because we are pretty sure that we know what the "true" answer is: the probability of throwing a 1 on a fair die is 1/6, while the probability of throwing a head/tail with a flipped coin is 0.5.
 
 ### Coin flipping
 
@@ -367,7 +367,7 @@ result <- sample(coinToss, 6, replace = TRUE)
 table(result)
 ```
 
-We can "wrap" the `table` function with the `as.data.frame` to turn the data into a data frame that works with `ggplot` You'll probably get different results than me because this is a random process:
+We can "wrap" the `table` function with the `as.data.frame` to turn the data into a data frame that works with `ggplot`. You'll probably get different results than me because this is a random process:
 
 ```{r 2-02-distributionsSummaryStats-25, echo=-1, fig.cap=('Barplot of 6 simulated coin tosses'),cache = TRUE}
 set.seed(2)

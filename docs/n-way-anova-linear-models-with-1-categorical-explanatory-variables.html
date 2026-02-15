@@ -23,7 +23,7 @@
 <meta name="author" content="Owen R. Jones" />
 
 
-<meta name="date" content="2026-02-14" />
+<meta name="date" content="2026-02-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -501,7 +501,7 @@ Figure 18.2: The effect of diet protein content and genotype on adult size of an
 <div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-1" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb426-2"><a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#cb426-2" tabindex="-1"></a><span class="fu">autoplot</span>(mod_A)</span></code></pre></div>
 <p><img src="BB852_files/figure-html/3-06-n-way-ANOVA-5-1.png" alt="" width="672" /></p>
-<p>These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots) now any major outliers.</p>
+<p>These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots), nor any major outliers.</p>
 </div>
 <div id="summarising-the-model-anova" class="section level2 hasAnchor" number="18.2">
 <h2><span class="header-section-number">18.2</span> Summarising the model (<code>anova</code>)<a href="n-way-anova-linear-models-with-1-categorical-explanatory-variables.html#summarising-the-model-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -620,7 +620,7 @@ To answer that question we need to use a post-hoc test</p>
 <li><p>The <code>(Intercept)</code> is 25.833 and must refer to the point for <em>genotype 1</em> on a <em>high protein diet</em> (look at the value of the intercept and compare to the graph/summary table, and/or the output from the Tukey test).</p></li>
 <li><p>The second coefficient (<code>genotypegt2</code>) is -8.083 which is the <strong>difference</strong> between the reference (intercept) and the value for <em>genotype 2</em> on a <em>high protein diet</em>: (25.833 + (-8.083) = 17.75).</p></li>
 <li><p>The third coefficient (<code>dietlowProtein</code>) is -5.167 which is the difference between the reference point and for <em>genotype 1</em> on a <em>low protein diet</em>: (25.833 + (-5.167) = 20.666).</p></li>
-<li><p>The final coefficient <code>dietlowProtein:genotypegt2</code> is 4.25 and is “interaction effect” of diet and genotype and represents the <em>additional</em> effect of genotype when it is on diet. In other words, in comparison to the reference point (genotype 1 &amp; high protein diet), the effect of a low protein diet is negative (-8.0833), as is the effect of being genotype 2 (-5.1667). However, having both a low protein diet <strong>and</strong> being genotype 2 leads to an additional positive effect (4.25) on length. The resulting estimate of mean length for <em>genotype 2</em> on a <em>low protein diet</em> is 25.833 + (-8.083) + (-5.167) + 4.25 = 16.833.</p></li>
+<li><p>The final coefficient <code>dietlowProtein:genotypegt2</code> is 4.25 and is the interaction effect of diet and genotype. It represents the <em>additional</em> effect for genotype 2 when it is on a low-protein diet. In other words, in comparison to the reference point (genotype 1 &amp; high protein diet), the effect of a low protein diet is negative (-8.0833), as is the effect of being genotype 2 (-5.1667). However, having both a low protein diet <strong>and</strong> being genotype 2 leads to an additional positive effect (4.25) on length. The resulting estimate of mean length for <em>genotype 2</em> on a <em>low protein diet</em> is 25.833 + (-8.083) + (-5.167) + 4.25 = 16.833.</p></li>
 </ul>
 <p>This is a bit complicated so my advice is generally to refer to the figures and the outputs of the <code>Tukey.HSD</code> function to obtain the estimate in the different groups.</p>
 <p>The logic and methods of the two-way ANOVA can be extended to produce <span class="math inline">\(n\)</span>-way ANOVA with <span class="math inline">\(n\)</span> categorical variables.</p>
