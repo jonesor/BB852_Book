@@ -16,11 +16,11 @@ course_data_files <- unique(course_data_files)
 library(stringr)
 library(dplyr)
 course_data_files <- unlist(str_extract_all(course_data_files,
-                                            "([A-Za-z0-9_]+\\.csv)")) %>%
-  sort() %>%
+                                            "([A-Za-z0-9_]+\\.csv)")) |>
+  sort() |>
   unique()
 
-course_data_files <- data.frame(file_name = c(course_data_files, "birds.csv")) %>%
+course_data_files <- data.frame(file_name = c(course_data_files, "birds.csv")) |>
   dplyr::filter(!file_name %in% c("write.csv", "read.csv", "myData.csv",
                                  "course_data_files.csv", "datasets_missing.csv"))
 
@@ -48,7 +48,7 @@ current_files <- list.files("CourseData/")
 
 missingFiles <- course_data_files$file_name[!course_data_files$file_name %in% current_files]
 
-datasets_missing <- data.frame(name = missingFiles) %>%
+datasets_missing <- data.frame(name = missingFiles) |>
   dplyr::filter(!name %in% c("SDUweather.csv", "example.csv", "myData.csv"))
 
 # Write out the missing datasets to a CSV

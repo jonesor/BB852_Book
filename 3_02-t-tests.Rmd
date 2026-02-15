@@ -237,8 +237,8 @@ ggplot(toolUse, aes(x = tool, y = amount, group = subjectID)) +
 We can also look at the mean values and standard deviations:
 
 ```{r 3-02-t-tests-12}
-toolUse %>%
-  group_by(tool) %>%
+toolUse |>
+  group_by(tool) |>
   summarise(meanAmount = mean(amount), sdAmount = sd(amount))
 ```
 
@@ -247,15 +247,15 @@ Now let's do a paired t-test to compare the means using the two tools. The best 
 **IMPORTANT:** it is very important that the pairs are arranged in the data frame so that the pairs match up when you filter the data to each group. It is therefore advisable to use `arrange` to sort the data by first the pairing variable (in this case, `subjectID`), and then the explanatory variable (the variable that defines the group - in this case, `tool`).
 
 ```{r 3-02-t-tests-14}
-toolUse <- toolUse %>%
+toolUse <- toolUse |>
   arrange(subjectID, tool)
 
-A <- toolUse %>%
-  filter(tool == "machete") %>%
+A <- toolUse |>
+  filter(tool == "machete") |>
   pull(amount)
 
-B <- toolUse %>%
-  filter(tool == "bow") %>%
+B <- toolUse |>
+  filter(tool == "bow") |>
   pull(amount)
 
 t.test(A, B, paired = TRUE)
@@ -357,8 +357,8 @@ In this example, we can revisit the class data and ask the question, *Is the rea
 Import the data in the usual way, and subset it to the right year (in the example below I am using 2019 data).
 
 ```{r 3-02-t-tests-18}
-x <- read.csv("CourseData/classData.csv") %>%
-  filter(Year == 2019) %>%
+x <- read.csv("CourseData/classData.csv") |>
+  filter(Year == 2019) |>
   filter(Gender %in% c("Male", "Female"))
 ```
 
@@ -441,7 +441,7 @@ anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv", header = TRUE)
 ```
 
 ```{r 3-02-t-tests-25}
-anorexiaCBT_long <- anorexiaCBT %>%
+anorexiaCBT_long <- anorexiaCBT |>
   pivot_longer(
     cols = starts_with("Week"), names_to = "time",
     values_to = "weight"

@@ -50,9 +50,9 @@ b) Use the `summarise` function to produce a table showing the minimum, maximum,
 # Prepare data
 allmoth <- read.csv("/Users/jones/Dropbox/Moths/GBIFmoths/allData.csv")
 
-lepi <- allmoth %>%
-  select(species, year, month, day, decimalLatitude, decimalLongitude) %>%
-  mutate(dayOfYear = lubridate::yday(lubridate::dmy(paste(day, month, year, sep = "/")))) %>%
+lepi <- allmoth |>
+  select(species, year, month, day, decimalLatitude, decimalLongitude) |>
+  mutate(dayOfYear = lubridate::yday(lubridate::dmy(paste(day, month, year, sep = "/")))) |>
   filter(year %in% 2000:2010)
 
 write.csv(lepi, file = "CourseData/lepi.csv", row.names = FALSE)
@@ -70,7 +70,7 @@ set.seed(12)
 df <- data.frame(
   ID = 1:30,
   sex = rep(c("Male", "Female"), each = 15)
-) %>%
+) |>
   mutate(distance = round(c(rnorm(15, 4, 2), rnorm(15, 7, 3)), 2))
 
 write.csv(df, file = "CourseData/dispersalDistance.csv", row.names = FALSE)
@@ -99,7 +99,7 @@ Use the pilot study data to conduct a power analysis to help plan your study.
 ```{r echo = FALSE, eval = TRUE}
 set.seed(23)
 ss <- 8
-runningSquirrels <- data.frame(tagNumber = sample(100:500, size = ss)) %>%
+runningSquirrels <- data.frame(tagNumber = sample(100:500, size = ss)) |>
   mutate(speed = round(rnorm(ss, 3.14, 1), 3))
 write.csv(runningSquirrels, file = "CourseData/runningSquirrels.csv", row.names = FALSE)
 set.seed(Sys.time())
@@ -135,19 +135,19 @@ ss <- 50
 df1 <- data.frame(
   habitat = "gravel",
   depth = round(runif(ss, 0, 3), 2)
-) %>%
+) |>
   mutate(nMussels = rpois(ss, exp(0.1 + 0.00001 * depth)))
 
 df2 <- data.frame(
   habitat = "mud",
   depth = round(runif(ss, 0, 3), 2)
-) %>%
+) |>
   mutate(nMussels = rpois(ss, exp(0.0 + 0.8 * depth)))
 
 df3 <- data.frame(
   habitat = "sand",
   depth = round(runif(ss, 0, 3), 2)
-) %>%
+) |>
   mutate(nMussels = rpois(ss, exp(0.0 + 0.6 * depth)))
 
 musselSurvey <- bind_rows(df1, df2, df3)

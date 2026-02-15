@@ -8,29 +8,29 @@ table(wines$year)
 table(wines$region)
 
 # Filter out non-vintage (N.V.) wines and include only wines from 1980 onwards
-wines <- wines %>%
-  filter(year != "N.V.") %>%
-  mutate(year = as.numeric(year)) %>%  # Convert 'year' column to numeric for analysis
+wines <- wines |>
+  filter(year != "N.V.") |>
+  mutate(year = as.numeric(year)) |>  # Convert 'year' column to numeric for analysis
   filter(year >= 1980)
 
 # Create a table showing sample size, mean and standard deviation of ratings for each region,
 # then sort it by sample size in descending order and select the top 10 regions
-wineTable1 <- wines %>%
-  group_by(region) %>%
-  summarise(sampleSize = n(), meanRating = mean(rating), sdRating = sd(rating)) %>%
-  arrange(-sampleSize) %>%
+wineTable1 <- wines |>
+  group_by(region) |>
+  summarise(sampleSize = n(), meanRating = mean(rating), sdRating = sd(rating)) |>
+  arrange(-sampleSize) |>
   slice(1:10)
 
 # Display the table of the top 10 regions by sample size
 wineTable1
 
 # Filter the dataset to include only wines from the top two regions
-wines <- wines %>%
+wines <- wines |>
   filter(region %in% wineTable1$region[1:2])
 
 # Summarize the dataset to compute the mean wine quality (rating) by year and region
-wineSummary <- wines %>%
-  group_by(year, region) %>%
+wineSummary <- wines |>
+  group_by(year, region) |>
   summarise(meanQuality = mean(rating))
 
 # Plot the mean wine quality by year for each of the top two regions using ggplot2
@@ -47,8 +47,8 @@ spainTemp <- read.csv("DataSetLibrary/SpainSurfaceTemp.csv")
 summary(spainTemp)
 
 # Merge the wine quality summary data for the Rioja region with the Spain temperature data
-wineSummaryRioja <- wineSummary %>%
-  filter(region == "Rioja") %>%
+wineSummaryRioja <- wineSummary |>
+  filter(region == "Rioja") |>
   left_join(spainTemp)
 
 # Plot the relationship between mean wine quality and temperature for the Rioja region using ggplot2

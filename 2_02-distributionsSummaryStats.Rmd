@@ -54,7 +54,7 @@ library(ggplot2)
 library(dplyr)
 
 # Create the data frame with normal distribution density and highlight regions for 1 and 2 SDs
-normData <- data.frame(x = seq(-3, 3, 0.1)) %>%
+normData <- data.frame(x = seq(-3, 3, 0.1)) |>
   mutate(
     dens = dnorm(x, mean = 0, sd = 1),
     sd1 = between(x, -1, 1),
@@ -139,7 +139,7 @@ We can calculate the mean and standard deviation using `summarise` (along with o
 *Note that here I put a set of parentheses around the code to both display the result AND save the result in an object called `sv`*
 
 ```{r 2-02-distributionsSummaryStats-6, message=FALSE}
-(sv <- rn %>%
+(sv <- rn |>
   summarise(
     meanEst = mean(d1),
     sdEst = sd(d1),
@@ -218,7 +218,7 @@ The Poisson distribution is typically used when dealing with count data. The val
 
 ```{r 2-02-distributionsSummaryStats-14, echo=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 set.seed(42)
-poissonData <- data.frame(x = seq(0, 10, 1)) %>%
+poissonData <- data.frame(x = seq(0, 10, 1)) |>
   mutate(dens = dpois(x, lambda = 2))
 
 L2 <- ggplot(poissonData, aes(x = x, y = dens)) +
@@ -229,7 +229,7 @@ L2 <- ggplot(poissonData, aes(x = x, y = dens)) +
   ylab("Density") +
   theme_minimal()
 
-poissonData <- data.frame(x = seq(0, 10, 1)) %>%
+poissonData <- data.frame(x = seq(0, 10, 1)) |>
   mutate(dens = dpois(x, lambda = 5))
 
 L5 <- ggplot(poissonData, aes(x = x, y = dens)) +
@@ -267,7 +267,7 @@ Calculate the mean values and compare those with `lambda` (they should be very s
 Let's calculate summary statistics of mean and standard deviation for this distribution
 
 ```{r 2-02-distributionsSummaryStats-17, message=FALSE}
-(sv <- rp %>%
+(sv <- rp |>
   summarise(
     meanEst = mean(d1),
     sdEst = sd(d1)
@@ -290,7 +290,7 @@ So how should we summarise this data?
 One approach is to report the median as a measure of "central tendency" instead of the mean, and to report "quantiles" of the data along with the range (i.e. minimum and maximum). Quantiles are simply the cut points that divide the data into parts. For example, the 25% quantile is the point where (if the data were arranged in order) one quarter of the values would fall below; the 50% quantile would mark the middle of the data (= the median); the 75% quantile would be the point when three-quarters of the data are below. You can calculate those things using `dplyr`'s `summarise`. However, you can also simply use the base R `summary` command.
 
 ```{r 2-02-distributionsSummaryStats-19}
-(sv <- rp %>%
+(sv <- rp |>
   summarise(
     minVal = min(d1),
     q25 = quantile(d1, 0.25),

@@ -37,8 +37,8 @@ This transformation enables logistic regression to handle binary or proportional
 
 
 ```{r 3-09-GLM-2-otherFamilies-1, echo=FALSE,fig.width=7,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
-datBinom <- data.frame(x = 1:10) %>%
-  mutate(tValue = seq(-6, 6, length.out = 10)) %>%
+datBinom <- data.frame(x = 1:10) |>
+  mutate(tValue = seq(-6, 6, length.out = 10)) |>
   mutate(prob = exp(tValue) / (exp(tValue) + 1))
 
 
@@ -74,7 +74,7 @@ Our aim is to estimate how the probability of success changes with distance from
 First, import the data and convert the distance from yards to meters. 
 
 ```{r 3-09-GLM-2-otherFamilies-3}
-NFL <- read.csv("CourseData/NFLfieldgoal.csv") %>%
+NFL <- read.csv("CourseData/NFLfieldgoal.csv") |>
   mutate(Distance = Distance * 0.9144)
 ```
 
@@ -156,7 +156,7 @@ $y =\frac{1}{1+exp(-(\beta_0 + \beta_1 x))}$, or $probability =\frac{1}{1+exp(-(
 Let's make sure that works by creating a set of predicted data from this equation and plotting it onto the graph:
 
 ```{r 3-09-GLM-2-otherFamilies-9, echo=TRUE,fig.width=5,fig.height=3,fig.align='center', fig.pos = "ht",message=FALSE}
-d1 <- data.frame(x = 10:50) %>%
+d1 <- data.frame(x = 10:50) |>
   mutate(y = 1 / (1 + exp(-(5.690 - 0.131 * x))))
 A + geom_line(data = d1, aes(x, y), colour = "red")
 ```
@@ -182,9 +182,9 @@ newData <- data.frame(Distance = 14:52)
 predVals <- predict(nflMod, newdata = newData, se.fit = TRUE)
 
 # Add those predictions to newDat
-newData <- newData %>%
-  mutate(fit_LP = predVals$fit) %>%
-  mutate(lowerCI_LP = predVals$fit - 1.96 * predVals$se.fit) %>%
+newData <- newData |>
+  mutate(fit_LP = predVals$fit) |>
+  mutate(lowerCI_LP = predVals$fit - 1.96 * predVals$se.fit) |>
   mutate(upperCI_LP = predVals$fit + 1.96 * predVals$se.fit)
 ```
 
@@ -195,7 +195,7 @@ Now we can first obtain the inverse link from the model object `family(nflMod)$l
 inverseFunction <- family(nflMod)$linkinv
 
 # transform predicted data to the natural scale
-newData <- newData %>%
+newData <- newData |>
   mutate(
     fit = inverseFunction(fit_LP),
     lowerCI = inverseFunction(lowerCI_LP),
@@ -220,9 +220,9 @@ set.seed(42)
 So, at what distance does the probability of success fall to just 50%? You could read this directly from the plot as "approximately 44m". Alternatively, you could obtain the value from the `newData` dataset you created above with predictions from the model, by filtering it. This confirms the probability of success reaches 0.5 somewhere between 43-44m.
 
 ```{r 3-09-GLM-2-otherFamilies-13}
-newData %>%
-  filter(fit < 0.55) %>%
-  filter(fit > 0.45) %>%
+newData |>
+  filter(fit < 0.55) |>
+  filter(fit > 0.45) |>
   select(Distance, fit)
 ```
 
@@ -243,7 +243,7 @@ hawksbill
 We are interested in sex ratio which we can calculate as the proportion of the population that is female (i.e. number of females divided by total number).
 
 ```{r 3-09-GLM-2-otherFamilies-16}
-hawksbill <- hawksbill %>%
+hawksbill <- hawksbill |>
   mutate(propFemale = Nfemale / (Nmale + Nfemale))
 ```
 
@@ -302,7 +302,7 @@ Now we can predict the values (and 95% CI) on the scale of the linear predictor 
 
 ```{r 3-09-GLM-2-otherFamilies-24}
 pv <- predict(modA, newDat, se.fit = TRUE)
-newDat <- newDat %>%
+newDat <- newDat |>
   mutate(
     propFemale_LP = pv$fit,
     lowerCI_LP = pv$fit - 1.96 * pv$se.fit,
@@ -317,7 +317,7 @@ Now we can use the inverse link function to backtransform to the natural probabi
 inverseFunction <- family(modA)$linkinv
 
 # transform predicted data to the natural scale
-newDat <- newDat %>%
+newDat <- newDat |>
   mutate(
     propFemale = inverseFunction(propFemale_LP),
     ymin = inverseFunction(lowerCI_LP),
@@ -410,7 +410,7 @@ First we calculate the fitted values and 95% confidence intervals on the scale o
 
 ```{r 3-09-GLM-2-otherFamilies-33}
 pv <- predict(smokeMod, smoke, se.fit = TRUE)
-smoke <- smoke %>%
+smoke <- smoke |>
   mutate(
     prob_LP = pv$fit,
     lowerCI_LP = pv$fit - 1.96 * pv$se.fit,
@@ -423,7 +423,7 @@ Then we can backtransform these values to the probability scale using the invers
 inverseFunction <- family(smokeMod)$linkinv
 
 # transform predicted data to the natural scale
-smoke <- smoke %>%
+smoke <- smoke |>
   mutate(
     prob = inverseFunction(prob_LP),
     ymin = inverseFunction(lowerCI_LP),

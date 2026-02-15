@@ -26,8 +26,8 @@ names(classData) <- c(
 
 
 # Process to add year column
-classData <- classData %>%
-  mutate(Year = year(Timestamp)) %>%
+classData <- classData |>
+  mutate(Year = year(Timestamp)) |>
   select(Year, everything(), -Timestamp)
 
 classData

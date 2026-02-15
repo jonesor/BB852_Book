@@ -11,9 +11,9 @@ During the 2+ way ANOVA (multiple regression) section you may have realised that
 We will use the class data to look at these topics (download the latest version please). In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or this year's data. 
 
 ```{r 3-07-EvaluatingModels-1}
-classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Year == 2019) %>% # you can edit this to look at particular years.
-  filter(Gender %in% c("Male", "Female")) %>%
+classData <- read.csv("CourseData/classData.csv") |>
+  filter(Year == 2019) |> # you can edit this to look at particular years.
+  filter(Gender %in% c("Male", "Female")) |>
   filter(!is.na(HandWidth)) # Filter out NA
 ```
 ## R-squared value
@@ -44,7 +44,7 @@ Multiple R-squared is a measure of R-squared value for models that can have mult
 You can test this by adding terms to the model. Let's start with something silly - we'll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?
 
 ```{r 3-07-EvaluatingModels-4}
-classData <- classData %>%
+classData <- classData |>
   mutate(randomVariable = rnorm(nrow(classData)))
 
 mod2 <- lm(Height ~ HandWidth + Gender + randomVariable, data = classData)
@@ -81,7 +81,7 @@ mod5 <- lm(Height ~ 1, data = classData)
 mod6 <- lm(Height ~ HandWidth + randomVariable, data = classData)
 
 
-(AICtable <- AIC(mod1, mod2, mod3, mod4, mod5, mod6) %>%
+(AICtable <- AIC(mod1, mod2, mod3, mod4, mod5, mod6) |>
   arrange(AIC))
 ```
 

@@ -102,9 +102,9 @@ newData <- data.frame(weight = seq(1.7, 4.4, 0.01))
 predVals <- predict(mod1, newData, se.fit = TRUE)
 
 # (3) Add the predicted fit and SE to newData
-newData <- newData %>%
-  mutate(fit_LP = predVals$fit) %>%
-  mutate(lowerCI_LP = predVals$fit - 1.96 * predVals$se.fit) %>%
+newData <- newData |>
+  mutate(fit_LP = predVals$fit) |>
+  mutate(lowerCI_LP = predVals$fit - 1.96 * predVals$se.fit) |>
   mutate(upperCI_LP = predVals$fit + 1.96 * predVals$se.fit)
 
 # (4) Backtransform these data to the natural scale
@@ -112,7 +112,7 @@ newData <- newData %>%
 inverseFunction <- family(mod1)$linkinv
 
 # transform predicted data to the natural scale
-newData <- newData %>%
+newData <- newData |>
   mutate(
     fit = inverseFunction(fit_LP),
     lowerCI = inverseFunction(lowerCI_LP),

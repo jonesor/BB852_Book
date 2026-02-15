@@ -5,7 +5,7 @@ Linear regression models, at their simplest, estimate linear (straight-line) rel
 The aim of linear regression is to (1) determine whether there is a meaningful statistical relationship between the explanatory variable(s) and the response variable, and (2) quantify those relationships by estimating their characteristics. These characteristics include the slope and intercept of fitted models, and the amount of variation explained by variables in the model.
 
 ```{r 3-04-linearRegression-1, echo=FALSE,fig.width=3,fig.height=3,fig.align='center',fig.cap="A linear regression model fitted through data points.", fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
+classData <- read.csv("CourseData/classData.csv") |>
   filter(Year == 2019)
 
 ggplot(classData, aes(x = HandWidth, y = Height)) +
@@ -25,7 +25,7 @@ To understand linear regression models it is important to know that the equation
 a1 <- 2
 b1 <- 1
 
-df_reg <- data.frame(x = c(0, 4, 5, 7)) %>%
+df_reg <- data.frame(x = c(0, 4, 5, 7)) |>
   mutate(y = a1 * x + b1)
 
 A <- ggplot(df_reg) +
@@ -54,7 +54,7 @@ A <- ggplot(df_reg) +
 a2 <- -2.3
 b2 <- 11
 
-df_reg <- data.frame(x = c(0, 4, 5, 7)) %>%
+df_reg <- data.frame(x = c(0, 4, 5, 7)) |>
   mutate(y = a2 * x + b2)
 
 B <- ggplot(df_reg) +
@@ -89,15 +89,15 @@ When looking at data points on a graph, unless all of the points are arranged pe
 One way of doing this is by minimising the sum of squares of the residuals (again, you have come across this concept a few times before). In other words, we add up the squares of each of the residuals. We square the values rather than simply adding up the residuals themselves because we want to ensure that the positive and negative values don't cancel each other out (a square of a negative number is positive). This method is called **least squares** regression and is illustrated in Figure \@ref(fig:3-04-linearRegression-3): Which is the best fitting line?
 
 ```{r 3-04-linearRegression-3, echo=FALSE,fig.width=4.8,fig.height=4,fig.align='center',fig.cap="Residuals and least squares: which is the best fitting line?",fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
+classData <- read.csv("CourseData/classData.csv") |>
   filter(Year == 2019)
 
 # Black thread least squares
 slopeCoef <- c(6.10, 4.66, -1, 0.00)
 interceptCoef <- c(125, 134, 185, 175)
 
-residualData <- classData %>%
-  select(Height, HandWidth) %>%
+residualData <- classData |>
+  select(Height, HandWidth) |>
   mutate(Height_Pred = (slopeCoef[1] * HandWidth) + interceptCoef[1])
 
 A <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
@@ -114,8 +114,8 @@ A <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend 
   theme_minimal()
 
 
-residualData <- classData %>%
-  select(Height, HandWidth) %>%
+residualData <- classData |>
+  select(Height, HandWidth) |>
   mutate(Height_Pred = (slopeCoef[2] * HandWidth) + interceptCoef[2])
 
 B <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
@@ -131,8 +131,8 @@ B <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend 
   ggtitle(paste0("B) slope:  ", slopeCoef[2], "; int: ", interceptCoef[2])) +
   theme_minimal()
 
-residualData <- classData %>%
-  select(Height, HandWidth) %>%
+residualData <- classData |>
+  select(Height, HandWidth) |>
   mutate(Height_Pred = (slopeCoef[3] * HandWidth) + interceptCoef[3])
 
 C <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
@@ -148,8 +148,8 @@ C <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend 
   ggtitle(paste0("C) slope:  ", slopeCoef[3], "; int: ", interceptCoef[3])) +
   theme_minimal()
 
-residualData <- classData %>%
-  select(Height, HandWidth) %>%
+residualData <- classData |>
+  select(Height, HandWidth) |>
   mutate(Height_Pred = (slopeCoef[4] * HandWidth) + interceptCoef[4])
 
 D <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
@@ -213,7 +213,7 @@ $$F = \frac{mESS}{mRSS}$$
 If the *explained variance* (mESS) is large compared to the *residual error variance* (mRSS), then F will be large. The size of F tells us how likely or unlikely it is that the null hypothesis is true. When F is large, the probability that the slope is significantly different from 0 is high. To obtain the actual probabilities, the F-value must be compared to a theoretical distribution which depends on the two degrees of freedom (explained and residual d.f.). Once upon a time you would have looked this up in a printed table, but now R makes this very straightforward.
 
 ```{r 3-04-linearRegression-4, echo=FALSE,fig.width=8,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
+classData <- read.csv("CourseData/classData.csv") |>
   filter(Year == 2019)
 
 
@@ -222,8 +222,8 @@ model <- lm(Height ~ HandWidth, data = classData)
 slopeCoefTotal <- 0
 interceptCoefTotal <- mean(classData$Height)
 
-residualDataTotal <- classData %>%
-  select(Height, HandWidth) %>%
+residualDataTotal <- classData |>
+  select(Height, HandWidth) |>
   mutate(Height_Pred = (slopeCoefTotal * HandWidth) + interceptCoefTotal)
 
 A <- ggplot(residualDataTotal, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
@@ -240,8 +240,8 @@ A <- ggplot(residualDataTotal, aes(x = HandWidth, y = Height, xend = HandWidth, 
 slopeCoefError <- model$coef[2]
 interceptCoefError <- model$coef[1]
 
-residualDataError <- classData %>%
-  select(Height, HandWidth) %>%
+residualDataError <- classData |>
+  select(Height, HandWidth) |>
   mutate(Height_Pred = (slopeCoefError * HandWidth) + interceptCoefError)
 
 B <- ggplot(residualDataError, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
@@ -274,7 +274,7 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 
 First, load the data:
 ```{r 3-04-linearRegression-6}
-classData <- read.csv("CourseData/classData.csv") %>%
+classData <- read.csv("CourseData/classData.csv") |>
   filter(Year == 2019)
 ```
 
@@ -331,7 +331,7 @@ These estimates and errors are each followed by a `t value` and a p-value (`Pr(>
 
 
 ```{r 3-04-linearRegression-12, echo=FALSE,fig.width=6,fig.height=3,fig.align='center',fig.cap="Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.", fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
+classData <- read.csv("CourseData/classData.csv") |>
   filter(Year == 2019)
 
 # ggplot(classData,aes(x=Height,y=HandWidth)) +
@@ -393,7 +393,7 @@ We could describe the model like this:
 ```{r 3-04-linearRegression-13, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}
 set.seed(7645)
 
-df1 <- data.frame(x = runif(30, 1, 10)) %>%
+df1 <- data.frame(x = runif(30, 1, 10)) |>
   mutate(y = (x * 1.5 + 0) + rnorm(30, 0, 0.05))
 z <- summary(lm(y ~ x, data = df1))
 cval <- cor(df1$x, df1$y)
@@ -406,7 +406,7 @@ A <- ggplot(df1, aes(x, y)) +
   ggtitle(paste0("R-sq = ", formatC(R2, digits = 2, format = "f"))) +
   NULL
 
-df1 <- data.frame(x = runif(30, 1, 10)) %>%
+df1 <- data.frame(x = runif(30, 1, 10)) |>
   mutate(y = (x * 1.5 + 0) + rnorm(30, 0, 1))
 z <- summary(lm(y ~ x, data = df1))
 cval <- cor(df1$x, df1$y)
@@ -419,7 +419,7 @@ B <- ggplot(df1, aes(x, y)) +
   ggtitle(paste0("R-sq = ", formatC(R2, digits = 2, format = "f"))) +
   NULL
 
-df1 <- data.frame(x = runif(30, 1, 10)) %>%
+df1 <- data.frame(x = runif(30, 1, 10)) |>
   mutate(y = (x * 1.5 + 0) + rnorm(30, 0, 3))
 z <- summary(lm(y ~ x, data = df1))
 cval <- cor(df1$x, df1$y)
@@ -433,7 +433,7 @@ C <- ggplot(df1, aes(x, y)) +
   NULL
 
 
-df1 <- data.frame(x = runif(30, 1, 10)) %>%
+df1 <- data.frame(x = runif(30, 1, 10)) |>
   mutate(y = (x * 1.5 + 0) + rnorm(30, 0, 8))
 z <- summary(lm(y ~ x, data = df1))
 cval <- cor(df1$x, df1$y)

@@ -14,7 +14,7 @@ fakeData <- expand.grid(diet = c("lowP", "highP"), genotype = c("gt1", "gt2"))
 
 # No effect of diet nor genotype
 A <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(lengthMM = c(5, 5, 5, 5)),
   aes(x = genotype, y = lengthMM, fill = diet, group = diet)
 ) +
@@ -26,7 +26,7 @@ A <- ggplot(
 
 # Genotype significant, not diet
 B <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(lengthMM = c(5, 5, 8, 8)),
   aes(x = genotype, y = lengthMM, fill = diet, group = diet)
 ) +
@@ -39,7 +39,7 @@ B <- ggplot(
 
 # Diet significant, not genotype
 C <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(lengthMM = c(5, 8, 5, 8)),
   aes(x = genotype, y = lengthMM, fill = diet, group = diet)
 ) +
@@ -56,7 +56,7 @@ C <- ggplot(
 # No interaction
 
 D <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(lengthMM = c(3, 4, 7, 8)),
   aes(x = genotype, y = lengthMM, fill = diet, group = diet)
 ) +
@@ -71,7 +71,7 @@ D <- ggplot(
 # Diet significant, genotype  significant
 # Significant interaction
 
-E <- ggplot(fakeData %>%
+E <- ggplot(fakeData |>
   mutate(lengthMM = c(3, 4, 5, 8)), aes(x = genotype, y = lengthMM, fill = diet, group = diet)) +
   geom_col(position = position_dodge(1)) +
   ylim(0, 9) +
@@ -83,7 +83,7 @@ E <- ggplot(fakeData %>%
 # Diet not significant, genotype not significant
 # Significant interaction
 
-Fa <- ggplot(fakeData %>%
+Fa <- ggplot(fakeData |>
   mutate(lengthMM = c(3, 6, 6, 3)), aes(x = genotype, y = lengthMM, fill = diet, group = diet)) +
   geom_col(position = position_dodge(1)) +
   ylim(0, 9) +
@@ -160,8 +160,8 @@ To do this you first need to create a summary table using `dplyr` tools `summari
 
 ```{r 3-06-n-way-ANOVA-7}
 insectDiet_means <-
-  insectDiet %>%
-  group_by(genotype, diet) %>% # <- remember to group by *both* factors
+  insectDiet |>
+  group_by(genotype, diet) |> # <- remember to group by *both* factors
   summarise(MeanLength = mean(lengthMM), SELength = sd(lengthMM) / sqrt(n()))
 insectDiet_means
 ```

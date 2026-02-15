@@ -72,7 +72,7 @@ The relevant columns are the taxonomic variables (`class`, `genus`, and `species
 
 
 ```{r 6-1-00-AllSolutions-8}
-x <- amniote %>%
+x <- amniote |>
   select(
     class, genus, species,
     longevity_y, adult_body_mass_g,
@@ -85,8 +85,8 @@ Use `mutate` and `paste` to convert the `species` column to a *Genus_species* by
 
 
 ```{r 6-1-00-AllSolutions-9}
-x <- x %>%
-  mutate(species = paste(genus, species)) %>%
+x <- x |>
+  mutate(species = paste(genus, species)) |>
   select(-genus)
 head(x)
 ```
@@ -94,22 +94,22 @@ head(x)
 4. What is the longest living species in the record? Use `arrange` to sort the data from longest to shortest longevity (`longevity_y`), and then look at the top of the file using `head` to find out. (hint: you will need to use reverse sort (`-`)). Cut and paste the species name into Google to find out more!
 
 ```{r 6-1-00-AllSolutions-10}
-x <- x %>% arrange(-longevity_y)
+x <- x |> arrange(-longevity_y)
 head(x)
 ```
 
 5. Do the same thing but this time find the shortest lived species.
 
 ```{r 6-1-00-AllSolutions-11}
-x <- x %>% arrange(longevity_y)
+x <- x |> arrange(longevity_y)
 head(x)
 ```
 
 6. Use `summarise` and `group_by` to make a table summarising `min`, `median` and `max` life spans (`longevity_y`) for the three taxonomic classes in the database. Remember that you need to tell R to remove the `NA` values using a `na.rm = TRUE` argument.
 
 ```{r 6-1-00-AllSolutions-12}
-x %>%
-  group_by(class) %>%
+x |>
+  group_by(class) |>
   summarise(
     min = min(longevity_y, na.rm = TRUE),
     median = median(longevity_y, na.rm = TRUE),
@@ -126,7 +126,7 @@ plot(x$adult_body_mass_g, x$longevity_y)
 8. Use `mutate` to create two new `log`-transformed variables, `logMass` and `logLongevity`. Use these to make a "log-log" plot. You should see that this makes the relationship more linear, and easier to "read".
 
 ```{r 6-1-00-AllSolutions-14}
-x <- x %>%
+x <- x |>
   mutate(
     logMass = log(adult_body_mass_g),
     logLongevity = log(longevity_y)
@@ -138,7 +138,7 @@ plot(x$logMass, x$logLongevity)
 9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: use `mutate` to create a variable called `logOffspring` which is the logarithm of the number of litters/clutches per year multiplied by the number of babies in each litter/clutch. Then plot `logOffspring` vs. `logLongevity`.
 
 ```{r 6-1-00-AllSolutions-15}
-x <- x %>%
+x <- x |>
   mutate(logOffspring = log(
     litter_or_clutch_size_n * litters_or_clutches_per_y
   ))
@@ -149,7 +149,7 @@ plot(x$logOffspring, x$logLongevity)
 10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationship holds universally.
 
 ```{r 6-1-00-AllSolutions-16}
-aves <- x %>%
+aves <- x |>
   filter(class == "Aves")
 
 plot(aves$logOffspring, aves$logLongevity)
@@ -157,7 +157,7 @@ title("Aves")
 ```
 
 ```{r 6-1-00-AllSolutions-17}
-mammalia <- x %>%
+mammalia <- x |>
   filter(class == "Mammalia")
 
 plot(mammalia$logOffspring, mammalia$logLongevity)
@@ -165,7 +165,7 @@ title("Mammalia")
 ```
 
 ```{r 6-1-00-AllSolutions-18}
-reptilia <- x %>%
+reptilia <- x |>
   filter(class == "Reptilia")
 
 plot(reptilia$logOffspring, reptilia$logLongevity)
@@ -190,7 +190,7 @@ You should also make sure that the `Year` column is recognised as being a numeri
 You should end up with a dataset with three columns as described above.
 
 ```{r 6-1-00-AllSolutions-20}
-eggDates <- eggDates %>% pivot_longer(
+eggDates <- eggDates |> pivot_longer(
   cols = starts_with("y"),
   names_to = "Year", values_to = "day"
 )
@@ -201,8 +201,8 @@ head(eggDates)
 3. Ensure that year is coded as numeric variable using `mutate`. [Hint, you can use the command `as.numeric`, but first remove the "y" in the name using `gsub`].
 
 ```{r 6-1-00-AllSolutions-21}
-eggDates <- eggDates %>%
-  mutate(Year = gsub(pattern = "y", replacement = "", Year)) %>%
+eggDates <- eggDates |>
+  mutate(Year = gsub(pattern = "y", replacement = "", Year)) |>
   mutate(Year = as.numeric(Year))
 head(eggDates)
 ```
@@ -210,8 +210,8 @@ head(eggDates)
 4. Calculate the mean egg date per year using `summarise` (remember to `group_by` the year first). Take a look at the data.
 
 ```{r 6-1-00-AllSolutions-22}
-meanEgg <- eggDates %>%
-  group_by(Year) %>%
+meanEgg <- eggDates |>
+  group_by(Year) |>
   summarise(meanEggDate = mean(day, na.rm = TRUE))
 
 meanEgg
@@ -230,9 +230,9 @@ str(weather)
 6. Use `filter` to subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `YEAR` (or `year`) and `meanSpringTemp`.
 
 ```{r 6-1-00-AllSolutions-24}
-weather <- weather %>%
-  filter(MONTH %in% 2:4) %>%
-  group_by(YEAR) %>%
+weather <- weather |>
+  filter(MONTH %in% 2:4) |>
+  group_by(YEAR) |>
   summarise(meanSpringTemp = mean(TEMP))
 
 head(weather)
@@ -346,8 +346,8 @@ hercules <- read.csv("CourseData/herculesBeetle.csv")
 
 ```{r 6-1-00-AllSolutions-32}
 # With dplyr
-hercules %>%
-  group_by(sex) %>%
+hercules |>
+  group_by(sex) |>
   summarise(mean = mean(width))
 
 # with tapply
@@ -365,9 +365,9 @@ tapply(hercules$width, hercules$sex, mean)
 6. Add vertical lines to the plot to indicate the mean values.
 
 ```{r 6-1-00-AllSolutions-34,message=FALSE}
-meanVals <- hercules %>%
-  group_by(sex) %>%
-  summarise(mean = mean(width)) %>%
+meanVals <- hercules |>
+  group_by(sex) |>
+  summarise(mean = mean(width)) |>
   pull(mean)
 
 plot1 + geom_vline(xintercept = meanVals, colour = c("red", "blue"))
@@ -377,10 +377,10 @@ plot1 + geom_vline(xintercept = meanVals, colour = c("red", "blue"))
 
 ```{r 6-1-00-AllSolutions-35}
 # with dplyr
-observedDiff <- hercules %>%
-  group_by(sex) %>%
-  summarise(mean = mean(width)) %>%
-  pull(mean) %>%
+observedDiff <- hercules |>
+  group_by(sex) |>
+  summarise(mean = mean(width)) |>
+  pull(mean) |>
   diff()
 observedDiff
 
@@ -392,11 +392,11 @@ diff(as.vector(tapply(hercules$width, hercules$sex, mean)))
 
 ```{r 6-1-00-AllSolutions-36}
 # with dplyr
-hercules %>%
-  mutate(sex = sample(sex)) %>%
-  group_by(sex) %>%
-  summarise(mean = mean(width)) %>%
-  pull(mean) %>%
+hercules |>
+  mutate(sex = sample(sex)) |>
+  group_by(sex) |>
+  summarise(mean = mean(width)) |>
+  pull(mean) |>
   diff()
 
 # with tapply
@@ -409,11 +409,11 @@ diff(as.vector(tapply(hercules$width, sample(hercules$sex), mean)))
 # with dplyr
 replicate(
   10,
-  hercules %>%
-    mutate(sex = sample(sex)) %>%
-    group_by(sex) %>%
-    summarise(mean = mean(width)) %>%
-    pull(mean) %>%
+  hercules |>
+    mutate(sex = sample(sex)) |>
+    group_by(sex) |>
+    summarise(mean = mean(width)) |>
+    pull(mean) |>
     diff()
 )
 
@@ -435,11 +435,11 @@ diffs <- data.frame(
   diffs =
     replicate(
       1000,
-      hercules %>%
-        mutate(sex = sample(sex)) %>%
-        group_by(sex) %>%
-        summarise(mean = mean(width)) %>%
-        pull(mean) %>%
+      hercules |>
+        mutate(sex = sample(sex)) |>
+        group_by(sex) |>
+        summarise(mean = mean(width)) |>
+        pull(mean) |>
         diff()
     )
 )
@@ -485,8 +485,8 @@ Carry out a two-sample t-test.
 
 ```{r 6-1-00-AllSolutions-41,echo = -1,cache=TRUE}
 set.seed(12)
-classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Gender %in% c("Male", "Female")) %>%
+classData <- read.csv("CourseData/classData.csv") |>
+  filter(Gender %in% c("Male", "Female")) |>
   filter(Year == 2019) #you may use a different filter
 
 ggplot(classData, aes(x = Gender, y = Precision)) +
@@ -529,7 +529,7 @@ anorexiaCBT <- read.csv("CourseData/anorexiaCBT.csv",
   header = TRUE
 )
 
-anorexiaCBT_long <- anorexiaCBT %>%
+anorexiaCBT_long <- anorexiaCBT |>
   pivot_longer(
     cols = starts_with("Week"), names_to = "time",
     values_to = "weight"
@@ -595,7 +595,7 @@ summary(apples)
 2. Ensure that the explanatory variable (`spacing`) is defined as a categorical variable (i.e. a "factor", in R-speak). You can use `mutate` and `as.factor` functions for this.
 
 ```{r 6-1-00-AllSolutions-51}
-apples <- apples %>%
+apples <- apples |>
   mutate(spacing = as.factor(spacing))
 ```
 
@@ -661,7 +661,7 @@ Or, more simply: *The 6-10ft and 6-14ft comparisons showed significant differenc
 10. Optional. Instead of using a Tukey test, use the alternative "relevel" approach to make the missing comparison.
 
 ```{r 6-1-00-AllSolutions-59}
-apples2 <- apples %>%
+apples2 <- apples |>
   mutate(spacing = relevel(spacing, ref = "10"))
 apple_mod2 <- lm(yield ~ spacing, data = apples2)
 summary(apple_mod2)
@@ -683,7 +683,7 @@ chirps <- read.csv("CourseData/chirps.csv")
 2. Use `mutate` to convert Fahrenheit to Celsius (Google it)
 
 ```{r 6-1-00-AllSolutions-61}
-chirps <- chirps %>%
+chirps <- chirps |>
   mutate(temperatureC = (temperature - 32) * (5 / 9))
 head(chirps)
 ```
@@ -838,16 +838,16 @@ summary(mod_A)
 newData <- data.frame(Age = c("Child", "Adult"))
 pv <- predict(mod_A, newData, se.fit = TRUE)
 
-newData <- newData %>%
-  mutate(nErrors_LP = pv$fit) %>%
-  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) %>%
+newData <- newData |>
+  mutate(nErrors_LP = pv$fit) |>
+  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) |>
   mutate(upperCI_LP = pv$fit + 1.96 * pv$se.fit)
 
 inverseFunction <- family(mod_A)$linkinv
 
-newData <- newData %>%
-  mutate(nErrors = inverseFunction(nErrors_LP)) %>%
-  mutate(lowerCI = inverseFunction(lowerCI_LP)) %>%
+newData <- newData |>
+  mutate(nErrors = inverseFunction(nErrors_LP)) |>
+  mutate(lowerCI = inverseFunction(lowerCI_LP)) |>
   mutate(upperCI = inverseFunction(upperCI_LP))
 
 

@@ -427,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="27.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>27.5</b> Sexual selection in Hercules beetles</a></li>
 <li class="chapter" data-level="27.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>27.6</b> Sex differences in fine motor skills</a></li>
 <li class="chapter" data-level="27.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>27.7</b> Therapy for anorexia</a></li>
-<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests-optional"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests (optional)</a></li>
 <li class="chapter" data-level="27.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>27.9</b> Apple tree crop yield</a></li>
 <li class="chapter" data-level="27.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>27.10</b> Chirping crickets</a></li>
 <li class="chapter" data-level="27.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>27.11</b> Fish behaviour</a></li>
@@ -544,17 +544,17 @@ Try splitting the data into different years using
 <p>Perhaps not surprisingly lines and points can be added with the geoms, <code>geom_line</code> and <code>geom_point</code> respectively.
 To illustrate this we will make a plot showing how clutch size changes among years.
 First we will use <code>summarise</code> to create a dataset with the mean clutch size. We’ll start simply, by looking at only great tits.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="visualising-data-with-ggplot2.html#cb205-1" tabindex="-1"></a>GTclutch <span class="ot">&lt;-</span> clutch <span class="sc">%&gt;%</span></span>
-<span id="cb205-2"><a href="visualising-data-with-ggplot2.html#cb205-2" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;GT&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb205-3"><a href="visualising-data-with-ggplot2.html#cb205-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="visualising-data-with-ggplot2.html#cb205-1" tabindex="-1"></a>GTclutch <span class="ot">&lt;-</span> clutch <span class="sc">|&gt;</span></span>
+<span id="cb205-2"><a href="visualising-data-with-ggplot2.html#cb205-2" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;GT&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb205-3"><a href="visualising-data-with-ggplot2.html#cb205-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">|&gt;</span></span>
 <span id="cb205-4"><a href="visualising-data-with-ggplot2.html#cb205-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanClutchSize =</span> <span class="fu">mean</span>(clutchSize))</span></code></pre></div>
 <p>Then you can plot this like this.</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="visualising-data-with-ggplot2.html#cb206-1" tabindex="-1"></a><span class="fu">ggplot</span>(GTclutch, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> meanClutchSize)) <span class="sc">+</span></span>
 <span id="cb206-2"><a href="visualising-data-with-ggplot2.html#cb206-2" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <p><img src="BB852_files/figure-html/2-01-visualisingData-16-1.png" alt="" width="672" /></p>
 <p>I think this looks OK, but we should add both species. I’ll first need to produce a mean clutch size dataset that includes both species.</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="visualising-data-with-ggplot2.html#cb207-1" tabindex="-1"></a>meanClutch <span class="ot">&lt;-</span> clutch <span class="sc">%&gt;%</span></span>
-<span id="cb207-2"><a href="visualising-data-with-ggplot2.html#cb207-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species, Year) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="visualising-data-with-ggplot2.html#cb207-1" tabindex="-1"></a>meanClutch <span class="ot">&lt;-</span> clutch <span class="sc">|&gt;</span></span>
+<span id="cb207-2"><a href="visualising-data-with-ggplot2.html#cb207-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species, Year) <span class="sc">|&gt;</span></span>
 <span id="cb207-3"><a href="visualising-data-with-ggplot2.html#cb207-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanClutchSize =</span> <span class="fu">mean</span>(clutchSize))</span></code></pre></div>
 <p>Now I can do the plot again. The only difference to the command is that I need to tell R that I want to colour the lines by species (<code>colour = species</code>).</p>
 <div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="visualising-data-with-ggplot2.html#cb208-1" tabindex="-1"></a><span class="fu">ggplot</span>(meanClutch, <span class="fu">aes</span>(</span>

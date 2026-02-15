@@ -427,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="27.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>27.5</b> Sexual selection in Hercules beetles</a></li>
 <li class="chapter" data-level="27.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>27.6</b> Sex differences in fine motor skills</a></li>
 <li class="chapter" data-level="27.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>27.7</b> Therapy for anorexia</a></li>
-<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests-optional"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests (optional)</a></li>
 <li class="chapter" data-level="27.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>27.9</b> Apple tree crop yield</a></li>
 <li class="chapter" data-level="27.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>27.10</b> Chirping crickets</a></li>
 <li class="chapter" data-level="27.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>27.11</b> Fish behaviour</a></li>
@@ -529,7 +529,7 @@ values you generate, and to alter the mean and standard deviation.
 <p><img src="BB852_files/figure-html/2-02-distributionsSummaryStats-5-1.png" width="384" style="display: block; margin: auto;" /></p>
 <p>We can calculate the mean and standard deviation using <code>summarise</code> (along with other estimates of “spread”). The mean and standard deviation values will be close (but not identical) to the values you set when you generated the distribution.</p>
 <p><em>Note that here I put a set of parentheses around the code to both display the result AND save the result in an object called <code>sv</code></em></p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="distributions-and-summarising-data.html#cb231-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rn <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="distributions-and-summarising-data.html#cb231-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rn <span class="sc">|&gt;</span></span>
 <span id="cb231-2"><a href="distributions-and-summarising-data.html#cb231-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb231-3"><a href="distributions-and-summarising-data.html#cb231-3" tabindex="-1"></a>    <span class="at">meanEst =</span> <span class="fu">mean</span>(d1),</span>
 <span id="cb231-4"><a href="distributions-and-summarising-data.html#cb231-4" tabindex="-1"></a>    <span class="at">sdEst =</span> <span class="fu">sd</span>(d1),</span>
@@ -626,7 +626,7 @@ Calculate the mean values and compare those with <code>lambda</code>
 </p>
 </div>
 <p>Let’s calculate summary statistics of mean and standard deviation for this distribution</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="distributions-and-summarising-data.html#cb243-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="distributions-and-summarising-data.html#cb243-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rp <span class="sc">|&gt;</span></span>
 <span id="cb243-2"><a href="distributions-and-summarising-data.html#cb243-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb243-3"><a href="distributions-and-summarising-data.html#cb243-3" tabindex="-1"></a>    <span class="at">meanEst =</span> <span class="fu">mean</span>(d1),</span>
 <span id="cb243-4"><a href="distributions-and-summarising-data.html#cb243-4" tabindex="-1"></a>    <span class="at">sdEst =</span> <span class="fu">sd</span>(d1)</span>
@@ -643,7 +643,7 @@ Calculate the mean values and compare those with <code>lambda</code>
 <p>This looks like a TERRIBLE fit: The mean is not close to the most common value in the data set and the lower limit of the standard deviation indicates we should expect some negative values - this is impossible for Poisson data. The reason for this is that mean and standard deviation, and therefore standard error, are intended for normally distributed data. When the data come from other distributions we must take another approach.</p>
 <p>So how should we summarise this data?</p>
 <p>One approach is to report the median as a measure of “central tendency” instead of the mean, and to report “quantiles” of the data along with the range (i.e. minimum and maximum). Quantiles are simply the cut points that divide the data into parts. For example, the 25% quantile is the point where (if the data were arranged in order) one quarter of the values would fall below; the 50% quantile would mark the middle of the data (= the median); the 75% quantile would be the point when three-quarters of the data are below. You can calculate those things using <code>dplyr</code>’s <code>summarise</code>. However, you can also simply use the base R <code>summary</code> command.</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="distributions-and-summarising-data.html#cb247-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rp <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="distributions-and-summarising-data.html#cb247-1" tabindex="-1"></a>(sv <span class="ot">&lt;-</span> rp <span class="sc">|&gt;</span></span>
 <span id="cb247-2"><a href="distributions-and-summarising-data.html#cb247-2" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb247-3"><a href="distributions-and-summarising-data.html#cb247-3" tabindex="-1"></a>    <span class="at">minVal =</span> <span class="fu">min</span>(d1),</span>
 <span id="cb247-4"><a href="distributions-and-summarising-data.html#cb247-4" tabindex="-1"></a>    <span class="at">q25 =</span> <span class="fu">quantile</span>(d1, <span class="fl">0.25</span>),</span>

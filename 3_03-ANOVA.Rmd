@@ -164,8 +164,8 @@ To properly interpret this output you need to understand something called "treat
 They are a bit hard to wrap your head around and I STRONGLY recommend that you always do this with reference to a plot of the actual data, and the mean values for your groups. To do this you can use `group_by` and `summarise` to calculate the means for the levels of your explanatory variable.
 
 ```{r 3-03-ANOVA-11}
-espresso %>%
-  group_by(method) %>%
+espresso |>
+  group_by(method) |>
   summarise(gp_mean = mean(foamIndx))
 ```
 
@@ -194,7 +194,7 @@ For example, we can `relevel` the method variable so that the levels are re-orde
 levels(espresso$method)
 
 # releveling changes this by changing the reference.
-espresso_2 <- espresso %>%
+espresso_2 <- espresso |>
   mutate(method = relevel(method, ref = "HIP"))
 levels(espresso_2$method)
 ```
@@ -217,7 +217,7 @@ temp <- data.frame(
   level = names(foam_mod$coefficients),
   levelNum = 1:3,
   coef = foam_mod$coefficients
-) %>%
+) |>
   mutate(value = c(coef[1], coef[2:3] + coef[1]))
 
 A <- ggplot(espresso, aes(x = method, y = foamIndx)) +
@@ -240,7 +240,7 @@ temp <- data.frame(
   level = names(foam_mod2$coefficients),
   levelNum = 1:3,
   coef = foam_mod2$coefficients
-) %>%
+) |>
   mutate(value = c(coef[1], coef[2:3] + coef[1]))
 
 B <- ggplot(espresso_2, aes(x = method, y = foamIndx)) +
@@ -307,17 +307,17 @@ If that doesn't make sense yet, picture the case where the treatment-specific me
 
 
 ```{r 3-03-ANOVA-18, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
-overallMean <- espresso %>%
-  summarise(overallMean = mean(foamIndx)) %>%
+overallMean <- espresso |>
+  summarise(overallMean = mean(foamIndx)) |>
   pull()
 
 # Add index and group means to the data
 espressoAugmented <- left_join(
   espresso,
-  espresso %>%
-    group_by(method) %>%
+  espresso |>
+    group_by(method) |>
     summarise(groupMean = mean(foamIndx))
-) %>%
+) |>
   mutate(n = 1:n())
 
 
@@ -332,13 +332,13 @@ SSTotalPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = metho
 
 # Plot B = error sum of squares (residuals from group means)
 SSErrorPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = method)) +
-  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
-  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
-  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented |> filter(method == "BM"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented |> filter(method == "HIP"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented |> filter(method == "IES"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
   geom_point() +
-  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
-  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
-  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented |> filter(method == "BM"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented |> filter(method == "HIP"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented |> filter(method == "IES"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
   xlab("Index") +
   NULL
 
@@ -360,18 +360,18 @@ overallMean <- mean(espresso$foamIndx)
 Now calculate the group-specific means:
 
 ```{r 3-03-ANOVA-20}
-(groupMeans <- espresso %>%
-  group_by(method) %>%
-  summarise(groupMean = mean(foamIndx)) %>%
+(groupMeans <- espresso |>
+  group_by(method) |>
+  summarise(groupMean = mean(foamIndx)) |>
   pull(groupMean))
 ```
 
 Now add those group-specific mean values to the dataset using `left_join` so that you can calculate the group-specific errors.
 
 ```{r 3-03-ANOVA-21}
-espresso <- left_join(espresso, espresso %>%
-  group_by(method) %>%
-  summarise(groupMean = mean(foamIndx))) %>%
+espresso <- left_join(espresso, espresso |>
+  group_by(method) |>
+  summarise(groupMean = mean(foamIndx))) |>
   mutate(groupSS = (foamIndx - groupMean)^2)
 
 head(espresso)
@@ -380,8 +380,8 @@ head(espresso)
 Then, to calculate the errors:
 
 ```{r 3-03-ANOVA-22}
-(SSError <- espresso %>%
-  summarise(sum(groupSS)) %>%
+(SSError <- espresso |>
+  summarise(sum(groupSS)) |>
   pull())
 ```
 
@@ -420,20 +420,20 @@ As you can see, the method is a bit laborious and time consuming but it is conce
 
 ```{r 3-03-ANOVA-27, echo=FALSE}
 # the following is some code to make a plot with shuffled data as an illustration of how the ANOVA works
-espressoShuffled <- espresso %>%
+espressoShuffled <- espresso |>
   mutate(foamIndx = sample(foamIndx))
 
-overallMean <- espressoShuffled %>%
-  summarise(overallMean = mean(foamIndx)) %>%
+overallMean <- espressoShuffled |>
+  summarise(overallMean = mean(foamIndx)) |>
   pull()
 
 # Add index and group means to the data
 espressoAugmented <- left_join(
   espressoShuffled,
-  espressoShuffled %>%
-    group_by(method) %>%
+  espressoShuffled |>
+    group_by(method) |>
     summarise(groupMean = mean(foamIndx))
-) %>%
+) |>
   mutate(n = 1:n())
 
 
@@ -448,13 +448,13 @@ SSTotalPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = metho
 
 # Plot B = error sum of squares (residuals from group means)
 SSErrorPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = method)) +
-  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
-  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
-  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented |> filter(method == "BM"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented |> filter(method == "HIP"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
+  geom_segment(data = espressoAugmented |> filter(method == "IES"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
   geom_point() +
-  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
-  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
-  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented |> filter(method == "BM"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented |> filter(method == "HIP"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
+  geom_segment(data = espressoAugmented |> filter(method == "IES"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
   xlab("Index") +
   NULL
 

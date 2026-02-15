@@ -126,9 +126,9 @@ First we will use `summarise` to create a dataset with the mean clutch size. We'
 
 
 ```{r 2-01-visualisingData-15}
-GTclutch <- clutch %>%
-  filter(species == "GT") %>%
-  group_by(Year) %>%
+GTclutch <- clutch |>
+  filter(species == "GT") |>
+  group_by(Year) |>
   summarise(meanClutchSize = mean(clutchSize))
 ```
 
@@ -143,8 +143,8 @@ I think this looks OK, but we should add both species. I'll first need to produc
 
 
 ```{r 2-01-visualisingData-17}
-meanClutch <- clutch %>%
-  group_by(species, Year) %>%
+meanClutch <- clutch |>
+  group_by(species, Year) |>
   summarise(meanClutchSize = mean(clutchSize))
 ```
 
@@ -240,8 +240,8 @@ df1 <- data.frame(x = rep(c("G1","G2"),each = n),
                   y = c(rnorm(n,mean = mv),
                         rgamma(n,shape = shape,scale = scale)))
 
-df2 <- df1 %>% 
-  group_by(x) %>% 
+df2 <- df1 |> 
+  group_by(x) |> 
   summarise(meanVal = mean(y), sdVal = sd(y))
 
 

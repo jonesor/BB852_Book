@@ -427,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="27.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>27.5</b> Sexual selection in Hercules beetles</a></li>
 <li class="chapter" data-level="27.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>27.6</b> Sex differences in fine motor skills</a></li>
 <li class="chapter" data-level="27.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>27.7</b> Therapy for anorexia</a></li>
-<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests-optional"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests (optional)</a></li>
 <li class="chapter" data-level="27.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>27.9</b> Apple tree crop yield</a></li>
 <li class="chapter" data-level="27.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>27.10</b> Chirping crickets</a></li>
 <li class="chapter" data-level="27.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>27.11</b> Fish behaviour</a></li>
@@ -494,7 +494,7 @@ correctly.
 <p>In this example you will be dealing with binary data (0/1, failure/success) from the American National Football League (NFL). The data are a record of field goals, which are a relatively rare method of scoring where someone kicks the ball over the crossbar and through the uprights of the goal during play.</p>
 <p>Our aim is to estimate how the probability of success changes with distance from the goal. We already have a good idea that success probability will decline with increasing distance! But at what rate does the probability decline? And at what distance is there a probability of 0.5 (i.e. 50% chance of success)?</p>
 <p>First, import the data and convert the distance from yards to meters.</p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="extending-use-cases-of-glm.html#cb468-1" tabindex="-1"></a>NFL <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/NFLfieldgoal.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="extending-use-cases-of-glm.html#cb468-1" tabindex="-1"></a>NFL <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CourseData/NFLfieldgoal.csv&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb468-2"><a href="extending-use-cases-of-glm.html#cb468-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Distance =</span> Distance <span class="sc">*</span> <span class="fl">0.9144</span>)</span></code></pre></div>
 <p>Next, plot the data with <code>ggplot</code> (<code>geom_jitter</code> would be a good option, but you might like to adjust the <code>height</code> and <code>alpha</code> arguments, e.g. <code>geom_jitter(height = 0.05,alpha = 0.5)</code>). You can see that the data are distributed in two bands with 1 representing success and 0 representing failure.</p>
 <div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="extending-use-cases-of-glm.html#cb469-1" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(NFL, <span class="fu">aes</span>(<span class="at">x =</span> Distance, <span class="at">y =</span> Success)) <span class="sc">+</span></span>
@@ -566,7 +566,7 @@ correctly.
 <p>The equation of the model if you want to express it on the natural scale works out to be:</p>
 <p><span class="math inline">\(y =\frac{1}{1+exp(-(\beta_0 + \beta_1 x))}\)</span>, or <span class="math inline">\(probability =\frac{1}{1+exp(-(5.690 - 0.131\times distance))}\)</span>.</p>
 <p>Let’s make sure that works by creating a set of predicted data from this equation and plotting it onto the graph:</p>
-<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="extending-use-cases-of-glm.html#cb477-1" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="extending-use-cases-of-glm.html#cb477-1" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">50</span>) <span class="sc">|&gt;</span></span>
 <span id="cb477-2"><a href="extending-use-cases-of-glm.html#cb477-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>(<span class="fl">5.690</span> <span class="sc">-</span> <span class="fl">0.131</span> <span class="sc">*</span> x))))</span>
 <span id="cb477-3"><a href="extending-use-cases-of-glm.html#cb477-3" tabindex="-1"></a>A <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">data =</span> d1, <span class="fu">aes</span>(x, y), <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## NULL</code></pre>
@@ -585,16 +585,16 @@ correctly.
 <span id="cb479-5"><a href="extending-use-cases-of-glm.html#cb479-5" tabindex="-1"></a>predVals <span class="ot">&lt;-</span> <span class="fu">predict</span>(nflMod, <span class="at">newdata =</span> newData, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb479-6"><a href="extending-use-cases-of-glm.html#cb479-6" tabindex="-1"></a></span>
 <span id="cb479-7"><a href="extending-use-cases-of-glm.html#cb479-7" tabindex="-1"></a><span class="co"># Add those predictions to newDat</span></span>
-<span id="cb479-8"><a href="extending-use-cases-of-glm.html#cb479-8" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
-<span id="cb479-9"><a href="extending-use-cases-of-glm.html#cb479-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit_LP =</span> predVals<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
-<span id="cb479-10"><a href="extending-use-cases-of-glm.html#cb479-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI_LP =</span> predVals<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span></span>
+<span id="cb479-8"><a href="extending-use-cases-of-glm.html#cb479-8" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">|&gt;</span></span>
+<span id="cb479-9"><a href="extending-use-cases-of-glm.html#cb479-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit_LP =</span> predVals<span class="sc">$</span>fit) <span class="sc">|&gt;</span></span>
+<span id="cb479-10"><a href="extending-use-cases-of-glm.html#cb479-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI_LP =</span> predVals<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit) <span class="sc">|&gt;</span></span>
 <span id="cb479-11"><a href="extending-use-cases-of-glm.html#cb479-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upperCI_LP =</span> predVals<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit)</span></code></pre></div>
 <p>Now we can first obtain the inverse link from the model object <code>family(nflMod)$linkinv</code>, and use that to backtransform the data onto the natural scale ready for plotting.</p>
 <div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="extending-use-cases-of-glm.html#cb480-1" tabindex="-1"></a><span class="co"># Get the inverse link function</span></span>
 <span id="cb480-2"><a href="extending-use-cases-of-glm.html#cb480-2" tabindex="-1"></a>inverseFunction <span class="ot">&lt;-</span> <span class="fu">family</span>(nflMod)<span class="sc">$</span>linkinv</span>
 <span id="cb480-3"><a href="extending-use-cases-of-glm.html#cb480-3" tabindex="-1"></a></span>
 <span id="cb480-4"><a href="extending-use-cases-of-glm.html#cb480-4" tabindex="-1"></a><span class="co"># transform predicted data to the natural scale</span></span>
-<span id="cb480-5"><a href="extending-use-cases-of-glm.html#cb480-5" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
+<span id="cb480-5"><a href="extending-use-cases-of-glm.html#cb480-5" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">|&gt;</span></span>
 <span id="cb480-6"><a href="extending-use-cases-of-glm.html#cb480-6" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb480-7"><a href="extending-use-cases-of-glm.html#cb480-7" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">inverseFunction</span>(fit_LP),</span>
 <span id="cb480-8"><a href="extending-use-cases-of-glm.html#cb480-8" tabindex="-1"></a>    <span class="at">lowerCI =</span> <span class="fu">inverseFunction</span>(lowerCI_LP),</span>
@@ -611,9 +611,9 @@ correctly.
 <span id="cb481-8"><a href="extending-use-cases-of-glm.html#cb481-8" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height =</span> <span class="fl">0.05</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="BB852_files/figure-html/3-09-GLM-2-otherFamilies-12-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>So, at what distance does the probability of success fall to just 50%? You could read this directly from the plot as “approximately 44m”. Alternatively, you could obtain the value from the <code>newData</code> dataset you created above with predictions from the model, by filtering it. This confirms the probability of success reaches 0.5 somewhere between 43-44m.</p>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="extending-use-cases-of-glm.html#cb482-1" tabindex="-1"></a>newData <span class="sc">%&gt;%</span></span>
-<span id="cb482-2"><a href="extending-use-cases-of-glm.html#cb482-2" tabindex="-1"></a>  <span class="fu">filter</span>(fit <span class="sc">&lt;</span> <span class="fl">0.55</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb482-3"><a href="extending-use-cases-of-glm.html#cb482-3" tabindex="-1"></a>  <span class="fu">filter</span>(fit <span class="sc">&gt;</span> <span class="fl">0.45</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="extending-use-cases-of-glm.html#cb482-1" tabindex="-1"></a>newData <span class="sc">|&gt;</span></span>
+<span id="cb482-2"><a href="extending-use-cases-of-glm.html#cb482-2" tabindex="-1"></a>  <span class="fu">filter</span>(fit <span class="sc">&lt;</span> <span class="fl">0.55</span>) <span class="sc">|&gt;</span></span>
+<span id="cb482-3"><a href="extending-use-cases-of-glm.html#cb482-3" tabindex="-1"></a>  <span class="fu">filter</span>(fit <span class="sc">&gt;</span> <span class="fl">0.45</span>) <span class="sc">|&gt;</span></span>
 <span id="cb482-4"><a href="extending-use-cases-of-glm.html#cb482-4" tabindex="-1"></a>  <span class="fu">select</span>(Distance, fit)</span></code></pre></div>
 <pre><code>##   Distance       fit
 ## 1       42 0.5449184
@@ -637,7 +637,7 @@ correctly.
 ## 6        29.8    10     2       8
 ## 7        30.4    10     0      10</code></pre>
 <p>We are interested in sex ratio which we can calculate as the proportion of the population that is female (i.e. number of females divided by total number).</p>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="extending-use-cases-of-glm.html#cb487-1" tabindex="-1"></a>hawksbill <span class="ot">&lt;-</span> hawksbill <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="extending-use-cases-of-glm.html#cb487-1" tabindex="-1"></a>hawksbill <span class="ot">&lt;-</span> hawksbill <span class="sc">|&gt;</span></span>
 <span id="cb487-2"><a href="extending-use-cases-of-glm.html#cb487-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">propFemale =</span> Nfemale <span class="sc">/</span> (Nmale <span class="sc">+</span> Nfemale))</span></code></pre></div>
 <p>Let’s plot that data. We can use the trick of telling R to plot the points different sizes depending on the sample size (using the <code>size =</code> argument):</p>
 <div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="extending-use-cases-of-glm.html#cb488-1" tabindex="-1"></a>(A <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(hawksbill, <span class="fu">aes</span>(</span>
@@ -696,7 +696,7 @@ correctly.
 <div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="extending-use-cases-of-glm.html#cb496-1" tabindex="-1"></a>newDat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Temperature =</span> <span class="fu">seq</span>(<span class="fl">27.9</span>, <span class="fl">30.4</span>, <span class="fl">0.1</span>))</span></code></pre></div>
 <p>Now we can predict the values (and 95% CI) on the scale of the linear predictor (logit).</p>
 <div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="extending-use-cases-of-glm.html#cb497-1" tabindex="-1"></a>pv <span class="ot">&lt;-</span> <span class="fu">predict</span>(modA, newDat, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb497-2"><a href="extending-use-cases-of-glm.html#cb497-2" tabindex="-1"></a>newDat <span class="ot">&lt;-</span> newDat <span class="sc">%&gt;%</span></span>
+<span id="cb497-2"><a href="extending-use-cases-of-glm.html#cb497-2" tabindex="-1"></a>newDat <span class="ot">&lt;-</span> newDat <span class="sc">|&gt;</span></span>
 <span id="cb497-3"><a href="extending-use-cases-of-glm.html#cb497-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb497-4"><a href="extending-use-cases-of-glm.html#cb497-4" tabindex="-1"></a>    <span class="at">propFemale_LP =</span> pv<span class="sc">$</span>fit,</span>
 <span id="cb497-5"><a href="extending-use-cases-of-glm.html#cb497-5" tabindex="-1"></a>    <span class="at">lowerCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit,</span>
@@ -707,7 +707,7 @@ correctly.
 <span id="cb498-2"><a href="extending-use-cases-of-glm.html#cb498-2" tabindex="-1"></a>inverseFunction <span class="ot">&lt;-</span> <span class="fu">family</span>(modA)<span class="sc">$</span>linkinv</span>
 <span id="cb498-3"><a href="extending-use-cases-of-glm.html#cb498-3" tabindex="-1"></a></span>
 <span id="cb498-4"><a href="extending-use-cases-of-glm.html#cb498-4" tabindex="-1"></a><span class="co"># transform predicted data to the natural scale</span></span>
-<span id="cb498-5"><a href="extending-use-cases-of-glm.html#cb498-5" tabindex="-1"></a>newDat <span class="ot">&lt;-</span> newDat <span class="sc">%&gt;%</span></span>
+<span id="cb498-5"><a href="extending-use-cases-of-glm.html#cb498-5" tabindex="-1"></a>newDat <span class="ot">&lt;-</span> newDat <span class="sc">|&gt;</span></span>
 <span id="cb498-6"><a href="extending-use-cases-of-glm.html#cb498-6" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb498-7"><a href="extending-use-cases-of-glm.html#cb498-7" tabindex="-1"></a>    <span class="at">propFemale =</span> <span class="fu">inverseFunction</span>(propFemale_LP),</span>
 <span id="cb498-8"><a href="extending-use-cases-of-glm.html#cb498-8" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fu">inverseFunction</span>(lowerCI_LP),</span>
@@ -820,7 +820,7 @@ We now create a (tiny) <code>data.frame</code> for the parental status (smoker =
 <p>This shows us the estimates on the logit scale. We can use <code>predict</code> to get a sense for these predictions on the more intuitive probability scale.
 First we calculate the fitted values and 95% confidence intervals on the scale of the linear predictor (logit):</p>
 <div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="extending-use-cases-of-glm.html#cb508-1" tabindex="-1"></a>pv <span class="ot">&lt;-</span> <span class="fu">predict</span>(smokeMod, smoke, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb508-2"><a href="extending-use-cases-of-glm.html#cb508-2" tabindex="-1"></a>smoke <span class="ot">&lt;-</span> smoke <span class="sc">%&gt;%</span></span>
+<span id="cb508-2"><a href="extending-use-cases-of-glm.html#cb508-2" tabindex="-1"></a>smoke <span class="ot">&lt;-</span> smoke <span class="sc">|&gt;</span></span>
 <span id="cb508-3"><a href="extending-use-cases-of-glm.html#cb508-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb508-4"><a href="extending-use-cases-of-glm.html#cb508-4" tabindex="-1"></a>    <span class="at">prob_LP =</span> pv<span class="sc">$</span>fit,</span>
 <span id="cb508-5"><a href="extending-use-cases-of-glm.html#cb508-5" tabindex="-1"></a>    <span class="at">lowerCI_LP =</span> pv<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pv<span class="sc">$</span>se.fit,</span>
@@ -831,7 +831,7 @@ First we calculate the fitted values and 95% confidence intervals on the scale o
 <span id="cb509-2"><a href="extending-use-cases-of-glm.html#cb509-2" tabindex="-1"></a>inverseFunction <span class="ot">&lt;-</span> <span class="fu">family</span>(smokeMod)<span class="sc">$</span>linkinv</span>
 <span id="cb509-3"><a href="extending-use-cases-of-glm.html#cb509-3" tabindex="-1"></a></span>
 <span id="cb509-4"><a href="extending-use-cases-of-glm.html#cb509-4" tabindex="-1"></a><span class="co"># transform predicted data to the natural scale</span></span>
-<span id="cb509-5"><a href="extending-use-cases-of-glm.html#cb509-5" tabindex="-1"></a>smoke <span class="ot">&lt;-</span> smoke <span class="sc">%&gt;%</span></span>
+<span id="cb509-5"><a href="extending-use-cases-of-glm.html#cb509-5" tabindex="-1"></a>smoke <span class="ot">&lt;-</span> smoke <span class="sc">|&gt;</span></span>
 <span id="cb509-6"><a href="extending-use-cases-of-glm.html#cb509-6" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb509-7"><a href="extending-use-cases-of-glm.html#cb509-7" tabindex="-1"></a>    <span class="at">prob =</span> <span class="fu">inverseFunction</span>(prob_LP),</span>
 <span id="cb509-8"><a href="extending-use-cases-of-glm.html#cb509-8" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fu">inverseFunction</span>(lowerCI_LP),</span>

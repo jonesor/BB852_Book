@@ -11,7 +11,7 @@ fakeData <- expand.grid(contVar = c(1, 5), categVar = c("A", "B"))
 
 # No effect of contVar nor categVar
 A <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(y = c(5, 5, 5.1, 5.1)),
   aes(x = contVar, y = y, group = categVar, colour = categVar)
 ) +
@@ -24,7 +24,7 @@ A <- ggplot(
 
 # Effect of contVar but not categVar
 B <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(y = c(2.5, 7.5, 2.6, 7.6)),
   aes(x = contVar, y = y, group = categVar, colour = categVar)
 ) +
@@ -38,7 +38,7 @@ B <- ggplot(
 
 # No effect of contVar but effect of categVar
 C <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(y = c(2.5, 2.5, 7.6, 7.6)),
   aes(x = contVar, y = y, group = categVar, colour = categVar)
 ) +
@@ -52,7 +52,7 @@ C <- ggplot(
 
 # No effect of contVar or categVar, but interaction effect
 D <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(y = c(7.6, 2.5, 2.5, 7.6)),
   aes(x = contVar, y = y, group = categVar, colour = categVar)
 ) +
@@ -66,7 +66,7 @@ D <- ggplot(
 
 # Effect of both contVar and categVar, AND interaction effect
 E <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(y = c(2.6, 9.5, 2.5, 5.0)),
   aes(x = contVar, y = y, group = categVar, colour = categVar)
 ) +
@@ -80,7 +80,7 @@ E <- ggplot(
 
 # Effect of both contVar and categVar, AND interaction effect
 Fa <- ggplot(
-  fakeData %>%
+  fakeData |>
     mutate(y = c(2.5, 5.0, 2.6, 9.5)),
   aes(x = contVar, y = y, group = categVar, colour = categVar)
 ) +
@@ -112,7 +112,7 @@ We'll begin by plotting the data (Figure \@ref(fig:3-05-ANCOVA-3)).
 
 
 ```{r 3-05-ANCOVA-3, echo=TRUE,fig.width=4.5,fig.height=3,fig.align='center',fig.cap="ANCOVA on hand width vs. height data in males and females", fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
+classData <- read.csv("CourseData/classData.csv") |>
   filter(Year == 2019)
 
 (A <- ggplot(classData, aes(

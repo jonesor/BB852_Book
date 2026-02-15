@@ -23,18 +23,18 @@ I will process the data a bit to make it easier to work with. One of the command
 I will also use `mutate` to (1) convert the mass from grams to kilograms and (2) create a new variable called "BMRperKg" which standardises metabolic rate by expressing it as rate per kilogram.
 
 ```{r 2-03-pimpYourPlots-2, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
-anage <- x %>%
-  mutate(Species = paste(Genus, Species)) %>%
+anage <- x |>
+  mutate(Species = paste(Genus, Species)) |>
   rename(
     Longevity = "Maximum.longevity..yrs.",
     Mass = "Body.mass..g.",
     BMR = "Metabolic.rate..W."
-  ) %>%
-  select(Class, Order, Species, Mass, Longevity, BMR) %>%
+  ) |>
+  select(Class, Order, Species, Mass, Longevity, BMR) |>
   filter(Class %in% c(
     "Aves", "Amphibia",
     "Mammalia", "Reptilia"
-  )) %>%
+  )) |>
   mutate(
     Mass = Mass / 1000,
     BMRperKg = BMR / Mass
@@ -341,7 +341,7 @@ Even though we have covered a lot of ground we have still only gotten a taster o
 
 
 <!-- ```{r} -->
-<!-- anage <- anage %>% -->
+<!-- anage <- anage |> -->
 <!--   slice(sample(1:n())) -->
 
 <!-- ggplot(anage,aes(x = Mass, y = BMR, colour = Class)) + -->
@@ -353,8 +353,8 @@ Even though we have covered a lot of ground we have still only gotten a taster o
 <!-- Another way would be to create a "helper" variable (e.g. `plotOrder`) and then arrange the data by this variable. This is a bit fiddly, but it gets the job done. -->
 
 <!-- ```{r} -->
-<!-- anage <- anage %>% -->
-<!--   mutate(plotOrder = as.numeric(Class)) %>% -->
+<!-- anage <- anage |> -->
+<!--   mutate(plotOrder = as.numeric(Class)) |> -->
 <!--   arrange(-plotOrder) -->
 
 

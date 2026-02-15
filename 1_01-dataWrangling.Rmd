@@ -3,7 +3,7 @@
 This chapter focuses on the package `dplyr`, which is designed to make working with data in R easier. 
 The package has several key "workhorse" functions, sometimes called **verbs**. These are: `filter`, `select`, `mutate`, `arrange` and `summarise`. I covered these in the lecture, and they are also discussed in the textbook. This chapter guides you through worked examples to illustrate their use.
 
-We will also be using **pipes** from the `magrittr` package, implemented using the command `%>%`. 
+We will also be using **pipes** from the `magrittr` package, implemented using the command `|>`. 
 
 ```{r 1-01-dataWrangling-1}
 library("dplyr")
@@ -188,18 +188,18 @@ knitr::kable(my_data)
 
 ## Using pipes and saving data
 
-I have walked you through a step-by-step data manipulation. During that process you made (and replaced) new data sets at each step. In practice this can be done more smoothly using *pipes* (`%>%`) to pass the result of one function into the next, and the next, and the next...
+I have walked you through a step-by-step data manipulation. During that process you made (and replaced) new data sets at each step. In practice this can be done more smoothly using *pipes* (`|>`) to pass the result of one function into the next, and the next, and the next...
 
 You'll get more practice with this as we go on.
 Below I show how to do this to create a clutch size data set from the raw data (note that your file path will differ from mine):
 
 ```{r 1-01-dataWrangling-18}
 # Import and process data using pipes
-SDUClutchSize <- read.csv("CourseData/sduBirds.csv") %>%
-  filter(species %in% c("GT", "BT")) %>% # include only GT and BT
-  select(species, Year, Day, boxNumber, nEggs) %>% # select columns
-  group_by(species, Year, boxNumber) %>% # group data
-  summarise(clutchSize = max(nEggs, na.rm = TRUE)) %>% # clutch size
+SDUClutchSize <- read.csv("CourseData/sduBirds.csv") |>
+  filter(species %in% c("GT", "BT")) |> # include only GT and BT
+  select(species, Year, Day, boxNumber, nEggs) |> # select columns
+  group_by(species, Year, boxNumber) |> # group data
+  summarise(clutchSize = max(nEggs, na.rm = TRUE)) |> # clutch size
   filter(clutchSize > 0)
 
 head(SDUClutchSize)

@@ -48,19 +48,19 @@ diff(tapply(ch$Cholesterol, ch$Treatment, mean))
 Because we are focusing on learning `dplyr`, you can also calculate the means like this:
 
 ```{r 3-01-randomisationTests-5}
-ch %>% # ch is the cholesterol data
-  group_by(Treatment) %>% # group the data by treatment
+ch |> # ch is the cholesterol data
+  group_by(Treatment) |> # group the data by treatment
   summarise(mean = mean(Cholesterol)) # calculate means
 ```
 
-Here the pipes (`%>%`) pass the result of each function on as input to the next. 
+Here the pipes (`|>`) pass the result of each function on as input to the next. 
 You can use further commands, `pull` to get the `mean` vector from the summary table, and then use `diff` to calculate the difference between the groups, before assigning that to `observedDiff`. 
 
 ```{r 3-01-randomisationTests-6}
-observedDiff <- ch %>%
-  group_by(Treatment) %>% # group the data by treatment
-  summarise(mean = mean(Cholesterol)) %>% # calculate means
-  pull(mean) %>% # extract the mean vector
+observedDiff <- ch |>
+  group_by(Treatment) |> # group the data by treatment
+  summarise(mean = mean(Cholesterol)) |> # calculate means
+  pull(mean) |> # extract the mean vector
   diff()
 ```
 
@@ -75,24 +75,24 @@ Let's try that one time:
 ```{r 3-01-randomisationTests-7, warning=FALSE, cache=TRUE, echo = -1}
 set.seed(666)
 
-ch %>%
-  mutate(Treatment = sample(Treatment)) %>%
+ch |>
+  mutate(Treatment = sample(Treatment)) |>
   # shuffle the Treatment data
-  group_by(Treatment) %>%
-  summarise(mean = mean(Cholesterol)) %>%
-  pull(mean) %>%
+  group_by(Treatment) |>
+  summarise(mean = mean(Cholesterol)) |>
+  pull(mean) |>
   diff()
 ```
 
 ```{r 3-01-randomisationTests-8, warning=FALSE, cache=TRUE, echo = FALSE}
 set.seed(666)
 
-shuffDiff_temp <- ch %>%
-  mutate(Treatment = sample(Treatment)) %>%
+shuffDiff_temp <- ch |>
+  mutate(Treatment = sample(Treatment)) |>
   # shuffle the Treatment data
-  group_by(Treatment) %>%
-  summarise(mean = mean(Cholesterol)) %>%
-  pull(mean) %>%
+  group_by(Treatment) |>
+  summarise(mean = mean(Cholesterol)) |>
+  pull(mean) |>
   diff()
 ```
 
@@ -107,11 +107,11 @@ Let's try it first 10 times to see how it works:
 set.seed(42)
 replicate(
   10,
-  ch %>%
-    mutate(Treatment = sample(Treatment)) %>%
-    group_by(Treatment) %>%
-    summarise(mean = mean(Cholesterol)) %>%
-    pull(mean) %>%
+  ch |>
+    mutate(Treatment = sample(Treatment)) |>
+    group_by(Treatment) |>
+    summarise(mean = mean(Cholesterol)) |>
+    pull(mean) |>
     diff()
 )
 ```
@@ -123,14 +123,14 @@ In the commands below I create 1000 replicates of the shuffled differences. I wa
 
 ```{r 3-01-randomisationTests-10, replicate, warning=FALSE, cache=TRUE, echo = -1}
 set.seed(43)
-shuffledData <- data.frame(rep = 1:1000) %>%
+shuffledData <- data.frame(rep = 1:1000) |>
   mutate(shuffledDiffs = replicate(
     1000,
-    ch %>%
-      mutate(Treatment = sample(Treatment)) %>%
-      group_by(Treatment) %>%
-      summarise(mean = mean(Cholesterol)) %>%
-      pull(mean) %>%
+    ch |>
+      mutate(Treatment = sample(Treatment)) |>
+      group_by(Treatment) |>
+      summarise(mean = mean(Cholesterol)) |>
+      pull(mean) |>
       diff()
   ))
 ```
@@ -218,7 +218,7 @@ head(an)
 These data are arranged in a so-called "wide" format. To make plotting and analysis data need to be rearranged into a tidy "long" format so that each observation is on a row. We can do this using the `pivot_longer` function:
 
 ```{r 3-01-randomisationTests-16}
-an <- an %>%
+an <- an |>
   pivot_longer(
     cols = starts_with("Week"), names_to = "time",
     values_to = "weight"
@@ -244,8 +244,8 @@ Another useful way to plot this data is to use an **interaction plot**. In these
 ```
 
 ```{r 3-01-randomisationTests-19, echo=FALSE}
-an2 <- an %>%
-  group_by(Subject) %>%
+an2 <- an |>
+  group_by(Subject) |>
   mutate(time = sample(time))
 p2.shuffled <- ggplot(an2, aes(x = time, y = weight, group = Subject)) +
   geom_point() +
@@ -258,8 +258,8 @@ What we are interested in is whether there has been a change in weight of the su
 The starting point for the analysis is to calculate the observed change in weight.
 
 ```{r 3-01-randomisationTests-20, warning=FALSE}
-an <- an %>%
-  group_by(Subject) %>%
+an <- an |>
+  group_by(Subject) |>
   summarise(change = diff(weight))
 ```
 You have created a dataset that looks like this:
@@ -285,11 +285,11 @@ Therefore, to carry out this test, we can permute the SIGN of the change in weig
 set.seed(123)
 head(an)
 
-anShuffled <- an %>%
+anShuffled <- an |>
   mutate(sign = sample(c(1, -1),
     size = nrow(an),
     replace = TRUE
-  )) %>%
+  )) |>
   mutate(shuffledChange = change * sign)
 ```
 
@@ -303,13 +303,13 @@ We need to calculate the mean of this shuffled vector. We can do this by `pull` 
 
 ```{r 3-01-randomisationTests-25, echo = -1, cache = TRUE}
 set.seed(42)
-an %>%
+an |>
   mutate(sign = sample(c(1, -1),
     size = nrow(an),
     replace = TRUE
-  )) %>%
-  mutate(shuffledChange = change * sign) %>%
-  pull(shuffledChange) %>%
+  )) |>
+  mutate(shuffledChange = change * sign) |>
+  pull(shuffledChange) |>
   mean()
 ```
 
@@ -319,13 +319,13 @@ Now we will build a null distribution of changes in weight by repeating this 100
 set.seed(42)
 nullDist <- data.frame(
   change =
-    replicate(1000, an %>%
+    replicate(1000, an |>
       mutate(sign = sample(c(1, -1),
         size = nrow(an),
         replace = TRUE
-      )) %>%
-      mutate(shuffledChange = change * sign) %>%
-      pull(shuffledChange) %>%
+      )) |>
+      mutate(shuffledChange = change * sign) |>
+      pull(shuffledChange) |>
       mean())
 )
 ```

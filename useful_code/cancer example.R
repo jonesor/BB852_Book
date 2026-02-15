@@ -19,9 +19,9 @@ predVals <- predict(mod1, newData,
 )
 
 # Create new data for the predicted fit line
-newData <- newData %>%
-  mutate(Cancers = predVals$fit) %>%
-  mutate(ymin = predVals$fit - 1.96 * predVals$se.fit) %>%
+newData <- newData |>
+  mutate(Cancers = predVals$fit) |>
+  mutate(ymin = predVals$fit - 1.96 * predVals$se.fit) |>
   mutate(ymax = predVals$fit + 1.96 * predVals$se.fit)
 
 head(newData)

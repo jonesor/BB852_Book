@@ -12,7 +12,7 @@ head(classData)
 tail(classData)
 
 
-ggplot(classData %>% filter(Year == 2019), aes(x = HandWidth, y = Height)) +
+ggplot(classData |> filter(Year == 2019), aes(x = HandWidth, y = Height)) +
   geom_point()
 
 ggplot(classData, aes(x = Precision, fill = Gender)) +
@@ -20,20 +20,20 @@ ggplot(classData, aes(x = Precision, fill = Gender)) +
 
 # Are males taller than females?
 
-obsDiff <- classData %>%
-  group_by(Gender) %>%
-  summarise(meanVal = mean(Height)) %>%
-  pull(meanVal) %>%
+obsDiff <- classData |>
+  group_by(Gender) |>
+  summarise(meanVal = mean(Height)) |>
+  pull(meanVal) |>
   diff()
 
 obsDiff
 df1 <- data.frame(shuffledDiffs = rep(NA, 1000))
 
-df1$shuffledDiffs <- replicate(1000, classData %>%
-  mutate(Gender = sample(Gender)) %>%
-  group_by(Gender) %>%
-  summarise(meanVal = mean(Height)) %>%
-  pull(meanVal) %>%
+df1$shuffledDiffs <- replicate(1000, classData |>
+  mutate(Gender = sample(Gender)) |>
+  group_by(Gender) |>
+  summarise(meanVal = mean(Height)) |>
+  pull(meanVal) |>
   diff())
 
 table(df1$shuffledDiffs <= obsDiff) # So the p-value is <0.001
@@ -48,19 +48,19 @@ ggplot(df1, aes(shuffledDiffs)) +
 
 # Are reaction times different for males vs. females?
 
-obsDiff <- classData %>%
-  group_by(Gender) %>%
-  summarise(meanVal = mean(Reaction)) %>%
-  pull(meanVal) %>%
+obsDiff <- classData |>
+  group_by(Gender) |>
+  summarise(meanVal = mean(Reaction)) |>
+  pull(meanVal) |>
   diff()
 
 obsDiff
 df1 <- data.frame(shuffledDiffs = NULL)
-df1$shuffledDiffs <- replicate(1000, classData %>%
-  mutate(Gender = sample(Gender)) %>%
-  group_by(Gender) %>%
-  summarise(meanVal = mean(Reaction)) %>%
-  pull(meanVal) %>%
+df1$shuffledDiffs <- replicate(1000, classData |>
+  mutate(Gender = sample(Gender)) |>
+  group_by(Gender) |>
+  summarise(meanVal = mean(Reaction)) |>
+  pull(meanVal) |>
   diff())
 
 table(shuffledDiffs <= obsDiff) # So the p-value is <0.001
@@ -73,19 +73,19 @@ ggplot(df1, aes(shuffledDiffs)) +
 
 # Are reaction times different for males vs. females?
 
-obsDiff <- classData %>%
-  group_by(Gender) %>%
-  summarise(meanVal = mean(Precision)) %>%
-  pull(meanVal) %>%
+obsDiff <- classData |>
+  group_by(Gender) |>
+  summarise(meanVal = mean(Precision)) |>
+  pull(meanVal) |>
   diff()
 
 obsDiff
 df1 <- data.frame(shuffledDiffs = NULL)
-df1$shuffledDiffs <- replicate(1000, classData %>%
-  mutate(Gender = sample(Gender)) %>%
-  group_by(Gender) %>%
-  summarise(meanVal = mean(Precision)) %>%
-  pull(meanVal) %>%
+df1$shuffledDiffs <- replicate(1000, classData |>
+  mutate(Gender = sample(Gender)) |>
+  group_by(Gender) |>
+  summarise(meanVal = mean(Precision)) |>
+  pull(meanVal) |>
   diff())
 
 table(shuffledDiffs <= obsDiff) # So the p-value is <0.001
@@ -98,22 +98,22 @@ ggplot(df1, aes(shuffledDiffs)) +
 
 table(classData$Handedness)
 
-obsDiff <- classData %>%
-  filter(Handedness != "Both") %>%
-  group_by(Handedness) %>%
-  summarise(meanVal = mean(Reaction)) %>%
-  pull(meanVal) %>%
+obsDiff <- classData |>
+  filter(Handedness != "Both") |>
+  group_by(Handedness) |>
+  summarise(meanVal = mean(Reaction)) |>
+  pull(meanVal) |>
   diff()
 
 obsDiff
 
 df1 <- data.frame(rep = 1:100, shuffledDiffs = NA)
-df1$shuffledDiffs <- replicate(100, classData %>%
-  filter(Handedness != "Both") %>%
-  mutate(Handedness = sample(Handedness)) %>%
-  group_by(Handedness) %>%
-  summarise(meanVal = mean(Reaction)) %>%
-  pull(meanVal) %>%
+df1$shuffledDiffs <- replicate(100, classData |>
+  filter(Handedness != "Both") |>
+  mutate(Handedness = sample(Handedness)) |>
+  group_by(Handedness) |>
+  summarise(meanVal = mean(Reaction)) |>
+  pull(meanVal) |>
   diff())
 
 table(shuffledDiffs <= obsDiff) # So the p-value is <0.001

@@ -57,15 +57,15 @@ __a) Produce a graph showing the total number of fires per year through time as 
 ```{r}
 # Import data
 amazon <- read.csv("CourseData/amazon.csv")
-amazon <- read.csv("CourseData/amazon.csv") %>%
+amazon <- read.csv("CourseData/amazon.csv") |>
   mutate(number = ifelse(number >= 1000,
     1 + (number - 1000) / 1000, number
   ))
 
 # A) MAKE GRAPH OF TOTAL FIRES PER YEAR.
 
-(amazon_YearlyFires <- amazon %>%
-  group_by(year) %>%
+(amazon_YearlyFires <- amazon |>
+  group_by(year) |>
   summarise(n.fires = sum(number)))
 
 (A <- ggplot(amazon_YearlyFires, aes(x = year, y = n.fires)) +
@@ -89,27 +89,27 @@ legalAmazonStates <- c(
   "Roraima", "Mato Grosso", "Tocantins", "Maranhao"
 )
 
-legalAmazon <- amazon %>%
+legalAmazon <- amazon |>
   filter(state %in% legalAmazonStates)
 
 
 # Next make a "look up" table to convert month name
 # to a numeric value 1-12
-(monthLookup <- amazon %>%
-  select(month) %>%
-  unique() %>%
+(monthLookup <- amazon |>
+  select(month) |>
+  unique() |>
   mutate(month_numeric = 1:12))
 
 # Then use left_join to add the numeric month to the data
 # then group_by month and year, and summarise to get total
 # number (i.e. sum for each month in each year for whole amazon)
 # Then group_by month again and calculate the min/mean/max etc.
-table1 <- legalAmazon %>%
-  left_join(monthLookup) %>%
-  group_by(month_numeric, year) %>%
-  summarise(sumFires = sum(number)) %>%
+table1 <- legalAmazon |>
+  left_join(monthLookup) |>
+  group_by(month_numeric, year) |>
+  summarise(sumFires = sum(number)) |>
   # total fires per month, per year
-  group_by(month_numeric) %>%
+  group_by(month_numeric) |>
   # group by month to get min/max/median per month
   summarise(
     minimum = min(sumFires), mean = mean(sumFires),
@@ -124,9 +124,9 @@ This question was HARD. It could also have been interpreted in a couple of diffe
 If you calculate the statistics "by state" as well as by year and month you end up with a different table, like this:
 
 ```{r}
-table1 <- legalAmazon %>%
-  left_join(monthLookup) %>%
-  group_by(month_numeric) %>%
+table1 <- legalAmazon |>
+  left_join(monthLookup) |>
+  group_by(month_numeric) |>
   summarise(
     minimum = min(number), mean = mean(number),
     median = median(number), maximum = max(number)
@@ -157,10 +157,10 @@ To check that you are on the right track you could look at the dimensions of the
 # Create the dataset by filtering to legal amazon, adding
 # numeric month, grouping by year and month and finally
 # summarising.
-amazon2 <- amazon %>%
-  filter(state %in% legalAmazonStates) %>%
-  left_join(monthLookup) %>%
-  group_by(year, month_numeric) %>%
+amazon2 <- amazon |>
+  filter(state %in% legalAmazonStates) |>
+  left_join(monthLookup) |>
+  group_by(year, month_numeric) |>
   summarise(n_fires = sum(number))
 
 # Check number of rows
@@ -210,8 +210,8 @@ First we need to calculate the observed difference between the two habitats.
 You can get the mean values like this (there are other ways):
 
 ```{r}
-coral %>%
-  group_by(habitat) %>%
+coral |>
+  group_by(habitat) |>
   summarise(meanIntensity = mean(intensity))
 ```
 
@@ -219,10 +219,10 @@ coral %>%
 
 You could also do the whole calculation using the pipes syntax like this:
 ```{r}
-(obsDiff <- coral %>%
-  group_by(habitat) %>%
-  summarise(meanIntensity = mean(intensity)) %>%
-  pull(meanIntensity) %>%
+(obsDiff <- coral |>
+  group_by(habitat) |>
+  summarise(meanIntensity = mean(intensity)) |>
+  pull(meanIntensity) |>
   diff())
 ```
 
@@ -230,14 +230,14 @@ Next we ask "is the observed difference significantly larger than what we would 
 
 ```{r, echo = -1}
 set.seed(42)
-shuffledData <- data.frame(rep = 1:2000) %>%
+shuffledData <- data.frame(rep = 1:2000) |>
   mutate(shuffledDiffs = replicate(
     2000,
-    coral %>%
-      mutate(habitat = sample(habitat)) %>%
-      group_by(habitat) %>%
-      summarise(meanIntensity = mean(intensity)) %>%
-      pull(meanIntensity) %>%
+    coral |>
+      mutate(habitat = sample(habitat)) |>
+      group_by(habitat) |>
+      summarise(meanIntensity = mean(intensity)) |>
+      pull(meanIntensity) |>
       diff()
   ))
 ```
@@ -289,7 +289,7 @@ oilseed <- read.csv("CourseData/oilseed.csv",
   stringsAsFactors = TRUE
 )
 
-(controlData <- oilseed %>%
+(controlData <- oilseed |>
   summarise(meanVal = mean(yield), sdVal = sd(yield)))
 ```
 
@@ -437,16 +437,16 @@ newData <- expand.grid(
 pv <- predict(mod1, newData, se.fit = TRUE)
 
 # Create new data for the predicted fit line
-newData <- newData %>%
-  mutate(nSpecies_LP = pv$fit) %>%
-  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) %>%
+newData <- newData |>
+  mutate(nSpecies_LP = pv$fit) |>
+  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) |>
   mutate(upperCI_LP = pv$fit + 1.96 * pv$se.fit)
 
 # Get the inverse link function
 inverseFunction <- family(mod1)$linkinv
 
 # transform predicted data to the natural scale
-newData <- newData %>%
+newData <- newData |>
   mutate(
     nSpecies = inverseFunction(nSpecies_LP),
     ymin = inverseFunction(lowerCI_LP),

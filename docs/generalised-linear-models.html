@@ -427,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="27.5" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sexual-selection-in-hercules-beetles"><i class="fa fa-check"></i><b>27.5</b> Sexual selection in Hercules beetles</a></li>
 <li class="chapter" data-level="27.6" data-path="exercise-solutions.html"><a href="exercise-solutions.html#sex-differences-in-fine-motor-skills"><i class="fa fa-check"></i><b>27.6</b> Sex differences in fine motor skills</a></li>
 <li class="chapter" data-level="27.7" data-path="exercise-solutions.html"><a href="exercise-solutions.html#therapy-for-anorexia"><i class="fa fa-check"></i><b>27.7</b> Therapy for anorexia</a></li>
-<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests</a></li>
+<li class="chapter" data-level="27.8" data-path="exercise-solutions.html"><a href="exercise-solutions.html#compare-t-tests-with-randomisation-tests-optional"><i class="fa fa-check"></i><b>27.8</b> Compare t-tests with randomisation tests (optional)</a></li>
 <li class="chapter" data-level="27.9" data-path="exercise-solutions.html"><a href="exercise-solutions.html#apple-tree-crop-yield"><i class="fa fa-check"></i><b>27.9</b> Apple tree crop yield</a></li>
 <li class="chapter" data-level="27.10" data-path="exercise-solutions.html"><a href="exercise-solutions.html#chirping-crickets"><i class="fa fa-check"></i><b>27.10</b> Chirping crickets</a></li>
 <li class="chapter" data-level="27.11" data-path="exercise-solutions.html"><a href="exercise-solutions.html#fish-behaviour"><i class="fa fa-check"></i><b>27.11</b> Fish behaviour</a></li>
@@ -557,9 +557,9 @@ before plotting. See below.
 <span id="cb458-5"><a href="generalised-linear-models.html#cb458-5" tabindex="-1"></a>predVals <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, newData, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb458-6"><a href="generalised-linear-models.html#cb458-6" tabindex="-1"></a></span>
 <span id="cb458-7"><a href="generalised-linear-models.html#cb458-7" tabindex="-1"></a><span class="co"># (3) Add the predicted fit and SE to newData</span></span>
-<span id="cb458-8"><a href="generalised-linear-models.html#cb458-8" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
-<span id="cb458-9"><a href="generalised-linear-models.html#cb458-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit_LP =</span> predVals<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
-<span id="cb458-10"><a href="generalised-linear-models.html#cb458-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI_LP =</span> predVals<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit) <span class="sc">%&gt;%</span></span>
+<span id="cb458-8"><a href="generalised-linear-models.html#cb458-8" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">|&gt;</span></span>
+<span id="cb458-9"><a href="generalised-linear-models.html#cb458-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit_LP =</span> predVals<span class="sc">$</span>fit) <span class="sc">|&gt;</span></span>
+<span id="cb458-10"><a href="generalised-linear-models.html#cb458-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lowerCI_LP =</span> predVals<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit) <span class="sc">|&gt;</span></span>
 <span id="cb458-11"><a href="generalised-linear-models.html#cb458-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">upperCI_LP =</span> predVals<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> predVals<span class="sc">$</span>se.fit)</span>
 <span id="cb458-12"><a href="generalised-linear-models.html#cb458-12" tabindex="-1"></a></span>
 <span id="cb458-13"><a href="generalised-linear-models.html#cb458-13" tabindex="-1"></a><span class="co"># (4) Backtransform these data to the natural scale</span></span>
@@ -567,7 +567,7 @@ before plotting. See below.
 <span id="cb458-15"><a href="generalised-linear-models.html#cb458-15" tabindex="-1"></a>inverseFunction <span class="ot">&lt;-</span> <span class="fu">family</span>(mod1)<span class="sc">$</span>linkinv</span>
 <span id="cb458-16"><a href="generalised-linear-models.html#cb458-16" tabindex="-1"></a></span>
 <span id="cb458-17"><a href="generalised-linear-models.html#cb458-17" tabindex="-1"></a><span class="co"># transform predicted data to the natural scale</span></span>
-<span id="cb458-18"><a href="generalised-linear-models.html#cb458-18" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">%&gt;%</span></span>
+<span id="cb458-18"><a href="generalised-linear-models.html#cb458-18" tabindex="-1"></a>newData <span class="ot">&lt;-</span> newData <span class="sc">|&gt;</span></span>
 <span id="cb458-19"><a href="generalised-linear-models.html#cb458-19" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb458-20"><a href="generalised-linear-models.html#cb458-20" tabindex="-1"></a>    <span class="at">fit =</span> <span class="fu">inverseFunction</span>(fit_LP),</span>
 <span id="cb458-21"><a href="generalised-linear-models.html#cb458-21" tabindex="-1"></a>    <span class="at">lowerCI =</span> <span class="fu">inverseFunction</span>(lowerCI_LP),</span>

@@ -111,25 +111,25 @@ schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 
 
 ```{r index-10, echo = FALSE, message=FALSE,eval=knitr::is_html_output(), warning=FALSE}
-schedule2 <- schedule %>%
+schedule2 <- schedule |>
   select(Part, Session, Type, Topic, Instructor)
 
 big_b <- fp_border(color = "gray70", width = 3)
 std_b <- fp_border(color = "gray70", style = "dashed")
 big_b_end <- fp_border(color = "white", width = 3)
 
-ft <- flextable(schedule2, cwidth = c(2, .5, 1, 4, .75, .75)) %>%
-  bold(part = "header") %>%
-  bold(j = 1) %>%
+ft <- flextable(schedule2, cwidth = c(2, .5, 1, 4, .75, .75)) |>
+  bold(part = "header") |>
+  bold(j = 1) |>
   color(
     i = ~ Type == "Lecture",
     j = ~ Session + Type + Topic,
     color = "red"
-  ) %>%
-  fontsize(part = "all", size = 14) %>%
-  vline(border = std_b, j = 1:4) %>%
-  rotate(j = ~Part, align = "top", rotation = "tblr") %>%
-  hline(border = std_b, i = seq(2, nrow(schedule2), 2)) %>%
+  ) |>
+  fontsize(part = "all", size = 14) |>
+  vline(border = std_b, j = 1:4) |>
+  rotate(j = ~Part, align = "top", rotation = "tblr") |>
+  hline(border = std_b, i = seq(2, nrow(schedule2), 2)) |>
   hline(border = big_b_end, i = nrow(schedule2))
 
 ft
