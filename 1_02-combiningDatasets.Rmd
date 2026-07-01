@@ -201,7 +201,7 @@ weather <- read.csv("DataSetLibrary/SDUweather.csv") %>%
 write.csv(weather, "CourseData/AarslevTemperature.csv", row.names = FALSE)
 ```
 
-Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: *is egg laying date associated with spring temperature?* The idea here is that warmer springs will lead to delayed egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change. 
+Data have been collected on great tits (musvit) at SDU for several years. Your task today is to analyse these data to answer the question: *is egg laying date associated with spring temperature?* The idea here is that warmer springs will lead to earlier egg laying which could have negative consequences to the population if their caterpillar food source doesn't keep pace with the change.
 
 You are provided with two data sets: one on the birds and another on weather. You will need to process these using tools in the `dplyr` package, and combine them (using `left_join`) for analysis.
 
@@ -232,8 +232,8 @@ You should end up with a dataset with three columns as described above.
 
 5. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `year` and `meanSpringTemp`. 
 
-6. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
+6. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanSpringTemp`
 
-7. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
+7. plot a graph of `meanSpringTemp` on the x-axis and `dayNumber` on the y-axis.
 
 Now you should be able to answer the question we started with: is laying date associated with spring temperatures.
