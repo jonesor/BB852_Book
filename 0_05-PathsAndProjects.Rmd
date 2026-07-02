@@ -1,132 +1,104 @@
 # Paths and projects
 
-In R, knowing how to tell the program where to find or save files on your computer is essential. This is done using file paths, which are like giving R directions in your computer’s filing system. Let’s explore the basics of paths and how you can use them in R.
+**Learning goals**
 
-## File paths 
+By the end of this chapter you should be able to:
 
-Think of a file path like a map or set of directions to a location. If you wanted to tell someone where your favourite restaurant is, you'd give them directions from a common starting point, like a bus stop or a well-known landmark. Similarly, a file path gives R the directions it needs to find a file on your computer.
+- Explain the difference between absolute and relative paths.
+- Use relative paths in your scripts.
+- Use an RStudio Project to keep work organised.
 
-Files on a computer are stored in hierarchical folders (also known as directories). On a Mac you can use Finder to navigate these folders, while on Windows you can use File Explorer.
+**Prerequisites**
 
-Try that now! Make sure that you can use these programs to navigate around your computer to find, move and rename files.
+- You can create and save an R script in RStudio.
 
-## File organisation
+**A tiny motivating example**
 
-When managing your research projects, keep your files organised rather than dumping everything into one folder. Be kind to your future self. Exactly how you do that is a matter of personal taste, but I like a folder per project, with subfolders for Data, Code (R scripts), Plots (graphs produced by R), and Writing (e.g. Word documents with the project write-up).
+If your project is organised, this will work on any computer:
 
-## Two types of paths
-
-There are two types of file paths: (1) Absolute Paths and (2) Relative Paths.
-
-### 1. Absolute Paths: The Exact Location
-
-An **absolute path** gives the complete route to a file, starting from the “root” (or base) of your computer's filing system. 
-
-Here’s how they look on different systems:
-
-- **On Windows**: Paths begin with the drive letter, usually `C:/`. For example:
-
-  ```
-  C:/Users/YourUsername/Documents/Project/myData.csv
-  ```
-
-- **On macOS**: Paths start from `/Users/`, like this:
-  ```
-  /Users/YourUsername/Documents/Project/myData.csv
-  ```
-
-> **Important Note:** While Windows normally uses backslashes (`\`) in paths, R needs you to replace them with forward slashes (`/`). R will interpret forward slashes correctly on both Windows and Mac.
-
-**How to copy an absolute path:**
-- **On Windows**: Hold the `Shift` key, right-click the file, and select **"Copy as path"**.
-- **On macOS**: Hold down the `Option` key, right-click the file, and select **"Copy [filename] as Pathname"**.
-
-Using absolute paths tells R precisely where your file is located on your computer. However, absolute paths have a downside: they are specific to each computer. If you share your code with someone else, they will have to change the path to match their system.
-
-
-### 2. Relative Paths: Paths That Start from the Project Folder
-
-A **relative path** is a shortcut that starts from your **current** folder in R instead of from the root directory of your computer. It’s like giving directions from a specific starting point, like "turn left at the library," instead of giving an address.
-
-For example:
-- If your project folder is at `/Users/YourUsername/Documents/Project/`, you could use a relative path to refer to files inside that folder.
-- So instead of typing the full absolute path, you might use: `data/myData.csv`
-  
-Using relative paths is particularly helpful because your code can be shared and used on other computers without needing changes to the file paths.
-
-## R and file structure
-
-To load data into R you need to use file paths, which can be annoying to type. 
-
-e.g. `x <- read.csv(“C:/Users/Owen/Documents/Analysis/SurveyAnalysis1/Data/myData.csv”)`
-
-There are two ways to make life easier for yourself: (1) set the working directory for your project; (2) set up an R Project.
-
-RStudio has a data import wizard, but setting a working directory or using Projects is recommended. I will briefly outline these two options.
-
-## Setting the Working Directory in R
-
-In R, the **working directory** is like the "home base" folder where R looks for files by default. Setting the working directory means you don’t have to type out the entire location (path) of a file each time you want to use it. This makes your code simpler and easier to manage.
-
-### Finding Your Current Working Directory
-
-To see where R is currently looking for files:
-
-1. Open RStudio.
-2. Type `getwd()` and press Enter.
-   
-This command shows the “working directory” R is using right now. Any file in this folder can be loaded into R without typing the full file location.
-
-For example, if you have a file called `myData.csv` in the working directory, you can load it simply by typing:
-
-```
-x <- read.csv("myData.csv")
-```
-instead of the longer path:
-
-```
-x <- read.csv("C:/Users/YourName/Documents/Project/Data/myData.csv")
+```{r 0-05-PathsAndProjects-1, eval = FALSE}
+readr::read_csv("CourseData/carnivora.csv")
 ```
 
-### Changing the Working Directory
+If your project is not organised, you end up with long absolute paths that break when shared.
 
-If your files are in a different folder, you can change the working directory using the command `setwd()`. Just replace `"path/to/your/folder"` with the path to the folder you want to use.
+---
 
-Example:
+## File paths in plain language
+
+A file path is the address of a file on your computer. There are two types.
+
+### Absolute paths (full address)
+
+These start from the root of your computer:
+
+- Windows: `C:/Users/YourName/Documents/Project/data.csv`
+- Mac: `/Users/YourName/Documents/Project/data.csv`
+
+**Why this is a problem:** Absolute paths are different on every computer, so shared code breaks.
+
+### Relative paths (recommended)
+
+Relative paths start from your project folder:
 
 ```
-setwd("C:/Users/YourName/Documents/Project/")
+CourseData/carnivora.csv
 ```
 
-After setting the working directory this way, you can access any files in that folder without typing out the full path. For example:
+**Why this is better:** If everyone keeps the same project structure, the code just works.
 
-```
-x <- read.csv("Data/myData.csv")  # Shorter and easier to read
-```
+---
 
-## Using Projects in RStudio: A Simpler Way to Set the Working Directory
+## Use an RStudio Project
 
-When you create an **R Project** in RStudio, it generates a file with an `.Rproj` suffix in your project folder. This `.Rproj` file not only serves as a shortcut to open the project but also ensures that RStudio sets the project folder as the working directory every time you open the project file. This feature simplifies managing file locations by keeping all paths relative to the project directory.
+**What we’re about to do:** Set a predictable working directory.
 
-### Steps to Create an R Project
+An RStudio Project creates a `.Rproj` file and sets the project folder as the working directory every time you open it.
 
-1. First, create a folder for your project files in **Finder** (Mac) or **Windows Explorer** (Windows). For example, create a folder called `MyProject`.
-2. Open RStudio and go to `File > New Project`.
-3. Select `Existing Directory` and browse to your new folder.
-4. Click `Create Project`.
+### How to create a project
 
-This setup creates a file called `MyProject.Rproj`. From now on, open this file to start RStudio with the working directory automatically set to the project folder. You don’t need to use `setwd()` or worry about typing long paths.
+1. Create a folder for the course (e.g., `BB852`).
+2. In RStudio, go to `File > New Project`.
+3. Choose **Existing Directory** and select your folder.
+4. Click **Create Project**.
 
-To double-check, you can type `getwd()` after opening the project, and it will show your project folder as the working directory.
+From now on, open the `.Rproj` file to work on this course. You do not need to use `setwd()` in your scripts.
 
-### Organising Files Within Your Project
+**Common mistake:** Calling `setwd()` inside scripts. It works on your machine but fails for others.
 
-Now that your project is set up, you can organise your files within the project folder. Here’s a common way to organise:
+**Takeaway:** RStudio Projects keep your paths stable and your work reproducible.
 
-- **data** – for all data files
-- **scripts** – for R code files
-- **plots** – for graphs and images
+---
 
-This folder organization makes it easy to find files, keeps everything related to the project in one place, and helps you share your work with others if needed.
+## Suggested folder structure
 
-By using R Projects and organising your folders, working with files in R becomes simpler and more efficient. 
+Keep your project tidy:
+
+- `CourseData/` for data files
+- `scripts/` for code
+- `plots/` for exported figures
+- `writing/` for notes or reports
+
+**Try this:** Create those folders now (if they do not already exist).
+
+---
+
+## Key takeaways
+
+- Relative paths make your code shareable.
+- RStudio Projects fix the working directory automatically.
+- A simple folder structure saves time and confusion.
+
+## Common pitfalls recap
+
+- Using absolute paths in scripts.
+- Changing the working directory with `setwd()` and forgetting to undo it.
+- Saving data and scripts in the same messy folder.
+
+## Mini‑project
+
+Create a new project folder with the structure above, then:
+
+1. Put a CSV file in `CourseData/`.
+2. Import it using a relative path.
+3. Write one sentence explaining why the relative path is better than the absolute one.
