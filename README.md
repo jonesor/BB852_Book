@@ -2,7 +2,7 @@
 
 ### Build workflow
 
-- Prepare datasets and validate references: run `Rscript -e "source('scripts/scripts/PrepareCourseData.R')"` (this syncs `CourseData/` from `DataSetLibrary/`, writes `course_data_files.csv`, and fails if a referenced dataset is missing).
+- Prepare datasets and validate references: run `Rscript -e "source('scripts/PrepareCourseData.R')"` (this syncs `CourseData/` from `DataSetLibrary/`, writes `course_data_files.csv`, and fails if a referenced dataset is missing).
 - Build the book: run `_build.sh` (which now runs the preparation step, then renders the gitbook).
 
 ### Build/release notes
