@@ -1,4 +1,4 @@
-name: Build Book
+name: Build and deploy book
 
 on:
   push:
@@ -8,6 +8,17 @@ on:
     # Every Monday at 06:00 UTC
     - cron: "0 6 * * 1"
   workflow_dispatch:
+
+# Permissions needed to deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one Pages deployment at a time; don't cancel an in-progress one
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -39,3 +50,25 @@ jobs:
 
       - name: Build book (gitbook)
         run: ./_build.sh
+
+      # Only package the site for deployment on real pushes / scheduled /
+      # manual runs. Pull requests still build above (as a check) but are
+      # not deployed.
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    # Never deploy from a pull request
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
