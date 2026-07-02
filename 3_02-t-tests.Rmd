@@ -22,7 +22,7 @@ The mean gives an estimate of location, and the standard error of the mean (calc
 
 The t-test then works by comparing your estimated distribution with some fixed value. Sometimes you are asking "is my mean *different* from the value?", other times you are asking "is my mean less than/greater than the value?". This depends on the hypothesis. The default that R uses is that it tests whether the mean of your distribution is *different* to the fixed value, but in many cases you should be framing a **directional** hypothesis.
 
-It is helpful to visualise this, so some examples of the pollution threshold test are shown in the figure below (Figure \@ref(fig:3-02-t-tests-1) ). The curves illustrate the estimated normal distributions that describe our estimate of the mean pollution level from some data (e.g. each curve might represent samples from different locations). We are interested in whether the mean values (the vertical dashed lines) are significantly **greater** than the threshold of 100mg/m^2^ (solid vertical black line) (this gives us a directional hypothesis).
+It is helpful to visualise this, so some examples of the pollution threshold test are shown in the figure below (Figure \@ref(fig:3-02-t-tests-1) ). The curves illustrate the estimated normal distributions that describe our estimate of the mean pollution level from some data (e.g. each curve might represent samples from different locations). We are interested in whether the mean values (the vertical dashed lines) are significantly **greater** than the threshold of 100mg/m^3^ (solid vertical black line) (this gives us a directional hypothesis).
 
 Formally we do this by establishing two hypotheses: a **null hypothesis** and an **alternative hypothesis**. In this case, the null hypothesis is that the mean of the sample measurements is **not** significantly different from the threshold value we define. The alternative hypothesis is that the sample mean is significantly **greater** than this threshold value.
 
@@ -347,9 +347,9 @@ B <- ggplot(data = data.frame(x = c(0, 120)), aes(x)) +
 A + ggtitle("A") + B + ggtitle("B")
 ```
 
-The mathematics involved with calculating the t-statistic is very similar to the one-sample t-test, except the numerator in the fraction is the difference between two means rather than between a mean and a fixed value.
+The mathematics involved with calculating the t-statistic is very similar to the one-sample t-test, except the numerator in the fraction is the difference between two means rather than between a mean and a fixed value. The denominator is the standard error *of the difference between the two means*, which combines the variability of both groups:
 
-$$t = \frac{\bar{x_1}-\bar{x_2}} {s/ \sqrt{n}}$$
+$$t = \frac{\bar{x_1}-\bar{x_2}} {\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
 So far so good... let's push on and use R to do some statistics.
 
 In this example, we can revisit the class data and ask the question, *Is the reaction time of males different than that of females?* The null hypothesis for this question is that there is no difference in mean reaction times between the two groups. The alternative hypothesis is that there **is** a difference in the mean reaction time between the two groups.
@@ -383,7 +383,7 @@ t.test(Reaction ~ Gender, data = x, var.equal = FALSE)
 
 This output first tells us that we are using something called a "Welch Two Sample t-test". This is a form of the two-sample t-test that relaxes the assumption that the variance in the two groups is the same. This is a good thing. Although it *is* possible to fit a t-test with equal variances, I recommend that you stick with the default Welch's test and **not** make this limiting assumption. 
 
-Then we are told the t-statistic (`r formatC(temp$statistic, digits = 3, format = "f")`), the degrees of freedom (`r formatC(temp$parameter, digits = 3, format = "f")`) and the p-value (`r formatC(temp$p.value, digits = 3, format = "f")`). We must therefore accept the null hypothesis: there is no significant difference between the two groups. Males are *not* faster than females. We could write report this something like this: 
+Then we are told the t-statistic (`r formatC(temp$statistic, digits = 3, format = "f")`), the degrees of freedom (`r formatC(temp$parameter, digits = 3, format = "f")`) and the p-value (`r formatC(temp$p.value, digits = 3, format = "f")`). We must therefore fail to reject the null hypothesis: there is no *detectable* difference between the two groups. We have not shown that males are faster than females. We could report this something like this:
 
 "*Although females had a slightly slower reaction time than males (`r formatC(temp$estimate[1], digits = 3, format = "f")` seconds compared to `r formatC(temp$estimate[2], digits = 3, format = "f")` seconds), this difference was not statistically significant (Welch's     t-test: t= `r formatC(temp$statistic, digits = 3, format = "f")`, d.f.= `r formatC(temp$parameter, digits = 3, format = "f")`), p=`r formatC(temp$p.value, digits = 3, format = "f")`).*"
 
@@ -403,7 +403,7 @@ If you look at the summary will notice that the estimate of the intercept (the a
 
 In fact, all of the t-tests, and ANOVA (below) are kinds linear models and can be also fitted with `lm`.
 
-Here is the paired t-test investigating gender differences in reaction time. You can see that the test statistics and coefficients match those obtained from `t.test`.
+Here is the two-sample t-test investigating gender differences in reaction time. You can see that the test statistics and coefficients match those obtained from `t.test`.
 
 ```{r 3-02-t-tests-23}
 mod <- lm(Reaction ~ Gender, data = x)

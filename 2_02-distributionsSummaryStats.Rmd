@@ -344,7 +344,7 @@ You should see the main features of both distributions are captured pretty well.
 ## The law of large numbers
 
 
-The **law of large numbers** is one of the most important ideas in probability. It states that *As sample grows large, the sample mean converges to the population mean*. In other words, as sample size increases, you get a better idea what the true value of the mean is. 
+The **law of large numbers** is one of the most important ideas in probability. It states that *as the sample size grows large, the sample mean converges to the population mean*. In other words, as sample size increases, you get a better idea what the true value of the mean is. 
 
 In this section you will demonstrate this law using coin tosses or dice throws. Since it is tiresome to toss coins hundreds of times it is convenient to simulate the data using **R**. Conceptually, what we are trying to do here is treat the dice rolling/coin tossing as experiments where the aim is to find the probability of getting a head/tail, or a particular number on the dice. It is useful to use dice and coins because we are pretty sure that we know what the "true" answer is: the probability of throwing a 1 on a fair dice is 1/6, while the probability of throwing a head/tail with a flipped coin is 0.5.
 
@@ -402,6 +402,6 @@ Now it's your turn...
 
 1) Simulate 10 rolls of the dice, and make a table of results using R.
 
-2) Now simulate 90 rolls of the dice. Put the results into a `data.frame` (see the chapter __An R refresher__ for help with this). Plot the results as a bar plot using `geom_bar` in `ggplot`. Add a line using `geom_abline` to show the **expected** result based on what you know about probability.
+2) Now simulate 90 rolls of the dice. Put the results into a `data.frame` (see the chapter __An R refresher__ for help with this). Plot the results as a bar plot using `geom_bar` in `ggplot`. Add a horizontal line using `geom_hline` to show the **expected** result based on what you know about probability.
 
 3) Try adjusting the code to simulate dice rolls with small (say, 30) and large (say, 600, or 6000, or 9000) samples. Observe what happens to the proportions, and compare them to the expected value. What does this tell you about the importance of sample size when trying to estimate real phenomena?

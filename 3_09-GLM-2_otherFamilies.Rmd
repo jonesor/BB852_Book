@@ -109,7 +109,7 @@ Given these limitations, it is often better to avoid relying heavily on traditio
 
 ### DHARMa
 
-The **DHARMa** package is an alternative approach to model diagnostics, particularly where traditional tools like `agricolae::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
+The **DHARMa** package is an alternative approach to model diagnostics, particularly where traditional tools like `ggfortify::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
 
 At the heart of DHARMa’s approach is the `simulateResiduals()` function. The function simulates standardised residuals based on the model's assumptions, including the specified error distribution and link function. DHARMa then constructs diagnostic plots that can reveal model deficiencies such as mismatched link functions, unmodelled predictors, and overdispersion.
 
@@ -147,7 +147,7 @@ summary(nflMod)
 
 We could report this something like this:
 
-*The binomial GLM showed that distance was significantly associated with the probability of goal success (GLM: Null Deviance = 955.38, Residual Deviance = 817.58, d.f. = 1 and 946 p <0.001). The slope and intercept of the relationship is -0.131 and 5.690 respectively on the logit scale. The equation of the best fit line was therefore logit(nOffspring) = 5.690 - 0.131$\times$distance (see Figure XXX)*
+*The binomial GLM showed that distance was significantly associated with the probability of goal success (GLM: Null Deviance = 955.38, Residual Deviance = 817.58, d.f. = 1 and 946 p <0.001). The slope and intercept of the relationship is -0.131 and 5.690 respectively on the logit scale. The equation of the best fit line was therefore logit(pSuccess) = 5.690 - 0.131$\times$distance (see Figure XXX)*
 
 The equation of the model if you want to express it on the natural scale works out to be:
 

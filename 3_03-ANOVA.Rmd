@@ -172,7 +172,7 @@ espresso %>%
 
 Look at the coefficients of the model. Remember that you have three levels in your explanatory variable, but only two levels are shown in the summary. Which one is missing? 
 
-The "missing" group is the first one alphabetically (i.e. BM). The estimate (of the mean) for this group is labelled "`(Intercept)`" (with a value of `r foam_mod$coefficients[1]`. This is like a baseline or reference value, and the estimates for the other groups (HIP and IES), are *differences* between this baseline value and the estimated mean for those groups. In other words, the second group (HIP) is `r foam_mod$coefficients[2]` more than `r foam_mod$coefficients[1]` (`r foam_mod$coefficients[1]` + `r foam_mod$coefficients[2]` = `r sum(foam_mod$coefficients[1:2])`). Similarly, the third group (IES) is `r foam_mod$coefficients[3]` more than `r foam_mod$coefficients[1]` (`r foam_mod$coefficients[1]` + `r foam_mod$coefficients[3]` = `r sum(foam_mod$coefficients[c(1,3)])`). Compare these values with the ones you got above using `summarise` - they should be the same. 
+The "missing" group is the first one alphabetically (i.e. BM). The estimate (of the mean) for this group is labelled "`(Intercept)`" (with a value of `r formatC(foam_mod$coefficients[1], digits = 2, format = "f")`). This is like a baseline or reference value, and the estimates for the other groups (HIP and IES), are *differences* between this baseline value and the estimated mean for those groups. In other words, the second group (HIP) is `r foam_mod$coefficients[2]` more than `r foam_mod$coefficients[1]` (`r foam_mod$coefficients[1]` + `r foam_mod$coefficients[2]` = `r sum(foam_mod$coefficients[1:2])`). Similarly, the third group (IES) is `r foam_mod$coefficients[3]` more than `r foam_mod$coefficients[1]` (`r foam_mod$coefficients[1]` + `r foam_mod$coefficients[3]` = `r sum(foam_mod$coefficients[c(1,3)])`). Compare these values with the ones you got above using `summarise` - they should be the same. 
 
 This is illustrated in Figure \@ref(fig:3-03-ANOVA-7)A. You can see that the coefficients of the model are the same as the lengths of the arrows that run from 0 (for the first level of method (BM), the Intercept) or *from* this reference value. It is often a good idea to sketch something like this on paper when you are trying to understand your model outputs!
 
@@ -391,7 +391,7 @@ From there, you can calculate the **Treatment Sum of Squares**
 (SSTreatment <- SSTotal - SSError)
 ```
 
-So far, so good - but we can't just look at the ratio of SSTreatment/SSError, because sum of square errors always increase with sample size. We can account for this by dividing 
+So far, so good - but we can't just look at the ratio of SSTreatment/SSError, because sum of square errors always increase with sample size.
 
 We need to take account of sample size (degrees of freedom) by dividing these sum of squares by the degrees of freedom to give us variances. There are 3 treatment groups and 9 samples per group. Therefore there are 2 degrees of freedom for the treatment, and 8 degrees of freedom per each of the three treatments, giving a total of 8*3 = 24 error degrees of freedom.
 
