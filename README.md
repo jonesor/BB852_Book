@@ -3,12 +3,17 @@
 ### Build workflow
 
 - Prepare datasets and validate references: run `Rscript -e "source('scripts/PrepareCourseData.R')"` (this syncs `CourseData/` from `DataSetLibrary/`, writes `course_data_files.csv`, and fails if a referenced dataset is missing).
-- Build the book: run `_build.sh` (which now runs the preparation step, then renders the gitbook).
+- Build the book locally (optional, for previewing): run `_build.sh` (which runs the preparation step, then renders the gitbook into `docs/`).
+
+### Publishing (automatic)
+
+- The site is built **and deployed to GitHub Pages by CI** on every push to `master`, via the `Build and deploy book` GitHub Action (`.github/workflows/build-book.yml`).
+- Pages **Source** must be set to **GitHub Actions** (Settings → Pages → Build and deployment).
+- The rendered `docs/` output is **no longer committed** — it is `.gitignore`d and rebuilt fresh in CI. A local `_build.sh` run just lets you preview the site before pushing.
 
 ### Build/release notes
 
-- The published site is served from `docs/` (GitHub Pages).
-- `bookdown::gitbook` output is written to `docs/` per `_bookdown.yml`.
+- `bookdown::gitbook` output is written to `docs/` per `_bookdown.yml` (locally and in CI).
 - Use `_clean.sh` to remove caches and generated artifacts before a clean rebuild.
 - Hand-authored images can live in `assets/`; generated plots should go in `generated/` (ignored by git).
 
@@ -27,7 +32,7 @@
 ### Contributor checklist
 
 - Run `_clean.sh` before a release build if the output looks stale.
-- Run `_build.sh` and confirm `docs/` updates as expected.
+- Optionally run `_build.sh` to preview locally; on push to `master`, CI rebuilds and deploys the site automatically.
 - Verify `CourseData/` contents match current references in `.Rmd` files.
 - Check annual items in the “Things to do each year” section below.
 
@@ -41,7 +46,7 @@
 - Check/add/remove items in `ExtraReading.Rmd`
 - Style check: `scripts/style.R`
 - Spell check: `scripts/SpellCheckScript.R`
-- Rebuild GitHub site. (`bookdown::render_book("index.Rmd", "bookdown::pdf_book")` and `bookdown::render_book("index.Rmd", "bookdown::gitbook")`)
+- The GitHub site rebuilds and redeploys automatically on push to `master`. To preview locally first, render with `bookdown::render_book("index.Rmd", "bookdown::gitbook")` (and `"bookdown::pdf_book"` for the PDF).
 
 ### Note:
 
