@@ -244,21 +244,28 @@ str(mydata)
 
 ## Organising your work and importing data
 
-**What we’re about to do:** Import a CSV file using tidyverse tools.
+**What we’re about to do:** Import a CSV file, and meet the two functions you will see for doing this.
 
 Keep your data in a `CourseData` folder inside your project. We will use **relative paths** throughout this course. If you do not have `CourseData`, download it from the course site.
 
+There are two common ways to read a CSV file into R, and you will come across both:
+
+- **`read.csv()`** comes with base R. It returns a `data.frame` and, with `stringsAsFactors = TRUE`, turns text columns into **factors** — which is convenient for the statistics later in the course.
+- **`read_csv()`** comes from the `readr` package (part of the tidyverse). It is a little faster, prints a short summary of the column types it guessed, and returns a *tibble* (a modern data frame). It leaves text columns as character.
+
+Both work well and you will see both in other people's code. **To keep things consistent, this book uses `read.csv()` from here on.**
+
 ```{r 0-03-An-R-Refresher-20}
-carni <- readr::read_csv("CourseData/carnivora.csv")
+carni <- read.csv("CourseData/carnivora.csv", stringsAsFactors = TRUE)
 ```
 
-**What just happened:** `read_csv()` imported the data and guessed column types.
+**What just happened:** `read.csv()` imported the data as a `data.frame` and, thanks to `stringsAsFactors = TRUE`, stored the text columns as factors.
 
-**Try this:** Run `glimpse(carni)` and compare it to `summary(carni)`.
+**Try this:** Run `str(carni)` and compare it to `summary(carni)`.
 
 **Common mistake:** File not found. Check spelling and folder names.
 
-**Takeaway:** `read_csv()` is the tidyverse way to import CSV files.
+**Takeaway:** This book uses `read.csv()`; `read_csv()` is the tidyverse alternative you will also encounter.
 
 ---
 
@@ -286,7 +293,7 @@ summary(carni$FW)
 
 ```{r 0-03-An-R-Refresher-23}
 class(carni$Family)
-levels(as.factor(carni$Family))
+levels(carni$Family)
 ```
 
 ```{r 0-03-An-R-Refresher-24}
@@ -370,7 +377,7 @@ The file is `suburbanBirds.csv`. Columns: `Name`, `Year`, `HabitatIndex`, `nIndi
 
 - Use scripts for reproducible work.
 - Vectors and data frames are the core data types.
-- `read_csv()` is the tidyverse way to import CSV files.
+- `read.csv()` imports CSV files; `read_csv()` is the tidyverse alternative.
 - Check classes with `str()` and convert to `factor()` when needed.
 - Always inspect your data before analysing it.
 

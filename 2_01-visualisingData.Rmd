@@ -39,7 +39,7 @@ We have already made a plot: data + aesthetics + geom. That pattern will repeat 
 We will use the SDU clutch size data created at the end of the **Data wrangling** chapter. The file should be in `CourseData/SDUClutchSize.csv`.
 
 ```{r 2-01-visualisingData-2}
-clutch <- readr::read_csv("CourseData/SDUClutchSize.csv")
+clutch <- read.csv("CourseData/SDUClutchSize.csv")
 ```
 
 **Checkpoint:** You should see columns like `species`, `Year`, and `clutchSize`.
@@ -200,7 +200,7 @@ mean_clutch %>%
 **What we’re about to do:** We will plot how bird species richness changes with suburb age.
 
 ```{r 2-01-visualisingData-12}
-birds <- readr::read_csv("CourseData/suburbanBirds.csv") %>%
+birds <- read.csv("CourseData/suburbanBirds.csv") %>%
   mutate(Age = 1975 - Year)
 ```
 
