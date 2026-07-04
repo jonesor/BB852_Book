@@ -8,20 +8,18 @@ There are some additional useful points to consider: proportion of variance expl
 
 During the 2+ way ANOVA (multiple regression) section you may have realised that there may be multiple ways to fit a model. For example, you may have a choice of parameters to include - should you include them or not? Which ones should you include? Would a log-transformed explanatory variable be better? 
 
-We will use the class data — collected from students in previous years — to look at these topics. In this example, I am filtering the data to only 2019, but you can choose to use all the data (i.e. no filtering), or any single year.
+We will use the `morphometry.csv` data (body measurements, the same data used in the regression and ANCOVA chapters) to look at these topics.
 
 ```{r 3-07-EvaluatingModels-1}
-classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Year == 2019) %>% # you can edit this to look at particular years.
-  filter(Gender %in% c("Male", "Female")) %>%
-  filter(!is.na(HandWidth)) # Filter out NA
+morph <- read.csv("CourseData/morphometry.csv") %>%
+  mutate(Height = Height / 10, HandLength = HandLength / 10) # mm -> cm
 ```
 ## R-squared value
 
-Let's fit a simple model: `Height ~ HandWidth + Gender`
+Let's fit a simple model: `Height ~ HandLength + Sex`
 
 ```{r 3-07-EvaluatingModels-2}
-mod1 <- lm(Height ~ HandWidth + Gender, data = classData)
+mod1 <- lm(Height ~ HandLength + Sex, data = morph)
 summary(mod1)
 ```
 
@@ -44,10 +42,10 @@ Multiple R-squared is a measure of R-squared value for models that can have mult
 You can test this by adding terms to the model. Let's start with something silly - we'll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?
 
 ```{r 3-07-EvaluatingModels-4}
-classData <- classData %>%
-  mutate(randomVariable = rnorm(nrow(classData)))
+morph <- morph %>%
+  mutate(randomVariable = rnorm(nrow(morph)))
 
-mod2 <- lm(Height ~ HandWidth + Gender + randomVariable, data = classData)
+mod2 <- lm(Height ~ HandLength + Sex + randomVariable, data = morph)
 summary(mod2)
 ```
 
@@ -73,12 +71,12 @@ You can get R to tell you the AIC value for a model using the function `AIC()` e
 Here's a simple example of use in practice:
 
 ```{r 3-07-EvaluatingModels-6}
-mod1 <- lm(Height ~ HandWidth + Gender, data = classData)
-mod2 <- lm(Height ~ HandWidth * Gender, data = classData)
-mod3 <- lm(Height ~ HandWidth, data = classData)
-mod4 <- lm(Height ~ Gender, data = classData)
-mod5 <- lm(Height ~ 1, data = classData)
-mod6 <- lm(Height ~ HandWidth + randomVariable, data = classData)
+mod1 <- lm(Height ~ HandLength + Sex, data = morph)
+mod2 <- lm(Height ~ HandLength * Sex, data = morph)
+mod3 <- lm(Height ~ HandLength, data = morph)
+mod4 <- lm(Height ~ Sex, data = morph)
+mod5 <- lm(Height ~ 1, data = morph)
+mod6 <- lm(Height ~ HandLength + randomVariable, data = morph)
 
 
 (AICtable <- AIC(mod1, mod2, mod3, mod4, mod5, mod6) %>%
@@ -93,7 +91,7 @@ When you have a model with numerous terms (e.g. a multiple regression model, or 
 
 We can do this using variance partitioning.
 
-Consider our earlier model `lm(Height ~ HandWidth + Gender`. What proportion of the variance in height is explained by hand width? And what proportion by Gender? (and so on, for more complicated models...)
+Consider our earlier model `lm(Height ~ HandLength + Sex)`. What proportion of the variance in height is explained by hand length? And what proportion by Sex? (and so on, for more complicated models...)
 
 This is done by examining the anova summary (e.g. `anova(mod1)`), using the `Sum Sq` column.
 
@@ -105,9 +103,9 @@ anova(mod1)
 ```
 
 So here we already know that the model explains `r 100*round(summary(mod1)$r.squared,4)`% of variation in Height. We can partition this among the terms by using the Sums of Squares values. 
-The proportion of variance explained by HandWidth is `r round(unlist(anova(mod1)[2]),1)[1]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[1]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
+The proportion of variance explained by HandLength is `r round(unlist(anova(mod1)[2]),1)[1]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[1]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
 
-Similarly, the proportion of variance explained by Gender is `r round(unlist(anova(mod1)[2]),1)[2]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[2]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
+Similarly, the proportion of variance explained by Sex is `r round(unlist(anova(mod1)[2]),1)[2]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[2]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
 
 
 In more complicated multiple regression one could use this approach to further group variables into types so one could e.g., one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level, for example. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of "types", such as "genetic", "morphological" and "diet". Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.
