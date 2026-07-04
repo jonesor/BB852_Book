@@ -1,14 +1,14 @@
 # Linear regression: models with a single continuous explanatory variable
 
-Linear regression models, at their simplest, estimate linear (straight-line) relationships between two continuous variables. As an example, picture the relationship between height and hand width (Figure \@ref(fig:3-04-linearRegression-1)). In this figure there is a clear relationship between the two variables, and the straight line running through the cloud of data points is the fitted linear regression model. 
+Linear regression models, at their simplest, estimate linear (straight-line) relationships between two continuous variables. As an example, picture the relationship between height and hand length (Figure \@ref(fig:3-04-linearRegression-1)). In this figure there is a clear relationship between the two variables, and the straight line running through the cloud of data points is the fitted linear regression model. 
 
 The aim of linear regression is to (1) determine whether there is a meaningful statistical relationship between the explanatory variable(s) and the response variable, and (2) quantify those relationships by estimating their characteristics. These characteristics include the slope and intercept of fitted models, and the amount of variation explained by variables in the model.
 
 ```{r 3-04-linearRegression-1, echo=FALSE,fig.width=3,fig.height=3,fig.align='center',fig.cap="A linear regression model fitted through data points.", fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Year == 2019)
+morph <- read.csv("CourseData/morphometry.csv") %>%
+  mutate(Height = Height / 10, HandLength = HandLength / 10)
 
-ggplot(classData, aes(x = HandWidth, y = Height)) +
+ggplot(morph, aes(x = HandLength, y = Height)) +
   geom_point() +
   geom_smooth(se = FALSE, method = "lm")
 ```
@@ -89,79 +89,79 @@ When looking at data points on a graph, unless all of the points are arranged pe
 One way of doing this is by minimising the sum of squares of the residuals (again, you have come across this concept a few times before). In other words, we add up the squares of each of the residuals. We square the values rather than simply adding up the residuals themselves because we want to ensure that the positive and negative values don't cancel each other out (a square of a negative number is positive). This method is called **least squares** regression and is illustrated in Figure \@ref(fig:3-04-linearRegression-3): Which is the best fitting line?
 
 ```{r 3-04-linearRegression-3, echo=FALSE,fig.width=4.8,fig.height=4,fig.align='center',fig.cap="Residuals and least squares: which is the best fitting line?",fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Year == 2019)
+morph <- read.csv("CourseData/morphometry.csv") %>%
+  mutate(Height = Height / 10, HandLength = HandLength / 10)
 
 # Black thread least squares
-slopeCoef <- c(6.10, 4.66, -1, 0.00)
-interceptCoef <- c(125, 134, 185, 175)
+slopeCoef <- c(6.15, 4.50, -2.00, 0.00)
+interceptCoef <- c(45, 78, 205, 168)
 
-residualData <- classData %>%
-  select(Height, HandWidth) %>%
-  mutate(Height_Pred = (slopeCoef[1] * HandWidth) + interceptCoef[1])
+residualData <- morph %>%
+  select(Height, HandLength) %>%
+  mutate(Height_Pred = (slopeCoef[1] * HandLength) + interceptCoef[1])
 
-A <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+A <- ggplot(residualData, aes(x = HandLength, y = Height, xend = HandLength, yend = Height_Pred)) +
   geom_segment(col = "grey75") +
   geom_point() +
   geom_segment(aes(
-    x = min(HandWidth),
-    xend = max(HandWidth),
-    y = (slopeCoef[1] * min(HandWidth)) + interceptCoef[1],
-    yend = (slopeCoef[1] * max(HandWidth)) + interceptCoef[1]
+    x = min(HandLength),
+    xend = max(HandLength),
+    y = (slopeCoef[1] * min(HandLength)) + interceptCoef[1],
+    yend = (slopeCoef[1] * max(HandLength)) + interceptCoef[1]
   ), inherit.aes = FALSE, colour = "#b20000") +
-  ylim(158, 195) +
+  ylim(120, 210) +
   ggtitle(paste0("A) slope:  ", slopeCoef[1], "; int: ", interceptCoef[1])) +
   theme_minimal()
 
 
-residualData <- classData %>%
-  select(Height, HandWidth) %>%
-  mutate(Height_Pred = (slopeCoef[2] * HandWidth) + interceptCoef[2])
+residualData <- morph %>%
+  select(Height, HandLength) %>%
+  mutate(Height_Pred = (slopeCoef[2] * HandLength) + interceptCoef[2])
 
-B <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+B <- ggplot(residualData, aes(x = HandLength, y = Height, xend = HandLength, yend = Height_Pred)) +
   geom_segment(col = "grey75") +
   geom_point() +
   geom_segment(aes(
-    x = min(HandWidth),
-    xend = max(HandWidth),
-    y = (slopeCoef[2] * min(HandWidth)) + interceptCoef[2],
-    yend = (slopeCoef[2] * max(HandWidth)) + interceptCoef[2]
+    x = min(HandLength),
+    xend = max(HandLength),
+    y = (slopeCoef[2] * min(HandLength)) + interceptCoef[2],
+    yend = (slopeCoef[2] * max(HandLength)) + interceptCoef[2]
   ), inherit.aes = FALSE, colour = "#b20000") +
-  ylim(158, 195) +
+  ylim(120, 210) +
   ggtitle(paste0("B) slope:  ", slopeCoef[2], "; int: ", interceptCoef[2])) +
   theme_minimal()
 
-residualData <- classData %>%
-  select(Height, HandWidth) %>%
-  mutate(Height_Pred = (slopeCoef[3] * HandWidth) + interceptCoef[3])
+residualData <- morph %>%
+  select(Height, HandLength) %>%
+  mutate(Height_Pred = (slopeCoef[3] * HandLength) + interceptCoef[3])
 
-C <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+C <- ggplot(residualData, aes(x = HandLength, y = Height, xend = HandLength, yend = Height_Pred)) +
   geom_segment(col = "grey75") +
   geom_point() +
   geom_segment(aes(
-    x = min(HandWidth),
-    xend = max(HandWidth),
-    y = (slopeCoef[3] * min(HandWidth)) + interceptCoef[3],
-    yend = (slopeCoef[3] * max(HandWidth)) + interceptCoef[3]
+    x = min(HandLength),
+    xend = max(HandLength),
+    y = (slopeCoef[3] * min(HandLength)) + interceptCoef[3],
+    yend = (slopeCoef[3] * max(HandLength)) + interceptCoef[3]
   ), inherit.aes = FALSE, colour = "#b20000") +
-  ylim(158, 195) +
+  ylim(120, 210) +
   ggtitle(paste0("C) slope:  ", slopeCoef[3], "; int: ", interceptCoef[3])) +
   theme_minimal()
 
-residualData <- classData %>%
-  select(Height, HandWidth) %>%
-  mutate(Height_Pred = (slopeCoef[4] * HandWidth) + interceptCoef[4])
+residualData <- morph %>%
+  select(Height, HandLength) %>%
+  mutate(Height_Pred = (slopeCoef[4] * HandLength) + interceptCoef[4])
 
-D <- ggplot(residualData, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+D <- ggplot(residualData, aes(x = HandLength, y = Height, xend = HandLength, yend = Height_Pred)) +
   geom_segment(col = "grey75") +
   geom_point() +
   geom_segment(aes(
-    x = min(HandWidth),
-    xend = max(HandWidth),
-    y = (slopeCoef[4] * min(HandWidth)) + interceptCoef[4],
-    yend = (slopeCoef[4] * max(HandWidth)) + interceptCoef[4]
+    x = min(HandLength),
+    xend = max(HandLength),
+    y = (slopeCoef[4] * min(HandLength)) + interceptCoef[4],
+    yend = (slopeCoef[4] * max(HandLength)) + interceptCoef[4]
   ), inherit.aes = FALSE, colour = "#b20000") +
-  ylim(158, 195) +
+  ylim(120, 210) +
   ggtitle(paste0("D) slope:  ", slopeCoef[4], "; int: ", interceptCoef[4])) +
   theme_minimal()
 
@@ -189,7 +189,7 @@ Usually, the most important hypothesis test involved with a linear regression mo
 
 Sometimes hypotheses like this are a bit boring, because we already know the answer before collecting and analysing the data. What we usually **don't** know is the nature of the relationship (the slope, intercept, their errors, and amount of variation explained). Usually it is more interesting and meaningful to focus on those details. 
 
-The following example, where we focus on the relationship between hand width and height, is one of these "boring" cases: we already know there is a relationship. Nevertheless, we'll use this example because it helps us understand how this hypothesis test works.
+The following example, where we focus on the relationship between hand length and height, is one of these "boring" cases: we already know there is a relationship. Nevertheless, we'll use this example because it helps us understand how this hypothesis test works.
 
 The aim of this section is to give you some intuition on how the hypothesis test works.
 
@@ -213,45 +213,45 @@ $$F = \frac{mESS}{mRSS}$$
 If the *explained variance* (mESS) is large compared to the *residual error variance* (mRSS), then F will be large. The size of F tells us how likely or unlikely it is that the null hypothesis is true. When F is large, the probability that the slope is significantly different from 0 is high. To obtain the actual probabilities, the F-value must be compared to a theoretical distribution which depends on the two degrees of freedom (explained and residual d.f.). Once upon a time you would have looked this up in a printed table, but now R makes this very straightforward.
 
 ```{r 3-04-linearRegression-4, echo=FALSE,fig.width=8,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Year == 2019)
+morph <- read.csv("CourseData/morphometry.csv") %>%
+  mutate(Height = Height / 10, HandLength = HandLength / 10)
 
 
-model <- lm(Height ~ HandWidth, data = classData)
+model <- lm(Height ~ HandLength, data = morph)
 
 slopeCoefTotal <- 0
-interceptCoefTotal <- mean(classData$Height)
+interceptCoefTotal <- mean(morph$Height)
 
-residualDataTotal <- classData %>%
-  select(Height, HandWidth) %>%
-  mutate(Height_Pred = (slopeCoefTotal * HandWidth) + interceptCoefTotal)
+residualDataTotal <- morph %>%
+  select(Height, HandLength) %>%
+  mutate(Height_Pred = (slopeCoefTotal * HandLength) + interceptCoefTotal)
 
-A <- ggplot(residualDataTotal, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+A <- ggplot(residualDataTotal, aes(x = HandLength, y = Height, xend = HandLength, yend = Height_Pred)) +
   geom_segment(col = "grey75") +
   geom_point() +
   geom_segment(aes(
-    x = min(HandWidth),
-    xend = max(HandWidth),
-    y = (slopeCoefTotal * min(HandWidth)) + interceptCoefTotal,
-    yend = (slopeCoefTotal * max(HandWidth)) + interceptCoefTotal
+    x = min(HandLength),
+    xend = max(HandLength),
+    y = (slopeCoefTotal * min(HandLength)) + interceptCoefTotal,
+    yend = (slopeCoefTotal * max(HandLength)) + interceptCoefTotal
   ), inherit.aes = FALSE, colour = "#b20000")
 
 
 slopeCoefError <- model$coef[2]
 interceptCoefError <- model$coef[1]
 
-residualDataError <- classData %>%
-  select(Height, HandWidth) %>%
-  mutate(Height_Pred = (slopeCoefError * HandWidth) + interceptCoefError)
+residualDataError <- morph %>%
+  select(Height, HandLength) %>%
+  mutate(Height_Pred = (slopeCoefError * HandLength) + interceptCoefError)
 
-B <- ggplot(residualDataError, aes(x = HandWidth, y = Height, xend = HandWidth, yend = Height_Pred)) +
+B <- ggplot(residualDataError, aes(x = HandLength, y = Height, xend = HandLength, yend = Height_Pred)) +
   geom_segment(col = "grey75") +
   geom_point() +
   geom_segment(aes(
-    x = min(HandWidth),
-    xend = max(HandWidth),
-    y = (slopeCoefError * min(HandWidth)) + interceptCoefError,
-    yend = (slopeCoefError * max(HandWidth)) + interceptCoefError
+    x = min(HandLength),
+    xend = max(HandLength),
+    y = (slopeCoefError * min(HandLength)) + interceptCoefError,
+    yend = (slopeCoefError * max(HandLength)) + interceptCoefError
   ), inherit.aes = FALSE, colour = "#b20000")
 
 A + ggtitle("A - total errors") + B + ggtitle("B - residual errors")
@@ -263,9 +263,9 @@ A + ggtitle("A - total errors") + B + ggtitle("B - residual errors")
 
 These models have similar assumptions to the other linear models^[t-tests, ANOVA and linear regression are all types of linear model, mathematically]. These are (1) that the relationship between the variables is linear (hence the name); (2) that the data are continuous variables; (3) that the observations are randomly sampled; (4) that the errors in the model (the "residuals") can be described by a normal distribution; and (5) and that the errors are "homoscedastic" (that they are constant through the range of the data). You can evaluate these things by looking at diagnostic plots after you have fitted the model. See page 112-113 in GSWR for a nice explanation. 
 
-## Worked example: height-hand width relationship
+## Worked example: height-hand length relationship
 
-Let's now use R to fit a linear regression model to estimate the relationship between hand width and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene.  I am restricting my analysis to 2019 data, but you could do it for any year (or all years, but you might need to first get rid of some outliers using `filter`).
+Let's now use R to fit a linear regression model to estimate the relationship between hand length and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene. The data are body measurements (in cm) from a sample of people.
 
 ```{block 3-04-linearRegression-5, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
@@ -274,24 +274,24 @@ Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your 
 
 First, load the data:
 ```{r 3-04-linearRegression-6}
-classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Year == 2019)
+morph <- read.csv("CourseData/morphometry.csv") %>%
+  mutate(Height = Height / 10, HandLength = HandLength / 10)
 ```
 
 We should then plot the data to make sure it looks OK.
 
 ```{r 3-04-linearRegression-7, fig.width=4.5,fig.height=3.5,fig.align='center', fig.pos = "ht"}
-ggplot(classData, aes(x = HandWidth, y = Height)) +
+ggplot(morph, aes(x = HandLength, y = Height)) +
   geom_point()
 ```
 
 
 This looks OK, and the relationship looks fairly linear. Now we can fit a model using the `lm` function (same as for ANOVA!).^[R knows that this is a linear regression rather than an ANOVA because the explanatory variable is numeric rather than categorical - smart!.]
 
-The response variable is always the one we would like to predict,  in this case `Height`. The explanatory variable (sometimes called the predictor) is `HandWidth`. These are added to the model using a formula where they are separated with the `~` ("tilde") symbol: `Height ~ HandWidth`. In the model expression, we also need to tell R where the data are using the `data = ` argument. We can save the model as an R object by naming it e.g. `mod_A <- `.
+The response variable is always the one we would like to predict,  in this case `Height`. The explanatory variable (sometimes called the predictor) is `HandLength`. These are added to the model using a formula where they are separated with the `~` ("tilde") symbol: `Height ~ HandLength`. In the model expression, we also need to tell R where the data are using the `data = ` argument. We can save the model as an R object by naming it e.g. `mod_A <- `.
 
 ```{r 3-04-linearRegression-8}
-mod_A <- lm(Height ~ HandWidth, data = classData)
+mod_A <- lm(Height ~ HandLength, data = morph)
 ```
 
 Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the `autoplot` function in the `ggfortify` package (you may need to install and/or load the package).
@@ -312,10 +312,10 @@ anova(mod_A)
 ```
 
 When you run this function, you get a summary table that looks exactly like the one you got with an ANOVA. There are degrees of freedom (`Df`), Sums of Squares (`Sum Sq`), Mean Sums of Squares (`Mean Sq`) and the `F value` and p-value (`Pr(>F)`). 
-The most important parts of this table are the F value (`r formatC( anova(mod_A)$F[1], digits = 3, format = "f")`) and the p-value (`r formatC(anova(mod_A)$Pr[1], digits = 3, format = "f")`): as described above, large F values lead to small p-values. This tells us that it is unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand width).
+The most important parts of this table are the F value (`r formatC( anova(mod_A)$F[1], digits = 3, format = "f")`) and the p-value (`r formatC(anova(mod_A)$Pr[1], digits = 3, format = "f")`): as described above, large F values lead to small p-values. This tells us that it is unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand length).
 
 We could report the results of this hypothesis test like this: 
-*There was a statistically significant association between hand width and height (F = `r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001)*
+*There was a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001)*
 
 Now we can dig deeper by asking for a `summary` of the model. 
 
@@ -325,20 +325,20 @@ summary(mod_A)
 
 This summary has a lot of information. First we see `Call` which reminds us what the formula we have used to fit the model. Then there is some summary information about the residuals. Ideally these should be fairly balanced around 0 (i.e. the `Min` value should be negative but with the same magnitude as `Max`). If they are **wildly** different, then you might want to check the data or model. In this case they look OK.
 
-Then we get to the important part of the table - the `Coefficients`. This lists the coefficients of the model and shows first the `Intercept` and then the slope, which is given by the name of the explanatory variable (`HandWidth` here). For each coefficient we get the `Estimate` of its value, and the uncertainty in that estimate (the standard error (`Std. Error)).
+Then we get to the important part of the table - the `Coefficients`. This lists the coefficients of the model and shows first the `Intercept` and then the slope, which is given by the name of the explanatory variable (`HandLength` here). For each coefficient we get the `Estimate` of its value, and the uncertainty in that estimate (the standard error (`Std. Error)).
 
 These estimates and errors are each followed by a `t value` and a p-value (`Pr(>|t|`)). These values provide a test of whether the slope/intercept is different from zero. In this case they both are. The t-tests are indeed doing t-tests of these estimates, in the same way that a regular t-test works, so that the significance depends on the ratio between signal (the estimate) and the noise (the standard error).  This is illustrated for the coefficient estimates for our model in Figure \@ref(fig:3-04-linearRegression-12).
 
 
 ```{r 3-04-linearRegression-12, echo=FALSE,fig.width=6,fig.height=3,fig.align='center',fig.cap="Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.", fig.pos = "ht"}
-classData <- read.csv("CourseData/classData.csv") %>%
-  filter(Year == 2019)
+morph <- read.csv("CourseData/morphometry.csv") %>%
+  mutate(Height = Height / 10, HandLength = HandLength / 10)
 
-# ggplot(classData,aes(x=Height,y=HandWidth)) +
+# ggplot(morph,aes(x=Height,y=HandLength)) +
 #  geom_point() +
 #  geom_smooth(method="lm")
 
-mod <- lm(Height ~ HandWidth, data = classData)
+mod <- lm(Height ~ HandLength, data = morph)
 # summary(mod)
 
 int <- summary(mod)$coefficients[1, 1:2]
@@ -385,9 +385,9 @@ $R^2$ is the square of the correlation coefficient $r$ and is a measure of the a
 
 We could describe the model like this:
 
-*There is a statistically significant association between hand width and height (F = `r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001) The equation of the fitted model is: Height = `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")`) $\times$ HandWidth + `r formatC(summary(mod_A)$coef[1,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[1,2], digits = 2,format = "f")`). The model explains `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 3, format = "f")`).*
+*There is a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001) The equation of the fitted model is: Height = `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")`) $\times$ HandLength + `r formatC(summary(mod_A)$coef[1,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[1,2], digits = 2,format = "f")`). The model explains `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 3, format = "f")`).*
 
-... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand width and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[2,3], digits = 2,format = "f")`, p < 0.01)*
+... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand length and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[2,3], digits = 2,format = "f")`, p < 0.01)*
 
 
 ```{r 3-04-linearRegression-13, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}
@@ -452,12 +452,12 @@ D <- ggplot(df1, aes(x, y)) +
 A plot is usually a good idea because it is easier for the reader to interpret than an equation, or coefficients. The `ggplot2` package has a neat and simple function called `geom_smooth` which will add the fitted regression line to simple models like this. For linear regression models you simply need to tell it to use `method = "lm"`. This will plot the fitted regression model, and will add, by default, a shaded "ribbon" which represents the so called "95% confidence interval" for the fitted values. These are approximately 2 times the standard error.
 
 ```{r 3-04-linearRegression-14, fig.width=4.5,fig.height=3.5,fig.align='center', fig.pos = 'ht'}
-ggplot(classData, aes(x = HandWidth, y = Height)) +
+ggplot(morph, aes(x = HandLength, y = Height)) +
   geom_point() +
   geom_smooth(method = "lm")
 ```
 
-**Question:** If police find the 9.8cm wide hand print at a crime scene, what is your best guess of the height of the person involved?
+**Question:** If police find a hand print at a crime scene with a hand length of 20cm, what is your best guess of the height of the person involved?
 
 
 ## Exercise: Chirping crickets
