@@ -195,13 +195,15 @@ anova(mod1, test = "Chi")
 
 The ANOVA table tells us that there is no significant effect of the Distance variable. In other words a model that includes the `Distance` term does not explain significantly more variation than the `NULL` model that includes no terms and instead assumes that variation in cancer incidence is simply caused by random variation.
 
-We needn't go further with this model, but go ahead and plot the model in any case (just for practice). 
+So the distance from the plant does not explain the pattern of cancers. Go ahead and plot the model in any case (just for practice).
 
 ```{r 3-08-GLM-1-Poisson-16}
 summary(mod1)
 ```
 
 Use the approach from the fox example as guidance to make a plot with a fit line.
+
+You might, however, have noticed that the diagnostic plots for this model looked distinctly *dodgy*. There are two clues in these data that a simple Poisson model may not be ideal: about half of the counts are zeros, and the spread of the counts is a little larger than a Poisson model expects (its variance should equal its mean). Both point towards a phenomenon called **overdispersion**, which is very common in real count data and which we turn to next.
 
 
 ### Overdispersion: What It Is and Why It Matters
@@ -228,6 +230,44 @@ A further, slightly more involved option, is to use a **zero-inflated model**, w
 
 While these methods require slightly different implementation, they are conceptually similar to regular GLMs and are interpreted in comparable ways.
 
+
+### Overdispersion in practice: elephant poaching
+
+Let's see overdispersion — and the quasi-Poisson fix — in action. These data (`elephantPoaching.csv`) record the number of elephants killed by poachers (`nkilled`) in a set of protected areas, along with the density of anti-poaching scout patrols (`scoutPerKm`) and whether each area received extra `funding`.
+
+```{r 3-08-GLM-1-Poisson-17}
+poaching <- read.csv("CourseData/elephantPoaching.csv")
+head(poaching)
+```
+
+We'll start with an ordinary Poisson GLM relating the number killed to the density of scout patrols.
+
+```{r 3-08-GLM-1-Poisson-18}
+mod_pois <- glm(nkilled ~ scoutPerKm, data = poaching, family = poisson)
+summary(mod_pois)
+```
+
+The effect of scout density looks *enormously* significant (a tiny p-value). But before celebrating, we must check for overdispersion. Recall the rule of thumb: divide the residual deviance by its degrees of freedom.
+
+```{r 3-08-GLM-1-Poisson-19}
+# overdispersion index
+deviance(mod_pois) / df.residual(mod_pois)
+```
+
+This is about `r round(deviance(mod_pois) / df.residual(mod_pois), 1)` -- well above 2 -- so the data are overdispersed. That means the Poisson standard errors, and the p-values derived from them, are **too optimistic** and cannot be trusted.
+
+To account for this we refit with the `quasipoisson` family. This estimates a dispersion parameter and widens the standard errors accordingly; the coefficient estimates themselves are unchanged.
+
+```{r 3-08-GLM-1-Poisson-20}
+mod_quasi <- glm(nkilled ~ scoutPerKm, data = poaching, family = quasipoisson)
+summary(mod_quasi)
+```
+
+Compare the two summaries. The `scoutPerKm` estimate is *identical*, but its standard error has roughly doubled. As a result, the effect that was wildly significant under the Poisson model (p < 0.001) is now only *just* significant (p is roughly 0.04). The relationship is still there -- more scout patrols per km is associated with fewer elephants killed -- but honestly accounting for the overdispersion gives a much more realistic (and humble) picture of how certain we can be. This is exactly why checking for overdispersion matters: ignore it, and you risk being far more confident than the data warrant.
+
+```{block 3-08-GLM-1-Poisson-21, type="do-something"}
+Overdispersion is often caused by an important variable being left out of the model (the "unobserved heterogeneity" mentioned above). Try adding `funding` to the Poisson model (`nkilled ~ scoutPerKm + funding`) and re-checking the overdispersion index. You should find that it drops substantially -- the missing variable was part of the problem all along.
+```
 
 
 ## Exercise: Maze runner
