@@ -165,6 +165,36 @@ The power has increased to `r (sum(powerResults<0.05)/1000)*100`%.
 Simulation can be a powerful tool to help design and understand the results of hypothesis-based studies. The example above focuses on data that are normally distributed and where the test involved is a t-test. However, the same principles apply for other types of data. One can adapt the approach to use different distributions e.g. `rpois` for Poisson or `rbinom` for binomial. One can also alter the tests being done. This case study used a `t.test` but one could alternatively simulate the results of other ordinary linear models with `lm` or GLMs with `glm`.
 
 
+## Power for other data types: a binomial example
+
+The simulation approach is not limited to t-tests and normally distributed data. Because we are simply generating fake data and running the analysis many times, we can use *any* combination of data type and test. To illustrate, here is the same idea applied to **binary (survival) data** analysed with a binomial GLM — exactly the kind of model you met in the GLM chapters.
+
+Imagine we are planning an experiment to test whether a treatment improves survival. Suppose that, without treatment, half of the individuals survive (a probability of 0.5), and we would like to be able to detect an increase to 0.7. Instead of drawing from a normal distribution with `rnorm`, we now generate 0/1 survival data with `rbinom`, fit a binomial GLM, and extract the p-value for the treatment effect:
+
+```{r 3-10-Power-Analysis-binom, echo=-1, cache=TRUE}
+set.seed(123)
+controlProb <- 0.5 # survival probability without treatment
+treatmentProb <- 0.7 # survival probability we hope to detect
+sampleSize <- 40 # individuals per group
+
+powerResults <- replicate(1000, {
+  # Simulate 0/1 survival data for the two groups
+  survival <- c(
+    rbinom(sampleSize, size = 1, prob = controlProb),
+    rbinom(sampleSize, size = 1, prob = treatmentProb)
+  )
+  treatment <- rep(c("control", "treatment"), each = sampleSize)
+
+  # Fit a binomial GLM and get the p-value for the treatment effect
+  mod <- glm(survival ~ treatment, family = binomial)
+  anova(mod, test = "Chi")[["Pr(>Chi)"]][2]
+})
+
+(sum(powerResults < 0.05) / 1000) * 100
+```
+
+At 40 individuals per group the power is about `r round(sum(powerResults<0.05)/10)`% — well short of the usual 80% target. Binary (0/1) outcomes carry less information than continuous measurements, so you typically need larger samples to detect a difference in *proportions* than a difference in means. Just as with the t-test example, you could now increase `sampleSize` until the power reaches your target. The important message is that the *recipe* stays the same whatever the data: simulate data, run the test, and count how often it is significant. Only the random-number function (`rnorm`, `rbinom`, `rpois`, …) and the choice of test need to change.
+
 ## Extending the simulation (optional, advanced)
 
 
