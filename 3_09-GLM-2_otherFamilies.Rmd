@@ -464,6 +464,17 @@ ggplot(smoke, aes(
   geom_segment(aes(xend = parentSmoke, y = ymin, yend = ymax))
 ```
 
+## Overdispersion in binomial models
+
+Just as count data modelled with Poisson errors can suffer from **overdispersion**, so can binomial data. Recall from the previous chapter that overdispersion occurs when the response varies more than the error family assumes, and that it is often caused by an important variable being left out of the model, or by non-independent (clustered) observations. Exactly the same problem, with the same causes, can affect a binomial GLM.
+
+Two points are worth emphasising for the binomial case:
+
+- **It only applies to *aggregated* binomial data** — that is, proportion data or a two-column `cbind(successes, failures)` response, like the turtle and smoking examples. Overdispersion *cannot* be diagnosed from *binary* (0/1) data such as the NFL field goals: with only a single trial per row the residual deviance carries no information about dispersion, so the usual checks are meaningless. Overdispersion is only a concern when each row summarises several trials.
+- **How to detect it.** The methods are the ones you already know. You can use the DHARMa **dispersion test** (as we did for the turtles, where it was comfortably non-significant), or the "rule of thumb" of dividing the residual deviance by its degrees of freedom and checking whether the result is much greater than 1 (a value above about 2 is a warning sign).
+
+**What to do when it is detected.** The fix mirrors the Poisson case. Refit the model exactly as before, but replace `family = binomial` with `family = quasibinomial`. The quasibinomial family estimates a dispersion parameter and widens the standard errors (and therefore the p-values) accordingly, while leaving the coefficient estimates themselves unchanged. Because a dispersion parameter is now being estimated, you should assess significance with an **F test** rather than the chi-squared test (i.e. `anova(model, test = "F")`). The negative-binomial and zero-inflation options mentioned in the previous chapter are specific to count data, but the quasi-likelihood idea carries over directly to binomial data through the quasibinomial family. The net effect, as with quasi-Poisson, is a more honest and more cautious picture of how certain you can be about the relationship.
+
 ## Exercise: Forensic footprints
 
 A crime has been committed. At the scene, investigators recover a single clear footprint, and from it a forensic technician estimates that the person who left it had a **foot length of 271 mm**. Was the culprit male or female?
