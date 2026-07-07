@@ -41,7 +41,8 @@ Multiple R-squared is a measure of R-squared value for models that can have mult
 
 You can test this by adding terms to the model. Let's start with something silly - we'll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?
 
-```{r 3-07-EvaluatingModels-4}
+```{r 3-07-EvaluatingModels-4, echo=-1}
+set.seed(42)
 morph <- morph %>%
   mutate(randomVariable = rnorm(nrow(morph)))
 
@@ -57,7 +58,7 @@ summary(mod2)$r.squared
 ```
 
 
-If you subtract one from the other, you will see that the Multiple R-squared has "improved" by `r  format(round(summary(mod2)$r.squared-summary(mod1)$r.squared,7),scientific = FALSE)`. In contrast, the Adjusted R-squared has decreased slightly (`r format(round(summary(mod2)$adj.r.squared,4)-round(summary(mod1)$adj.r.squared,4),scientific = FALSE)`), from `r round(summary(mod1)$adj.r.squared,4)` to `r round(summary(mod2)$adj.r.squared,4)`. This, hopefully, is enough evidence to make you favour reporting adjusted rather than multiple R-squared values.
+If you subtract one from the other, you will see that the Multiple R-squared has "improved" by `r format(round(summary(mod2)$r.squared-summary(mod1)$r.squared,7),scientific = FALSE)` — an increase that happens *automatically* whenever any term is added to a model, even a completely useless one. The Adjusted R-squared, however, is not so easily fooled: because it penalises each extra parameter, the random variable earns essentially no reward. Here the Adjusted R-squared `r ifelse(summary(mod2)$adj.r.squared < summary(mod1)$adj.r.squared, "actually *decreases* slightly", "stays essentially flat")`, changing by just `r format(round(summary(mod2)$adj.r.squared-summary(mod1)$adj.r.squared,4),scientific = FALSE)` (from `r round(summary(mod1)$adj.r.squared,4)` to `r round(summary(mod2)$adj.r.squared,4)`). This, hopefully, is enough evidence to make you favour reporting adjusted rather than multiple R-squared values.
 
 The adjusted R-squared value can be used as a single-number summary of model explanatory power.
 
@@ -107,6 +108,8 @@ The proportion of variance explained by HandLength is `r round(unlist(anova(mod1
 
 Similarly, the proportion of variance explained by Sex is `r round(unlist(anova(mod1)[2]),1)[2]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(unlist(anova(mod1)[2]),1)[2]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2])`.
 
+
+**A word of caution.** These proportions come from the `Sum Sq` column of `anova()`, which uses *sequential* (Type I) sums of squares: each term is credited with the variation it explains *after* the terms listed before it in the model formula. When the predictors are correlated — as `HandLength` and `Sex` are here (men tend to be both taller and larger-handed) — the share attributed to each term depends on the order in which the terms enter the model. Fitting `Height ~ Sex + HandLength` instead would give a somewhat different split. Variance partitioning is therefore best treated as a useful summary rather than a unique, definitive attribution.^[If you need an order-independent partition where the contributions still add up to the model's R-squared, the standard tool is the `lmg` metric in the `relaimpo` package (`relaimpo::calc.relimp(mod1, type = "lmg")`). It averages each predictor's contribution over every possible order of entry — for two predictors this is simply the average of the two orderings (`HandLength + Sex` and `Sex + HandLength`). This is equivalent to the "Shapley value" from game theory: a principled way of sharing the overlapping variance fairly between correlated predictors.]
 
 In more complicated multiple regression one could use this approach to further group variables into types so one could e.g., one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level, for example. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of "types", such as "genetic", "morphological" and "diet". Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.
 
