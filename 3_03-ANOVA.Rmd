@@ -420,6 +420,7 @@ As you can see, the method is a bit laborious and time consuming but it is conce
 
 ```{r 3-03-ANOVA-27, echo=FALSE}
 # the following is some code to make a plot with shuffled data as an illustration of how the ANOVA works
+set.seed(42)
 espressoShuffled <- espresso %>%
   mutate(foamIndx = sample(foamIndx))
 
