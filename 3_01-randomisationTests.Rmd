@@ -244,6 +244,7 @@ Another useful way to plot this data is to use an **interaction plot**. In these
 ```
 
 ```{r 3-01-randomisationTests-19, echo=FALSE}
+set.seed(42)
 an2 <- an %>%
   group_by(Subject) %>%
   mutate(time = sample(time))

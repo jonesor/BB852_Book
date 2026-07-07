@@ -391,6 +391,7 @@ diff(as.vector(tapply(hercules$width, hercules$sex, mean)))
 8. Use `sample` to randomise the sex column of the data, and recalculate the difference between the mean.
 
 ```{r 6-1-00-AllSolutions-36}
+set.seed(42)
 # with dplyr
 hercules %>%
   mutate(sex = sample(sex)) %>%
@@ -406,6 +407,7 @@ diff(as.vector(tapply(hercules$width, sample(hercules$sex), mean)))
 9. Use `replicate` to repeat this 10 times (to ensure that you code works).
 
 ```{r 6-1-00-AllSolutions-37}
+set.seed(43)
 # with dplyr
 replicate(
   10,
@@ -430,6 +432,7 @@ replicate(
 10. When your code is working, use `replicate` again, but this time with 1000 replicates and pass the results into a data frame.
 
 ```{r 6-1-00-AllSolutions-38}
+set.seed(44)
 # with dplyr
 diffs <- data.frame(
   diffs =
@@ -874,7 +877,8 @@ head(morph)
 
 2. Plot the data.
 
-```{r 6-1-00-AllSolutions-83,fig.width=5,fig.height=3,fig.align='center',message=FALSE}
+```{r 6-1-00-AllSolutions-83, echo=-1,fig.width=5,fig.height=3,fig.align='center',message=FALSE}
+set.seed(42)
 (A <- ggplot(morph, aes(x = FootLength, y = male)) +
   geom_jitter(height = 0.05, alpha = 0.5))
 ```
@@ -956,6 +960,7 @@ Simulate a t-test-based analysis in R to figure out what sample size would resul
 
 
 ```{r 6-1-00-AllSolutions-80}
+set.seed(42)
 sampleSize <- 40 # vary this until power > 0.8
 result <- replicate(
   1000,
@@ -974,6 +979,7 @@ You should find that you need a sample size of about 40 per group.
 What difference in strength could you reliably detect (with power >80%) with these sample sizes?
 
 ```{r 6-1-00-AllSolutions-81}
+set.seed(42)
 diff <- 185 # Vary this to give a difference to 2nd group t-test
 result <- replicate(
   1000,
