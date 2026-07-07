@@ -288,13 +288,15 @@ library(ggfortify)
 autoplot(modA)
 ```
 
-To confirm this, we can also check the model with DHARMa. Unlike the NFL binary case — where `autoplot` and DHARMa disagreed, and DHARMa was the one to trust — here the two approaches *agree* that the model is appropriate. That agreement is reassuring, and it is exactly what we expect for aggregated binomial data.
+To confirm this, we can also check the model with DHARMa.
 
 ```{r 3-09-GLM-2-DHARMa-turtle, echo=TRUE,fig.width=6,fig.height=4,fig.align='center',message=FALSE,warning=FALSE}
 library(DHARMa)
 sim_res <- simulateResiduals(fittedModel = modA)
 plot(sim_res)
 ```
+
+The three formal tests all pass: the KS test, the dispersion test, and the outlier test are each non-significant, so DHARMa agrees with `autoplot` that the binomial model is appropriate. The non-significant dispersion test is especially reassuring — it tells us the data are not overdispersed. You will, however, notice that the right-hand panel highlights a "quantile deviation" in red. Don't panic: the *combined* adjusted quantile test (reported at the top of that panel) is itself non-significant, and with such a tiny dataset (only 7 rows) DHARMa's quantile lines are very easily wiggled by one or two points, so an isolated red flag like this should not be over-interpreted. The contrast with the NFL example is the instructive part: there, `autoplot` and DHARMa genuinely disagreed and DHARMa was the one to trust; here both tools agree the model is fine, and the lone red flag is a small-sample artefact rather than a real problem.
 
 Now we can look at the anova table. This will tell us what we already know - there is a strong effect of temperature on sex ratio.
 
