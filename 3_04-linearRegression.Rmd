@@ -379,7 +379,7 @@ slopePlot + interceptPlot
 ```
 
 
-The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the $\epsilon$ term in the equations at the start of this chapter). Then we are told what the $R^2$ value is `r formatC( summary(mod_A)$r.squared, digits = 4, format = "f")`. The adjusted $R^2$ is for use in multiple regression models, where there are many explanatory variables and should not be used for this simple regression model. So what does $R^2$ actually mean? 
+The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the $\epsilon$ term in the equations at the start of this chapter). Then we are told what the $R^2$ value is `r formatC( summary(mod_A)$r.squared, digits = 4, format = "f")`. The adjusted $R^2$ is for use in multiple regression models, where there are many explanatory variables, and should not be used for this simple regression model. Multiple regression is not really a separate technique: it is the same `lm` you are using here, just with more explanatory variables added using `+` (you will meet it in the ANCOVA and model-evaluation chapters). The main extra thing to watch for is **multicollinearity** — strongly correlated explanatory variables — which is discussed in the chapter on linear model assumptions. So what does $R^2$ actually mean?
 
 $R^2$ is the square of the correlation coefficient $r$ and is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the $R^2$ value would be 1. This idea is illustrated in Figure \@ref(fig:3-04-linearRegression-13).
 
