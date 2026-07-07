@@ -862,9 +862,9 @@ A + geom_point(
 ```
 
 
-## Sex and foot size
+## Forensic footprints
 
-1. Import the data and create a binary (0/1) response for the probability of being male.
+1. Import the reference data and create a binary (0/1) response for the probability of being male.
 
 ```{r 6-1-00-AllSolutions-82}
 morph <- read.csv("CourseData/morphometry.csv") %>%
@@ -879,7 +879,7 @@ head(morph)
   geom_jitter(height = 0.05, alpha = 0.5))
 ```
 
-3. Fit an appropriate binomial GLM.
+3. Fit the binomial GLM - this is our "forensic tool".
 
 ```{r 6-1-00-AllSolutions-84}
 morphMod <- glm(male ~ FootLength, data = morph, family = binomial)
@@ -893,55 +893,62 @@ sim_res <- simulateResiduals(fittedModel = morphMod)
 plot(sim_res)
 ```
 
-5. Analysis of deviance table. This shows that foot length is a highly significant predictor of sex.
+5. The analysis of deviance table and coefficient summary. Foot length is a highly significant predictor of sex, and the positive slope shows that the probability of being male increases with foot length.
 
 ```{r 6-1-00-AllSolutions-86}
 anova(morphMod, test = "Chi")
-```
-
-6. The coefficient summary (on the logit scale). The positive slope for `FootLength` shows that the probability of being male increases with foot length.
-
-```{r 6-1-00-AllSolutions-87}
 summary(morphMod)
 ```
 
-7. Add the fitted probability and 95% confidence interval to the plot, back-transforming to the natural scale with the inverse link function.
+6. How good is the forensic tool? Predict the probability of being male for everyone in the reference data, classify as male when that probability exceeds 0.5, and compare with the truth. The confusion table and the overall accuracy show that the tool classifies about 90% of people correctly - good, but far from perfect because male and female foot lengths overlap.
 
-```{r 6-1-00-AllSolutions-88,fig.width=5,fig.height=3,fig.align='center',message=FALSE}
-# Dataset to predict FROM
-newData <- data.frame(FootLength = seq(190, 285, 1))
+```{r 6-1-00-AllSolutions-87}
+morph <- morph %>%
+  mutate(pMale = predict(morphMod, type = "response")) %>%
+  mutate(prediction = ifelse(pMale > 0.5, "Male", "Female"))
 
-# Predictions on the scale of the linear predictor (logit)
-pv <- predict(morphMod, newdata = newData, se.fit = TRUE)
-newData <- newData %>%
-  mutate(fit_LP = pv$fit) %>%
-  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) %>%
-  mutate(upperCI_LP = pv$fit + 1.96 * pv$se.fit)
+# Confusion table: true sex versus predicted sex
+table(trueSex = morph$Sex, prediction = morph$prediction)
 
-# Back-transform to the natural (probability) scale
-inverseFunction <- family(morphMod)$linkinv
-newData <- newData %>%
-  mutate(
-    fit = inverseFunction(fit_LP),
-    lowerCI = inverseFunction(lowerCI_LP),
-    upperCI = inverseFunction(upperCI_LP)
-  )
-
-A + geom_ribbon(
-  data = newData, aes(x = FootLength, ymin = lowerCI, ymax = upperCI),
-  fill = "grey75", alpha = 0.5, inherit.aes = FALSE
-) +
-  geom_line(data = newData, aes(x = FootLength, y = fit))
+# Overall proportion correctly classified
+mean(morph$prediction == morph$Sex)
 ```
 
-8. At what foot length is a person equally likely to be male or female? You can read this from the plot, or filter the predicted values for a probability close to 0.5. This happens at a foot length of around 245-250 mm (roughly the midpoint between the average female and male foot lengths).
+7. The crime scene. Predict the probability that the person with a 271 mm foot was male, with a 95% confidence interval, back-transforming to the probability scale with the inverse link function.
+
+```{r 6-1-00-AllSolutions-88}
+crimeScene <- data.frame(FootLength = 271)
+
+pv <- predict(morphMod, newdata = crimeScene, se.fit = TRUE)
+inverseFunction <- family(morphMod)$linkinv
+
+crimeScene <- crimeScene %>%
+  mutate(
+    probMale = inverseFunction(pv$fit),
+    lowerCI = inverseFunction(pv$fit - 1.96 * pv$se.fit),
+    upperCI = inverseFunction(pv$fit + 1.96 * pv$se.fit)
+  )
+crimeScene
+```
+
+The probability of being male is very high (well above 0.9), so the evidence points strongly to a male culprit. Note, however, that "very likely" is not "certain": a small number of women in the reference data have feet this large, so on its own this would be suggestive rather than conclusive evidence.
+
+8. The second print (249 mm). Repeat the prediction for a foot length of 249 mm.
 
 ```{r 6-1-00-AllSolutions-89}
-newData %>%
-  filter(fit < 0.55) %>%
-  filter(fit > 0.45) %>%
-  select(FootLength, fit)
+crimeScene2 <- data.frame(FootLength = 249)
+pv2 <- predict(morphMod, newdata = crimeScene2, se.fit = TRUE)
+
+crimeScene2 <- crimeScene2 %>%
+  mutate(
+    probMale = inverseFunction(pv2$fit),
+    lowerCI = inverseFunction(pv2$fit - 1.96 * pv2$se.fit),
+    upperCI = inverseFunction(pv2$fit + 1.96 * pv2$se.fit)
+  )
+crimeScene2
 ```
+
+Here the probability of being male is close to 0.5, so the tool is essentially guessing. A foot length of 249 mm sits almost exactly at the "tipping point" where males and females are equally likely (around 245-250 mm, roughly the midpoint between the average female and male foot lengths), so this print tells us very little about the culprit's sex. This is an important lesson: a prediction is only as useful as the certainty attached to it.
 
 ## Snails on the move
 

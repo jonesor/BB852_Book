@@ -443,17 +443,19 @@ ggplot(smoke, aes(
   geom_segment(aes(xend = parentSmoke, y = ymin, yend = ymax))
 ```
 
-## Exercise: Sex and foot size
+## Exercise: Forensic footprints
 
-The data set `morphometry.csv` contains measurements taken from 154 people. For each person the data record their `Sex` (`Male` or `Female`) and three body measurements in millimetres: `Height`, `HandLength` and `FootLength`.
+A crime has been committed. At the scene, investigators recover a single clear footprint, and from it a forensic technician estimates that the person who left it had a **foot length of 271 mm**. Was the culprit male or female?
 
-This is the "predicting sex from morphology" scenario mentioned at the start of the chapter. Your task is to use a binomial GLM (logistic regression) to ask whether, and how well, you can predict a person's sex from their foot length. The structure is a good parallel to the NFL field goals example: the response is binary (here `Male` vs. `Female`) and there is a single continuous predictor. Unlike the examples above, this one is *not* worked through for you - use the NFL example as your template and figure out the steps yourself. Ask for help if you get stuck.
+To answer this, you have access to a reference database, `morphometry.csv`, containing measurements from 155 people of known sex. For each person the data record their `Sex` (`Male` or `Female`) and three body measurements in millimetres: `Height`, `HandLength` and `FootLength`. Your job is to build a "forensic tool" - a binomial GLM (logistic regression) that predicts sex from foot length - evaluate how accurate it is, and then use it to make a prediction about the person who left the print.
 
-1) Import the data. The response variable needs to be binary (0/1), so create a new column that is `1` when the person is male and `0` when they are female (`ifelse` is one way to do this). You will therefore be modelling the *probability of being male*.
+This is the kind of binary (`Male` vs. `Female`) single-predictor problem you saw in the NFL field goals example, so use that worked example as your template. Unlike the examples above, this one is *not* worked through for you - figure out the steps yourself, and ask for help if you get stuck.
+
+1) Import the reference data. Your response variable needs to be binary (0/1), so create a new column that is `1` when the person is male and `0` when they are female (`ifelse` is one way to do this). You will therefore be modelling the *probability of being male*.
 2) Plot the data (`geom_jitter` works well here - remember to adjust the `height` and `alpha` arguments as in the NFL example).
 3) Fit an appropriate binomial GLM predicting your 0/1 variable from `FootLength`.
 4) Check the model using `DHARMa` (`simulateResiduals`). Does the binomial family look appropriate?
-5) Get the analysis of deviance table (`anova` with `test = "Chi"`). Is foot length a significant predictor of sex?
-6) Obtain the `summary` table. Remember that these coefficients are on the logit scale.
-7) Use `predict` to add the fitted probability (and its 95% confidence interval) to your plot, back-transforming to the natural scale with the inverse link function.
-8) At what foot length is a person equally likely to be male or female (i.e. the probability of being male is 0.5)?
+5) Get the analysis of deviance table (`anova` with `test = "Chi"`) and the `summary` table. Is foot length a significant predictor of sex? (Remember the coefficients are on the logit scale.)
+6) **How good is your forensic tool?** Use the model to predict the probability of being male for everyone in the reference database (`predict` with `type = "response"`), classify each person as male if that probability is greater than 0.5, and compare your classification with their true sex. What proportion of people does your tool classify correctly?
+7) **The crime scene.** Use `predict` to estimate the probability (and its 95% confidence interval) that a person with a foot length of 271 mm is male. What is your conclusion, and how confident are you? Would this be strong enough evidence to present in court?
+8) A second, fainter print at the scene suggests a foot length of about 249 mm. Predict the probability of being male for this print too. Why is it much harder to draw a conclusion here? (Think about the foot length at which the probability of being male is 0.5.)
