@@ -42,6 +42,54 @@ Recognising and addressing these biases is essential for ensuring that insights 
 Once a representative sample is collected, the next step is often to explore and summarise the data to uncover patterns or relationships. Statistical distributions provide a framework for describing this variability and later for testing hypotheses about the population.
 
 
+## Probability, odds, and uncertainty
+
+Because we almost always work with a *sample* rather than the whole population, and because biological systems are inherently variable, nearly every conclusion we draw carries some **uncertainty**. A large part of statistics is simply the business of measuring and communicating that uncertainty honestly. The language we use to do this is **probability**.
+
+### Probability
+
+The **probability** of an event is a number between 0 and 1 that expresses how likely it is to happen. A probability of 0 means the event is impossible, a probability of 1 means it is certain, and values in between express intermediate degrees of likelihood (often written as percentages, so 0.25 = 25%). One useful way to think about probability is as a **long-run relative frequency**: if you could repeat something many times, the probability is the proportion of times the event would occur. If the probability that a particular skylark survives the winter is 0.7, then out of many such birds we would expect about 70% to survive.
+
+A helpful rule is that the probabilities of all possible mutually exclusive outcomes must add up to 1. So if the probability of survival is 0.7, the probability of *not* surviving must be \(1 - 0.7 = 0.3\).
+
+### Odds
+
+**Odds** are a different way of expressing the same information. Instead of comparing the number of "successes" to the total (as a probability does), odds compare the chance of an event happening to the chance of it *not* happening:
+
+\[
+\text{odds} = \frac{p}{1 - p}
+\]
+
+For example, a probability of 0.5 gives odds of \(0.5 / 0.5 = 1\) (you may have heard this called "evens", or "1 to 1"). A probability of 0.8 gives odds of \(0.8 / 0.2 = 4\) ("4 to 1"), and a probability of 0.2 gives odds of \(0.2 / 0.8 = 0.25\) ("1 to 4"). We can convert back again with \(p = \text{odds} / (1 + \text{odds})\).
+
+```{r 2-02-distributionsSummaryStats-odds}
+p <- c(0.2, 0.5, 0.7, 0.8)
+odds <- p / (1 - p)
+odds
+```
+
+Why bother with odds when probabilities seem more intuitive? The reason is that odds behave more conveniently for modelling. A probability is trapped between 0 and 1, but odds can take any value from 0 (an impossible event) up towards infinity (a near-certain one). If we then take the natural logarithm of the odds — the **log-odds**, or **logit** — we get a quantity that is symmetric around zero and can range from \(-\infty\) to \(+\infty\):
+
+\[
+\text{logit}(p) = \log\left(\frac{p}{1-p}\right)
+\]
+
+This unbounded scale is exactly what makes odds so useful: it is the foundation of **logistic regression** (a binomial GLM), which you will meet in the [chapter on other GLM families](https://jonesor.github.io/BB852_Book/extending-use-cases-of-glm.html). There, models are fitted on the log-odds scale and then back-transformed to probabilities, so it is worth becoming comfortable with the idea now.
+
+### Uncertainty and certainty
+
+Probability is the natural way to put a number on how *certain* or *uncertain* we are. When a forecaster says there is a 90% chance of rain, or when we later say we are "95% confident" that a mean lies within some range, these are all probability statements about our degree of certainty.
+
+A key idea running through the rest of this book is that we are almost never 100% certain about anything we estimate from a sample — but we *can* quantify how uncertain we are, and we can reduce that uncertainty by collecting more or better data. The tools you will meet later — **confidence intervals**, **p-values**, and **statistical power** — are all formal ways of expressing and managing this uncertainty. The law of large numbers, which we return to at the end of this chapter, captures the most important practical consequence: the more data we gather, the closer our sample estimates tend to get to the truth.
+
+### Probability density
+
+For outcomes we can count — heads or tails, the number on a die, the number of eggs in a nest — we can talk directly about the probability of each specific outcome. But for things we *measure* on a continuous scale — a wing length, a body mass, a temperature — the probability of getting any *exact* value (say, a wing length of precisely 95.0000… mm) is effectively zero, because there are infinitely many possible values.
+
+To describe continuous variables we therefore use **probability density** rather than probability directly. Density is not itself a probability; it is probability *per unit* of the measurement, arranged so that the **area** under the density curve between two values gives the probability of falling in that range, and the total area under the whole curve is exactly 1. This is precisely what the y-axis labelled "Density" means in the distribution plots that follow: where the curve is high, probability is concentrated; where it is low, outcomes are rare. In the normal-distribution figure shortly, the shaded bands (1 SD ≈ 68%, 2 SD ≈ 95%) are *areas* under the curve — and therefore probabilities.
+
+These ideas come to life once we look at whole **distributions** of outcomes, which we turn to now.
+
 ### Distributions
 
 A statistical distribution describes the relative frequency or probability of possible outcomes, either from observed data or a theoretical model, if repeated samples were taken or if the process occurred many times. Distributions are important because (1) they provide a framework for summarising and describing patterns in the data, and (2) they underpin assumptions in many statistical approaches. For example, some statistical analyses assume that **residuals** (the differences between observed and predicted values) follow a normal distribution.
