@@ -442,3 +442,18 @@ ggplot(smoke, aes(
   geom_point() +
   geom_segment(aes(xend = parentSmoke, y = ymin, yend = ymax))
 ```
+
+## Exercise: Sex and foot size
+
+The data set `morphometry.csv` contains measurements taken from 154 people. For each person the data record their `Sex` (`Male` or `Female`) and three body measurements in millimetres: `Height`, `HandLength` and `FootLength`.
+
+This is the "predicting sex from morphology" scenario mentioned at the start of the chapter. Your task is to use a binomial GLM (logistic regression) to ask whether, and how well, you can predict a person's sex from their foot length. The structure is a good parallel to the NFL field goals example: the response is binary (here `Male` vs. `Female`) and there is a single continuous predictor. Unlike the examples above, this one is *not* worked through for you - use the NFL example as your template and figure out the steps yourself. Ask for help if you get stuck.
+
+1) Import the data. The response variable needs to be binary (0/1), so create a new column that is `1` when the person is male and `0` when they are female (`ifelse` is one way to do this). You will therefore be modelling the *probability of being male*.
+2) Plot the data (`geom_jitter` works well here - remember to adjust the `height` and `alpha` arguments as in the NFL example).
+3) Fit an appropriate binomial GLM predicting your 0/1 variable from `FootLength`.
+4) Check the model using `DHARMa` (`simulateResiduals`). Does the binomial family look appropriate?
+5) Get the analysis of deviance table (`anova` with `test = "Chi"`). Is foot length a significant predictor of sex?
+6) Obtain the `summary` table. Remember that these coefficients are on the logit scale.
+7) Use `predict` to add the fitted probability (and its 95% confidence interval) to your plot, back-transforming to the natural scale with the inverse link function.
+8) At what foot length is a person equally likely to be male or female (i.e. the probability of being male is 0.5)?

@@ -862,6 +862,87 @@ A + geom_point(
 ```
 
 
+## Sex and foot size
+
+1. Import the data and create a binary (0/1) response for the probability of being male.
+
+```{r 6-1-00-AllSolutions-82}
+morph <- read.csv("CourseData/morphometry.csv") %>%
+  mutate(male = ifelse(Sex == "Male", 1, 0))
+head(morph)
+```
+
+2. Plot the data.
+
+```{r 6-1-00-AllSolutions-83,fig.width=5,fig.height=3,fig.align='center',message=FALSE}
+(A <- ggplot(morph, aes(x = FootLength, y = male)) +
+  geom_jitter(height = 0.05, alpha = 0.5))
+```
+
+3. Fit an appropriate binomial GLM.
+
+```{r 6-1-00-AllSolutions-84}
+morphMod <- glm(male ~ FootLength, data = morph, family = binomial)
+```
+
+4. Check the model using `DHARMa`. The points fall on the QQ diagonal and the residual-versus-predicted plot is a random star-field with no patterns, so the binomial family is appropriate.
+
+```{r 6-1-00-AllSolutions-85,fig.width=6,fig.height=4,fig.align='center',message=FALSE,warning=FALSE}
+library(DHARMa)
+sim_res <- simulateResiduals(fittedModel = morphMod)
+plot(sim_res)
+```
+
+5. Analysis of deviance table. This shows that foot length is a highly significant predictor of sex.
+
+```{r 6-1-00-AllSolutions-86}
+anova(morphMod, test = "Chi")
+```
+
+6. The coefficient summary (on the logit scale). The positive slope for `FootLength` shows that the probability of being male increases with foot length.
+
+```{r 6-1-00-AllSolutions-87}
+summary(morphMod)
+```
+
+7. Add the fitted probability and 95% confidence interval to the plot, back-transforming to the natural scale with the inverse link function.
+
+```{r 6-1-00-AllSolutions-88,fig.width=5,fig.height=3,fig.align='center',message=FALSE}
+# Dataset to predict FROM
+newData <- data.frame(FootLength = seq(190, 285, 1))
+
+# Predictions on the scale of the linear predictor (logit)
+pv <- predict(morphMod, newdata = newData, se.fit = TRUE)
+newData <- newData %>%
+  mutate(fit_LP = pv$fit) %>%
+  mutate(lowerCI_LP = pv$fit - 1.96 * pv$se.fit) %>%
+  mutate(upperCI_LP = pv$fit + 1.96 * pv$se.fit)
+
+# Back-transform to the natural (probability) scale
+inverseFunction <- family(morphMod)$linkinv
+newData <- newData %>%
+  mutate(
+    fit = inverseFunction(fit_LP),
+    lowerCI = inverseFunction(lowerCI_LP),
+    upperCI = inverseFunction(upperCI_LP)
+  )
+
+A + geom_ribbon(
+  data = newData, aes(x = FootLength, ymin = lowerCI, ymax = upperCI),
+  fill = "grey75", alpha = 0.5, inherit.aes = FALSE
+) +
+  geom_line(data = newData, aes(x = FootLength, y = fit))
+```
+
+8. At what foot length is a person equally likely to be male or female? You can read this from the plot, or filter the predicted values for a probability close to 0.5. This happens at a foot length of around 245-250 mm (roughly the midpoint between the average female and male foot lengths).
+
+```{r 6-1-00-AllSolutions-89}
+newData %>%
+  filter(fit < 0.55) %>%
+  filter(fit > 0.45) %>%
+  select(FootLength, fit)
+```
+
 ## Snails on the move
 
 Simulate a t-test-based analysis in R to figure out what sample size would result in 80% power.
