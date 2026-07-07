@@ -128,6 +128,17 @@ The text on the Q-Q plot reports the results of three tests: the KS test, Disper
 
 As you can see, the two plots, and the in-built tests, indicate that the model structure is appropriate: The observed and expected points fall on the QQ diagonal line and the residuals versus predicted values plot looks like a random star-field without any patterns.
 
+This example illustrates a general principle. **DHARMa is a reliable, general-purpose diagnostic tool for GLMs.** Because it works by simulation, it produces trustworthy residuals whatever the error family (binomial, Poisson, and so on) and whatever the structure of the data. The traditional `autoplot` diagnostics, by contrast, become less and less reliable as the response data become more discrete. They are perfectly readable for ordinary linear models and remain acceptable for GLMs with *aggregated* or high-count responses, but they can be very misleading for *binary* (0/1) data like the NFL field goals. The reason is that, for binary data, the residual at any given fitted value can only take one of two possible values, so the Q-Q plot looks alarming even when the model is perfectly appropriate — which is exactly what we saw with `autoplot(nflMod)` earlier.
+
+```{block 3-09-GLM-2-diagnostic-rule, type="do-something"}
+**Which diagnostic when?**
+
+- **`autoplot` (deviance residuals):** fine for ordinary linear models, and acceptable for GLMs with *aggregated* or high-count data (e.g. grouped binomial `cbind` data, or Poisson counts that are not dominated by zeros).
+- **`DHARMa` (simulated residuals):** reliable for *all* GLMs. Essential for *binary* (0/1) data, where `autoplot` cannot be trusted.
+
+When in doubt, use DHARMa. If `autoplot` and DHARMa agree, you can be confident; if they disagree, believe DHARMa.
+```
+
 ### Continuing the analysis
 
 
@@ -270,11 +281,19 @@ Now lets fit the model.
 modA <- glm(y ~ Temperature, data = hawksbill, family = binomial)
 ```
 
-As ever, we should take a quick look at the model diagnostic plots - these look OK.
+As ever, we should take a quick look at the model diagnostic plots. Note the important difference from the NFL example: these turtle data are *aggregated* binomial data (each row summarises many individual turtles via `cbind`), rather than binary 0/1 data. As explained in the "Which diagnostic when?" box above, this is exactly the situation where the traditional `autoplot` deviance-residual plots *are* trustworthy — and here they look fine.
 
 ```{r 3-09-GLM-2-otherFamilies-20, echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
 library(ggfortify)
 autoplot(modA)
+```
+
+To confirm this, we can also check the model with DHARMa. Unlike the NFL binary case — where `autoplot` and DHARMa disagreed, and DHARMa was the one to trust — here the two approaches *agree* that the model is appropriate. That agreement is reassuring, and it is exactly what we expect for aggregated binomial data.
+
+```{r 3-09-GLM-2-DHARMa-turtle, echo=TRUE,fig.width=6,fig.height=4,fig.align='center',message=FALSE,warning=FALSE}
+library(DHARMa)
+sim_res <- simulateResiduals(fittedModel = modA)
+plot(sim_res)
 ```
 
 Now we can look at the anova table. This will tell us what we already know - there is a strong effect of temperature on sex ratio.
