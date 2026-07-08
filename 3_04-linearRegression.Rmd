@@ -212,7 +212,7 @@ $$F = \frac{mESS}{mRSS}$$
 
 If the *explained variance* (mESS) is large compared to the *residual error variance* (mRSS), then F will be large. The size of F tells us how likely or unlikely it is that the null hypothesis is true. When F is large, the probability that the slope is significantly different from 0 is high. To obtain the actual probabilities, the F-value must be compared to a theoretical distribution which depends on the two degrees of freedom (explained and residual d.f.). Once upon a time you would have looked this up in a printed table, but now R makes this very straightforward.
 
-```{r 3-04-linearRegression-4, echo=FALSE,fig.width=8,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
+```{r 3-04-linearRegression-4, echo=FALSE,fig.width=6.5,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
 morph <- read.csv("CourseData/morphometry.csv") %>%
   mutate(Height = Height / 10, HandLength = HandLength / 10)
 

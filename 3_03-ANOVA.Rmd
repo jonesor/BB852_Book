@@ -210,7 +210,7 @@ summary(foam_mod2)
 Now the coefficients in the model summary look different, but the model is actually the same. Compare the two graphs in Figure \@ref(fig:3-03-ANOVA-14) - can you see the differences/similarities?
 
 
-```{r 3-03-ANOVA-14, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.",cache=TRUE}
+```{r 3-03-ANOVA-14, echo=FALSE,fig.width=6.5,fig.height=3,fig.align='center', fig.cap="Comparison illustrating the difference between ANOVA models using (A) BM and (B) HIP as references in the espresso foam data set.",cache=TRUE}
 set.seed(31)
 
 temp <- data.frame(
@@ -306,7 +306,7 @@ The difference between those values is called the *Treatment Sum of Squares (SST
 If that doesn't make sense yet, picture the case where the treatment-specific means are all very similar, and are therefore very close to the overall mean. Now the difference between the *Total Sum of Squares* and the *Error Sum of Squares* will be small. Sketch out a couple of examples with pen on paper if that helps. You should now see that you can investigate differences among means by looking at variation.
 
 
-```{r 3-03-ANOVA-18, echo=FALSE,fig.width=8,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
+```{r 3-03-ANOVA-18, echo=FALSE,fig.width=6.5,fig.height=3,fig.align='center', message = FALSE, fig.cap="The relative size of the squared residual errors from the overall mean (SSTotal) (A) and from the treatment-specific means (SSError) (B) tell us about the importance of the treatment variable. The difference between the two values is the \"treatment sum of squares\".", fig.pos = "ht"}
 overallMean <- espresso %>%
   summarise(overallMean = mean(foamIndx)) %>%
   pull()
