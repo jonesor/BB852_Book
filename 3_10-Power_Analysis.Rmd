@@ -165,9 +165,13 @@ The power has increased to `r (sum(powerResults<0.05)/1000)*100`%.
 Simulation can be a powerful tool to help design and understand the results of hypothesis-based studies. The example above focuses on data that are normally distributed and where the test involved is a t-test. However, the same principles apply for other types of data. One can adapt the approach to use different distributions e.g. `rpois` for Poisson or `rbinom` for binomial. One can also alter the tests being done. This case study used a `t.test` but one could alternatively simulate the results of other ordinary linear models with `lm` or GLMs with `glm`.
 
 
-## Power for other data types: a binomial example
+## Power for other models
 
-The simulation approach is not limited to t-tests and normally distributed data. Because we are simply generating fake data and running the analysis many times, we can use *any* combination of data type and test. To illustrate, here is the same idea applied to **binary (survival) data** analysed with a binomial GLM — exactly the kind of model you met in the GLM chapters.
+The simulation approach is not limited to t-tests and normally distributed data. Because we are simply generating fake data and running the analysis many times, we can use *any* combination of data type and test — we just change the function that generates the data and the model we fit. Here are two more examples: one for a binomial GLM, and one for linear regression.
+
+### A binomial GLM
+
+To illustrate, here is the same idea applied to **binary (survival) data** analysed with a binomial GLM — exactly the kind of model you met in the GLM chapters.
 
 Imagine we are planning an experiment to test whether a treatment improves survival. Suppose that, without treatment, half of the individuals survive (a probability of 0.5), and we would like to be able to detect an increase to 0.7. Instead of drawing from a normal distribution with `rnorm`, we now generate 0/1 survival data with `rbinom`, fit a binomial GLM, and extract the p-value for the treatment effect:
 
@@ -194,6 +198,51 @@ powerResults <- replicate(1000, {
 ```
 
 At 40 individuals per group the power is about `r round(sum(powerResults<0.05)/10)`% — well short of the usual 80% target. Binary (0/1) outcomes carry less information than continuous measurements, so you typically need larger samples to detect a difference in *proportions* than a difference in means. Just as with the t-test example, you could now increase `sampleSize` until the power reaches your target. The important message is that the *recipe* stays the same whatever the data: simulate data, run the test, and count how often it is significant. Only the random-number function (`rnorm`, `rbinom`, `rpois`, …) and the choice of test need to change.
+
+### A linear regression
+
+We can do exactly the same for a **linear regression**. Imagine we are planning a study to detect how a response (say, body size) changes with a continuous predictor (say, temperature). We expect a slope of about 2 units per degree, with a fair amount of scatter around the line (a residual standard deviation of 12), and we can afford to measure 30 individuals. As before, we simulate data that match these expectations, fit the model with `lm`, and extract the p-value for the slope:
+
+```{r 3-10-Power-Analysis-lm-narrow, echo=-1, cache=TRUE}
+set.seed(123)
+slope <- 2 # change in y per unit x that we hope to detect
+intercept <- 20
+residualSD <- 12 # scatter around the line
+sampleSize <- 30
+
+# predictor values, sampled over a fairly narrow range
+x <- seq(11, 19, length.out = sampleSize)
+
+powerResults <- replicate(1000, {
+  y <- intercept + slope * x + rnorm(sampleSize, 0, residualSD)
+  mod <- lm(y ~ x)
+  summary(mod)$coefficients["x", "Pr(>|t|)"]
+})
+
+(sum(powerResults < 0.05) / 1000) * 100
+```
+
+This gives a power of about `r round(sum(powerResults<0.05)/10)`% — so with this design we would miss a real effect a fair fraction of the time.
+
+So far this is just the familiar recipe. But regression has an extra lever that the t-test does not, and it is easy to miss. **The power to detect a slope also depends on how widely you spread your predictor values.** Keeping the slope, the noise, and the sample size *exactly* the same, watch what happens if we sample `x` across a much wider range:
+
+```{r 3-10-Power-Analysis-lm-wide, echo=-1, cache=TRUE}
+set.seed(123)
+# EXACTLY the same study, but x spread over a much wider range
+x <- seq(5, 25, length.out = sampleSize)
+
+powerResults <- replicate(1000, {
+  y <- intercept + slope * x + rnorm(sampleSize, 0, residualSD)
+  mod <- lm(y ~ x)
+  summary(mod)$coefficients["x", "Pr(>|t|)"]
+})
+
+(sum(powerResults < 0.05) / 1000) * 100
+```
+
+The power jumps to about `r round(sum(powerResults<0.05)/10)`%, even though the slope, the residual noise, and the sample size are unchanged. A slope is estimated more precisely when the predictor is spread out: the wider the range of `x`, the more leverage the data have to pin down the line.
+
+This is a genuinely useful design principle. Whenever you have control over your predictor — experimental doses, incubation temperatures, sites along an environmental gradient — you will get more power for the same effort by spreading those values across a wide range rather than clustering them in the middle. (The caveat is that this assumes the relationship really *is* linear across that range; spreading `x` so far that the relationship starts to curve would create a different problem.)
 
 ## Extending the simulation (optional, advanced)
 
