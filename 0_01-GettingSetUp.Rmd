@@ -40,26 +40,29 @@ You install **both**, but once they are installed you only ever open **RStudio**
 
 ## Installing R and RStudio
 
-**What we're about to do:** Get both programs onto your computer, in the right order.
+**What we're about to do:** Get both programs onto your computer, in the right order. There are **two separate downloads, from two different websites**.
 
-The easiest route is the Posit download page, which lays the process out as two numbered steps:
+**Step 1 — Install R (from CRAN).** Go to the official R website, CRAN, at <https://cran.r-project.org>. In the "Download and Install R" box at the top, choose the download for your operating system — **Download R for Windows** or **Download R for macOS** — then run the installer and accept the default options.
 
-<https://posit.co/download/rstudio-desktop/>
+```{r 0-01-getting-set-up-cran, echo=FALSE, out.width="95%", fig.cap="Downloading R from CRAN: use the \"Download and Install R\" box at the top of the page."}
+knitr::include_graphics("assets/CRAN_R_install.png")
+```
 
-1. **Install R first.** Follow the "Install R" link on that page (it takes you to CRAN, the official R website at <https://cran.r-project.org>). Choose the version for your operating system (Windows or macOS), download it, and run the installer, accepting the default options.
-2. **Then install RStudio Desktop** (the free version). Download the installer from the same page, run it, and again accept the defaults.
+**Step 2 — Install RStudio Desktop (from Posit).** Go to <https://posit.co/download/rstudio-desktop/> and download the **RStudio Desktop** installer — the free, open-source version — for your operating system. Run it and again accept the defaults.
+
+```{r 0-01-getting-set-up-rstudio-dl, echo=FALSE, out.width="95%", fig.cap="Downloading RStudio Desktop from Posit: choose the installer for your operating system."}
+knitr::include_graphics("assets/POSIT_R_Studio_install.png")
+```
 
 Install R **before** RStudio, so that RStudio can find it.
 
 ```{block 0-01-getting-set-up-2, type="do-something"}
-**Do this now:** Install R, then RStudio, then open **RStudio** (not R). You should see a window divided into panes, described next.
+**Do this now:** Install R (from CRAN), then RStudio (from Posit), then open **RStudio** (not R). You should see a window divided into panes, described next.
 ```
 
 **Common mistake:** Opening "R" (a very plain window) instead of "RStudio". If the program you opened looks bare and old-fashioned, close it and open RStudio instead.
 
-<!-- Screenshot suggestion: the Posit download page showing the two numbered steps (Install R, Install RStudio). -->
-
-**Takeaway:** R first, then RStudio; then only ever open RStudio.
+**Takeaway:** R first (from CRAN), then RStudio (from Posit); then only ever open RStudio.
 
 ---
 
@@ -74,7 +77,9 @@ When you open RStudio you will see up to four panes. (You may see only three at 
 - **Environment / History (top-right):** lists the **objects** (data sets, variables) currently loaded in R's memory.
 - **Files / Plots / Packages / Help (bottom-right):** browse files on your computer, view **plots**, manage installed **packages**, and read **help** pages.
 
-<!-- Screenshot suggestion: an annotated RStudio window labelling the four panes. -->
+```{r 0-01-getting-set-up-panes, echo=FALSE, out.width="100%", fig.cap="The four panes of the RStudio window."}
+knitr::include_graphics("assets/RStudio.png")
+```
 
 ```{block 0-01-getting-set-up-3, type="do-something"}
 **Try this:** Click in the **Console**, type `1 + 1`, and press Enter. You should see the answer appear. Congratulations — R is working.
