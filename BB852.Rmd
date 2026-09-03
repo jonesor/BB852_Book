@@ -209,7 +209,7 @@ It is worth being clear about this from the start, because it confuses almost ev
 - **R** is the programming *language* and the engine that does the actual computing. On its own it is not much to look at.
 - **RStudio** is a separate, much friendlier program — an "integrated development environment" (IDE) — that sits on top of R and makes it pleasant to use: somewhere to write scripts, run code, and see your results and plots side by side.
 
-You install **both**, but once they are installed you only ever open **RStudio** — it starts R for you behind the scenes.
+You install **both**, but for this course you will normally open **RStudio** — it starts R for you behind the scenes.
 
 **Takeaway:** Install R *and* RStudio; work in RStudio.
 
@@ -217,7 +217,7 @@ You install **both**, but once they are installed you only ever open **RStudio**
 
 ## Installing R and RStudio
 
-**What we're about to do:** Get both programs onto your computer, in the right order. There are **two separate downloads, from two different websites**.
+**What we're about to do:** Get both programs onto your computer. There are **two separate downloads from two different websites**.
 
 **Step 1 — Install R (from CRAN).** Go to the official R website, CRAN, at <https://cran.r-project.org>. In the "Download and Install R" box at the top, choose the download for your operating system — **Download R for Windows** or **Download R for macOS** — then run the installer and accept the default options.
 
@@ -231,7 +231,7 @@ knitr::include_graphics("assets/CRAN_R_install.png")
 knitr::include_graphics("assets/POSIT_R_Studio_install.png")
 ```
 
-Install R **before** RStudio, so that RStudio can find it.
+Install R **before** opening RStudio for the first time, so that RStudio can find it.
 
 ```{block 0-01-getting-set-up-2, type="do-something"}
 **Do this now:** Install R (from CRAN), then RStudio (from Posit), then open **RStudio** (not R). You should see a window divided into panes, described next.
@@ -239,7 +239,7 @@ Install R **before** RStudio, so that RStudio can find it.
 
 **Common mistake:** Opening "R" (a very plain window) instead of "RStudio". If the program you opened looks bare and old-fashioned, close it and open RStudio instead.
 
-**Takeaway:** R first (from CRAN), then RStudio (from Posit); then only ever open RStudio.
+**Takeaway:** R comes from CRAN and RStudio comes from Posit. For this course, you will normally work in RStudio.
 
 ---
 
@@ -275,9 +275,9 @@ Almost every example in this book reads a data file from a folder called `Course
 1. **Download the data** from the course Dropbox folder:
    [https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0](https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0). Dropbox lets you download the whole folder as a single `.zip` file.
 2. **Unzip it.** This gives you a folder called `CourseData` containing many `.csv` files.
-3. **Put it in your project folder.** Move the `CourseData` folder inside the course project folder you will create in the *Paths and projects* chapter (the folder that contains your `.Rproj` file).
+3. **Create a course folder.** Create a folder called `BB852` somewhere sensible, such as your Documents folder, and move `CourseData` into it. In the next chapter, you will turn `BB852` into an RStudio Project.
 
-Once it is there, and you are working inside your RStudio Project, a command like this will just work — no long file paths required:
+After you create the RStudio Project in the next chapter, a command like this will work without a long file path:
 
 ```{r 0-01-getting-set-up-4, eval = FALSE}
 carni <- read.csv("CourseData/carnivora.csv")
@@ -298,16 +298,16 @@ carni <- read.csv("CourseData/carnivora.csv")
 ## Common pitfalls recap
 
 - Opening R instead of RStudio.
-- Installing RStudio before R.
+- Installing only R or only RStudio, rather than installing both.
 - Downloading the data but leaving it in your Downloads folder, so R cannot find it.
 
-## Mini-project
+## Try this
 
 1. Install R and RStudio, and open RStudio.
 2. In the Console, type `1 + 1` and then `R.version.string`, pressing Enter after each.
-3. Download and unzip the course data, ready to move into your project folder in the next chapters.
+3. Download and unzip the course data, then put `CourseData` inside a folder called `BB852`.
 
-You are now ready to set up a tidy project (see the *Paths and projects* chapter) and start learning R (see *An R refresher*).
+You are now ready to turn the `BB852` folder into an RStudio Project in the next chapter.
 
 <!--chapter:end:0_01-GettingSetUp.Rmd-->
 
@@ -336,13 +336,13 @@ By the end of this chapter you should be able to:
 
 **Prerequisites**
 
-- You can create and save an R script in RStudio.
+- You have installed R and RStudio and created the `BB852` folder described in the previous chapter.
 
 **A tiny motivating example**
 
-If your project is organised, this will work on any computer:
+If the same project structure is present, this will work on any computer:
 
-```{r 0-05-PathsAndProjects-1, eval = FALSE}
+```{r 0-02-PathsAndProjects-1, eval = FALSE}
 read.csv("CourseData/carnivora.csv")
 ```
 
@@ -359,7 +359,7 @@ A file path is the address of a file on your computer. There are two types.
 These start from the root of your computer:
 
 - Windows: `C:/Users/YourName/Documents/Project/myData.csv`
-- Mac: `/Users/YourName/Documents/Project/myData.csv`
+- macOS: `/Users/YourName/Documents/Project/myData.csv`
 
 **Why this is a problem:** Absolute paths are different on every computer, so shared code breaks.
 
@@ -383,14 +383,14 @@ An RStudio Project creates a `.Rproj` file and sets the project folder as the wo
 
 ### How to create a project
 
-1. Create a folder for the course (e.g., `BB852`).
+1. Use the `BB852` folder you created in the previous chapter. If you have not yet created it, do that now.
 2. In RStudio, go to `File > New Project`.
 3. Choose **Existing Directory** and select your folder.
 4. Click **Create Project**.
 
 From now on, open the `.Rproj` file to work on this course. You do not need to use `setwd()` in your scripts.
 
-**Common mistake:** Calling `setwd()` inside scripts. It works on your machine but fails for others.
+**Common mistake:** Calling `setwd()` inside scripts. A path that works on your machine will often fail on somebody else's.
 
 **Takeaway:** RStudio Projects keep your paths stable and your work reproducible.
 
@@ -412,21 +412,21 @@ Keep your project tidy:
 ## Key takeaways
 
 - Relative paths make your code shareable.
-- RStudio Projects fix the working directory automatically.
+- RStudio Projects set the working directory automatically.
 - A simple folder structure saves time and confusion.
 
 ## Common pitfalls recap
 
 - Using absolute paths in scripts.
-- Changing the working directory with `setwd()` and forgetting to undo it.
+- Using `setwd()` so that a script depends on a machine-specific location.
 - Saving data and scripts in the same messy folder.
 
-## Mini‑project
+## Try this
 
 Create a new project folder with the structure above, then:
 
-1. Put a CSV file in `CourseData/`.
-2. Import it using a relative path.
+1. Check that `carnivora.csv` is in `CourseData/`.
+2. Import it using `read.csv("CourseData/carnivora.csv")`.
 3. Write one sentence explaining why the relative path is better than the absolute one.
 
 <!--chapter:end:0_02-PathsAndProjects.Rmd-->
@@ -453,12 +453,12 @@ By the end of this chapter you should be able to:
 - Use RStudio to run code from scripts.
 - Create and inspect basic objects in R.
 - Work with vectors and data frames.
-- Import a CSV file using tidyverse tools.
+- Import a CSV file using a relative path.
 - Make simple plots and summaries.
 
 **Prerequisites**
 
-- You have R and RStudio installed.
+- You have R and RStudio installed and have created the course project described in the previous chapter.
 
 **A tiny motivating example**
 
@@ -466,13 +466,11 @@ Let’s make a tiny plot so we know everything is working.
 
 ```{r 0-03-An-R-Refresher-1, message=FALSE}
 
-bodylength <- c(4.2, 5.1, 5.6, 6.8, 7.4)
-bodymass <- c(9.5, 12.1, 14.0, 18.2, 21.5)
+body_length <- c(4.2, 5.1, 5.6, 6.8, 7.4)
+body_mass <- c(9.5, 12.1, 14.0, 18.2, 21.5)
 
-plot(bodylength,bodymass)
+plot(body_length, body_mass)
 ```
-
-**What just happened:** Each point is an individual. This matters because almost every plot in this course follows the same pattern: **data + aesthetics + geom**.
 
 **Try this:** Change one value and re-run. What changes on the plot?
 
@@ -560,22 +558,22 @@ x <- 4
 x
 ```
 
-Vectors are simple sequences of values.
+Vectors are sequences of values of the same basic type, such as numbers or text.
 
 ```{r 0-03-An-R-Refresher-8}
 A <- 1:5
 B <- c(1, 3, 6, 1, 7, 9)
-C <- seq(1, 12, 2)
-D <- seq(1, 5, 0.1)
+C <- seq(from = 1, to = 12, by = 2)
+D <- seq(from = 1, to = 5, by = 0.1)
 E <- rep(c("Male", "Female"), each = 3)
-G <- rep(c("Male", "Female"), c(2, 4))
+F <- rep(c("Male", "Female"), times = c(2, 4))
 ```
 
 ```{block 0-03-An-R-Refresher-9, type="do-something"}
 Try changing `seq()` or `rep()` arguments. What changes?
 ```
 
-**Common mistake:** Forgetting `c()` when creating a list of values.
+**Common mistake:** Forgetting `c()` when creating a vector of values.
 
 **Takeaway:** Vectors are the building blocks of most data in R.
 
@@ -594,7 +592,7 @@ B * c(1, 2, 3, 4, 5, 6)
 A / B
 ```
 
-**What just happened:** R works element-by-element when vector lengths match.
+**What just happened:** R works element-by-element when vector lengths match. In the final calculation, `A` has five values but `B` has six. R recycles the shorter vector and produces a warning. Do not ignore this warning: unequal vector lengths usually indicate a mistake.
 
 **Takeaway:** Vectorised operations are fast and convenient.
 
@@ -616,7 +614,9 @@ mean(c(1, 3, 6, 1, 7, 9, NA), na.rm = TRUE)
 Inf - Inf
 ```
 
-**Takeaway:** Use `na.rm = TRUE` when you want to ignore missing values.
+`Inf` and `-Inf` represent positive and negative infinity. `NaN` means "not a number" and appears when a calculation has no defined numerical result. `NA` instead represents a missing value.
+
+**Takeaway:** Use `na.rm = TRUE` when you deliberately want a function to ignore missing values, and pay attention to non-finite results such as `Inf` and `NaN`.
 
 ---
 
@@ -663,7 +663,7 @@ class(sex)
 class(mydata)
 ```
 
-Some functions need categorical data to be factors:
+Factors tell R that a variable represents categories and record the possible category levels. Some plotting and modelling functions use this information:
 
 ```{r 0-03-An-R-Refresher-17, eval = FALSE}
 plot(mydata$sex, mydata$age)
@@ -678,7 +678,7 @@ mydata$sex <- as.factor(mydata$sex)
 str(mydata)
 ```
 
-**Common mistake:** Forgetting to convert characters to factors for categorical plots.
+**Common mistake:** Leaving a categorical variable as character data when a function expects a factor.
 
 **Takeaway:** Use factors for categorical variables when needed.
 
@@ -693,7 +693,7 @@ Keep your data in a `CourseData` folder inside your project. We will use **relat
 There are two common ways to read a CSV file into R, and you will come across both:
 
 - **`read.csv()`** comes with base R. It returns a `data.frame` and, with `stringsAsFactors = TRUE`, turns text columns into **factors** — which is convenient for the statistics later in the course.
-- **`read_csv()`** comes from the `readr` package (part of the tidyverse). It is a little faster, prints a short summary of the column types it guessed, and returns a *tibble* (a modern data frame). It leaves text columns as character.
+- **`read_csv()`** comes from the `readr` package (part of the tidyverse, which we cover later). It is a little faster, prints a short summary of the column types it guessed, and returns a *tibble* (a modern data frame). It leaves text columns as character.
 
 Both work well and you will see both in other people's code. **To keep things consistent, this book uses `read.csv()` from here on.**
 
@@ -749,7 +749,7 @@ tapply(carni$FW, carni$Family, mean, na.rm = TRUE)
 
 ## Basic plotting
 
-```{r 0-03-An-R-Refresher-25, fig.cap=('A simple scatter plot'), fig.show=('asis')}
+```{r 0-03-An-R-Refresher-25, fig.cap='A simple scatter plot', fig.show='asis'}
 plot(log(carni$FW), log(carni$GL))
 ```
 
@@ -761,29 +761,12 @@ plot(log(carni$FW), log(carni$GL))
 
 **Try this:** Remove the log and compare the shape.
 
----
-
-## R packages
-
-Packages extend base R. Install once, then load each session.
-
-```{r 0-03-An-R-Refresher-26, eval=FALSE}
-install.packages("tidyverse")
-```
-
-```{r 0-03-An-R-Refresher-27}
-library(tidyverse)
-```
-
-```{block 0-03-An-R-Refresher-28, type="do-something"}
-Add your `library(...)` calls at the top of scripts so your code runs every time.
-```
 
 ---
 
 ## Exercise: Californian bird diversity
 
-Surveys on bird abundances were carried out near Oakland, California.^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.] The locations were of different ages, which lets us ask how species richness changes through time.
+Surveys of bird abundance were carried out near Oakland, California.^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. *Journal of Biogeography*, 3(2), 157–165.] The locations were developed in different years, which lets us ask how species richness varies with the age of a suburb.
 
 ### The data
 
@@ -793,23 +776,23 @@ The file is `suburbanBirds.csv`. Columns: `Name`, `Year`, `HabitatIndex`, `nIndi
 
 **Level 1 (warm-up)**
 
-1. Import the data and check the columns with `str()`.
+1. Import the data as an object called `birds`, then check the columns with `str()`.
    **Checkpoint:** You should see the five columns listed above.
 
 2. Calculate the mean, minimum, and maximum of `nSpecies`.
-   **Checkpoint:** You should get three numbers.
+   **Checkpoint:** The values should be approximately 9.65, 3, and 15, respectively.
 
 **Level 2 (practice)**
 
-3. Create a new column `Age = 1975 - Year` and check it looks sensible.
+3. Create a new column with `birds$Age <- 1975 - birds$Year` and check that it looks sensible.
    **Checkpoint:** Younger suburbs have smaller `Age` values.
 
-4. Plot `Age` vs `nSpecies` with `plot()`.
+4. Plot `Age` against `nSpecies` with `plot(birds$Age, birds$nSpecies)`.
    **Checkpoint:** The x-axis is age and the y-axis is species richness.
 
 **Level 3 (extension)**
 
-5. Re-plot with a smoother (e.g. `lines(lowess(Age, nSpecies))`). Does it change your interpretation?
+5. Add a smoother with `lines(lowess(birds$Age, birds$nSpecies))`. Does it change your interpretation?
 
 **Hint:** If your plot is empty, check your column names with `names()`.
 
@@ -820,7 +803,7 @@ The file is `suburbanBirds.csv`. Columns: `Name`, `Year`, `HabitatIndex`, `nIndi
 - Use scripts for reproducible work.
 - Vectors and data frames are the core data types.
 - `read.csv()` imports CSV files; `read_csv()` is the tidyverse alternative.
-- Check classes with `str()` and convert to `factor()` when needed.
+- Check classes with `str()` and convert categorical variables to factors when needed.
 - Always inspect your data before analysing it.
 
 ## Common pitfalls recap
@@ -828,16 +811,6 @@ The file is `suburbanBirds.csv`. Columns: `Name`, `Year`, `HabitatIndex`, `nIndi
 - Running code only in the console.
 - File paths that point to the wrong folder.
 - Treating categories as numbers or characters when they should be factors.
-
-## Mini-project
-
-Pick one dataset from `CourseData` and write a short script that:
-
-1. Imports the data.
-2. Summarises one column with `summary()`.
-3. Produces a simple plot.
-
-Write 3–4 sentences describing what you found.
 
 <!--chapter:end:0_03-An_R_Refresher.Rmd-->
 
@@ -877,7 +850,7 @@ Here is a small quality‑of‑life improvement you can apply immediately:
 options(scipen = 999)
 ```
 
-This tells R to avoid scientific notation when printing numbers.
+This strongly discourages R from using scientific notation when printing numbers.
 
 ---
 
@@ -885,9 +858,9 @@ This tells R to avoid scientific notation when printing numbers.
 
 **What we’re about to do:** Make RStudio easier to read.
 
-You can change the appearance in **Tools > Options** (Windows) or **RStudio > Preferences** (Mac). The **Appearance** tab lets you change theme and font.
+You can change the appearance under **Tools > Global Options > Appearance** (Windows and Linux) or **RStudio > Preferences > Appearance** (macOS). There you can change the theme and font.
 
-- Use a **monospace** font (e.g., *Menlo*, *Courier*, *Lucida Console*).
+- Use a **monospace** font (e.g., *Source Code Pro*, *Menlo*, or *Consolas*).
 - Increase font size if you are squinting.
 
 **Takeaway:** A readable setup reduces mistakes and fatigue.
@@ -898,12 +871,14 @@ You can change the appearance in **Tools > Options** (Windows) or **RStudio > Pr
 
 **What we’re about to do:** Learn the shortcuts you will use every session.
 
-- Run current line/selection: `Ctrl+Enter` (Mac: `Cmd+Enter`)
-- Run from start to current line: `Ctrl+Alt+B` (Mac: `Cmd+Option+B`)
-- Comment/uncomment: `Ctrl+Shift+C`
-- Find in files: `Ctrl+Shift+F`
-- Auto‑complete: type, then use arrows + Enter
-- Insert pipe `%>%`: `Ctrl+Shift+M` (Mac: `Cmd+Shift+M`)
+- Run current line/selection: `Ctrl+Enter` (macOS: `Cmd+Enter`)
+- Run from start to current line: `Ctrl+Alt+B` (macOS: `Cmd+Option+B`)
+- Comment/uncomment: `Ctrl+Shift+C` (macOS: `Cmd+Shift+C`)
+- Find in files: `Ctrl+Shift+F` (macOS: `Cmd+Shift+F`)
+- Auto-complete: start typing, then press `Tab`
+- Insert the pipe operator `|>`: `Ctrl+Shift+M` (macOS: `Cmd+Shift+M`)
+
+This course uses R's native pipe, `|>`. You may also encounter the older `%>%` pipe in other code. For everything we do in this course, you can treat them as equivalent. Their differences matter only in more specialised code. If the shortcut inserts `%>%`, change the pipe setting under **Tools > Global Options > Code > Editing** (Windows and Linux) or **RStudio > Preferences > Code > Editing** (macOS).
 
 **Try this:** Use `Ctrl+Shift+C` to comment out a block, then toggle it back.
 
@@ -931,15 +906,15 @@ If you want a full guide, the tidyverse style guide is excellent: <https://style
 
 **What we’re about to do:** Save plots cleanly.
 
-Plots appear in the **Plots** pane (usually bottom right). Use the back/forward arrows to browse old plots. Use **Export** to save a plot.
+Plots appear in the **Plots** pane (usually bottom right). Use the back/forward arrows to browse old plots and **Export** to save one. In the export window, choose suitable dimensions and check the preview before saving.
 
-**Common mistake:** Exporting before resizing. If your plot looks cramped, resize the plot pane first.
+**Common mistake:** Exporting a plot without checking its dimensions. A plot that looks fine in the pane may become cramped when saved at a different size.
 
 ---
 
 ## Tables
 
-If you create a summary table, save it to CSV and open in Excel or Word.
+If you need to use a summary table outside R, save it as a CSV file and open it in spreadsheet software such as Excel.
 
 ```{r 0-04-Tips-and-Tricks-2, eval = FALSE}
 write.csv(my_table, file = "example.csv", row.names = FALSE)
@@ -952,7 +927,7 @@ write.csv(my_table, file = "example.csv", row.names = FALSE)
 **What we’re about to do:** Avoid the most common import errors.
 
 - **Everything in one column?** You probably used the wrong delimiter.
-- **Weird symbols?** Open the file in a text editor and inspect it.
+- **Unexpected symbols?** The file may use a different text encoding. Inspect it in a text editor and check how it was saved.
 
 **Sanity checks:**
 
@@ -968,6 +943,7 @@ write.csv(my_table, file = "example.csv", row.names = FALSE)
 
 - Make RStudio comfortable and readable.
 - Learn a few shortcuts and use them daily.
+- Use `Ctrl+Shift+M` (macOS: `Cmd+Shift+M`) to insert `|>`.
 - Export plots and tables deliberately.
 - Always check imported data.
 
@@ -976,14 +952,6 @@ write.csv(my_table, file = "example.csv", row.names = FALSE)
 - Forgetting to check the delimiter when importing.
 - Using non‑monospace fonts that misalign code.
 - Skipping basic checks after import.
-
-## Mini‑project
-
-Pick one dataset you have imported and:
-
-1. Check it with `str()` and `summary()`.
-2. Save a small summary table to CSV.
-3. Export one plot and write a sentence describing it.
 
 <!--chapter:end:0_04-Tips_and_Tricks.Rmd-->
 
@@ -1009,7 +977,7 @@ These readings and websites give helpful background, examples, and visual inspir
 ## Papers and chapters
 
 - Broman, K. W., & Woo, K. H. (2018). *Data Organization in Spreadsheets*. The American Statistician, 72(1), 2–10.
-- Gotelli, N. J., & Ellison, A. M. (2013). Chapter 4, *Framing and Testing Hypotheses*, in *A Primer of Ecological Statistics*. Sinauer.
+- Gotelli, N. J., & Ellison, A. M. (2013). Chapter 4, *Framing and Testing Hypotheses*, in *A Primer of Ecological Statistics* (2nd ed.). Sinauer.
 - Petchey, O., Beckerman, A., & Childs, D. (2009). *Shock and Awe by Statistical Software - Why R?* Bulletin of the British Ecological Society, 40(4), 55–58.
 - Weissgerber, T. L., Milic, N. M., Winham, S. J., & Garovic, V. D. (2015). Beyond bar and line graphs: time for a new data presentation paradigm. *PLoS Biology*, 13(4), e1002128. doi: [10.1371/journal.pbio.1002128](https://doi.org/10.1371/journal.pbio.1002128)
 - Wickham, H. (2014). *Tidy Data*. Journal of Statistical Software, 59(10), 1–23.
@@ -1017,8 +985,8 @@ These readings and websites give helpful background, examples, and visual inspir
 ## Useful websites
 
 - The R Graph Gallery: [https://www.r-graph-gallery.com/](https://www.r-graph-gallery.com/)
-- STHDA ggplot2 essentials: [http://www.sthda.com/english/wiki/ggplot2-essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
-- STHDA R basics: [http://www.sthda.com/english/wiki/r-basics-quick-and-easy](http://www.sthda.com/english/wiki/r-basics-quick-and-easy)
+- Datanovia ggplot2 tutorials: [https://www.datanovia.com/learn/data-visualization/ggplot2/](https://www.datanovia.com/learn/data-visualization/ggplot2/)
+- Datanovia R foundations: [https://www.datanovia.com/learn/programming/r-foundations/](https://www.datanovia.com/learn/programming/r-foundations/)
 
 **Tip:** Pick one reading and one website and spend 30 minutes exploring. A little browsing goes a long way.
 

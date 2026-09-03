@@ -21,7 +21,7 @@ Here is a small quality‑of‑life improvement you can apply immediately:
 options(scipen = 999)
 ```
 
-This tells R to avoid scientific notation when printing numbers.
+This strongly discourages R from using scientific notation when printing numbers.
 
 ---
 
@@ -29,9 +29,9 @@ This tells R to avoid scientific notation when printing numbers.
 
 **What we’re about to do:** Make RStudio easier to read.
 
-You can change the appearance in **Tools > Options** (Windows) or **RStudio > Preferences** (Mac). The **Appearance** tab lets you change theme and font.
+You can change the appearance under **Tools > Global Options > Appearance** (Windows and Linux) or **RStudio > Preferences > Appearance** (macOS). There you can change the theme and font.
 
-- Use a **monospace** font (e.g., *Menlo*, *Courier*, *Lucida Console*).
+- Use a **monospace** font (e.g., *Source Code Pro*, *Menlo*, or *Consolas*).
 - Increase font size if you are squinting.
 
 **Takeaway:** A readable setup reduces mistakes and fatigue.
@@ -42,12 +42,14 @@ You can change the appearance in **Tools > Options** (Windows) or **RStudio > Pr
 
 **What we’re about to do:** Learn the shortcuts you will use every session.
 
-- Run current line/selection: `Ctrl+Enter` (Mac: `Cmd+Enter`)
-- Run from start to current line: `Ctrl+Alt+B` (Mac: `Cmd+Option+B`)
-- Comment/uncomment: `Ctrl+Shift+C`
-- Find in files: `Ctrl+Shift+F`
-- Auto‑complete: type, then use arrows + Enter
-- Insert pipe `%>%`: `Ctrl+Shift+M` (Mac: `Cmd+Shift+M`)
+- Run current line/selection: `Ctrl+Enter` (macOS: `Cmd+Enter`)
+- Run from start to current line: `Ctrl+Alt+B` (macOS: `Cmd+Option+B`)
+- Comment/uncomment: `Ctrl+Shift+C` (macOS: `Cmd+Shift+C`)
+- Find in files: `Ctrl+Shift+F` (macOS: `Cmd+Shift+F`)
+- Auto-complete: start typing, then press `Tab`
+- Insert the pipe operator `|>`: `Ctrl+Shift+M` (macOS: `Cmd+Shift+M`)
+
+This course uses R's native pipe, `|>`. You may also encounter the older `%>%` pipe in other code. For everything we do in this course, you can treat them as equivalent. Their differences matter only in more specialised code. If the shortcut inserts `%>%`, change the pipe setting under **Tools > Global Options > Code > Editing** (Windows and Linux) or **RStudio > Preferences > Code > Editing** (macOS).
 
 **Try this:** Use `Ctrl+Shift+C` to comment out a block, then toggle it back.
 
@@ -75,15 +77,15 @@ If you want a full guide, the tidyverse style guide is excellent: <https://style
 
 **What we’re about to do:** Save plots cleanly.
 
-Plots appear in the **Plots** pane (usually bottom right). Use the back/forward arrows to browse old plots. Use **Export** to save a plot.
+Plots appear in the **Plots** pane (usually bottom right). Use the back/forward arrows to browse old plots and **Export** to save one. In the export window, choose suitable dimensions and check the preview before saving.
 
-**Common mistake:** Exporting before resizing. If your plot looks cramped, resize the plot pane first.
+**Common mistake:** Exporting a plot without checking its dimensions. A plot that looks fine in the pane may become cramped when saved at a different size.
 
 ---
 
 ## Tables
 
-If you create a summary table, save it to CSV and open in Excel or Word.
+If you need to use a summary table outside R, save it as a CSV file and open it in spreadsheet software such as Excel.
 
 ```{r 0-04-Tips-and-Tricks-2, eval = FALSE}
 write.csv(my_table, file = "example.csv", row.names = FALSE)
@@ -96,7 +98,7 @@ write.csv(my_table, file = "example.csv", row.names = FALSE)
 **What we’re about to do:** Avoid the most common import errors.
 
 - **Everything in one column?** You probably used the wrong delimiter.
-- **Weird symbols?** Open the file in a text editor and inspect it.
+- **Unexpected symbols?** The file may use a different text encoding. Inspect it in a text editor and check how it was saved.
 
 **Sanity checks:**
 
@@ -112,6 +114,7 @@ write.csv(my_table, file = "example.csv", row.names = FALSE)
 
 - Make RStudio comfortable and readable.
 - Learn a few shortcuts and use them daily.
+- Use `Ctrl+Shift+M` (macOS: `Cmd+Shift+M`) to insert `|>`.
 - Export plots and tables deliberately.
 - Always check imported data.
 
@@ -120,11 +123,3 @@ write.csv(my_table, file = "example.csv", row.names = FALSE)
 - Forgetting to check the delimiter when importing.
 - Using non‑monospace fonts that misalign code.
 - Skipping basic checks after import.
-
-## Mini‑project
-
-Pick one dataset you have imported and:
-
-1. Check it with `str()` and `summary()`.
-2. Save a small summary table to CSV.
-3. Export one plot and write a sentence describing it.

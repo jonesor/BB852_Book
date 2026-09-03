@@ -32,7 +32,7 @@ It is worth being clear about this from the start, because it confuses almost ev
 - **R** is the programming *language* and the engine that does the actual computing. On its own it is not much to look at.
 - **RStudio** is a separate, much friendlier program — an "integrated development environment" (IDE) — that sits on top of R and makes it pleasant to use: somewhere to write scripts, run code, and see your results and plots side by side.
 
-You install **both**, but once they are installed you only ever open **RStudio** — it starts R for you behind the scenes.
+You install **both**, but for this course you will normally open **RStudio** — it starts R for you behind the scenes.
 
 **Takeaway:** Install R *and* RStudio; work in RStudio.
 
@@ -40,7 +40,7 @@ You install **both**, but once they are installed you only ever open **RStudio**
 
 ## Installing R and RStudio
 
-**What we're about to do:** Get both programs onto your computer, in the right order. There are **two separate downloads, from two different websites**.
+**What we're about to do:** Get both programs onto your computer. There are **two separate downloads from two different websites**.
 
 **Step 1 — Install R (from CRAN).** Go to the official R website, CRAN, at <https://cran.r-project.org>. In the "Download and Install R" box at the top, choose the download for your operating system — **Download R for Windows** or **Download R for macOS** — then run the installer and accept the default options.
 
@@ -54,7 +54,7 @@ knitr::include_graphics("assets/CRAN_R_install.png")
 knitr::include_graphics("assets/POSIT_R_Studio_install.png")
 ```
 
-Install R **before** RStudio, so that RStudio can find it.
+Install R **before** opening RStudio for the first time, so that RStudio can find it.
 
 ```{block 0-01-getting-set-up-2, type="do-something"}
 **Do this now:** Install R (from CRAN), then RStudio (from Posit), then open **RStudio** (not R). You should see a window divided into panes, described next.
@@ -62,7 +62,7 @@ Install R **before** RStudio, so that RStudio can find it.
 
 **Common mistake:** Opening "R" (a very plain window) instead of "RStudio". If the program you opened looks bare and old-fashioned, close it and open RStudio instead.
 
-**Takeaway:** R first (from CRAN), then RStudio (from Posit); then only ever open RStudio.
+**Takeaway:** R comes from CRAN and RStudio comes from Posit. For this course, you will normally work in RStudio.
 
 ---
 
@@ -70,7 +70,7 @@ Install R **before** RStudio, so that RStudio can find it.
 
 **What we're about to do:** Get oriented so the window is not intimidating.
 
-When you open RStudio you will see up to four panes. (You may see only three at first — the top-left one appears as soon as you open or create a script.)
+When you open RStudio you will see four main panes. (You may see only three at first — the top-left one appears as soon as you open or create a script.)
 
 - **Source / editor (top-left):** where you write and save your **scripts**. This is where most of your work happens.
 - **Console (bottom-left):** where code actually runs and results appear. You can also type here directly for quick, throwaway commands.
@@ -98,9 +98,9 @@ Almost every example in this book reads a data file from a folder called `Course
 1. **Download the data** from the course Dropbox folder:
    [https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0](https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0). Dropbox lets you download the whole folder as a single `.zip` file.
 2. **Unzip it.** This gives you a folder called `CourseData` containing many `.csv` files.
-3. **Put it in your project folder.** Move the `CourseData` folder inside the course project folder you will create in the *Paths and projects* chapter (the folder that contains your `.Rproj` file).
+3. **Create a course folder.** Create a folder called `BB852` somewhere sensible, such as your Documents folder, and move `CourseData` into it. In the next chapter, you will turn `BB852` into an RStudio Project.
 
-Once it is there, and you are working inside your RStudio Project, a command like this will just work — no long file paths required:
+After you create the RStudio Project in the next chapter, a command like this will work without a long file path:
 
 ```{r 0-01-getting-set-up-4, eval = FALSE}
 carni <- read.csv("CourseData/carnivora.csv")
@@ -121,13 +121,13 @@ carni <- read.csv("CourseData/carnivora.csv")
 ## Common pitfalls recap
 
 - Opening R instead of RStudio.
-- Installing RStudio before R.
+- Installing only R or only RStudio, rather than installing both.
 - Downloading the data but leaving it in your Downloads folder, so R cannot find it.
 
-## Mini-project
+## Try this
 
 1. Install R and RStudio, and open RStudio.
 2. In the Console, type `1 + 1` and then `R.version.string`, pressing Enter after each.
-3. Download and unzip the course data, ready to move into your project folder in the next chapters.
+3. Download and unzip the course data, then put `CourseData` inside a folder called `BB852`.
 
-You are now ready to set up a tidy project (see the *Paths and projects* chapter) and start learning R (see *An R refresher*).
+You are now ready to turn the `BB852` folder into an RStudio Project in the next chapter.

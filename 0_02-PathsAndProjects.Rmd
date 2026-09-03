@@ -10,13 +10,13 @@ By the end of this chapter you should be able to:
 
 **Prerequisites**
 
-- You can create and save an R script in RStudio.
+- You have installed R and RStudio and created the `BB852` folder described in the previous chapter.
 
 **A tiny motivating example**
 
-If your project is organised, this will work on any computer:
+If the same project structure is present, this will work on any computer:
 
-```{r 0-05-PathsAndProjects-1, eval = FALSE}
+```{r 0-02-PathsAndProjects-1, eval = FALSE}
 read.csv("CourseData/carnivora.csv")
 ```
 
@@ -33,9 +33,9 @@ A file path is the address of a file on your computer. There are two types.
 These start from the root of your computer:
 
 - Windows: `C:/Users/YourName/Documents/Project/myData.csv`
-- Mac: `/Users/YourName/Documents/Project/myData.csv`
+- macOS: `/Users/YourName/Documents/Project/myData.csv`
 
-**Why this is a problem:** Absolute paths are different on every computer, so shared code breaks.
+**Why this is a problem:** Absolute paths often differ between computers, so code containing them may break when it is shared.
 
 ### Relative paths (recommended)
 
@@ -57,14 +57,14 @@ An RStudio Project creates a `.Rproj` file and sets the project folder as the wo
 
 ### How to create a project
 
-1. Create a folder for the course (e.g., `BB852`).
+1. Use the `BB852` folder you created in the previous chapter. If you have not yet created it, do that now.
 2. In RStudio, go to `File > New Project`.
 3. Choose **Existing Directory** and select your folder.
 4. Click **Create Project**.
 
 From now on, open the `.Rproj` file to work on this course. You do not need to use `setwd()` in your scripts.
 
-**Common mistake:** Calling `setwd()` inside scripts. It works on your machine but fails for others.
+**Common mistake:** Calling `setwd()` inside scripts. A path that works on your machine will often fail on somebody else's.
 
 **Takeaway:** RStudio Projects keep your paths stable and your work reproducible.
 
@@ -86,19 +86,19 @@ Keep your project tidy:
 ## Key takeaways
 
 - Relative paths make your code shareable.
-- RStudio Projects fix the working directory automatically.
+- RStudio Projects set the working directory automatically.
 - A simple folder structure saves time and confusion.
 
 ## Common pitfalls recap
 
 - Using absolute paths in scripts.
-- Changing the working directory with `setwd()` and forgetting to undo it.
+- Using `setwd()` so that a script depends on a machine-specific location.
 - Saving data and scripts in the same messy folder.
 
-## Mini‑project
+## Try this
 
 Create a new project folder with the structure above, then:
 
-1. Put a CSV file in `CourseData/`.
-2. Import it using a relative path.
+1. Check that `carnivora.csv` is in `CourseData/`.
+2. Import it using `read.csv("CourseData/carnivora.csv")`.
 3. Write one sentence explaining why the relative path is better than the absolute one.

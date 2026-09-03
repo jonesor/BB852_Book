@@ -7,12 +7,12 @@ By the end of this chapter you should be able to:
 - Use RStudio to run code from scripts.
 - Create and inspect basic objects in R.
 - Work with vectors and data frames.
-- Import a CSV file using tidyverse tools.
+- Import a CSV file using a relative path.
 - Make simple plots and summaries.
 
 **Prerequisites**
 
-- You have R and RStudio installed.
+- You have R and RStudio installed and have created the course project described in the previous chapter.
 
 **A tiny motivating example**
 
@@ -20,10 +20,10 @@ Let’s make a tiny plot so we know everything is working.
 
 ```{r 0-03-An-R-Refresher-1, message=FALSE}
 
-bodylength <- c(4.2, 5.1, 5.6, 6.8, 7.4)
-bodymass <- c(9.5, 12.1, 14.0, 18.2, 21.5)
+body_length <- c(4.2, 5.1, 5.6, 6.8, 7.4)
+body_mass <- c(9.5, 12.1, 14.0, 18.2, 21.5)
 
-plot(bodylength,bodymass)
+plot(body_length, body_mass)
 ```
 
 **Try this:** Change one value and re-run. What changes on the plot?
@@ -58,7 +58,7 @@ help.search("bar plot")
 ??"bar plot"
 ```
 
-**What just happened:** `?` opens a help page when you know a function name; `??` searches when you do not.
+**What just happened:** `?` opens a help page when you know a function name. `help.search()` and its shortcut, `??`, search across help pages when you do not.
 
 **Try this:** Look up `mean` or `plot` and read the arguments section.
 
@@ -112,22 +112,29 @@ x <- 4
 x
 ```
 
-Vectors are simple sequences of values.
+The assignment operator `<-` stores the value on its right under the name on its left. You can read this as "`x` gets 4". Typing the object's name prints its value.
+
+Vectors are sequences of values of the same basic type, such as numbers or text.
 
 ```{r 0-03-An-R-Refresher-8}
 A <- 1:5
 B <- c(1, 3, 6, 1, 7, 9)
-C <- seq(1, 12, 2)
-D <- seq(1, 5, 0.1)
+C <- seq(from = 1, to = 12, by = 2)
+D <- seq(from = 1, to = 5, by = 0.1)
 E <- rep(c("Male", "Female"), each = 3)
-G <- rep(c("Male", "Female"), c(2, 4))
+F <- rep(c("Male", "Female"), times = c(2, 4))
+
+A
+C
+E
+F
 ```
 
 ```{block 0-03-An-R-Refresher-9, type="do-something"}
 Try changing `seq()` or `rep()` arguments. What changes?
 ```
 
-**Common mistake:** Forgetting `c()` when creating a list of values.
+**Common mistake:** Forgetting `c()` when creating a vector of values.
 
 **Takeaway:** Vectors are the building blocks of most data in R.
 
@@ -146,7 +153,7 @@ B * c(1, 2, 3, 4, 5, 6)
 A / B
 ```
 
-**What just happened:** R works element-by-element when vector lengths match.
+**What just happened:** R works element-by-element when vector lengths match. In the final calculation, `A` has five values but `B` has six. R recycles the shorter vector and produces a warning. Do not ignore this warning: unequal vector lengths usually indicate a mistake.
 
 **Takeaway:** Vectorised operations are fast and convenient.
 
@@ -161,6 +168,8 @@ mean(c(1, 3, 6, 1, 7, 9, NA))
 mean(c(1, 3, 6, 1, 7, 9, NA), na.rm = TRUE)
 ```
 
+The first result is `NA` because one value is missing. The argument `na.rm = TRUE` tells `mean()` to remove missing values before doing the calculation.
+
 ```{r 0-03-An-R-Refresher-12}
 5 / 0
 -4 / 0
@@ -168,7 +177,9 @@ mean(c(1, 3, 6, 1, 7, 9, NA), na.rm = TRUE)
 Inf - Inf
 ```
 
-**Takeaway:** Use `na.rm = TRUE` when you want to ignore missing values.
+`Inf` and `-Inf` represent positive and negative infinity. `NaN` means "not a number" and appears when a calculation has no defined numerical result. `NA` instead represents a missing value.
+
+**Takeaway:** Use `na.rm = TRUE` when you deliberately want a function to ignore missing values, and pay attention to non-finite results such as `Inf` and `NaN`.
 
 ---
 
@@ -215,11 +226,13 @@ class(sex)
 class(mydata)
 ```
 
-Some functions need categorical data to be factors:
+Factors tell R that a variable represents categories and record the possible category levels. Some plotting and modelling functions use this information:
 
 ```{r 0-03-An-R-Refresher-17, eval = FALSE}
 plot(mydata$sex, mydata$age)
 ```
+
+The command above fails because `mydata$sex` contains character data. Converting it to a factor tells `plot()` to compare the numerical values across categories:
 
 ```{r 0-03-An-R-Refresher-18}
 plot(as.factor(mydata$sex), mydata$age)
@@ -230,7 +243,7 @@ mydata$sex <- as.factor(mydata$sex)
 str(mydata)
 ```
 
-**Common mistake:** Forgetting to convert characters to factors for categorical plots.
+**Common mistake:** Leaving a categorical variable as character data when a function expects a factor.
 
 **Takeaway:** Use factors for categorical variables when needed.
 
@@ -245,7 +258,7 @@ Keep your data in a `CourseData` folder inside your project. We will use **relat
 There are two common ways to read a CSV file into R, and you will come across both:
 
 - **`read.csv()`** comes with base R. It returns a `data.frame` and, with `stringsAsFactors = TRUE`, turns text columns into **factors** — which is convenient for the statistics later in the course.
-- **`read_csv()`** comes from the `readr` package (part of the tidyverse). It is a little faster, prints a short summary of the column types it guessed, and returns a *tibble* (a modern data frame). It leaves text columns as character.
+- **`read_csv()`** comes from the `readr` package (part of the tidyverse, which we cover later). It is a little faster, prints a short summary of the column types it guessed, and returns a *tibble* (a modern data frame). It leaves text columns as character.
 
 Both work well and you will see both in other people's code. **To keep things consistent, this book uses `read.csv()` from here on.**
 
@@ -273,9 +286,9 @@ names(carni)
 
 The dataset includes life history variables. For example:
 
-- `FW` = Female body weight (kg)
+- `FW` = Female body mass (kg)
 - `GL` = Gestation length (days)
-- `BW` = Birth weight (g)
+- `BW` = Birth mass (g)
 
 ```{r 0-03-An-R-Refresher-22}
 summary(carni$FW)
@@ -301,8 +314,12 @@ tapply(carni$FW, carni$Family, mean, na.rm = TRUE)
 
 ## Basic plotting
 
-```{r 0-03-An-R-Refresher-25, fig.cap=('A simple scatter plot'), fig.show=('asis')}
-plot(log(carni$FW), log(carni$GL))
+```{r 0-03-An-R-Refresher-25, fig.cap='A simple scatter plot', fig.show='asis'}
+plot(
+  log(carni$FW), log(carni$GL),
+  xlab = "Log female body mass (kg)",
+  ylab = "Log gestation length (days)"
+)
 ```
 
 **Interpretation:** Species with larger female body mass tend to have longer gestation lengths.
@@ -311,42 +328,42 @@ plot(log(carni$FW), log(carni$GL))
   - Is the relationship roughly linear?
   - Are there any clear outliers?
 
-**Try this:** Remove the log and compare the shape.
+**Try this:** Plot `carni$FW` against `carni$GL` without the log transformations and compare the shape.
 
 
 ---
 
 ## Exercise: Californian bird diversity
 
-Surveys on bird abundances were carried out near Oakland, California.^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. Journal of Biogeography, 157–165.] The locations were of different ages, which lets us ask how species richness changes through time.
+Surveys of bird abundance were carried out near Oakland, California.^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. *Journal of Biogeography*, 3(2), 157–165.] The locations were developed in different years, which lets us ask how species richness varies with the age of a suburb.
 
 ### The data
 
-The file is `suburbanBirds.csv`. Columns: `Name`, `Year`, `HabitatIndex`, `nIndividuals`, `nSpecies`.
+The file is `suburbanBirds.csv`. It contains the columns `Name`, `Year`, `HabitatIndex`, `nIndividuals`, and `nSpecies`. The surveys were conducted in 1975, so subtracting `Year` from 1975 gives the approximate age of each suburb at the time of the survey.
 
 ### Your tasks
 
 **Level 1 (warm-up)**
 
-1. Import the data and check the columns with `str()`.
+1. Import the data as an object called `birds`, then check the columns with `str()`.
    **Checkpoint:** You should see the five columns listed above.
 
 2. Calculate the mean, minimum, and maximum of `nSpecies`.
-   **Checkpoint:** You should get three numbers.
+   **Checkpoint:** The values should be approximately 9.65, 3, and 15, respectively.
 
 **Level 2 (practice)**
 
-3. Create a new column `Age = 1975 - Year` and check it looks sensible.
+3. Create a new column with `birds$Age <- 1975 - birds$Year` and check that it looks sensible.
    **Checkpoint:** Younger suburbs have smaller `Age` values.
 
-4. Plot `Age` vs `nSpecies` with `plot()`.
+4. Plot `Age` against `nSpecies` with `plot(birds$Age, birds$nSpecies)`.
    **Checkpoint:** The x-axis is age and the y-axis is species richness.
 
 **Level 3 (extension)**
 
-5. Re-plot with a smoother (e.g. `lines(lowess(Age, nSpecies))`). Does it change your interpretation?
+5. Immediately after creating the scatter plot, add a smoother with `lines(lowess(birds$Age, birds$nSpecies))`. Does it change your interpretation?
 
-**Hint:** If your plot is empty, check your column names with `names()`.
+**Hint:** If the plotting code fails, check the column names with `names(birds)`.
 
 ---
 
@@ -355,7 +372,7 @@ The file is `suburbanBirds.csv`. Columns: `Name`, `Year`, `HabitatIndex`, `nIndi
 - Use scripts for reproducible work.
 - Vectors and data frames are the core data types.
 - `read.csv()` imports CSV files; `read_csv()` is the tidyverse alternative.
-- Check classes with `str()` and convert to `factor()` when needed.
+- Check classes with `str()` and convert categorical variables to factors when needed.
 - Always inspect your data before analysing it.
 
 ## Common pitfalls recap
