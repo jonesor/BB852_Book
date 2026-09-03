@@ -19,18 +19,12 @@ By the end of this chapter you should be able to:
 Let’s make a tiny plot so we know everything is working.
 
 ```{r 0-03-An-R-Refresher-1, message=FALSE}
-library(tidyverse)
 
-mydata <- data.frame(
-  body_length_cm = c(4.2, 5.1, 5.6, 6.8, 7.4),
-  body_mass_g = c(9.5, 12.1, 14.0, 18.2, 21.5)
-)
+bodylength <- c(4.2, 5.1, 5.6, 6.8, 7.4)
+bodymass <- c(9.5, 12.1, 14.0, 18.2, 21.5)
 
-ggplot(mydata, aes(x = body_length_cm, y = body_mass_g)) +
-  geom_point()
+plot(bodylength,bodymass)
 ```
-
-**What just happened:** Each point is an individual. This matters because almost every plot in this course follows the same pattern: **data + aesthetics + geom**.
 
 **Try this:** Change one value and re-run. What changes on the plot?
 
