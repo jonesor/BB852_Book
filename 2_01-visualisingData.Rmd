@@ -170,7 +170,8 @@ clutch %>%
 ```{r 2-01-visualisingData-10}
 mean_clutch <- clutch %>%
   group_by(species, Year) %>%
-  summarise(mean_clutch_size = mean(clutchSize), .groups = "drop")
+  summarise(mean_clutch_size = mean(clutchSize)) %>%
+  ungroup()
 ```
 
 ```{r 2-01-visualisingData-11}
