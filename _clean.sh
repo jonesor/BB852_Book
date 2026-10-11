@@ -5,6 +5,7 @@ rm -rf \
   _bookdown_files \
   BB852_cache \
   BB852_files \
+  BB852_book_*_files \
   *_cache \
   cache \
   index.md \

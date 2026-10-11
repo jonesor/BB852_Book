@@ -3,17 +3,19 @@
 ### Build workflow
 
 - Prepare datasets and validate references: run `Rscript -e "source('scripts/PrepareCourseData.R')"` (this syncs `CourseData/` from `DataSetLibrary/`, writes `course_data_files.csv`, and fails if a referenced dataset is missing).
-- Build the book locally (optional, for previewing): run `_build.sh` (which runs the preparation step, then renders the gitbook into `docs/`).
+- Build the book locally (optional, for previewing): run `_build.sh` (which runs the preparation step, then renders the HTML book and a date-stamped PDF such as `BB852_book_2026-10-11.pdf` into `docs/`). A working XeLaTeX installation is required for the PDF.
 
 ### Publishing (automatic)
 
-- The site is built **and deployed to GitHub Pages by CI** on every push to `master`, via the `Build and deploy book` GitHub Action (`.github/workflows/build-book.yml`).
+- The HTML and PDF books are built **and deployed to GitHub Pages by CI** on every push to `main`, via the `Build and deploy book` GitHub Action (`.github/workflows/build-book.yml`).
+- The PDF is available from the download button on the website and as the `BB852-pdf` artifact on each workflow run.
 - Pages **Source** must be set to **GitHub Actions** (Settings → Pages → Build and deployment).
 - The rendered `docs/` output is **no longer committed** — it is `.gitignore`d and rebuilt fresh in CI. A local `_build.sh` run just lets you preview the site before pushing.
 
 ### Build/release notes
 
-- `bookdown::gitbook` output is written to `docs/` per `_bookdown.yml` (locally and in CI).
+- The `bookdown::gitbook` and `bookdown::pdf_book` outputs are written to `docs/` per `_bookdown.yml` (locally and in CI).
+- PDF filenames use the Copenhagen build date in `BB852_book_YYYY-MM-DD.pdf` format. Set `BUILD_DATE=YYYY-MM-DD` when running `_build.sh` to override it for a reproducible build.
 - Use `_clean.sh` to remove caches and generated artifacts before a clean rebuild.
 - Hand-authored images can live in `assets/`; generated plots should go in `generated/` (ignored by git).
 
@@ -32,7 +34,7 @@
 ### Contributor checklist
 
 - Run `_clean.sh` before a release build if the output looks stale.
-- Optionally run `_build.sh` to preview locally; on push to `master`, CI rebuilds and deploys the site automatically.
+- Optionally run `_build.sh` to preview locally; on push to `main`, CI rebuilds and deploys the site and PDF automatically.
 - Verify `CourseData/` contents match current references in `.Rmd` files.
 - Check annual items in the “Things to do each year” section below.
 
@@ -46,7 +48,7 @@
 - Check/add/remove items in `ExtraReading.Rmd`
 - Style check: `scripts/style.R`
 - Spell check: `scripts/SpellCheckScript.R`
-- The GitHub site rebuilds and redeploys automatically on push to `master`. To preview locally first, render with `bookdown::render_book("index.Rmd", "bookdown::gitbook")` (and `"bookdown::pdf_book"` for the PDF).
+- The GitHub site and PDF rebuild and redeploy automatically on push to `main`. To preview both locally first, run `_build.sh`.
 
 ### Note:
 
