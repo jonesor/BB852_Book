@@ -1,23 +1,33 @@
 # Randomisation Tests
 
-When conducting simple experiments to compare mean values between two groups, the null hypothesis typically assumes no difference between the groups. The alternative hypothesis can vary. Sometimes it simply states that the two groups are different, without specifying the direction of the difference. In other cases, it asserts that the mean of Group A is either less than or greater than the mean of Group B.
+When we observe a difference between two groups, we need to ask whether it provides evidence of a real effect or whether it could plausibly have arisen through random variation. A randomisation test approaches this question by generating results that we might obtain if the null hypothesis were true.
 
-Randomisation tests provide an intuitive approach to testing these hypotheses, although they can be computationally intensive. These tests have a long history and were initially proposed by R.A. Fisher in the 1930s. They only became widely practical with the advent of high-speed computers capable of performing the necessary calculations.
+We repeatedly rearrange observations or labels in ways that are consistent with the null hypothesis and calculate a **test statistic** each time. The resulting values form a **null distribution**. We then compare the observed test statistic with this distribution. In this chapter, the test statistic is a difference between means, although other statistics can also be used.
 
-To conduct a randomisation test using R, you will have the opportunity to put your `dplyr` skills to the test. In the following example, you will be guided through the process step by step, gaining a better understanding of how randomisation tests work and how they can be applied to biological research.
+Randomisation tests have a long history and were initially proposed by R. A. Fisher in the 1930s. Modern computers make it straightforward to repeat the required rearrangements many times, but computation is not what makes the test valid. The randomisation procedure must match the null hypothesis and respect the study design. If individuals were randomly allocated to control and treatment groups, we can examine other possible allocations. Paired or otherwise dependent observations cannot necessarily be shuffled independently.
+
+The technical term is **exchangeability**: under the null hypothesis, the observations or labels being shuffled must be interchangeable in the way required by the test. We will apply this idea without developing its mathematical details. The examples also provide further practice with `dplyr` and `ggplot2`.
 
 ## Randomisation test in R
 
 A new drug has been developed that is supposed to reduce cholesterol levels in men. An experiment has been carried out where 12 human test subjects have been assigned randomly to two groups: "Control" and "Drug". The pharmaceutical company is hoping that the "Drug" group will have lower cholesterol than the "Control" group. The aim here is to do a randomisation test to check that.
 
+In this example, you will:
+
+- calculate the observed difference between two group means;
+- generate a null distribution by shuffling treatment labels;
+- use the null distribution to calculate a p-value; and
+- interpret the result in the context of the experiment.
+
 ```{block 3-01-randomisationTests-1, type="do-something"}
-Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+Remember to load the `dplyr`, `tidyr`, and `ggplot2` packages, and open the book's RStudio project so that the relative data paths work.
 ```
 
 Import the data, called `cholesterol.csv`. 
 
 ```{r 3-01-randomisationTests-2, echo=TRUE}
 ch <- read.csv("CourseData/cholesterol.csv")
+ch$Treatment <- factor(ch$Treatment, levels = c("Control", "Drug"))
 ```
 
 Let's first take a look at the data by plotting it. I will plot a boxplot and add jittered points for clarity.
@@ -29,20 +39,20 @@ ggplot(ch, aes(x = Treatment, y = Cholesterol)) +
   geom_jitter(colour = "grey", width = .1)
 ```
 
-It looks like there might be a difference between the groups.
-Now let's consider our test statistic and our hypotheses. Our test statistic is the difference in mean cholesterol levels between the two groups: mean of the drug group minus the mean of the control group.
+It looks like there might be a difference between the groups. Now let's consider our test statistic and hypotheses. The test statistic is the mean cholesterol level in the drug group minus the mean in the control group. Negative differences therefore support the directional alternative.
 
-The *null hypothesis* is that there is no difference between these two groups (i.e. the difference should be close to 0).
+The *null hypothesis* is that treatment assignment does not affect an individual's cholesterol level.
 
-The *alternative hypothesis* is that the mean of the drug group should be less than the mean of the control group. 
+The *alternative hypothesis* is that the drug reduces cholesterol levels, so the mean of the drug group is less than the mean of the control group.
 
 ### Calculate the observed difference
 
 There are a few ways of doing this. In base R you can use the function `tapply` ("table apply"), followed by `diff` ("difference").
 
 ```{r 3-01-randomisationTests-4}
-tapply(ch$Cholesterol, ch$Treatment, mean)
-diff(tapply(ch$Cholesterol, ch$Treatment, mean))
+cholesterolMeans <- tapply(ch$Cholesterol, ch$Treatment, mean)
+cholesterolMeans
+diff(cholesterolMeans)
 ```
 
 Because we are focusing on learning `dplyr`, you can also calculate the means like this:
@@ -50,7 +60,7 @@ Because we are focusing on learning `dplyr`, you can also calculate the means li
 ```{r 3-01-randomisationTests-5}
 ch %>% # ch is the cholesterol data
   group_by(Treatment) %>% # group the data by treatment
-  summarise(mean = mean(Cholesterol)) # calculate means
+  summarise(mean = mean(Cholesterol), .groups = "drop") # calculate means
 ```
 
 Here the pipes (`%>%`) pass the result of each function on as input to the next. 
@@ -59,136 +69,189 @@ You can use further commands, `pull` to get the `mean` vector from the summary t
 ```{r 3-01-randomisationTests-6}
 observedDiff <- ch %>%
   group_by(Treatment) %>% # group the data by treatment
-  summarise(mean = mean(Cholesterol)) %>% # calculate means
+  summarise(mean = mean(Cholesterol), .groups = "drop") %>% # calculate means
   pull(mean) %>% # extract the mean vector
   diff()
+observedDiff
 ```
 
 This is a complicated set of commands. To make sure you understand it, try running it bit by bit to see what is going on.
 
+Because the factor levels are explicitly ordered as Control and then Drug, `diff()` calculates Drug minus Control. The control mean is 205.6667, the drug mean is 185.5000, and the observed difference is -20.1667. The individuals receiving the drug therefore had cholesterol levels approximately 20.2 units lower, on average, than individuals in the control group. This difference alone does not tell us how strong the statistical evidence is.
+
 ### Null distribution
 
-Now we ask, what would the world look like if our null hypothesis was *true*? To do this we can disassociate the treatment group variable from the measured cholesterol values. We do this by using the `mutate` function to replace the `Treatment` variable with a shuffled version of itself using the `sample` function. 
+Now we ask what results we might obtain if the null hypothesis were true. If the drug has no effect, the cholesterol measurements would be unchanged under another allocation of individuals to the two groups. Because the individuals were randomly allocated in this hypothetical experiment, we can explore other possible allocations by shuffling the treatment labels while leaving the measurements unchanged.
+
+The command below uses `mutate()` and `sample()` to shuffle the `Treatment` variable. The 12 cholesterol measurements remain fixed, each shuffled dataset still contains six Control and six Drug labels, and the association between treatment and cholesterol is broken. This represents another allocation consistent with the null hypothesis of no treatment effect.
 
 Let's try that one time:
 
 ```{r 3-01-randomisationTests-7, warning=FALSE, cache=TRUE, echo = -1}
-set.seed(666)
+set.seed(123)
 
 ch %>%
   mutate(Treatment = sample(Treatment)) %>%
   # shuffle the Treatment data
   group_by(Treatment) %>%
-  summarise(mean = mean(Cholesterol)) %>%
+  summarise(mean = mean(Cholesterol), .groups = "drop") %>%
   pull(mean) %>%
   diff()
 ```
 
 ```{r 3-01-randomisationTests-8, warning=FALSE, cache=TRUE, echo = FALSE}
-set.seed(666)
+set.seed(123)
 
 shuffDiff_temp <- ch %>%
   mutate(Treatment = sample(Treatment)) %>%
   # shuffle the Treatment data
   group_by(Treatment) %>%
-  summarise(mean = mean(Cholesterol)) %>%
+  summarise(mean = mean(Cholesterol), .groups = "drop") %>%
   pull(mean) %>%
   diff()
 ```
 
 In this instance, the difference with the shuffled `Treatment` values of `r round(shuffDiff_temp,3)` is rather different from our observed difference of `r round(observedDiff,3)`.
 
-Doing this one time is not much help though - we need to repeat this many times. I suggest that you do it 1000 times here, but some statisticians would suggest 5000 or even 10000 replicates. 
+There are `choose(12, 6)` possible ways to select six of the 12 individuals for the Drug group:
 
-We can do this easily in R using the function `replicate`, which is a kind of wrapper that tells R to repeat a command `n` times and then pass the result to a vector.
+```{r 3-01-randomisationTests-possible-allocations}
+choose(12, 6)
+choose(24, 12)
+```
+
+For this small dataset, an **exact randomisation test** could examine all 924 allocations. With 12 individuals in each of two groups, however, there would already be 2,704,156 possible allocations. A **Monte Carlo randomisation test** instead examines a random sample of possible allocations. Its p-value is an estimate and therefore varies slightly among runs. We will use this approach to practise `sample()` and `replicate()`; the exact result will provide a useful comparison later.
+
+Doing one randomisation is not much help, so we need to repeat the process many times.
+
+We can do this easily in R using `replicate()`, which is a wrapper that tells R to repeat a command `n` times and store the results in a vector.
 Let's try it first 10 times to see how it works:
 
 ```{r 3-01-randomisationTests-9, warning=FALSE, cache=TRUE, echo=-1}
-set.seed(42)
+set.seed(123)
 replicate(
   10,
   ch %>%
     mutate(Treatment = sample(Treatment)) %>%
     group_by(Treatment) %>%
-    summarise(mean = mean(Cholesterol)) %>%
+    summarise(mean = mean(Cholesterol), .groups = "drop") %>%
     pull(mean) %>%
     diff()
 )
 ```
 
-You can see that the `replicate` command simply does the sampling-recalculation of the mean 10 times.
+You can see that `replicate()` performs the shuffle and recalculates the difference 10 times.
 
-In the commands below I create 1000 replicates of the shuffled differences. I want to put them in a dataframe to make it easy to plot. Therefore, I first create a `data.frame` called `shuffledData`. This data frame initially has a variable called `rep` which consists of the numbers 1-1000. I then use `mutate` to add the 1000 shuffled differences. 
+For the main analysis, we use 10,000 randomisations. We store that number as `B`, so the simulation and p-value calculation use the same value. The data frame contains one shuffled difference from each randomisation.
 
 
 ```{r 3-01-randomisationTests-10, replicate, warning=FALSE, cache=TRUE, echo = -1}
-set.seed(43)
-shuffledData <- data.frame(rep = 1:1000) %>%
-  mutate(shuffledDiffs = replicate(
-    1000,
+set.seed(123)
+B <- 10000
+
+shuffledData <- data.frame(
+  shuffledDiffs = replicate(
+    B,
     ch %>%
       mutate(Treatment = sample(Treatment)) %>%
       group_by(Treatment) %>%
-      summarise(mean = mean(Cholesterol)) %>%
+      summarise(mean = mean(Cholesterol), .groups = "drop") %>%
       pull(mean) %>%
       diff()
-  ))
+  )
+)
 ```
 
-
-```{block 3-01-randomisationTests-11, type="do-something"}
-
-When you use `summarise`, R will give you a message like this:
-
-`summarise() ungrouping output (override with .groups argument)`
-
-This can be annoying, particularly if you are using randomisation tests and summarising hundreds of times. Thankfully, you can turn off this behaviour by setting one of the `dplyr` options like this:
-
-
-`options(dplyr.summarise.inform = FALSE)`
-
-
-I suggest to put this code at the beginning of your script if the messages annoy you!
-
-```
+The `.groups = "drop"` argument tells `summarise()` that the result no longer needs to remain grouped. This avoids repeated grouping messages without changing a global R option.
 
 ### Testing significance
 
-Before formally testing the hypothesis it is useful to visualise what we have created in a histogram. I can use `ggplot` to do this, to create a plot called `p1`. Note that by putting the command in brackets R will both create the plot object, and print it to the screen. Note that because the shuffling of the data is random process your graph will look slightly different to mine.
+Before formally testing the hypothesis, it is useful to visualise the null distribution. The x-axis shows differences between Drug and Control means, and the y-axis shows how frequently those differences occurred among the randomised datasets. Because treatment labels are unrelated to cholesterol under the null randomisation procedure, the exact null distribution has a mean of zero. A finite Monte Carlo sample will usually be centred only approximately on zero.
+
+I use `ggplot()` to create a plot called `p1`. Putting the command in brackets both creates the plot object and prints it to the screen.
 
 ```{r 3-01-randomisationTests-12, message = FALSE}
 (p1 <- ggplot(shuffledData, aes(x = shuffledDiffs)) +
-  geom_histogram() +
+  geom_histogram(bins = 30, fill = "steelblue", colour = "white") +
   theme_minimal() +
-  xlab("Drug mean - Control mean"))
+  labs(
+    x = "Difference between means (Drug - Control)",
+    y = "Number of randomised datasets",
+    title = "Null distribution of differences between means"
+  ))
 ```
 
 You can now add your observed difference (calculated above) to this plot like this:
 
 ```{r 3-01-randomisationTests-13, message=FALSE}
-p1 + geom_vline(xintercept = observedDiff)
+p1 + geom_vline(
+  xintercept = observedDiff,
+  colour = "#B2182B", linewidth = 1.2
+)
 ```
+
+Where does our observed difference lie relative to the null distribution? Does it appear to be an unusual result?
 
 ### Testing the hypothesis
 
-Recall that the alternative hypothesis is that the observed difference (drug mean - control mean) will be less than 0.
+Recall that the alternative hypothesis predicts a negative difference: Drug minus Control should be less than zero. This is a **one-sided test**, so we count randomised differences that are less than or equal to the observed difference.
 
-You can see that there are few of the null distribution sample that are as extreme as the observed difference. To calculate a p-value we can simply count these values and express them as a proportion. Note that because the shuffling of the data is random process your result will probably be slightly different to mine.
+The p-value tells us how often a result at least as extreme as the observed difference would arise under the null hypothesis, using this test statistic and randomisation procedure.
 
 ```{r 3-01-randomisationTests-14}
-table(shuffledData$shuffledDiffs <= observedDiff)
-```
-So that is `r sum(shuffledData$shuffledDiffs<=observedDiff)` of the shuffled values that are equal to or less than the observed difference. The p-value is then simply `r sum(shuffledData$shuffledDiffs<=observedDiff)`/1000 = `r sum(shuffledData$shuffledDiffs<=observedDiff)/1000`. 
+b <- sum(shuffledData$shuffledDiffs <= observedDiff)
+p_value <- (b + 1) / (B + 1)
 
-Therefore we can say that the drug appears to be effective at reducing cholesterol.
+b
+p_value
+```
+
+Here, `b` is the number of simulated statistics at least as extreme as the observed statistic, and `B` is the number of randomisations. The `+1` correction includes the observed arrangement in the Monte Carlo calculation and prevents an estimated p-value of zero. With this seed, `b` is `r b` and the corrected Monte Carlo estimate is `r round(p_value, 4)`. Another seed would give a slightly different estimate.
+
+For comparison, we can enumerate every possible allocation for this small dataset:
+
+```{r 3-01-randomisationTests-exact-test}
+possibleDrugGroups <- combn(nrow(ch), 6)
+
+exactDiffs <- apply(possibleDrugGroups, 2, function(drugRows) {
+  mean(ch$Cholesterol[drugRows]) - mean(ch$Cholesterol[-drugRows])
+})
+
+exact_b <- sum(exactDiffs <= observedDiff)
+exact_p_value <- exact_b / length(exactDiffs)
+
+c(extreme_allocations = exact_b, exact_p_value = exact_p_value)
+```
+
+The exact one-sided result is 31/924, or approximately 0.0335. This is close to the Monte Carlo estimate but is not itself a simulated result.
+
+If the alternative hypothesis had instead been that the drug **changes** cholesterol in either direction, we would use a two-sided test. For this test statistic, we could count values satisfying:
+
+```{r 3-01-randomisationTests-two-sided, eval = FALSE}
+abs(shuffledData$shuffledDiffs) >= abs(observedDiff)
+```
+
+The alternative hypothesis determines which part of the null distribution counts as at least as extreme.
+
+```{block 3-01-randomisationTests-11, type="do-something"}
+Before continuing, check that you can answer these questions:
+
+1. What exactly did we shuffle?
+2. Why was it appropriate to shuffle treatment labels?
+3. What does the null distribution represent?
+4. What does the p-value tell us?
+5. Would a small p-value necessarily imply an important treatment effect?
+```
+
+The result provides evidence against the null hypothesis in the predicted direction. It does not tell us the probability that the null hypothesis is true, and it does not by itself establish that the reduction is biologically or medically important. Conversely, a large p-value would mean that the observed statistic is not particularly unusual under the specified null model; it would not prove that the null hypothesis is true.
 
 ### Writing it up
 
-We can report our findings something like this:
+We can report the Monte Carlo analysis concisely:
 
-"*To test whether effect of the drug at reducing cholesterol level is statistically significant I did a 1000 replicate randomisation test with the null hypothesis being that there is no difference between the group means and the alternative hypothesis that the mean for the drug treatment is lower than the control treatment. I compared the observed difference to this null distribution to calculate a p-value in a one-sided test.*
+"*Mean cholesterol was 205.7 in the control group and 185.5 in the drug group, giving an observed difference of -20.2 (Drug minus Control). A one-sided Monte Carlo randomisation test was used to evaluate whether the drug reduced cholesterol. Treatment labels were randomly reallocated 10,000 times while preserving group sizes, and the difference between group means was recalculated after each allocation. The result provided evidence that cholesterol was lower in the drug group (p = `r round(p_value, 3)`).*"
 
-*The observed mean values of the control and drug groups were 205.667 and 185.500 respectively and the difference between them is therefore -20.167 (drug mean - control mean). Only `r sum(shuffledData$shuffledDiffs<=observedDiff)` of the 1000 null distribution replicates were as low or lower than my observed difference value. I conclude that the observed difference between the means of the two treatment groups is statistically significant (p = `r sum(shuffledData$shuffledDiffs<=observedDiff)/1000`)*"
+The p-value describes statistical evidence relative to the null model; it does not measure the size or medical importance of the effect. The estimated reduction is approximately 20.2 units, but interpreting its importance requires relevant biological or medical context. Larger samples often provide greater power to detect effects, but statistical significance and biological importance remain different questions.
 
 
 ## Paired Randomisation Tests
@@ -196,6 +259,8 @@ We can report our findings something like this:
 A paired randomisation test is used when the observations in your data are paired or matched in some way. In this type of test, each observation in one group (e.g. Group A) is paired or matched with a corresponding observation in the other group (e.g. Group B), based on some relevant characteristic or factor.
 
 You would use a paired randomisation test when you want to compare the mean values of the two groups while taking into account the paired nature of the observations. This type of test is particularly useful when the paired observations are expected to be more similar to each other than to the observations in the other group.
+
+In the cholesterol example, each individual belonged to one of two independent groups. Here, each individual contributes two linked measurements. We must preserve those links: simply shuffling measurements among subjects would not respect the study design.
 
 Here are three examples of situations where a paired randomisation test would be appropriate:
 
@@ -205,90 +270,92 @@ Here are three examples of situations where a paired randomisation test would be
 
 (3) Matched case-control studies: In a case-control study design, where individuals with a particular condition (cases) are compared to individuals without the condition (controls), it is common to match cases and controls based on certain characteristics such as age, gender, or socioeconomic status. The idea is that the pairs (case vs. control) are similar in every way EXCEPT the condition being investigated.
 
-The paired randomisation test is a **one-sample** randomisation test where the distribution is tested against a value of 0 (i.e. where there is no difference between the two groups). Usually this distribution is the **difference** in measurements between two sets of measurements taken from the pairs. For example, measurements taken from the same individuals before and after some treatment has been applied. 
+The paired randomisation test is a **one-sample** randomisation test in which one difference is calculated for every pair. Here, we define each difference as After minus Before, so positive values represent weight gain. Under an appropriate null hypothesis, reversing the direction of a within-pair difference should be equally plausible. We can therefore multiply each difference randomly by +1 or -1.
+
+This sign-flipping procedure has an assumption of its own: the signs must be exchangeable under the null hypothesis. In a randomised paired experiment, that justification can follow from the design. For observational before-and-after data, it relies more strongly on assumptions such as symmetry of the difference distribution. A mean difference of zero alone does not automatically justify arbitrary sign-flipping.
 
 I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. Everitt collected data on weights of people before and after therapy. These data are in the file `anorexiaCBT.csv`
 
 ```{r 3-01-randomisationTests-15}
-# Remember to set your working directory first
-an <- read.csv("CourseData/anorexiaCBT.csv")
-head(an)
+anWide <- read.csv("CourseData/anorexiaCBT.csv")
+head(anWide)
 ```
 
-These data are arranged in a so-called "wide" format. To make plotting and analysis data need to be rearranged into a tidy "long" format so that each observation is on a row. We can do this using the `pivot_longer` function:
+These data are arranged in a so-called "wide" format. For plotting and analysis, they need to be rearranged into a tidy "long" format so that each observation is on a row. We can do this using `pivot_longer()`:
 
 ```{r 3-01-randomisationTests-16}
-an <- an %>%
+anLong <- anWide %>%
   pivot_longer(
     cols = starts_with("Week"), names_to = "time",
     values_to = "weight"
-  )
-head(an)
+  ) %>%
+  mutate(time = factor(time, levels = c("Week01", "Week08"))) %>%
+  arrange(Subject, time)
+head(anLong)
 ```
 
 We should *always* plot the data. So here goes.
 
 ```{r 3-01-randomisationTests-17, message=FALSE}
-(p1 <- ggplot(an, aes(x = weight, fill = time)) +
-  geom_histogram(position = "identity", alpha = .7)
+(p1 <- ggplot(anLong, aes(x = weight, fill = time)) +
+  geom_histogram(
+    position = "identity", alpha = .7, bins = 15,
+    colour = "white"
+  ) +
+  labs(x = "Weight", y = "Number of observations", fill = "Time")
 )
 ```
 
 Another useful way to plot this data is to use an **interaction plot**. In these plots the matched pairs (grouped by `Subject`) are joined together with lines. You can plot one like this:
 
 ```{r 3-01-randomisationTests-18, message=FALSE}
-(p2 <- ggplot(an, aes(x = time, y = weight, group = Subject)) +
+(p2 <- ggplot(anLong, aes(x = time, y = weight, group = Subject)) +
   geom_point() +
-  geom_line(linewidth = 1, alpha = 0.5)
+  geom_line(linewidth = 1, alpha = 0.5) +
+  labs(x = "Time", y = "Weight")
 )
 ```
 
-```{r 3-01-randomisationTests-19, echo=FALSE}
-set.seed(42)
-an2 <- an %>%
-  group_by(Subject) %>%
-  mutate(time = sample(time))
-p2.shuffled <- ggplot(an2, aes(x = time, y = weight, group = Subject)) +
-  geom_point() +
-  geom_line(linewidth = 1, alpha = 0.5)
-```
-
-
-What we are interested in is whether there has been a change in weight of the subjects after CBT. The null hypothesis is that there is zero change in weight. The alternative hypothesis is that weight has increased.
+The second plot is especially informative because every line joins the two measurements from one subject. What we are interested in is whether weight changed after CBT. The null model for this sign-flipping test treats positive and negative within-subject differences as exchangeable; the directional alternative is that weight increased.
 
 The starting point for the analysis is to calculate the observed change in weight.
 
 ```{r 3-01-randomisationTests-20, warning=FALSE}
-an <- an %>%
+anChanges <- anLong %>%
   group_by(Subject) %>%
-  summarise(change = diff(weight))
+  summarise(
+    change = weight[time == "Week08"] - weight[time == "Week01"],
+    .groups = "drop"
+  )
 ```
 You have created a dataset that looks like this:
 
 ```{r 3-01-randomisationTests-21}
-head(an)
+head(anChanges)
 ```
 
 And you can calculate the observed change like this:
 
 ```{r 3-01-randomisationTests-22}
-obsChange <- mean(an$change)
+obsChange <- mean(anChanges$change)
 obsChange
 ```
 
+The observed mean change is approximately 3.0069. This is the average of the 29 within-individual changes, not a difference between two independent samples.
+
 ### The randomisation test
 
-The logic of this test is that if the experimental treatment has no effect on weight, then the *Before* weight is just as likely to be larger than the *After* weight as it is to be smaller. 
+The logic of this test is that, under the sign-flipping null model, a within-subject difference is equally likely to have its observed sign or the opposite sign.
 
-Therefore, to carry out this test, we can permute the SIGN of the change in weight (i.e. we randomly flip values from positive to negative and vice versa). We can do this by multiplying by 1 or -1, randomly.
+We randomly multiply each observed difference by +1 or -1. Each individual's two measurements remain linked, the magnitude of each difference is preserved, and differences are not exchanged between subjects. `replace = TRUE` is required because every individual's sign is chosen independently and all combinations of positive and negative signs must be possible.
 
 ```{r 3-01-randomisationTests-23, echo =-1, cache = TRUE}
 set.seed(123)
-head(an)
+head(anChanges)
 
-anShuffled <- an %>%
+anShuffled <- anChanges %>%
   mutate(sign = sample(c(1, -1),
-    size = nrow(an),
+    size = nrow(anChanges),
     replace = TRUE
   )) %>%
   mutate(shuffledChange = change * sign)
@@ -303,10 +370,10 @@ head(anShuffled)
 We need to calculate the mean of this shuffled vector. We can do this by `pull` to get the vector, and then `mean`.
 
 ```{r 3-01-randomisationTests-25, echo = -1, cache = TRUE}
-set.seed(42)
-an %>%
+set.seed(123)
+anChanges %>%
   mutate(sign = sample(c(1, -1),
-    size = nrow(an),
+    size = nrow(anChanges),
     replace = TRUE
   )) %>%
   mutate(shuffledChange = change * sign) %>%
@@ -314,20 +381,24 @@ an %>%
   mean()
 ```
 
-Now we will build a null distribution of changes in weight by repeating this 1000 times. We can do this using the `replicate` function to "wrap" around the function, passing the result into a data frame. We can then compare this null distribution to the observed change.
+Now we build a null distribution of mean changes by repeating these three steps 10,000 times: choose signs, multiply the differences by those signs, and calculate the mean shuffled difference. We again store the number of randomisations in `B`.
 
 ```{r 3-01-randomisationTests-26, cache=TRUE, echo=-1}
-set.seed(42)
+set.seed(123)
+B <- 10000
+
 nullDist <- data.frame(
-  change =
-    replicate(1000, an %>%
+  change = replicate(
+    B,
+    anChanges %>%
       mutate(sign = sample(c(1, -1),
-        size = nrow(an),
+        size = nrow(anChanges),
         replace = TRUE
       )) %>%
       mutate(shuffledChange = change * sign) %>%
       pull(shuffledChange) %>%
-      mean())
+      mean()
+  )
 )
 ```
 
@@ -337,59 +408,76 @@ nullDist <- data.frame(
 
 ```{r 3-01-randomisationTests-27, message=FALSE}
 (nullDistPlot <- ggplot(nullDist, aes(x = change)) +
-  geom_histogram())
+  geom_histogram(bins = 30, fill = "steelblue", colour = "white") +
+  theme_minimal() +
+  labs(
+    x = "Mean change in weight",
+    y = "Number of sign randomisations",
+    title = "Null distribution of paired mean changes"
+  ))
 ```
 
-We can add the observed change as a line to this:
+This distribution represents mean changes expected under the sign-flipping null model and is centred approximately on zero. We can add the observed mean change as a line:
 
 ```{r 3-01-randomisationTests-28, message=FALSE}
-nullDistPlot + geom_vline(xintercept = obsChange)
+nullDistPlot + geom_vline(
+  xintercept = obsChange,
+  colour = "#B2182B", linewidth = 1.2
+)
 ```
+
+Where does the observed mean change lie relative to this null distribution?
 
 ### The formal hypothesis test
 
-The formal test of significance then works by asking how many of the null distribution replicates are as extreme as the observed change. 
+The alternative hypothesis predicts weight gain, and After minus Before is positive for weight gain. We therefore use the **upper tail**, unlike the lower-tail comparison in the cholesterol example.
 
 ```{r 3-01-randomisationTests-29}
-table(nullDist$change >= obsChange)
+b_paired <- sum(nullDist$change >= obsChange)
+p_value_paired <- (b_paired + 1) / (B + 1)
+
+b_paired
+p_value_paired
 ```
-So we can see that `r table(nullDist$change>=obsChange)[2]` of `r sum(table(nullDist$change>=obsChange))` replicates were greater than or equal to the observed change. This translates to a p-value of `r table(nullDist$change>=obsChange)[2]/sum(table(nullDist$change>=obsChange))`. We can therefore say that the observed change in weight after CBT was significantly greater than what we would expect from chance.
+
+With this seed, `r b_paired` of the 10,000 randomised mean changes were greater than or equal to the observed change. The corrected Monte Carlo p-value is `r round(p_value_paired, 4)`, providing evidence that weight increased under the specified null model.
+
+This analysis identifies statistical evidence of a before-and-after change. It does not, by itself, establish that CBT caused the change. For observational data, changes over time, concurrent interventions, and other explanations may also be relevant.
 
 
 
 ## Exercise: Sexual selection in Hercules beetles
 
-A Hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data[^1] on width measurements in cm of a small sample of 20 individuals of each sex. Can you use your skills to report whether males are significantly larger than females. 
+A Hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data[^1] on width measurements in cm from 20 individuals: 10 females and 10 males. Can you use your skills to report whether males are significantly larger than females?
 
-The data are called `herculesBeetle.csv` and can be found via the course data Dropbox link. 
+The data are called `herculesBeetle.csv` and are in the `CourseData` folder.
 
 [^1]: This example is from: [https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html](https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html)
 
 
-**Follow the following prompts to get to your answer:**
+Use the preceding examples as a guide, but make the analytical decisions yourself.
 
-1. What is your null hypothesis? 
+**Task 1: Explore the data.** Import the dataset, examine its structure, visualise body size for males and females, and calculate descriptive statistics with units.
 
-2. What is your alternative hypothesis?
+**Task 2: Formulate hypotheses.** State the null and alternative hypotheses. Decide whether a one-sided or two-sided test is appropriate and explain your decision.
 
-3. Import the data.
+**Task 3: Calculate the observed statistic.** Calculate the difference between group means and state clearly which mean is subtracted from which.
 
-4. Calculate the mean for each sex (either using `tapply` or using `dplyr` tools)
+**Task 4: Construct a null distribution.** Use randomisation to generate a null distribution with a sufficiently large number of randomisations. Explain what you shuffle and why that shuffle is consistent with the null hypothesis and study design.
 
-5. Plot the data as a histogram.
+**Task 5: Evaluate the evidence.** Plot the null distribution, indicate the observed statistic, calculate a corrected Monte Carlo p-value, and interpret it in context.
 
-6. Add vertical lines to the plot to indicate the mean values.
+**Task 6: Write a short results paragraph.** Report the observed group means, difference between means, randomisation method, p-value, and a restrained biological interpretation.
 
-7. Now calculate the difference between the mean values using `dplyr` tools, or `tapply`.
+```{block 3-01-randomisationTests-hercules-hints, type="do-something"}
+**Optional hints**
 
-8. Use `sample` to randomise the sex column of the data, and recalculate the difference between the mean.
+- Use `group_by()` and `summarise()` to calculate group means.
+- Set the factor levels so the direction of `diff()` is explicit.
+- Use `sample()` to shuffle the sex labels while preserving the group sizes.
+- Use `replicate()` to repeat the randomisation, first a few times to test your code and then at least 10,000 times.
+- Use `ggplot2` to visualise the null distribution and add the observed statistic with `geom_vline()`.
+- Count simulated statistics in the tail specified by your alternative hypothesis and use the `+1` Monte Carlo correction.
+```
 
-9. Use `replicate` to repeat this 10 times (to ensure that you code works).
-
-10. When your code is working, use `replicate` again, but this time with 1000 replicates and pass the results into a data frame.
-
-11. Use `ggplot` to plot the null distribution you have just created, and add the observed difference.
-
-12. Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.
-
-13. Summarise your result as in a report. Describe the method, followed by the result and conclusion.
+Finally, would a statistically significant difference necessarily mean that the difference in body size is biologically important? What additional information might help you decide?
