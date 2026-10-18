@@ -8,8 +8,32 @@ library(patchwork)
 library(scales)
 library(viridis)
 
-plot_dir <- file.path("scripts", "pimp_your_plots_figures")
-dir.create(plot_dir, showWarnings = FALSE)
+plot_root <- file.path("lecture_figures", "pimp_your_plots", "output")
+plot_dirs <- list(
+  full = file.path(plot_root, "full"),
+  half = file.path(plot_root, "half")
+)
+invisible(lapply(plot_dirs, dir.create, recursive = TRUE, showWarnings = FALSE))
+
+save_lecture_versions <- function(filename, plot, aspect_ratio) {
+  output_widths <- c(full = 11.73, half = 5.57)
+
+  for (layout in names(output_widths)) {
+    output_width <- output_widths[[layout]]
+    output_scaling <- output_width / output_widths[["full"]]
+    ggsave(
+      file.path(plot_dirs[[layout]], filename),
+      plot,
+      width = output_width,
+      height = output_width / aspect_ratio,
+      units = "in",
+      dpi = 300,
+      device = ragg::agg_png,
+      scaling = output_scaling,
+      bg = "white"
+    )
+  }
+}
 
 # Load data
 anage <- read.csv("CourseData/anage_data.csv") |>
@@ -28,14 +52,10 @@ bad_plot <- ggplot(plot_dat, aes(Mass, BMR)) +
   geom_point(size = 4) +
   labs(title = "BMR vs Mass", x = "Mass", y = "BMR") +
   theme_gray(base_size = 16)
-bad_plot
 
 # The oversized canvas makes the labels look too small when the image is
 # scaled to fit a slide.
-ggsave(
-  file.path(plot_dir, "01_bad_plot.png"), bad_plot,
-  width = 40, height = 28, units = "cm", dpi = 300, bg = "white"
-)
+save_lecture_versions("01_bad_plot.png", bad_plot, aspect_ratio = 40 / 28)
 
 # FIGURE 2 — improved plot
 good_plot <- ggplot(plot_dat, aes(Mass, BMR, colour = Class)) +
@@ -48,12 +68,8 @@ good_plot <- ggplot(plot_dat, aes(Mass, BMR, colour = Class)) +
        colour = "Class") +
   theme_classic(base_size = 16) +
   theme(legend.position = "top")
-good_plot
 
-ggsave(
-  file.path(plot_dir, "02_good_plot.png"), good_plot,
-  width = 18, height = 12, units = "cm", dpi = 300, bg = "white"
-)
+save_lecture_versions("02_good_plot.png", good_plot, aspect_ratio = 18 / 12)
 
 # FIGURE 3 — raw versus log scales
 p_raw <- ggplot(plot_dat, aes(Mass, BMR, colour = Class)) +
@@ -67,11 +83,11 @@ p_raw <- ggplot(plot_dat, aes(Mass, BMR, colour = Class)) +
 
 p_log <- p_raw + scale_x_log10() + scale_y_log10()
 scale_comparison <- p_raw + p_log + plot_annotation(tag_levels = "A")
-scale_comparison
 
-ggsave(
-  file.path(plot_dir, "03_raw_vs_log_scales.png"), scale_comparison,
-  width = 28, height = 12, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "03_raw_vs_log_scales.png",
+  scale_comparison,
+  aspect_ratio = 28 / 12
 )
 
 # FIGURE 4 — variable names versus reader-facing labels
@@ -88,11 +104,11 @@ p_names_good <- p_names_bad +
        colour = "Class")
 
 label_comparison <- p_names_bad + p_names_good
-label_comparison
 
-ggsave(
-  file.path(plot_dir, "04_axis_label_comparison.png"), label_comparison,
-  width = 28, height = 12, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "04_axis_label_comparison.png",
+  label_comparison,
+  aspect_ratio = 28 / 12
 )
 
 # FIGURE 5 — purposeful aesthetics
@@ -106,11 +122,11 @@ p_aesthetics <- ggplot(plot_dat,
        colour = "Class", shape = "Class") +
   theme_classic(base_size = 16) +
   theme(legend.position = "top")
-p_aesthetics
 
-ggsave(
-  file.path(plot_dir, "05_purposeful_aesthetics.png"), p_aesthetics,
-  width = 18, height = 12, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "05_purposeful_aesthetics.png",
+  p_aesthetics,
+  aspect_ratio = 18 / 12
 )
 
 # FIGURE 6 — categorical, sequential and diverging colour
@@ -145,11 +161,11 @@ p_div <- ggplot(div_dat, aes(x, y, colour = effect)) +
   theme_classic(base_size = 13)
 
 colour_scale_comparison <- p_cat + p_seq + p_div
-colour_scale_comparison
 
-ggsave(
-  file.path(plot_dir, "06_colour_scale_types.png"), colour_scale_comparison,
-  width = 32, height = 11, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "06_colour_scale_types.png",
+  colour_scale_comparison,
+  aspect_ratio = 32 / 11
 )
 
 # FIGURE 6B — colour scales matched to the meaning of the variable
@@ -266,11 +282,11 @@ colour_scale_guide <- p_cat_b + p_seq_b + p_div_b +
       plot.subtitle = element_text(size = 12, colour = "grey35")
     )
   )
-colour_scale_guide
 
-ggsave(
-  file.path(plot_dir, "06B_colour_scale_types.png"), colour_scale_guide,
-  width = 33, height = 12, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "06B_colour_scale_types.png",
+  colour_scale_guide,
+  aspect_ratio = 33 / 12
 )
 
 # FIGURE 6C — vertically stacked version for presentation slides
@@ -287,12 +303,11 @@ colour_scale_guide_vertical <- (p_cat_b / p_seq_b / p_div_b) +
       plot.subtitle = element_text(size = 12, colour = "grey35")
     )
   )
-colour_scale_guide_vertical
 
-ggsave(
-  file.path(plot_dir, "06C_colour_scale_types_vertical.png"),
+save_lecture_versions(
+  "06C_colour_scale_types_vertical.png",
   colour_scale_guide_vertical,
-  width = 18, height = 24, units = "cm", dpi = 300, bg = "white"
+  aspect_ratio = 18 / 24
 )
 
 # FIGURE 7 — clutter/theme comparison
@@ -319,11 +334,11 @@ p_guides <- base_plot +
   labs(title = "Minimal + useful guides")
 
 theme_comparison <- p_default + p_minimal + p_guides
-theme_comparison
 
-ggsave(
-  file.path(plot_dir, "07_theme_comparison.png"), theme_comparison,
-  width = 32, height = 11, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "07_theme_comparison.png",
+  theme_comparison,
+  aspect_ratio = 32 / 11
 )
 
 # FIGURE 8 — theme montage
@@ -350,11 +365,11 @@ theme_montage <- wrap_plots(
     plot.title = element_text(size = 10),
     legend.position = "none"
   )
-theme_montage
 
-ggsave(
-  file.path(plot_dir, "08_theme_montage.png"), theme_montage,
-  width = 30, height = 24, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "08_theme_montage.png",
+  theme_montage,
+  aspect_ratio = 30 / 24
 )
 
 # FIGURE 8B — selected themes from the ggthemes package
@@ -375,11 +390,11 @@ ggthemes_montage <- wrap_plots(
     plot.title = element_text(size = 10),
     legend.position = "none"
   )
-ggthemes_montage
 
-ggsave(
-  file.path(plot_dir, "08B_ggthemes_montage.png"), ggthemes_montage,
-  width = 30, height = 24, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "08B_ggthemes_montage.png",
+  ggthemes_montage,
+  aspect_ratio = 30 / 24
 )
 
 # FIGURE 9 — coherent multi-panel figure
@@ -400,24 +415,26 @@ multi_panel <- (p_bmr / p_mass_specific) +
   plot_layout(guides = "collect") +
   plot_annotation(tag_levels = "A") &
   theme(legend.position = "bottom")
-multi_panel
 
-ggsave(
-  file.path(plot_dir, "09_multi_panel.png"), multi_panel,
-  width = 16, height = 22, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "09_multi_panel.png",
+  multi_panel,
+  aspect_ratio = 16 / 22
 )
 
 # FIGURE 10 — same figure at two output sizes
 publication_plot <- good_plot
 
-ggsave(
-  file.path(plot_dir, "10_publication_wide_18cm.png"), publication_plot,
-  width = 18, height = 12, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "10_publication_wide_18cm.png",
+  publication_plot,
+  aspect_ratio = 18 / 12
 )
 
-ggsave(
-  file.path(plot_dir, "10_publication_column_8cm.png"), publication_plot,
-  width = 8, height = 6, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "10_publication_column_8cm.png",
+  publication_plot,
+  aspect_ratio = 8 / 6
 )
 
 # FIGURE 11 — deliberately poor plot for final student challenge
@@ -435,9 +452,9 @@ challenge_plot <- ggplot(plot_dat, aes(Mass, BMR, colour = Class)) +
     panel.grid.minor = element_line(linewidth = 0.8),
     legend.position = "right"
   )
-challenge_plot
 
-ggsave(
-  file.path(plot_dir, "11_student_challenge.png"), challenge_plot,
-  width = 18, height = 12, units = "cm", dpi = 300, bg = "white"
+save_lecture_versions(
+  "11_student_challenge.png",
+  challenge_plot,
+  aspect_ratio = 18 / 12
 )
