@@ -8,6 +8,7 @@ Run each generator from the repository root:
 ```r
 source("lecture_figures/randomisation_tests/generate_figures.R")
 source("lecture_figures/pimp_your_plots/generate_figures.R")
+source("lecture_figures/statistics_roadmap/generate_figures.R")
 ```
 
 Each lecture directory contains:
