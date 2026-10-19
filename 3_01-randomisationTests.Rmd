@@ -32,7 +32,7 @@ ch$Treatment <- factor(ch$Treatment, levels = c("Control", "Drug"))
 
 Let's first take a look at the data by plotting it. I will plot a boxplot and add jittered points for clarity.
 
-```{r 3-01-randomisationTests-3, echo = -1, cache=TRUE}
+```{r 3-01-randomisationTests-3, echo = -1}
 set.seed(42)
 ggplot(ch, aes(x = Treatment, y = Cholesterol)) +
   geom_boxplot() +
@@ -87,7 +87,7 @@ The command below uses `mutate()` and `sample()` to shuffle the `Treatment` vari
 
 Let's try that one time:
 
-```{r 3-01-randomisationTests-7, warning=FALSE, cache=TRUE, echo = -1}
+```{r 3-01-randomisationTests-7, warning=FALSE, echo = -1}
 set.seed(123)
 
 ch %>%
@@ -99,7 +99,7 @@ ch %>%
   diff()
 ```
 
-```{r 3-01-randomisationTests-8, warning=FALSE, cache=TRUE, echo = FALSE}
+```{r 3-01-randomisationTests-8, warning=FALSE, echo = FALSE}
 set.seed(123)
 
 shuffDiff_temp <- ch %>%
@@ -127,7 +127,7 @@ Doing one randomisation is not much help, so we need to repeat the process many 
 We can do this easily in R using `replicate()`, which is a wrapper that tells R to repeat a command `n` times and store the results in a vector.
 Let's try it first 10 times to see how it works:
 
-```{r 3-01-randomisationTests-9, warning=FALSE, cache=TRUE, echo=-1}
+```{r 3-01-randomisationTests-9, warning=FALSE, echo=-1}
 set.seed(123)
 replicate(
   10,
@@ -145,7 +145,7 @@ You can see that `replicate()` performs the shuffle and recalculates the differe
 For the main analysis, we use 10,000 randomisations. We store that number as `B`, so the simulation and p-value calculation use the same value. The data frame contains one shuffled difference from each randomisation.
 
 
-```{r 3-01-randomisationTests-10, replicate, warning=FALSE, cache=TRUE, echo = -1}
+```{r 3-01-randomisationTests-10, warning=FALSE, echo = -1}
 set.seed(123)
 B <- 10000
 
@@ -349,7 +349,7 @@ The logic of this test is that, under the sign-flipping null model, a within-sub
 
 We randomly multiply each observed difference by +1 or -1. Each individual's two measurements remain linked, the magnitude of each difference is preserved, and differences are not exchanged between subjects. `replace = TRUE` is required because every individual's sign is chosen independently and all combinations of positive and negative signs must be possible.
 
-```{r 3-01-randomisationTests-23, echo =-1, cache = TRUE}
+```{r 3-01-randomisationTests-23, echo =-1}
 set.seed(123)
 head(anChanges)
 
@@ -369,7 +369,7 @@ head(anShuffled)
 
 We need to calculate the mean of this shuffled vector. We can do this by `pull` to get the vector, and then `mean`.
 
-```{r 3-01-randomisationTests-25, echo = -1, cache = TRUE}
+```{r 3-01-randomisationTests-25, echo = -1}
 set.seed(123)
 anChanges %>%
   mutate(sign = sample(c(1, -1),
@@ -383,7 +383,7 @@ anChanges %>%
 
 Now we build a null distribution of mean changes by repeating these three steps 10,000 times: choose signs, multiply the differences by those signs, and calculate the mean shuffled difference. We again store the number of randomisations in `B`.
 
-```{r 3-01-randomisationTests-26, cache=TRUE, echo=-1}
+```{r 3-01-randomisationTests-26, echo=-1}
 set.seed(123)
 B <- 10000
 
