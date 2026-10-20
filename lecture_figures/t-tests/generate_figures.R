@@ -16,8 +16,9 @@
 # Object and file names use the slide numbers of the current lecture deck
 # (BB852_t_tests_Context_Data_Analysis), e.g. plots$slide_23_reaction_times.
 #
-# Labels use plotmath (e.g. m^3, H[0], mu) rather than typed Unicode symbols,
-# so they render on any operating system and in any font.
+# Labels use plotmath (e.g. m^3, H[0], mu) and \u escapes (e.g. \u00b5, the
+# micro sign) rather than typed Unicode symbols, so the script stays plain ASCII.
+# Pollution values are concentrations in air, in micrograms per cubic metre.
 
 
 # Load packages -----------------------------------------------------------
@@ -136,7 +137,7 @@ save_bb852 <- function(plot, filename, layout = "half", bg = bb852$bg) {
 
 # Data ----------------------------------------------------------------------
 
-pollution <- data.frame(mgm3 = c(
+pollution <- data.frame(ugm3 = c(
   105, 196, 226, 81, 156, 201, 142, 149, 191, 192,
   178, 185, 231, 76, 207, 138, 146, 175, 114, 155
 ))
@@ -166,7 +167,7 @@ reaction <- data.frame(
 )
 
 # Compute results directly rather than typing rounded values into figures.
-pollution_test <- t.test(pollution$mgm3, mu = threshold, alternative = "greater")
+pollution_test <- t.test(pollution$ugm3, mu = threshold, alternative = "greater")
 paired_test <- t.test(wide$machete, wide$bow, paired = TRUE)
 reaction_test <- t.test(Reaction ~ Gender, data = reaction, var.equal = FALSE)
 mean_difference_ms <- unname(reaction_test$estimate[1] - reaction_test$estimate[2]) * 1000
@@ -207,14 +208,14 @@ plots$slide_01_cover <- ggplot(cover_data, aes(tool, amount, group = subjectID,
 # Deterministic vertical offsets reproduce the presentation without random jitter.
 
 pollution$offset <- .46 + ((seq_len(nrow(pollution)) - 1) %% 5) * .02
-plots$slide_06_pollution <-ggplot(pollution, aes(mgm3, offset)) +
+plots$slide_06_pollution <-ggplot(pollution, aes(ugm3, offset)) +
   annotate("segment", x = threshold, xend = threshold, y = .15, yend = .85,
            colour = bb852$coral, linewidth = .55) +
   geom_point(colour = bb852$slate, size = 2.4) +
   scale_x_continuous(limits = c(50, 250), breaks = seq(50, 250, 50),
                      expand = expansion(mult = 0)) +
   scale_y_continuous(limits = c(0, 1), expand = expansion(mult = 0)) +
-  labs(x = expression("Pollution (mg/m"^3 * ")"), y = NULL) +
+  labs(x = expression("Pollution (\u00b5g/m"^3 * ")"), y = NULL) +
   theme_bb852() + no_y_axis()
 
 
@@ -225,9 +226,9 @@ plots$slide_06_pollution <-ggplot(pollution, aes(mgm3, offset)) +
 # are densities so they share the y-axis. The curve is NOT a fit to the raw
 # data and NOT the null distribution used for the test.
 
-pollution_sd <- sd(pollution$mgm3)
+pollution_sd <- sd(pollution$ugm3)
 pollution_se <- pollution_sd / sqrt(nrow(pollution))
-pollution_xbar <- mean(pollution$mgm3)
+pollution_xbar <- mean(pollution$ugm3)
 x_grid <- seq(50, 250, by = .25)
 se_curve <- data.frame(
   x = x_grid,
@@ -235,7 +236,7 @@ se_curve <- data.frame(
 )
 plots$slide_07_uncertainty_in_mean <- ggplot() +
   geom_histogram(
-    data = pollution, aes(mgm3, after_stat(density)),
+    data = pollution, aes(ugm3, after_stat(density)),
     breaks = seq(50, 250, 25), closed = "right",
     fill = "#C7CCD4", colour = bb852$bg, linewidth = .6
   ) +
@@ -251,7 +252,7 @@ plots$slide_07_uncertainty_in_mean <- ggplot() +
   scale_y_continuous(breaks = seq(0, .04, .01),
                      labels = function(z) sprintf("%.2f", z),
                      expand = expansion(mult = c(0, .05))) +
-  labs(x = expression("Pollution (mg/m"^3 * ")"), y = "Density") +
+  labs(x = expression("Pollution (\u00b5g/m"^3 * ")"), y = "Density") +
   theme_bb852() +
   theme(panel.grid.major.y = element_blank())
 
@@ -262,7 +263,7 @@ plots$slide_07_uncertainty_in_mean <- ggplot() +
 
 same_mean <- 130
 se_values <- c(10, 25)
-se_labels <- sprintf('"SE = %d mg/m"^3', se_values)
+se_labels <- sprintf('"SE = %d \u00b5g/m"^3', se_values)
 se_panels <- do.call(rbind, lapply(seq_along(se_values), function(i) {
   data.frame(
     x = x_grid,
@@ -281,7 +282,7 @@ plots$slide_09_same_mean_different_se <- ggplot(se_panels, aes(x, density)) +
   scale_x_continuous(limits = c(50, 250), breaks = seq(50, 250, 50),
                      expand = expansion(mult = 0)) +
   scale_y_continuous(expand = expansion(mult = c(0, .1))) +
-  labs(x = expression("Estimated mean = 130 mg/m"^3 * " in both panels"),
+  labs(x = expression("Estimated mean = 130 \u00b5g/m"^3 * " in both panels"),
        y = NULL) +
   theme_bb852() + no_y_axis() +
   theme(
@@ -367,7 +368,7 @@ plots$slide_14_lower_bound <- ggplot() +
   scale_x_continuous(limits = c(80, 220), breaks = seq(80, 220, 20),
                      expand = expansion(mult = 0)) +
   scale_y_continuous(limits = c(0, 1), expand = expansion(mult = 0)) +
-  labs(x = expression("Population mean pollution (mg/m"^3 * ")"), y = NULL) +
+  labs(x = expression("Population mean pollution (\u00b5g/m"^3 * ")"), y = NULL) +
   theme_bb852() + no_y_axis()
 
 

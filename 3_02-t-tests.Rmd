@@ -10,7 +10,7 @@ We will cover the following:
 
 In this theory section I focus on the one-sample t-test, but the concepts apply to the other types of t-test. 
 
-The one-sample t-test is used to compare the mean of a sample to some fixed value. For example, we might want to compare pollution levels (e.g. in mg/m^3^) in a sample to some acceptable threshold value to help us decide whether we need to take action to prevent or clean up pollution.
+The one-sample t-test is used to compare the mean of a sample to some fixed value. For example, we might want to compare the concentration of an air pollutant (e.g. in µg/m^3^) in a sample to some acceptable threshold value to help us decide whether we need to take action to prevent or clean up pollution.
 
 One of the assumptions of t-tests (and many other tests/models) is that the **residuals** (the deviations of each observation from its group mean) come from a normal distribution. For a t-test, in practice, this means that the measured values **for each group** should be approximately normally distributed (for a paired t-test, it is the **differences** within pairs that should be approximately normal). Another key assumption is that the observations (or, for a paired test, the pairs) are **independent** of each other.
 
@@ -22,7 +22,7 @@ The mean gives an estimate of location, and the standard error of the mean (calc
 
 The t-test then works by comparing the estimated mean (and its uncertainty) with some fixed value. Sometimes you are asking "is my mean *different* from the value?", other times you are asking "is my mean less than/greater than the value?". This depends on the hypothesis. The default that R uses is that it tests whether the mean of your distribution is *different* to the fixed value, but in many cases you should be framing a **directional** hypothesis.
 
-It is helpful to visualise this, so some examples of the pollution threshold test are shown in the figure below (Figure \@ref(fig:3-02-t-tests-1) ). The curves illustrate the uncertainty in our estimate of the mean pollution level from some data (e.g. each curve might represent samples from different locations): each is centred on an estimated mean, and its width reflects the standard error. We are interested in whether the mean values (the vertical dashed lines) are significantly **greater** than the threshold of 100 mg/m^3^ (solid vertical black line) (this gives us a directional hypothesis).
+It is helpful to visualise this, so some examples of the pollution threshold test are shown in the figure below (Figure \@ref(fig:3-02-t-tests-1) ). The curves illustrate the uncertainty in our estimate of the mean pollution level from some data (e.g. each curve might represent samples from different locations): each is centred on an estimated mean, and its width reflects the standard error. We are interested in whether the mean values (the vertical dashed lines) are significantly **greater** than the threshold of 100 µg/m^3^ (solid vertical black line) (this gives us a directional hypothesis).
 
 Formally we do this by establishing two hypotheses about the **population** mean, $\mu$: a **null hypothesis** and an **alternative hypothesis**. In this case, the null hypothesis (H~0~) is that the population mean is less than or equal to the threshold value ($\mu \le 100$). The alternative hypothesis (H~1~) is that the population mean is **greater** than this threshold value ($\mu > 100$). Note that hypotheses are statements about the population, not about the sample, and that the word "significant" does not belong in a hypothesis: significance is a property of the result of the test.
 
@@ -44,7 +44,7 @@ A <- ggplot(data = data.frame(x = c(0, 350)), aes(x)) +
     colour = "red"
   ) +
   ylab("Probability density") +
-  xlab(expression(Pollution ~ level ~ mg / m^3)) +
+  xlab(expression(Pollution ~ level ~ mu * g / m^3)) +
   scale_y_continuous(breaks = NULL) +
   geom_vline(xintercept = 100, linetype = "solid") +
   geom_segment(
@@ -75,7 +75,7 @@ B <- ggplot(data = data.frame(x = c(0, 350)), aes(x)) +
     colour = "red"
   ) +
   ylab("Probability density") +
-  xlab(expression(Pollution ~ level ~ mg / m^3)) +
+  xlab(expression(Pollution ~ level ~ mu * g / m^3)) +
   scale_y_continuous(breaks = NULL) +
   geom_vline(xintercept = 100, linetype = "solid") +
   geom_segment(
@@ -130,10 +130,10 @@ Enough theory. Here's how you would apply such a test in R.
 Remember to load the `dplyr`, `tidyr`, `magrittr` and `ggplot2` packages, and to set your working directory correctly.
 ```
 
-Firstly, let's load some data. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.
+Firstly, let's load some data: 20 measurements of the concentration of an air pollutant, in µg/m^3^. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.
 
 ```{r 3-02-t-tests-4}
-pollution <- data.frame(mgm3 = c(
+pollution <- data.frame(ugm3 = c(
   105, 196, 226, 81, 156, 201, 142, 149, 191, 192,
   178, 185, 231, 76, 207, 138, 146, 175, 114, 155
 ))
@@ -142,7 +142,7 @@ pollution <- data.frame(mgm3 = c(
 First I plot the data (Figure \@ref(fig:3-02-t-tests-5)). One reason for doing this is to check that the data look approximately normally distributed. These data are slightly left-skewed but they are close enough.
 
 ```{r 3-02-t-tests-5, fig.width=4,fig.height=3,fig.align='center',fig.cap="Histogram of the pollution data."}
-ggplot(pollution, aes(x = mgm3)) +
+ggplot(pollution, aes(x = ugm3)) +
   geom_histogram(bins = 8) +
   geom_vline(xintercept = 100)
 ```
@@ -150,12 +150,12 @@ ggplot(pollution, aes(x = mgm3)) +
 Now we can run a t-test in R like this. The command is simple - the arguments are the data (`x`), the fixed value you are comparing the data to (`mu`), and the alternative hypothesis (`alternative`). This can take values of "`two.sided`", "`less`" or "`greater`" (the default is `two.sided`). In this example, the alternative hypothesis is that the mean of our sample is greater than the threshold of 100.
 
 ```{r 3-02-t-tests-6}
-t.test(x = pollution$mgm3, mu = 100, alternative = "greater")
+t.test(x = pollution$ugm3, mu = 100, alternative = "greater")
 ```
 
 The output of the model tells us (1) what type of t-test is being fitted ("`One Sample t-test`"). Then it gives some values for the t-statistic, the degrees of freedom and the p-value. The model output also tells us that the alternative hypothesis "**true mean is greater than 100**". Because the p-value is very small (p<0.05) we can reject the null hypothesis: the data provide strong evidence that the population mean is greater than 100.  Finally, the output gives you the estimate of the mean and a 95% confidence interval for it. A confidence interval is a range of plausible values for the population mean: if we repeated the sampling many times, 95% of intervals calculated this way would contain the true mean. Because we asked a one-sided question ("greater than"), R gives a one-sided interval: the lower bound is 145.08 and the upper bound is `Inf` (infinity), meaning that the procedure gives no finite upper limit. The whole interval lies above 100, which agrees with the small p-value.
 
-We could report these results like this: "*the mean value of the sample was 162.2 mg/m^3^ (one-sided 95% lower confidence bound: 145.1 mg/m^3^), which is significantly greater than the threshold of 100 mg/m^3^ (one-sample t-test: t = 6.28, df = 19, p = 2.5 x 10^-6^)*".
+We could report these results like this: "*the mean value of the sample was 162.2 µg/m^3^ (one-sided 95% lower confidence bound: 145.1 µg/m^3^), which is significantly greater than the threshold of 100 µg/m^3^ (one-sample t-test: t = 6.28, df = 19, p = 2.5 x 10^-6^)*".
 
 
 ## Doing it "by hand" - where does the t-statistic come from?
@@ -169,7 +169,7 @@ Here goes... I first create a vector (`x`) of the values to save typing. Then I 
 
 ```{r 3-02-t-tests-7}
 # First create a vector of the values
-x <- pollution$mgm3
+x <- pollution$ugm3
 
 # mean
 mean(x)
