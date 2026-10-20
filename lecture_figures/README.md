@@ -9,6 +9,7 @@ Run each generator from the repository root:
 source("lecture_figures/randomisation_tests/generate_figures.R")
 source("lecture_figures/pimp_your_plots/generate_figures.R")
 source("lecture_figures/statistics_roadmap/generate_figures.R")
+source("lecture_figures/t-tests/generate_figures.R")
 ```
 
 Each lecture directory contains:
@@ -17,4 +18,8 @@ Each lecture directory contains:
 - `output/full/`: figures prepared for full-width placement.
 - `output/half/`: figures prepared for half-width placement.
 
-Both generators write PNG files only.
+The t-tests generator writes each figure once, at the size of its slide
+placeholder, into `output/full/`, `output/half/`, `output/takeaway/` or
+`output/cover/`.
+
+All generators write PNG files only.
