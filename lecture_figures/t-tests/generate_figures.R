@@ -348,23 +348,42 @@ plots$slide_12_one_and_two_sided <-ggplot(two_panels, aes(t, density)) +
   theme(panel.spacing = grid::unit(.35, "in"))
 
 
-# Slide 14: one-sided lower confidence bound ---------------------------------
-# The interval is [L, Inf). An arrowhead at the display limit signals that the
-# interval has no finite upper end.
+# Slide 14: one-sided versus two-sided 95% confidence intervals ---------------
+# The one-sided test (alternative = "greater") gives the interval [L, Inf): an
+# arrowhead at the display limit signals that it has no finite upper end. The
+# two-sided interval from t.test(..., mu = 100) is shown below it for contrast.
 
 lower_bound <- unname(pollution_test$conf.int[1])
 pollution_mean <- unname(pollution_test$estimate)
+two_sided_ci <- unname(t.test(pollution$ugm3, mu = threshold)$conf.int)
+y_one <- .66
+y_two <- .30
+label_one <- sprintf('"One-sided 95%%: [%.1f, " * infinity * ")"', lower_bound)
+label_two <- sprintf('"Two-sided 95%%: %.1f to %.1f"', two_sided_ci[1], two_sided_ci[2])
 plots$slide_14_lower_bound <- ggplot() +
-  annotate("segment", x = threshold, xend = threshold, y = .2, yend = .8,
+  annotate("segment", x = threshold, xend = threshold, y = .08, yend = .92,
            colour = bb852$coral, linewidth = .55) +
-  annotate("segment", x = lower_bound, xend = 219, y = .5, yend = .5,
+  # One-sided interval: lower bound only, open towards +Inf
+  annotate("segment", x = lower_bound, xend = 219, y = y_one, yend = y_one,
            colour = bb852$slate, linewidth = 1,
            arrow = grid::arrow(length = grid::unit(.12, "in"), type = "closed")) +
-  annotate("segment", x = lower_bound, xend = lower_bound, y = .43, yend = .57,
+  annotate("segment", x = lower_bound, xend = lower_bound,
+           y = y_one - .06, yend = y_one + .06,
            colour = bb852$slate, linewidth = .8) +
-  annotate("point", x = pollution_mean, y = .5, colour = bb852$coral, size = 2.7) +
-  annotate("text", x = 183, y = .6, label = '"Continues to +" * infinity',
-           parse = TRUE, family = bb852_font, colour = bb852$slate, size = 5) +
+  annotate("point", x = pollution_mean, y = y_one, colour = bb852$coral, size = 2.7) +
+  annotate("text", x = lower_bound - 3, y = y_one + .15, label = label_one,
+           parse = TRUE, hjust = 0, family = bb852_font, colour = bb852$slate,
+           size = 5) +
+  # Two-sided interval: both limits
+  annotate("segment", x = two_sided_ci[1], xend = two_sided_ci[2],
+           y = y_two, yend = y_two, colour = bb852$grey, linewidth = 1) +
+  annotate("segment", x = two_sided_ci, xend = two_sided_ci,
+           y = y_two - .06, yend = y_two + .06,
+           colour = bb852$grey, linewidth = .8) +
+  annotate("point", x = pollution_mean, y = y_two, colour = bb852$coral, size = 2.7) +
+  annotate("text", x = two_sided_ci[1] - 3, y = y_two + .15, label = label_two,
+           parse = TRUE, hjust = 0, family = bb852_font, colour = bb852$grey,
+           size = 5) +
   scale_x_continuous(limits = c(80, 220), breaks = seq(80, 220, 20),
                      expand = expansion(mult = 0)) +
   scale_y_continuous(limits = c(0, 1), expand = expansion(mult = 0)) +
