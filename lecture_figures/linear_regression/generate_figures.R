@@ -18,8 +18,8 @@
 # Run from the repository root:
 # source("lecture_figures/linear_regression/generate_figures.R")
 #
-# Each figure is written as PNG (300 dpi) and PDF at the exact size of its
-# BB852 slide placeholder, into lecture_figures/linear_regression/output/<layout>/.
+# Each content figure is written as a full- and half-width PNG (300 dpi) into
+# lecture_figures/linear_regression/output/<layout>/.
 # R output text is written to lecture_figures/linear_regression/output/text/.
 #
 # Labels use plotmath (e.g. R^2, beta[0]) rather than typed Unicode symbols,
@@ -94,6 +94,7 @@ bb852_sizes <- list(
 )
 
 output_root <- file.path("lecture_figures", "linear_regression", "output")
+unlink(output_root, recursive = TRUE)
 
 save_bb852 <- function(plot, filename, layout = "full", bg = bb852$bg) {
   size <- bb852_sizes[[layout]]
@@ -103,9 +104,6 @@ save_bb852 <- function(plot, filename, layout = "full", bg = bb852$bg) {
   ggsave(file.path(output_directory, paste0(filename, ".png")), plot,
          width = size[1], height = size[2], units = "in", dpi = 300,
          device = ragg::agg_png, bg = bg)
-  ggsave(file.path(output_directory, paste0(filename, ".pdf")), plot,
-         width = size[1], height = size[2], units = "in",
-         device = cairo_pdf, bg = bg)
   invisible(filename)
 }
 
@@ -117,6 +115,7 @@ write_output <- function(expr_text, filename) {
 }
 
 plots <- list()
+half_plots <- list()
 
 
 # Data and model ----------------------------------------------------------
@@ -183,7 +182,6 @@ plots$cover <- ggplot(morph, aes(HandLength, Height)) +
     axis.text        = element_text(colour = bb852$light),
     plot.margin      = margin(150, 30, 130, 20)
   )
-save_bb852(plots$cover, "01_cover", "cover", bg = bb852$cover)
 
 
 # 02 The data and a fitted straight line -----------------------------------
@@ -194,7 +192,6 @@ plots$hand_height_line <- ggplot(morph, aes(HandLength, Height)) +
   x_scale + y_scale +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
-save_bb852(plots$hand_height_line, "02_hand_height_line", "takeaway")
 
 
 # 03 The equation of a straight line (redrawn from the book) ---------------
@@ -229,9 +226,12 @@ line_panel <- function(a, b, label, label_y) {
     labs(x = "x", y = "y") +
     theme_bb852()
 }
-plots$straight_lines <- line_panel(2, 1, "y = 2x + 1", -4) +
+straight_line_panels <- list(
+  line_panel(2, 1, "y = 2x + 1", -4),
   line_panel(-2.3, 11, "y = -2.3x + 11", 14)
-save_bb852(plots$straight_lines, "03_straight_line_equations", "full")
+)
+plots$straight_lines <- wrap_plots(straight_line_panels, nrow = 1)
+half_plots$straight_lines <- wrap_plots(straight_line_panels, ncol = 1)
 
 
 # 04 Least squares: which line fits best? -----------------------------------
@@ -272,10 +272,12 @@ ls_panel <- function(i, show_rss) {
     theme_bb852(base_size = 16) + panel_label() +
     theme(axis.title.x = element_text(size = 15))
 }
-plots$least_squares_question <- wrap_plots(lapply(1:4, ls_panel, show_rss = FALSE), nrow = 1)
-plots$least_squares_answer   <- wrap_plots(lapply(1:4, ls_panel, show_rss = TRUE), nrow = 1)
-save_bb852(plots$least_squares_question, "04a_least_squares_question", "full")
-save_bb852(plots$least_squares_answer, "04b_least_squares_answer", "full")
+least_squares_question_panels <- lapply(1:4, ls_panel, show_rss = FALSE)
+least_squares_answer_panels <- lapply(1:4, ls_panel, show_rss = TRUE)
+plots$least_squares_question <- wrap_plots(least_squares_question_panels, nrow = 1)
+plots$least_squares_answer <- wrap_plots(least_squares_answer_panels, nrow = 1)
+half_plots$least_squares_question <- wrap_plots(least_squares_question_panels, ncol = 2)
+half_plots$least_squares_answer <- wrap_plots(least_squares_answer_panels, ncol = 2)
 
 
 # 05 Partitioning variation: total = explained + residual -------------------
@@ -301,13 +303,14 @@ ss_panel <- function(yend_var, ystart_var, title, line = c("mean", "fit")) {
     theme_bb852(base_size = 16) + panel_label() +
     theme(axis.title.x = element_text(size = 15))
 }
-plots$ss_partition <-
-  (ss_panel("mean", "Height", sprintf("Total SS = %s", format(round(ss_total), big.mark = ",")), "mean") +
-     labs(y = height_lab)) +
-  ss_panel("mean", "fitted", sprintf("Explained SS = %s", format(round(ss_explained), big.mark = ",")), "fit") +
-  ss_panel("fitted", "Height", sprintf("Residual SS = %s", format(round(ss_residual), big.mark = ",")), "fit") +
-  plot_layout(nrow = 1)
-save_bb852(plots$ss_partition, "05_ss_partition", "full")
+ss_panels <- list(
+  ss_panel("mean", "Height", sprintf("Total SS = %s", format(round(ss_total), big.mark = ",")), "mean") +
+    labs(y = height_lab),
+  ss_panel("mean", "fitted", sprintf("Explained SS = %s", format(round(ss_explained), big.mark = ",")), "fit"),
+  ss_panel("fitted", "Height", sprintf("Residual SS = %s", format(round(ss_residual), big.mark = ",")), "fit")
+)
+plots$ss_partition <- wrap_plots(ss_panels, nrow = 1)
+half_plots$ss_partition <- wrap_plots(ss_panels, ncol = 1)
 
 
 # 06 What does "significant" mean for slope and intercept? (SIMULATED) -----
@@ -355,8 +358,9 @@ sig_panel <- function(pan) {
     labs(x = "x", y = if (pan == "A") "y" else NULL, title = unique(d$title)) +
     theme_bb852(base_size = 16) + panel_label()
 }
-plots$significance_cases <- wrap_plots(lapply(c("A", "B", "C", "D"), sig_panel), nrow = 1)
-save_bb852(plots$significance_cases, "06_significance_cases", "full")
+significance_panels <- lapply(c("A", "B", "C", "D"), sig_panel)
+plots$significance_cases <- wrap_plots(significance_panels, nrow = 1)
+half_plots$significance_cases <- wrap_plots(significance_panels, ncol = 2)
 
 
 # 07 Diagnostic plots for the hand model ------------------------------------
@@ -396,8 +400,9 @@ d4 <- ggplot(diag, aes(leverage, std_resid)) +
   geom_hline(yintercept = 0, colour = bb852$grey, linetype = "dashed", linewidth = 0.6) +
   diag_points + diag_colours +
   labs(x = "Leverage", y = "Std. residuals", title = "Leverage") + diag_theme
-plots$diagnostics <- d1 + d2 + d3 + d4 + plot_layout(nrow = 1)
-save_bb852(plots$diagnostics, "07_diagnostics_hand_model", "full")
+diagnostic_panels <- list(d1, d2, d3, d4)
+plots$diagnostics <- wrap_plots(diagnostic_panels, nrow = 1)
+half_plots$diagnostics <- wrap_plots(diagnostic_panels, ncol = 2)
 
 
 # 07b The question that matters: how steep is the slope? -------------------
@@ -419,8 +424,9 @@ plots$slope_ci <- ggplot(curve_df, aes(slope, density)) +
            label = "Null hypothesis:\nslope = 0") +
   geom_area(fill = bb852$light, alpha = 0.5) +
   geom_line(colour = bb852$slate, linewidth = 1.2) +
-  annotate("errorbarh", y = peak * 0.08, xmin = slope_ci[1], xmax = slope_ci[2],
-           height = peak * 0.06, colour = bb852$coral, linewidth = 1.2) +
+  annotate("errorbar", y = peak * 0.08, xmin = slope_ci[1], xmax = slope_ci[2],
+           height = peak * 0.06, orientation = "y", colour = bb852$coral,
+           linewidth = 1.2) +
   annotate("point", x = b1, y = peak * 0.08, colour = bb852$coral, size = 4) +
   annotate("text", x = b1, y = peak * 1.08, size = 5.6, family = bb852_font,
            colour = bb852$coral,
@@ -430,7 +436,6 @@ plots$slope_ci <- ggplot(curve_df, aes(slope, density)) +
   labs(x = "Slope (cm of height per cm of hand length)", y = NULL) +
   theme_bb852() +
   theme(axis.text.y = element_blank(), panel.grid.major.y = element_blank())
-save_bb852(plots$slope_ci, "07b_slope_estimate", "takeaway")
 
 
 # 08 What problems look like in a residual plot (SIMULATED) ----------------
@@ -455,12 +460,13 @@ resid_panel <- function(dat, title, highlight = FALSE) {
     theme(axis.text = element_blank(), panel.grid.major = element_blank(),
           axis.line = element_line(colour = bb852$axis, linewidth = 0.4))
 }
-plots$residual_problems <-
-  resid_panel(sim_good, "No pattern: assumptions OK") +
-  resid_panel(sim_curve, "Curve: relationship not linear", TRUE) +
-  resid_panel(sim_funnel, "Funnel: variance not constant", TRUE) +
-  plot_layout(nrow = 1)
-save_bb852(plots$residual_problems, "08_residual_problems", "full")
+residual_panels <- list(
+  resid_panel(sim_good, "No pattern: assumptions OK"),
+  resid_panel(sim_curve, "Curve: relationship not linear", TRUE),
+  resid_panel(sim_funnel, "Funnel: variance not constant", TRUE)
+)
+plots$residual_problems <- wrap_plots(residual_panels, nrow = 1)
+half_plots$residual_problems <- wrap_plots(residual_panels, ncol = 1)
 
 
 # 09 Plot the data first (for the lm() code slide) --------------------------
@@ -470,7 +476,6 @@ plots$plot_first <- ggplot(morph, aes(HandLength, Height)) +
   x_scale + y_scale +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
-save_bb852(plots$plot_first, "09_plot_data_first", "half")
 
 
 # 10 R-squared: proportion of variation explained (SIMULATED) --------------
@@ -496,8 +501,9 @@ r2_panel <- function(s) {
     theme_bb852(base_size = 16) + panel_label() +
     theme(axis.text.y = element_blank())
 }
-plots$r_squared <- wrap_plots(lapply(r2_sds, r2_panel), nrow = 1)
-save_bb852(plots$r_squared, "10_r_squared", "full")
+r_squared_panels <- lapply(r2_sds, r2_panel)
+plots$r_squared <- wrap_plots(r_squared_panels, nrow = 1)
+half_plots$r_squared <- wrap_plots(r_squared_panels, ncol = 2)
 
 
 # 11 Confidence band vs prediction interval --------------------------------
@@ -535,7 +541,6 @@ plots$ci_vs_pi <- ggplot(morph, aes(HandLength, Height)) +
   coord_cartesian(ylim = c(140, 200)) +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
-save_bb852(plots$ci_vs_pi, "11_ci_vs_prediction_interval", "takeaway")
 
 
 # 12 Answer: predicted height for a 20 cm hand print -----------------------
@@ -557,7 +562,6 @@ plots$prediction_20cm <- ggplot(morph, aes(HandLength, Height)) +
   x_scale + y_scale +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
-save_bb852(plots$prediction_20cm, "12_prediction_20cm", "takeaway")
 
 
 # 13 Next time: add a second explanatory variable (sex) --------------------
@@ -576,4 +580,40 @@ plots$next_time_sex <- ggplot(morph, aes(HandLength, Height, colour = Sex)) +
   x_scale + y_scale +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
-save_bb852(plots$next_time_sex, "13_next_time_sex", "takeaway")
+
+
+# Export ------------------------------------------------------------------
+
+save_bb852(plots$cover, "01_cover", "cover", bg = bb852$cover)
+
+output_names <- c(
+  hand_height_line = "02_hand_height_line",
+  straight_lines = "03_straight_line_equations",
+  least_squares_question = "04a_least_squares_question",
+  least_squares_answer = "04b_least_squares_answer",
+  ss_partition = "05_ss_partition",
+  significance_cases = "06_significance_cases",
+  diagnostics = "07_diagnostics_hand_model",
+  slope_ci = "07b_slope_estimate",
+  residual_problems = "08_residual_problems",
+  plot_first = "09_plot_data_first",
+  r_squared = "10_r_squared",
+  ci_vs_pi = "11_ci_vs_prediction_interval",
+  prediction_20cm = "12_prediction_20cm",
+  next_time_sex = "13_next_time_sex"
+)
+
+for (plot_name in names(output_names)) {
+  save_bb852(plots[[plot_name]], output_names[[plot_name]], layout = "full")
+  half_plot <- if (plot_name %in% names(half_plots)) {
+    half_plots[[plot_name]]
+  } else {
+    plots[[plot_name]]
+  }
+  save_bb852(half_plot, output_names[[plot_name]], layout = "half")
+}
+
+message(
+  "Saved ", length(output_names),
+  " full- and half-width figures to: ", normalizePath(output_root)
+)
