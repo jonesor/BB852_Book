@@ -3,11 +3,29 @@
 command_args <- commandArgs(trailingOnly = FALSE)
 file_arg <- grep("^--file=", command_args, value = TRUE)
 
-if (length(file_arg) != 1) {
-  stop("Run this script with Rscript lecture_figures/generate_all.R")
+if (length(file_arg) == 1) {
+  runner_path <- sub("^--file=", "", file_arg)
+} else {
+  source_files <- vapply(
+    sys.frames(),
+    function(frame) {
+      if (is.null(frame$ofile)) NA_character_ else as.character(frame$ofile)[1]
+    },
+    character(1)
+  )
+  source_files <- source_files[!is.na(source_files)]
+
+  if (length(source_files) == 0) {
+    stop(
+      "Run with Rscript lecture_figures/generate_all.R or ",
+      "source(\"lecture_figures/generate_all.R\")"
+    )
+  }
+
+  runner_path <- tail(source_files, 1)
 }
 
-runner_path <- normalizePath(sub("^--file=", "", file_arg))
+runner_path <- normalizePath(runner_path)
 lecture_root <- dirname(runner_path)
 repository_root <- dirname(lecture_root)
 setwd(repository_root)

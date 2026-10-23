@@ -9,6 +9,12 @@ Build every lecture figure set from the repository root with one command:
 Rscript lecture_figures/generate_all.R
 ```
 
+Or, from the RStudio console:
+
+```r
+source("lecture_figures/generate_all.R")
+```
+
 The aggregate build runs each generator in a separate R process, stops on the
 first failure, and verifies that every lecture produced full- and half-width
 PNG files. It also rejects unexpected PDF output.
