@@ -106,3 +106,26 @@ niveoscincus <- data.frame(
 write.csv(niveoscincus, file = "DataSetLibrary/Niveoscincus.csv", row.names = FALSE)
 
 rm(niveoscincus)
+
+# Morphometry (height, hand length and foot length) ----
+# Simulated teaching data replacing an earlier version that contained
+# measurement errors. Values are in mm, rounded to the nearest mm.
+# Design: hand length differs by sex; height increases with hand length with
+# the same slope in both sexes (no interaction) and males are taller at a given
+# hand length; foot length is proportional to hand length. The seed was chosen
+# so that the worked examples in the regression, ANCOVA, model evaluation and
+# forensic-footprint (binomial GLM) chapters behave as described in the text.
+set.seed(45)
+nMale <- 80
+nFemale <- 75
+morphometry <- data.frame(Sex = rep(c("Male", "Female"), c(nMale, nFemale))) %>%
+  mutate(
+    male = Sex == "Male",
+    hand = rnorm(nMale + nFemale, ifelse(male, 209, 190), 8),
+    Height = round(787 + 4.3 * hand + 69 * male + rnorm(nMale + nFemale, 0, 40)),
+    HandLength = round(hand),
+    FootLength = round(1.25 * hand + 3 * male + rnorm(nMale + nFemale, 0, 8))
+  ) %>%
+  select(Sex, Height, HandLength, FootLength)
+write.csv(morphometry, "DataSetLibrary/morphometry.csv", row.names = FALSE)
+rm(morphometry, nMale, nFemale)

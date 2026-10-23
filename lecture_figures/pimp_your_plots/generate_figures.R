@@ -9,6 +9,7 @@ library(scales)
 library(viridis)
 
 plot_root <- file.path("lecture_figures", "pimp_your_plots", "output")
+unlink(plot_root, recursive = TRUE)
 plot_dirs <- list(
   full = file.path(plot_root, "full"),
   half = file.path(plot_root, "half")
@@ -40,8 +41,6 @@ anage <- read.csv("CourseData/anage_data.csv") |>
   janitor::clean_names() |>
   rename(BMR = metabolic_rate_w, Class = class) |>
   mutate(Mass = body_mass_g / 1000)
-
-names(anage)
 
 plot_dat <- anage |>
   filter(is.finite(Mass), is.finite(BMR),
@@ -457,4 +456,16 @@ save_lecture_versions(
   "11_student_challenge.png",
   challenge_plot,
   aspect_ratio = 18 / 12
+)
+
+full_files <- list.files(plot_dirs$full, pattern = "[.]png$")
+half_files <- list.files(plot_dirs$half, pattern = "[.]png$")
+stopifnot(
+  length(full_files) == 15,
+  setequal(full_files, half_files)
+)
+
+message(
+  "Created full- and half-width versions of 15 pimp-your-plots figures in ",
+  plot_root, "."
 )

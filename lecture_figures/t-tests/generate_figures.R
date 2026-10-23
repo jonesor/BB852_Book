@@ -110,6 +110,7 @@ bb852_sizes <- list(
 )
 
 output_root <- file.path("lecture_figures", "t-tests", "output")
+unlink(output_root, recursive = TRUE)
 
 save_bb852 <- function(plot, filename, layout = "half", bg = bb852$bg) {
   size <- bb852_sizes[[layout]]
@@ -459,27 +460,28 @@ plots$slide_26_effect_and_ci <-ggplot() +
 
 # Export every figure --------------------------------------------------------
 
-layouts <- c(
-  slide_01_cover = "cover",
-  slide_06_pollution = "half",
-  slide_07_uncertainty_in_mean = "half",
-  slide_09_same_mean_different_se = "full",
-  slide_11_null_distribution = "half",
-  slide_12_one_and_two_sided = "full",
-  slide_14_lower_bound = "half",
-  slide_17_paired_measurements = "takeaway",
-  slide_18_paired_differences = "half",
-  slide_23_reaction_times = "half",
-  slide_26_effect_and_ci = "half"
+figure_names <- c(
+  "slide_01_cover",
+  "slide_06_pollution",
+  "slide_07_uncertainty_in_mean",
+  "slide_09_same_mean_different_se",
+  "slide_11_null_distribution",
+  "slide_12_one_and_two_sided",
+  "slide_14_lower_bound",
+  "slide_17_paired_measurements",
+  "slide_18_paired_differences",
+  "slide_23_reaction_times",
+  "slide_26_effect_and_ci"
 )
-stopifnot(setequal(names(layouts), names(plots)))
+stopifnot(setequal(figure_names, names(plots)))
 
 for (name in names(plots)) {
-  save_bb852(
-    plots[[name]], name,
-    layout = layouts[[name]],
-    bg = if (layouts[[name]] == "cover") bb852$cover else bb852$bg
-  )
+  if (name == "slide_01_cover") {
+    save_bb852(plots[[name]], name, layout = "cover", bg = bb852$cover)
+  } else {
+    save_bb852(plots[[name]], name, layout = "full")
+    save_bb852(plots[[name]], name, layout = "half")
+  }
 }
 
 message("Saved ", length(plots), " figures to: ", normalizePath(output_root))

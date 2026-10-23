@@ -101,7 +101,7 @@ Fa <- ggplot(
 
 In a previous class (linear regression) you explored the relationship between hand length and height. The aim there was (1) to determine if the relationship (i.e. the slope) was significantly different from 0, and (2) to estimate the equation of the relationship so you could make predictions of height from hand length.
 
-Here we will extend that example by asking whether there are differences between males and females. We'll use the same `morphometry.csv` dataset of body measurements.
+Here we will extend that example by asking whether there are differences between males and females. We'll use the same `morphometry.csv` dataset of body measurements.^[These data are simulated for teaching purposes.]
 
 ```{block 3-05-ANCOVA-2, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
@@ -166,7 +166,7 @@ This type of *sequential sum of squares* Analysis of Variance table should be ge
 x <- anova(mod_A)
 ```
 
-You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by hand length (`r round(x$'Mean Sq'[1],2)`). Then it tells us that an *additional* bit of variation `r round(x$'Mean Sq'[2],2)` is captured if we allow the intercepts to vary with sex. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the sexes (the interaction) `r round(x$'Mean Sq'[3],2)`. Finally, there is a bit of unexplained variation left over (Residuals) `r round(x$'Mean Sq'[4],2)`. So you can see that hand length explains most variation, followed by sex, followed by the interaction between them.
+You can interpret the mean sum of squares column in terms of the amount of variation in the response variable (Height) that is explained by the term: The table first tells us the amount of variation (in terms of Mean Sum of Squares) in Height that is captured by hand length (`r round(x$'Mean Sq'[1],1)`). Then it tells us that an *additional* bit of variation `r round(x$'Mean Sq'[2],1)` is captured if we allow the intercepts to vary with sex. Then it tells us that a small additional amount of variation is explained by allowing the slope to vary between the sexes (the interaction) `r round(x$'Mean Sq'[3],1)`. Finally, there is a bit of unexplained variation left over (Residuals) `r round(x$'Mean Sq'[4],1)`. So you can see that hand length explains most variation, followed by sex, followed by the interaction between them.
 
 You would report from this table something like this:
 
@@ -175,7 +175,7 @@ mod_A_anova <- anova(mod_A)
 mod_A_summary <- summary(mod_A)
 ```
 
-Hand length and sex both explain a significant amount of the variation in height (ANCOVA - HandLength: F = `r round(mod_A_anova$'F value'[1],3)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p<0.001; Sex: F = `r round(mod_A_anova$'F value'[2],3)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p<0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand length and height are not significantly different between the sexes (ANCOVA - F = `r round(mod_A_anova$'F value'[3],3)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p = `r round(mod_A_anova$'Pr(>F)'[3],3)`).
+Hand length and sex both explain a significant amount of the variation in height (ANCOVA - HandLength: F = `r round(mod_A_anova$'F value'[1],1)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p<0.001; Sex: F = `r round(mod_A_anova$'F value'[2],1)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p<0.001). The interaction effect was not significant, which means that the slopes of the relationship between hand length and height are not significantly different between the sexes (ANCOVA - F = `r round(mod_A_anova$'F value'[3],1)`, d.f. = 1 and `r mod_A_anova$Df[4]`, p = `r round(mod_A_anova$'Pr(>F)'[3],2)`).
 
 
 It is of course useful to take the interpretation a bit further. You could do this with reference to the plot - e.g. *Figure X shows the clear positive relationship between hand length and height, and shows that males tend to be taller than females at any given hand length.*

@@ -93,8 +93,8 @@ morph <- read.csv("CourseData/morphometry.csv") %>%
   mutate(Height = Height / 10, HandLength = HandLength / 10)
 
 # Black thread least squares
-slopeCoef <- c(6.15, 4.50, -2.00, 0.00)
-interceptCoef <- c(45, 78, 205, 168)
+slopeCoef <- c(6.13, 4.50, -2.00, 0.00)
+interceptCoef <- c(45.1, 78, 205, 168)
 
 residualData <- morph %>%
   select(Height, HandLength) %>%
@@ -265,7 +265,7 @@ These models have similar assumptions to the other linear models^[t-tests, ANOVA
 
 ## Worked example: height-hand length relationship
 
-Let's now use R to fit a linear regression model to estimate the relationship between hand length and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene. The data are body measurements (in cm) from a sample of people.
+Let's now use R to fit a linear regression model to estimate the relationship between hand length and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene. The data are body measurements (in cm) from a sample of people.^[These data are simulated for teaching purposes.]
 
 ```{block 3-04-linearRegression-5, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
@@ -312,10 +312,10 @@ anova(mod_A)
 ```
 
 When you run this function, you get a summary table that looks exactly like the one you got with an ANOVA. There are degrees of freedom (`Df`), Sums of Squares (`Sum Sq`), Mean Sums of Squares (`Mean Sq`) and the `F value` and p-value (`Pr(>F)`). 
-The most important parts of this table are the F value (`r formatC( anova(mod_A)$F[1], digits = 3, format = "f")`) and the p-value (`r formatC(anova(mod_A)$Pr[1], digits = 3, format = "f")`): as described above, large F values lead to small p-values. This tells us that it is unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand length).
+The most important parts of this table are the F value (`r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`) and the p-value (`r format.pval(anova(mod_A)$Pr[1], eps = 0.001)`): as described above, large F values lead to small p-values. This tells us that it is unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand length).
 
 We could report the results of this hypothesis test like this: 
-*There was a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001)*
+*There was a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001)*
 
 Now we can dig deeper by asking for a `summary` of the model. 
 
@@ -385,9 +385,9 @@ $R^2$ is the square of the correlation coefficient $r$ and is a measure of the a
 
 We could describe the model like this:
 
-*There is a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 4, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001) The equation of the fitted model is: Height = `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")`) $\times$ HandLength + `r formatC(summary(mod_A)$coef[1,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[1,2], digits = 2,format = "f")`). The model explains `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 3, format = "f")`).*
+*There is a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001) The equation of the fitted model is: Height = `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")`) $\times$ HandLength + `r formatC(summary(mod_A)$coef[1,1], digits = 1,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[1,2], digits = 1,format = "f")`). The model explains `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 2, format = "f")`).*
 
-... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand length and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[2,3], digits = 2,format = "f")`, p < 0.01)*
+... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand length and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[2,3], digits = 1,format = "f")`, p < 0.001)*
 
 
 ```{r 3-04-linearRegression-13, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}

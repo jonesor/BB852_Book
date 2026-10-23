@@ -174,6 +174,7 @@ output_root <- file.path(
   "statistics_roadmap",
   "output"
 )
+unlink(output_root, recursive = TRUE)
 full_output_directory <- file.path(output_root, "full")
 half_output_directory <- file.path(output_root, "half")
 dir.create(full_output_directory, recursive = TRUE, showWarnings = FALSE)

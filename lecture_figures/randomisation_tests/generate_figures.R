@@ -173,6 +173,7 @@ output_root <- file.path(
   "randomisation_tests",
   "output"
 )
+unlink(output_root, recursive = TRUE)
 full_output_directory <- file.path(output_root, "full")
 half_output_directory <- file.path(output_root, "half")
 dir.create(full_output_directory, recursive = TRUE, showWarnings = FALSE)
