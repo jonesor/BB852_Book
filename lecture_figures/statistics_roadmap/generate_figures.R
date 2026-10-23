@@ -401,7 +401,6 @@ stopifnot(
   nlevels(espresso$method) == 3
 )
 
-set.seed(43)
 figure_5 <- ggplot(espresso, aes(x = method, y = foamIndx)) +
   geom_boxplot(
     width = 0.5,
@@ -410,11 +409,10 @@ figure_5 <- ggplot(espresso, aes(x = method, y = foamIndx)) +
     linewidth = 0.7,
     outlier.shape = NA
   ) +
-  geom_jitter(
+  geom_point(
     colour = bb852$slate,
     size = 3.2,
-    width = 0.12,
-    height = 0
+    position = position_jitter(width = 0.12, height = 0, seed = 43)
   ) +
   labs(x = "Method", y = "Foam index") +
   theme_bb852(base_family = bb852_font) +
