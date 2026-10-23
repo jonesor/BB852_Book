@@ -310,7 +310,17 @@ ss_panels <- list(
   ss_panel("fitted", "Height", sprintf("Residual SS = %s", format(round(ss_residual), big.mark = ",")), "fit")
 )
 plots$ss_partition <- wrap_plots(ss_panels, nrow = 1)
-half_plots$ss_partition <- wrap_plots(ss_panels, ncol = 1)
+ss_half_panels <- list(
+  ss_panel("mean", "Height", sprintf("Total SS\n%s", format(round(ss_total), big.mark = ",")), "mean") +
+    labs(x = NULL, y = height_lab) + theme(axis.title.x = element_blank()),
+  ss_panel("mean", "fitted", sprintf("Explained SS\n%s", format(round(ss_explained), big.mark = ",")), "fit") +
+    labs(x = NULL) + theme(axis.title.x = element_blank()),
+  ss_panel("fitted", "Height", sprintf("Residual SS\n%s", format(round(ss_residual), big.mark = ",")), "fit")
+)
+half_plots$ss_partition <- wrap_plots(
+  ss_half_panels,
+  design = "AB\nCC"
+)
 
 
 # 06 What does "significant" mean for slope and intercept? (SIMULATED) -----
@@ -346,8 +356,18 @@ sig_data <- do.call(rbind, lapply(1:4, simulate_case))
 writeLines(capture.output(print(unique(sig_data[, c("panel", "seed", "p_int", "p_slope")]))),
            file.path(output_root, "text", "significance_cases_seeds.txt"))
 
-sig_panel <- function(pan) {
+sig_panel <- function(pan, compact = FALSE) {
   d <- sig_data[sig_data$panel == pan, ]
+  panel_title <- if (compact) {
+    c(
+      A = "Slope n.s.\nIntercept n.s.",
+      B = "Slope sig.\nIntercept n.s.",
+      C = "Slope n.s.\nIntercept sig.",
+      D = "Slope sig.\nIntercept sig."
+    )[[pan]]
+  } else {
+    unique(d$title)
+  }
   ggplot(d, aes(x, y)) +
     geom_hline(yintercept = 0, colour = bb852$grey, linewidth = 0.6, linetype = "dashed") +
     geom_smooth(method = "lm", formula = y ~ x, colour = bb852$slate, fill = bb852$slate,
@@ -355,12 +375,17 @@ sig_panel <- function(pan) {
     geom_point(colour = bb852$slate, size = 2, alpha = 0.7) +
     scale_x_continuous(limits = c(0, 10), breaks = c(0, 5, 10), expand = expansion(mult = 0.02)) +
     coord_cartesian(ylim = c(-4, 14)) +
-    labs(x = "x", y = if (pan == "A") "y" else NULL, title = unique(d$title)) +
+    labs(x = "x", y = if (pan == "A") "y" else NULL, title = panel_title) +
     theme_bb852(base_size = 16) + panel_label()
 }
 significance_panels <- lapply(c("A", "B", "C", "D"), sig_panel)
+significance_half_panels <- lapply(
+  c("A", "B", "C", "D"),
+  sig_panel,
+  compact = TRUE
+)
 plots$significance_cases <- wrap_plots(significance_panels, nrow = 1)
-half_plots$significance_cases <- wrap_plots(significance_panels, ncol = 2)
+half_plots$significance_cases <- wrap_plots(significance_half_panels, ncol = 2)
 
 
 # 07 Diagnostic plots for the hand model ------------------------------------
@@ -425,7 +450,7 @@ plots$slope_ci <- ggplot(curve_df, aes(slope, density)) +
   geom_area(fill = bb852$light, alpha = 0.5) +
   geom_line(colour = bb852$slate, linewidth = 1.2) +
   annotate("errorbar", y = peak * 0.08, xmin = slope_ci[1], xmax = slope_ci[2],
-           height = peak * 0.06, orientation = "y", colour = bb852$coral,
+           width = peak * 0.06, orientation = "y", colour = bb852$coral,
            linewidth = 1.2) +
   annotate("point", x = b1, y = peak * 0.08, colour = bb852$coral, size = 4) +
   annotate("text", x = b1, y = peak * 1.08, size = 5.6, family = bb852_font,
@@ -523,8 +548,7 @@ writeLines(c(
 
 pi <- cbind(grid_x, predict(mod_A, grid_x, interval = "prediction"))
 
-label_x <- 24.6
-plots$ci_vs_pi <- ggplot(morph, aes(HandLength, Height)) +
+ci_vs_pi_base <- ggplot(morph, aes(HandLength, Height)) +
   geom_ribbon(data = pi, aes(x = HandLength, ymin = lwr, ymax = upr), inherit.aes = FALSE,
               fill = bb852$light, alpha = 0.25) +
   geom_line(data = pi, aes(y = lwr), colour = bb852$grey, linetype = "dashed", linewidth = 0.6) +
@@ -533,21 +557,31 @@ plots$ci_vs_pi <- ggplot(morph, aes(HandLength, Height)) +
   geom_ribbon(data = ci, aes(x = HandLength, ymin = lwr, ymax = upr), inherit.aes = FALSE,
               fill = bb852$coral, alpha = 0.35) +
   geom_line(data = ci, aes(y = fit), colour = bb852$coral, linewidth = 1.2) +
-  annotate("text", x = 13.4, y = 197, hjust = 0, vjust = 1, size = 5.6, family = bb852_font,
-           colour = bb852$grey, label = "95% prediction interval:\nwhere a new person is likely to fall") +
-  annotate("text", x = 25.9, y = 147, hjust = 1, size = 5.6, family = bb852_font,
-           colour = bb852$coral, label = "95% confidence interval\nfor the mean line") +
   x_scale + scale_y_continuous(breaks = seq(140, 200, 20)) +
   coord_cartesian(ylim = c(140, 200)) +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
+
+plots$ci_vs_pi <- ci_vs_pi_base +
+  annotate("text", x = 13.4, y = 197, hjust = 0, vjust = 1, size = 5.6, family = bb852_font,
+           colour = bb852$grey, label = "95% prediction interval:\nwhere a new person is likely to fall") +
+  annotate("text", x = 25.9, y = 147, hjust = 1, size = 5.6, family = bb852_font,
+           colour = bb852$coral, label = "95% confidence interval\nfor the mean line")
+
+half_plots$ci_vs_pi <- ci_vs_pi_base +
+  annotate("text", x = 13.6, y = 197, hjust = 0, vjust = 1, size = 5.2,
+           family = bb852_font, colour = bb852$grey,
+           label = "95% prediction interval\nfor a new person") +
+  annotate("text", x = 25.6, y = 146, hjust = 1, size = 5.2,
+           family = bb852_font, colour = bb852$coral,
+           label = "95% confidence interval\nfor the mean line")
 
 
 # 12 Answer: predicted height for a 20 cm hand print -----------------------
 
 p20_ci <- predict(mod_A, new_hand, interval = "confidence")
 p20_pi <- predict(mod_A, new_hand, interval = "prediction")
-plots$prediction_20cm <- ggplot(morph, aes(HandLength, Height)) +
+prediction_20cm_base <- ggplot(morph, aes(HandLength, Height)) +
   geom_point(colour = bb852$light, size = 2.2, alpha = 0.6) +
   geom_abline(intercept = b0, slope = b1, colour = bb852$slate, linewidth = 1.2) +
   annotate("segment", x = 20, xend = 20, y = 140, yend = p20_ci[1, "fit"],
@@ -555,13 +589,21 @@ plots$prediction_20cm <- ggplot(morph, aes(HandLength, Height)) +
   annotate("errorbar", x = 20, ymin = p20_pi[1, "lwr"], ymax = p20_pi[1, "upr"],
            width = 0.5, colour = bb852$coral, linewidth = 1.2) +
   annotate("point", x = 20, y = p20_ci[1, "fit"], colour = bb852$coral, size = 4.5) +
-  annotate("text", x = 20.5, y = p20_ci[1, "fit"] - 1, hjust = 0, vjust = 1, size = 5.6,
-           family = bb852_font, colour = bb852$coral,
-           label = sprintf("%.0f cm\n(95%% PI %.0f to %.0f cm)",
-                           p20_ci[1, "fit"], p20_pi[1, "lwr"], p20_pi[1, "upr"])) +
   x_scale + y_scale +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
+
+plots$prediction_20cm <- prediction_20cm_base +
+  annotate("text", x = 20.5, y = p20_ci[1, "fit"] - 1, hjust = 0, vjust = 1, size = 5.6,
+           family = bb852_font, colour = bb852$coral,
+           label = sprintf("%.0f cm\n(95%% PI %.0f to %.0f cm)",
+                           p20_ci[1, "fit"], p20_pi[1, "lwr"], p20_pi[1, "upr"]))
+
+half_plots$prediction_20cm <- prediction_20cm_base +
+  annotate("text", x = 20.6, y = p20_ci[1, "fit"] - 1, hjust = 0, vjust = 1,
+           size = 5.2, family = bb852_font, colour = bb852$coral,
+           label = sprintf("%.0f cm\n95%% PI\n%.0f to %.0f cm",
+                           p20_ci[1, "fit"], p20_pi[1, "lwr"], p20_pi[1, "upr"]))
 
 
 # 13 Next time: add a second explanatory variable (sex) --------------------
