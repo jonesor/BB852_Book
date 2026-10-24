@@ -13,8 +13,8 @@
 #   CourseData/morphometry.csv  ANCOVA and multiple regression, n = 155
 #                               (simulated in scripts/SimulateData.R);
 #                               converted from mm to cm as in the book
-# Simulated here (seed stated): Simpson's paradox example (slide 5).
-# Schematic panels (slides 9 and 16) use hand-chosen values, not data.
+# Simulated here (seed stated): Simpson's paradox example (off by default).
+# Schematic panels (slides 8 and 15) use hand-chosen values, not data.
 #
 # Run from the repository root:
 # source("lecture_figures/ancova/generate_figures.R")
@@ -24,7 +24,7 @@
 # "Title, Bullets & Photo" slide are also written at takeaway size. The R
 # output shown on the slides is written to output/text/.
 # Object and file names use the slide numbers of the rebuilt deck
-# (BB852_14_ANCOVA_and_Multiple_Regression_v3), e.g. plots$slide_19_parallel.
+# (BB852_14_ANCOVA_and_Multiple_Regression_v4), e.g. plots$slide_19_parallel.
 #
 # Labels use \u escapes so the script stays plain ASCII.
 
@@ -152,21 +152,24 @@ hand_range <- range(morph$HandLength)
 
 # R output shown on slides ------------------------------------------------------
 
-save_output("anova(mod_insect)", "slide_12_anova_insect")
-save_output("summary(mod_insect)", "slide_13_summary_insect")
-save_output("anova(mod_A)", "slide_18_anova_ancova")
+save_output("anova(mod_insect)", "slide_11_anova_insect")
+save_output("summary(mod_insect)", "slide_12_summary_insect")
+save_output("anova(mod_A)", "slide_17_anova_ancova")
 save_output("anova(mod_B, mod_A)", "slide_19_model_comparison")
 save_output("summary(mod_B)", "slide_20_summary_parallel")
-save_output("summary(mod_A)", "slide_21_summary_full")
-save_output("anova(mod_B)", "slide_18_anova_hand_first")
-save_output("anova(mod_sex_first)", "slide_18_anova_sex_first")
-save_output("summary(mod_multi)", "slide_23_summary_multiple")
-save_output("summary(mod_foot)", "slide_23_summary_foot_only")
-save_output("cor(morph$HandLength, morph$FootLength)", "slide_23_correlation")
+save_output("anova(mod_B)", "slide_20_anova_parallel")
+save_output("summary(lm(Height ~ HandLength + FootLength + Sex, data = morph))",
+            "slide_22_summary_with_sex")
+save_output("summary(mod_A)", "slide_18_summary_full")
+save_output("anova(mod_B)", "slide_17_anova_hand_first")
+save_output("anova(mod_sex_first)", "slide_17_anova_sex_first")
+save_output("summary(mod_multi)", "slide_22_summary_multiple")
+save_output("summary(mod_foot)", "slide_22_summary_foot_only")
+save_output("cor(morph$HandLength, morph$FootLength)", "slide_22_correlation")
 if (requireNamespace("agricolae", quietly = TRUE)) {
   save_output(
     'agricolae::HSD.test(mod_insect, trt = c("diet", "genotype"), console = TRUE)',
-    "slide_14_hsd"
+    "slide_13_hsd"
   )
 }
 
@@ -198,7 +201,7 @@ plots$slide_01_cover <- ggplot(morph, aes(HandLength, Height)) +
   )
 
 
-# Slides 4 and 17: height vs hand length by sex (separate lines, as in the book) --
+# Slides 4 and 16: height vs hand length by sex (separate lines, as in the book) --
 
 sex_ends <- do.call(rbind, lapply(split(morph, morph$Sex), function(d) {
   fit <- lm(Height ~ HandLength, data = d)
@@ -216,7 +219,7 @@ by_sex <- ggplot(morph, aes(HandLength, Height, colour = Sex)) +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
 
-plots$slide_17_ancova_data <- by_sex
+plots$slide_16_ancova_data <- by_sex
 
 # Slide 4 version adds the overall line (ignoring sex), dashed grey, so both
 # slopes can be compared in one figure.
@@ -233,7 +236,10 @@ plots$slide_04_by_sex <- by_sex +
            label = sprintf("Within each sex: slope %.1f", coef(mod_B)[["HandLength"]]))
 
 
-# Slide 5: Simpson's paradox (simulated) ----------------------------------------
+# Simpson's paradox (simulated): no longer a slide; it is mentioned in the
+# speaker notes of slide 4. Set show_simpson <- TRUE to rebuild the figure.
+show_simpson <- FALSE
+if (show_simpson) {
 # Four groups. Within each, y rises with x (slope 0.8); group means fall as x
 # rises, so the pooled slope is negative.
 
@@ -272,9 +278,10 @@ simpson_grouped <- ggplot(simpson, aes(x, y, colour = group)) +
 plots$slide_05_simpson <- simpson_pooled + simpson_grouped
 half_plots$slide_05_simpson <- simpson_pooled / simpson_grouped &
   theme_bb852(14) & theme(plot.margin = margin(4, 12, 4, 8))
+}
 
 
-# Slides 9 and 16: schematic outcome panels --------------------------------------
+# Slides 8 and 15: schematic outcome panels --------------------------------------
 
 panel_theme <- function() {
   theme_bb852(14) +
@@ -323,8 +330,8 @@ twoway_specs <- list(
 twoway_panels <- lapply(seq_along(twoway_specs), function(i) {
   twoway_panel(twoway_specs[[i]][[1]], twoway_specs[[i]][[2]], show_key = i == 3)
 })
-plots$slide_09_twoway_outcomes <- wrap_plots(twoway_panels, nrow = 2)
-half_plots$slide_09_twoway_outcomes <- wrap_plots(twoway_panels, ncol = 2)
+plots$slide_08_twoway_outcomes <- wrap_plots(twoway_panels, nrow = 2)
+half_plots$slide_08_twoway_outcomes <- wrap_plots(twoway_panels, ncol = 2)
 
 ancova_panel <- function(values, label, show_key = FALSE) {
   d <- expand.grid(x = c(1, 5), group = c("A", "B"))
@@ -359,11 +366,11 @@ ancova_specs <- list(
 ancova_panels <- lapply(seq_along(ancova_specs), function(i) {
   ancova_panel(ancova_specs[[i]][[1]], ancova_specs[[i]][[2]], show_key = i == 3)
 })
-plots$slide_16_ancova_outcomes <- wrap_plots(ancova_panels, nrow = 2)
-half_plots$slide_16_ancova_outcomes <- wrap_plots(ancova_panels, ncol = 2)
+plots$slide_15_ancova_outcomes <- wrap_plots(ancova_panels, nrow = 2)
+half_plots$slide_15_ancova_outcomes <- wrap_plots(ancova_panels, ncol = 2)
 
 
-# Slide 10: the insect diet data ----------------------------------------------------
+# Slide 9: the insect diet data ----------------------------------------------------
 
 insect_means <- aggregate(lengthMM ~ genotype + diet, data = insectDiet, FUN = mean)
 insect_se <- aggregate(lengthMM ~ genotype + diet, data = insectDiet,
@@ -371,15 +378,19 @@ insect_se <- aggregate(lengthMM ~ genotype + diet, data = insectDiet,
 insect_means$se <- insect_se$lengthMM
 names(insect_means)[names(insect_means) == "lengthMM"] <- "mean"
 
-# Deterministic offsets (no random jitter): diets side by side, points spread.
+# Deterministic offsets (no random jitter): diets side by side, and points with
+# the same length (lengths are whole mm) spread sideways so all 12 are visible.
 dodge <- c(highProtein = -0.18, lowProtein = 0.18)
 insectDiet$x <- as.numeric(factor(insectDiet$genotype)) + dodge[insectDiet$diet] +
   ave(seq_len(nrow(insectDiet)), insectDiet$genotype, insectDiet$diet,
-      FUN = function(i) ((seq_along(i) - 1) %% 4 - 1.5) * 0.035)
+      insectDiet$lengthMM,
+      FUN = function(i) (seq_along(i) - (length(i) + 1) / 2) * 0.045)
 insect_means$x <- as.numeric(factor(insect_means$genotype)) + dodge[insect_means$diet]
 
-plots$slide_10_insect_data <- ggplot(insectDiet, aes(x, lengthMM, colour = diet)) +
+plots$slide_09_insect_data <- ggplot(insectDiet, aes(x, lengthMM, colour = diet)) +
   geom_point(alpha = 0.55, size = 2.6) +
+  geom_line(data = insect_means, aes(x = x, y = mean, group = diet),
+            linewidth = 0.8) +
   geom_segment(data = insect_means,
                aes(x = x - 0.13, xend = x + 0.13, y = mean, yend = mean),
                linewidth = 1.2) +
@@ -397,7 +408,7 @@ plots$slide_10_insect_data <- ggplot(insectDiet, aes(x, lengthMM, colour = diet)
   theme(panel.grid.major.x = element_blank())
 
 
-# Slide 13: coefficients as steps from the reference group ---------------------------
+# Slide 12: coefficients as steps from the reference group ---------------------------
 
 cf <- coef(mod_insect)
 b0 <- cf[["(Intercept)"]]
@@ -451,10 +462,10 @@ coef_steps <- ggplot() +
   scale_y_continuous(limits = c(11.5, 27.5)) +
   labs(x = NULL, y = "Mean length (mm)")
 
-plots$slide_13_coefficient_steps <- coef_steps + theme_bb852(16)
+plots$slide_12_coefficient_steps <- coef_steps + theme_bb852(16)
 
 
-# Slide 14: interaction plot with Tukey groupings ----------------------------------
+# Slide 13: interaction plot with Tukey groupings ----------------------------------
 # Letters as reported by agricolae::HSD.test(mod_insect, trt = c("diet",
 # "genotype")): highProtein:gt1 a, lowProtein:gt1 b, highProtein:gt2 c,
 # lowProtein:gt2 c. Base-R TukeyHSD() on the four cells agrees: every pair
@@ -473,7 +484,7 @@ insect_means <- merge(insect_means, letters_df)
 nudge <- c(highProtein = -0.05, lowProtein = 0.05)
 insect_means$xi <- as.numeric(factor(insect_means$genotype)) + nudge[insect_means$diet]
 
-plots$slide_14_interaction_tukey <- ggplot(
+plots$slide_13_interaction_tukey <- ggplot(
   insect_means, aes(xi, mean, colour = diet, group = diet)
 ) +
   geom_line(linewidth = 1.2) +
@@ -499,7 +510,7 @@ plots$slide_14_interaction_tukey <- ggplot(
 
 # Slide 19: the parallel-lines model (mod_B) ----------------------------------------
 
-x_arrow <- 16.8
+x_arrow <- 20
 y_f <- cb[["(Intercept)"]] + cb[["HandLength"]] * x_arrow
 y_m <- y_f + cb[["SexMale"]]
 
@@ -511,27 +522,28 @@ parallel <- ggplot(morph, aes(HandLength, Height, colour = Sex)) +
   annotate("segment", x = x_arrow, xend = x_arrow, y = y_f, yend = y_m,
            colour = bb852$text, linewidth = 1.1,
            arrow = arrow(length = unit(0.1, "in"), ends = "both", type = "closed")) +
-  annotate("text", x = x_arrow - 0.1, y = y_m + 8, hjust = 1,
+  annotate("label", x = x_arrow + 0.15, y = y_f - 1, hjust = 0, vjust = 1,
            size = pt(16), family = bb852_font, fontface = "bold",
-           colour = bb852$text, lineheight = 0.9,
+           colour = bb852$text, fill = bb852$bg, label.size = 0,
+           lineheight = 0.9,
            label = sprintf("SexMale\n+%.1f cm", cb[["SexMale"]])) +
   annotate("text", x = hand_range[2], y = 147, hjust = 1, size = pt(16),
            family = bb852_font, colour = bb852$text,
            label = sprintf("Common slope %.2f cm per cm", cb[["HandLength"]])) +
-  annotate("text", x = 15, y = 186, hjust = 0, size = pt(16),
+  annotate("text", x = hand_range[1], y = 186, hjust = 0, size = pt(16),
            family = bb852_font, fontface = "bold", colour = bb852$coral,
            label = "Male") +
-  annotate("text", x = 15, y = 181, hjust = 0, size = pt(16),
+  annotate("text", x = hand_range[1], y = 181, hjust = 0, size = pt(16),
            family = bb852_font, fontface = "bold", colour = bb852$slate,
            label = "Female") +
   scale_colour_manual(values = sex_cols) +
-  coord_cartesian(xlim = c(15, hand_range[2]), ylim = c(144, 190)) +
+  coord_cartesian(xlim = hand_range, ylim = c(144, 190)) +
   labs(x = hand_lab, y = height_lab)
 
 plots$slide_19_parallel <- parallel + theme_bb852()
 
 
-# Slide 21: why SexMale is "non-significant" in the interaction model ------------
+# Slide 18: why SexMale is "non-significant" in the interaction model ------------
 # In mod_A, SexMale is the male-female difference at HandLength = 0, far
 # outside the data, so its standard error is huge. Ribbons are 95% confidence
 # intervals for the fitted lines; they widen as the lines are extrapolated.
@@ -541,7 +553,7 @@ extrap <- expand.grid(HandLength = seq(0, 25, by = 0.25), Sex = c("Female", "Mal
 extrap <- cbind(extrap, predict(mod_A, newdata = extrap, interval = "confidence"))
 names(extrap)[names(extrap) == "fit"] <- "Height"
 
-plots$slide_21_extrapolation <- ggplot(morph, aes(HandLength, Height, colour = Sex)) +
+plots$slide_18_extrapolation <- ggplot(morph, aes(HandLength, Height, colour = Sex)) +
   annotate("rect", xmin = hand_range[1], xmax = hand_range[2],
            ymin = -Inf, ymax = Inf, fill = bb852$panel) +
   geom_ribbon(data = extrap, aes(ymin = lwr, ymax = upr, fill = Sex),
@@ -564,10 +576,10 @@ plots$slide_21_extrapolation <- ggplot(morph, aes(HandLength, Height, colour = S
   theme_bb852()
 
 
-# Slide 23: hand and foot length are strongly correlated --------------------------
+# Slide 22: hand and foot length are strongly correlated --------------------------
 
 r_hf <- cor(morph$HandLength, morph$FootLength)
-plots$slide_23_hand_foot <- ggplot(morph, aes(HandLength, FootLength)) +
+plots$slide_22_hand_foot <- ggplot(morph, aes(HandLength, FootLength)) +
   geom_point(colour = bb852$slate, alpha = 0.55, size = 2.6) +
   annotate("text", x = hand_range[1], y = max(morph$FootLength), hjust = 0,
            size = pt(18), family = bb852_font, colour = bb852$coral,
@@ -578,7 +590,7 @@ plots$slide_23_hand_foot <- ggplot(morph, aes(HandLength, FootLength)) +
 
 # Save every figure ------------------------------------------------------------------
 
-takeaway_slides <- c("slide_04_by_sex", "slide_13_coefficient_steps",
+takeaway_slides <- c("slide_04_by_sex", "slide_12_coefficient_steps",
                      "slide_19_parallel")
 
 for (name in names(plots)) {

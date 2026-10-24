@@ -37,7 +37,8 @@ lecture_names <- c(
   "t-tests",
   "anova",
   "linear_regression",
-  "ancova"
+  "ancova",
+  "data_management"
 )
 
 rscript <- file.path(R.home("bin"), "Rscript")

@@ -19,7 +19,8 @@
 # source("lecture_figures/linear_regression/generate_figures.R")
 #
 # Each content figure is written as a full- and half-width PNG (300 dpi) into
-# lecture_figures/linear_regression/output/<layout>/.
+# lecture_figures/linear_regression/output/<layout>/. Figures used on the
+# "Title, Bullets & Photo" slides are also written at takeaway size.
 # R output text is written to lecture_figures/linear_regression/output/text/.
 #
 # Labels use plotmath (e.g. R^2, beta[0]) rather than typed Unicode symbols,
@@ -241,7 +242,7 @@ half_plots$straight_lines <- wrap_plots(straight_line_panels, ncol = 1)
 candidates <- data.frame(
   panel = c("A", "B", "C", "D"),
   slope = c(0, 4.50, -2.00, round(b1, 2)),
-  intercept = c(round(mean(morph$Height)), 78, 205, round(b0, 1))
+  intercept = c(round(mean(morph$Height), 1), 78, 205, round(b0, 1))
 )
 candidates$rss <- sapply(seq_len(nrow(candidates)), function(i) {
   sum((morph$Height - (candidates$intercept[i] + candidates$slope[i] * morph$HandLength))^2)
@@ -437,6 +438,9 @@ half_plots$diagnostics <- wrap_plots(diagnostic_panels, ncol = 2)
 
 slope_ci <- confint(mod_A)["HandLength", ]
 write_output("confint(mod_A)", "confint_mod_A")
+# The slope above ignores sex. Adding sex (next lecture: ANCOVA) roughly halves it.
+write_output("summary(lm(Height ~ HandLength + Sex, data = morph))", "summary_hand_plus_sex")
+write_output("confint(lm(Height ~ HandLength + Sex, data = morph))", "confint_hand_plus_sex")
 se1 <- summary(mod_A)$coefficients["HandLength", "Std. Error"]
 df_res <- df.residual(mod_A)
 curve_df <- data.frame(slope = seq(b1 - 5 * se1, b1 + 5 * se1, length.out = 300))
@@ -514,6 +518,7 @@ r2_data <- do.call(rbind, lapply(r2_sds, function(s) {
   y <- 1.5 * x + rnorm(30, 0, s)
   data.frame(x = x, y = y, sd = s, r2 = summary(lm(y ~ x))$r.squared)
 }))
+r2_ylim <- range(r2_data$y)
 r2_panel <- function(s) {
   d <- r2_data[r2_data$sd == s, ]
   ggplot(d, aes(x, y)) +
@@ -521,6 +526,8 @@ r2_panel <- function(s) {
                 linewidth = 1.2) +
     geom_point(colour = bb852$slate, size = 2, alpha = 0.7) +
     scale_x_continuous(breaks = c(2, 6, 10)) +
+    # Same y limits in every panel, so equal slopes look equally steep
+    coord_cartesian(ylim = r2_ylim) +
     labs(x = "x", y = if (s == r2_sds[1]) "y" else NULL,
          title = bquote(bold(R^2 == .(formatC(unique(d$r2), digits = 2, format = "f"))))) +
     theme_bb852(base_size = 16) + panel_label() +
@@ -557,22 +564,23 @@ ci_vs_pi_base <- ggplot(morph, aes(HandLength, Height)) +
   geom_ribbon(data = ci, aes(x = HandLength, ymin = lwr, ymax = upr), inherit.aes = FALSE,
               fill = bb852$coral, alpha = 0.35) +
   geom_line(data = ci, aes(y = fit), colour = bb852$coral, linewidth = 1.2) +
-  x_scale + scale_y_continuous(breaks = seq(140, 200, 20)) +
-  coord_cartesian(ylim = c(140, 200)) +
+  scale_x_continuous(breaks = seq(18, 24, 2)) +
+  scale_y_continuous(breaks = seq(140, 200, 20)) +
+  coord_cartesian(xlim = c(17.2, 24.2), ylim = c(140, 200)) +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
 
 plots$ci_vs_pi <- ci_vs_pi_base +
-  annotate("text", x = 13.4, y = 197, hjust = 0, vjust = 1, size = 5.6, family = bb852_font,
+  annotate("text", x = 17.2, y = 199, hjust = 0, vjust = 1, size = 5.6, family = bb852_font,
            colour = bb852$grey, label = "95% prediction interval:\nwhere a new person is likely to fall") +
-  annotate("text", x = 25.9, y = 147, hjust = 1, size = 5.6, family = bb852_font,
+  annotate("text", x = 24.2, y = 146, hjust = 1, size = 5.6, family = bb852_font,
            colour = bb852$coral, label = "95% confidence interval\nfor the mean line")
 
 half_plots$ci_vs_pi <- ci_vs_pi_base +
-  annotate("text", x = 13.6, y = 197, hjust = 0, vjust = 1, size = 5.2,
+  annotate("text", x = 17.2, y = 199, hjust = 0, vjust = 1, size = 5.2,
            family = bb852_font, colour = bb852$grey,
            label = "95% prediction interval\nfor a new person") +
-  annotate("text", x = 25.6, y = 146, hjust = 1, size = 5.2,
+  annotate("text", x = 24.2, y = 146, hjust = 1, size = 5.2,
            family = bb852_font, colour = bb852$coral,
            label = "95% confidence interval\nfor the mean line")
 
@@ -653,6 +661,12 @@ for (plot_name in names(output_names)) {
     plots[[plot_name]]
   }
   save_bb852(half_plot, output_names[[plot_name]], layout = "half")
+}
+
+# Figures for the "Title, Bullets & Photo" slides (figure + takeaway box)
+takeaway_plots <- c("hand_height_line", "slope_ci", "ci_vs_pi", "prediction_20cm", "next_time_sex")
+for (plot_name in takeaway_plots) {
+  save_bb852(plots[[plot_name]], output_names[[plot_name]], layout = "takeaway")
 }
 
 message(
