@@ -746,7 +746,11 @@ save_both(make_card, "nest_record_card", half_scale = 1)
 
 card_file <- file.path("lecture_figures", "data_management", "source_images",
                        "bto_nest_record_card.jpg")
-if (file.exists(card_file) && requireNamespace("jpeg", quietly = TRUE)) {
+if (!requireNamespace("jpeg", quietly = TRUE)) {
+  stop("The BTO card figure needs the jpeg package: install.packages(\"jpeg\")")
+}
+if (!file.exists(card_file)) stop("Missing source image: ", card_file)
+{
   card_img <- jpeg::readJPEG(card_file)
   card_aspect <- dim(card_img)[1] / dim(card_img)[2]   # height / width
   make_bto_card <- function(size_scale = 1) {
