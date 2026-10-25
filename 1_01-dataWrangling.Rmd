@@ -20,8 +20,8 @@ We will address two questions concerning clutch size (the number of eggs laid in
 To answer these questions we need to calculate the average clutch size (number of eggs) for each nest in each year. The data are in a file called `sduBirds.csv` and are raw data collected while visiting the nests. The data will need to be processed to answer those questions.
 
 Let's import the data and take a look at it. Make sure your data looks OK before moving on.
-You should first set up your working directory (e.g. a folder for the course, with a sub-folder for course data), and set it with `setwd()`.
-See the earlier material for how to do this, or ask for help.
+Work inside your RStudio Project for the course (with a sub-folder called `CourseData` for the data), so that the file paths below work as written. You do not need `setwd()`.
+See the chapter on paths and projects for how to set this up, or ask for help.
 
 ```{r 1-01-dataWrangling-2}
 sduBirds <- read.csv("CourseData/sduBirds.csv")
@@ -214,7 +214,7 @@ The questions are:
 (1) what are the records and typical life spans in different taxonomic classes? [*what is the longest, shortest and median life span in birds, mammals and reptiles?*]
 (2) is there a positive relationship between body mass and life span? [*do big species live longer than small ones?*]; 
 (3) is there a trade-off between reproductive effort and life span? [*do species that reproduce a lot have short lives, so there is a negative relationship between reproduction and life span?*]; 
-(4) is this trade-off universal across all Classes? [*does the trade-off exist in birds, reptiles and amphibians?*]
+(4) is this trade-off universal across all Classes? [*does the trade-off exist in birds, mammals and reptiles?*]
 
 The database is in a file called `Amniote_Database_Aug_2015.csv` in the course data folder. The missing values (which are normally coded as `NA` in R) are coded as "`-999`". The easiest way to take care of this is to specify this when we import the data using the `na.strings` argument of the `read.csv` function. Thus we can import the data like this:
 

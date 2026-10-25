@@ -22,6 +22,7 @@ PNG files. It also rejects unexpected PDF output.
 Individual generators can still be run when working on one lecture:
 
 ```r
+source("lecture_figures/data_wrangling_summary/generate_figures.R")
 source("lecture_figures/summary_statistics/generate_figures.R")
 source("lecture_figures/randomisation_tests/generate_figures.R")
 source("lecture_figures/pimp_your_plots/generate_figures.R")
@@ -91,5 +92,10 @@ values and seeds (insect diet example, binomial GLM, regression). It writes
 the code output shown on the slides to `output/text/`, a title-slide graphic
 to `output/cover/`, and three figures at the takeaway size to
 `output/takeaway/`.
+
+The data_wrangling_summary generator (lecture 04b, data wrangling summary)
+reads `CourseData/AarslevTemperature.csv`. It writes the R output and answer
+keys quoted on the slides to `output/text/`, a title-slide graphic to
+`output/cover/`, and one figure at the takeaway size to `output/takeaway/`.
 
 All figures are written as PNG files only.
