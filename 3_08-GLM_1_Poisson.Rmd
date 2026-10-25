@@ -4,7 +4,7 @@ The models we have covered so far are ordinary linear models (including ANOVA, A
 
 In many cases this will not be the case. Non-linearity and heteroscedasticity tend to go hand-in-hand. Sometimes, for example, the data show an exponential growth type of pattern, and/or may be bounded in such a way that the errors cannot be homoscedastic. For example, counts of number of species on islands of different sizes have a lower bound at zero (you can't have negative numbers of species!) and increase exponentially while the standard deviations are small for small islands and large for large islands. Ratio data or percentage data such as proportion of individuals dying/surviving is bounded between 0 and 1 (0 - 100%).
 
-Transformation of the response variable could be an option to linearise these data (although there would be problems with 0 values because log(0) = -Infinity), but a second problem is that the ordinary linear model assumes "homoscedasticity" - that the errors in the model are evenly distributed along the explanatory variables. This assumption will be violated in most cases. For example, with count data (e.g. number of species in relation to island size), the errors for very small islands will be smaller than those for large islands. In fact, even if we transform the response variable, for example by log transformation, the predictions of the model will allow errors that include negative counts. This is clearly a problem!
+Transformation of the response variable could be an option to linearise these data (although there would be problems with 0 values because log(0) = -Infinity), but a second problem is that the ordinary linear model assumes "homoscedasticity" - that the errors in the model are evenly distributed along the explanatory variables. This assumption will be violated in most cases. For example, with count data (e.g. number of species in relation to island size), the errors for very small islands will be smaller than those for large islands. An untransformed linear model can even predict negative counts. Log-transforming the response does not fully solve these problems: zeros still need an arbitrary fix such as log(y + 1), the model still treats the (log) counts as continuous, normally distributed data rather than as integers, and back-transformed predictions estimate something closer to a geometric mean than the mean count.
 
 Generalised linear models (GLMs) solve these problems by not only applying a transformation but also explicitly altering the error assumption. They do this using a **link function** to carry out the transformation and by choosing an **error structure** (sometimes referred to as **family**, or **variance function**). The choice of link and error structure can be a bit confusing, but there are so-called "canonical links" that are commonly associated with particular error structures. For example, a model for count data would usually have a log link and a Poisson error structure.
 
@@ -22,7 +22,7 @@ In these cases:
 * Variance of response likely to increase with mean (it usually does with count data).
 * Errors are non-normal.
 * Zeros difficult to deal with by transformation (e.g. log(0) = -Inf).
-* Other error families do not allow zero values.
+* Some other error families (e.g. Gamma) do not allow zero values.
 
 The standard ("canonical") link used with the Poisson error family is the log link. The log link ensures that all fitted (i.e. predicted) values are positive, while the Poisson errors take account of the fact that the data are integer and the variance scales 1:1 with the mean (i.e. variance increases linearly and is equal to the mean). 
 
@@ -34,7 +34,7 @@ There are other potential link and error families that *could* be used with this
 This example uses the `fox.csv` data set. This data set gives the number of offspring produced by a group of foxes, alongside the weight (in kg) of the mothers. Let's import and plot the data.
 
 ```{block 3-08-GLM-1-Poisson-1, type="do-something"}
-Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+Remember to load the `dplyr`, `magrittr`, `ggplot2` and `ggfortify` packages, and to set your working directory correctly.
 ```
 
 
@@ -61,14 +61,14 @@ autoplot(mod1)
 
 These diagnostic plots are basically the same as the ones you saw for `lm` models. There is one difference: the plots use standardised *deviance* residuals instead of standardised residuals. These are transformed versions of the residuals that will look *normal* (in the statistical sense) if the family of the GLM is appropriate. So, if "poisson" is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.
 
-Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except for GLMs you must also specify that you would like to see the results of significance tests using `test = "F"` or `test = "Chi"`. For Poisson and binomial GLMs the chi-squared test is most appropriate, while for Gaussian (normal), quasibinomial and quasipoisson models the F test is most appropriate.
+Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except that for GLMs it is good practice to state which significance test you want, using `test = "Chi"` or `test = "F"`. For Poisson and binomial GLMs (where the dispersion is fixed) the chi-squared test is most appropriate, while for Gaussian (normal), quasibinomial and quasipoisson models (where the dispersion is estimated) the F test is most appropriate. In versions of R before 4.4.0 no test is shown unless you ask for one; from R 4.4.0, `anova()` chooses the appropriate test by default, but writing it explicitly makes your choice clear and works in every version.
 
 
 ```{r 3-08-GLM-1-Poisson-5}
 anova(mod1, test = "Chi")
 ```
 
-This summary table tells us that the single explanatory variable (`weight`) is fantastically important (p-value is very small indeed).
+This table gives strong evidence that the single explanatory variable (`weight`) is associated with the number of offspring: adding it reduces the deviance by 44.1, and the p-value is very small. A small p-value tells us the evidence is strong, not how large the effect is; we estimate the size of the effect below.
 
 We can then ask for the coefficient summary using `summary`.
 
@@ -149,7 +149,7 @@ So we could summarise this something like this:
 
 Methods: *I modelled the association between mother's weight and number of pups produced using a generalised linear model with a log link and Poisson error structure. This is appropriate because the data are count data (number of pups) that are bounded at 0 with increasing variance with increased maternal weight.*
 
-Results: *The GLM showed that maternal weight was significantly associated with the number of pups produced (GLM: Null Deviance = 166.8, Residual Deviance = 122.7, d.f. = 1 and 98, p <0.001). The slope of the relationship was 0.63 (on the log scale). The equation of the best fit line was log(nOffspring) = -0.75 + 0.63 $\times$ MotherWeight (see Figure XXX)*
+Results: *The GLM showed that maternal weight was significantly associated with the number of pups produced (GLM: $\chi^2$ = 44.1, d.f. = 1, p < 0.001; Null Deviance = 166.8 on 99 d.f., Residual Deviance = 122.7 on 98 d.f.). The slope of the relationship was 0.63 (on the log scale), so each additional kg of maternal weight multiplied the expected number of pups by exp(0.63) = 1.88 (95% CI 1.56 to 2.27). The equation of the best fit line was log(expected number of pups) = -0.75 + 0.63 $\times$ MotherWeight (see Figure XXX)*
 
 
 
@@ -174,14 +174,14 @@ Again, you will notice that the data are formed into horizontal rows of integer 
 Let's fit a Generalised Linear Model to find out. As before will assume that the error is Poisson (that the variance increases directly in proportion to the mean), and we will use the standard log link to ensure that we don't predict negative values:
 
 ```{r 3-08-GLM-1-Poisson-13}
-mod1 <- glm(Cancers ~ Distance, data = cancer, family = poisson)
+mod_cancer <- glm(Cancers ~ Distance, data = cancer, family = poisson)
 ```
 
 Next, plot the diagnostic plots.
 
 ```{r 3-08-GLM-1-Poisson-14, echo=TRUE,fig.width=4,fig.height=4,fig.align='center', fig.pos = "ht",message=FALSE}
 library(ggfortify)
-autoplot(mod1)
+autoplot(mod_cancer)
 ```
 
 These look a bit dodgy, but we'll stick with it for the moment. (These `autoplot` diagnostics are hard to read here because the data are dominated by low counts and zeros. In the next chapter we will meet a simulation-based diagnostic tool, `DHARMa`, that makes awkward cases like this much clearer — it would be a good exercise to return to this model and re-examine it with DHARMa once you have learned about it.)
@@ -189,16 +189,16 @@ These look a bit dodgy, but we'll stick with it for the moment. (These `autoplot
 Next ask for the Analysis of Variance table.
 
 ```{r 3-08-GLM-1-Poisson-15}
-anova(mod1, test = "Chi")
+anova(mod_cancer, test = "Chi")
 ```
 
 
 The ANOVA table tells us that there is no significant effect of the Distance variable. In other words a model that includes the `Distance` term does not explain significantly more variation than the `NULL` model that includes no terms and instead assumes that variation in cancer incidence is simply caused by random variation.
 
-So the distance from the plant does not explain the pattern of cancers. Go ahead and plot the model in any case (just for practice).
+So the distance from the plant does not explain the pattern of cancers. Look at the coefficient summary, and then go ahead and plot the model in any case (just for practice).
 
 ```{r 3-08-GLM-1-Poisson-16}
-summary(mod1)
+summary(mod_cancer)
 ```
 
 Use the approach from the fox example as guidance to make a plot with a fit line.
@@ -208,7 +208,7 @@ You might, however, have noticed that the diagnostic plots for this model looked
 
 ### Overdispersion: What It Is and Why It Matters
 
-**Overdispersion** occurs when the observed variance in the response variable exceeds what is expected under the model's assumptions. For example, in a **Poisson model**, the variance is expected to equal the mean. If the actual variance is significantly larger, overdispersion is present. There's a nice intuitive description of this in the textbook (Getting Started With R, section 7.5.1). To diagnose overdispersion, you compare the `Residual deviance` to the `degrees of freedom`.  In a perfect Poisson model, these values will be equal, so we can generate a useful index of overdispersion by dividing the residual deviance by the degrees of freedom. The "rule of thumb" is that an overdispersion index >2 is problematic.
+**Overdispersion** occurs when the observed variance in the response variable exceeds what is expected under the model's assumptions. For example, in a **Poisson model**, the variance is expected to equal the mean. If the actual variance is significantly larger, overdispersion is present. There's a nice intuitive description of this in the textbook (Getting Started With R, section 7.5.1). To diagnose overdispersion, you compare the `Residual deviance` to the `degrees of freedom`.  In a perfect Poisson model, these values will be equal, so we can generate a useful index of overdispersion by dividing the residual deviance by the degrees of freedom. As a "rule of thumb", an overdispersion index below about 1.5 is fine, values between about 1.5 and 2 call for caution, and values above 2 are problematic. The index is only a rough guide, particularly when there are few residual degrees of freedom.
 
 **Causes of Overdispersion**:
 
@@ -263,10 +263,10 @@ mod_quasi <- glm(nkilled ~ scoutPerKm, data = poaching, family = quasipoisson)
 summary(mod_quasi)
 ```
 
-Compare the two summaries. The `scoutPerKm` estimate is *identical*, but its standard error has roughly doubled. As a result, the effect that was wildly significant under the Poisson model (p < 0.001) is now only *just* significant (p is roughly 0.04). The relationship is still there -- more scout patrols per km is associated with fewer elephants killed -- but honestly accounting for the overdispersion gives a much more realistic (and humble) picture of how certain we can be. This is exactly why checking for overdispersion matters: ignore it, and you risk being far more confident than the data warrant.
+Compare the two summaries. The `scoutPerKm` estimate is *identical*, but its standard error has roughly doubled. As a result, the effect that was wildly significant under the Poisson model (p < 0.001) now has a p-value of about 0.05 (`r round(summary(mod_quasi)$coefficients["scoutPerKm", 4], 3)` in the summary table; `anova(mod_quasi, test = "F")` gives a similar value). It is more informative to look at the size of the effect: 10 more scout patrols per 1000 km (0.01 per km) multiply the expected number of elephants killed by `r round(exp(0.01 * coef(mod_quasi)[["scoutPerKm"]]), 2)` under both models, but the 95% confidence interval widens from `r paste(round(exp(0.01 * (coef(mod_pois)[["scoutPerKm"]] + c(-1.96, 1.96) * sqrt(vcov(mod_pois)[2, 2]))), 2), collapse = " to ")` (Poisson) to `r paste(round(exp(0.01 * (coef(mod_quasi)[["scoutPerKm"]] + c(-1.96, 1.96) * sqrt(vcov(mod_quasi)[2, 2]))), 2), collapse = " to ")` (quasi-Poisson). The relationship is still there -- more scout patrols per km is associated with fewer elephants killed -- but honestly accounting for the overdispersion gives a much more realistic (and humble) picture of how certain we can be. This is exactly why checking for overdispersion matters: ignore it, and you risk being far more confident than the data warrant.
 
 ```{block 3-08-GLM-1-Poisson-21, type="do-something"}
-Overdispersion is often caused by an important variable being left out of the model (the "unobserved heterogeneity" mentioned above). Try adding `funding` to the Poisson model (`nkilled ~ scoutPerKm + funding`) and re-checking the overdispersion index. You should find that it drops substantially -- the missing variable was part of the problem all along.
+Overdispersion is often caused by an important variable being left out of the model (the "unobserved heterogeneity" mentioned above). Try adding `funding` to the Poisson model (`nkilled ~ scoutPerKm + funding`) and re-checking the overdispersion index. You should find that it drops substantially (to about 1.9: better, though still above 1) -- the missing variable was part of the problem all along.
 ```
 
 
@@ -281,4 +281,4 @@ In this example, you will be fitting a GLM equivalent of a t-test that is approp
 3) Examine the diagnostic plots of the model (`autoplot`).
 4) Get the analysis of variance (deviance) table (`anova`). What does this tell you?
 5) Obtain the `summary` table. What does this tell you?
-6) Use the coefficient information in the `summary` table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations "by hand", or using the `predict` function. Ask for help if you get stuck.
+6) Use the model to get the predicted average number of mistakes for each age group (plus/minus 95% confidence interval). Start from a data frame of the groups to predict for, `newData <- data.frame(Age = c("Adult", "Child"))`. Remember that (i) the model summary is on the scale of the linear predictor, so `exp(AgeChild)` is the *ratio* of the Child mean to the Adult mean, not the Child mean itself; and (ii) the standard error of the Child mean is not in the `summary` table (it combines both coefficients), so use `predict(..., se.fit = TRUE)` as in the fox example: calculate the 95% CI as the fit plus/minus 1.96 times the standard error on the link scale, then back-transform. Ask for help if you get stuck.

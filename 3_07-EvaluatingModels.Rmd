@@ -33,11 +33,11 @@ We'll look at multiple R-squared first. This value is calculated as the amount o
 anova(mod1)
 ```
 
-Here, the column labelled `Sum Sq` is telling us what the variance EXPLAINED by each of the terms is. The final entry, for `Residuals`, is the amount **not** explained (hence "residual"). Therefore we can calculate R-squared from this as (`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) / (`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]` + `r round(unlist(anova(mod1)[2]),1)[3]`) = `r round(sum(round(unlist(anova(mod1)[2]),1)[1:2])/sum(round(unlist(anova(mod1)[2]),1)), 4)`. You can check that this matches the figure indicated by `summary(mod1)`.
+Here, the column labelled `Sum Sq` tells us how much of the variation each term EXPLAINS, measured as a sum of squares. The final entry, for `Residuals`, is the amount **not** explained (hence "residual"). Therefore we can calculate R-squared from this as (`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) / (`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]` + `r round(unlist(anova(mod1)[2]),1)[3]`) = `r round(sum(round(unlist(anova(mod1)[2]),1)[1:2])/sum(round(unlist(anova(mod1)[2]),1)), 4)`. You can check that this matches the figure indicated by `summary(mod1)`.
 
 **But what is the Adjusted R-squared?**
 
-Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. It measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared will *always* increase because terms will *always* explain some portion of the variance, even if it is very small. This behaviour can be a bit annoying, so adjusted R-squared controls against this increase by adding a penalty based on the number of predictors in the model and the sample size^[The formula is: $R^2_{adj} = 1 - \left( \frac{(1 - R^2)(n - 1)}{n - k - 1} \right)$, where *n* is the sample size and *k* is the number of predictors in the model.]. When reporting R-squared values for models with >1 term you should report the adjusted R-squared value.
+Multiple R-squared is a measure of R-squared value for models that can have multiple predictor variables. It measures the amount of variation in the response variable that can be explained by the predictor variables. When additional terms are added to the model, the multiple R-squared can *never* decrease (and in practice almost always increases) because terms will *always* explain some portion of the variance, even if it is very small. This behaviour can be a bit annoying, so adjusted R-squared controls against this increase by adding a penalty based on the number of coefficients in the model and the sample size^[The formula is: $R^2_{adj} = 1 - \left( \frac{(1 - R^2)(n - 1)}{n - k - 1} \right)$, where *n* is the sample size and *k* is the number of estimated coefficients excluding the intercept. Note that *k* counts coefficients, not variables: an interaction adds coefficients, and a categorical variable with *L* levels adds *L* - 1.]. When reporting R-squared values for models with >1 term you should report the adjusted R-squared value.
 
 You can test this by adding terms to the model. Let's start with something silly - we'll add a variable that is simply a vector of random numbers to the model. By definition this cannot have any meaningful explanatory power, but what will it do to the multiple R-squared value?
 
@@ -46,26 +46,28 @@ set.seed(42)
 morph <- morph %>%
   mutate(randomVariable = rnorm(nrow(morph)))
 
-mod2 <- lm(Height ~ HandLength + Sex + randomVariable, data = morph)
-summary(mod2)
+mod1_random <- lm(Height ~ HandLength + Sex + randomVariable, data = morph)
+summary(mod1_random)
 ```
 
 We can ask for the more precise multiple R-squared values like this:
 
 ```{r 3-07-EvaluatingModels-5}
 summary(mod1)$r.squared
-summary(mod2)$r.squared
+summary(mod1_random)$r.squared
 ```
 
 
-If you subtract one from the other, you will see that the Multiple R-squared has "improved" by `r format(round(summary(mod2)$r.squared-summary(mod1)$r.squared,7),scientific = FALSE)` — an increase that happens *automatically* whenever any term is added to a model, even a completely useless one. The Adjusted R-squared, however, is not so easily fooled: because it penalises each extra parameter, the random variable earns essentially no reward. Here the Adjusted R-squared `r ifelse(summary(mod2)$adj.r.squared < summary(mod1)$adj.r.squared, "actually *decreases* slightly", "stays essentially flat")`, changing by just `r format(round(summary(mod2)$adj.r.squared-summary(mod1)$adj.r.squared,4),scientific = FALSE)` (from `r round(summary(mod1)$adj.r.squared,4)` to `r round(summary(mod2)$adj.r.squared,4)`). This, hopefully, is enough evidence to make you favour reporting adjusted rather than multiple R-squared values.
+If you subtract one from the other, you will see that the Multiple R-squared has "improved" by `r format(round(summary(mod1_random)$r.squared-summary(mod1)$r.squared,7),scientific = FALSE)` — an increase that happens *automatically* whenever any term is added to a model, even a completely useless one. The Adjusted R-squared, however, is not so easily fooled: because it penalises each extra parameter, the random variable earns essentially no reward. Here the Adjusted R-squared `r ifelse(summary(mod1_random)$adj.r.squared < summary(mod1)$adj.r.squared, "actually *decreases* slightly", "stays essentially flat")`, changing by just `r format(round(summary(mod1_random)$adj.r.squared-summary(mod1)$adj.r.squared,4),scientific = FALSE)` (from `r round(summary(mod1)$adj.r.squared,4)` to `r round(summary(mod1_random)$adj.r.squared,4)`). Be aware, though, that adjusted R-squared is not a noise detector: it rises whenever a new term improves the fit by more than an average noise term would, so with other random numbers (try a different seed) it rises roughly one time in three. Even so, it is a better summary than multiple R-squared, so you should favour reporting adjusted rather than multiple R-squared values.
 
 The adjusted R-squared value can be used as a single-number summary of model explanatory power.
 
 
 ## Akaike Information Criterion (AIC)
 
-The Akaike information criterion (AIC) is an estimator of prediction error in a statistical model developed in 1970 by a Japanese statistician called Hirotugu Akaike. In a nutshell, it is a measure of the relative quality of statistical models *for a given set of data*. This last part is important. AIC is only comparable among statistical models that use the same data (and which have the same response variable). In other words, given a collection of plausible models that use the same data set, AIC estimates the quality of each model relative to the others. If you are interested in the details you can read further on Wikipedia or a more advanced statistics book; otherwise you can simply trust that AIC estimates the relative quality of models, with lower values being better.
+The Akaike information criterion (AIC) is an estimator of prediction error in a statistical model introduced in the early 1970s by the Japanese statistician Hirotugu Akaike (presented in 1971, published in 1973 and 1974). In a nutshell, it is a measure of the relative quality of statistical models *for a given set of data*. This last part is important. AIC is only comparable among statistical models that use the same data (and which have the same response variable). In other words, given a collection of plausible models that use the same data set, AIC estimates the quality of each model relative to the others. If you are interested in the details you can read further on Wikipedia or a more advanced statistics book; otherwise you can simply trust that AIC estimates the relative quality of models, with lower values being better.
+
+The formula is $AIC = -2 \ln(L) + 2k$, where $L$ is the likelihood (how probable the observed data are under the fitted model) and $k$ is the number of estimated parameters. The first part rewards a good fit; the second part penalises complexity, adding 2 for each extra parameter. For `lm` models, $k$ includes the residual standard deviation as well as the coefficients, which is why the `df` column in the table below is one larger than the number of coefficients.
 
 You can get R to tell you the AIC value for a model using the function `AIC()` e.g. `AIC(mod1)`.
 
@@ -85,6 +87,15 @@ mod6 <- lm(Height ~ HandLength + randomVariable, data = morph)
 ```
 
 In the AIC results table, the models are now ordered from best (lowest AIC) to worst (highest AIC).
+
+AIC values only mean something relative to each other, so it is usual to look at the difference between each model and the best one ($\Delta$AIC):
+
+```{r 3-07-EvaluatingModels-6b}
+AICtable %>%
+  mutate(deltaAIC = AIC - min(AIC))
+```
+
+Common rules of thumb [@burnham2002model] are that models within about 2 AIC units of the best have similar support, models 4 to 7 units worse have considerably less support, and models more than 10 units worse have essentially none. When a more complex model is within 2 units of a simpler one, as the interaction model `mod2` is here (`r round(AIC(mod2) - AIC(mod1), 1)` units worse than `mod1`), the extra term adds essentially nothing and the simpler model is preferred [@arnold2010uninformative]. Finally, choose a small set of sensible candidate models *before* comparing them: fitting every possible combination of variables and picking the lowest AIC will find patterns that are there by chance.
 
 ## Variance partitioning
 
@@ -109,7 +120,7 @@ The proportion of variance explained by HandLength is `r round(unlist(anova(mod1
 Similarly, the proportion of variance explained by Sex is `r round(unlist(anova(mod1)[2]),1)[2]`/(`r round(unlist(anova(mod1)[2]),1)[1]` + `r round(unlist(anova(mod1)[2]),1)[2]`) = `r round(round(unlist(anova(mod1)[2]),1)[2]/(round(unlist(anova(mod1)[2]),1)[1]+round(unlist(anova(mod1)[2]),1)[2]), 2)`.
 
 
-**A word of caution.** These proportions come from the `Sum Sq` column of `anova()`, which uses *sequential* (Type I) sums of squares: each term is credited with the variation it explains *after* the terms listed before it in the model formula. When the predictors are correlated — as `HandLength` and `Sex` are here (men tend to be both taller and larger-handed) — the share attributed to each term depends on the order in which the terms enter the model. Fitting `Height ~ Sex + HandLength` instead would give a somewhat different split. Variance partitioning is therefore best treated as a useful summary rather than a unique, definitive attribution.^[If you need an order-independent partition where the contributions still add up to the model's R-squared, the standard tool is the `lmg` metric in the `relaimpo` package (`relaimpo::calc.relimp(mod1, type = "lmg")`). It averages each predictor's contribution over every possible order of entry — for two predictors this is simply the average of the two orderings (`HandLength + Sex` and `Sex + HandLength`). This is equivalent to the "Shapley value" from game theory: a principled way of sharing the overlapping variance fairly between correlated predictors.]
+**A word of caution.** These proportions come from the `Sum Sq` column of `anova()`, which uses *sequential* (Type I) sums of squares: each term is credited with the variation it explains *after* the terms listed before it in the model formula. When the predictors are correlated — as `HandLength` and `Sex` are here (men tend to be both taller and larger-handed) — the share attributed to each term depends on the order in which the terms enter the model. Fitting `Height ~ Sex + HandLength` instead gives a very different split: the share credited to `HandLength` falls from about `r round(100 * anova(mod1)[1, 2] / sum(anova(mod1)[1:2, 2]))`% to about `r round(100 * anova(lm(Height ~ Sex + HandLength, data = morph))[2, 2] / sum(anova(mod1)[1:2, 2]))`%. This happens because most of the explained variation can be explained by *either* predictor; that shared part goes to whichever term enters first. Variance partitioning is therefore best treated as a useful summary rather than a unique, definitive attribution.^[If you need an order-independent partition where the contributions still add up to the model's R-squared, the standard tool is the `lmg` metric in the `relaimpo` package (`relaimpo::calc.relimp(mod1, type = "lmg")`). It averages each predictor's contribution over every possible order of entry — for two predictors this is simply the average of the two orderings (`HandLength + Sex` and `Sex + HandLength`). This is equivalent to the "Shapley value" from game theory: a principled convention for dividing the overlapping variance between correlated predictors (a convention, because the shared part cannot truly be attributed to either).]
 
 In more complicated multiple regression one could use this approach to further group variables into types so one could e.g., one could lump together different types of explanatory variables. Imagine you had data on human cholesterol level, for example. You might have explanatory variables including various genotypes, morphology (height/weight), various dietary factors and so on. After partitioning variance among the many variables, it could then be useful to group these variables into a smaller number of "types", such as "genetic", "morphological" and "diet". Thus, variance partitioning can help make sense of complex data and can improve how such results are communicated.
 
@@ -119,5 +130,5 @@ The logical process is the same for Generalised Linear Models (GLM), which we wi
 
 ## Conclusion
 
-In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary to tell you how much variation is explained - a high R2 value indicates a good model. It can be used to compare models that use different data. AIC is another measure of model "quality" but can only compare models that use the same data set. Low AIC values are better than high ones.
+In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary of how much of the variation in the response is explained (report adjusted R-squared for models with more than one term). It is not a measure of effect size, and a low value does not mean a bad model: noisy biological systems often give low R-squared values even when an effect is clear and precisely estimated. Because R-squared depends on the range and noise of each data set, do not use it to compare models fitted to different data. AIC is another measure of model "quality" that can only compare models fitted to the same data set, with the same response variable. Low AIC values are better than high ones.
 Variance partitioning can be used as a handy way to sum up your model (in addition to significance and coefficient values).

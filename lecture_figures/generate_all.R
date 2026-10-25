@@ -39,7 +39,11 @@ lecture_names <- c(
   "anova",
   "linear_regression",
   "ancova",
-  "data_management"
+  "data_management",
+  "glm_count",
+  "glm_part2",
+  "evaluating_models",
+  "power_analysis"
 )
 
 rscript <- file.path(R.home("bin"), "Rscript")

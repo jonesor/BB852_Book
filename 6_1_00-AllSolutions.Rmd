@@ -835,7 +835,16 @@ anova(mod_A, test = "Chi")
 summary(mod_A)
 ```
 
-6. Use the coefficient information in the `summary` table to get the model predictions for average number of mistakes (plus/minus 95% Confidence interval). Remember that (i) the model summary is on the scale of the linear predictor, and (ii) the 95% CI can be calculated as 1.96 times the standard error. You can do these calculations "by hand", or using the `predict` function. Ask for help if you get stuck.
+6. Use the model to get the predicted average number of mistakes for each age group (plus/minus 95% confidence interval). Start from a data frame of the groups to predict for, `newData <- data.frame(Age = c("Adult", "Child"))`. Remember that (i) the model summary is on the scale of the linear predictor, so `exp(AgeChild)` is the *ratio* of the Child mean to the Adult mean, not the Child mean itself; and (ii) the standard error of the Child mean is not in the `summary` table (it combines both coefficients), so use `predict(..., se.fit = TRUE)` as in the fox example: calculate the 95% CI as the fit plus/minus 1.96 times the standard error on the link scale, then back-transform. Ask for help if you get stuck.
+
+The `AgeChild` coefficient, back-transformed, is the ratio of the Child mean to the Adult mean: children make about three times as many mistakes. (`confint()` gives a profile-likelihood interval, which can differ slightly from estimate plus/minus 1.96 SE.)
+
+```{r 6-1-00-AllSolutions-79a}
+exp(coef(mod_A))
+exp(confint(mod_A))
+```
+
+The group means and their 95% confidence intervals come from `predict()`:
 
 ```{r 6-1-00-AllSolutions-79}
 newData <- data.frame(Age = c("Child", "Adult"))
