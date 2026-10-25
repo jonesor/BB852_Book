@@ -22,6 +22,7 @@ PNG files. It also rejects unexpected PDF output.
 Individual generators can still be run when working on one lecture:
 
 ```r
+source("lecture_figures/summary_statistics/generate_figures.R")
 source("lecture_figures/randomisation_tests/generate_figures.R")
 source("lecture_figures/pimp_your_plots/generate_figures.R")
 source("lecture_figures/statistics_roadmap/generate_figures.R")
@@ -57,5 +58,11 @@ spreadsheet examples and nest record card are invented teaching data, not
 real records. It also reads `source_images/bto_nest_record_card.jpg`, a completed
 BTO Nest Record Scheme card used with permission for educational use
 (source: BTO Nest Record Scheme Handbook, 2003; (c) BTO).
+
+The summary_statistics generator (lecture 07, summary statistics,
+distributions and probability) uses simulated data only: a hypothetical moth
+light-trap survey with illustrative values (forewing length mean 28 mm, SD
+2 mm). It also writes the numbers quoted on the slides to
+`output/text/slide_numbers.txt`, and a title-slide graphic to `output/cover/`.
 
 All figures are written as PNG files only.

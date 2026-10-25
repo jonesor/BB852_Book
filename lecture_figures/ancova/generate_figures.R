@@ -203,6 +203,9 @@ plots$slide_01_cover <- ggplot(morph, aes(HandLength, Height)) +
 
 # Slides 4 and 16: height vs hand length by sex (separate lines, as in the book) --
 
+sex_slopes <- sapply(split(morph, morph$Sex),
+                     function(d) coef(lm(Height ~ HandLength, data = d))[[2]])
+
 sex_ends <- do.call(rbind, lapply(split(morph, morph$Sex), function(d) {
   fit <- lm(Height ~ HandLength, data = d)
   x <- max(d$HandLength)
@@ -233,7 +236,8 @@ plots$slide_04_by_sex <- by_sex +
            label = sprintf("Ignoring sex: slope %.1f", coef(mod_overall)[2])) +
   annotate("text", x = hand_range[1], y = 184.5, hjust = 0, size = pt(16),
            family = bb852_font, colour = bb852$text, fontface = "bold",
-           label = sprintf("Within each sex: slope %.1f", coef(mod_B)[["HandLength"]]))
+           label = sprintf("Within each sex: %.1f (F) and %.1f (M)",
+                           sex_slopes[["Female"]], sex_slopes[["Male"]]))
 
 
 # Simpson's paradox (simulated): no longer a slide; it is mentioned in the
@@ -439,26 +443,27 @@ coef_steps <- ggplot() +
   annotate("text", x = 1.1, y = b0 + 1, hjust = 0, size = pt(15),
            family = bb852_font, fontface = "bold", colour = bb852$text,
            label = sprintf("(Intercept) %.2f", b0)) +
-  annotate("text", x = 2.08, y = b0 + b_diet / 2, hjust = 0, size = pt(15),
+  annotate("text", x = 2.07, y = b0 + b_diet / 2, hjust = 0, size = pt(14),
            family = bb852_font, fontface = "bold", colour = term_cols[["diet"]],
-           label = sprintf("diet %.2f", b_diet)) +
-  annotate("text", x = 3.08, y = b0 + b_gt / 2 + 1.2, hjust = 0, size = pt(15),
+           lineheight = 0.9, label = sprintf("dietlowProtein\n%.2f", b_diet)) +
+  annotate("text", x = 3.07, y = b0 + b_gt + 2.2, hjust = 0, size = pt(14),
            family = bb852_font, fontface = "bold", colour = term_cols[["gt"]],
-           label = sprintf("genotype\n%.2f", b_gt), lineheight = 0.9) +
+           lineheight = 0.9, label = sprintf("genotypegt2\n%.2f", b_gt)) +
   annotate("text", x = 3.64, y = b0 + b_gt + b_diet / 2, hjust = 1,
-           size = pt(15), family = bb852_font, fontface = "bold",
-           colour = term_cols[["diet"]], label = sprintf("diet %.2f", b_diet)) +
-  annotate("text", x = 4.08, y = b0 + b_gt + b_diet + b_int / 2 - 0.6,
-           hjust = 0, size = pt(15), family = bb852_font, fontface = "bold",
+           size = pt(14), family = bb852_font, fontface = "bold",
+           colour = term_cols[["diet"]], lineheight = 0.9,
+           label = sprintf("dietlowProtein\n%.2f", b_diet)) +
+  annotate("text", x = 4.06, y = b0 + b_gt + b_diet + b_int / 2 - 0.9,
+           hjust = 0, size = pt(14), family = bb852_font, fontface = "bold",
            colour = term_cols[["inter"]], lineheight = 0.9,
-           label = sprintf("interaction\n+%.2f", b_int)) +
+           label = sprintf("genotypegt2:\ndietlowProtein\n+%.2f", b_int)) +
   annotate("text", x = 4.1, y = cell_mean[4] + 0.6, hjust = 0, size = pt(15),
            family = bb852_font, colour = bb852$text,
            label = sprintf("= %.2f", cell_mean[4])) +
   scale_colour_manual(values = term_cols) +
   scale_x_continuous(breaks = 1:4,
                      labels = c("gt1\nhigh", "gt1\nlow", "gt2\nhigh", "gt2\nlow"),
-                     expand = expansion(add = c(0.35, 0.95))) +
+                     expand = expansion(add = c(0.35, 1.75))) +
   scale_y_continuous(limits = c(11.5, 27.5)) +
   labs(x = NULL, y = "Mean length (mm)")
 
@@ -514,11 +519,22 @@ x_arrow <- 20
 y_f <- cb[["(Intercept)"]] + cb[["HandLength"]] * x_arrow
 y_m <- y_f + cb[["SexMale"]]
 
+# Each fitted line is drawn only over its own sex's range of hand length.
+parallel_segs <- merge(
+  aggregate(HandLength ~ Sex, data = morph, FUN = min),
+  aggregate(HandLength ~ Sex, data = morph, FUN = max), by = "Sex",
+  suffixes = c("_min", "_max")
+)
+parallel_segs <- merge(parallel_segs, cover_lines, by = "Sex")
+parallel_segs$y_min <- parallel_segs$intercept + parallel_segs$slope * parallel_segs$HandLength_min
+parallel_segs$y_max <- parallel_segs$intercept + parallel_segs$slope * parallel_segs$HandLength_max
+
 parallel <- ggplot(morph, aes(HandLength, Height, colour = Sex)) +
   geom_point(alpha = 0.45, size = 2.4) +
-  geom_abline(data = cover_lines,
-              aes(intercept = intercept, slope = slope, colour = Sex),
-              linewidth = 1.2) +
+  geom_segment(data = parallel_segs,
+               aes(x = HandLength_min, xend = HandLength_max,
+                   y = y_min, yend = y_max, colour = Sex),
+               linewidth = 1.2) +
   annotate("segment", x = x_arrow, xend = x_arrow, y = y_f, yend = y_m,
            colour = bb852$text, linewidth = 1.1,
            arrow = arrow(length = unit(0.1, "in"), ends = "both", type = "closed")) +
