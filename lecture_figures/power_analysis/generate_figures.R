@@ -299,12 +299,15 @@ one_exp <- data.frame(
                  levels = c("Control", "High protein")),
   length = c(control, treatment)
 )
-set.seed(1)
 plots$slide_16_one_experiment <- ggplot(one_exp, aes(group, length)) +
   geom_boxplot(aes(colour = group), fill = NA, width = 0.5,
                outlier.shape = NA, linewidth = 0.7) +
-  geom_jitter(aes(colour = group), width = 0.08, height = 0, size = 3,
-              alpha = 0.8) +
+  geom_point(
+    aes(colour = group),
+    position = position_jitter(width = 0.08, height = 0, seed = 1),
+    size = 3,
+    alpha = 0.8
+  ) +
   scale_colour_manual(values = group_cols) +
   labs(x = NULL, y = "Body length (mm)") +
   theme_bb852() +

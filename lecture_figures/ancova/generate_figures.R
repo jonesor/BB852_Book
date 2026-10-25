@@ -540,7 +540,7 @@ parallel <- ggplot(morph, aes(HandLength, Height, colour = Sex)) +
            arrow = arrow(length = unit(0.1, "in"), ends = "both", type = "closed")) +
   annotate("label", x = x_arrow + 0.15, y = y_f - 1, hjust = 0, vjust = 1,
            size = pt(16), family = bb852_font, fontface = "bold",
-           colour = bb852$text, fill = bb852$bg, label.size = 0,
+           colour = bb852$text, fill = bb852$bg, linewidth = 0,
            lineheight = 0.9,
            label = sprintf("SexMale\n+%.1f cm", cb[["SexMale"]])) +
   annotate("text", x = hand_range[2], y = 147, hjust = 1, size = pt(16),

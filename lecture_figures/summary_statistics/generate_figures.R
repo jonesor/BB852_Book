@@ -557,7 +557,12 @@ make_ci <- function(layout) {
   ggplot(ci, aes(y = sample, x = mean, colour = covers)) +
     geom_vline(xintercept = wing_mean, colour = bb852$grey, linewidth = 0.6,
                linetype = "dashed") +
-    geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0, linewidth = 1.1) +
+    geom_errorbar(
+      aes(xmin = lower, xmax = upper),
+      width = 0,
+      linewidth = 1.1,
+      orientation = "y"
+    ) +
     geom_point(size = 2.8) +
     scale_colour_manual(values = c(`TRUE` = bb852$slate, `FALSE` = bb852$coral)) +
     scale_y_continuous(breaks = c(1, 5, 10, 15, 20)) +

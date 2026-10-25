@@ -33,7 +33,6 @@
 library(ggplot2)
 library(ragg)
 library(patchwork)
-library(ggfortify)
 
 
 # Define the BB852 theme and export functions -----------------------------
@@ -308,17 +307,61 @@ half_plots$slide_11_poisson <- plots$slide_11_poisson +
   theme(panel.grid.major.x = element_blank())
 
 
-# Slide 15: diagnostic plots (autoplot, restyled) ----------------------------------
-# The same four panels students get from ggfortify::autoplot(mod1).
+# Slide 15: diagnostic plots -------------------------------------------------------
+# Recreate the four panels students get from ggfortify::autoplot(mod1) without
+# relying on ggfortify's deprecated ggplot2 methods.
 
-diag_plot <- autoplot(mod1, colour = bb852$slate, alpha = 0.5,
-                      smooth.colour = bb852$coral, label.n = 0,
-                      ad.colour = bb852$grey)
-diag_list <- lapply(diag_plot@plots, function(p) {
-  p + theme_bb852(14) + panel_title(14) +
-    theme(axis.text = element_text(size = 14), axis.title = element_text(size = 14),
-          plot.margin = margin(4, 8, 4, 4))
-})
+diag_data <- data.frame(
+  fitted = predict(mod1, type = "link"),
+  deviance_resid = residuals(mod1, type = "deviance"),
+  std_deviance_resid = rstandard(mod1, type = "deviance"),
+  std_pearson_resid = rstandard(mod1, type = "pearson"),
+  leverage = hatvalues(mod1)
+)
+diag_data$sqrt_abs_std_deviance <- sqrt(abs(diag_data$std_deviance_resid))
+
+diag_theme <- theme_bb852(14) + panel_title(14) +
+  theme(
+    axis.text = element_text(size = 14),
+    axis.title = element_text(size = 14),
+    plot.margin = margin(4, 8, 4, 4)
+  )
+diag_points <- geom_point(colour = bb852$slate, alpha = 0.5, size = 1.8)
+diag_smooth <- geom_smooth(
+  method = "loess",
+  formula = y ~ x,
+  se = FALSE,
+  colour = bb852$coral,
+  linewidth = 1
+)
+
+diag_list <- list(
+  ggplot(diag_data, aes(fitted, deviance_resid)) +
+    geom_hline(yintercept = 0, colour = bb852$grey, linetype = "22",
+               linewidth = 0.5) +
+    diag_points + diag_smooth +
+    labs(title = "Residuals vs fitted", x = "Predicted values", y = "Residuals") +
+    diag_theme,
+  ggplot(diag_data, aes(sample = std_deviance_resid)) +
+    geom_qq_line(colour = bb852$grey, linetype = "22", linewidth = 0.5) +
+    geom_qq(colour = bb852$slate, alpha = 0.5, size = 1.8) +
+    labs(title = "Normal Q-Q", x = "Theoretical quantiles",
+         y = "Std. deviance resid.") +
+    diag_theme,
+  ggplot(diag_data, aes(fitted, sqrt_abs_std_deviance)) +
+    diag_points + diag_smooth +
+    labs(title = "Scale-location", x = "Predicted values",
+         y = expression(sqrt("|Std. deviance resid.|"))) +
+    diag_theme,
+  ggplot(diag_data, aes(leverage, std_pearson_resid)) +
+    geom_hline(yintercept = 0, colour = bb852$grey, linetype = "22",
+               linewidth = 0.5) +
+    diag_points + diag_smooth +
+    scale_x_continuous(breaks = c(0, 0.04, 0.08, 0.12)) +
+    labs(title = "Residuals vs leverage", x = "Leverage",
+         y = "Std. Pearson resid.") +
+    diag_theme
+)
 plots$slide_15_diagnostics <- wrap_plots(diag_list, nrow = 1)
 half_plots$slide_15_diagnostics <- wrap_plots(diag_list, ncol = 2)
 

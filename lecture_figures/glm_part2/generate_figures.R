@@ -229,10 +229,13 @@ save_all(plots$logit_link, "logit_link", "full")
 
 # Figures: NFL field goals (binary data) -----------------------------------
 
-set.seed(12)
 nfl_base <- ggplot(NFL, aes(Distance, Success)) +
-  geom_jitter(width = 0, height = 0.05, alpha = 0.4, colour = bb852$light,
-              size = 2) +
+  geom_point(
+    position = position_jitter(width = 0, height = 0.05, seed = 12),
+    alpha = 0.4,
+    colour = bb852$light,
+    size = 2
+  ) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1)) +
   labs(x = "Distance (m)", y = "Success (1) or miss (0)") +
   theme_bb852()
@@ -241,10 +244,13 @@ save_all(plots$nfl_data, "nfl_data", "half")
 
 nfl_pred <- predict_ci(nflMod, data.frame(Distance = seq(14, 52, 0.25)))
 p50 <- -coef(nflMod)[1] / coef(nflMod)[2]
-set.seed(12)
 plots$nfl_fit <- ggplot(NFL, aes(Distance, Success)) +
-  geom_jitter(width = 0, height = 0.05, alpha = 0.4, colour = bb852$light,
-              size = 2) +
+  geom_point(
+    position = position_jitter(width = 0, height = 0.05, seed = 12),
+    alpha = 0.4,
+    colour = bb852$light,
+    size = 2
+  ) +
   geom_ribbon(data = nfl_pred, aes(x = Distance, ymin = lwr, ymax = upr),
               inherit.aes = FALSE, fill = bb852$coral, alpha = 0.2) +
   geom_line(data = nfl_pred, aes(Distance, fit), colour = bb852$coral,
@@ -255,7 +261,7 @@ plots$nfl_fit <- ggplot(NFL, aes(Distance, Success)) +
            colour = bb852$teal, linewidth = 0.6, linetype = "22") +
   annotate("label", x = p50 - 0.8, y = 0.38, hjust = 1,
            label = sprintf("p = 0.5 at %.1f m", p50), colour = bb852$teal,
-           fill = bb852$bg, label.size = 0, size = pt(16),
+           fill = bb852$bg, linewidth = 0, size = pt(16),
            family = bb852_font) +
   coord_cartesian(xlim = c(13, 53), ylim = c(-0.06, 1.06)) +
   scale_y_continuous(breaks = c(0, 0.25, 0.5, 0.75, 1)) +

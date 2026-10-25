@@ -1,0 +1,13 @@
+controlMean <- 12
+treatmentMean <- 14.4
+sdValue <- 3
+sampleSize <- 10
+
+powerResults <- replicate(1000,
+  t.test(rnorm(sampleSize, controlMean, sdValue),
+         rnorm(sampleSize, treatmentMean, sdValue))$p.value)
+
+(sum(powerResults < 0.05) / 1000) * 100
+[1] 39.3
+
+Analytic check, power.t.test: 0.395
