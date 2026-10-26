@@ -257,10 +257,10 @@ The research questions are: *What is the relative influence of colour pattern an
 
 4) Look at diagnostic plots from this model (`autoplot`)
 
-5) Use `anova` to get an Analysis of Variance summary table, and interpret the results.
+5) Use `anova` to get an Analysis of Variance summary table. Start with the interaction row: is there evidence that the effect of personality depends on colour pattern? There are only 8 fish in each group, so what does a non-significant result tell you, and what does it not tell you?
 
-6) Get the coefficient summary (`summary`) and interpret the output.
+6) If the interaction is not needed, drop it and refit the model with the two main effects only (`spawning ~ personality + colouration`). Use `anova` on this simpler model to test the main effects.
 
-7) Do post-hoc Tukey tests (e.g. using `HSD.test` from the `agricolae` package). Interpret the results.
+7) Get the coefficient summary (`summary`) and confidence intervals (`confint`) of the final model, and interpret them. How much more do proactive fish spawn than reactive ones, and homogeneous than heterogeneous ones? (Each variable has only two levels, so no post-hoc test is needed.)
 
-8) Sum up your findings with reference to the initial research questions.
+8) Sum up your findings with reference to the initial research questions. Avoid concluding that personality matters "in one colour morph but not the other": that is a claim about an interaction, so it needs the interaction test, not separate comparisons within each colour morph.

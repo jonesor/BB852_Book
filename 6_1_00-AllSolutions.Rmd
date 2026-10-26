@@ -765,33 +765,47 @@ mod_A <- lm(spawning ~ personality + colouration +
 
 4. Look at diagnostic plots from this model (`autoplot`)
 
-5. Use `anova` to get an Analysis of Variance summary table, and interpret the results.
+```{r 6-1-00-AllSolutions-fish-diag, message = FALSE, warning = FALSE}
+library(ggfortify)
+autoplot(mod_A)
+```
+
+The diagnostic plots look acceptable: no strong pattern in the residuals and no extreme points.
+
+5. Use `anova` to get an Analysis of Variance summary table. Start with the interaction row.
 
 ```{r 6-1-00-AllSolutions-71}
 anova(mod_A)
 ```
 
+The interaction is not significant (F = 2.91, d.f. = 1 and 28, p = 0.099), so there is no clear evidence that the effect of personality depends on colour pattern. This is **not** the same as showing that there is no interaction. The group means in the plot are clearly not parallel (proactive fish spawn about 54 more eggs than reactive fish in heterogeneous fish, but only about 9 more in homogeneous fish), and with only 8 fish per group the test has little power to detect an interaction of this size. The honest conclusion is "no clear evidence", and a larger study would be needed to settle it.
 
-6. Get the coefficient summary (`summary`) and interpret the output.
+6. The interaction is not needed, so drop it and refit the model with the main effects only.
 
 ```{r 6-1-00-AllSolutions-72}
-summary(mod_A)
+mod_B <- lm(spawning ~ personality + colouration, data = fishPersonality)
+anova(mod_B)
 ```
 
-7. Do post-hoc Tukey tests (e.g. using `HSD.test` from the `agricolae` package). Interpret the results.
+Both main effects are significant: personality (F = 5.16, d.f. = 1 and 29, p = 0.031) and colouration (F = 37.1, d.f. = 1 and 29, p < 0.001). Colouration explains much more of the variation than personality (sum of squares 55862 vs 7781).
+
+7. Get the coefficient summary and confidence intervals of the final model, and interpret them.
 
 ```{r 6-1-00-AllSolutions-73}
-library(agricolae)
-HSD.test(mod_A, c("personality", "colouration"), console = TRUE)
+summary(mod_B)
+confint(mod_B)
 ```
 
+* The intercept (207.2) is the estimated spawning of the reference group: proactive, heterogeneous fish.
+* `personalityReactive` (-31.2, 95% CI -59.3 to -3.1): reactive fish spawn about 31 fewer eggs than proactive fish of the same colour morph.
+* `colourationHomogeneous` (83.6, 95% CI 55.5 to 111.6): homogeneous fish spawn about 84 more eggs than heterogeneous fish of the same personality.
+* Each variable has only two levels, so these coefficients already compare the two groups and no post-hoc test is needed.
 
 8. Sum up your findings with reference to the initial research questions.
 
-
-* Homogeneous coloured fish seem to do better than heterogeneous ones overall (from the plot)
-* The anova table shows that personality and colouration are important variables (p <0.05); Colouration seems to be more important than personality overall (based on the sum of squares in the anova summary). The interaction between personality and colouration is not significant (p>0.05), which indicates that the effect of colour does not depend on the personality (and that the effect of personality does not depend on colour).
-* The Tukey test table shows that -  (1) Personality is associated with spawning, but only for heterogeneous coloured fish. (2) In the heterogeneous coloured fish the proactive fish spawn significantly more than the reactive ones. (3) In the homogeneous coloured fish there is no significant difference between the personalities.
+* Both colour pattern and personality are associated with spawning. Colour pattern has the larger effect: homogeneous fish spawned about 84 more eggs than heterogeneous fish (95% CI 55 to 112; F = 37.1, d.f. = 1 and 29, p < 0.001), while proactive fish spawned about 31 more than reactive fish (95% CI 3 to 59; F = 5.16, d.f. = 1 and 29, p = 0.031).
+* There was no clear evidence that the effect of personality depends on colour pattern (interaction F = 2.91, d.f. = 1 and 28, p = 0.099). The plot hints that the personality difference may be larger in heterogeneous fish, but with 8 fish per group this study cannot tell; it would need a larger sample.
+* Do not conclude that "personality matters only in heterogeneous fish" from separate comparisons within each colour morph (e.g. Tukey tests on the four groups). A significant difference in one group and a non-significant one in the other does not show that the two differences are themselves different: that is exactly what the interaction test assesses.
 
 
 ## Maze runner
