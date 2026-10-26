@@ -7,6 +7,8 @@
 # Data (empirical, from CourseData/), analysed exactly as in the course book:
 #   NFLfieldgoal.csv      binary binomial GLM; yards -> metres (n = 948)
 #   hawksbill.csv         aggregated binomial GLM with cbind() (7 clutches)
+# Simulated residuals: DHARMa::simulateResiduals(nflMod, n = 250, seed = 123)
+#   for the autoplot() vs DHARMa Q-Q comparison (needs the DHARMa package).
 # Analytical (no data): mean-variance curves, logit link curves, exact
 #   binomial confidence intervals for 1/2, 5/10 and 50/100 survivors.
 #
@@ -23,6 +25,7 @@
 library(ggplot2)
 library(ragg)
 library(patchwork)
+library(DHARMa)  # install.packages("DHARMa") if missing
 
 
 # Define the BB852 theme and export functions -----------------------------
@@ -268,6 +271,45 @@ plots$nfl_fit <- ggplot(NFL, aes(Distance, Success)) +
   labs(x = "Distance (m)", y = "Probability of success") +
   theme_bb852()
 save_all(plots$nfl_fit, "nfl_fit", "takeaway")
+
+
+# Figure: autoplot() vs DHARMa Q-Q plots for the binary NFL model ------------
+# Left: the Q-Q panel autoplot(nflMod) draws (standardised deviance residuals
+# against normal quantiles). Right: the Q-Q panel plot(simulateResiduals())
+# draws (DHARMa scaled residuals against uniform quantiles). Redrawn in the
+# BB852 style so the two can sit side by side on one slide.
+
+dev_res <- sort(rstandard(nflMod, type = "deviance"))
+qq_dev <- data.frame(
+  lab = "autoplot(): deviance residuals",
+  expected = qnorm(ppoints(length(dev_res))),
+  observed = dev_res
+)
+
+nfl_sim <- simulateResiduals(nflMod, n = 250, seed = 123)
+sim_res <- sort(nfl_sim$scaledResiduals)
+qq_sim <- data.frame(
+  lab = "DHARMa: simulated residuals",
+  expected = ppoints(length(sim_res)),
+  observed = sim_res
+)
+
+save_output("testUniformity(nfl_sim, plot = FALSE)", "nfl_dharma_ks")
+save_output("testDispersion(nfl_sim, plot = FALSE)", "nfl_dharma_dispersion")
+save_output("testOutliers(nfl_sim, plot = FALSE)", "nfl_dharma_outliers")
+
+qq_panel <- function(d, colour) {
+  ggplot(d, aes(expected, observed)) +
+    geom_abline(intercept = 0, slope = 1, colour = bb852$grey,
+                linewidth = 0.6, linetype = "22") +
+    geom_point(colour = colour, alpha = 0.4, size = 2) +
+    strip_lab() +
+    labs(x = "Expected quantile", y = "Observed residual") +
+    theme_bb852()
+}
+plots$nfl_qq_compare <- qq_panel(qq_dev, bb852$grey) +
+  qq_panel(qq_sim, bb852$slate)
+save_all(plots$nfl_qq_compare, "nfl_qq_compare", "full")
 
 
 # Figure: hawksbill turtles, cbind() vs proportions without sample size -----

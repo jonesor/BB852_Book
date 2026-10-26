@@ -301,7 +301,7 @@ save_bb852(colour_guide, "06_colour_scale_types", "half", bg = bb852$bg)
 default_cols <- scales::hue_pal()(4)
 okabe_cols   <- unname(class_cols)
 
-vision <- list(
+vision_fns <- list(
   "Normal vision" = function(x) x,
   "Deuteranopia"  = colorspace::deutan,
   "Protanopia"    = colorspace::protan,
@@ -309,16 +309,16 @@ vision <- list(
   "Greyscale"     = colorspace::desaturate
 )
 
-cvd_dat <- bind_rows(lapply(names(vision), function(v) {
+cvd_dat <- bind_rows(lapply(names(vision_fns), function(v) {
   bind_rows(
     tibble(palette = "ggplot default", swatch = 1:4,
-           fill = vision[[v]](default_cols)),
+           fill = vision_fns[[v]](default_cols)),
     tibble(palette = "Okabe-Ito", swatch = 1:4,
-           fill = vision[[v]](okabe_cols))
+           fill = vision_fns[[v]](okabe_cols))
   ) |> mutate(vision = v)
 })) |>
   mutate(
-    vision  = factor(vision, levels = names(vision)),
+    vision  = factor(vision, levels = names(vision_fns)),
     palette = factor(palette, levels = c("ggplot default", "Okabe-Ito"))
   )
 
@@ -372,13 +372,17 @@ save_bb852(clutter, "08_clutter_comparison", "full")
 
 # 09 Theme montage (built-in themes plus two from ggthemes) ----------------
 
+# Each panel is wrapped so patchwork does not align axes across panels
+# (theme_void() has no axes and would push its neighbours sideways).
+# Axis titles are dropped: every panel shows the same plot.
 theme_panel <- function(th, name) {
-  base_plot + th + ggtitle(name) +
+  p <- base_plot + th + labs(x = NULL, y = NULL) + ggtitle(name) +
     theme(legend.position = "none",
-          axis.title = element_text(size = 8),
           axis.text = element_text(size = 6),
-          plot.title = element_text(family = code_font, size = 10,
-                                    face = "plain", hjust = 0))
+          plot.title = element_text(family = code_font, size = 8.5,
+                                    face = "plain", hjust = 0),
+          plot.margin = margin(4, 6, 4, 4))
+  wrap_elements(full = p)
 }
 
 theme_montage <- wrap_plots(
@@ -437,7 +441,7 @@ shrunk  <- render_at(column_plot, 25, 18.75)
 at_size <- render_at(column_plot, 8, 6)
 
 image_panel <- function(img, title, colour) {
-  wrap_elements(full = grid::rasterGrob(img, interpolate = TRUE)) +
+  wrap_elements(panel = grid::rasterGrob(img, interpolate = TRUE)) +
     ggtitle(title) +
     theme(plot.title = element_text(family = bb852_font, size = 15,
                                     face = "bold", colour = colour,
