@@ -55,7 +55,7 @@ Now let's start with a basic plot. You will see a warning about removing rows wi
 
 ## Axis limits
 
-These points are really spread out. One option is to set the range over which the axes are allowed to go using `xlim` and `ylim`.
+These points are really spread out. One option is to set the range over which the axes are allowed to go using `xlim` and `ylim`. Be careful: `xlim` and `ylim` do not just zoom in, they *remove* every point outside the limits (that is what the "Removed rows" warning means). If you only want to zoom, use `coord_cartesian(xlim = c(0, 500), ylim = c(0, 300))`, which keeps all the data.
 
 ```{r 2-03-pimpYourPlots-5,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 p1 +
@@ -67,12 +67,12 @@ p1 +
 
 In this particular case, a log scale is best because even after focusing on a smaller part of the range of values you can see that the points are still concentrated at smaller values. In a moment you will also see that log-transforming the data makes the cloud of points pleasingly linear.
 
-You can set a log scale by using the commands `scale_x_continuous(trans = "log")` and `scale_y_continuous(trans = "log")`.
+You can set a log scale by using the commands `scale_x_continuous(transform = "log")` and `scale_y_continuous(transform = "log")`. (In older versions of `ggplot2` this argument was called `trans`; you may see that in examples online. `scale_x_log10()` and `scale_y_log10()` are shortcuts that do the same with base-10 logs.)
 
 ```{r 2-03-pimpYourPlots-6,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (p2 <- p1 +
-  scale_x_continuous(trans = "log") +
-  scale_y_continuous(trans = "log"))
+  scale_x_continuous(transform = "log") +
+  scale_y_continuous(transform = "log"))
 ```
 
 Now the axis labels are not ideal. Let's change them.
@@ -85,9 +85,9 @@ This looks nice, but the numbers on the axis are not very nice. Using `summary(a
 
 ```{r 2-03-pimpYourPlots-8, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (p2 <- p1 +
-  scale_x_continuous(trans = "log") +
+  scale_x_continuous(transform = "log") +
   scale_y_continuous(
-    trans = "log",
+    transform = "log",
     breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000)
   ))
 ```
@@ -97,37 +97,35 @@ Using `summary(anage$Mass)` tells us that the range of data is from 0.001 to 367
 ```{r 2-03-pimpYourPlots-9,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 (p2 <- p1 +
   scale_x_continuous(
-    trans = "log",
+    transform = "log",
     breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000)
   ) +
   scale_y_continuous(
-    trans = "log",
+    transform = "log",
     breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000)
   )
 )
 ```
 
-If you don't like the scientific notation (e.g. 1e+03 instead of 1000), you can tell R to use natural numbers by using the `label_number` function from the `scales` package. 
+If you don't like the scientific notation (e.g. 1e+03 instead of 1000), you can give your own tick labels with the `labels` argument. The labels are matched to the breaks in order, so give one label per break.
 
 ```{r 2-03-pimpYourPlots-7}
-#First install the scales package, if necessary
-#install.packages("scales")
-library(scales)
-
 p2 <- p1 +
   scale_x_continuous(
-    trans = "log", 
-    breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000),
-    labels = label_number(accuracy = 1)
+    transform = "log",
+    breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000),
+    labels = c("0.001", "0.01", "0.1", "1", "10", "100", "1000")
   ) +
   scale_y_continuous(
-    trans = "log",
+    transform = "log",
     breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000),
-    labels = label_number(accuracy = 1)
+    labels = c("0.0001", "0.001", "0.01", "0.1", "1", "10", "100", "1000")
   )
 
 p2
 ```
+
+Check your tick labels after you change them. A common trap is rounding: with `labels = scales::label_number(accuracy = 1)` every value below 0.5 is shown as "0".
 
 
 
@@ -143,11 +141,25 @@ Now, let's think about the axis labels. The labels in the plots so far have no u
 ```
 
 
+## Points hiding other points
+
+Look closely: there are 171 birds in these data, but you can hardly see them. `ggplot` draws points in the order of the rows, and here the 422 mammals come after the birds, so they are drawn on top. One fix is to sort the data so that the largest group is drawn first. `add_count()` adds a column `n` with the number of rows in each class, and `arrange(desc(n))` puts the biggest class first.
+
+```{r 2-03-pimpYourPlots-overplot, echo = TRUE, message = FALSE, fig.height = 3, fig.width = 5, fig.align = 'center', warning = FALSE}
+anage_sorted <- anage %>%
+  add_count(Class) %>%
+  arrange(desc(n))
+
+p3 %+% anage_sorted
+```
+
+The `%+%` operator replaces the data in an existing plot. You could also simply rebuild the plot with `ggplot(anage_sorted, ...)`. Transparency (`alpha`) also helps when points overlap.
+
 ## Colours
 
 What about those colours? The `ggplot` package uses some default colours that are OK, but sometimes you will want to make a change. 
 
-You can "manually" adjust colours using the `scale_colour_manual` function. You can either name individual colours (e.g. "red","green","orange","black")^[See [https://www.r-graph-gallery.com/42-colors-names.html](https://www.r-graph-gallery.com/42-colors-names.html)], or you can find their so-called "hex-codes" from a site like [http://colorbrewer2.org/](http://colorbrewer2.org/) or [https://htmlcolorcodes.com/color-picker/](https://htmlcolorcodes.com/color-picker/). You can add a two digit number after the hex code to set the "opaqueness" of the colour. For example "#FF000075" is red, with 75% opacity.
+You can "manually" adjust colours using the `scale_colour_manual` function. You can either name individual colours (e.g. "red","green","orange","black")^[See [https://www.r-graph-gallery.com/42-colors-names.html](https://www.r-graph-gallery.com/42-colors-names.html)], or you can find their so-called "hex-codes" from a site like [http://colorbrewer2.org/](http://colorbrewer2.org/) or [https://htmlcolorcodes.com/color-picker/](https://htmlcolorcodes.com/color-picker/). You can add two more hexadecimal digits after the hex code to set the opacity of the colour, from `00` (fully transparent) to `FF` (fully opaque). These are hexadecimal, not percentages: "#FF0000BF" is red at about 75% opacity, and "#FF000075" is red at about 46% (hexadecimal 75 is 117 out of 255).
 
 With colour names...
 
@@ -220,7 +232,7 @@ p3 +
   theme_economist()
 ```
 
-This package also includes some useful colour scales, including some for colour blind people.
+This package also includes some useful colour scales, including `scale_color_colorblind()`, which uses the Okabe-Ito colours. These stay distinguishable for people with the commonest kinds of colour-vision deficiency (about 1 in 12 men and 1 in 200 women have red-green colour-vision deficiency). The `viridis` palettes above are also designed with this in mind. You can check any figure with a free simulator such as Coblis.
 
 ```{r 2-03-pimpYourPlots-20, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 p3 +
@@ -258,11 +270,11 @@ I will illustrate it by first making another plot, this time showing the relatio
 plotA <- ggplot(anage, aes(x = Mass, y = BMR, colour = Class)) +
   geom_point(alpha = 0.5) +
   scale_x_continuous(
-    trans = "log",
+    transform = "log",
     breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000)
   ) +
   scale_y_continuous(
-    trans = "log",
+    transform = "log",
     breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1000)
   ) +
   xlab("Adult body mass (kg)") +
@@ -279,11 +291,11 @@ plotA <- ggplot(anage, aes(x = Mass, y = BMR, colour = Class)) +
 )) +
   geom_point(alpha = 0.5) +
   scale_x_continuous(
-    trans = "log",
+    transform = "log",
     breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000)
   ) +
   scale_y_continuous(
-    trans = "log",
+    transform = "log",
     breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10)
   ) +
   xlab("Adult body mass (kg)") +
@@ -299,15 +311,25 @@ Now I can combine these using the very simple syntax like this:
 plotA + plotB
 ```
 
-I can add titles using the `ggtitle` command like this.
+Journals usually want panels labelled A, B and so on. `plot_annotation(tag_levels = "A")` adds these tags for you.
+
 ```{r 2-03-pimpYourPlots-26,fig.height = 4,fig.width=7}
-plotA + ggtitle("A") + plotB + ggtitle("B")
+plotA + plotB + plot_annotation(tag_levels = "A")
 ```
 
 You could place the sub-plots on top of each other like this.
 
 ```{r 2-03-pimpYourPlots-27,fig.height = 7,fig.width=4}
-(plotA + ggtitle("A")) / (plotB + ggtitle("B"))
+plotA / plotB + plot_annotation(tag_levels = "A")
+```
+
+If both panels need the same legend, show it once rather than twice. Keep the legend in both plots and let `patchwork` collect them into one with `plot_layout(guides = "collect")`:
+
+```{r 2-03-pimpYourPlots-27b,fig.height = 4,fig.width=7}
+(plotA + plotB + theme(legend.position = "bottom", legend.title = element_blank())) +
+  plot_layout(guides = "collect") +
+  plot_annotation(tag_levels = "A") &
+  theme(legend.position = "bottom")
 ```
 
 
@@ -322,40 +344,18 @@ The default setting for `ggsave` is that it will save the last plot that was pri
 ggsave("MySavedPlot1.png", width = 18, height = 10, units = "cm")
 ```
 
-The command can save to various file types including `png`, `jpeg`, `pdf` (see the `ggplot` help file for more). R knows what file type is chosen by checking the file extension in the file name (e.g. `.png`). I advise to use `png`.
+The command can save to various file types including `png`, `jpeg`, `pdf` (see the `ggplot` help file for more). R knows what file type is chosen by checking the file extension in the file name (e.g. `.png`). I advise to use `png`, with `dpi = 300` for anything that will be printed.
+
+Choose the size for where the figure will end up, not for how it looks on your screen. A figure made large and then shrunk into a report or a journal column gets tiny, unreadable text. Many journals use a single column about 8 cm wide and a full page width about 17 cm (check the author guidelines). Save at that size and look at the file before you use it:
+
+```{r 2-03-pimpYourPlots-28b,eval=FALSE}
+ggsave("MySavedPlot1.png", width = 8, height = 6, units = "cm", dpi = 300)
+```
+
+At 8 cm you may need to tidy things up: fewer tick labels, a legend in two rows (`guides(colour = guide_legend(nrow = 2))`) or a shorter axis label.
 
 ## Final word on plots
 
 We have covered a lot of ground here. There is a lot to learn, but don't feel like you have to remember all of these commands (I don't). Mostly it is simply a case of remembering that it is *possible* to do these things, and knowing where to look up the commands. Obvious starting points are this course book, and the text book (including the online version!). You can also usually find help by Googling "ggplot" followed by what you are trying to do (e.g. "ggplot change axis ticks"). One of my frequently used web sites is this one [http://www.sthda.com/english/](http://www.sthda.com/english/) which has an extensive section on `ggplot` ([http://www.sthda.com/english/wiki/ggplot2-essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)).
 
 Even though we have covered a lot of ground we have still only gotten a taster of what `ggplot` is capable of. I encourage you to learn more. A useful resource for learning is the online R graph gallery" at [https://www.r-graph-gallery.com/](https://www.r-graph-gallery.com/), which shows you how to make and modify many types of plot.
-
-
-<!-- ## A note about the order of point layers -->
-
-<!-- Sometimes the points end up obscuring each other. For example, here the points for birds (Aves) are mostly hidden by the points for mammals. This happens because `ggplot` places the points in the order that they appear in the data frame. Therefore, one way to deal with that would be to change the order of the rows (e.g. so Aves appears last) or to randomise the rows using a new command called `slice` in concert with the `sample` function. -->
-
-
-<!-- ```{r} -->
-<!-- anage <- anage %>% -->
-<!--   slice(sample(1:n())) -->
-
-<!-- ggplot(anage,aes(x = Mass, y = BMR, colour = Class)) + -->
-<!--   geom_point(alpha=0.5) +  -->
-<!--   scale_x_continuous(trans = "log",breaks =c(0.001,0.01,0.1,1,10,100,1000)) +  -->
-<!--   scale_y_continuous(trans = "log",breaks =c(0.0001,0.001,0.01,0.1,1,10,100,1000)) -->
-<!-- ``` -->
-
-<!-- Another way would be to create a "helper" variable (e.g. `plotOrder`) and then arrange the data by this variable. This is a bit fiddly, but it gets the job done. -->
-
-<!-- ```{r} -->
-<!-- anage <- anage %>% -->
-<!--   mutate(plotOrder = as.numeric(Class)) %>% -->
-<!--   arrange(-plotOrder) -->
-
-
-<!-- ggplot(anage,aes(x = Mass, y = BMR, colour = Class)) + -->
-<!--   geom_point(alpha=0.5) +  -->
-<!--   scale_x_continuous(trans = "log",breaks =c(0.001,0.01,0.1,1,10,100,1000)) +  -->
-<!--   scale_y_continuous(trans = "log",breaks =c(0.0001,0.001,0.01,0.1,1,10,100,1000)) -->
-<!-- ``` -->
