@@ -22,6 +22,7 @@ PNG files. It also rejects unexpected PDF output.
 Individual generators can still be run when working on one lecture:
 
 ```r
+source("lecture_figures/hypotheses_and_questions/generate_figures.R")
 source("lecture_figures/data_wrangling_summary/generate_figures.R")
 source("lecture_figures/summary_statistics/generate_figures.R")
 source("lecture_figures/randomisation_tests/generate_figures.R")
@@ -79,6 +80,11 @@ The evaluating_models generator (lecture 15, evaluating and comparing
 models) reads `CourseData/morphometry.csv` (converted from mm to cm as in the
 book) and uses simulated data for the residual-pattern and R-squared panels
 (seeds stated in the script). It writes its slide output to `output/text/`.
+
+The hypotheses_and_questions generator (lecture 02, hypotheses and questions)
+uses the course cholesterol data (CourseData/cholesterol.csv) for one figure
+and simulated or analytical values for the rest (seeds stated in the script).
+It writes a title-slide graphic to `output/cover/`.
 
 The summary_statistics generator (lecture 07, summary statistics,
 distributions and probability) uses simulated data only: a hypothetical moth

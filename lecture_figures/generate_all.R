@@ -31,6 +31,7 @@ repository_root <- dirname(lecture_root)
 setwd(repository_root)
 
 lecture_names <- c(
+  "hypotheses_and_questions",
   "data_wrangling_summary",
   "summary_statistics",
   "pimp_your_plots",
