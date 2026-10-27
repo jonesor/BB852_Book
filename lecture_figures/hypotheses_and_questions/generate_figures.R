@@ -321,7 +321,50 @@ plots$errors <- ggplot(err, aes(truth, decision, fill = kind)) +
 save_all(plots$errors, "04_error_table", "takeaway")
 
 
-# 05 Simulated p-values: real difference versus no difference ----------------
+# 05 Three simulated studies from the same truth ---------------------------
+# SIMULATED. The setup slide for the simulation that follows: we choose the
+# truth (control mean 260, drug mean 220 mg/dL, SD 30) and draw three
+# independent studies with 5 people per group. Two-sample t-tests,
+# var.equal = TRUE, two-sided. Seed 358 was chosen (searching seeds 1 to 358)
+# because the three p-values span the range clearly: 0.008, 0.18 and 0.54.
+# Disclose this in the slide notes: the spread is typical, the exact values
+# are illustrative.
+
+set.seed(358)
+three <- do.call(rbind, lapply(1:3, function(i) {
+  control <- rnorm(5, 260, 30)
+  drug <- rnorm(5, 220, 30)
+  p <- t.test(control, drug, var.equal = TRUE)$p.value
+  data.frame(study = i, p = p,
+             Treatment = rep(c("Control", "Drug"), each = 5),
+             Cholesterol = c(control, drug))
+}))
+three$Treatment <- factor(three$Treatment, levels = c("Control", "Drug"))
+study_p <- tapply(three$p, three$study, unique)
+study_labels <- setNames(sprintf("Study %d\np = %s", 1:3,
+                                 ifelse(study_p < 0.01, sprintf("%.3f", study_p),
+                                        sprintf("%.2f", study_p))),
+                         1:3)
+three$label <- factor(study_labels[as.character(three$study)],
+                      levels = study_labels)
+message("Three studies, p = ", paste(sprintf("%.3f", study_p), collapse = ", "))
+
+plots$three_studies <- ggplot(three, aes(Treatment, Cholesterol)) +
+  geom_boxplot(width = 0.55, fill = bb852$panel, colour = bb852$slate,
+               outlier.shape = NA, linewidth = 0.5) +
+  geom_jitter(width = 0.1, height = 0, colour = bb852$coral, size = 2.2) +
+  facet_wrap(~label) +
+  scale_x_discrete(labels = c("Control", "Drug")) +
+  labs(x = NULL, y = "Cholesterol (mg/dL)") +
+  theme_bb852(base_size = 16) +
+  theme(panel.spacing = unit(1, "lines"),
+        panel.grid.major.x = element_blank(),
+        strip.text = element_text(size = 14, face = "bold", hjust = 0.5,
+                                  lineheight = 0.95))
+save_all(plots$three_studies, "05_three_studies", "half")
+
+
+# 06 Simulated p-values: real difference versus no difference ----------------
 # SIMULATED, using the values from the original lecture: means 260 and 220
 # mg/dL, SD 30 (a real difference of 40 mg/dL), versus a scenario with no
 # difference (both means 240, SD 30). Two-sample t-tests, var.equal = TRUE.
@@ -360,7 +403,7 @@ plots$pvalues <- ggplot(p_points, aes(n, p)) +
   labs(x = "Sample size per group", y = "p-value") +
   theme_bb852(base_size = 17) +
   theme(panel.spacing = unit(2, "lines"))
-save_all(plots$pvalues, "05_pvalues_vs_n", "takeaway")
+save_all(plots$pvalues, "06_pvalues_vs_n", "takeaway")
 
 for (s in names(scen)) {
   rates <- sapply(c(5, 10, 20), function(n) {
@@ -371,7 +414,69 @@ for (s in names(scen)) {
 }
 
 
-# 06 Two non-significant results that mean different things ------------------
+# 07-08 Rocky shores: one effect, two surveys (after Amrhein et al. 2019) ---
+# ANALYTICAL illustration with ILLUSTRATIVE numbers (not published data).
+# Question: does wave disturbance let more species persist? Response: mean
+# number of species per quadrat on each shore; the shore is the unit.
+# Both surveys estimate the same difference (exposed minus sheltered:
+# +3 species per quadrat; SD among shores 3.5). 95% t-intervals for a
+# difference between two means; two-sided p-values.
+# Small survey: 4 shores of each type. Large survey: 20 of each.
+
+rocky <- as.data.frame(rbind(ci_diff(3, 4, sd = 3.5), ci_diff(3, 20, sd = 3.5)))
+rocky$study <- factor(c("Small survey\n4 + 4 shores", "Large survey\n20 + 20 shores"),
+                      levels = c("Large survey\n20 + 20 shores", "Small survey\n4 + 4 shores"))
+rocky$verdict <- ifelse(rocky$p < 0.05,
+                        sprintf("p = %.2f\n\"significant\"", rocky$p),
+                        sprintf("p = %.2f\n\"not significant\"", rocky$p))
+message("Rocky shores: ", paste(sprintf("est %.1f [%.1f, %.1f], p = %.3f",
+        rocky$est, rocky$lo, rocky$hi, rocky$p), collapse = "; "))
+
+rocky_plot <- function(d, xlim = c(-5, 15)) {
+  ggplot(d, aes(est, study)) +
+    geom_vline(xintercept = 0, colour = bb852$grey, linewidth = 0.5) +
+    annotate("text", x = 0, y = Inf, label = "no effect", vjust = 1.4,
+             hjust = 1.1, colour = bb852$grey, size = 5, family = bb852_font) +
+    geom_errorbar(aes(xmin = lo, xmax = hi), width = 0.12, orientation = "y",
+                  colour = bb852$slate, linewidth = 0.9) +
+    geom_point(size = 3.6, colour = bb852$coral) +
+    geom_text(aes(x = 9.8, label = verdict), hjust = 0, colour = bb852$text,
+              size = 5, family = bb852_font, lineheight = 0.9) +
+    scale_x_continuous(limits = xlim, breaks = seq(-4, 8, 2)) +
+    scale_y_discrete(expand = expansion(add = 0.6)) +
+    labs(x = "Extra species per quadrat on exposed shores", y = NULL) +
+    theme_bb852() +
+    theme(axis.text.y = element_text(colour = bb852$text, size = 15,
+                                     lineheight = 0.9),
+          panel.grid.major.y = element_blank())
+}
+
+# The small survey alone, for the half-width figure: no row label (the
+# slide text names the survey) and the verdict above the interval.
+small <- rocky[1, ]
+plots$rocky_small <- ggplot(small, aes(est, 1)) +
+  geom_vline(xintercept = 0, colour = bb852$grey, linewidth = 0.5) +
+  annotate("text", x = 0, y = 1.75, label = "no effect", hjust = 1.1,
+           colour = bb852$grey, size = 5, family = bb852_font) +
+  geom_errorbar(aes(xmin = lo, xmax = hi), width = 0.12, orientation = "y",
+                colour = bb852$slate, linewidth = 0.9) +
+  geom_point(size = 3.6, colour = bb852$coral) +
+  annotate("text", x = 0.5, y = 1.3, hjust = 0,
+           label = sprintf("p = %.2f, \"not significant\"", small$p),
+           colour = bb852$text, size = 5, family = bb852_font) +
+  scale_x_continuous(limits = c(-5, 11), breaks = seq(-4, 10, 2)) +
+  scale_y_continuous(limits = c(0.5, 1.8)) +
+  labs(x = "Extra species per quadrat\n(exposed minus sheltered shores)",
+       y = NULL) +
+  theme_bb852() +
+  theme(axis.text.y = element_blank(), panel.grid.major.y = element_blank())
+save_all(plots$rocky_small, "07_rocky_small_survey", "half")
+
+plots$rocky_both <- rocky_plot(rocky)
+save_all(plots$rocky_both, "08_rocky_two_surveys", "takeaway")
+
+
+# 09 Ideal free distribution: two non-significant results ----------------------
 # ANALYTICAL illustration for the ideal free distribution example. The
 # quantity is the difference in mean offspring per female between two
 # habitats; the true difference is zero in both cases. SD 1.5 offspring.
@@ -408,39 +513,8 @@ plots$null_results <- ggplot(null_res, aes(est, study)) +
   theme(axis.text.y = element_text(colour = bb852$text, size = 15,
                                    lineheight = 0.9),
         panel.grid.major.y = element_blank())
-save_all(plots$null_results, "06_null_results", "takeaway")
+save_all(plots$null_results, "09_null_results", "takeaway")
 
 
-# 07 Same effect, opposite verdicts (after Amrhein et al. 2019) -------------
-# ANALYTICAL illustration of a HYPOTHETICAL drug, deliberately different from
-# the course cholesterol data: two studies estimate the same reduction
-# (-15 mg/dL, SD 20). 95% t-intervals for a difference between two means
-# with 8 and 40 people per group; two-sided p-values.
-
-same_eff <- as.data.frame(rbind(ci_diff(-15, 8, sd = 20),
-                                ci_diff(-15, 40, sd = 20)))
-same_eff$study <- factor(c("Study 1\n8 per group", "Study 2\n40 per group"),
-                         levels = c("Study 2\n40 per group", "Study 1\n8 per group"))
-same_eff$verdict <- sprintf("two-sided p = %.2f\n\"not significant\"", same_eff$p)
-same_eff$verdict[same_eff$p < 0.05] <- sprintf("two-sided p = %.3f\n\"significant\"",
-                                               same_eff$p[same_eff$p < 0.05])
-message("Same-effect CIs: ", paste(sprintf("est %.0f [%.1f, %.1f], p = %.3f",
-        same_eff$est, same_eff$lo, same_eff$hi, same_eff$p), collapse = "; "))
-
-plots$same_effect <- ggplot(same_eff, aes(est, study)) +
-  geom_vline(xintercept = 0, colour = bb852$grey, linewidth = 0.5) +
-  geom_errorbar(aes(xmin = lo, xmax = hi), width = 0.12, orientation = "y",
-                colour = bb852$slate, linewidth = 0.9) +
-  geom_point(size = 3.6, colour = bb852$coral) +
-  geom_text(aes(x = 12, label = verdict), hjust = 0, colour = bb852$text,
-            size = 5, family = bb852_font, lineheight = 0.9) +
-  scale_x_continuous(limits = c(-42, 48), breaks = seq(-40, 10, 10)) +
-  scale_y_discrete(expand = expansion(add = 0.6)) +
-  labs(x = "Hypothetical drug: change in cholesterol (mg/dL)", y = NULL) +
-  theme_bb852() +
-  theme(axis.text.y = element_text(colour = bb852$text, size = 15,
-                                   lineheight = 0.9),
-        panel.grid.major.y = element_blank())
-save_all(plots$same_effect, "07_same_effect", "takeaway")
 
 message("Done: figures written to ", output_root)
