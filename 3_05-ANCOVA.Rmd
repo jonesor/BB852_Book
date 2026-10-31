@@ -1,12 +1,12 @@
 # ANCOVA: Linear models with categorical and continuous explanatory variables
 
-In the previous chapter we looked at linear models where there is a continuous response variable and two categorical explanatory variables (we call this type of linear model two-way ANOVA). In this chapter we will look at linear models where the explanatory variables are both continuous and categorical. You can think of these as a cross between ANOVA and linear regression. These types of models are often called "*ANCOVA*" or *Analysis of Covariance*.
+In the previous chapters we looked at linear models with a continuous response variable and a single explanatory variable: either categorical (one-way ANOVA) or continuous (linear regression). In this chapter we will look at linear models where the explanatory variables are both continuous and categorical. You can think of these as a cross between ANOVA and linear regression. These types of models are often called "*ANCOVA*" or *Analysis of Covariance*.
 
 In a simple case, you might be interested in a model with a continuous response variable (e.g. height) and a continuous and a categorical explanatory variable (e.g. hand length and sex). The categorical variable may have any number of levels, but the simplest case is two (e.g. sex with male and female levels).
 
 Some of these possible outcomes are illustrated in Figure \@ref(fig:3-05-ANCOVA-1). We might see that neither of the two explanatory variables has a significant effect. We might see that one does but not the other. We might see an interaction effect (where the effect of one variable, e.g. hand length, depends on the other, e.g. sex). We might also see an interaction effect but no main effect.
 
-```{r 3-05-ANCOVA-1, echo=FALSE,fig.width=8,fig.height=3.5,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
+```{r 3-05-ANCOVA-1, echo=FALSE,fig.width=8,fig.height=3.5,fig.align='center',fig.cap="Some potential results of an ANCOVA. There may be a significant effect (or not) of the continuous explanatory variable (cont) and of the categorical explanatory variable (categ), and there may be a significant interaction between them (int) (or not). Y and N in each title indicate yes or no.", fig.pos = "ht",message=FALSE}
 fakeData <- expand.grid(contVar = c(1, 5), categVar = c("A", "B"))
 
 # No effect of contVar nor categVar
@@ -64,15 +64,15 @@ D <- ggplot(
   NULL
 
 
-# Effect of both contVar and categVar, AND interaction effect
+# Effect of both contVar and categVar, no interaction (parallel lines)
 E <- ggplot(
   fakeData %>%
-    mutate(y = c(2.6, 9.5, 2.5, 5.0)),
+    mutate(y = c(2.5, 6.5, 4.5, 8.5)),
   aes(x = contVar, y = y, group = categVar, colour = categVar)
 ) +
   geom_line(size = 2) +
   ylim(0, 10) +
-  ggtitle("E) cont = Y; categ = Y; int = Y") +
+  ggtitle("E) cont = Y; categ = Y; int = N") +
   theme(axis.text.x = element_blank()) +
   theme(axis.text.y = element_blank()) +
   NULL
@@ -81,7 +81,7 @@ E <- ggplot(
 # Effect of both contVar and categVar, AND interaction effect
 Fa <- ggplot(
   fakeData %>%
-    mutate(y = c(2.5, 5.0, 2.6, 9.5)),
+    mutate(y = c(2.6, 9.5, 2.5, 5.0)),
   aes(x = contVar, y = y, group = categVar, colour = categVar)
 ) +
   geom_line(size = 2) +
