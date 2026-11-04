@@ -265,7 +265,7 @@ These models have similar assumptions to the other linear models^[t-tests, ANOVA
 
 ## Worked example: height-hand length relationship
 
-Let's now use R to fit a linear regression model to estimate the relationship between hand length and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene. The data are body measurements (in cm) from a sample of people.^[These data are simulated for teaching purposes.]
+Let's now use R to fit a linear regression model to estimate the relationship between hand length and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene. The data are body measurements (in cm) from a sample of people.
 
 ```{block 3-04-linearRegression-5, type="do-something"}
 Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
@@ -456,6 +456,40 @@ ggplot(morph, aes(x = HandLength, y = Height)) +
   geom_point() +
   geom_smooth(method = "lm")
 ```
+
+```{r 3-04-linearRegression-ci-pi-setup, echo = FALSE}
+new20 <- data.frame(HandLength = 20)
+ci20 <- predict(mod_A, newdata = new20, interval = "confidence")
+pi20 <- predict(mod_A, newdata = new20, interval = "prediction")
+se20 <- predict(mod_A, newdata = new20, se.fit = TRUE)$se.fit
+sig_A <- summary(mod_A)$sigma
+ci_all <- predict(mod_A, interval = "confidence")
+pi_all <- suppressWarnings(predict(mod_A, interval = "prediction"))
+in_ci <- mean(morph$Height >= ci_all[, "lwr"] & morph$Height <= ci_all[, "upr"])
+in_pi <- mean(morph$Height >= pi_all[, "lwr"] & morph$Height <= pi_all[, "upr"])
+f1 <- function(x) formatC(x, digits = 1, format = "f")
+```
+
+::: {.advanced-box data-latex=""}
+**Two kinds of 95% interval: confidence and prediction**
+
+A fitted regression can answer two different questions, and each needs its own interval.
+
+- **95% confidence interval (CI):** where is the *mean* height of all people with a 20 cm hand? It includes only the uncertainty in where the line is. For the hand data: `r f1(ci20[, "lwr"])` to `r f1(ci20[, "upr"])` cm. It gets narrower as we collect more data.
+- **95% prediction interval (PI):** where will *one new person* with a 20 cm hand fall? It includes the uncertainty in the line *plus* the scatter of individuals around it. For the hand data: `r f1(pi20[, "lwr"])` to `r f1(pi20[, "upr"])` cm. More data barely changes it: it can never shrink below about ± 2 × the residual standard error.
+
+The ribbon drawn by `geom_smooth()` is the CI. It is *not* where 95% of the data fall: only `r round(100 * in_ci)`% of our `r nrow(morph)` people lie inside it, but `r round(100 * in_pi)`% lie inside the 95% PI.
+
+Both intervals come from `predict()`:
+
+```{r 3-04-linearRegression-ci-pi}
+new20 <- data.frame(HandLength = 20)
+predict(mod_A, newdata = new20, interval = "confidence")
+predict(mod_A, newdata = new20, interval = "prediction")
+```
+
+**How they are calculated.** Both are the predicted value ± *t* × a standard error (*t* ≈ 1.98 here, with `r df.residual(mod_A)` d.f.). For the CI the standard error is just the uncertainty in the line at that hand length, SE~fit~ (`r formatC(se20, digits = 2, format = "f")` cm here; `predict(..., se.fit = TRUE)` shows it). For the PI it is $\sqrt{SE_{fit}^2 + \hat\sigma^2}$, where $\hat\sigma$ is the residual standard error from `summary()` (`r formatC(sig_A, digits = 2, format = "f")` cm). Because $\hat\sigma$ is so much bigger than SE~fit~, it dominates the PI. Both intervals are narrowest at the mean hand length and widen towards the ends of the data.
+:::
 
 **Question:** If police find a hand print at a crime scene with a hand length of 20cm, what is your best guess of the height of the person involved?
 

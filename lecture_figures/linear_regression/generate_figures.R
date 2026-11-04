@@ -187,12 +187,63 @@ plots$cover <- ggplot(morph, aes(HandLength, Height)) +
 
 # 02 The data and a fitted straight line -----------------------------------
 
-plots$hand_height_line <- ggplot(morph, aes(HandLength, Height)) +
+# A stylised hand print (drawn here, so no image licence is needed) shows how
+# hand length is measured: wrist crease to the tip of the middle finger.
+
+capsule <- function(cx, y0, len, w, angle = 0, n = 40) {
+  r <- w / 2
+  top <- seq(0, pi, length.out = n)
+  bottom <- seq(pi, 2 * pi, length.out = n)
+  xy <- rbind(cbind(r * cos(top), len - r + r * sin(top)),
+              cbind(r * cos(bottom), r + r * sin(bottom)))
+  a <- angle * pi / 180
+  data.frame(x = cx + xy[, 1] * cos(a) - xy[, 2] * sin(a),
+             y = y0 + xy[, 1] * sin(a) + xy[, 2] * cos(a))
+}
+superellipse <- function(cx, cy, a, b, p = 3.2, n = 200) {
+  t <- seq(0, 2 * pi, length.out = n)
+  data.frame(x = cx + a * sign(cos(t)) * abs(cos(t))^(2 / p),
+             y = cy + b * sign(sin(t)) * abs(sin(t))^(2 / p))
+}
+hand_parts <- list(
+  palm   = superellipse(0, 4.6, 3.9, 4.8),
+  index  = capsule(-2.85, 7.2, 7.4, 1.90, angle = 5),
+  middle = capsule(-0.95, 7.6, 8.4, 1.95, angle = 1),
+  ring   = capsule( 0.95, 7.4, 7.7, 1.90, angle = -3),
+  little = capsule( 2.80, 6.6, 6.0, 1.70, angle = -10),
+  thumb  = capsule(-3.10, 1.6, 6.8, 2.30, angle = 40)
+)
+hand_df <- do.call(rbind, Map(function(d, part) transform(d, part = part),
+                              hand_parts, names(hand_parts)))
+wrist_y <- -0.2
+tip_y <- max(hand_parts$middle$y)
+arrow_x <- 6.2
+
+hand_print <- ggplot() +
+  geom_polygon(data = hand_df, aes(x, y, group = part), fill = bb852$slate) +
+  annotate("segment", x = -0.95, xend = arrow_x + 0.4, y = c(wrist_y, tip_y),
+           yend = c(wrist_y, tip_y), colour = bb852$coral, linetype = "22",
+           linewidth = 0.7) +
+  annotate("segment", x = arrow_x, xend = arrow_x, y = wrist_y, yend = tip_y,
+           colour = bb852$coral, linewidth = 1.2,
+           arrow = arrow(ends = "both", length = unit(0.12, "in"), type = "closed")) +
+  annotate("text", x = 1.5, y = wrist_y - 1.6, label = "Hand length",
+           colour = bb852$coral, size = 6, family = bb852_font, fontface = "bold") +
+  coord_equal(clip = "off") +
+  theme_void() +
+  theme(plot.background = element_rect(fill = bb852$bg, colour = NA),
+        plot.margin = margin(5, 30, 5, 5))
+
+hand_scatter <- ggplot(morph, aes(HandLength, Height)) +
   geom_point(colour = bb852$slate, size = 2.6, alpha = 0.55) +
   geom_abline(intercept = b0, slope = b1, colour = bb852$coral, linewidth = 1.2) +
   x_scale + y_scale +
   labs(x = hand_lab, y = height_lab) +
   theme_bb852()
+
+plots$hand_height_line <- hand_print + hand_scatter +
+  plot_layout(widths = c(0.42, 1)) &
+  theme(plot.background = element_rect(fill = bb852$bg, colour = NA))
 
 
 # 03 The equation of a straight line (redrawn from the book) ---------------
@@ -636,12 +687,53 @@ plots$next_time_sex <- ggplot(morph, aes(HandLength, Height, colour = Sex)) +
 
 save_bb852(plots$cover, "01_cover", "cover", bg = bb852$cover)
 
+
+# 05b Where the degrees of freedom come from ---------------------------------
+# Fitting a line uses two estimates (intercept and slope). With n = 2 the line
+# passes through both points, so no information about scatter is left
+# (residual d.f. = 0); each extra point adds one residual d.f.
+
+# Three real people: two close to the fitted line at either end, plus one
+# well above it in the middle, so the n = 3 residuals are visible.
+res_A <- residuals(mod_A)
+pick <- function(lo, hi, f) {
+  rows <- which(morph$HandLength > lo & morph$HandLength < hi)
+  rows[f(res_A[rows])]
+}
+df_rows <- c(pick(17.5, 18.5, function(r) which.min(abs(r))),
+             pick(21.5, 22.5, function(r) which.min(abs(r))),
+             pick(19.5, 20.5, which.max))
+df_panel <- function(d, title) {
+  fit <- lm(Height ~ HandLength, data = d)
+  d$fitted <- fitted(fit)
+  ggplot(d, aes(HandLength, Height)) +
+    geom_segment(aes(xend = HandLength, yend = fitted), colour = bb852$grey,
+                 linewidth = 0.5) +
+    geom_abline(intercept = coef(fit)[1], slope = coef(fit)[2],
+                colour = bb852$coral, linewidth = 1.1) +
+    geom_point(colour = bb852$slate, size = if (nrow(d) > 10) 1.8 else 3.6,
+               alpha = if (nrow(d) > 10) 0.55 else 1) +
+    coord_cartesian(xlim = c(17, 24.5), ylim = c(140, 200)) +
+    scale_x_continuous(breaks = seq(18, 24, 2)) +
+    scale_y_continuous(breaks = seq(140, 200, 20)) +
+    labs(x = hand_lab, y = NULL, title = title) +
+    theme_bb852(base_size = 15) + panel_label()
+}
+df_panels <- list(
+  df_panel(morph[df_rows[1:2], ], "n = 2: residual d.f. = 0") +
+    labs(y = height_lab),
+  df_panel(morph[df_rows, ], "n = 3: residual d.f. = 1"),
+  df_panel(morph, "n = 155: residual d.f. = 153")
+)
+plots$degrees_of_freedom <- wrap_plots(df_panels, nrow = 1)
+
 output_names <- c(
   hand_height_line = "02_hand_height_line",
   straight_lines = "03_straight_line_equations",
   least_squares_question = "04a_least_squares_question",
   least_squares_answer = "04b_least_squares_answer",
   ss_partition = "05_ss_partition",
+  degrees_of_freedom = "05b_degrees_of_freedom",
   significance_cases = "06_significance_cases",
   diagnostics = "07_diagnostics_hand_model",
   slope_ci = "07b_slope_estimate",
