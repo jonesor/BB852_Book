@@ -735,7 +735,19 @@ A + geom_smooth(method = "lm")
 
 10. Can I use cricket chirp frequency as a kind of thermometer?
 
-Yes, using the equation from the model. Ask an instructor if you can't figure this out.
+Yes, but to predict temperature from chirp rate we need temperature as the *response*. The model above (`chirps ~ temperatureC`) answers a different question: how does chirp rate change with temperature? Rearranging its equation to solve for temperature gives a slightly different (and less appropriate) answer, because least squares minimises the errors in the response only.
+
+```{r 6-1-00-AllSolutions-67b}
+thermo_mod <- lm(temperatureC ~ chirps, data = chirps)
+predict(thermo_mod, newdata = data.frame(chirps = 17), interval = "prediction")
+```
+
+```{r 6-1-00-AllSolutions-67c, echo = FALSE}
+pi17 <- predict(thermo_mod, newdata = data.frame(chirps = 17), interval = "prediction")
+f1 <- function(x) formatC(x, digits = 1, format = "f")
+```
+
+*A cricket chirping 17 times per second suggests a temperature of about `r f1(pi17[, "fit"])` °C, but the 95% prediction interval for a single reading runs from `r f1(pi17[, "lwr"])` to `r f1(pi17[, "upr"])` °C. So crickets make a rough thermometer at best: the prediction interval (one new reading) is what matters here, not the much narrower confidence interval for the mean (see the box on confidence and prediction intervals in the linear regression chapter). The data only cover `r min(chirps$chirps)` to `r max(chirps$chirps)` chirps per second, so predictions outside that range would be extrapolation.*
 
 
 ## Fish behaviour

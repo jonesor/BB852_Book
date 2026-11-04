@@ -522,4 +522,4 @@ The data has two columns - `chirps` (the frequency in Hertz) and `temperature` (
 
 9) Add model fit line to the plot.
 
-10) Can I use cricket chirp frequency as a kind of thermometer?
+10) Can I use cricket chirp frequency as a kind of thermometer? To use it that way, we want to *predict temperature from chirp rate*, so temperature has to be the response variable, even though temperature is what causes the chirping. Fit a second model with the variables the other way round, then use `predict()` with `interval = "prediction"` to estimate the temperature when a cricket chirps 17 times per second. How precise is your cricket thermometer?
