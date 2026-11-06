@@ -1,150 +1,115 @@
-# Leveraging ChatGPT for R Programming Assistance
+# Using AI chatbots for help with R
 
 ## Introduction
 
-This class is a bit different from previous classes. Instead of a lecture, this will be a workshop with some discussion and plenty of hands-on use of new tools. Specifically we’ll be focusing on using ChatGPT, which is a Large Language Model (LLM), to help with R programming tasks.
+This chapter goes with the AI workshop. Instead of a lecture, the workshop has some discussion and plenty of hands-on use of AI chatbots (also called AI assistants), such as Microsoft Copilot Chat, ChatGPT, Claude or Gemini, to help with R programming and statistics.
 
-## Overview
+You can use whichever tool you prefer or have access to, and it is a good idea to compare more than one. You never need a paid subscription: as an SDU student you have free access to **Microsoft Copilot Chat** by logging in with your SDU account. If you would rather not use AI tools at all, that is fine: you can do the activities by working with a neighbour, and you will still learn how to check AI output, which is a useful skill in itself.
 
-* What is a Large Language Model (LLM) and how do they work?
-* The ethics of using LLMs
-* Use cases in R coding
+The chapter covers:
 
-## What is a Large Language Model (LLM) and how do they work?
-LLMs are a type of machine learning model that are designed to process and generate human-like language. They can be used to process and generate language in a way that is similar to how humans use language, but on a much larger scale and with the ability to process vast amounts of data quickly. These models use a neural network architecture, which is a type of algorithm that is loosely modelled on the structure of the human brain. LLMs are trained on massive datasets of text, such as books, news articles, and social media posts, in order to learn patterns and relationships within language. This process is known as pre-training, and it allows LLMs to develop a deep understanding of the structure and nuances of language. This is computationally intensive and can be very expensive. For example, it is said that OpenAI spent an estimated $4.6 million to train GPT-3 on 285,000 processing cores and 10,000 graphics cards.
+* What AI chatbots are and how they work
+* The rules for using AI in BB852
+* Ways AI can help with R
+* When AI gets it wrong, and how to check its output
+* Tips for good prompts
+* How to declare your use of AI
 
-After an LLM has been pre-trained, it is fine-tuned for specific tasks. A finished model can be used for tasks such as answering questions, summarising text or generating new text. When you ask a question to ChatGPT, it uses its knowledge of language to understand the meaning of the question, and then generates a response based on what it has learned from the training data.
+## How AI chatbots work
 
-## Limitations
+AI chatbots are built on **large language models** (LLMs). An LLM is a machine learning model trained on enormous amounts of text (books, websites, computer code and so on) to do one thing: predict a likely next word, again and again. Because the training text includes a great deal of R code and statistics, this simple trick produces answers that are often very useful. But the model is producing *plausible* text, not checking facts, so a fluent, confident answer is not necessarily a correct one.
 
-### Limited knowledge
+Many current tools can also search the web or run code. This helps, but it does not remove the need to check the output yourself.
 
-While LLMs like ChatGPT have impressive capabilities, they also have limitations. One of the biggest concerns with LLMs is the potential for bias in their training data. In a nutshell, an LLM can be expected to reflect any bias that is present in its training dataset. Another important limitation, which is particularly relevant for a rapidly developing field like R and its many packages, is that the LLM will have no knowledge of developments that occur after the period of its training data. In this case, its usefulness for help with packages released after this date will be limited. In short, I would expect ChatGPT to be less useful for newer and less-used packages, because there will have been less input data for ChatGPT systems to work with.
+## Using AI in BB852: the rules
 
-### Hallucination
+These rules follow SDU's common rules for generative AI. There is no course-specific exception for BB852.
 
-Another important limitation is that LLMs can “hallucinate”. In the context of LLMs, “hallucination” refers to a phenomenon where the model generates text that is not grounded in reality. Essentially, the model generates text that appears to be “imagined” or “made up” rather than based on facts. For example, if you ask about something that the LLM has no knowledge of it will still often produce an answer, but the answer will be close to nonsense.
+* **Allowed:** you may use AI tools in the practicals and in the written assignment.
+* **Not allowed:** AI tools may not be used in any supervised written or oral exam. In BB852 this means the multiple-choice exam.
+* **You are responsible for everything you submit.** AI tools often produce code that runs but fits the wrong model, invent functions or arguments, and describe results with more confidence than the data support. You must be able to explain every line of code, every modelling choice and every number in your assignment. Check AI output against the course book and the lectures.
+* **Declare your use** (see [Declaring your use of AI] below). Declaring use does not lower your mark, but SDU treats missing or incomplete declaration as plagiarism.
+* **Protect data.** AI tools are not necessarily GDPR compliant, so never put personal, sensitive or confidential information into a prompt. The course data sets are fine to use.
 
-To illustrate a hallucination try the following prompt in ChatGPT:
+If you are unsure whether a use is acceptable, ask before you submit. SDU's rules are here: [The use of artificial intelligence at SDU](https://mitsdu.dk/en/mit_studie/kandidat/biologi_kandidat/vejledning-og-support/aipaasdu).
 
-```
-Explain the actuary package in R. 
-Summarise what it is for and give an example of basic use. 
-Describe any limitations.
-```
-
-There is no such package in R. So this entire answer is a hallucination.
-
-### Numerical ability
-
-Most LLMs are not good with numbers. This could have important consequences for helping with maths and statistics, so bear it in mind.
-
-To illustrate that, try the following prompt.
-
-```
-Write a sentence about dogs that contains 8 + 2 words.
-```
-
-You might need to try it a few times, but you should see that ChatGPT is not good at counting words. It would fail at a task such as asking it to write a paragraph with a certain word count.
-
-Now try this:
-
-```
-How many Rs are there in the word Strawberry?
-```
-
-## Ethics of using LLMs in education
-
-The use of tools like ChatGPT in student coursework raises ethical concerns. On the one hand, students can use these tools to enhance their learning and understanding of complex concepts. For example, they can generate helpful insights and help with writing assignments. On the other hand, they can encourage plagiarism or cheating, which could result in NOT learning.
-
-LLMs are tools, not substitutes for learning. They can help you move faster (e.g. by explaining concepts, spotting bugs, or suggesting alternative code), but in a university setting the main risk is outsourcing your learning. If you let the tool do the thinking, you may complete tasks without building the underlying skills. Use ChatGPT to support your learning, not to replace it. A good rule of thumb: if you cannot explain the output in your own words, you should not use it in your work.
-
-Some guidelines:
-
-* Use ChatGPT as a supplement to your own learning and understanding of the course material. For example, by asking it to explain difficult concepts.
-* Don’t rely solely on ChatGPT to complete your assignments or study for exams (remember the hallucinations!).
-* When using ChatGPT to generate solutions or code, be sure that you understand and can explain the reasoning behind the output. Don’t simply copy and paste answers without understanding.
-* Give credit where credit is due. If you use ChatGPT to generate code or solutions, acknowledge the role of ChatGPT in your work.
-* Be aware of the limitations of ChatGPT. Double-check your work and verify any information you obtain from ChatGPT.
-* Use ChatGPT to enhance your learning experience, but don’t use it to cheat. Plagiarism and academic dishonesty are taken very seriously at SDU and can negatively impact your education and career.
-
-The Guidelines for SDU Biology Masters students are [here](https://mitsdu.dk/en/mit_studie/kandidat/biologi_kandidat/vejledning-og-support/aipaasdu)
-
-Despite these issues, LLMs like ChatGPT can be very useful in R programming. In the next part of the workshop we’ll cover some use cases. I provide some examples here but during the workshop we’ll work through others that are relevant to the course. You could also try using your own project code.
-
-## Use cases in R
+## Ways AI can help with R
 
 * Finding errors (debugging)
-* Explaining complex code
+* Explaining code
 * Interpreting output (e.g. what does this model summary mean?)
-* Improving code (finding better ways to do things)
+* Choosing a model (e.g. I have this design, how should I analyse it?)
+* Improving code and adding comments
 * Translating code from another language
-* Solving modelling problems (e.g. I have this set-up, how do I model it?)
 
-### Finding errors.
+The activities below use code and data from the course, so you can check the answers against what you already know. In each case, the point is not just to get an answer but to judge whether the answer is right.
 
-It can be frustrating to deal with error messages in R. 
-Use ChatGPT to find the error and make it work.
+### Finding errors
 
-A suitable prompt could be:
+It can be frustrating to deal with error messages in R. Give the tool the code and the error message, and ask it to help.
 
 ```
-The following code doesn’t work. Please help me debug it.
+This R code gives an error. Help me fix it.
 
+fox <- read.csv("CourseData/fox.csv")
 mod1 <- glm(noffspring ~ weight, data = fox family = poisson)
-
 ```
+
+Run the fixed code in R. Did the tool explain *why* the code failed, or just give you a corrected version? (Follow-up: ask it what `family = poisson` means.)
 
 ### Explaining code
 
-You can ask for help understanding what code does.
+You can ask for help understanding what code does. Telling the tool your level helps it pitch the explanation.
 
 ```
-I don’t understand what this code does. Please explain it to me. 
-I'm a total beginner in using R and in statistics in general
+Explain this line to a beginner in R and statistics:
 
-
-mod1 <- glm(noffspring ~ weight, data = fox, family = poisson)
+foam_mod <- lm(foamIndx ~ method, data = espresso)
 ```
+
+Check the explanation against the ANOVA chapter. Is anything wrong or missing? A good explanation should mention that `method` is a factor, that `lm()` here fits the same model as a one-way ANOVA, and that the intercept is the mean of the reference method.
 
 ### Interpreting output
 
-You can ask for help interpreting model outputs.
+Fit the model above (the data are in `espresso.csv`), run `summary(foam_mod)`, and paste the output into the tool:
 
 ```
-I have the following model output summary. Please explain it to me:
-I'm a total beginner in using R and in statistics in general
+Explain this output. Then write a results sentence for a scientific report.
 
-
-Analysis of Variance Table
-
-Response: lengthMM
-              Df Sum Sq Mean Sq F value    Pr(>F)    
-genotype       1 426.02  426.02  99.575 7.135e-13 ***
-diet           1 111.02  111.02  25.949 7.064e-06 ***
-genotype:diet  1  54.19   54.19  12.665 0.0009073 ***
-Residuals     44 188.25    4.28                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
+[paste your summary(foam_mod) output here]
 ```
 
-### Translating code (e.g. from Python/Matlab to R)
+Does the tool read the output the way you would? Do the numbers in its sentence match the output? Many tools write test-led sentences ("there was a significant difference, p < 0.001"). Compare its sentence with the [Examples of statistics reporting]: does it report the estimated differences with 95% confidence intervals?
 
-You can ask it to translate code from one language to another. This can be useful if you can find code in e.g. Python or Matlab and you need to make it work with the rest of your analysis.
+### Choosing a model
+
+You can describe your study design and ask for help with modelling choices.
 
 ```
-Translate the following Python code into R. 
+I counted bumblebee visits to 40 flower patches, half mown and half
+unmown. Which model should I fit in R?
+```
 
-import numpy as np
-from scipy import stats 
-from numpy.random import seed
-from numpy.random import randn
+Before you ask, decide which model *you* would choose and write it down. Does the tool agree? (From the course, a natural choice is a Poisson GLM, `glm(visits ~ treatment, family = poisson)`, followed by a check for overdispersion.) Tools often suggest a t-test, a log transformation of the counts, or jump straight to a more complex model. A good tool will also ask for information it needs: were the patches the same size, and were they watched for the same length of time?
+
+Advice on modelling is where AI tools are most error-prone, so ask follow-up questions until you understand *why* it recommends an approach. Treat it as a sparring partner, not an oracle.
+
+### Improving code and adding comments
+
+Sometimes you will have written a long script without commenting it, which makes life hard for "future you" and for collaborators. You can ask an AI tool to add or improve the comments, or to suggest a simpler way to do the same thing. Try it on a script you have written during the course, then check that the code still runs and gives the same results.
+
+### Translating code
+
+You may find code in another language, such as Python, that you want to use in R. AI tools are usually good at translation, but they can also copy the original's mistakes. Try this:
+
+```
+Translate the following Python code into R.
+
 from numpy.random import normal
 from scipy.stats import ttest_1samp
 
 seed=(1)
-sample =normal(150,10,20)
+sample = normal(150, 10, 20)
 print('Sample: ', sample)
 
 t_stat, p_value = ttest_1samp(sample, popmean=155)
@@ -152,33 +117,113 @@ print("T-statistic value: ", t_stat)
 print("P-Value: ", p_value)
 ```
 
+There is a deliberate bug: `seed=(1)` creates a variable called `seed` but does *not* set the random number seed, so the results change every time. Does the tool notice, and does its R version use `set.seed(1)`?
 
-### Solving modelling problems
+## When AI gets it wrong
 
-You can describe your data to ChatGPT, and ask it to help you with modelling choices. This is probably quite error prone, so it is good practice to ask follow up questions to make sure you understand WHY it is advising certain approaches. In a nutshell, be suspicious and treat ChatGPT as an advisor/sparring partner rather than blindly listening to it. Engage your own brain!
+Common failures in R and statistics:
 
+* **Inventing** packages, functions or arguments that do not exist.
+* **Being out of date.** Tools learn from text up to a certain date, so they know less about newer packages and recent changes.
+* **Weak arithmetic.** Unless it actually runs code, a chatbot is guessing at numbers, and it can be bad at counting and calculating.
+* **A plausible but wrong model** for your design (e.g. ignoring that the data are counts, or that measurements are repeated on the same individuals).
+* **Test-led write-ups** that give p-values but no estimates or confidence intervals.
+* **Dropping terms** from a model just because p > 0.05, without looking at the estimates.
 
-### Helping with documentation/comments
+The first three are general problems. The last three are specific to statistics, and they are exactly the mistakes this course teaches you to avoid.
 
-Sometimes you will have written a long script without bothering to comment it. This can be troublesome to "future you" and to collaborators who will struggle to understand what your code is doing. You can ask ChatGPT to add (or improve) comments to your code. Try it on scripts you have already written during the course. 
+### Will it admit that something does not exist?
 
-### Finding alternative/better ways 
+When asked about something it has no knowledge of, a chatbot will often still produce a confident answer (a "hallucination"). Try this prompt:
 
-Sometimes you will have written a script which works but is too complicated and hard to follow. You could ask ChatGPT if there is an easier/better/alternative way to do it. Try it with some code you have already written.
+```
+In R, how do I use the overdispersion = TRUE argument in glm()
+to deal with overdispersed count data?
+```
 
-## Some tips
+There is no such argument: R stops with an "unused argument" error. Did your tool invent an explanation, or did it tell you the argument does not exist and point you to a real solution (a quasi-Poisson or negative binomial model, as in the GLM chapters)? What did your neighbour's tool say? How could you check? (Try running it, and read the help page with `?glm`.)
 
-**Set package constraints**: When using ChatGPT to help solve R problems, it often suggests using various R packages, including some that may not exist. To avoid confusion and ensure the advice aligns with your needs, it's helpful to specify which packages you want to use.
+### Do two tools agree?
 
-For instance, if you're focusing on data handling with the `Tidyverse` (which we use in the course), you can guide ChatGPT by adding "`...Please use Tidyverse packages`" to your request. If you prefer to work without additional packages, simply say "`... use base R`". 
+Give two different tools the same prompt:
 
-**Be Specific with Your Questions**: Clearly describe your problem, including the desired outcome and any error messages or unexpected behaviour you encounter. The more details you provide, the more precise the help can be.
+```
+In R, how do I test whether foam index differs between three espresso
+methods, and how should I report it?
+```
 
-**Share Code Snippets**: Include relevant code snippets when asking for help. This allows for more accurate advice, whether you're troubleshooting an issue, debugging, or seeking to improve your code.
+Compare the answers. Do they suggest the same model? Do they reach the same conclusion? Do they report estimates with confidence intervals, or only p-values? Which one matches the course book?
 
-**State Your R Experience Level**: Mention your familiarity with R. This helps in tailoring explanations to your level, whether you’re a beginner or an advanced user.
+## Verify, don't trust
 
-**Iterative Approach**: Use an iterative approach by testing small pieces of advice and asking follow-up questions. This is particularly useful for complex problems, but also for simpler questions when you don't quite grasp the explanation or answer given.
+Before you use AI output in your work:
 
-**Consider Reproducibility**: When sharing data, use small, reproducible examples (often called a "reprex") to illustrate your issue. This helps in providing more targeted help.
+1. **Run it.** Run the code yourself, from a clean R session, and check that it works.
+2. **Check the numbers.** Every number in a sentence the AI wrote must match your R output.
+3. **Check the model.** Is it the right model for the data and the design? Compare with the course book.
+4. **Check the assumptions.** Look at the diagnostic plots yourself.
+5. **Check the reporting.** Are estimates and confidence intervals reported, not just p-values?
+6. **Explain it.** If you cannot explain the code or the output in your own words, do not use it.
 
+## Tips for good prompts
+
+* **Give context.** Say that you are an MSc biology student, how much R you know, and what the data are (e.g. "I have counts of bee visits per patch and a mown/unmown treatment").
+* **Be specific.** Describe the desired outcome, and include the code and any error messages.
+* **Set package constraints.** Tools often suggest extra packages (sometimes ones that do not exist). Say which packages you want to use, e.g. "use base R, `dplyr` and `ggplot2`" for this course.
+* **Use small examples.** When asking about a problem with your data, share a small, reproducible example rather than the whole data set (and never personal data).
+* **Work iteratively.** Test small pieces of advice and ask follow-up questions when you don't understand.
+* **Push back, then check.** Asking "Are you sure? Check that again." often surfaces errors. But tools can also cave in and change a correct answer, so pushing back is not a substitute for checking.
+
+## Declaring your use of AI
+
+SDU's rules require that the reader can see how AI contributed to your work. For the written assignment this means two things:
+
+1. **In the assignment itself**, indicate AI use at the relevant point (in the methods, a footnote or an appendix). Text that an AI wrote (directly or paraphrased) must be cited like a quotation, with the tool listed in your references. Describe how AI was used for coding or analysis.
+2. **Attach a declaration.** The Faculty of Science has a [declaration form](https://mitsdu.dk/-/media/mitsdu/filer/mit_studie/nat/declaration-form-science-gai.docx) for this. As a minimum you must state whether you used AI and, if so, which tools you used, what you gave them (your prompts or a description of them), how you used the output, and how you critically assessed it.
+
+These questions will help you fill in the declaration:
+
+```
+1. Which tools did I use (name and version or model, if known)?
+2. What did I use them for? (e.g. writing or starting R code, fixing
+   errors, explaining output or statistical concepts, choosing or
+   checking the analysis, interpreting results, improving language)
+3. What kinds of things did I give them? (e.g. my own code, error
+   messages, R output, my draft text; not the exact prompts)
+4. Where does AI-generated text or code appear in my assignment
+   (directly or edited)?
+5. How did I check the output? (e.g. re-ran the code, compared with
+   the course book, checked model diagnostics, compared two tools)
+6. What did the AI get wrong, or what did I change?
+```
+
+### How much detail?
+
+**Keep it short.** A declaration should take about half a page and five minutes to write. The aim is that the reader can see *what kind* of help you had and *how you checked it*, not to reconstruct every conversation.
+
+* **Do not paste your prompts or chat logs.** They are long, hard to read and not needed. Summarise instead.
+* **Describe types of use, not individual questions.** If you asked twenty questions about error messages, that is one line: "fixing errors in my R code".
+* **Describe what you gave the tool in general terms**, e.g. "my own code and error messages", "the output of `summary()`", "a draft paragraph of my Discussion".
+* **Be specific only where AI output ended up in your assignment**, e.g. "the code for Figure 2 started from a Copilot suggestion, which I edited".
+
+If you find it hard to summarise, try finishing these sentences: *"I used [tool] to help me with [type of task]. I gave it [type of input]. I used the output to [what you did with it]. I checked it by [how]."*
+
+For example:
+
+| Too vague | About right | Too much |
+|---|---|---|
+| "I used AI for coding." | "I used Copilot to fix errors in my R code, by giving it my code and the error messages. I checked each fix by re-running the code." | Pasting the 15 prompts and replies from your chat about the error. |
+| "AI helped with the analysis." | "I asked ChatGPT to explain the output of my GLM. I compared its explanation with the GLM chapter of the course book." | A transcript of your conversation, or a list of every question you asked. |
+
+Here is an example of a complete declaration with the level of detail expected:
+
+> *Tools used:* Microsoft Copilot Chat (SDU licence); ChatGPT (free version) for one comparison.
+> *What for:* starting R code; fixing errors; explaining R output; improving language.
+> *What I gave them:* my own R code and error messages, the output of `summary()`, and two paragraphs of my Discussion.
+> *Where it appears:* the ggplot code for Figure 2 started from a Copilot suggestion, which I edited (axis labels, `geom_jitter(height = 0)`). Two sentences in the Discussion were shortened with Copilot. No AI text appears unedited.
+> *How I checked:* re-ran all code from a clean session; compared the `lm()` model with the course book chapter on ANCOVA; checked residual plots with `autoplot()`; asked both tools the same question about the interaction term and compared answers.
+> *What it got wrong:* Copilot suggested dropping the interaction because p = 0.08, without looking at the estimate or its confidence interval. I kept the full model and reported the interaction estimate with its CI.
+
+### Practice declaration
+
+At the end of the workshop, write a short practice declaration for what you did with AI today, using the questions above. Then swap with a neighbour: could they tell from your declaration exactly what the AI did and how you checked it?

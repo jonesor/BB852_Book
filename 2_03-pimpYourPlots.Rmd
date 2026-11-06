@@ -11,6 +11,13 @@ We will cover the following:
 5. Saving your plots.
 
 
+In this chapter we use these packages:
+
+```{r 2-03-pimpYourPlots-setup, message = FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
 For these examples I will use the animal life-history data set `Anage`. 
 
 ```{r 2-03-pimpYourPlots-1,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
@@ -150,10 +157,10 @@ anage_sorted <- anage %>%
   add_count(Class) %>%
   arrange(desc(n))
 
-p3 %+% anage_sorted
+p3 + anage_sorted
 ```
 
-The `%+%` operator replaces the data in an existing plot. You could also simply rebuild the plot with `ggplot(anage_sorted, ...)`. Transparency (`alpha`) also helps when points overlap.
+Adding a data frame to an existing plot with `+` replaces its data. (In versions of `ggplot2` older than 4.0 you had to use `%+%` instead of `+` for this; you may see that in examples online.) You could also simply rebuild the plot with `ggplot(anage_sorted, ...)`. Transparency (`alpha`) also helps when points overlap.
 
 ## Colours
 
@@ -203,16 +210,16 @@ p3 +
   scale_colour_grey()
 ```
 
-There's another one for various colour schemes, called "colour brewer". Try using "RdGy", "RdYlBu" and "Spectral" see `?scale_colour_brewer` for more options.
+There's another set of palettes called "colour brewer". These come in three types. *Qualitative* palettes (such as "Dark2", "Set2" and "Paired") use clearly different colours with no order, which is what we need for unordered categories such as `Class`. *Sequential* palettes (such as "Blues") run from light to dark and suit ordered values. *Diverging* palettes (such as "RdYlBu" and "BrBG") run between two colours through a neutral middle, and suit data with a meaningful midpoint (e.g. change from zero). Try "Set2" and "Paired", and see `?scale_colour_brewer` for more options.
 
 ```{r 2-03-pimpYourPlots-16,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 p3 +
-  scale_colour_brewer(palette = "BrBG")
+  scale_colour_brewer(palette = "Dark2")
 ```
 
 ## Themes
 
-Finally, `ggplot` includes the option to set a  **theme** for the plots. "Themes"" make adjustments to the "look" of the plot.  It is possible to write your own themes, but I recommend to use some ready-made ones. You can implement them by adding them as you would any other addition to the `ggplot` command (e.g. `+ theme_light()`. 
+Finally, `ggplot` includes the option to set a **theme** for the plots. Themes make adjustments to the "look" of the plot. It is possible to write your own themes, but I recommend using some ready-made ones. You can implement them by adding them as you would any other addition to the `ggplot` command (e.g. `+ theme_light()`). 
 
 There are several themes included with `ggplot`. Try my favourite, `theme_minimal()`. Then try `theme_classic()` and `theme_dark()`.
 
@@ -221,7 +228,7 @@ There are several themes included with `ggplot`. Try my favourite, `theme_minima
   theme_minimal()
 )
 ```
-For more theme fun, you can install packages that include more themes. The best one is called `ggthemes` (remember that you only need to install the package once). Try `theme_economist()`, `theme_tufte()` and (ugh!) `theme_excel()`. You can see what other themes there in this package at [https://jrnold.github.io/ggthemes/reference/index.html](https://jrnold.github.io/ggthemes/reference/index.html) (some of them are really ugly in my opinion!).
+For more theme fun, you can install packages that include more themes. The best one is called `ggthemes` (remember that you only need to install the package once). Try `theme_economist()`, `theme_tufte()` and (ugh!) `theme_excel()`. You can see what other themes there are in this package at [https://jrnold.github.io/ggthemes/reference/index.html](https://jrnold.github.io/ggthemes/reference/index.html) (some of them are really ugly in my opinion!).
 
 ```{r 2-03-pimpYourPlots-18,eval=FALSE,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 install.packages("ggthemes")
@@ -296,10 +303,10 @@ plotA <- ggplot(anage, aes(x = Mass, y = BMR, colour = Class)) +
   ) +
   scale_y_continuous(
     transform = "log",
-    breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 10)
+    breaks = c(0.1, 1, 10)
   ) +
   xlab("Adult body mass (kg)") +
-  ylab("Basal metabolic rate (W/kg)") +
+  ylab("Mass-specific BMR (W/kg)") +
   theme_minimal() +
   theme(legend.position = "none")
 ) # This one is wrapped in brackets so that R shows it
@@ -323,13 +330,13 @@ You could place the sub-plots on top of each other like this.
 plotA / plotB + plot_annotation(tag_levels = "A")
 ```
 
-If both panels need the same legend, show it once rather than twice. Keep the legend in both plots and let `patchwork` collect them into one with `plot_layout(guides = "collect")`:
+If both panels need the same legend, show it once rather than twice. `plot_layout(guides = "collect")` gathers identical legends into one. Adding a theme with `&` (instead of `+`) applies it to *every* panel, so here it puts the legend at the bottom for both plots (overriding the `legend.position = "none"` we set for `plotB`), and `patchwork` then merges the two legends into one:
 
 ```{r 2-03-pimpYourPlots-27b,fig.height = 4,fig.width=7}
-(plotA + plotB + theme(legend.position = "bottom", legend.title = element_blank())) +
+plotA + plotB +
   plot_layout(guides = "collect") +
   plot_annotation(tag_levels = "A") &
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom", legend.title = element_blank())
 ```
 
 
@@ -344,7 +351,7 @@ The default setting for `ggsave` is that it will save the last plot that was pri
 ggsave("MySavedPlot1.png", width = 18, height = 10, units = "cm")
 ```
 
-The command can save to various file types including `png`, `jpeg`, `pdf` (see the `ggplot` help file for more). R knows what file type is chosen by checking the file extension in the file name (e.g. `.png`). I advise to use `png`, with `dpi = 300` for anything that will be printed.
+The command can save to various file types including `png`, `jpeg`, `pdf` (see the `ggsave` help file for more). R knows what file type is chosen by checking the file extension in the file name (e.g. `.png`). I advise using `png`, with `dpi = 300` for anything that will be printed.
 
 Choose the size for where the figure will end up, not for how it looks on your screen. A figure made large and then shrunk into a report or a journal column gets tiny, unreadable text. Many journals use a single column about 8 cm wide and a full page width about 17 cm (check the author guidelines). Save at that size and look at the file before you use it:
 
@@ -356,6 +363,6 @@ At 8 cm you may need to tidy things up: fewer tick labels, a legend in two rows 
 
 ## Final word on plots
 
-We have covered a lot of ground here. There is a lot to learn, but don't feel like you have to remember all of these commands (I don't). Mostly it is simply a case of remembering that it is *possible* to do these things, and knowing where to look up the commands. Obvious starting points are this course book, and the text book (including the online version!). You can also usually find help by Googling "ggplot" followed by what you are trying to do (e.g. "ggplot change axis ticks"). One of my frequently used web sites is this one [http://www.sthda.com/english/](http://www.sthda.com/english/) which has an extensive section on `ggplot` ([http://www.sthda.com/english/wiki/ggplot2-essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)).
+We have covered a lot of ground here. There is a lot to learn, but don't feel like you have to remember all of these commands (I don't). Mostly it is simply a case of remembering that it is *possible* to do these things, and knowing where to look up the commands. Obvious starting points are this course book, and the text book (including the online version!). You can also usually find help by Googling "ggplot" followed by what you are trying to do (e.g. "ggplot change axis ticks"). One web site I use often is Datanovia, which has an extensive set of `ggplot2` tutorials ([https://www.datanovia.com/learn/data-visualization/ggplot2/](https://www.datanovia.com/learn/data-visualization/ggplot2/)).
 
-Even though we have covered a lot of ground we have still only gotten a taster of what `ggplot` is capable of. I encourage you to learn more. A useful resource for learning is the online R graph gallery" at [https://www.r-graph-gallery.com/](https://www.r-graph-gallery.com/), which shows you how to make and modify many types of plot.
+Even though we have covered a lot of ground we have still only gotten a taster of what `ggplot` is capable of. I encourage you to learn more. A useful resource for learning is the online "R graph gallery" at [https://www.r-graph-gallery.com/](https://www.r-graph-gallery.com/), which shows you how to make and modify many types of plot.

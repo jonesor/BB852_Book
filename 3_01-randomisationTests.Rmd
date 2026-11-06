@@ -10,7 +10,7 @@ The technical term is **exchangeability**: under the null hypothesis, the observ
 
 ## Randomisation test in R
 
-A new drug has been developed that is supposed to reduce cholesterol levels in men. An experiment has been carried out where 12 human test subjects have been assigned randomly to two groups: "Control" and "Drug". The pharmaceutical company is hoping that the "Drug" group will have lower cholesterol than the "Control" group. The aim here is to do a randomisation test to check that.
+A new drug has been developed that is supposed to reduce cholesterol levels in men. In this (hypothetical) experiment, 12 human test subjects have been assigned randomly to two groups: "Control" and "Drug". Cholesterol is measured in mg/dL. The pharmaceutical company is hoping that the "Drug" group will have lower cholesterol than the "Control" group. The aim here is to do a randomisation test to check that.
 
 In this example, you will:
 
@@ -19,8 +19,12 @@ In this example, you will:
 - use the null distribution to calculate a p-value; and
 - interpret the result in the context of the experiment.
 
-```{block 3-01-randomisationTests-1, type="do-something"}
-Remember to load the `dplyr`, `tidyr`, and `ggplot2` packages, and open the book's RStudio project so that the relative data paths work.
+In this chapter we use these packages (and, as always, work inside your course RStudio project so that the relative data paths work):
+
+```{r 3-01-randomisationTests-setup, message = FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
 ```
 
 Import the data, called `cholesterol.csv`. 
@@ -77,7 +81,7 @@ observedDiff
 
 This is a complicated set of commands. To make sure you understand it, try running it bit by bit to see what is going on.
 
-Because the factor levels are explicitly ordered as Control and then Drug, `diff()` calculates Drug minus Control. The control mean is 205.6667, the drug mean is 185.5000, and the observed difference is -20.1667. The individuals receiving the drug therefore had cholesterol levels approximately 20.2 units lower, on average, than individuals in the control group. This difference alone does not tell us how strong the statistical evidence is.
+Because the factor levels are explicitly ordered as Control and then Drug, `diff()` calculates Drug minus Control. The control mean is 205.6667, the drug mean is 185.5000, and the observed difference is -20.1667. The individuals receiving the drug therefore had cholesterol levels approximately 20.2 mg/dL lower, on average, than individuals in the control group. This difference alone does not tell us how strong the statistical evidence is.
 
 ### Null distribution
 
@@ -249,9 +253,9 @@ The result provides evidence against the null hypothesis in the predicted direct
 
 We can report the Monte Carlo analysis concisely:
 
-"*Mean cholesterol was 205.7 in the control group and 185.5 in the drug group, giving an observed difference of -20.2 (Drug minus Control). A one-sided Monte Carlo randomisation test was used to evaluate whether the drug reduced cholesterol. Treatment labels were randomly reallocated 10,000 times while preserving group sizes, and the difference between group means was recalculated after each allocation. The result provided evidence that cholesterol was lower in the drug group (p = `r round(p_value, 3)`).*"
+"*Mean cholesterol was 205.7 mg/dL in the control group and 185.5 mg/dL in the drug group, giving an observed difference of -20.2 mg/dL (Drug minus Control). A one-sided Monte Carlo randomisation test was used to evaluate whether the drug reduced cholesterol. Treatment labels were randomly reallocated 10,000 times while preserving group sizes, and the difference between group means was recalculated after each allocation. The result provided evidence that cholesterol was lower in the drug group (p = `r round(p_value, 3)`).*"
 
-The p-value describes statistical evidence relative to the null model; it does not measure the size or medical importance of the effect. The estimated reduction is approximately 20.2 units, but interpreting its importance requires relevant biological or medical context. Larger samples often provide greater power to detect effects, but statistical significance and biological importance remain different questions.
+The p-value describes statistical evidence relative to the null model; it does not measure the size or medical importance of the effect. The estimated reduction is approximately 20.2 mg/dL, but interpreting its importance requires relevant biological or medical context. Larger samples often provide greater power to detect effects, but statistical significance and biological importance remain different questions.
 
 
 ## Paired Randomisation Tests
@@ -274,7 +278,7 @@ The paired randomisation test is a **one-sample** randomisation test in which on
 
 This sign-flipping procedure has an assumption of its own: the signs must be exchangeable under the null hypothesis. In a randomised paired experiment, that justification can follow from the design. For observational before-and-after data, it relies more strongly on assumptions such as symmetry of the difference distribution. A mean difference of zero alone does not automatically justify arbitrary sign-flipping.
 
-I will illustrate this with an example from Everitt (1994) who looked at using cognitive behaviour therapy as a treatment for anorexia. Everitt collected data on weights of people before and after therapy. These data are in the file `anorexiaCBT.csv`
+I will illustrate this with data on the weights of young women with anorexia before and after a period of cognitive behaviour therapy (CBT).^[The data are from Hand, D. J., Daly, F., McConway, K., Lunn, D. & Ostrowski, E. (eds) (1993) *A Handbook of Small Data Sets*. Chapman & Hall (data set 285), where they are credited to Everitt. They are also the CBT group of the `anorexia` data in the R package `MASS`.] Weights are in pounds (lb; 1 lb is about 0.45 kg). (The original source says kilograms, but that is a mistake.) These data are in the file `anorexiaCBT.csv`
 
 ```{r 3-01-randomisationTests-15}
 anWide <- read.csv("CourseData/anorexiaCBT.csv")
@@ -302,7 +306,7 @@ We should *always* plot the data. So here goes.
     position = "identity", alpha = .7, bins = 15,
     colour = "white"
   ) +
-  labs(x = "Weight", y = "Number of observations", fill = "Time")
+  labs(x = "Weight (lb)", y = "Number of observations", fill = "Time")
 )
 ```
 
@@ -312,7 +316,7 @@ Another useful way to plot this data is to use an **interaction plot**. In these
 (p2 <- ggplot(anLong, aes(x = time, y = weight, group = Subject)) +
   geom_point() +
   geom_line(linewidth = 1, alpha = 0.5) +
-  labs(x = "Time", y = "Weight")
+  labs(x = "Time", y = "Weight (lb)")
 )
 ```
 
@@ -341,7 +345,7 @@ obsChange <- mean(anChanges$change)
 obsChange
 ```
 
-The observed mean change is approximately 3.0069. This is the average of the 29 within-individual changes, not a difference between two independent samples.
+The observed mean change is approximately 3.0 lb (about 1.4 kg). This is the average of the 29 within-individual changes, not a difference between two independent samples.
 
 ### The randomisation test
 
@@ -411,7 +415,7 @@ nullDist <- data.frame(
   geom_histogram(bins = 30, fill = "steelblue", colour = "white") +
   theme_minimal() +
   labs(
-    x = "Mean change in weight",
+    x = "Mean change in weight (lb)",
     y = "Number of sign randomisations",
     title = "Null distribution of paired mean changes"
   ))
@@ -448,11 +452,11 @@ This analysis identifies statistical evidence of a before-and-after change. It d
 
 ## Exercise: Sexual selection in Hercules beetles
 
-A Hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has been operating on the species so that the males are significantly larger than the females. You are given data[^1] on width measurements in cm from 20 individuals: 10 females and 10 males. Can you use your skills to report whether males are significantly larger than females?
+A Hercules beetle is a large rainforest species from South America. Researchers suspect that sexual selection has made males larger than females. You are given data[^1] on width measurements in cm from 20 individuals: 10 females and 10 males. Is there evidence that males are larger than females?
 
 The data are called `herculesBeetle.csv` and are in the `CourseData` folder.
 
-[^1]: This example is from: [https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html](https://uoftcoders.github.io/rcourse/lec09-Randomization-tests.html)
+[^1]: These are simulated data, adapted from a University of Toronto Coders R course lesson on randomisation tests (https://uoftcoders.github.io/rcourse/).
 
 
 Use the preceding examples as a guide, but make the analytical decisions yourself.

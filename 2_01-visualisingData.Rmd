@@ -19,7 +19,8 @@ By the end of this chapter you should be able to:
 Let’s start with a simple scatter plot. Run this and see what happens:
 
 ```{r 2-01-visualisingData-1, message=FALSE}
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
 
 mydata <- data.frame(
   body_length_cm = c(4.2, 5.1, 5.6, 6.8, 7.4),
@@ -141,7 +142,7 @@ clutch %>%
   geom_boxplot()
 ```
 
-**What just happened:** The box shows the middle 50% of values; the line is the median.
+**What just happened:** The box shows the middle 50% of values (from the first to the third quartile; its height is the *interquartile range*), and the line inside it is the median. The whiskers extend to the most extreme values that lie within 1.5 times the interquartile range of the box. Any values beyond that are drawn as individual points: these are possible outliers worth checking.
 
 - **What to look for:**
   - Are medians different between species?
@@ -153,9 +154,11 @@ clutch %>%
 set.seed(42)
 clutch %>%
   ggplot(aes(x = species, y = clutchSize)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.2, alpha = 0.5)
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.2, height = 0, alpha = 0.5)
 ```
+
+Two details matter here. `height = 0` stops the points from being moved up and down: clutch sizes are whole numbers, and we only want to spread the points sideways so they do not sit on top of each other. `outlier.shape = NA` stops the box plot drawing the outliers, because they are already shown as jittered points (otherwise each outlier would appear twice).
 
 **Common mistake:** If your points overlap too much, increase `width` or reduce `alpha`.
 
@@ -190,7 +193,7 @@ mean_clutch %>%
   - Do the two species move together or differently?
   - Are there years that stand out?
 
-**Caution:** A mean hides variability. For deeper analysis, check sample sizes or plot distributions per year.
+**Caution:** A mean hides variability. For deeper analysis, check sample sizes or plot distributions per year. Also note that there are no data for 2015, so the lines joining 2014 and 2016 do not show what happened in that year.
 
 **Takeaway:** Lines are good for ordered values like time.
 
@@ -232,7 +235,7 @@ birds %>%
 
 Bar charts can hide the shape of data. They are fine for **counts**, but risky for **means**.
 
-```{r 2-01-visualisingData-14, echo = FALSE, fig.width = 6, fig.height = 2, fig.align = "center", fig.cap = "Problems with bar plots."}
+```{r 2-01-visualisingData-14, echo = FALSE, fig.width = 6, fig.height = 3, fig.align = "center", fig.cap = "Problems with bar plots. The same two groups of data shown as (A) a bar plot of the means, with error bars showing ±1 standard error, and (B) box plots with the individual data points."}
 library(patchwork)
 set.seed(42)
 n <- 50
@@ -262,7 +265,7 @@ A <- ggplot(df2, aes(x = x, y = meanVal)) +
 
 B <- ggplot(df1, aes(x = x, y = y)) +
   geom_boxplot(outlier.shape = NA) +
-  geom_jitter(size = 2, width = 0.2) +
+  geom_jitter(size = 2, width = 0.2, height = 0) +
   theme_minimal() +
   ggtitle("B") +
   ylab("y")
@@ -303,6 +306,7 @@ clutch %>%
 
 - Mapping the wrong variable to `x` or `y` (check your `aes()` call).
 - Forgetting `geom_*()` (you’ll get an empty plot).
+- Joining layers with `%>%` instead of `+`. The pipe passes data *into* `ggplot()`; after that, every layer is added with `+`.
 - Using bar plots for means without showing the distribution.
 
 ## Mini-project

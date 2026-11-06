@@ -2,6 +2,14 @@
 
 These are the solutions to the exercises used in the course.
 
+The solutions use these packages (others are loaded where they are needed):
+
+```{r 6-1-00-AllSolutions-setup, message = FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+
 ## Californian bird diversity
 
 1. Import the data as an object called `birds`, then check the columns with `str()`.
@@ -64,7 +72,7 @@ names(amniote)
 ```
 
 2. We are interested in longevity (lifespan), body size and reproductive effort, and how this might vary depending on the taxonomy (specifically, with Class). Use `select` to pick relevant columns of the dataset and discard the others. Call the new data frame `x`. 
-The relevant columns are the taxonomic variables (`class`, `species`) and `longevity_y`, `litter_or_clutch_size_n`, `litters_or_clutches_per_y`, and `adult_body_mass_g`.
+The relevant columns are the taxonomic variables (`class`, `genus` & `species`) and `longevity_y`, `litter_or_clutch_size_n`, `litters_or_clutches_per_y`, and `adult_body_mass_g`.
 
 
 ```{r 6-1-00-AllSolutions-8}
@@ -94,12 +102,14 @@ x <- x %>% arrange(-longevity_y)
 head(x)
 ```
 
-5. Do the same thing but this time find the shortest lived species.
+5. Do the same thing but this time find the shortest lived species. Is this result plausible? What might have gone wrong?
 
 ```{r 6-1-00-AllSolutions-11}
 x <- x %>% arrange(longevity_y)
 head(x)
 ```
+
+The two shortest-lived species, the northern marsupial mole (*Notoryctes caurinus*) and the Indian hare (*Lepus nigricollis*), are recorded as living 1 month (0.083 years). That is not plausible for mammals of this size (the hare weighs over 2 kg). These values are almost certainly errors in the database, for example a value in months entered as years, or a juvenile life stage recorded as the life span. Real data sets often contain errors like this, which is why it is worth checking extreme values before analysing them.
 
 6. Use `summarise` and `group_by` to make a table summarising `min`, `median` and `max` life spans (`longevity_y`) for the three taxonomic classes in the database. Remember that you need to tell R to remove the `NA` values using a `na.rm = TRUE` argument.
 
@@ -113,7 +123,7 @@ x %>%
   )
 ```
 
-7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
+7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
 
 ```{r 6-1-00-AllSolutions-13}
 plot(x$adult_body_mass_g, x$longevity_y)
@@ -131,7 +141,7 @@ x <- x %>%
 plot(x$logMass, x$logLongevity)
 ```
 
-9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot `logOffspring` vs. `logLongevity`.
+9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of (number of litters/clutches per year × number of babies in each litter/clutch), i.e. `log(litters_or_clutches_per_y * litter_or_clutch_size_n)`. Then plot `logOffspring` vs. `logLongevity`.
 
 ```{r 6-1-00-AllSolutions-15}
 x <- x %>%
@@ -142,7 +152,7 @@ x <- x %>%
 plot(x$logOffspring, x$logLongevity)
 ```
 
-10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationships holds universally. 
+10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationship holds universally. 
 
 ```{r 6-1-00-AllSolutions-16}
 aves <- x %>%
@@ -170,90 +180,74 @@ title("Reptilia")
 
 ## Temperature effects on egg laying dates
 
-1. Import the data and take a look at it  with `head` or `str`.
+1. Import the egg data and take a look at it with `head` or `str`.
 
 ```{r 6-1-00-AllSolutions-19, eval=TRUE}
 eggDates <- read.csv("CourseData/eggDates.csv")
 head(eggDates)
 ```
 
-2. Use `pivot_longer` to reformat the data. This might take a bit of trial and error - don't give up! 
-
-Maybe this will help: The first argument in the `pivot_longer` command (`cols`) tells R which columns contain the data you are interested in (in this case, these are `y2013`,`y2014` etc). Then the `names_to` argument tells R what you want to name the new column from this data (in this case, `Year`). Then, the `values_to` argument tells R what the data column should be called (e.g. `Day`). In addition, there is a useful argument called `names_prefix` that will remove the part of the column name  (e.g. the `y` of `y2013`)
-
-You should also make sure that the `Year` column is recognised as being a numeric variable rather than a character string. You can do this by adding a command using `mutate` and `as.numeric`, like this `mutate(Year = as.numeric(Year))`
-
-You should end up with a dataset with three columns as described above.
+2. Use `pivot_longer` to reformat the data, and make sure `Year` is numeric.
 
 ```{r 6-1-00-AllSolutions-20}
-eggDates <- eggDates %>% pivot_longer(
-  cols = starts_with("y"),
-  names_to = "Year", values_to = "day"
-)
-
-head(eggDates)
-```
-
-3. Ensure that year is coded as numeric variable using `mutate`. [Hint, you can use the command `as.numeric`, but first remove the "y" in the name using `gsub`].
-
-```{r 6-1-00-AllSolutions-21}
 eggDates <- eggDates %>%
-  mutate(Year = gsub(pattern = "y", replacement = "", Year)) %>%
+  pivot_longer(
+    cols = starts_with("y"),
+    names_to = "Year", values_to = "dayNumber",
+    names_prefix = "y"
+  ) %>%
   mutate(Year = as.numeric(Year))
+
 head(eggDates)
 ```
 
-4. Calculate the mean egg date per year using `summarise` (remember to `group_by` the year first). Take a look at the data.
+(Without `names_prefix`, you could instead remove the "y" afterwards with `mutate(Year = gsub(pattern = "y", replacement = "", Year))`.)
+
+3. Calculate the mean egg date per year using `summarise`.
 
 ```{r 6-1-00-AllSolutions-22}
 meanEgg <- eggDates %>%
   group_by(Year) %>%
-  summarise(meanEggDate = mean(day, na.rm = TRUE))
+  summarise(meanEggDate = mean(dayNumber, na.rm = TRUE))
 
 meanEgg
 ```
 
-
-**Preparing the weather data**
-
-5. Import the weather data and take a look at it with `head` or `str`.
+4. Import the weather data and take a look at it with `head` or `str`.
 
 ```{r 6-1-00-AllSolutions-23,eval=TRUE}
 weather <- read.csv("CourseData/AarslevTemperature.csv")
 str(weather)
 ```
 
-6. Use `filter` subset to the months of interest (February-April) and then `summarise` the data to calculate the mean temperature in this period (remember to `group_by` year). Look at the data. You should end up with a dataset with two columns - `YEAR` and `meanSpringTemp`. 
+5. Use `filter` to subset to the months of interest (February to April) and then `summarise` the data to calculate the mean temperature in this period.
 
 ```{r 6-1-00-AllSolutions-24}
 weather <- weather %>%
   filter(MONTH %in% 2:4) %>%
   group_by(YEAR) %>%
-  summarise(meanAprilTemp = mean(TEMP))
+  summarise(meanSpringTemp = mean(TEMP))
 
 head(weather)
 ```
 
-
-**Bringing it together**
-
-7. Join the two datasets together using `left_join`. You should now have a dataset with columns `nestNumber`, `Year`,  `dayNumber` and `meanAprilTemp`
+6. Join the two yearly datasets together using `left_join`.
 
 ```{r 6-1-00-AllSolutions-25}
-joinedData <- left_join(meanEgg, weather, c("Year" = "YEAR"))
-head(joinedData)
+joinedData <- left_join(meanEgg, weather, by = c("Year" = "YEAR"))
+joinedData
 ```
 
-
-**Plot the data**
-
-8. plot a graph of `meanAprilTemp` on the x-axis and `dayNumber` on the y-axis.
+7. Plot a graph of `meanSpringTemp` on the x-axis and `meanEggDate` on the y-axis.
 
 ```{r 6-1-00-AllSolutions-26}
-plot(joinedData$meanAprilTemp, joinedData$meanEggDate)
+plot(joinedData$meanSpringTemp, joinedData$meanEggDate,
+  xlab = "Mean February-April temperature (°C)",
+  ylab = "Mean first egg date (day of year)"
+)
 ```
 
-Now you should be able to answer the question we started with: is laying date associated with spring temperatures? Yes, there looks to be a negative relationship between temperature and egg laying date.
+Is laying date associated with spring temperature? There looks to be a negative relationship: in warmer springs, the birds start laying earlier. But we should not be too confident. There are only six years of data, and much of the pattern comes from one year: 2013 had a very cold spring and the latest mean laying date. With more years we could test the relationship properly (you will learn how to do this with linear regression later in the course).
 
 ## Virtual dice
 
@@ -277,7 +271,7 @@ table(result)
 
 Your table will probably look different to this, because it is a random process. You may notice that some numbers in the table are missing if some numbers were never rolled by our virtual dice. 
 
-2) Now simulate 90 rolls of the dice, and plot the results as a bar plot using `geom_bar` in `ggplot`. Add a horizontal line using `geom_abline` to show the **expected** result based on what you know about probability.
+2) Now simulate 90 rolls of the dice, and plot the results as a bar plot using `geom_bar` in `ggplot`. Add a horizontal line using `geom_hline` to show the **expected** result based on what you know about probability.
 
 
 ```{r 6-1-00-AllSolutions-29, echo=-1,fig.cap=('Barplot of 90 simulated dice throws'),cache = TRUE}
@@ -287,7 +281,7 @@ result <- data.frame(result = sample(diceRoll, n, replace = TRUE))
 
 ggplot(result, aes(x = result)) +
   geom_bar() +
-  geom_abline(intercept = n / 6, slope = 0)
+  geom_hline(yintercept = n / 6)
 ```
 
 3) Try adjusting the code to simulate dice rolls with small (say, 30) and large (say, 600, or 6000, or 9000) samples. Observe what happens to the proportions, and compare them to the expected value. What does this tell you about the importance of sample size when trying to estimate real phenomena?
@@ -307,7 +301,7 @@ result <- data.frame(result = sample(diceRoll, n, replace = TRUE))
 
 A <- ggplot(result, aes(x = result)) +
   geom_bar() +
-  geom_abline(intercept = n / 6, slope = 0) +
+  geom_hline(yintercept = n / 6) +
   ggtitle("n = 30")
 
 set.seed(2)
@@ -316,7 +310,7 @@ result <- data.frame(result = sample(diceRoll, n, replace = TRUE))
 
 B <- ggplot(result, aes(x = result)) +
   geom_bar() +
-  geom_abline(intercept = n / 6, slope = 0) +
+  geom_hline(yintercept = n / 6) +
   ggtitle("n = 9000")
 
 A + B
@@ -325,154 +319,111 @@ A + B
 
 ## Sexual selection in Hercules beetles
 
-1. What is your null hypothesis?
+**Task 1: Explore the data.**
 
-*Null Hypothesis - There is no difference in the widths of the species.*
-
-2. What is your alternative hypothesis?
-
-*Alternative Hypothesis - Males have larger widths than females.*
-
-3. Import the data.
 ```{r 6-1-00-AllSolutions-31}
 hercules <- read.csv("CourseData/herculesBeetle.csv")
+str(hercules)
+
+# Set the factor levels so that diff() gives Male minus Female
+hercules$sex <- factor(hercules$sex, levels = c("Female", "Male"))
 ```
 
-4. Calculate the mean for each sex (either using `tapply` or using `dplyr` tools)
+```{r 6-1-00-AllSolutions-32, echo = -1}
+set.seed(42)
+ggplot(hercules, aes(x = sex, y = width)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.1, height = 0, colour = "grey40") +
+  labs(x = "Sex", y = "Width (cm)")
+```
 
-```{r 6-1-00-AllSolutions-32}
-# With dplyr
-hercules %>%
+```{r 6-1-00-AllSolutions-33}
+meanVals <- hercules %>%
   group_by(sex) %>%
-  summarise(mean = mean(width))
-
-# with tapply
-tapply(hercules$width, hercules$sex, mean)
+  summarise(n = n(), mean = mean(width), sd = sd(width), .groups = "drop")
+meanVals
 ```
 
-5. Plot the data as a histogram.
+Males are wider on average (about `r round(meanVals$mean[2], 1)` cm) than females (about `r round(meanVals$mean[1], 1)` cm), but the two groups overlap a lot.
 
-```{r 6-1-00-AllSolutions-33,message=FALSE}
-# Let's look at the male and female data
-(plot1 <- ggplot(hercules, aes(x = width, fill = sex)) +
-  geom_histogram(position = "identity", alpha = .7))
-```
+**Task 2: Formulate hypotheses.**
 
-6. Add vertical lines to the plot to indicate the mean values.
+*Null hypothesis:* sex is unrelated to width, so the sex labels are exchangeable.
 
-```{r 6-1-00-AllSolutions-34,message=FALSE}
-hercules %>%
-  group_by(sex) %>%
-  summarise(mean = mean(width)) %>%
-  pull(mean) -> meanVals
+*Alternative hypothesis:* males are wider than females. The research idea (sexual selection on males) predicts a direction before we look at the data, so a **one-sided** test is appropriate. (If we had no prior expectation of which sex is larger, we would use a two-sided test.)
 
-plot1 + geom_vline(xintercept = meanVals, colour = c("red", "blue"))
-```
-
-7. Now calculate the difference between the mean values using `dplyr` tools, or `tapply`.
+**Task 3: Calculate the observed statistic.** The statistic is the mean width of males minus the mean width of females, so positive values support the alternative.
 
 ```{r 6-1-00-AllSolutions-35}
-# with dplyr
-hercules %>%
+observedDiff <- hercules %>%
   group_by(sex) %>%
-  summarise(mean = mean(width)) %>%
-  pull(mean) %>%
-  diff() -> observedDiff
-observedDiff
-
-# with tapply
-diff(as.vector(tapply(hercules$width, hercules$sex, mean)))
-```
-
-8. Use `sample` to randomise the sex column of the data, and recalculate the difference between the mean.
-
-```{r 6-1-00-AllSolutions-36}
-set.seed(42)
-# with dplyr
-hercules %>%
-  mutate(sex = sample(sex)) %>%
-  group_by(sex) %>%
-  summarise(mean = mean(width)) %>%
+  summarise(mean = mean(width), .groups = "drop") %>%
   pull(mean) %>%
   diff()
-
-# with tapply
-diff(as.vector(tapply(hercules$width, sample(hercules$sex), mean)))
+observedDiff
 ```
 
-9. Use `replicate` to repeat this 10 times (to ensure that you code works).
+**Task 4: Construct a null distribution.** We shuffle the sex labels, keeping 10 males and 10 females. Under the null hypothesis, sex is unrelated to width, so any allocation of the labels to the 20 measurements is equally plausible.
 
-```{r 6-1-00-AllSolutions-37}
+```{r 6-1-00-AllSolutions-37, echo = -1}
 set.seed(43)
-# with dplyr
+# Check the code with a few randomisations first
 replicate(
-  10,
+  5,
   hercules %>%
     mutate(sex = sample(sex)) %>%
     group_by(sex) %>%
-    summarise(mean = mean(width)) %>%
+    summarise(mean = mean(width), .groups = "drop") %>%
     pull(mean) %>%
     diff()
 )
-
-# with tapply
-replicate(
-  10,
-  diff(as.vector(tapply(
-    hercules$width,
-    sample(hercules$sex), mean
-  )))
-)
 ```
 
-10. When your code is working, use `replicate` again, but this time with 1000 replicates and pass the results into a data frame.
-
-```{r 6-1-00-AllSolutions-38}
+```{r 6-1-00-AllSolutions-38, echo = -1}
 set.seed(44)
-# with dplyr
-diffs <- data.frame(
-  diffs =
-    replicate(
-      1000,
-      hercules %>%
-        mutate(sex = sample(sex)) %>%
-        group_by(sex) %>%
-        summarise(mean = mean(width)) %>%
-        pull(mean) %>%
-        diff()
-    )
-)
+B <- 10000
 
-# with tapply
 diffs <- data.frame(
-  diffs =
-    replicate(
-      1000,
-      diff(as.vector(
-        tapply(hercules$width, sample(hercules$sex), mean)
-      ))
-    )
+  diffs = replicate(
+    B,
+    hercules %>%
+      mutate(sex = sample(sex)) %>%
+      group_by(sex) %>%
+      summarise(mean = mean(width), .groups = "drop") %>%
+      pull(mean) %>%
+      diff()
+  )
 )
 ```
 
-11. Use `ggplot` to plot the null distribution you have just created, and add the observed difference.
+**Task 5: Evaluate the evidence.**
 
-```{r 6-1-00-AllSolutions-39,message=FALSE}
+```{r 6-1-00-AllSolutions-39, message = FALSE}
 ggplot(diffs, aes(x = diffs)) +
-  geom_histogram() +
-  geom_vline(xintercept = observedDiff)
+  geom_histogram(bins = 30, fill = "steelblue", colour = "white") +
+  geom_vline(xintercept = observedDiff, colour = "#B2182B", linewidth = 1.2) +
+  labs(
+    x = "Difference between means (Male - Female, cm)",
+    y = "Number of randomised datasets"
+  )
 ```
 
-12. Obtain the p-value for the hypothesis test described above. (1) how many of the shuffled differences are more extreme than the observed distribution (2) what is this expressed as a proportion of the number of replicates.
+Because the alternative predicts a positive difference, we count randomised differences greater than or equal to the observed one, and use the +1 correction:
 
 ```{r 6-1-00-AllSolutions-40}
-sum(diffs$diffs >= observedDiff)
-sum(diffs$diffs >= observedDiff) / 1000
+b <- sum(diffs$diffs >= observedDiff)
+p_value <- (b + 1) / (B + 1)
+b
+p_value
 ```
 
-13. Summarise your result as in a report. Describe the method, followed by the result and conclusion.
+For comparison, the exact one-sided p-value from all 184,756 possible allocations of 10 males and 10 females is 2,202/184,756 = 0.012, very close to the Monte Carlo estimate.
 
-*"I used a randomisation test to estimate the significance of the observed difference of `r format(observedDiff,digits= 3,nsmall=3)` (mean values: female=`r format(meanVals[2],digits= 3,nsmall=3)`;  male = `r format(meanVals[1],digits= 3,nsmall=3)`) in mean widths of the sexes. To do this I generated a null distribution of differences between sexes using 1000 replicates. I found that only `r sum(diffs$diffs >= observedDiff)` of the differences in the null distribution were as extreme as the observed difference. Thus the p-value is `r sum(diffs$diffs >= observedDiff)/1000`: I therefore reject the null hypothesis that there is no difference between the sexes and accept the alternative hypothesis that males are significantly larger than females."*
+**Task 6: Write a short results paragraph.**
+
+*"Mean width was `r round(meanVals$mean[2], 2)` cm in males and `r round(meanVals$mean[1], 2)` cm in females (n = 10 per sex), a difference of `r round(observedDiff, 2)` cm (Male minus Female). A one-sided Monte Carlo randomisation test, in which the sex labels were randomly reallocated 10,000 times while preserving group sizes, provided evidence that males are wider than females (p = `r round(p_value, 3)`). This is consistent with sexual selection on male size, although these data alone cannot show that sexual selection is the cause."*
+
+**Is the difference biologically important?** A statistically clear difference is not automatically an important one. Here the difference (about 2.3 cm, or about 16% of mean female width) is fairly large relative to body size. To judge its importance we would want to know, for example, whether wider males win more fights or mate more often, how the difference compares with variation among populations, and whether width is a good measure of overall body size.
 
 ## Sex differences in fine motor skills
 
@@ -496,8 +447,9 @@ ggplot(classData, aes(x = Gender, y = Precision)) +
 
 2) Formulate null and alternative hypotheses. 
 
-Null hypotheses - the differences in precision between male and female are due to chance alone.
-Alternative hypothesis - there is a significant difference between male and female precision scores.
+*Null hypothesis:* the mean precision score is the same for males and females.
+
+*Alternative hypothesis:* the mean precision score differs between males and females (a two-sided alternative, because we have no strong reason to expect a particular direction).
 
 3) Use the `t.test` function to do the test.
 
@@ -510,11 +462,11 @@ t.test(Precision ~ Gender, data = classData)
 ```{r 6-1-00-AllSolutions-43, echo = FALSE}
 x <- t.test(Precision ~ Gender, data = classData)
 ```
-There was no significant difference in mean precision between the two genders (t-test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between genders overlapped 0 (95% CI = `r sprintf(x$conf.int[1], fmt = '%#.3f')`-`r sprintf(x$conf.int[2], fmt = '%#.3f')`). I therefore fail to reject the null hypothesis that the observed differences are due to chance alone.
+There was no clear difference in mean precision between females and males (Welch's t-test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference (female minus male) was `r sprintf(x$conf.int[1], fmt = '%#.3f')` to `r sprintf(x$conf.int[2], fmt = '%#.3f')`, which includes zero. We therefore have no evidence of a difference, but this is not the same as showing that there is no difference: the interval shows which differences are still compatible with the data. (These are also observational data from a convenience sample, so we should be careful about generalising.)
 
 ## Therapy for anorexia
 
-A study was carried out looking at the effect of cognitive behavioural therapy on weight of people with anorexia. Weight was measured in week 1 and again in week 8. Use a paired t-test to assess whether the treatment is effective.
+A study was carried out looking at the effect of cognitive behavioural therapy on weight of people with anorexia. Weight was measured in week 1 and again in week 8. Use a paired t-test to assess whether weight changed between week 1 and week 8 during the treatment. (Think about this: the study has no control group, so can a change in weight on its own tell you that the *treatment* caused it?)
 
 The data is called `anorexiaCBT.csv`
 
@@ -543,32 +495,33 @@ ggplot(anorexiaCBT_long, aes(
   geom_line() +
   geom_point() +
   xlab("Time") +
-  ylab("Weight (kg)")
+  ylab("Weight (lb)")
 ```
 
 
 
 2) Formulate a null and alternative hypothesis.
 
-Null = The difference in weight between the two times is no different than random chance.
-Alternative Hypothesis = There is a significant change in weight between the two time points.
+*Null hypothesis:* the mean change in weight between week 1 and week 8 is zero.
+
+*Alternative hypothesis:* the mean change in weight is not zero (two-sided). You could argue for a one-sided alternative (weight *increases*), but only if that was decided before looking at the data.
 
 3) Use `t.test` to conduct a *paired* t-test.
 
-The method here depends on whether you use the "long" data or not:
+Putting week 8 first means the estimate is week 8 minus week 1, so a weight gain is positive:
 
 ```{r 6-1-00-AllSolutions-46}
-t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
+t.test(anorexiaCBT$Week08, anorexiaCBT$Week01, paired = TRUE)
 ```
 
 
 4) Write a couple of sentences to report your result.
 
 ```{r 6-1-00-AllSolutions-48}
-x <- t.test(anorexiaCBT$Week01, anorexiaCBT$Week08, paired = TRUE)
+x <- t.test(anorexiaCBT$Week08, anorexiaCBT$Week01, paired = TRUE)
 ```
 
-There was a significant difference in weight of `r sprintf(x$estimate, fmt= '%#.3f')`kg between week 1 and week 8 (t.test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`). The 95% confidence interval for the difference between weeks was between `r sprintf(x$conf.int[1], fmt = '%#.3f')` and `r sprintf(x$conf.int[2], fmt = '%#.3f')`. Therefore, I reject the null hypotheses, that the difference is due to chance alone, and accept the alternative hypothesis.
+On average, weight increased by `r sprintf(x$estimate, fmt= '%#.1f')` lb (about `r sprintf(0.4536 * x$estimate, fmt= '%#.1f')` kg) between week 1 and week 8 (paired t-test: t = `r format(x$statistic,nsmall = 2,digits = 3)`, df = `r format(x$parameter,nsmall = 2,digits = 3)`, p = `r format(x$p.value,nsmall = 2,digits = 3)`; 95% CI for the mean change `r sprintf(x$conf.int[1], fmt = '%#.1f')` to `r sprintf(x$conf.int[2], fmt = '%#.1f')` lb). This is evidence that weight changed during the treatment period. However, because there is no control group, it does not show that CBT *caused* the change: weight might have changed anyway over those weeks (for example because of other care the patients received, or because people tend to enter treatment when their weight is at its lowest).
 
 ## Compare t-tests with randomisation tests
 
@@ -578,7 +531,7 @@ Try re-fitting some of these tests as randomisation tests (or analyse the random
 Then try answering the question - "*are people who prefer dogs taller than those who prefer cats?* " using the `classData.csv`. Can you think of any problems with this analysis?
 ```
 
-The problem with the analysis is that it is "confounded". That is to say, gender is correlated with height, so you would not be sure whether any difference you found would be due to height, or gender.
+The problem with the analysis is that it is likely to be *confounded* by gender. Men are on average taller than women. If men and women also differ in whether they prefer cats or dogs, then a height difference between "cat people" and "dog people" could simply reflect the different proportions of men and women in the two groups, rather than anything to do with pet preference.
 
 ## Apple tree crop yield
 
@@ -605,8 +558,9 @@ apples <- apples %>%
 ```{r 6-1-00-AllSolutions-52, echo = -1,cache=TRUE}
 set.seed(42)
 ggplot(apples, aes(x = spacing, y = yield)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.2) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.1, height = 0) +
+  xlab("Spacing (feet)") +
   ylab("Yield (kg per tree)")
 ```
 
@@ -624,6 +578,8 @@ library(ggfortify)
 autoplot(apple_mod)
 ```
 
+Look for points in the Q-Q plot lying close to the line (normality) and for the three columns of residuals in the Residuals vs Fitted and Scale-Location plots having a broadly similar spread (equal variance).
+
 
 6. Use `anova` to get the ANOVA summary.
 
@@ -639,7 +595,16 @@ summary(apple_mod)
 
 8. Use a Tukey test to make all the pairwise comparisons among the treatments.
 
+`TukeyHSD` gives the estimated differences with 95% confidence intervals (adjusted for multiple comparisons). Note that `aov` (like `lm`) drops the rows with missing yields:
+
 ```{r 6-1-00-AllSolutions-57}
+apple_tukey <- TukeyHSD(aov(yield ~ spacing, data = apples))
+apple_tukey
+```
+
+The letters version from `agricolae` gives the same conclusions:
+
+```{r 6-1-00-AllSolutions-57b}
 library(agricolae)
 HSD.test(apple_mod, "spacing", console = TRUE)
 ```
@@ -649,13 +614,18 @@ HSD.test(apple_mod, "spacing", console = TRUE)
 
 ```{r 6-1-00-AllSolutions-58,echo = FALSE}
 x <- anova(apple_mod)
+appleMeans <- apples %>%
+  group_by(spacing) %>%
+  summarise(mean = mean(yield, na.rm = TRUE))
+fmt <- function(v) formatC(v, digits = 1, format = "f")
+tk <- apple_tukey$spacing
 ```
 
-*There was a significant effect of spacing on apple yields (Figure XX, ANOVA: F = `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p = `r formatC(x$"Pr(>F)"[1], digits = 4, format = "f")`). *
+*Mean yield per tree differed among the three spacings (ANOVA: F = `r formatC(x$"F value"[1], digits = 2, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p = `r formatC(x$"Pr(>F)"[1], digits = 4, format = "f")`; see the box plot above). Trees planted 6 feet apart yielded the least (mean `r fmt(appleMeans$mean[1])` kg per tree), compared with `r fmt(appleMeans$mean[2])` kg at 10 feet and `r fmt(appleMeans$mean[3])` kg at 14 feet. Compared with the 6-foot spacing, yield per tree was `r fmt(tk["10-6", "diff"])` kg higher at 10 feet (95% CI `r fmt(tk["10-6", "lwr"])` to `r fmt(tk["10-6", "upr"])`; Tukey HSD) and `r fmt(tk["14-6", "diff"])` kg higher at 14 feet (95% CI `r fmt(tk["14-6", "lwr"])` to `r fmt(tk["14-6", "upr"])`). The difference between 10 and 14 feet was smaller and not clear (`r fmt(tk["14-10", "diff"])` kg, 95% CI `r fmt(tk["14-10", "lwr"])` to `r fmt(tk["14-10", "upr"])`).*
 
-Then:  *The pairwise comparisons in the ANOVA model showed that means of the 6 and 10 foot spacing treatment were significantly different (t= 3.244, p = 0.0017), as were those of 6 and 14 (t=4.022, p = 0.0001), but the 10 foot - 14 foot comparison showed no significant difference (t= 0.707, p= 0.4813)^[These values come from the `summary` tables for the ANOVA model, and the relevelled ANOVA model].*
+**What biological processes might drive this?** Trees that are closer together compete more strongly for light, water and nutrients, so each tree has fewer resources to put into growth and fruit. Shading of the lower canopy by neighbouring trees may be particularly important for fruit production. Beyond about 10 feet, the extra space seems to make less difference, perhaps because competition between neighbours is already weak.
 
-Or, more simply: *The 6-10ft and 6-14ft comparisons showed significant differences (Tukey HSD: p<0.05), but the 10-14ft comparison showed no significant difference (Tukey HSD: p>0.05)*
+Note that these are yields **per tree**. A grower is usually more interested in yield **per hectare**: closely spaced trees produce less each, but there are many more of them, so the total yield per hectare could still be higher at the 6-foot spacing. Which spacing is "best" therefore depends on the question you ask.
 
 10. Optional. Instead of using a Tukey test, use the alternative "relevel" approach to make the missing comparison.
 
@@ -668,7 +638,7 @@ summary(apple_mod2)
 
 
 -------
-If you get this far, try using the ANOVA approach on one of the previous t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the `t.test` function or the ANOVA approach with `lm`.
+If you get this far, try using the ANOVA approach on one of the previous two-sample t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the `t.test` function with `var.equal = TRUE` or the ANOVA approach with `lm` (for two groups, F = t^2^). The default Welch t-test gives slightly different results, because it does not assume equal variances.
 
 
 ## Chirping crickets
@@ -973,7 +943,31 @@ crimeScene2
 
 Here the probability of being male is close to 0.5, so the tool is essentially guessing. A foot length of 249 mm sits almost exactly at the "tipping point" where males and females are equally likely (around 250 mm, roughly the midpoint between the average female and male foot lengths), so this print tells us very little about the culprit's sex. This is an important lesson: a prediction is only as useful as the certainty attached to it.
 
+## Power analysis: questions in the chapter
+
+These answers are approximate: because the simulations are random, your numbers will differ slightly.
+
+1) **What sample size would give you 80% power?** About 26 per group. You can find this by increasing `sampleSize` until the power reaches 0.8:
+
+```{r 6-1-00-AllSolutions-power-q1}
+set.seed(42)
+sampleSize <- 26 # vary this until power > 0.8
+result <- replicate(
+  1000,
+  t.test(
+    rnorm(sampleSize, mean = 12, sd = 3),
+    rnorm(sampleSize, mean = 14.4, sd = 3)
+  )$p.value
+)
+mean(result < 0.05)
+```
+
+2) **What power would you have if the variation was larger (sd = 4)?** With 10 per group, the power falls from about 40% to about 24%. More noise makes the signal harder to detect.
+
+3) **What power would you have if the difference was only 10%?** The treatment mean would then be 12 $\times$ 1.1 = 13.2 mm, and with 10 per group the power falls to about 13%. Small effects are much harder to detect.
+
 ## Snails on the move
+
 
 Simulate a t-test-based analysis in R to figure out what sample size would result in 80% power.
 

@@ -1,21 +1,29 @@
 # Distributions and summarising data
 
-When you collect data in biology—whether it’s measuring bird wing lengths, tracking flowering times, or measuring the effect of physiological stressors in the lab—you’re dealing with distributions. The first step to making sense of these distributions is to summarise and explore them. Summarising helps us uncover patterns, identify variability, and ask meaningful questions. For example: 
+When you collect data in biology (whether it's measuring bird wing lengths, tracking flowering times, or measuring the effect of physiological stressors in the lab), you're dealing with distributions. The first step to making sense of these distributions is to summarise and explore them. Summarising helps us uncover patterns, identify variability, and ask meaningful questions. For example: 
 
 - Are larger ponds home to more invertebrate species?  
 - Does temperature influence flowering time in plants?  
 - Is body mass correlated with lifespan in mammals?  
 
-To answer these questions, we need to understand the data we’re working with. This chapter guides you through key concepts in exploring and summarising biological data, including how to define variables, avoid common pitfalls like bias, and use R to visualise and summarise distributions. We'll end with a brief look at the "law of large numbers".
+To answer these questions, we need to understand the data we're working with. This chapter guides you through key concepts in exploring and summarising biological data, including how to define variables, avoid common pitfalls like bias, and use R to visualise and summarise distributions. We'll end with a brief look at the "law of large numbers".
+
+In this chapter we use these packages:
+
+```{r 2-02-distributionsSummaryStats-setup, message = FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+```
 
 ## Relationships in Data: Response and Explanatory Variables
 
 In biological studies, one of the most common goals is to explore relationships between variables. For example, how does island size affect species diversity? Or how does temperature influence metabolic rate? Answering these questions involves two key types of variables:
 
-- **Response Variable**: The variable you measure or aim to explain. This could be species diversity, metabolic rate, or population growth. By convention, it’s plotted on the **y-axis** of a graph.
+- **Response Variable**: The variable you measure or aim to explain. This could be species diversity, metabolic rate, or population growth. By convention, it's plotted on the **y-axis** of a graph.
 - **Explanatory Variable**: The variable you suspect influences the response variable, such as island size or temperature. 
 
-These variables are also known as **dependent** (response) and **independent** (explanatory) variables. However, I prefer the terms 'response' and 'explanatory' because they avoid implying causation. For instance, in some areas, higher animal population densities (response variable) might be observed near roads, which serve as a source of roadkill (explanatory variable). This pattern reflects resource availability rather than roads directly causing increased population growth.
+These variables are also known as **dependent** (response) and **independent** (explanatory) variables. However, I prefer the terms 'response' and 'explanatory' because they avoid implying causation. For instance, scavengers such as crows may be more abundant close to roads (distance to road is the explanatory variable; crow density is the response), because roadkill provides food. Distance to road predicts crow density, but the roads themselves are not what makes the crow population grow: the food is.
 
 Think of it like this: the response variable is the outcome you are measuring, while the explanatory variable is the factor you are examining for patterns or associations with that outcome. These roles are crucial to keep clear, not only during data analysis but also when visualising results. By convention, the response variable is plotted on the y-axis, and the explanatory variable on the x-axis. This convention does not suggest causation; it simply reflects the structure of the analysis.
 
@@ -37,7 +45,7 @@ For these inferences to be reliable, the sample should be **representative**: it
 * Estimating insect biodiversity using light traps exclusively may overrepresent moths and other light-attracted insects, while neglecting species not drawn to light.
 * Behavioural research on captive animals may overrepresent behaviours suited to confined spaces, failing to reflect the natural behaviours seen in the wild.
 
-Recognising and addressing these biases is essential for ensuring that insights derived from a sample are representative of the broader population. A good understanding of potential bias will clarify the study’s limitations in generalisability. While achieving representativeness is a critical goal, it is noteworthy that the sample size required to capture population variability and detect meaningful effects or differences may often be smaller than expected. This topic will be explored in the later [Chapter on power analysis](https://jonesor.github.io/BB852_Book/power-analysis-by-simulation.html).
+Recognising and addressing these biases is essential for ensuring that insights derived from a sample are representative of the broader population. A good understanding of potential bias will clarify the study's limitations in generalisability. As well as being representative, a sample needs to be large enough to capture the variability of the population and to detect the effects or differences you are interested in. How large a sample you need is something you can work out before collecting any data: this topic is explored in the later [Chapter on power analysis](https://jonesor.github.io/BB852_Book/power-analysis-by-simulation.html).
 
 Once a representative sample is collected, the next step is often to explore and summarise the data to uncover patterns or relationships. Statistical distributions provide a framework for describing this variability and later for testing hypotheses about the population.
 
@@ -68,7 +76,7 @@ odds <- p / (1 - p)
 odds
 ```
 
-Why bother with odds when probabilities seem more intuitive? The reason is that odds behave more conveniently for modelling. A probability is trapped between 0 and 1, but odds can take any value from 0 (an impossible event) up towards infinity (a near-certain one). If we then take the natural logarithm of the odds — the **log-odds**, or **logit** — we get a quantity that is symmetric around zero and can range from \(-\infty\) to \(+\infty\):
+Why bother with odds when probabilities seem more intuitive? The reason is that odds behave more conveniently for modelling. A probability is trapped between 0 and 1, but odds can take any value from 0 (an impossible event) up towards infinity (a near-certain one). If we then take the natural logarithm of the odds (the **log-odds**, or **logit**), we get a quantity that is symmetric around zero and can range from \(-\infty\) to \(+\infty\):
 
 \[
 \text{logit}(p) = \log\left(\frac{p}{1-p}\right)
@@ -78,15 +86,15 @@ This unbounded scale is exactly what makes odds so useful: it is the foundation 
 
 ### Uncertainty and certainty
 
-Probability is the natural way to put a number on how *certain* or *uncertain* we are. When a forecaster says there is a 90% chance of rain, or when we later say we are "95% confident" that a mean lies within some range, these are all probability statements about our degree of certainty.
+Probability is the natural way to put a number on how *certain* or *uncertain* we are. When a forecaster says there is a 90% chance of rain, that is a probability statement. Later in the course you will meet **95% confidence intervals**. Be careful with their meaning: the "95%" describes the *method*, not one particular interval. If we repeated a study many times and calculated a 95% confidence interval each time, 95% of those intervals would contain the true value. Any single interval either contains the true value or it does not; we just don't know which.
 
-A key idea running through the rest of this book is that we are almost never 100% certain about anything we estimate from a sample — but we *can* quantify how uncertain we are, and we can reduce that uncertainty by collecting more or better data. The tools you will meet later — **confidence intervals**, **p-values**, and **statistical power** — are all formal ways of expressing and managing this uncertainty. The law of large numbers, which we return to at the end of this chapter, captures the most important practical consequence: the more data we gather, the closer our sample estimates tend to get to the truth.
+A key idea running through the rest of this book is that we are almost never 100% certain about anything we estimate from a sample, but we *can* quantify how uncertain we are, and we can reduce that uncertainty by collecting more or better data. The tools you will meet later (**standard errors**, **confidence intervals**, **p-values**, and **statistical power**) are all formal ways of expressing and managing this uncertainty. The law of large numbers, which we return to at the end of this chapter, captures the most important practical consequence: the more data we gather, the closer our sample estimates tend to get to the truth.
 
 ### Probability density
 
-For outcomes we can count — heads or tails, the number on a die, the number of eggs in a nest — we can talk directly about the probability of each specific outcome. But for things we *measure* on a continuous scale — a wing length, a body mass, a temperature — the probability of getting any *exact* value (say, a wing length of precisely 95.0000… mm) is effectively zero, because there are infinitely many possible values.
+For outcomes we can count (heads or tails, the number on a die, the number of eggs in a nest), we can talk directly about the probability of each specific outcome. But for things we *measure* on a continuous scale (a wing length, a body mass, a temperature), the probability of getting any *exact* value (say, a wing length of precisely 95.0000… mm) is effectively zero, because there are infinitely many possible values.
 
-To describe continuous variables we therefore use **probability density** rather than probability directly. Density is not itself a probability; it is probability *per unit* of the measurement, arranged so that the **area** under the density curve between two values gives the probability of falling in that range, and the total area under the whole curve is exactly 1. This is precisely what the y-axis labelled "Density" means in the distribution plots that follow: where the curve is high, probability is concentrated; where it is low, outcomes are rare. In the normal-distribution figure shortly, the shaded bands (1 SD ≈ 68%, 2 SD ≈ 95%) are *areas* under the curve — and therefore probabilities.
+To describe continuous variables we therefore use **probability density** rather than probability directly. Density is not itself a probability; it is probability *per unit* of the measurement, arranged so that the **area** under the density curve between two values gives the probability of falling in that range, and the total area under the whole curve is exactly 1. This is precisely what the y-axis labelled "Density" means in the distribution plots that follow: where the curve is high, probability is concentrated; where it is low, outcomes are rare. In the normal-distribution figure shortly, the shaded bands (1 SD ≈ 68%, 2 SD ≈ 95%) are *areas* under the curve, and therefore probabilities.
 
 These ideas come to life once we look at whole **distributions** of outcomes, which we turn to now.
 
@@ -97,10 +105,6 @@ A statistical distribution describes the relative frequency or probability of po
 The **normal distribution**, also called the Gaussian distribution, is a symmetrical bell-shaped curve centered on the mean. It is characterized by two parameters: the mean (average) and the standard deviation (s.d.), which measures the spread of the data. Approximately 68% of observations fall within 1 s.d. of the mean, and 95% fall within 2 s.d..
 
 ```{r 2-02-distributionsSummaryStats-1, echo = FALSE, fig.height=3, fig.width = 4,fig.align='center'}
-# Load necessary libraries
-library(ggplot2)
-library(dplyr)
-
 # Create the data frame with normal distribution density and highlight regions for 1 and 2 SDs
 normData <- data.frame(x = seq(-3, 3, 0.1)) %>%
   mutate(
@@ -221,12 +225,48 @@ We can compare these with the true values (the values we set when we generated t
 Try repeating these plots with data that has different sample sizes. For example, use sample sizes of 5000, 250, 100, 50, 10. What do you notice? You should notice that for smaller sample sizes, the true distribution is not captured very well.
 ```
 
-When you calculate the mean and standard deviation, you are actually fitting a simple model: the mean and standard deviation are parameters of the model, which assumes that the data follow a normal distribution.
+For normally distributed data like these, the mean and standard deviation are all you need: they are the two parameters of the normal distribution, so together they describe the whole distribution. For other distributions, the mean and standard deviation are still valid summaries, but they no longer describe the shape of the distribution on their own (see the Poisson example below).
 
 
+
+## How precise is a mean? The standard error
+
+The standard deviation describes how much individual *observations* vary. A different question is how much our *estimate of the mean* would vary if we repeated the study. Any one sample gives one estimate of the mean; a different sample from the same population would give a slightly different estimate. The **standard error of the mean** (SE) measures how much these estimates vary from sample to sample. It is calculated as
+
+\[
+\text{SE} = \frac{\text{SD}}{\sqrt{n}}
+\]
+
+so it gets smaller as the sample size, \(n\), gets larger. We calculated it above as `semEst`.
+
+We can see this by simulation. Imagine moths whose forewing length has a true mean of 28 mm and a standard deviation of 2 mm. We will take 1000 samples of 16 moths, and 1000 samples of 64 moths, and calculate the mean of each sample. The `replicate` function repeats a command many times:
+
+```{r 2-02-distributionsSummaryStats-sem, fig.height=3, fig.width = 6, fig.align='center', echo = -1}
+set.seed(28)
+means16 <- replicate(1000, mean(rnorm(16, mean = 28, sd = 2)))
+means64 <- replicate(1000, mean(rnorm(64, mean = 28, sd = 2)))
+
+sd(means16) # the spread of the sample means: compare with 2 / sqrt(16) = 0.5
+sd(means64) # compare with 2 / sqrt(64) = 0.25
+
+sampleMeans <- data.frame(
+  n = rep(c("n = 16", "n = 64"), each = 1000),
+  sampleMean = c(means16, means64)
+)
+
+ggplot(sampleMeans, aes(x = sampleMean)) +
+  geom_histogram(binwidth = 0.1) +
+  facet_grid(. ~ n) +
+  xlab("Sample mean forewing length (mm)")
+```
+
+Each histogram shows the *sampling distribution* of the mean: the distribution of the estimates we would get from repeated studies. Both are centred on the true mean (28 mm), but the means from samples of 64 moths are much less spread out. The standard deviations of these sample means (about `r round(sd(means16), 2)` and `r round(sd(means64), 2)` mm) are very close to the standard errors predicted by the formula (0.5 and 0.25 mm). Notice that quadrupling the sample size only halves the standard error, because of the square root.
+
+**In short:** the SD describes the spread of the *data*; the SE describes the precision of the *mean*. Report the SD when you want to describe how variable individuals are, and the SE (or, better, a confidence interval) when you want to show how precisely you have estimated the mean.
 
 ```{block 2-02-distributionsSummaryStats-10, type="do-something"}
-Try adding lines for the standard error of the mean to one of your histograms.
+1. Repeat the simulation with samples of 4 and 256 moths. What happens to the spread of the sample means? Check your answers against SD / sqrt(n).
+2. Go back to the histogram of `rn` above and add lines for the mean ± 1 standard error (using `sv$semEst`). Why are they so much closer to the mean than the lines for the standard deviation?
 ```
 
 
@@ -262,7 +302,9 @@ Try changing the distributions and re-plotting them (you can change the number o
 
 ## Poisson distribution
 
-The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the "`lambda`" parameter, which is the arithmetic mean of the distribution. Due to the zero bounds, small values of `lambda` will give more skewed distributions.
+The Poisson distribution is typically used when dealing with count data. The values must be whole numbers (integers) and they cannot be negative. The shape of the distributions varies with the "`lambda`" parameter, which is the arithmetic mean of the distribution. The Poisson distribution has only this one parameter: its **variance is also equal to `lambda`**, so the spread of the distribution increases with its mean. (This will matter later, when we check count data for "overdispersion" in the GLM chapters.) Due to the zero bounds, small values of `lambda` will give more skewed distributions.
+
+Because Poisson values are whole numbers, we can give the *probability* of each value directly (unlike the normal distribution, where we need probability density). The plots below show these probabilities, calculated with the function `dpois`:
 
 ```{r 2-02-distributionsSummaryStats-14, echo=FALSE, fig.height=3, fig.width = 4,fig.align='center'}
 set.seed(42)
@@ -274,7 +316,7 @@ L2 <- ggplot(poissonData, aes(x = x, y = dens)) +
   geom_segment(aes(x = x, xend = x, y = 0, yend = dens)) +
   scale_x_continuous(breaks = 0:10) +
   xlab("x") +
-  ylab("Density") +
+  ylab("Probability") +
   theme_minimal()
 
 poissonData <- data.frame(x = seq(0, 10, 1)) %>%
@@ -285,7 +327,7 @@ L5 <- ggplot(poissonData, aes(x = x, y = dens)) +
   geom_segment(aes(x = x, xend = x, y = 0, yend = dens)) +
   scale_x_continuous(breaks = 0:10) +
   xlab("x") +
-  ylab("Density") +
+  ylab("Probability") +
   theme_minimal()
 
 L2 + ggtitle("lambda = 2") + L5 + ggtitle("lambda = 5")
@@ -331,7 +373,7 @@ p1 +
   geom_vline(xintercept = sv$meanEst - 2 * sv$sdEst, linewidth = 1)
 ```
 
-This looks like a TERRIBLE fit: The mean is not close to the most common value in the data set and the lower limit of the standard deviation indicates we should expect some negative values - this is impossible for Poisson data. The reason for this is that mean and standard deviation, and therefore standard error, are intended for normally distributed data. When the data come from other distributions we must take another approach.
+This does not describe the data well. For a normal distribution, about 95% of values lie within 2 standard deviations of the mean. Here, the lower line is at `r round(sv$meanEst - 2 * sv$sdEst, 1)`: it suggests that we should expect some negative values, which is impossible for counts. The mean and standard deviation are still perfectly valid numbers for these data (and the mean is a good estimate of `lambda`), but "mean ± 2 SD" only works as a description of the spread of the data when the distribution is roughly normal. For skewed data like these, other summaries describe the spread better.
 
 So how should we summarise this data?
 
@@ -386,7 +428,7 @@ ggplot(rn, aes(x = sampleID, y = value, fill = sampleID)) +
   geom_boxplot()
 ```
 
-You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer then the other) and cannot be <0. Which graph to you prefer? (there's no right answer!)
+You should see the main features of both distributions are captured pretty well. The normal distribution is approximately symmetrical and the Poisson distribution is skewed (one whisker longer than the other) and cannot be <0. Which graph do you prefer? (there's no right answer!)
 
 
 ## The law of large numbers
@@ -407,7 +449,7 @@ coinToss <- c("Heads", "Tails")
 sample(coinToss, 1)
 ```
 
-And here is how to simulate 6 coin tosses and make a table of the results. Note, we must use the `replace = TRUE` argument. Please ask if you don't understand why this is necessary.
+And here is how to simulate 6 coin tosses and make a table of the results. Note that we must use the `replace = TRUE` argument. By default, `sample` draws *without* replacement, like drawing cards from a deck: once "Heads" has been drawn, it cannot be drawn again, so we could never get more than two tosses. With `replace = TRUE`, each toss can give either result, like a real coin.
 
 ```{r 2-02-distributionsSummaryStats-24, echo=-1,cache = TRUE}
 set.seed(25)
@@ -415,7 +457,7 @@ result <- sample(coinToss, 6, replace = TRUE)
 table(result)
 ```
 
-We can "wrap" the `table` function with the `as.data.frame` to turn the data into a data frame that works with `ggplot` You'll probably get different results than me because this is a random process:
+To plot the results with `ggplot`, we put them in a data frame and let `geom_bar` count them. You'll probably get different results to me because this is a random process:
 
 ```{r 2-02-distributionsSummaryStats-25, echo=-1, fig.cap=('Barplot of 6 simulated coin tosses'),cache = TRUE}
 set.seed(2)

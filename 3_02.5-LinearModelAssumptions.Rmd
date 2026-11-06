@@ -2,17 +2,23 @@
 
 Before proceeding, we should talk about assumptions in linear models. And before that, we should clarify what we mean by *linear models*.
 
-Linear models assume a linear relationship between the response variable (the outcome of interest) and one or more explanatory variables (factors that may influence the response). Linear models encompass various techniques, including t-tests, linear regression, analysis of variance (ANOVA), and analysis of covariance (ANCOVA).
+Linear models describe the response variable (the outcome of interest) as a sum of effects of one or more explanatory variables (factors that may influence the response), plus random variation. Linear models encompass various techniques, including t-tests, linear regression, analysis of variance (ANOVA), and analysis of covariance (ANCOVA).
 
-All these techniques fall under the umbrella of linear models because they assume a linear relationship between the response variable and the explanatory variables. This linearity is a little hard to visualise for some models (e.g. t-tests) but easy to see for others (e.g. linear regression).
+All these techniques fall under the umbrella of linear models because the model is **linear in its parameters**: the predicted value is made by multiplying each explanatory variable by a coefficient and adding the results together (e.g. intercept + slope × x). For a t-test or ANOVA, the "explanatory variable" simply codes which group an observation belongs to, so the linearity is a little hard to visualise; for linear regression it is easy to see as a straight line.
 
-Note also that linear models can be extended to include non-linear relationships through appropriate transformations of data (e.g. log-transformation) or by incorporating polynomial terms or other non-linear functions into the model.
+Note that "linear in its parameters" does not mean that the relationship must be a straight line. A model that includes a squared term (intercept + b~1~ × x + b~2~ × x^2^), or that uses a transformed variable such as log(x), is still a linear model, even though it describes a curve. This is how linear models can handle many non-linear relationships.
 
-In a nutshell, all the models we use in this course are linear models. Generalised Linear Models (GLMs), which we get to later, relax some of these assumptions (they **generalise** the model by relaxing the assumptions of linearity and homoscedasticity - more on this later).
+In a nutshell, all the models we use in this course are linear models. Generalised Linear Models (GLMs), which we get to later, relax some of these assumptions. They keep the linear part of the model (intercept + slope × x and so on), but connect it to the mean of the response through a *link function*, and they **generalise** the model by allowing the errors to follow distributions other than the normal (e.g. Poisson for counts, binomial for proportions). With those distributions the variance is allowed to change with the mean, so GLMs relax the assumptions of normality and homoscedasticity (more on this later).
 
 ## The assumptions
 
-The assumptions of linear models are outlined below. The relevance of each assumption depends on the type of model. For example, the assumption of linearity is not important in a t-test. I should also emphasise that some assumptions are more important than others and that models/tests are quite robust to minor-to-moderate violations of some assumptions. 
+The assumptions of linear models are outlined below. The relevance of each assumption depends on the type of model. For example, the assumption of linearity is not important in a t-test. I should also emphasise that some assumptions are more important than others and that models/tests are quite robust to minor-to-moderate violations of some assumptions. Roughly in order of importance:
+
+1. **The data can answer the question** (the response measures what you are interested in, and the sample represents the population you want to generalise to). No statistical method can fix this.
+2. **Independence**, because violating it makes you far too confident in your results.
+3. **Linearity** (where there are continuous explanatory variables).
+4. **Homoscedasticity** (equal variance).
+5. **Normality** of the residuals, usually the least important, especially with larger samples.
 
 **Linearity**: The assumption of linearity states that the relationship between the response variable and continuous explanatory variable(s) should be linear. This means that the effect of continuous explanatory variables on the response variable is additive and constant across all levels of the explanatory variable. For practical purposes, the assumption of linearity is only relevant when there is a continuous explanatory variable. 
 
@@ -24,14 +30,33 @@ b. Repeated measurements: When multiple measurements are collected from the same
 
 c. Relatedness: When measurements are collected from individuals that are related via a pedigree (family tree) or phylogeny, the observations from closely-related individuals are likely to be more similar than those from distantly-related individuals.
 
-**Homoscedasticity**: The assumption of homoscedasticity (or homogeneity of variances) states that the variability of the response variable should be constant across all levels of the explanatory variables. In a linear regression, you can picture this as the cloud of data points being evenly dispersed like a ribbon running along the fitted line of the regression model. For a t-test this assumption means that we expect the spread of data to be the same for both group 1 and group 2 (note that Welch's t-test used by default in R with `t.test` relaxes this assumption).
+d. Time: Measurements taken close together in time (for example, on consecutive days) are often more similar than measurements taken far apart.
+
+e. Pseudoreplication: This is treating measurements as independent replicates when they are not, because they share the same *experimental unit*. For example, if a treatment is applied to whole fish tanks, then fish in the same tank are not independent replicates of the treatment: the tank is the unit of replication. Similarly, several measurements from the same nest box, or several nests in the same year, may share conditions that make them similar. Pseudoreplication makes the sample size look larger than it really is, and so makes p-values too small.
+
+**Homoscedasticity**: The assumption of homoscedasticity (or homogeneity of variances) states that the variability of the residuals (the spread of the data around the fitted values) should be constant across all levels of the explanatory variables. In a linear regression, you can picture this as the cloud of data points being evenly dispersed like a ribbon of constant width running along the fitted line of the regression model. A common violation is a "funnel" shape, where the spread increases as the fitted values increase. For a t-test this assumption means that we expect the spread of data to be the same for both group 1 and group 2 (note that Welch's t-test used by default in R with `t.test` relaxes this assumption).
 
 
-**Normality**: The residuals of the model are assumed to follow a normal distribution with a mean of zero. Note that it is the **residuals** that are expected to be normally distributed, **not** the actual data.
+**Normality**: The residuals of the model are assumed to follow a normal distribution with a mean of zero. Note that it is the **residuals** that are expected to be normally distributed, **not** the actual data. Estimates of means and differences are fairly robust to moderate non-normality, especially with larger samples.
 
-**No multicollinearity**: The explanatory variables should not be highly correlated with each other. High multicollinearity can cause issues with model estimation and interpretation of the coefficients. It is desirable to have explanatory variables that are moderately or weakly correlated with each other. This is normally only an issue for multiple regression models.
+## Also check for
 
-**No influential outliers**: Outliers are extreme values that have a significant impact on the estimated coefficients and can distort the model. Linear models assume that there are no influential outliers that disproportionately affect the model's results.
+Two further problems are not strictly assumptions of the model, but can make the results misleading, so they are worth checking:
+
+**Multicollinearity**: This occurs when explanatory variables are highly correlated with each other. It does not bias the estimates, but it makes them very imprecise (large standard errors) and hard to interpret, because the model cannot tell which of the correlated variables is responsible for an effect. It is desirable to have explanatory variables that are moderately or weakly correlated with each other. This is normally only an issue for multiple regression models.
+
+**Influential outliers**: Outliers are extreme values. They are a problem when they are also *influential*, meaning that they have a large effect on the estimated coefficients, so that the results depend heavily on one or a few observations. Check whether such values are errors; if they are not, report the results both with and without them rather than simply deleting them.
+
+## How to check the assumptions
+
+Most of these assumptions are checked *after* fitting the model, by looking at diagnostic plots of the residuals. You will meet these in the ANOVA chapter, where the `autoplot()` function from the `ggfortify` package draws them in one go:
+
+- **Residuals vs Fitted**: checks linearity (no curve in the points) and equal variance (no funnel shape).
+- **Normal Q-Q**: checks normality (points close to the straight line).
+- **Scale-Location**: another check of equal variance (no trend in the spread).
+- **Residuals vs Leverage**: identifies influential observations.
+
+Independence cannot be checked from these plots. It has to be judged from how the data were collected, which is why the study design matters so much.
 
 Finally, it is important to recognise that no model is perfect and that violations of assumptions are common in statistical analyses. While we strive to develop valid models, real-world data can deviate from idealised assumptions. This should not discourage us from using models; rather, it emphasises the need to fit the best model possible given the available data and circumstances. By carefully considering the assumptions and limitations of the chosen model, we can make informed decisions about its applicability and potential biases. 
 

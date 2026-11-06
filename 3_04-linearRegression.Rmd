@@ -261,14 +261,18 @@ A + ggtitle("A - total errors") + B + ggtitle("B - residual errors")
 
 ## Assumptions
 
-These models have similar assumptions to the other linear models^[t-tests, ANOVA and linear regression are all types of linear model, mathematically]. These are (1) that the relationship between the variables is linear (hence the name); (2) that the data are continuous variables; (3) that the observations are randomly sampled; (4) that the errors in the model (the "residuals") can be described by a normal distribution; and (5) and that the errors are "homoscedastic" (that they are constant through the range of the data). You can evaluate these things by looking at diagnostic plots after you have fitted the model. See page 112-113 in GSWR for a nice explanation. 
+These models have the same assumptions as the other linear models^[t-tests, ANOVA and linear regression are all types of linear model, mathematically], described in the chapter *Assumptions in linear models*: independent observations, a linear relationship, constant variance of the residuals (homoscedasticity), and normally distributed residuals. Linearity is especially important here, because the explanatory variable is continuous. You can evaluate most of these by looking at diagnostic plots after you have fitted the model (independence has to be judged from how the data were collected). See pages 112-113 in GSWR for a nice explanation. 
 
 ## Worked example: height-hand length relationship
 
 Let's now use R to fit a linear regression model to estimate the relationship between hand length and height. One application for such a model could be to predict height from a hand print, for example left at a crime scene. The data are body measurements (in cm) from a sample of people.
 
-```{block 3-04-linearRegression-5, type="do-something"}
-Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+In this chapter we use these packages (and, as always, work inside your course RStudio project):
+
+```{r 3-04-linearRegression-setup, message = FALSE}
+library(dplyr)
+library(ggplot2)
+library(ggfortify) # for autoplot()
 ```
 
 
@@ -294,13 +298,12 @@ The response variable is always the one we would like to predict,  in this case 
 mod_A <- lm(Height ~ HandLength, data = morph)
 ```
 
-Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the `autoplot` function in the `ggfortify` package (you may need to install and/or load the package).
+Before proceeding further we should evaluate the model using a diagnostic plot. We can do this using the `autoplot` function in the `ggfortify` package.
 
 ```{r 3-04-linearRegression-9,fig.width=5,fig.height=4.2,fig.align = 'center',fig.pos = "ht",message = FALSE, warning = FALSE}
-library(ggfortify)
 autoplot(mod_A)
 ```
-These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows "leverage", which measures how unusual each point's *x* value (here, hand length) is: points far from the mean hand length have high leverage and can pull the line towards them. Points that have both high leverage *and* a large residual are the ones with most influence on the model, and can mess it up. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.
+These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for linearity (a curved pattern, such as a hump, would suggest that a straight line is not a good description of the relationship) and for constant variance (homoscedasticity) along the range of the data (a funnel shape would suggest that the variance changes). In an ideal case, there should be no pattern in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows "leverage", which measures how unusual each point's *x* value (here, hand length) is: points far from the mean hand length have high leverage and can pull the line towards them. Points that have both high leverage *and* a large residual are the ones with most influence on the model, and can mess it up. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.
 
 Now that we are satisfied that the model doesn't violate the assumptions we can dig into the model to see what it is telling us. 
 
@@ -327,10 +330,10 @@ This summary has a lot of information. First we see `Call` which reminds us what
 
 Then we get to the important part of the table - the `Coefficients`. This lists the coefficients of the model and shows first the `Intercept` and then the slope, which is given by the name of the explanatory variable (`HandLength` here). For each coefficient we get the `Estimate` of its value, and the uncertainty in that estimate (the standard error (`Std. Error)).
 
-These estimates and errors are each followed by a `t value` and a p-value (`Pr(>|t|`)). These values provide a test of whether the slope/intercept is different from zero. In this case they both are. The t-tests are indeed doing t-tests of these estimates, in the same way that a regular t-test works, so that the significance depends on the ratio between signal (the estimate) and the noise (the standard error).  This is illustrated for the coefficient estimates for our model in Figure \@ref(fig:3-04-linearRegression-12).
+These estimates and errors are each followed by a `t value` and a p-value (`Pr(>|t|`)). These values provide a test of whether the slope/intercept is different from zero. Only the slope test is usually of interest. The intercept is the predicted height for a person with a hand length of 0 cm, which is far outside the range of the data (and biologically meaningless), so whether it differs from zero tells us nothing useful. The t-tests are indeed doing t-tests of these estimates, in the same way that a regular t-test works, so that the significance depends on the ratio between signal (the estimate) and the noise (the standard error).  This is illustrated for the coefficient estimates for our model in Figure \@ref(fig:3-04-linearRegression-12).
 
 
-```{r 3-04-linearRegression-12, echo=FALSE,fig.width=6,fig.height=3,fig.align='center',fig.cap="Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the mean for the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.", fig.pos = "ht"}
+```{r 3-04-linearRegression-12, echo=FALSE,fig.width=6,fig.height=3,fig.align='center',fig.cap="Illustration of the coefficient estimates for our model. The peak of the distribution is at the coefficient estimate, and the spread of the distribution indicates the standard error of the estimate. The statistical significance of the coefficient is determined by the degree of overlap with 0.", fig.pos = "ht"}
 morph <- read.csv("CourseData/morphometry.csv") %>%
   mutate(Height = Height / 10, HandLength = HandLength / 10)
 
@@ -379,15 +382,27 @@ slopePlot + interceptPlot
 ```
 
 
-The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the $\epsilon$ term in the equations at the start of this chapter). Then we are told what the $R^2$ value is `r formatC( summary(mod_A)$r.squared, digits = 4, format = "f")`. The adjusted $R^2$ is for use in multiple regression models, where there are many explanatory variables, and should not be used for this simple regression model. Multiple regression is not really a separate technique: it is the same `lm` you are using here, just with more explanatory variables added using `+` (you will meet it in the ANCOVA and model-evaluation chapters). The main extra thing to watch for is **multicollinearity** — strongly correlated explanatory variables — which is discussed in the chapter on linear model assumptions. So what does $R^2$ actually mean?
+The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the $\epsilon$ term in the equations at the start of this chapter). Then we are told what the $R^2$ value is `r formatC( summary(mod_A)$r.squared, digits = 4, format = "f")`. The adjusted $R^2$ is for use in multiple regression models, where there are many explanatory variables, and should not be used for this simple regression model. Multiple regression is not really a separate technique: it is the same `lm` you are using here, just with more explanatory variables added using `+` (you will meet it in the ANCOVA and model-evaluation chapters). The main extra thing to watch for is **multicollinearity** (strongly correlated explanatory variables), which is discussed in the chapter on linear model assumptions. So what does $R^2$ actually mean?
 
-$R^2$ is the square of the correlation coefficient $r$ and is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the $R^2$ value would be 1. This idea is illustrated in Figure \@ref(fig:3-04-linearRegression-13).
+For a simple regression like this one (with a single explanatory variable), $R^2$ is the square of the correlation coefficient $r$. More generally, it is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the $R^2$ value would be 1. This idea is illustrated in Figure \@ref(fig:3-04-linearRegression-13).
 
-We could describe the model like this:
+The most useful single number in this model is the slope: it tells us how much height changes, on average, for each extra centimetre of hand length. As well as its standard error, we should report a 95% confidence interval for it, which we get with `confint`:
 
-*There is a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001) The equation of the fitted model is: Height = `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")`) $\times$ HandLength + `r formatC(summary(mod_A)$coef[1,1], digits = 1,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[1,2], digits = 1,format = "f")`). The model explains `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 2, format = "f")`).*
+```{r 3-04-linearRegression-confint}
+confint(mod_A)
+```
 
-... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand length and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[2,3], digits = 1,format = "f")`, p < 0.001)*
+```{r 3-04-linearRegression-confint-store, echo = FALSE}
+ci_A <- confint(mod_A)
+```
+
+The slope interval is a range of plausible values for the true slope: if we repeated the study many times, 95% of intervals made this way would contain the true slope. (Ignore the intercept row, for the reason given above.)
+
+We could describe the model like this, leading with the estimate and putting the test in brackets:
+
+*Height increased by `r formatC(coef(mod_A)[2], digits = 2, format = "f")` cm for each additional centimetre of hand length (95% CI `r formatC(ci_A[2, 1], digits = 2, format = "f")` to `r formatC(ci_A[2, 2], digits = 2, format = "f")` cm; F = `r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`, d.f. = `r anova(mod_A)$Df[1]` and `r anova(mod_A)$Df[2]`, p < 0.001). The fitted line is Height (cm) = `r formatC(coef(mod_A)[1], digits = 1, format = "f")` + `r formatC(coef(mod_A)[2], digits = 2, format = "f")` × hand length (cm), and the model explains `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 2, format = "f")`).*
+
+Giving the equation is useful if readers might want to use the model to make predictions.
 
 
 ```{r 3-04-linearRegression-13, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}
@@ -491,7 +506,21 @@ predict(mod_A, newdata = new20, interval = "prediction")
 **How they are calculated.** Both are the predicted value ± *t* × a standard error (*t* ≈ 1.98 here, with `r df.residual(mod_A)` d.f.). For the CI the standard error is just the uncertainty in the line at that hand length, SE~fit~ (`r formatC(se20, digits = 2, format = "f")` cm here; `predict(..., se.fit = TRUE)` shows it). For the PI it is $\sqrt{SE_{fit}^2 + \hat\sigma^2}$, where $\hat\sigma$ is the residual standard error from `summary()` (`r formatC(sig_A, digits = 2, format = "f")` cm). Because $\hat\sigma$ is so much bigger than SE~fit~, it dominates the PI. Both intervals are narrowest at the mean hand length and widen towards the ends of the data.
 :::
 
-**Question:** If police find a hand print at a crime scene with a hand length of 20cm, what is your best guess of the height of the person involved?
+**Question:** If police find a hand print at a crime scene with a hand length of 20cm, what is your best guess of the height of the person involved? What range of heights would you give the police, and which of the two intervals above is the right one to use?
+
+```{r 3-04-linearRegression-sex, echo = FALSE}
+mod_sex <- lm(Height ~ HandLength + Sex, data = morph)
+```
+
+::: {.advanced-box data-latex=""}
+**A warning: a hidden variable (sex)**
+
+These data include both men and women. On average, men are taller *and* have longer hands than women. Some of the relationship between hand length and height in our model is therefore really a difference between the sexes: the men's points sit towards the top right of the plot and the women's towards the bottom left, which makes the overall line steeper.
+
+If we include sex in the model (`lm(Height ~ HandLength + Sex)`, a model you will meet in the ANCOVA chapter), the estimated slope *within* each sex is `r formatC(coef(mod_sex)["HandLength"], digits = 1, format = "f")` cm per cm of hand length, compared with `r formatC(coef(mod_A)[2], digits = 1, format = "f")` cm per cm when sex is ignored. Neither model is "wrong", but they answer different questions. For the crime-scene problem, if we knew the sex of the person who left the hand print, the model including sex would give a better prediction.
+
+This is a general point: when an important variable is left out of a model, the estimated effect of the variables that *are* included can be misleading. Always think about what else might be driving a relationship.
+:::
 
 
 ## Exercise: Chirping crickets

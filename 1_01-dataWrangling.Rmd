@@ -38,11 +38,13 @@ sduBirds <- select(sduBirds, species, Year, Day, boxNumber, nEggs)
 head(sduBirds)
 ```
 
-The output of `head` shows you the first few rows of the data set. Each row represents a visit to a particular nest. The researcher records the bird species if it is known (GT = Great tit, BT = Blue tit, NH = Nuthatch etc.), and then records the number of eggs, number of chicks, activity of the adults and so on. We need to convert this large dataset into one that contains clutch size for each nest, for each year of the study. 
+The output of `head` shows you the first few rows of the data set. Each row represents a visit to a particular nest. The researcher records the bird species if it is known (GT = great tit, BT = blue tit, MT = marsh tit, NH = nuthatch, WR = wren), and then records the number of eggs, number of chicks, activity of the adults and so on. We need to convert this large dataset into one that contains clutch size for each nest, for each year of the study. 
 
 The information given by `str` (above) shows that there are data on species other than our target species. We are only interested in the great tits and blue tits so we can first filter the others out using the `species` variable. 
 
 We can check the make-up of this part of the data using the `table` function, which counts the entries.
+
+Note that the species is not recorded on every visit (for example, before the adults have been seen), so many rows have `NA` for `species`. When we filter by species below, those visits are dropped, including some on which eggs were counted. For a few nests this means the clutch size we calculate is lower than the true one. That is fine for learning the `dplyr` verbs, but it is a good example of why you should always ask what a filter removes.
 
 ```{r 1-01-dataWrangling-4}
 table(sduBirds$species)
@@ -103,7 +105,7 @@ So both species lay the same maximum number of eggs, but maybe this is just caus
 
 How can we calculate the average? We cannot simply ask for the `mean` because the data run through time following the development in each nest. We need to calculate the maximum `nEggs` for each nest, and then calculate the average of those. We can do this in two steps. 
 
-We calculate the clutch size as the maximum (`max`) number of eggs in each box, for each species, in each year. A warning message appears because R attempts to calculate the maximum number of eggs for all combinations of species, year, and box number, but some of these combinations contain no data (i.e., all `NA` values), making it impossible to compute a maximum. This warning can be safely ignored in this case.
+We calculate the clutch size as the maximum (`max`) number of eggs in each box, for each species, in each year. A warning message appears because R attempts to calculate the maximum number of eggs for all combinations of species, year, and box number, but some of these combinations contain no data (i.e., all `NA` values), making it impossible to compute a maximum. In those cases `max()` returns `-Inf` (minus infinity). This warning can be safely ignored here, because the `filter(clutchSize > 0)` step below removes those rows.
 
 ```{r 1-01-dataWrangling-10}
 sduBirds <- group_by(sduBirds, species, Year, boxNumber)
@@ -162,28 +164,28 @@ points(sduBirds2$Year[sduBirds2$species == "GT"],
 )
 ```
 
-So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have larger clutch sizes than great tits.
+So it looks like the clutch size varies a fair amount from year to year, but that generally blue tits have larger clutch sizes than great tits. (There are no data for 2015, so the lines joining 2014 and 2016 do not show what happened in that year.)
 
-This approach of using `group_by` followed by `summarise` can be used to summarise data in many different ways: maximum or minimum value (`max` or `min`), variance or standard deviation (`var` or `sd`), quantiles such as the 10% or 50% quantile (see the section on **Distributions** below) (`quantile`), cumulative sums (`cumsum`) or counts (`n` or `length`) and so on.
+This approach of using `group_by` followed by `summarise` can be used to summarise data in many different ways: maximum or minimum value (`max` or `min`), variance or standard deviation (`var` or `sd`), quantiles such as the 10% or 50% quantile (`quantile`; see the *Distributions and summarising data* chapter), or counts (`n` or `length`) and so on.
 
 <!-- table -->
 
 ```{r 1-01-dataWrangling-17, results = "asis", echo = FALSE}
 my_data <- data.frame(
   Command = c("min(x)", "max(x)", "n()", "length(x)", "var(x)", "sd(x)", "quantile(x,y)"),
-  What = c("minimum value", "maximum value", "number of records, see ?n", "number of records", "variance", "std. devation","a quantile, e.g. quantile(x, 0.25)"))
+  What = c("minimum value", "maximum value", "number of records, see ?n", "number of records", "variance", "std. deviation","a quantile, e.g. quantile(x, 0.25)"))
 
 knitr::kable(my_data)
 ```
 
 
 
-## Using pipes, saving data.
+## Using pipes, saving data
 
 I have walked you through a step-by-step data manipulation. During that process you made (and replaced) new data sets at each step. In practice this can be done more smoothly using *pipes* (`%>%`) to pass the result of one function into the next, and the next, and the next...
 
 You'll get more practice with this as we go on.
-Below I show how to do this to create a clutch size data set from the raw data (note that your file path will differ from mine):
+Below I show how to do this to create a clutch size data set from the raw data:
 
 ```{r 1-01-dataWrangling-18}
 # Import and process data using pipes
@@ -197,7 +199,7 @@ SDUClutchSize <- read.csv("CourseData/sduBirds.csv") %>%
 head(SDUClutchSize)
 ```
 
-You can save this out using the `write.csv` function. You will need to set the argument `row.names = FALSE` to stop the data including row names.
+You can save this out using the `write.csv` function. You will need to set the argument `row.names = FALSE` to stop the data including row names. We save it in `CourseData` because the *Visualising data* chapter reads it from there. Note that this is a new, *derived* file: never overwrite your raw data files (here, `sduBirds.csv`).
 
 ```{r 1-01-dataWrangling-19}
 write.csv(
@@ -211,10 +213,11 @@ write.csv(
 In this exercise the aim is to use the "Amniote Life History Database" ^[See [https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1](https://esajournals.onlinelibrary.wiley.com/doi/10.1890/15-0846R.1)] to investigate some questions about life history evolution.
 
 The questions are:
-(1) what are the records and typical life spans in different taxonomic classes? [*what is the longest, shortest and median life span in birds, mammals and reptiles?*]
-(2) is there a positive relationship between body mass and life span? [*do big species live longer than small ones?*]; 
-(3) is there a trade-off between reproductive effort and life span? [*do species that reproduce a lot have short lives, so there is a negative relationship between reproduction and life span?*]; 
-(4) is this trade-off universal across all Classes? [*does the trade-off exist in birds, mammals and reptiles?*]
+
+1. What are the records and typical life spans in different taxonomic classes? [*What is the longest, shortest and median life span in birds, mammals and reptiles?*]
+2. Is there a positive relationship between body mass and life span? [*Do big species live longer than small ones?*]
+3. Is there a trade-off between reproductive effort and life span? [*Do species that reproduce a lot have short lives, so there is a negative relationship between reproduction and life span?*]
+4. Is this trade-off universal across all classes? [*Does the trade-off exist in birds, mammals and reptiles?*]
 
 The database is in a file called `Amniote_Database_Aug_2015.csv` in the course data folder. The missing values (which are normally coded as `NA` in R) are coded as "`-999`". The easiest way to take care of this is to specify this when we import the data using the `na.strings` argument of the `read.csv` function. Thus we can import the data like this:
 
@@ -237,17 +240,17 @@ Use `mutate` and `paste` to convert the `species` column to a *Genus_species* by
 
 4. What is the longest living species in the record? Use `arrange` to sort the data from longest to shortest longevity (`longevity_y`), and then look at the top of the file using `head` to find out. (hint: you will need to use reverse sort (`-`)). Cut and paste the species name into Google to find out more!
 
-5. Do the same thing but this time find the shortest lived species.
+5. Do the same thing but this time find the shortest lived species. Is this result plausible? What might have gone wrong?
 
 6. Use `summarise` and `group_by` to make a table summarising `min`, `median` and `max` life spans (`longevity_y`) for the three taxonomic classes in the database. Remember that you need to tell R to remove the `NA` values using a `na.rm = TRUE` argument.
 
-7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what would the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
+7. Body size is thought to be associated with life span. Let's treat that as a hypothesis and test it graphically. Sketch what the graph would look like if the hypothesis were true, and if it was false. Plot `adult_body_mass_g` vs. `longevity_y` (using base R graphics). You should notice that this looks a bit messy.
 
 8. Use `mutate` to create new `log`-transformed variables, `logMass` and `logLongevity`. Use these to make a "log-log" plot. You should see that makes the relationship more linear, and easier to "read".
 
-9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what would the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of number of litters/clutches per year multiplied by the number of babies in each litter/clutch . Then plot `logOffspring` vs. `logLongevity`.
+9. Is there a trade-off between reproductive effort and life span? Think about this as a hypothesis - sketch what the graph would look like if that were true, and if it was false. Now use the data to test that hypothesis: Use `mutate` to create a variable called `logOffspring` which is the logarithm of (number of litters/clutches per year × number of babies in each litter/clutch), i.e. `log(litters_or_clutches_per_y * litter_or_clutch_size_n)`. Then plot `logOffspring` vs. `logLongevity`.
 
-10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationships holds universally. 
+10. To answer the final question (differences between taxonomic classes) you could now use `filter` to subset to particular classes and repeat the plot to see whether the relationship holds universally. 
 
 
 Remember that if you struggle you can check back to previous work where you have used `dplyr` commands to manipulate data in a similar way. If you get truly stuck, ask for help from instructors or fellow students.

@@ -14,33 +14,39 @@ Before setting out to run an experiment or an observational study it is natural 
 
 Similar questions are also relevant **after** running an experiment. For example, imagine you have run an experiment that failed to find a significant effect of your treatment. There are two explanations for this finding: (i) there really is no effect of your treatment; (ii) there **is** an effect of your treatment but you did not have enough power to detect it. So the question arises: "what difference **could** you have detected, based on the results you have?" The answer could be "*Based on my experiment I can see that if there **is** really a difference it must be smaller than $X$*" and/or "I would need to increase my sample size to X to detect a difference if the difference is $Y$".
 
+```{block 3-10-Power-Analysis-observed, type="do-something"}
+**Avoid "observed power".** It can be tempting, after a non-significant result, to calculate the power of your study using the effect size you actually observed. This "observed" (or "post hoc") power tells you nothing new: it is simply a re-expression of your p-value (a non-significant result always has low observed power). The useful questions are the ones above: what effect size *could* the study have detected, or what sample size would be needed to detect an effect of a size that matters biologically? The confidence interval for the difference is also very helpful here, because it shows the range of effect sizes that are compatible with your data.
+```
+
 These types of questions are closely related to the two types of error that one can make when testing hypotheses:
 
 * A **Type I** error is the rejection of a true null hypothesis. For example, when there truly is no effect of an experimental treatment, but you detect one in error.
 * A **Type II** error is the failure to reject a false null hypothesis. For example, when there truly is an effect of an experimental treatment, but you fail to detect it.^[To remember this, think of the story about "*the boy who cried wolf*". First the villagers believe the boy when there was no wolf (Type I error). Second, the villagers don't believe the boy but there IS a wolf (Type II error).]
 
-The probability of making these errors depends on the **statistical power** of your study. Statistical power ranges between 0 and 1 and, for a simple hypothesis test, it is defined as **the probability that the test rejects the null hypothesis ($H_0$) when the alternative hypothesis ($H_1$) is true**. In other words it is the probability of NOT making a Type II error. 
+The probability of making a Type I error is set by the significance criterion ($\alpha$) that you choose: if you use $\alpha = 0.05$, then when the null hypothesis is true you will wrongly reject it 5% of the time. The probability of making a Type II error depends on the **statistical power** of your study. Statistical power ranges between 0 and 1 and, for a simple hypothesis test, it is defined as **the probability that the test rejects the null hypothesis ($H_0$) when the alternative hypothesis ($H_1$) is true**. In other words it is the probability of NOT making a Type II error. 
 
 For example, a power of 0.80 means that you have an 80% chance of correctly detecting that $H_1$ is true and a 20% chance (1.0 - 0.8 = 0.2) of making a Type II error. As power decreases, the probability of making a Type II error increases.
 
 ## What determines statistical power?
 
-Statistical power is determined by several factors including the actual effect size, the natural variation in the effect size, the sample size in the study, and the (arbitrary) criterion you have chosen for significance:
+Statistical power is determined by several factors including the actual effect size, the natural variation in the data, the sample size in the study, and the (arbitrary) criterion you have chosen for significance:
 
 1) The **magnitude of the actual effect** of interest. If the effect under investigation is very small then it will be harder to detect (i.e. the power to detect it will be small).
 2) **Variation**. Variation in the data introduces noise into the statistical test. Where there is large amounts of natural variation it is harder to detect significant effects (i.e. the power to detect it will be reduced). 
 3) The **sample size**. Larger sample sizes reduce the amount of *sampling error* and therefore reduce the amount of "noise" in the data. Therefore large sample sizes increase power to detect a difference between groups.
-4) Sampling error can be reduced by improving the precision of measurements. Therefore power can also be increased by improving measurement precision.
-5) The **significance criterion**. We normally use p = 0.05, but this is arbitrary. We could increase the power of the statistical test by using a more relaxed criterion e.g. p = 0.10.
+4) **Measurement precision**. Measurement error adds noise to the data, so power can also be increased by improving the precision of measurements.
+5) The **significance criterion** ($\alpha$). We normally use $\alpha = 0.05$, but this is arbitrary. We could increase the power of the statistical test by using a more relaxed criterion, e.g. $\alpha = 0.10$, but this comes at a cost: it also increases the probability of a Type I error.
 
-There are several ways to estimate statistical power, required sample sizes etc. In this chapter we will look at one of them -- power analysis by simulation. This is best communicated using a simple example.
+There are several ways to estimate statistical power, required sample sizes etc. In this chapter we will look at one of them: power analysis by simulation. This is best communicated using a simple example.
 
-## An example of calculating statistical power. 
+## An example of calculating statistical power
 
-In an experiment, researchers would like to test a hypothesis that a high protein diet increases the size of adult insects from a pest species. Previous work has shown that the average size on a normal diet is 12mm with a standard deviation of 3mm. 
+In an experiment, researchers would like to test a hypothesis that a high protein diet increases the size of adult insects from a pest species. Previous work has shown that the average size on a normal diet is 12 mm with a standard deviation of 3 mm. 
 
-```{block 3-10-Power-Analysis-1, type="do-something"}
-Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+In this chapter we use this package (and, as always, work inside your course RStudio project):
+
+```{r 3-10-Power-Analysis-setup, message = FALSE}
+library(ggplot2)
 ```
 
 
@@ -50,9 +56,9 @@ We can simulate a distribution of measurements from this distribution using the 
 set.seed(42)
 (control <- rnorm(n = 10, mean = 12, sd = 3))
 ```
-Because this is a random process your results will be different (and they will be different each time you run the code).
+Because this is a random process your results will be different (and they will be different each time you run the code). If you want to get the same random numbers each time, for example to make your work reproducible, you can first set the random number "seed" with `set.seed()` (e.g. `set.seed(42)`).
 
-Suppose that other studies on a different species has shown that a high protein diet leads to a 20% increase in size. This means that we expect our treatment group to have a body length of 12 $\times$ 1.2 = 14.4mm. If we assume the standard deviation will be the same, we can simulate a distribution for a high protein treatment group in the same way as for the control group:
+Suppose that other studies on a different species have shown that a high protein diet leads to a 20% increase in size. This means that we expect our treatment group to have a body length of 12 $\times$ 1.2 = 14.4 mm. If we assume the standard deviation will be the same, we can simulate a distribution for a high protein treatment group in the same way as for the control group:
 
 ```{r 3-10-Power-Analysis-3,echo = -1,cache=TRUE}
 set.seed(142)
@@ -126,7 +132,13 @@ I can now ask how many of the p-values stored in `powerResults` were less than 0
 sum(powerResults < 0.05)
 ```
 
-So in this case, `r sum(powerResults<0.05)` of the 1000 tests were correct. The statistical power can be calculated by turning this into a percentage - i.e. Power = `r (sum(powerResults<0.05)/1000)*100`%.
+So in this case, `r sum(powerResults<0.05)` of the 1000 tests detected the difference. The statistical power can be calculated by turning this into a percentage, i.e. Power = `r (sum(powerResults<0.05)/1000)*100`%.
+
+A handy shortcut is to take the mean of the TRUE/FALSE values. R treats TRUE as 1 and FALSE as 0, so the mean is the proportion of tests that were significant, which is the power:
+
+```{r 3-10-Power-Analysis-mean}
+mean(powerResults < 0.05)
+```
 
 We can ask what sample size do we need to get a better power, e.g. 90%, by increasing sample size incrementally. For example, here I increase sample size to 15: 
 
@@ -160,18 +172,13 @@ The power has increased to `r (sum(powerResults<0.05)/1000)*100`%.
 3) What power would you have if the difference between groups was only 10% instead of 20%?
 
 
-## Summary
-
-Simulation can be a powerful tool to help design and understand the results of hypothesis-based studies. The example above focuses on data that are normally distributed and where the test involved is a t-test. However, the same principles apply for other types of data. One can adapt the approach to use different distributions e.g. `rpois` for Poisson or `rbinom` for binomial. One can also alter the tests being done. This case study used a `t.test` but one could alternatively simulate the results of other ordinary linear models with `lm` or GLMs with `glm`.
-
-
 ## Power for other models
 
-The simulation approach is not limited to t-tests and normally distributed data. Because we are simply generating fake data and running the analysis many times, we can use *any* combination of data type and test — we just change the function that generates the data and the model we fit. Here are two more examples: one for a binomial GLM, and one for linear regression.
+The simulation approach is not limited to t-tests and normally distributed data. Because we are simply generating fake data and running the analysis many times, we can use *any* combination of data type and test: we just change the function that generates the data and the model we fit. Here are two more examples: one for a binomial GLM, and one for linear regression.
 
 ### A binomial GLM
 
-To illustrate, here is the same idea applied to **binary (survival) data** analysed with a binomial GLM — exactly the kind of model you met in the GLM chapters.
+To illustrate, here is the same idea applied to **binary (survival) data** analysed with a binomial GLM, exactly the kind of model you met in the GLM chapters.
 
 Imagine we are planning an experiment to test whether a treatment improves survival. Suppose that, without treatment, half of the individuals survive (a probability of 0.5), and we would like to be able to detect an increase to 0.7. Instead of drawing from a normal distribution with `rnorm`, we now generate 0/1 survival data with `rbinom`, fit a binomial GLM, and extract the p-value for the treatment effect:
 
@@ -191,13 +198,13 @@ powerResults <- replicate(1000, {
 
   # Fit a binomial GLM and get the p-value for the treatment effect
   mod <- glm(survival ~ treatment, family = binomial)
-  anova(mod, test = "Chi")[["Pr(>Chi)"]][2]
+  anova(mod, test = "Chisq")[["Pr(>Chi)"]][2]
 })
 
 (sum(powerResults < 0.05) / 1000) * 100
 ```
 
-At 40 individuals per group the power is about `r round(sum(powerResults<0.05)/10)`% — well short of the usual 80% target. Binary (0/1) outcomes carry less information than continuous measurements, so you typically need larger samples to detect a difference in *proportions* than a difference in means. Just as with the t-test example, you could now increase `sampleSize` until the power reaches your target. The important message is that the *recipe* stays the same whatever the data: simulate data, run the test, and count how often it is significant. Only the random-number function (`rnorm`, `rbinom`, `rpois`, …) and the choice of test need to change.
+At 40 individuals per group the power is about `r round(sum(powerResults<0.05)/10)`%, well short of the usual 80% target. Binary (0/1) outcomes carry less information than continuous measurements, so you typically need larger samples to detect a difference in *proportions* than a difference in means. Just as with the t-test example, you could now increase `sampleSize` until the power reaches your target. The important message is that the *recipe* stays the same whatever the data: simulate data, run the test, and count how often it is significant. Only the random-number function (`rnorm`, `rbinom`, `rpois`, …) and the choice of test need to change.
 
 ### A linear regression
 
@@ -222,7 +229,7 @@ powerResults <- replicate(1000, {
 (sum(powerResults < 0.05) / 1000) * 100
 ```
 
-This gives a power of about `r round(sum(powerResults<0.05)/10)`% — so with this design we would miss a real effect a fair fraction of the time.
+This gives a power of about `r round(sum(powerResults<0.05)/10)`%, so with this design we would miss a real effect a fair fraction of the time.
 
 So far this is just the familiar recipe. But regression has an extra lever that the t-test does not, and it is easy to miss. **The power to detect a slope also depends on how widely you spread your predictor values.** Keeping the slope, the noise, and the sample size *exactly* the same, watch what happens if we sample `x` across a much wider range:
 
@@ -242,17 +249,17 @@ powerResults <- replicate(1000, {
 
 The power jumps to about `r round(sum(powerResults<0.05)/10)`%, even though the slope, the residual noise, and the sample size are unchanged. A slope is estimated more precisely when the predictor is spread out: the wider the range of `x`, the more leverage the data have to pin down the line.
 
-This is a genuinely useful design principle. Whenever you have control over your predictor — experimental doses, incubation temperatures, sites along an environmental gradient — you will get more power for the same effort by spreading those values across a wide range rather than clustering them in the middle. (The caveat is that this assumes the relationship really *is* linear across that range; spreading `x` so far that the relationship starts to curve would create a different problem.)
+This is a genuinely useful design principle. Whenever you have control over your predictor (experimental doses, incubation temperatures, sites along an environmental gradient), you will get more power for the same effort by spreading those values across a wide range rather than clustering them in the middle. (The caveat is that this assumes the relationship really *is* linear across that range; spreading `x` so far that the relationship starts to curve would create a different problem.)
 
 ## Extending the simulation (optional, advanced)
 
 
 
 ```{block 3-10-Power-Analysis-12, type="do-something"}
-This section is for illustration only. It is intended to show the utility of using R to quickly address experimental design questions but it goes beyond what you are expected to learn.I hope you find it interesting nevertheless. To this you will need to add the `purrr` library (using `install.packages("purrr")`). This package includes a useful function, `map_dbl`, which allows you to repeatedly apply functions over many different input values. I use the double colon (`::`) notation like this `purrr::map_dbl` to use this function without the need to load the whole package.
+This section is for illustration only. It is intended to show the utility of using R to quickly address experimental design questions but it goes beyond what you are expected to learn. I hope you find it interesting nevertheless. It uses the base R function `sapply`, which applies a function to each value in a vector and collects the results.
 ```
 
-One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) using by turning the calculations of the t-test into a function, and then applying that function over a range of values. 
+One can extend the simulation to cover a range of sample sizes (or differences between treatments, or standard deviations etc.) by turning the calculations of the t-test into a function, and then applying that function over a range of values. 
 
 I illustrate this below by varying sample size between 5 and 40.
 
@@ -278,9 +285,9 @@ pwr <- function(n) {
   ) < 0.05) / 1000
 }
 
-# map_dbl applying the function for every value of
+# sapply applies the function to every value of
 # simulData$sampleSize
-simulData$Power <- purrr::map_dbl(simulData$sampleSize, pwr)
+simulData$Power <- sapply(simulData$sampleSize, pwr)
 ```
 These results can then be graphed with `ggplot`.
 
@@ -291,6 +298,10 @@ ggplot(simulData, aes(x = sampleSize, y = Power)) +
   geom_line() +
   geom_hline(yintercept = 0.8, linetype = "dashed")
 ```
+
+## Summary
+
+Simulation is a powerful tool to help design studies and to understand their results. The recipe is always the same: (1) decide on realistic values for the effect you hope to detect and the variation you expect, based on previous work or pilot data; (2) simulate data with those properties; (3) analyse the simulated data with the test or model you plan to use; and (4) repeat many times and count how often the result is significant. Only the random-number function (`rnorm`, `rbinom`, `rpois`, ...) and the analysis (`t.test`, `lm`, `glm`, ...) need to change. You can then vary the sample size (or the design, such as the spread of predictor values) until the power reaches your target, usually 80%.
 
 ## Exercise 1: Snails on the move
 
@@ -305,8 +316,8 @@ For your masters project you hypothesise that the boring snail will cover more d
 
 Previous work on grey mouse lemurs (*Microcebus murinus*) has found that they are quite strong. They can lift and hold 10 times their own body weight!^[Thomas, P., Pouydebat, E., Brazidec, M., Aujard, F., & Herrel, A. (2015). Determinants of pull strength in captive grey mouse lemurs Journal of Zoology DOI: 10.1111/jzo.12292]
 
-This work was done on prime-age animals. Researchers believe that older individuals will have experienced physiological senescence and that their strength will have deteriorated. The body weight of these lemurs is about 60grams. The prime-age animals could lift and hold 600grams with a standard deviation of 145grams. 
+This work was done on prime-age animals. Researchers believe that older individuals will have experienced physiological senescence and that their strength will have deteriorated. The body weight of these lemurs is about 60 g. The prime-age animals could lift and hold 600 g with a standard deviation of 145 g. 
 
-A research institute has agreed to you carrying out this study for your masters project. They have 25 young age lemurs, but only have 8 old aged animals. You can assume the standard deviation is the same in both age classes.
+A research institute has agreed to you carrying out this study for your masters project. They have 25 prime-age lemurs, but only 8 old animals. You can assume the standard deviation is the same in both age classes.
 
-**What difference in strength could you reliably detect (with power >80%) with these sample sizes?**
+**What difference in strength could you reliably detect (with power >80%) with these sample sizes?**^[A senescent decline in grip strength has since been demonstrated in grey mouse lemurs, both in captivity and in the wild: Hämäläinen, A., Dammhahn, M., Aujard, F., & Kraus, C. (2015). Losing grip: Senescent decline in physical strength in a small-bodied primate in captivity and in the wild. *Experimental Gerontology*, 61, 54-61.]

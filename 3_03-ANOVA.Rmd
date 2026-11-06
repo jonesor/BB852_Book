@@ -80,10 +80,15 @@ After figuring out if at least one of the groups is significantly different from
 
 ## Fitting an ANOVA in R
 
-New coffee machines use "pods" to make espresso. These have become much more popular than traditional "bar machines". This data looks at the amount of "crema" or foam produced (a sign of quality) using three methods: bar machines (BM), Hyper Espresso Pods (HIP) and Illy Espresso System (IES). Are any of these methods better than the others?
+New coffee machines use capsules ("pods") to make espresso. These have become much more popular than traditional "bar machines". These data, from an experiment by Parenti et al. (2014)^[Parenti, A., Guerrini, L., Masella, P., Spinelli, S., Calamai, L. & Spugnoli, P. (2014) Comparison of espresso coffee brewing techniques. *Journal of Food Engineering* 121: 112-117.], look at the amount of "crema" or foam produced (a sign of quality, measured as a foam index in %) using three methods: a traditional bar machine (BM) and two capsule systems, the Hyper-Espresso Method (HIP) and the I-Espresso System (IES). Are any of these methods better than the others?
 
-```{block 3-03-ANOVA-3, type="do-something"}
-Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+In this chapter we use these packages (and, as always, work inside your course RStudio project):
+
+```{r 3-03-ANOVA-setup, message = FALSE}
+library(dplyr)
+library(ggplot2)
+library(ggfortify) # for autoplot(); install.packages("ggfortify") if needed
+library(agricolae) # for HSD.test(); install.packages("agricolae") if needed
 ```
 
 
@@ -99,8 +104,9 @@ head(espresso)
 ```{r 3-03-ANOVA-5, echo=-1,fig.width=4,fig.height=3,fig.align='center', fig.cap="A box and whisker plot, with jittered points, for the espresso foam data.",cache=TRUE}
 set.seed(43)
 (ggplot(espresso, aes(x = method, y = foamIndx)) +
-  geom_boxplot() +
-  geom_jitter(width = 0.2))
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.1, height = 0) +
+  ylab("Foam index (%)"))
 ```
 
 You can see in Figure \@ref(fig:3-03-ANOVA-5) that the categorical explanatory variable ("method") defines the three treatment groups and has the three levels representing the different coffee types: BM, HIP and IES.
@@ -111,16 +117,18 @@ Let's first fit the ANOVA using R. One way ANOVAs are fitted using the `lm` func
 foam_mod <- lm(foamIndx ~ method, data = espresso)
 ```
 
-Before proceeding, we need to check the assumptions of the model. This can be done visually using the `autoplot` function in the `ggfortify` package. If you don't have the package installed, install it now (`install.packages("ggfortify")`). 
+Before proceeding, we need to check the assumptions of the model (see the chapter *Assumptions in linear models*). This can be done visually using the `autoplot` function in the `ggfortify` package.
 
-```{r 3-03-ANOVA-7, echo=TRUE,fig.width=5,fig.height=4,fig.align='center', fig.cap="Diagnostic plots for the ANOVA model. This looks great.",message = FALSE, warning = FALSE}
-library(ggfortify)
+```{r 3-03-ANOVA-7, echo=TRUE,fig.width=5,fig.height=4,fig.align='center', fig.cap="Diagnostic plots for the ANOVA model.",message = FALSE, warning = FALSE}
 autoplot(foam_mod)
 ```
 
-The main thing to look at here in Figure \@ref(fig:3-03-ANOVA-7) is the "Q-Q" plot on the top right. We want those points to be approximately along the line. If that is the case, then it tells us that the model's residuals are normally distributed (this is one of the assumptions of ANOVA). We may cover these diagnostic plots more thoroughly later. You can find more details on pages 112-113 of the Beckerman et al textbook, or at the following if you are interested: [https://data.library.virginia.edu/diagnostic-plots/](https://data.library.virginia.edu/diagnostic-plots/).
+For an ANOVA, the two most important plots in Figure \@ref(fig:3-03-ANOVA-7) are:
 
-Trust me, everything here looks great.
+- **Normal Q-Q** (top right): we want the points to lie approximately along the line. If they do, the model's residuals are approximately normally distributed.
+- **Residuals vs Fitted** (top left) and **Scale-Location** (bottom left): with one categorical explanatory variable, the points form one vertical column per group (here, three columns, one at each group mean). We want the columns to have a similar spread (equal variance). A column that is much more spread out than the others would suggest unequal variances.
+
+Here the points in the Q-Q plot lie close to the line, with no strong curve, and the three columns of residuals have a broadly similar spread, so the assumptions look reasonable. (With only nine observations per group, we should not expect the plots to look perfect.) You can find more details on pages 112-113 of the Beckerman et al textbook, or at [https://data.library.virginia.edu/diagnostic-plots/](https://data.library.virginia.edu/diagnostic-plots/).
 
 Now let's evaluate our ANOVA model. We do this using two functions: `anova` and `summary` (it sounds strange, but yes we do use a function called `anova` on our ANOVA model).
 
@@ -141,11 +149,11 @@ In this case, the F-value is  `r formatC(x$"F value"[1], digits = 3, format = "f
 
 As with the t-test, R compares this value to a theoretical distribution (a "table"), based on *two* degrees of freedom. The first one is number of groups minus one, i.e. `r formatC(x$Df[1], digits = 3, format = "f")` in this case. The second one is the overall sample size, minus the number of groups, i.e.  `r formatC(x$Df[2], digits = 3, format = "f")`, in this case. 
 
-This results in a p-value of `r formatC(x$"Pr(>F)"[1], digits = 10, format = "f")` (very highly significant!). 
+This results in a very small p-value (p = `r signif(x$"Pr(>F)"[1], 2)`).
 
-Based on this p-value we can reject the null hypothesis that there is no difference between groups. We might report this simple result like this:
+Based on this p-value we can reject the null hypothesis that the mean foam index is the same for all three methods. This tells us only that *at least one* mean differs; we still need to find out which, and by how much (see below). The overall result could be reported like this:
 
-*The foam index varied significantly among groups (ANOVA: F = `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p = `r formatC(x$"Pr(>F)"[1], digits = 3, format = "f")`).*
+*The mean foam index differed among the three brewing methods (ANOVA: F = `r formatC(x$"F value"[1], digits = 2, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p < 0.001).*
 
 ### Where are the differences?
 
@@ -174,7 +182,7 @@ Look at the coefficients of the model. Remember that you have three levels in yo
 
 The "missing" group is the first one alphabetically (i.e. BM). The estimate (of the mean) for this group is labelled "`(Intercept)`" (with a value of `r formatC(foam_mod$coefficients[1], digits = 2, format = "f")`). This is like a baseline or reference value, and the estimates for the other groups (HIP and IES), are *differences* between this baseline value and the estimated mean for those groups. In other words, the second group (HIP) is `r foam_mod$coefficients[2]` more than `r foam_mod$coefficients[1]` (`r foam_mod$coefficients[1]` + `r foam_mod$coefficients[2]` = `r sum(foam_mod$coefficients[1:2])`). Similarly, the third group (IES) is `r foam_mod$coefficients[3]` more than `r foam_mod$coefficients[1]` (`r foam_mod$coefficients[1]` + `r foam_mod$coefficients[3]` = `r sum(foam_mod$coefficients[c(1,3)])`). Compare these values with the ones you got above using `summarise` - they should be the same. 
 
-This is illustrated in Figure \@ref(fig:3-03-ANOVA-7)A. You can see that the coefficients of the model are the same as the lengths of the arrows that run from 0 (for the first level of method (BM), the Intercept) or *from* this reference value. It is often a good idea to sketch something like this on paper when you are trying to understand your model outputs!
+This is illustrated in Figure \@ref(fig:3-03-ANOVA-14)A. You can see that the coefficients of the model are the same as the lengths of the arrows that run from 0 (for the first level of method (BM), the Intercept) or *from* this reference value. It is often a good idea to sketch something like this on paper when you are trying to understand your model outputs!
 
 <!---
 Source: A. Parenti, L. Guerrini, P. Masella, S. Spinelli, L. Calamai,
@@ -263,28 +271,34 @@ A + ggtitle("A - default,\nBM reference") + B + ggtitle("B - releveled,\nHIP ref
 ```
 
 
-So, from the first of the model outputs above you can say that BM is significantly different than HIP (t= 7.248, p < 0.0001), but that BM is not significantly different from IES (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP is significantly different from IES (t=-5.417, p < 0.0001). You could write this into the main text, include the information in a figure caption (i.e. add it to the figure). 
+So, from the first of the model outputs above you can see that HIP produced more foam than BM (t = 7.248, p < 0.0001), but that the difference between BM and IES was less clear (t = 1.831, p = 0.0796). Then, from the second one you can see that HIP produced more foam than IES (t = -5.417, p < 0.0001).
 
-e.g. *The foam index varied significantly among groups (ANOVA: F = `r formatC(x$"F value"[1], digits = 3, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p = `r formatC(x$"Pr(>F)"[1], digits = 3, format = "f")`). The pairwise comparisons in the ANOVA model showed that means of BM and HIP were significantly different (t= 7.248, p < 0.0001), as were those of HIP and IES (t=-5.417, p < 0.0001), but the BM-IES comparison showed no significant difference (t= 1.831, p= 0.0796)*.
+Be careful, though: these are **unadjusted** comparisons. Each p-value is calculated as though it were the only test we were doing. When we make several comparisons, the chance that at least one of them is "significant" just by chance increases. With three groups this is a small problem, but with more groups it becomes a serious one. The usual solution is a **post-hoc multiple comparison** test such as Tukey's, which adjusts for the number of comparisons.
 
 ### Tukey's Honestly Significant Difference (HSD)
 
-An alternative way to approach these comparisons between groups is to use something called a **post-hoc multiple comparison test**. The words "post-hoc" mean "after the event" -- i.e. after the ANOVA in this case -- while the "multiple comparison" refers to the (potentially many) pairwise comparisons that you would like to make with an ANOVA. One of the most widely used post-hoc tests is called Tukey’s Honestly Significant Difference (Tukey HSD) test. There is a convenient R package called `agricolae` that will do these for you.
+An alternative way to approach these comparisons between groups is to use something called a **post-hoc multiple comparison test**. The words "post-hoc" mean "after the event" (i.e. after the ANOVA in this case), while the "multiple comparison" refers to the (potentially many) pairwise comparisons that you would like to make with an ANOVA. One of the most widely used post-hoc tests is called Tukey's Honestly Significant Difference (Tukey HSD) test.
 
-```{r 3-03-ANOVA-15, eval=FALSE}
-# You only need to do this once!
-install.packages("agricolae")
+The base R function `TukeyHSD` needs the model to be fitted with `aov` (another way of fitting the same ANOVA model). It gives the estimated difference between every pair of groups, with a 95% confidence interval and a p-value that are both adjusted for the number of comparisons:
+
+```{r 3-03-ANOVA-tukey}
+tukey <- TukeyHSD(aov(foamIndx ~ method, data = espresso))
+tukey
 ```
-When you have the package installed, you can load it (using `library`). Then you can run the Tukey HSD test using the function `HSD.test`. The first argument for the function is the name of the model, followed by the name of the variable you are comparing (in this case `method`) and finally `console = TRUE` tells the function to print the output to your computer screen.
+
+Each row is one comparison: `diff` is the estimated difference between the two means, `lwr` and `upr` are the limits of the 95% confidence interval for that difference, and `p adj` is the adjusted p-value. This is the most useful output to report, because it tells us *how big* each difference is, and how precisely we know it, not just whether it is "significant". For example, HIP produced `r formatC(tukey$method["HIP-BM", "diff"], digits = 1, format = "f")` percentage points more foam than BM (95% CI `r formatC(tukey$method["HIP-BM", "lwr"], digits = 1, format = "f")` to `r formatC(tukey$method["HIP-BM", "upr"], digits = 1, format = "f")`). IES produced `r formatC(tukey$method["IES-BM", "diff"], digits = 1, format = "f")` percentage points more than BM, but the confidence interval (`r formatC(tukey$method["IES-BM", "lwr"], digits = 1, format = "f")` to `r formatC(tukey$method["IES-BM", "upr"], digits = 1, format = "f")`) includes zero, so the data are compatible with no difference, but also with a difference of more than 15 percentage points.
+
+Another popular way of presenting Tukey's test is as letters. The `agricolae` package does this with the function `HSD.test`. The first argument for the function is the name of the model, followed by the name of the variable you are comparing (in this case `method`) and finally `console = TRUE` tells the function to print the output to your computer screen.
 
 ```{r 3-03-ANOVA-16}
-library(agricolae)
 HSD.test(foam_mod2, "method", console = TRUE)
 ```
 
-The output is long-winded, and the main thing to look at is the part at the end. The key to understanding this is actually written in the output, "`Treatments with the same letter are not significantly different`". 
+The output is long-winded, and the main thing to look at is the part at the end. The key to understanding this is actually written in the output, "`Treatments with the same letter are not significantly different`". You could include these in a figure or a table with text like, *"Means followed by the same letter did not differ significantly (Tukey HSD test, p>0.05)"*. Note that sharing a letter does **not** mean that two groups are the same: it only means that the data do not show a clear difference. The confidence intervals from `TukeyHSD` show how large a difference is still plausible.
 
-You could include these in a figure or a table with text like, *"Means followed by the same letter did not differ significantly (Tukey HSD test, p>0.05)"*.
+Putting this together, we could report the results like this:
+
+*The mean foam index differed among the three brewing methods (ANOVA: F = `r formatC(x$"F value"[1], digits = 2, format = "f")`, d.f. = `r x$Df[1]` and `r x$Df[2]`, p < 0.001). The Hyper-Espresso Method produced the most foam (mean `r formatC(mean(espresso$foamIndx[espresso$method == "HIP"]), digits = 1, format = "f")`%), `r formatC(tukey$method["HIP-BM", "diff"], digits = 1, format = "f")` percentage points more than the bar machine (95% CI `r formatC(tukey$method["HIP-BM", "lwr"], digits = 1, format = "f")` to `r formatC(tukey$method["HIP-BM", "upr"], digits = 1, format = "f")`; Tukey HSD) and `r formatC(-tukey$method["IES-HIP", "diff"], digits = 1, format = "f")` percentage points more than the I-Espresso System (95% CI `r formatC(-tukey$method["IES-HIP", "upr"], digits = 1, format = "f")` to `r formatC(-tukey$method["IES-HIP", "lwr"], digits = 1, format = "f")`). The I-Espresso System produced slightly more foam than the bar machine (difference `r formatC(tukey$method["IES-BM", "diff"], digits = 1, format = "f")`, 95% CI `r formatC(tukey$method["IES-BM", "lwr"], digits = 1, format = "f")` to `r formatC(tukey$method["IES-BM", "upr"], digits = 1, format = "f")`), but this difference was not clear.*
 
 ## ANOVA calculation "by hand".
 
@@ -293,13 +307,13 @@ You could include these in a figure or a table with text like, *"Means followed 
 The following is an optional exercise designed to help you understand how ANOVA works.
 ```
 
-The ANOVA calculation involves calculating something called an F-value or F-statistic (the F stands for Fisher, who invented ANOVA). This is similar to the t-statistic in that it is a ratio between two quantities, in this case variances. In ANOVA, the F-statistic is calculated as the **treatment variance** divided by the **error variance**.
+The ANOVA calculation involves calculating something called an F-value or F-statistic (named after R. A. Fisher, who developed ANOVA). This is similar to the t-statistic in that it is a ratio between two quantities, in this case variances. In ANOVA, the F-statistic is calculated as the **treatment variance** divided by the **error variance**.
 
 What does that mean? Let's consider the espresso data set again. 
 
-In Figure \@ref(fig:3-03-ANOVA-14), you can see on the left (A) the black horizontal line which is the overall mean foam index. The vertical lines are the "errors" or departures from the overall mean value, colour coded by treatment (i.e. method). These can be quantified by summing up their square values (squaring ensures that the summed values are all positive). We call this quantity the *Total Sum of Squares (SSTotal)*. If there is a lot of variation, the sum of squares will be large, if there is little variation the sum of squares will be small. 
+In Figure \@ref(fig:3-03-ANOVA-18), you can see on the left (A) the black horizontal line which is the overall mean foam index. The vertical lines are the "errors" or departures from the overall mean value, colour coded by treatment (i.e. method). These can be quantified by summing up their square values (squaring ensures that the summed values are all positive). We call this quantity the *Total Sum of Squares (SSTotal)*. If there is a lot of variation, the sum of squares will be large, if there is little variation the sum of squares will be small. 
 
-On the right hand side (Figure \@ref(fig:3-03-ANOVA-14)B) we see the same data points. However, this time the horizontal lines represent the treatment-specific mean values, and the vertical lines illustrate the errors from these mean values. Again we can sum up these as sum of squares, which we call the *Error Sum of Squares (SSError)*. 
+On the right hand side (Figure \@ref(fig:3-03-ANOVA-18)B) we see the same data points. However, this time the horizontal lines represent the treatment-specific mean values, and the vertical lines illustrate the errors from these mean values. Again we can sum up these as sum of squares, which we call the *Error Sum of Squares (SSError)*. 
 
 The difference between those values is called the *Treatment Sum of Squares (SSTreatment)* and is the key to ANOVA - it represents the importance of the treatment: $$SSTreatment = SSTotal - SSError$$.
 
@@ -411,56 +425,12 @@ The F-statistic is then the ratio of these values.
 We can "look up" the p-value associated with this F-statistic using the `pf` function (`pf` stands for probability of f) like this:
 
 ```{r 3-03-ANOVA-26}
-1 - pf(Fstat, df1 = 2, df2 = 24)
+pf(Fstat, df1 = 2, df2 = 24, lower.tail = FALSE)
 ```
 
 As you can see, the method is a bit laborious and time consuming but it is conceptually fairly straightforward - it all hinges on the ratio of variation due to treatment effect vs. overall variation. Signal and noise.
 
 
-
-```{r 3-03-ANOVA-27, echo=FALSE}
-# the following is some code to make a plot with shuffled data as an illustration of how the ANOVA works
-set.seed(42)
-espressoShuffled <- espresso %>%
-  mutate(foamIndx = sample(foamIndx))
-
-overallMean <- espressoShuffled %>%
-  summarise(overallMean = mean(foamIndx)) %>%
-  pull()
-
-# Add index and group means to the data
-espressoAugmented <- left_join(
-  espressoShuffled,
-  espressoShuffled %>%
-    group_by(method) %>%
-    summarise(groupMean = mean(foamIndx))
-) %>%
-  mutate(n = 1:n())
-
-
-# Plot A = total sum of squares (residuals from overall mean)
-SSTotalPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = method)) +
-  geom_segment(aes(xend = n, yend = overallMean), alpha = 0.4) +
-  geom_point() +
-  geom_hline(yintercept = overallMean) +
-  xlab("Index") +
-  NULL
-
-
-# Plot B = error sum of squares (residuals from group means)
-SSErrorPlot <- ggplot(espressoAugmented, aes(x = n, y = foamIndx, colour = method)) +
-  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
-  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
-  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(xend = n, yend = groupMean, colour = method), alpha = 0.4) +
-  geom_point() +
-  geom_segment(data = espressoAugmented %>% filter(method == "BM"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
-  geom_segment(data = espressoAugmented %>% filter(method == "HIP"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
-  geom_segment(data = espressoAugmented %>% filter(method == "IES"), aes(x = min(n), y = mean(foamIndx), xend = max(n), yend = mean(foamIndx))) +
-  xlab("Index") +
-  NULL
-
-xx <- SSTotalPlot + ggtitle("A - Total errors\n SSTotal") + SSErrorPlot + ggtitle("B - Treatment-specific error\n SSError")
-```
 
 ## Exercise: Apple tree crop yield
 
@@ -492,5 +462,5 @@ Import the data (`apples.csv`) and analyse it using the techniques you have lear
 
 
 ```{block 3-03-ANOVA-28, type="do-something"}
-If you get this far, try using the ANOVA approach on one of the previous t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the `t.test` function or the ANOVA approach with `lm`.
+If you get this far, try using the ANOVA approach on one of the previous two-sample t-test examples (remember that ANOVA can be used when your single explanatory variable has TWO or more levels). You should notice that the results are the same whether you use the `t.test` function with `var.equal = TRUE` or the ANOVA approach with `lm` (for two groups, F = t^2^). The default Welch t-test gives slightly different results, because it does not assume equal variances.
 ```

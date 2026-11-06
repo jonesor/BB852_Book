@@ -126,8 +126,12 @@ What R is doing when it figures out the p-value is calculating the area under th
 
 Enough theory. Here's how you would apply such a test in R.
 
-```{block 3-02-t-tests-3, type="do-something"}
-Remember to load the `dplyr`, `tidyr`, `magrittr` and `ggplot2` packages, and to set your working directory correctly.
+In this chapter we use these packages (and, as always, work inside your course RStudio project so that the relative data paths work):
+
+```{r 3-02-t-tests-setup, message = FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
 ```
 
 Firstly, let's load some data: 20 measurements of the concentration of an air pollutant, in µg/m^3^. Because this is a very small example, you can simply cut and paste the data in rather than loading it from a CSV file.
@@ -213,9 +217,9 @@ It's actually quite hard to find examples of one-sample t-tests in biology. Most
 )
 ```
 
-Here's a simple example. Anthropologists studied tool use in women from the indigenous Machiguenga of Peru^[A.M. Hurtado, K. Hill (1989). "Experimental Studies of Tool Efficiency Among Machiguenga Women and Implications for Root-Digging Foragers", Journal of Anthropological Research, Vol.45,2,pp207-217.]. They estimated the amount of cassava obtained in kg/hour using either a wooden tool (a broken bow) or a metal machete. The study focused on 5 women who were randomly assigned to groups to use the wooden tool then the machete (or vice versa). 
+Here's a simple example. Anthropologists studied tool use in women from the indigenous Machiguenga of Peru^[A.M. Hurtado, K. Hill (1989). "Experimental Studies of Tool Efficiency Among Machiguenga Women and Implications for Root-Digging Foragers", Journal of Anthropological Research, Vol.45,2,pp207-217.]. They measured how many kilograms of sweet manioc (cassava) a woman dug up per hour spent digging, using either a traditional wooden tool (a broken palm-wood bow) or a metal machete. In each of 5 trials, a woman dug up the roots of two manioc plants at the same location, one with each tool, so that differences in patch quality and individual skill were controlled for. (Their Table 1 gives the data used here; it misprints the first difference as 60 instead of 80.)
 
-Each woman used both tools, so each woman provides a *pair* of measurements, and the five women (not the ten measurements) are the independent units. The anthropologists hypothesised that using different tools led to different harvesting efficiency. The null hypothesis is that the mean difference in harvest rate between the two tools (machete - bow) is zero, i.e. that on average a woman was equally efficient at foraging using either tool. The alternative hypothesis is that the mean difference is not zero. (NOTE - this could also be formulated as a directional hypothesis e.g. with the expectation that machete is more efficient than the bow. If so, that decision should be made *before* looking at the data.)
+Each trial used both tools, so each trial provides a *pair* of measurements, and the five pairs (not the ten measurements) are the independent units. The anthropologists expected the metal tool to be more efficient, and analysed their data with one-tailed paired t-tests. Here, to illustrate the default two-sided test, we will ask the more general question of whether harvesting efficiency differed between the tools. The null hypothesis is that the mean difference in harvest rate between the two tools (machete - bow) is zero, i.e. that on average a woman was equally efficient at foraging using either tool. The alternative hypothesis is that the mean difference is not zero. (NOTE - as the original authors did, this could also be formulated as a directional hypothesis, with the expectation that the machete is more efficient than the bow. If so, that decision should be made *before* looking at the data.)
 
 First let's import and look at the data. Make sure you understand it. For a paired t-test, the normality assumption applies to the *differences* within pairs. With only five pairs, a plot will tell us very little about whether these differences are normally distributed, so we will have to assume that they are. t-tests are fairly robust to moderate departures from normality, especially with larger samples, but with very small samples like this one, the assumption matters more and is hard to check.
 
@@ -261,7 +265,7 @@ B <- toolUse %>%
 t.test(A, B, paired = TRUE)
 ```
 
-You would report these results something like this: *"Women harvested cassava more efficiently with a machete (168.2 kg/hr) than with a wooden tool (82.8kg/hr). The mean difference of 85.4 kg/hr (95% CI 72.2-98.6 kg/hr) was statistically significant (paired t-test: t = 17.98, df = 4, p = 5.6 x 10^-5^)."*
+You would report these results something like this: *"Women dug up cassava more efficiently with a machete (168.2 kg/hr) than with a wooden tool (82.8 kg/hr). The mean difference of 85.4 kg/hr (95% CI 72.2-98.6 kg/hr) was statistically significant (paired t-test: t = 17.98, df = 4, p = 5.6 x 10^-5^)."*
 
 NOTE: you could add the argument `alternative = "less"` or `alternative = "greater"` to these t-tests to turn them into directional (one-tailed) tests. The direction refers to the first group minus the second: here, `alternative = "greater"` tests whether machete - bow is greater than zero. When the observed difference is in the predicted direction, the one-tailed p-value is half the two-tailed p-value. When it is in the *opposite* direction, the one-tailed p-value is close to 1 (it is 1 minus half the two-tailed p-value). So you can only halve the two-tailed p-value if you chose the direction *before* seeing the data and the result is in that direction.
 
@@ -355,7 +359,7 @@ This is the same signal/noise idea as before. The signal is the difference betwe
 
 So far so good... let's push on and use R to do some statistics.
 
-In this example, we can revisit the class data — a set of measurements (height, hand width, reaction time, and so on) collected from students in previous years of this course — and ask the question, *Is the reaction time of males different from that of females?* The null hypothesis for this question is that there is no difference in mean reaction times between the two groups. The alternative hypothesis is that there **is** a difference in the mean reaction time between the two groups. Each student belongs to only one group, so the two groups are independent. Note that these are observational data from a convenience sample (one class), so we should be careful not to generalise too far, or to interpret any difference as being *caused* by sex.
+In this example, we can revisit the class data (a set of measurements such as height, hand width and reaction time, collected from students in previous years of this course) and ask the question, *Is the reaction time of males different from that of females?* The null hypothesis for this question is that there is no difference in mean reaction times between the two groups. The alternative hypothesis is that there **is** a difference in the mean reaction time between the two groups. Each student belongs to only one group, so the two groups are independent. Note that these are observational data from a convenience sample (one class), so we should be careful not to generalise too far, or to interpret any difference as being *caused* by sex.
 
 Import the data in the usual way, and subset it to the right year (in the example below I am using 2019 data).
 
@@ -406,7 +410,7 @@ summary(mod1)
 
 If you look at the summary you will notice that the estimate of the intercept (the mean difference within pairs), the degrees of freedom, the t-value and the p-value are all the same as the values reported when using `t.test`.
 
-In fact, all of the t-tests, and ANOVA (below) are kinds of linear models and can be also fitted with `lm`.
+In fact, all of the t-tests, and ANOVA (in a later chapter), are kinds of linear models and can be also fitted with `lm`.
 
 Here is the two-sample t-test investigating gender differences in reaction time, fitted as a linear model. There is one important difference: an ordinary linear model assumes that the variance is the same in both groups. It is therefore equivalent to the *equal-variance* t-test (`var.equal = TRUE`), not to the Welch test we used above. You can see that the t-value and p-value for the `GenderMale` coefficient match the equal-variance t-test exactly (the sign of t is reversed because `lm` estimates male - female, while `t.test` estimates female - male), but they differ slightly from the Welch test.
 
