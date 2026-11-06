@@ -206,7 +206,7 @@ $$Total = Explained + Residual$$
 $$Explained = Total - Residual$$
 
 
-Before using these values we need to standardise them to control for sample size. This is necessary because sum of squares will *always* increase with sample size. We make this correction by dividing our sum of squares measures by the degrees of freedom. The d.f. for the **explained sum of squares** is 1, and the d.f. for the **residual sum of squares** is the number of observations minus 2. The result of these calculations is the **mean explained sum of squares** (mESS) and the **mean residual sum of squares** (mRSS). These "mean" quantities are **variances**, and the ratio between them gives us the **F-value**. Notice that this is very similar to the variance ratio used in the ANOVA.
+Before using these values we need to standardise them to control for sample size. This is necessary because sum of squares will *always* increase with sample size. We make this correction by dividing our sum of squares measures by the degrees of freedom. The d.f. for the **explained sum of squares** is 1, and the d.f. for the **residual sum of squares** is the number of observations minus 2. Think of degrees of freedom as bookkeeping: we start with *n* independent pieces of information, and every parameter we estimate from the data uses one up. The fitted line needs two estimates (intercept and slope), so the residuals are left with *n* - 2. (With only two data points the line passes through both exactly, and there is no information left about the scatter.) The explained sum of squares compares the fitted line with a flat line at the mean, and the two differ by one parameter, the slope, so it has 1 d.f. The d.f. add up in the same way as the sums of squares: total *n* - 1 = 1 + (*n* - 2). The result of these calculations is the **mean explained sum of squares** (mESS) and the **mean residual sum of squares** (mRSS). These "mean" quantities are **variances**, and the ratio between them gives us the **F-value**. Notice that this is very similar to the variance ratio used in the ANOVA.
 
 $$F = \frac{mESS}{mRSS}$$
 
@@ -261,7 +261,7 @@ A + ggtitle("A - total errors") + B + ggtitle("B - residual errors")
 
 ## Assumptions
 
-These models have similar assumptions to the other linear models^[t-tests, ANOVA and linear regression are all types of linear model, mathematically]. These are (1) that the relationship between the variables is linear (hence the name); (2) that the data are continuous variables; (3) that the observations are randomly sampled; (4) that the errors in the model (the "residuals") can be described by a normal distribution; and (5) and that the errors are "homoscedastic" (that they are constant through the range of the data). You can evaluate these things by looking at diagnostic plots after you have fitted the model. See page 112-113 in GSWR for a nice explanation. 
+These models have similar assumptions to the other linear models^[t-tests, ANOVA and linear regression are all types of linear model, mathematically]. These are (1) that the relationship between the variables is linear (hence the name); (2) that the data are continuous variables; (3) that the observations are independent of each other (for example, randomly sampled, with no repeated measurements of the same individual); (4) that the errors in the model (the "residuals") can be described by a normal distribution; and (5) and that the errors are "homoscedastic" (that they are constant through the range of the data). You can evaluate these things by looking at diagnostic plots after you have fitted the model. See page 112-113 in GSWR for a nice explanation. 
 
 ## Worked example: height-hand length relationship
 
@@ -379,16 +379,27 @@ slopePlot + interceptPlot
 ```
 
 
-The summary then gives some information about the amount of residual variation left after the model has been fitted (this is the $\epsilon$ term in the equations at the start of this chapter). Then we are told what the $R^2$ value is `r formatC( summary(mod_A)$r.squared, digits = 4, format = "f")`. The adjusted $R^2$ is for use in multiple regression models, where there are many explanatory variables, and should not be used for this simple regression model. Multiple regression is not really a separate technique: it is the same `lm` you are using here, just with more explanatory variables added using `+` (you will meet it in the ANCOVA and model-evaluation chapters). The main extra thing to watch for is **multicollinearity** — strongly correlated explanatory variables — which is discussed in the chapter on linear model assumptions. So what does $R^2$ actually mean?
+The summary then gives some information about the amount of residual variation left after the model has been fitted: the `Residual standard error` (`r formatC(summary(mod_A)$sigma, digits = 2, format = "f")` cm here) is our estimate of the standard deviation of the $\epsilon$ term in the equations at the start of this chapter, i.e. the typical distance of a person from the line. Then we are told what the $R^2$ value is `r formatC( summary(mod_A)$r.squared, digits = 4, format = "f")`. The adjusted $R^2$ is for use in multiple regression models, where there are many explanatory variables, and should not be used for this simple regression model. Multiple regression is not really a separate technique: it is the same `lm` you are using here, just with more explanatory variables added using `+` (you will meet it in the ANCOVA and model-evaluation chapters). The main extra thing to watch for is **multicollinearity** — strongly correlated explanatory variables — which is discussed in the chapter on linear model assumptions. So what does $R^2$ actually mean?
 
 $R^2$ is the square of the correlation coefficient $r$ and is a measure of the amount of variation in the response variable (Height) that is explained by the model. If all the points were sitting on the regression line, the $R^2$ value would be 1. This idea is illustrated in Figure \@ref(fig:3-04-linearRegression-13).
 
-We could describe the model like this:
+The estimates in the `summary` table are the most useful part of the output, but a standard error is hard to interpret on its own. The 95% confidence intervals for the coefficients are more useful, and you can get them with `confint()`:
 
-*There is a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001) The equation of the fitted model is: Height = `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")`) $\times$ HandLength + `r formatC(summary(mod_A)$coef[1,1], digits = 1,format = "f")`($\pm$ `r formatC(summary(mod_A)$coef[1,2], digits = 1,format = "f")`). The model explains `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 2, format = "f")`).*
+```{r 3-04-linearRegression-confint}
+confint(mod_A)
+```
 
-... or maybe, *The model, which explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height, showed that the slope of the relationship between hand length and height is `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` $\pm$ `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")` which is significantly greater than 0 (t = `r formatC(summary(mod_A)$coef[2,3], digits = 1,format = "f")`, p < 0.001)*
+```{r 3-04-linearRegression-confint-values, echo = FALSE}
+ci_A <- confint(mod_A)
+```
 
+We could describe the model like this, leading with the estimate and its uncertainty rather than with the test:
+
+*Height was `r formatC(coef(mod_A)[2], digits = 1, format = "f")` cm greater per cm of hand length (95% CI `r formatC(ci_A[2, 1], digits = 1, format = "f")` to `r formatC(ci_A[2, 2], digits = 1, format = "f")`; F = `r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001). Hand length explained `r formatC( summary(mod_A)$r.squared*100, digits = 0, format = "f")`% of the variation in height ($R^2$ = `r formatC( summary(mod_A)$r.squared, digits = 2, format = "f")`).*
+
+If your readers will want to make predictions, also give the equation of the fitted line, with the standard errors of the coefficients in brackets: Height = `r formatC(summary(mod_A)$coef[1,1], digits = 1,format = "f")` (SE `r formatC(summary(mod_A)$coef[1,2], digits = 1,format = "f")`) + `r formatC(summary(mod_A)$coef[2,1], digits = 2,format = "f")` (SE `r formatC(summary(mod_A)$coef[2,2], digits = 2,format = "f")`) $\times$ HandLength.
+
+Note that "height was greater in people with longer hands" describes a difference *between people*: it does not mean that a person's height increases if their hand grows.
 
 ```{r 3-04-linearRegression-13, echo=FALSE,fig.width=4,fig.height=4,fig.align='center',fig.cap="An illustration of different R-squared values.", fig.pos = "ht",cache=TRUE}
 set.seed(7645)
@@ -493,6 +504,12 @@ predict(mod_A, newdata = new20, interval = "prediction")
 
 **Question:** If police find a hand print at a crime scene with a hand length of 20cm, what is your best guess of the height of the person involved?
 
+
+::: {.advanced-box data-latex=""}
+**Looking ahead: is `r formatC(coef(mod_A)[2], digits = 1, format = "f")` cm per cm the whole story?**
+
+These data also record each person's sex. At a given hand length, males tend to be taller, and males also tend to have longer hands. Part of the slope we estimated here is therefore really a difference between the sexes. When sex is added to the model (`lm(Height ~ HandLength + Sex)`), the slope drops to about `r formatC(coef(lm(Height ~ HandLength + Sex, data = morph))[2], digits = 1, format = "f")` cm per cm, well outside the confidence interval above. A confidence interval only covers sampling error: it says nothing about variables we left out of the model. You will fit this model in the next chapter (ANCOVA).
+:::
 
 ## Exercise: Chirping crickets
 
