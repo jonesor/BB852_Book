@@ -193,7 +193,7 @@ The following example, where we focus on the relationship between hand length an
 
 The aim of this section is to give you some intuition on how the hypothesis test works.
 
-We can address the slope hypothesis by calculating an F-value in a similar way to how we used them in ANOVA. Recall that F-values are ratios of variances. To understand how these work in the context of a linear regression we need to think clearly about the slope hypothesis: The **null hypothesis** is that the slope is **not** significantly different to 0 (that the data can be explained by random variation). The **alternative hypothesis** is that the slope is significantly different from 0. 
+We can address the slope hypothesis by calculating an F-value in a similar way to how we used them in ANOVA. Recall that F-values are ratios of variances. To understand how these work in the context of a linear regression we need to think clearly about the slope hypothesis: The **null hypothesis** is that the true slope is 0 (that the pattern in the data can be explained by random variation alone). The **alternative hypothesis** is that the true slope is not 0. 
 
 The first step in evaluating these hypotheses is to calculate what the **total sum of squares**^[sum of squares is simply a way to estimate variation.] is when the null hypothesis is true (Figure \@ref(fig:3-04-linearRegression-4)A) - this value is the total variation that the model is trying to explain. 
 
@@ -210,7 +210,7 @@ Before using these values we need to standardise them to control for sample size
 
 $$F = \frac{mESS}{mRSS}$$
 
-If the *explained variance* (mESS) is large compared to the *residual error variance* (mRSS), then F will be large. The size of F tells us how likely or unlikely it is that the null hypothesis is true. When F is large, the probability that the slope is significantly different from 0 is high. To obtain the actual probabilities, the F-value must be compared to a theoretical distribution which depends on the two degrees of freedom (explained and residual d.f.). Once upon a time you would have looked this up in a printed table, but now R makes this very straightforward.
+If the *explained variance* (mESS) is large compared to the *residual error variance* (mRSS), then F will be large. A large F means that data like ours would be very unlikely if the true slope were 0. Note that this is *not* the same as the probability that the null hypothesis is true. To obtain the actual probabilities, the F-value must be compared to a theoretical distribution which depends on the two degrees of freedom (explained and residual d.f.). Once upon a time you would have looked this up in a printed table, but now R makes this very straightforward.
 
 ```{r 3-04-linearRegression-4, echo=FALSE,fig.width=6.5,fig.height=3,fig.align='center',fig.cap="(A) the total variation around the overall mean Height value (B) the residual error of the model.",fig.pos = "ht"}
 morph <- read.csv("CourseData/morphometry.csv") %>%
@@ -300,7 +300,7 @@ Before proceeding further we should evaluate the model using a diagnostic plot. 
 library(ggfortify)
 autoplot(mod_A)
 ```
-These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows "leverage" which is a measure of how much influence individual data points have on the model. Outliers will have large leverage and can mess up your model. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.
+These diagnostic plots allow you to check that the assumptions of the model are not violated. On the left are two plots which (more or less) show the same thing. They show how the residuals (the errors in the model) vary with the predicted value (height). Looking at the plots allows a visual test for constant variance (homoscedasticity) along the range of the data. In an ideal case, there should be no pattern (e.g. humps) in these points. On the top right is the QQ-plot which shows how well the residuals match up to a theoretical normal distribution. In an ideal case, these points should line up on the diagonal line running across the plot. The bottom right plot shows "leverage", which measures how unusual each point's *x* value (here, hand length) is: points far from the mean hand length have high leverage and can pull the line towards them. Points that have both high leverage *and* a large residual are the ones with most influence on the model, and can mess it up. Ideally, the points here should be in a cloud, with no points standing out from the others. Please read the pages 112-113 in the textbook GSWR for more on these. In this case, the model looks pretty good.
 
 Now that we are satisfied that the model doesn't violate the assumptions we can dig into the model to see what it is telling us. 
 
@@ -312,7 +312,7 @@ anova(mod_A)
 ```
 
 When you run this function, you get a summary table that looks exactly like the one you got with an ANOVA. There are degrees of freedom (`Df`), Sums of Squares (`Sum Sq`), Mean Sums of Squares (`Mean Sq`) and the `F value` and p-value (`Pr(>F)`). 
-The most important parts of this table are the F value (`r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`) and the p-value (`r format.pval(anova(mod_A)$Pr[1], eps = 0.001)`): as described above, large F values lead to small p-values. This tells us that it is unlikely that the null hypothesis is true and we should accept the alternative hypothesis (that height is associated with hand length).
+The most important parts of this table are the F value (`r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`) and the p-value (`r format.pval(anova(mod_A)$Pr[1], eps = 0.001)`): as described above, large F values lead to small p-values. This tells us that data like these would be very unlikely if the true slope were 0, so we reject the null hypothesis: height is associated with hand length.
 
 We could report the results of this hypothesis test like this: 
 *There was a statistically significant association between hand length and height (F = `r formatC( anova(mod_A)$F[1], digits = 1, format = "f")`, d.f. = `r anova(mod_A)$Df[1]`,`r anova(mod_A)$Df[2]`, p < 0.001)*

@@ -35,18 +35,18 @@ The book is divided into three parts: data wrangling, data visualisation and sta
 
 ## How to use this book
 
-The book mirrors the course and is designed to be worked through **in order** — each part builds on the ones before it.
+The book mirrors the course and is designed to be worked through **in order**: each part builds on the ones before it.
 
-- **New to R?** Start with *An R refresher* and *Paths and projects* (with *Tips and tricks* and *Additional reading* to dip into as needed). These get the R language and your RStudio project set up so that the examples run smoothly.
+- **Start here:** *Getting set up* (installing R and RStudio and downloading the course data), then *Paths and projects* (setting up the RStudio Project and `CourseData` folder that every later chapter assumes), then *An R refresher*, especially if you are new to R or a bit rusty. *Tips and tricks* and *Additional recommended reading* are there to dip into as needed.
 - Then come the three main parts: **Part 1 – Data wrangling**, **Part 2 – Data visualisation** (which also includes a chapter on distributions, probability and summary statistics that sets up the statistics to come), and **Part 3 – Statistics**. Each is described in more detail below.
-- **Part 3 tells one connected story:** foundations (randomisation tests, t-tests, model assumptions) → linear models (ANOVA, regression, ANCOVA, n-way ANOVA — all really the *same* model) → evaluating those models → generalised linear models for count and binary data → power analysis. Because each chapter assumes the previous ones, work through this part in sequence.
-- **Reference material:** the *Appendix* has examples of reporting results, a past assignment, and a guide to using ChatGPT for R; full *Solutions* to the exercises are at the end of the book — but do try the exercises yourself first.
+- **Part 3 tells one connected story:** foundations (randomisation tests, t-tests, model assumptions) → linear models (ANOVA, regression, ANCOVA, n-way ANOVA; all really the *same* model) → evaluating those models → generalised linear models for count and binary data → power analysis. Because each chapter assumes the previous ones, work through this part in sequence.
+- **Reference material:** the *Appendix* has examples of reporting results, a past assignment, and a guide to using AI chatbots (such as ChatGPT) for R. Full *Solutions* to the exercises are at the end of the book, but do try the exercises yourself first.
 
 The **Schedule** (following this preface) shows how these chapters map onto the lectures and practical sessions.
 
 ## Data wrangling
 
-The term data wrangling covers the manipulation of data, for example collected from an experiment or observational study, from its raw form to a form that is ready for analysis or summarised into tables. It includes reshaping, transforming, filtering and augmenting from other data. This book covers these processes in R mainly using tools from the `dplyr` package.
+The term data wrangling covers the manipulation of data, for example collected from an experiment or observational study, from its raw form to a form that is ready for analysis or summarised into tables. It includes reshaping, transforming, filtering and augmenting from other data. This book covers these processes in R mainly using tools from the `dplyr` and `tidyr` packages.
 
 ## Data visualisation
 
@@ -54,9 +54,9 @@ Graphing data is a crucial analytical step that can highlight problems with the 
 
 ## Statistics
 
-Statistics is a *huge* field; I don't attempt to cover more than a small fraction of it in this course. Instead, I focus on (ordinary) linear models and generalised linear models. In a nutshell, linear models describe the effects of explanatory variables on a continuous response variable with a Gaussian (normal) error distribution. In contrast, generalised linear models (GLMs) offer a more flexible approach that allows the response variable to have non-normal error distributions. This flexibility enables more appropriate modelling of phenomena, including integer counts (e.g. the number of individuals, species, or events), binary (0/1) data (e.g. survived/died) or binomial count data (e.g. counts of successes and failures). It is essential to realise that most commonly used statistical methods, including t-tests, ANOVA, ANCOVA, n-way ANOVA, and linear and multiple regression, are all special cases of linear models. 
+Statistics is a *huge* field; I don't attempt to cover more than a small fraction of it in this course. Instead, I focus on (ordinary) linear models and generalised linear models. In a nutshell, linear models describe the effects of explanatory variables on a continuous response variable with a Gaussian (normal) error distribution. In contrast, generalised linear models (GLMs) offer a more flexible approach that allows the response variable to have non-normal error distributions. This flexibility enables more appropriate modelling of phenomena, including integer counts (e.g. the number of individuals, species, or events), binary (0/1) data (e.g. survived/died) or binomial count data (e.g. counts of successes and failures). It is essential to realise that many of the most commonly used statistical methods, including t-tests, ANOVA, ANCOVA, n-way ANOVA, and linear and multiple regression, are all special cases of linear models. 
 
-My general approach is to teach using examples. Therefore, the bulk of the text consists of walk-throughs of manipulating, plotting and analysing real data. For the statistics section I focus on communicating the "gist" of the underlying mathematical machinery rather than the details. If you find yourself interested in these details, there are more specialist textbooks available. 
+My general approach is to teach using examples. Therefore, the bulk of the text consists of walk-throughs of manipulating, plotting and analysing data. Most of it is real data, from published studies or collected by me, with some simulated data where that makes a point more clearly. For the statistics section I focus on communicating the "gist" of the underlying mathematical machinery rather than the details. If you find yourself interested in these details, there are more specialist textbooks available. 
 
 
 ```{block index-3, type="do-something"}
@@ -67,11 +67,11 @@ This book accompanies the course lectures. The general idea is that there will b
 
 This book uses numerous data sets in examples, most of which are real data sets obtained from published works or collected by me.
 
-The data sets can be found at the following link:
-[https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0](https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0)
+The data sets are in a folder called `CourseData`, which you can download from the following link (see *Getting set up* and *Paths and projects* for where to put it):
+[https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/AMXW_LUKtK8Knk7yuWOXRWc?rlkey=xz3c6pe0pscg52357frq37515&dl=0](https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/AMXW_LUKtK8Knk7yuWOXRWc?rlkey=xz3c6pe0pscg52357frq37515&dl=0)
 
 
-## Your instructor(s)
+## Your instructor
 
 You are welcome to contact instructors with any problems or questions (but please put a little effort in first).
 
@@ -80,7 +80,7 @@ You are welcome to contact instructors with any problems or questions (but pleas
 
 ## Expectations
 
-There are lectures and practical exercise sessions on the course. The exercise sessions are essential to understanding the subject and I expect students to attend and actively participate in them. I also expect students to make every effort to keep up with the core reading (mainly the textbook chapters), and to ask questions when they don’t understand. The nature of the course is that it builds sequentially and therefore, if you miss classes or fall behind, it may be hard to catch up. 
+There are lectures and practical exercise sessions on the course. The exercise sessions are essential to understanding the subject and I expect students to attend and actively participate in them. I also expect students to make every effort to keep up with the core reading (mainly chapters of the course textbook, Beckerman, Childs & Petchey's *Getting Started with R*; the Schedule lists the relevant chapter for each session), and to ask questions when they don’t understand. The nature of the course is that it builds sequentially and therefore, if you miss classes or fall behind, it may be hard to catch up. 
 
 **If you don’t finish off exercises in class time you should finish them as homework.**
 
@@ -90,12 +90,17 @@ I aim to make this course useful and rewarding for you. I would really like your
 
 ## Assessment
 
-Your final grade will be determined by a multiple choice question (MCQ) exam, worth 30% of your grade, and a written assignment, worth 70% of your grade. The take-home assignment will include several questions where you apply your new skills to analyse some interesting data and report your findings.
+The course has two assessments:
+
+- **Written assignment** (2 ECTS, Pass/Fail), in December. This take-home assignment has several questions where you apply your new skills to analyse some interesting data and report your findings.
+- **Multiple choice question (MCQ) exam** (3 ECTS, graded on the 7-point scale), a two-hour exam in January.
+
+The official course description (on ODIN) gives the formal rules.
 
 
 ## Acknowledgements
 
-These materials are inspired by the excellent textbook, "Getting Started With R"^[Beckerman, Childs & Petchey (2017) *Getting Started With R*. Oxford University Press (2nd edition)], which is the recommended textbook for BB852, and by materials for the Sheffield University course "AP 240 - Data Analysis And Statistics With R" ([https://dzchilds.github.io/stats-for-bio/](https://dzchilds.github.io/stats-for-bio/)). For your convenience, the data sets for the Beckerman et al. book are available at this course's data Dropbox link (above), in a folder called "GSWR_datasets".
+These materials are inspired by the excellent textbook, "Getting Started With R"^[Beckerman, Childs & Petchey (2017) *Getting Started With R*. Oxford University Press (2nd edition)], which is the recommended textbook for BB852, and by materials for the University of Sheffield course "APS 240: Data Analysis and Statistics with R" ([https://dzchilds.github.io/stats-for-bio/](https://dzchilds.github.io/stats-for-bio/)).
 
 
 ```{r index-4, echo = FALSE, message=FALSE, results='hide'}
@@ -124,13 +129,14 @@ schedule <- readxl::read_excel("BB852_Schedule.xlsx")
 
 ```{r index-10, echo = FALSE, message=FALSE,eval=knitr::is_html_output(), warning=FALSE}
 schedule2 <- schedule %>%
-  select(Part, Session, Type, Topic, Instructor)
+  select(Part, Session, Type, Topic, Instructor, GSWR)
 
 big_b <- fp_border(color = "gray70", width = 3)
 std_b <- fp_border(color = "gray70", style = "dashed")
 big_b_end <- fp_border(color = "white", width = 3)
 
 ft <- flextable(schedule2, cwidth = c(2, .5, 1, 4, .75, .75)) %>%
+  set_header_labels(GSWR = "Textbook chapter") %>%
   bold(part = "header") %>%
   bold(j = 1) %>%
   color(

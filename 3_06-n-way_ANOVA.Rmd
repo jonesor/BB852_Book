@@ -4,7 +4,7 @@ In the one-way ANOVA we covered earlier we were interested in understanding the 
 
 The two-way ANOVA is an extension of one-way ANOVA that allows you to investigate the effect of **two** categorical variables. This can be useful in an experimental context. 
 
-For example, one might run an experiment investigating the effect of two types of diet (*lowProtein* and *highProtein*) and genotype (*gt1* and *gt2*) on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these possible outcomes are illustrated in Figure \@ref(fig:3-06-n-way-ANOVA-1). The titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dotted lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
+For example, one might run an experiment investigating the effect of two types of diet (*lowProtein* and *highProtein*) and genotype (*gt1* and *gt2*) on adult size of a pest species. It is worth thinking about what potential outcomes there are for this experiment. There may be no effect of diet, and no effect of genotype. There may be an effect of one of these variables but not the other. The effect of the diet might be the same for the different genotypes, or it might be different. Some of these possible outcomes are illustrated in Figure \@ref(fig:3-06-n-way-ANOVA-1). The titles indicate with Y (yes) or N (no) whether the figure shows a significant diet, genotype (gt) or interaction (int) effect. The dashed lines joining the estimates for the two genotypes are a kind of **interaction plot**: where they are parallel, there is no interaction.
 
 
 ```{r 3-06-n-way-ANOVA-1, echo=FALSE,fig.width=8,fig.height=3.5,fig.align='center',fig.cap="Some potential results of the experiment. There may be a significant effect (or not) of both of the main effects (diet and genotype) and there may be a significant interaction effect (or not).", fig.pos = "ht",message=FALSE}
@@ -97,14 +97,14 @@ Fa <- ggplot(fakeData %>%
 
 
 
-In the model we aim to quantify these effects and ask if they are statistically significant (i.e. if the effect sizes are >0). We divide the effects of the explanatory variables into two types: **main effects** and **interaction effects**. The main effects are the overall effect of the explanatory variables (genotype and diet in this case), while the interaction effect allows us to ask whether one main effect *depends on another*. In this case we are asking whether *the effect of diet depends on genotype (and vice versa)*. Make sure that you understand this important concept.
+In the model we aim to quantify these effects and ask if they are statistically significant (i.e. whether the effect sizes differ from zero, in either direction). We divide the effects of the explanatory variables into two types: **main effects** and **interaction effects**. The main effects are the overall effect of the explanatory variables (genotype and diet in this case), while the interaction effect allows us to ask whether one main effect *depends on another*. In this case we are asking whether *the effect of diet depends on genotype (and vice versa)*. Make sure that you understand this important concept.
 
 ## Fitting a two-way ANOVA model
 
 Let's use R to fit a two-way ANOVA model using data from the example I just described. As with one-way ANOVA, you can fit a two-way ANOVA model in R using `lm`. 
 
 ```{block 3-06-n-way-ANOVA-2, type="do-something"}
-Remember to load the `dplyr`, `magrittr` and `ggplot` packages, and to set your working directory correctly.
+Remember to load the `dplyr`, `magrittr` and `ggplot2` packages. The code below reads data from the `CourseData` folder, so R's working directory must be the folder that contains `CourseData`. The easiest way is to open the course's RStudio Project, which does this for you. If you set the working directory yourself instead (with `setwd()` or *Session > Set Working Directory*), point it at that same folder.
 ```
 
 First, import the `insectDiet.csv` data and plot it, to produce a plot like in Figure \@ref(fig:3-06-n-way-ANOVA-3). From looking at the graph in this figure, you can see (a) genotype 1 tends to be larger than genotype 2; (b) insects raised on a high protein diet tend to be larger than those on a low protein diet; and (c) the effect of the diet (i.e. the *difference* in size between insects raised on the different diets) is larger for genotype 1 than for genotype 2. But are these differences statistically meaningful?
@@ -122,7 +122,7 @@ To address this question, we will fit a linear model (the two-way ANOVA) to esti
 
 The model formula is `lengthMM ~ genotype + diet + genotype:diet`. 
 
-Let's try to understand this. The `genotype + diet` part represents the **main effects** of these two variables, and the `genotype:diet` part represents the **interaction effect** between them. This formula*can* be shortened to `lengthMM ~ genotype * diet` (i.e. this is exactly equivalent to the more complicated-looking formula), but I recommend to use the longer version because it is clearer.
+Let's try to understand this. The `genotype + diet` part represents the **main effects** of these two variables, and the `genotype:diet` part represents the **interaction effect** between them. This formula *can* be shortened to `lengthMM ~ genotype * diet` (i.e. this is exactly equivalent to the more complicated-looking formula), but I recommend to use the longer version because it is clearer.
 
 So we fit the model like this - putting the formula first, then telling R which data to use:
 
@@ -139,7 +139,7 @@ library(ggfortify)
 autoplot(mod_A)
 ```
 
-These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimeter. There is no evidence of heteroscedasticity (left hand plots) now any major outliers. 
+These all look OK. The slightly odd structure in the QQ-plot is caused by the fact that the length data are rounded to the nearest millimetre. There is no evidence of heteroscedasticity (left hand plots) nor any major outliers. 
 
 ## Summarising the model (`anova`)
 
@@ -152,6 +152,8 @@ anova(mod_A)
 This summary `Analysis of Variance Table` is similar to the ones you have already seen for one-way ANOVA and linear regression. It just has some extra rows because you have extra explanatory variables. It shows you the degrees of freedom for the different terms in the model (all 1, because they have two levels), the sum of squares (`Sum Sq`) and mean sum of squares (`Mean Sq`) and the associated `F value` and p-value (`Pr(>F)`). Those F values are all large, leading to highly-significant p-values. 
 
 This means that all of those terms in the model explain a significant proportion of the variation in insect length. 
+
+The interaction row is the one to look at first. Because the interaction is significant, the effect of diet *depends on* genotype, so the main-effect rows for diet and genotype cannot be interpreted on their own: there is no single "effect of diet" to report, because its size differs between the genotypes. Instead we describe the effect of diet separately for each genotype, using the plot and the post-hoc test below. (If the interaction had *not* been significant, we would drop it, refit the model with the main effects only, and interpret those, as in the exercise at the end of this chapter.)
 
 But as you know, this summary table doesn't tell you the direction of the effects. The obvious way to understand your data is to simply look at the plot you have already produced. You could also make an **interaction plot** which is a simplified version of the plot of the raw data. 
 
@@ -202,10 +204,29 @@ HSD.test(mod_A, trt = c("diet", "genotype"), console = TRUE)
 
 The important part of this output is at the bottom where it tells us ` Treatments with the same letter are not significantly different.`. You can see that the mean lengths between diets for genotype 1 are significantly different (they do not share a letter). However, there is no significant difference between diets for genotype 2 (they share the same letter, `c`). The two genotypes are also significantly different from each other. 
 
+The letters only tell us which groups differ. To say *how much* they differ, and how precisely we know that, we can use the confidence intervals from Tukey's test, which base R provides with `TukeyHSD`:
+
+```{r 3-06-n-way-ANOVA-10b}
+tukey_cells <- TukeyHSD(aov(lengthMM ~ interaction(diet, genotype), data = insectDiet))
+tukey_cells
+```
+
+```{r 3-06-n-way-ANOVA-10c, echo = FALSE}
+tk <- tukey_cells[[1]]
+gt1_diff <- -tk["lowProtein.gt1-highProtein.gt1", ]
+gt2_diff <- -tk["lowProtein.gt2-highProtein.gt2", ]
+mod_A_anova <- anova(mod_A)
+fmt <- function(x, d = 1) formatC(x, digits = d, format = "f")
+```
+
+You could report the results like this:
+
+*The effect of diet depended on genotype (two-way ANOVA, interaction: F = `r fmt(mod_A_anova["genotype:diet", "F value"])`, d.f. = 1 and `r mod_A_anova["Residuals", "Df"]`, p < 0.001). In genotype 1, insects reared on the high protein diet were `r fmt(gt1_diff["diff"])` mm longer than those on the low protein diet (Tukey 95% CI `r fmt(gt1_diff["upr"])` to `r fmt(gt1_diff["lwr"])` mm). In genotype 2 the difference was only `r fmt(gt2_diff["diff"])` mm (95% CI `r fmt(gt2_diff["upr"])` to `r fmt(gt2_diff["lwr"])` mm, adjusted p = `r fmt(tk["lowProtein.gt2-highProtein.gt2", "p adj"], 2)`), so there was no clear evidence of a diet effect in that genotype.*
+
 
 ## Summarising the model (`summary`)
 
-This (above) is generally enough information for a complete write up of results.  However, you can ask R to provide the model summary that includes the $R^2$ values, coefficient estimates and standard errors using `summary`.
+The ANOVA table, the plot and the post-hoc comparisons above are generally enough for a complete write up of results. However, you can ask R to provide the model summary that includes the $R^2$ values, coefficient estimates and standard errors using `summary`.
 
 ```{r 3-06-n-way-ANOVA-11}
 summary(mod_A)
@@ -215,7 +236,7 @@ The most useful thing shown here is the $R^2$ value. Because we have several ter
 
 The next bit is not 100% necessary most of the time...
 
-We already have a good idea of the mean values and standard errors for these data look because we calculated them above directly from the data. For completeness though I will now run through the coefficient estimates part of the summary table.
+We already have a good idea of the mean values and standard errors for these data because we calculated them above directly from the data. For completeness though I will now run through the coefficient estimates part of the summary table.
 
 The coefficient `Estimates` here are interpreted in a similar way to a one-way ANOVA. Again, it is important to know what the reference point is. When you understand this you can reconstruct the mean values for the various levels of the variables that are estimated by the model. You will see that the model estimates lead to precisely the same estimates as obtained from summarising the data. 
 
@@ -235,11 +256,11 @@ The logic and methods of the two-way ANOVA can be extended to produce $n$-way AN
 
 ## Exercise: Fish behaviour
 
-Individual differences in animal personality and external appearance such as colouration patterns have both been extensively studied separately. A significant body of research has explored many of pertinent ecological and biological aspects that can be affected by them and their impact upon fitness. Currently little is known about how both factors interact and their effect on reproductive success.
+Individual differences in animal personality and external appearance such as colouration patterns have both been extensively studied separately. A significant body of research has explored many of the pertinent ecological and biological aspects that can be affected by them and their impact upon fitness. Currently little is known about how both factors interact and their effect on reproductive success.
 
-Researchers carried out a study looking at differences in personality and its interaction with colour phenotype in zebra fish (*Danio rerio*). They used two colour morphs, "homogeneous" which has clearly defined lateral stripes,  and "heterogeneous" which has more variable and less clear patterns.
+Researchers carried out a study looking at differences in personality and its interaction with colour phenotype in zebrafish (*Danio rerio*). They used two colour morphs, "homogeneous" which has clearly defined lateral stripes,  and "heterogeneous" which has more variable and less clear patterns.
 
-They also assigned individuals to two personality types which they called "Proactive" (adventurous, risk taking) and "Reactive" (timid, less risk taking). They did this by recording how they explore a new environment
+They also assigned individuals to two personality types which they called "Proactive" (adventurous, risk taking) and "Reactive" (timid, less risk taking). They did this by recording how they explore a new environment.
 
 The two variables of interest are:
 

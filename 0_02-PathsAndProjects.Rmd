@@ -7,6 +7,7 @@ By the end of this chapter you should be able to:
 - Explain the difference between absolute and relative paths.
 - Use relative paths in your scripts.
 - Use an RStudio Project to keep work organised.
+- Check your working directory with `getwd()`.
 
 **Prerequisites**
 
@@ -39,19 +40,33 @@ These start from the root of your computer:
 
 ### Relative paths (recommended)
 
-Relative paths start from your project folder:
+Relative paths start from R's *working directory*: the folder R is currently "standing in". When you open an RStudio Project (next section), the working directory is set to the project folder, so this path finds the file inside your project:
 
 ```
 CourseData/carnivora.csv
 ```
 
+You can check the working directory at any time with:
+
+```{r 0-02-PathsAndProjects-getwd, eval = FALSE}
+getwd()
+```
+
+RStudio also shows it at the top of the Console pane.
+
 **Why this is better:** If everyone keeps the same project structure, the code just works.
+
+**Common mistake (Windows):** pasting a path copied from File Explorer, such as `C:\Users\YourName\...`. In R, `\` has a special meaning inside text, so this gives an error. Use forward slashes (`/`) instead, or better, a relative path.
+
+**Check yourself:** Which of these would work on a classmate's computer, `read.csv("C:/Users/YourName/Documents/BB852/CourseData/carnivora.csv")` or `read.csv("CourseData/carnivora.csv")`? (The second, as long as they open the same project structure.)
+
+Names must match exactly, including capital letters: `CourseData`, not `coursedata`. Some computers forgive the wrong case; others do not.
 
 ---
 
 ## Use an RStudio Project
 
-**What we’re about to do:** Set a predictable working directory.
+**What we're about to do:** Set a predictable working directory.
 
 An RStudio Project creates a `.Rproj` file and sets the project folder as the working directory every time you open it.
 
@@ -62,7 +77,11 @@ An RStudio Project creates a `.Rproj` file and sets the project folder as the wo
 3. Choose **Existing Directory** and select your folder.
 4. Click **Create Project**.
 
-From now on, open the `.Rproj` file to work on this course. You do not need to use `setwd()` in your scripts.
+From now on, open the `.Rproj` file (or choose the project from `File > Recent Projects`) to work on this course. You can tell you are working inside the project because its name, `BB852`, appears in the top-right corner of RStudio. You do not need to use `setwd()` in your scripts.
+
+**Common mistake:** double-clicking an `.R` script to open it. This can start RStudio *without* the project, so the working directory is wrong and relative paths fail. Open the project first, then open the script from the Files pane.
+
+**Recommended setting:** In `Tools > Global Options > General`, untick "Restore .RData into workspace at startup" and set "Save workspace to .RData on exit" to **Never**. Each session then starts clean, so your scripts (not leftover objects in memory) are the record of what you did.
 
 **Common mistake:** Calling `setwd()` inside scripts. A path that works on your machine will often fail on somebody else's.
 
@@ -86,18 +105,21 @@ Keep your project tidy:
 ## Key takeaways
 
 - Relative paths make your code shareable.
-- RStudio Projects set the working directory automatically.
+- Relative paths start from the working directory; check it with `getwd()`.
+- RStudio Projects set the working directory to the project folder automatically.
 - A simple folder structure saves time and confusion.
 
 ## Common pitfalls recap
 
 - Using absolute paths in scripts.
+- Opening a script by double-clicking it, so RStudio starts outside the project.
+- Pasting Windows paths with backslashes (`\`).
 - Using `setwd()` so that a script depends on a machine-specific location.
 - Saving data and scripts in the same messy folder.
 
 ## Try this
 
-Create a new project folder with the structure above, then:
+In your `BB852` project, create the folders above (if you have not already), then:
 
 1. Check that `carnivora.csv` is in `CourseData/`.
 2. Import it using `read.csv("CourseData/carnivora.csv")`.

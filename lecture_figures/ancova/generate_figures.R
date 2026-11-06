@@ -13,7 +13,7 @@
 #   CourseData/morphometry.csv  ANCOVA and multiple regression, n = 155
 #                               (simulated in scripts/SimulateData.R);
 #                               converted from mm to cm as in the book
-# Simulated here (seed stated): Simpson's paradox example (off by default).
+# Simulated here (seed stated): Simpson's paradox example (slide 5).
 # Schematic panels (slides 8 and 15) use hand-chosen values, not data.
 #
 # Run from the repository root:
@@ -240,9 +240,9 @@ plots$slide_04_by_sex <- by_sex +
                            sex_slopes[["Female"]], sex_slopes[["Male"]]))
 
 
-# Simpson's paradox (simulated): no longer a slide; it is mentioned in the
-# speaker notes of slide 4. Set show_simpson <- TRUE to rebuild the figure.
-show_simpson <- FALSE
+# Simpson's paradox (simulated): slide 5 of the Keynote deck (added 5 Nov 2026).
+# Set show_simpson <- FALSE to skip it.
+show_simpson <- TRUE
 if (show_simpson) {
 # Four groups. Within each, y rises with x (slope 0.8); group means fall as x
 # rises, so the pooled slope is negative.

@@ -16,7 +16,7 @@ By the end of this chapter you should be able to:
 
 **A tiny motivating example**
 
-Let’s make a tiny plot so we know everything is working.
+Let's make a tiny plot so we know everything is working.
 
 ```{r 0-03-An-R-Refresher-1, message=FALSE}
 
@@ -32,25 +32,35 @@ plot(body_length, body_mass)
 
 ## Getting started with RStudio
 
-**What we’re about to do:** We will set up a simple workflow so your work is reproducible.
+**What we're about to do:** We will set up a simple workflow so your work is reproducible.
 
 RStudio is not R itself. It is the interface where you write scripts, run code, and view results.
 
 ```{block 0-03-An-R-Refresher-2, type="do-something"}
-**Do this:** Open RStudio and create a new script (`File > New File > R Script`). Save it as `practice.R`.
+**Do this:** Open your `BB852` project, then create a new script (`File > New File > R Script`). Save it as `practice.R` in your `scripts` folder.
+```
+
+To run code from a script, put the cursor on a line (or select several lines) and press **Cmd + Enter** (Mac) or **Ctrl + Enter** (Windows), or click the **Run** button at the top of the script. The code is sent to the Console, and the result appears there.
+
+Anything after a `#` on a line is a **comment**: R ignores it. Use comments to explain what your code does and why, so that you (and anyone marking your work) can follow it later:
+
+```{r 0-03-An-R-Refresher-comments, eval = FALSE}
+# Import the carnivore data
+carni <- read.csv("CourseData/carnivora.csv")
+mean(carni$FW) # mean female body mass (kg)
 ```
 
 **Why this matters:** Scripts let you save, revisit, and debug your work. Copy-pasting into the console will not scale.
 
 **Common mistake:** Running everything in the console and losing your work. If this happens, start a script and re-run your commands there.
 
-**Takeaway:** Work in scripts, not just the console.
+**Takeaway:** Work in scripts, not just the console, run lines with Cmd/Ctrl + Enter, and comment your code with `#`.
 
 ---
 
 ## Getting help
 
-**What we’re about to do:** Learn how to ask R for help.
+**What we're about to do:** Learn how to ask R for help.
 
 ```{r 0-03-An-R-Refresher-3, eval=FALSE}
 ?rep
@@ -68,7 +78,7 @@ help.search("bar plot")
 
 ## R as a calculator
 
-**What we’re about to do:** Use R for basic arithmetic and logic.
+**What we're about to do:** Use R for basic arithmetic and logic.
 
 ```{r 0-03-An-R-Refresher-4}
 4 + 3
@@ -88,6 +98,8 @@ exp(1)
 log10(6)
 ```
 
+Note that `log()` is the *natural* logarithm (base *e*). Use `log10()` for base-10 logarithms, or `log(x, base = 2)` for any other base.
+
 Logical comparisons:
 
 ```{r 0-03-An-R-Refresher-6}
@@ -105,7 +117,7 @@ Logical comparisons:
 
 ## Objects and vectors
 
-**What we’re about to do:** Create objects and simple vectors.
+**What we're about to do:** Create objects and simple vectors.
 
 ```{r 0-03-An-R-Refresher-7}
 x <- 4
@@ -119,16 +131,18 @@ Vectors are sequences of values of the same basic type, such as numbers or text.
 ```{r 0-03-An-R-Refresher-8}
 A <- 1:5
 B <- c(1, 3, 6, 1, 7, 9)
-C <- seq(from = 1, to = 12, by = 2)
+odds <- seq(from = 1, to = 12, by = 2)
 D <- seq(from = 1, to = 5, by = 0.1)
-E <- rep(c("Male", "Female"), each = 3)
-F <- rep(c("Male", "Female"), times = c(2, 4))
+sex1 <- rep(c("Male", "Female"), each = 3)
+sex2 <- rep(c("Male", "Female"), times = c(2, 4))
 
 A
-C
-E
-F
+odds
+sex1
+sex2
 ```
+
+**Choosing names:** Object names can contain letters, numbers, `.` and `_`, but must not start with a number, and they are case sensitive (`A` and `a` are different objects). Avoid names that R already uses, such as `T`, `F` (short for `TRUE` and `FALSE`), `c` or `mean`. Short, descriptive names such as `body_mass` are easiest to read.
 
 ```{block 0-03-An-R-Refresher-9, type="do-something"}
 Try changing `seq()` or `rep()` arguments. What changes?
@@ -142,7 +156,7 @@ Try changing `seq()` or `rep()` arguments. What changes?
 
 ## Manipulating vectors
 
-**What we’re about to do:** Do arithmetic on vectors.
+**What we're about to do:** Do arithmetic on vectors.
 
 ```{r 0-03-An-R-Refresher-10}
 B
@@ -161,7 +175,7 @@ A / B
 
 ## Missing values, infinity, and NaN
 
-**What we’re about to do:** See how R handles missing values and edge cases.
+**What we're about to do:** See how R handles missing values and edge cases.
 
 ```{r 0-03-An-R-Refresher-11}
 mean(c(1, 3, 6, 1, 7, 9, NA))
@@ -185,7 +199,7 @@ Inf - Inf
 
 ## Data frames
 
-**What we’re about to do:** Create and inspect a data frame.
+**What we're about to do:** Create and inspect a data frame.
 
 ```{r 0-03-An-R-Refresher-13}
 height <- c(173, 145, 187, 155, 179, 133)
@@ -218,7 +232,7 @@ subset(mydata, sex == "Female")
 
 ## Classes and factors
 
-**What we’re about to do:** Check classes and use factors for categories.
+**What we're about to do:** Check classes and use factors for categories.
 
 ```{r 0-03-An-R-Refresher-16}
 class(height)
@@ -232,7 +246,7 @@ Factors tell R that a variable represents categories and record the possible cat
 plot(mydata$sex, mydata$age)
 ```
 
-The command above fails because `mydata$sex` contains character data. Converting it to a factor tells `plot()` to compare the numerical values across categories:
+The command above fails because `mydata$sex` contains character data. Converting it to a factor tells `plot()` to compare the numerical values across categories, which it does by drawing a **box plot** for each category:
 
 ```{r 0-03-An-R-Refresher-18}
 plot(as.factor(mydata$sex), mydata$age)
@@ -251,13 +265,13 @@ str(mydata)
 
 ## Organising your work and importing data
 
-**What we’re about to do:** Import a CSV file, and meet the two functions you will see for doing this.
+**What we're about to do:** Import a CSV file, and meet the two functions you will see for doing this.
 
-Keep your data in a `CourseData` folder inside your project. We will use **relative paths** throughout this course. If you do not have `CourseData`, download it from the course site.
+Keep your data in a `CourseData` folder inside your project. We will use **relative paths** throughout this course. If you do not have `CourseData`, follow the instructions in *Getting set up*.
 
 There are two common ways to read a CSV file into R, and you will come across both:
 
-- **`read.csv()`** comes with base R. It returns a `data.frame` and, with `stringsAsFactors = TRUE`, turns text columns into **factors** — which is convenient for the statistics later in the course.
+- **`read.csv()`** comes with base R. It returns a `data.frame` and, with `stringsAsFactors = TRUE`, turns text columns into **factors**.
 - **`read_csv()`** comes from the `readr` package (part of the tidyverse, which we cover later). It is a little faster, prints a short summary of the column types it guessed, and returns a *tibble* (a modern data frame). It leaves text columns as character.
 
 Both work well and you will see both in other people's code. **To keep things consistent, this book uses `read.csv()` from here on.**
@@ -269,6 +283,8 @@ carni <- read.csv("CourseData/carnivora.csv", stringsAsFactors = TRUE)
 **What just happened:** `read.csv()` imported the data as a `data.frame` and, thanks to `stringsAsFactors = TRUE`, stored the text columns as factors.
 
 **Try this:** Run `str(carni)` and compare it to `summary(carni)`.
+
+**Look closely:** `str(carni)` shows that `AM` (age at sexual maturity) and `IB` (inter-birth interval) were imported as **factors**, not numbers. Why? If even one value in a column is not a number, R treats the whole column as text. Run `levels(carni$AM)` and `levels(carni$IB)` and look for the odd ones out (`"t 132"` and `" S"`). These are typos in the original file. Problems like this are common in real data, which is why you should always check `str()` after importing.
 
 **Common mistake:** File not found. Check spelling and folder names.
 
@@ -284,11 +300,22 @@ dim(carni)
 names(carni)
 ```
 
-The dataset includes life history variables. For example:
+The data are life history traits of species in the mammal order Carnivora, from Gittleman (1986).^[Gittleman, J. L. (1986). Carnivore life history patterns: allometric, phylogenetic and ecological associations. *American Naturalist*, 127, 744–771. The same data set is included in the R package `ape` as `carnivora`.] Besides the taxonomy columns (`Order`, `SuperFamily`, `Family`, `Genus`, `Species`), the variables are:
 
-- `FW` = Female body mass (kg)
-- `GL` = Gestation length (days)
-- `BW` = Birth mass (g)
+| Column | Variable | Units |
+|---|---|---|
+| `FW` | Female body mass | kg |
+| `SW` | Average body mass of adult males and females | kg |
+| `FB` | Female brain mass | g |
+| `SB` | Average brain mass of adult males and females | g |
+| `LS` | Litter size | number of young |
+| `GL` | Gestation length | days |
+| `BW` | Birth mass | g |
+| `WA` | Weaning age | days |
+| `AI` | Age of independence | days |
+| `LY` | Longevity | months |
+| `AM` | Age at sexual maturity | days |
+| `IB` | Inter-birth interval | months |
 
 ```{r 0-03-An-R-Refresher-22}
 summary(carni$FW)
@@ -335,7 +362,7 @@ plot(
 
 ## Exercise: Californian bird diversity
 
-Surveys of bird abundance were carried out near Oakland, California.^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. *Journal of Biogeography*, 3(2), 157–165.] The locations were developed in different years, which lets us ask how species richness varies with the age of a suburb.
+Surveys of bird abundance were carried out in suburbs in west-central California.^[Vale, T. R., & Vale, G. R. (1976). Suburban bird populations in west-central California. *Journal of Biogeography*, 3(2), 157–165.] The locations were developed in different years, which lets us ask how species richness varies with the age of a suburb.
 
 ### The data
 
@@ -354,7 +381,7 @@ The file is `suburbanBirds.csv`. It contains the columns `Name`, `Year`, `Habita
 **Level 2 (practice)**
 
 3. Create a new column with `birds$Age <- 1975 - birds$Year` and check that it looks sensible.
-   **Checkpoint:** Younger suburbs have smaller `Age` values.
+   **Checkpoint:** `Age` should run from 1 to 29 years.
 
 4. Plot `Age` against `nSpecies` with `plot(birds$Age, birds$nSpecies)`.
    **Checkpoint:** The x-axis is age and the y-axis is species richness.

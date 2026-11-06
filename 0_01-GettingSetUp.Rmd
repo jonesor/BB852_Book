@@ -7,11 +7,12 @@ By the end of this chapter you should be able to:
 - Install R and RStudio on your own computer.
 - Explain the difference between R and RStudio.
 - Recognise the main parts of the RStudio window.
+- Install the packages used in the course.
 - Download the course data and put it where R can find it.
 
 **Prerequisites**
 
-- A laptop or desktop computer with an internet connection. That is all — this is the very first step.
+- A laptop or desktop computer with an internet connection. That is all: this is the very first step.
 
 **A tiny motivating example**
 
@@ -21,7 +22,7 @@ By the end of this short chapter you will be able to open RStudio, type a line l
 1 + 1
 ```
 
-If you can do that *and* import one of the course data files, you are ready to start.
+If you can do that, have the course packages installed *and* have the course data downloaded, you are ready for the next chapter.
 
 ---
 
@@ -30,9 +31,9 @@ If you can do that *and* import one of the course data files, you are ready to s
 It is worth being clear about this from the start, because it confuses almost everyone at first:
 
 - **R** is the programming *language* and the engine that does the actual computing. On its own it is not much to look at.
-- **RStudio** is a separate, much friendlier program — an "integrated development environment" (IDE) — that sits on top of R and makes it pleasant to use: somewhere to write scripts, run code, and see your results and plots side by side.
+- **RStudio** is a separate, much friendlier program, an "integrated development environment" (IDE), that sits on top of R and makes it pleasant to use: somewhere to write scripts, run code, and see your results and plots side by side.
 
-You install **both**, but for this course you will normally open **RStudio** — it starts R for you behind the scenes.
+You install **both**, but for this course you will normally open **RStudio**: it starts R for you behind the scenes.
 
 **Takeaway:** Install R *and* RStudio; work in RStudio.
 
@@ -42,13 +43,13 @@ You install **both**, but for this course you will normally open **RStudio** —
 
 **What we're about to do:** Get both programs onto your computer. There are **two separate downloads from two different websites**.
 
-**Step 1 — Install R (from CRAN).** Go to the official R website, CRAN, at <https://cran.r-project.org>. In the "Download and Install R" box at the top, choose the download for your operating system — **Download R for Windows** or **Download R for macOS** — then run the installer and accept the default options.
+**Step 1: Install R (from CRAN).** Go to the official R website, CRAN, at <https://cran.r-project.org>. In the "Download and Install R" box at the top, choose the download for your operating system (**Download R for Windows** or **Download R for macOS**), then run the installer and accept the default options. On a Mac, choose the **Apple silicon (arm64)** build unless your Mac is an older Intel model (check via the Apple menu > *About This Mac*).
 
 ```{r 0-01-getting-set-up-cran, echo=FALSE, out.width="95%", fig.cap="Downloading R from CRAN: use the \"Download and Install R\" box at the top of the page."}
 knitr::include_graphics("assets/CRAN_R_install.png")
 ```
 
-**Step 2 — Install RStudio Desktop (from Posit).** Go to <https://posit.co/download/rstudio-desktop/> and download the **RStudio Desktop** installer — the free, open-source version — for your operating system. Run it and again accept the defaults.
+**Step 2: Install RStudio Desktop (from Posit).** Go to <https://posit.co/download/rstudio-desktop/> and download the **RStudio Desktop** installer (the free, open-source version) for your operating system. Run it and again accept the defaults.
 
 ```{r 0-01-getting-set-up-rstudio-dl, echo=FALSE, out.width="95%", fig.cap="Downloading RStudio Desktop from Posit: choose the installer for your operating system."}
 knitr::include_graphics("assets/POSIT_R_Studio_install.png")
@@ -70,7 +71,7 @@ Install R **before** opening RStudio for the first time, so that RStudio can fin
 
 **What we're about to do:** Get oriented so the window is not intimidating.
 
-When you open RStudio you will see four main panes. (You may see only three at first — the top-left one appears as soon as you open or create a script.)
+When you open RStudio you will see four main panes. (You may see only three at first: the top-left one appears as soon as you open or create a script.)
 
 - **Source / editor (top-left):** where you write and save your **scripts**. This is where most of your work happens.
 - **Console (bottom-left):** where code actually runs and results appear. You can also type here directly for quick, throwaway commands.
@@ -82,10 +83,29 @@ knitr::include_graphics("assets/RStudio.png")
 ```
 
 ```{block 0-01-getting-set-up-3, type="do-something"}
-**Try this:** Click in the **Console**, type `1 + 1`, and press Enter. You should see the answer appear. Congratulations — R is working.
+**Try this:** Click in the **Console**, type `1 + 1`, and press Enter. You should see the answer appear. Congratulations: R is working.
 ```
 
-**Takeaway:** Four panes — editor, console, environment, and files/plots/help. You will use all of them.
+**Takeaway:** Four panes: editor, console, environment, and files/plots/help. You will use all of them.
+
+---
+
+## Install the course packages
+
+**What we're about to do:** Install the add-on packages used in this book. You only need to do this once on each computer (and again if you reinstall R).
+
+Copy this line into the RStudio **Console** and press Enter. It needs an internet connection and takes a few minutes:
+
+```{r 0-01-getting-set-up-packages, eval = FALSE}
+install.packages(c("dplyr", "tidyr", "ggplot2", "ggfortify", "patchwork",
+                   "agricolae", "DHARMa"))
+```
+
+Each time you start a new R session, you then *load* the packages you need with `library()`, for example `library(dplyr)`. Each chapter shows which ones it uses.
+
+**Common mistake:** putting `install.packages()` in your scripts, so that packages are reinstalled every time the script runs. Install once in the Console; load with `library()` in the script.
+
+**Takeaway:** `install.packages()` once per computer; `library()` once per session.
 
 ---
 
@@ -96,9 +116,9 @@ knitr::include_graphics("assets/RStudio.png")
 Almost every example in this book reads a data file from a folder called `CourseData`. Here is how to set that up:
 
 1. **Download the data** from the course Dropbox folder:
-   [https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0](https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/h?rlkey=spw81m08re1ufef5uvxcopgla&dl=0). Dropbox lets you download the whole folder as a single `.zip` file.
-2. **Unzip it.** This gives you a folder called `CourseData` containing many `.csv` files.
-3. **Create a course folder.** Create a folder called `BB852` somewhere sensible, such as your Documents folder, and move `CourseData` into it. In the next chapter, you will turn `BB852` into an RStudio Project.
+   [https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/AMXW_LUKtK8Knk7yuWOXRWc?rlkey=xz3c6pe0pscg52357frq37515&dl=0](https://www.dropbox.com/scl/fo/5tdl9dtflv79lkvq86vuj/AMXW_LUKtK8Knk7yuWOXRWc?rlkey=xz3c6pe0pscg52357frq37515&dl=0). Dropbox lets you download the whole folder as a single `.zip` file.
+2. **Unzip it and rename it.** This gives you a folder called `BB852_CourseData` containing many `.csv` files. Rename this folder to `CourseData` (exactly that, with a capital C and D), because that is the name the code in this book uses. (Some browsers, such as Safari, unzip the download automatically.)
+3. **Create a course folder.** Create a folder called `BB852` somewhere sensible, such as your Documents folder, and move `CourseData` into it. Avoid folders that are synced to the cloud (OneDrive, iCloud Drive, Dropbox) and folder names with spaces or Danish letters (æ, ø, å): these cause file-path errors later. In the next chapter, you will turn `BB852` into an RStudio Project.
 
 After you create the RStudio Project in the next chapter, a command like this will work without a long file path:
 
@@ -116,6 +136,7 @@ carni <- read.csv("CourseData/carnivora.csv")
 
 - R is the engine; RStudio is the friendly interface. Install both, open RStudio.
 - The RStudio window has four panes: editor, console, environment, and files/plots/help.
+- Install the course packages once with `install.packages()`; load them in each session with `library()`.
 - Put the `CourseData` folder inside your project and refer to files with relative paths.
 
 ## Common pitfalls recap
@@ -123,11 +144,13 @@ carni <- read.csv("CourseData/carnivora.csv")
 - Opening R instead of RStudio.
 - Installing only R or only RStudio, rather than installing both.
 - Downloading the data but leaving it in your Downloads folder, so R cannot find it.
+- Forgetting to rename `BB852_CourseData` to `CourseData`.
 
 ## Try this
 
 1. Install R and RStudio, and open RStudio.
-2. In the Console, type `1 + 1` and then `R.version.string`, pressing Enter after each.
-3. Download and unzip the course data, then put `CourseData` inside a folder called `BB852`.
+2. In the Console, type `1 + 1` and then `R.version.string`, pressing Enter after each. The second should report R version 4.5 or later.
+3. Install the course packages.
+4. Download and unzip the course data, rename the folder to `CourseData`, then put it inside a folder called `BB852`.
 
 You are now ready to turn the `BB852` folder into an RStudio Project in the next chapter.

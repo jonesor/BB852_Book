@@ -4,52 +4,48 @@ These are the solutions to the exercises used in the course.
 
 ## Californian bird diversity
 
-1. First import the data. Check that the columns look as they should. (e.g. use `summary` or `str` functions). Tip: use the "Wizard" in RStudio to guide you.
+1. Import the data as an object called `birds`, then check the columns with `str()`.
 
 ```{r 6-1-00-AllSolutions-1}
 birds <- read.csv("CourseData/suburbanBirds.csv")
+str(birds)
 ```
 
+There are 17 suburbs and the five columns `Name`, `Year`, `HabitatIndex`, `nIndividuals` and `nSpecies`. (`HabitatIndex` has one missing value, `NA`.)
 
-2. What is the mean, minimum, and maximum number of species seen? (there is more than one way to do this)*
+2. Calculate the mean, minimum, and maximum of `nSpecies`.
 
 ```{r 6-1-00-AllSolutions-2}
 mean(birds$nSpecies)
 min(birds$nSpecies)
 max(birds$nSpecies)
-range(birds$nSpecies)
-summary(birds$nSpecies)
 ```
 
+There is more than one way to do this. For example, `range(birds$nSpecies)` gives the minimum and maximum together, and `summary(birds$nSpecies)` gives all three (and more).
 
-3. How old are the youngest and oldest suburbs? (hint: the survey was carried out in 1975, do the math!)
+3. Create a new column with `birds$Age <- 1975 - birds$Year` and check that it looks sensible.
 
 ```{r 6-1-00-AllSolutions-3}
-1975 - min(birds$Year)
-1975 - max(birds$Year)
+birds$Age <- 1975 - birds$Year
+range(birds$Age)
 ```
 
-4. Plot the relationship between `Year` and `nSpecies` as a scatterplot using base-R graphics (using the `plot` function).
+The suburbs were between 1 and 29 years old when they were surveyed.
+
+4. Plot `Age` against `nSpecies`.
 
 ```{r 6-1-00-AllSolutions-4}
-plot(birds$Year, birds$nSpecies)
-```
-
-5. The pattern might be easier to see if you could replace `YearBuilt` with suburb age. Create a new vector in your data frame for this variable (e.g. `birds$Age <- 1975 - birds$Year)`). Re-plot your results.
-
-```{r 6-1-00-AllSolutions-5}
-birds$Age <- 1975 - birds$Year
 plot(birds$Age, birds$nSpecies)
 ```
 
+5. Add a smoother.
 
-6. What do the data show? What might be the mechanisms for the patterns you see? Do they match your expectations?
+```{r 6-1-00-AllSolutions-5}
+plot(birds$Age, birds$nSpecies)
+lines(lowess(birds$Age, birds$nSpecies))
+```
 
-If you recall that the average species richness pre-development was about 3.5 species, the data show that suburban development is actually good for bird species. This could be surprising, but a possible explanation is that the gardens, parks, trees etc. that come with development represent additional habitats that would not normally be there. Therefore, these areas attract new species.
-
-7. Export your plots and paste them into a Word Document.
-
-You can do this with several methods. My favourite *quick* method is to click the Export button > Copy to Clipboard, resize the plot so it looks nice, then click Copy Plot. Finally, paste into Word with Ctrl (or Cmd) + V.
+Species richness increases with the age of the suburb: the newest suburbs have only 3 to 6 species, while those built 20 or more years before the survey have 11 to 15. The smoother suggests that richness rises steeply over the first 15 to 20 years and then levels off. A possible explanation is that the gardens, parks and trees that come with development take years to mature, and as they do they provide habitat for more species.
 
 
 ## Wrangling the Amniote Life History Database
