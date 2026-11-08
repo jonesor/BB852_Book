@@ -423,6 +423,18 @@ t.test(Reaction ~ Gender, data = x, var.equal = TRUE)
 ```
 
 
+```{block2, type="try-it-box"}
+**Try it: Randomisation Test Lab: same question, three tests** ([open the lab](https://jonesor.shinyapps.io/bb852suite/?lab=randomisationtestlab))
+
+Use the "Same question, three tests" panel at the bottom of the lab.
+
+- Compare the t-test and `lm()` rows. Which numbers are identical, and why?
+- Give the two groups very different SDs and a small sample. When does the randomisation test start to disagree with the t-test?
+- Switch to paired data: how does the paired t-test relate to `lm(change ~ 1)`?
+
+Then try the same idea in R.
+```
+
 ## Exercise: Sex differences in fine motor skills
 
 Some people have suggested that there might be sex differences in fine motor skills in humans. Use the data collected from students in previous years to address this topic using t-tests. The relevant data set is called `classData.csv`, and the columns of interest are `Gender` and `Precision`. The data contain several years, and a small number of students chose a `Gender` other than `Female` or `Male`; filter the data so that you are comparing two groups (and decide whether to use one year or all years).

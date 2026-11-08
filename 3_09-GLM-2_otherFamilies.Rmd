@@ -499,6 +499,18 @@ Two points are worth emphasising for the binomial case:
 
 **What to do when it is detected.** The fix mirrors the Poisson case. Refit the model exactly as before, but replace `family = binomial` with `family = quasibinomial`. The quasibinomial family estimates a dispersion parameter and widens the standard errors (and therefore the p-values) accordingly, while leaving the coefficient estimates themselves unchanged. Because a dispersion parameter is now being estimated, you should assess significance with an **F test** rather than the chi-squared test (i.e. `anova(model, test = "F")`). The negative-binomial and zero-inflation options mentioned in the previous chapter are specific to count data, but the quasi-likelihood idea carries over directly to binomial data through the quasibinomial family. The net effect, as with quasi-Poisson, is a more honest and more cautious picture of how certain you can be about the relationship.
 
+```{block2, type="try-it-box"}
+**Try it: GLM Family Lab: binomial models** ([open the lab](https://jonesor.shinyapps.io/bb852suite/?lab=glmfamilyexplorer))
+
+Choose the binomial family.
+
+- With 1 trial per observation (0/1 data), why does the lab give no verdict on the dispersion ratio?
+- Use the odds ratio and the 50% point to describe the fitted curve in words.
+- Increase the trials to 20 and add extra variation. What happens to the dispersion ratio and to the binomial confidence interval for the slope?
+
+Then try the same idea in R.
+```
+
 ## Exercise: Forensic footprints
 
 A crime has been committed. At the scene, investigators recover a single clear footprint, and from it a forensic technician estimates that the person who left it had a **foot length of 271 mm**. Was the culprit male or female?

@@ -134,6 +134,17 @@ In more complicated models, this approach can be taken further by grouping expla
 The logical process is the same for Generalised Linear Models (GLM), which we will cover soon, except we use an analogous quantity called `Deviance` rather than Sum of Squares.
 
 
+```{block2, type="try-it-box"}
+**Try it: Overfitting and AIC Lab** ([open the lab](https://jonesor.shinyapps.io/bb852suite/?lab=overfittinglab))
+
+Fit polynomials of increasing degree to a sample of daily temperatures.
+
+- With 20 sampled days, which polynomial degree predicts the unseen days best? Does AIC pick the same degree?
+- Draw a new sample of days, then try 80 days. Does the best degree change? Why do small samples overfit sooner?
+
+Then try the same idea in R.
+```
+
 ## Conclusion
 
 In conclusion, you now have some tools to understand your models in more detail. R-squared gives a handy summary of how much of the variation in the response is explained (report adjusted R-squared for models with more than one term). It is not a measure of effect size, and a low value does not mean a bad model: noisy biological systems often give low R-squared values even when an effect is clear and precisely estimated. Because R-squared depends on the range and noise of each data set, do not use it to compare models fitted to different data. AIC is another measure of model "quality" that can only compare models fitted to the same data set, with the same response variable. Low AIC values are better than high ones.

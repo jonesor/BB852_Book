@@ -299,6 +299,17 @@ ggplot(simulData, aes(x = sampleSize, y = Power)) +
   geom_hline(yintercept = 0.8, linetype = "dashed")
 ```
 
+```{block2, type="try-it-box"}
+**Try it: Power Simulation Lab** ([open the lab](https://jonesor.shinyapps.io/bb852suite/?lab=powersimstudio))
+
+Estimate power by simulation.
+
+- Before you look: if you halve the difference you want to detect, roughly how many more samples per group do you need for 80% power? Check it.
+- Set the difference to 0. What "power" do you get, and why is it close to alpha?
+
+Then try the same idea in R.
+```
+
 ## Summary
 
 Simulation is a powerful tool to help design studies and to understand their results. The recipe is always the same: (1) decide on realistic values for the effect you hope to detect and the variation you expect, based on previous work or pilot data; (2) simulate data with those properties; (3) analyse the simulated data with the test or model you plan to use; and (4) repeat many times and count how often the result is significant. Only the random-number function (`rnorm`, `rbinom`, `rpois`, ...) and the analysis (`t.test`, `lm`, `glm`, ...) need to change. You can then vary the sample size (or the design, such as the spread of predictor values) until the power reaches your target, usually 80%.
