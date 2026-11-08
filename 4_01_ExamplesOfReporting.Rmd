@@ -29,6 +29,8 @@ results
 ```
 
 ```{r 4-01-ttest-values, echo = FALSE}
+# format numbers with a fixed number of decimal places (keeps trailing zeros)
+f <- function(x, digits) formatC(x, digits = digits, format = "f")
 tt_diff <- mean(treatment) - mean(control)
 tt_ci <- results$conf.int
 ```
@@ -39,7 +41,7 @@ _To compare the mean height of plants in the two groups I used a two-sample t-te
 
 You might report the results as:
 
-_Plants in the treatment group were on average `r round(tt_diff, 1)` cm taller than those in the control group (mean height `r round(mean(treatment), 1)` cm vs. `r round(mean(control), 1)` cm; 95% CI for the difference: `r round(tt_ci[1], 2)` to `r round(tt_ci[2], 2)` cm; t = `r round(results$statistic, 2)`, d.f. = `r results$parameter`, p = `r round(results$p.value, 3)`)._
+_Plants in the treatment group were on average `r f(tt_diff, 1)` cm taller than those in the control group (mean height `r f(mean(treatment), 1)` cm vs. `r f(mean(control), 1)` cm; 95% CI for the difference: `r f(tt_ci[1], 2)` to `r f(tt_ci[2], 2)` cm; t = `r f(results$statistic, 2)`, d.f. = `r results$parameter`, p = `r f(results$p.value, 3)`)._
 
 Notice the order: first the biology (how much taller, and how uncertain that estimate is), then the test details in parentheses. If the p-value had been, say, 0.14, you would write something like _"there was no clear evidence of a difference in height between the groups (difference = ..., 95% CI: ...)"_. The confidence interval then tells the reader how large a difference is still compatible with the data.
 
@@ -67,7 +69,7 @@ _To investigate the relationship between petal length and sepal length I fitted 
 
 You might write the results up like this:
 
-_Sepal length increased with petal length: each 1 cm increase in petal length was associated with an increase in sepal length of `r round(lm_coef[2], 2)` cm (95% CI: `r round(lm_ci[2, 1], 2)` to `r round(lm_ci[2, 2], 2)` cm; F = `r round(lm_aov[1, "F value"], 1)`, d.f. = 1 and `r lm_aov[2, "Df"]`, p < 0.001). Petal length explained `r round(lm_r2 * 100)`% of the variation in sepal length (R^2^ = `r round(lm_r2, 2)`). The fitted line was: sepal length = `r round(lm_coef[1], 2)` + `r round(lm_coef[2], 2)` $\times$ petal length._
+_Sepal length increased with petal length: each 1 cm increase in petal length was associated with an increase in sepal length of `r f(lm_coef[2], 2)` cm (95% CI: `r f(lm_ci[2, 1], 2)` to `r f(lm_ci[2, 2], 2)` cm; F = `r f(lm_aov[1, "F value"], 1)`, d.f. = 1 and `r lm_aov[2, "Df"]`, p < 0.001). Petal length explained `r f(lm_r2 * 100, 0)`% of the variation in sepal length (R^2^ = `r f(lm_r2, 2)`). The fitted line was: sepal length = `r f(lm_coef[1], 2)` + `r f(lm_coef[2], 2)` $\times$ petal length._
 
 Note that the F-test from `anova()` and the t-test of the slope from `summary()` give the same p-value for a simple regression (F = t^2^), so you only need to report one of them.
 
@@ -86,7 +88,7 @@ summary(mod_fox)
 fox_aov <- anova(mod_fox, test = "Chisq")
 fox_coef <- coef(mod_fox)
 fox_ci <- confint.default(mod_fox)
-fox_disp <- sum(residuals(mod_fox, type = "pearson")^2) / df.residual(mod_fox)
+fox_disp <- deviance(mod_fox) / df.residual(mod_fox)
 fox_devexp <- fox_aov[2, "Deviance"] / fox_aov[1, "Resid. Dev"]
 ```
 
@@ -94,13 +96,13 @@ For the methods, I might write something like this:
 
 _To investigate the relationship between maternal weight and the number of offspring, I fitted a generalised linear model (GLM) with Poisson errors and a log link, with maternal weight as the explanatory variable. I tested the effect of weight using a likelihood ratio test, and checked for overdispersion._
 
-The `anova()` output gives the likelihood ratio test (the drop in deviance when weight is added to the model). The `summary()` output gives the coefficients, which are on the log scale. Because of the log link, exponentiating the slope gives a *multiplicative* effect: $e^{`r round(fox_coef[2], 2)`}$ = `r round(exp(fox_coef[2]), 2)`, so the expected number of offspring is multiplied by about `r round(exp(fox_coef[2]), 1)` for each extra kg of maternal weight.
+The `anova()` output gives the likelihood ratio test (the drop in deviance when weight is added to the model). The `summary()` output gives the coefficients, which are on the log scale. Because of the log link, exponentiating the slope gives a *multiplicative* effect: $e^{`r f(fox_coef[2], 2)`}$ = `r f(exp(fox_coef[2]), 2)`, so the expected number of offspring is multiplied by about `r f(exp(fox_coef[2]), 1)` for each extra kg of maternal weight.
 
-The deviances can also be used to calculate how much of the variation the model explains (a kind of _pseudo-R^2^_): weight reduces the deviance by `r round(fox_aov[2, "Deviance"], 1)` out of a null deviance of `r round(fox_aov[1, "Resid. Dev"], 1)`, which is `r round(fox_devexp * 100, 1)`%.
+The deviances can also be used to calculate how much of the variation the model explains (a kind of _pseudo-R^2^_): weight reduces the deviance by `r f(fox_aov[2, "Deviance"], 1)` out of a null deviance of `r f(fox_aov[1, "Resid. Dev"], 1)`, which is `r f(fox_devexp * 100, 1)`%.
 
 So, to put it together:
 
-_Heavier mothers produced more offspring (Poisson GLM, likelihood ratio test: $\chi^2$ = `r round(fox_aov[2, "Deviance"], 1)`, d.f. = 1, p < 0.001). The slope on the log scale was `r round(fox_coef[2], 2)` (95% CI: `r round(fox_ci[2, 1], 2)` to `r round(fox_ci[2, 2], 2)`), meaning that each additional kg of maternal weight multiplied the expected number of offspring by `r round(exp(fox_coef[2]), 2)` (95% CI: `r round(exp(fox_ci[2, 1]), 2)` to `r round(exp(fox_ci[2, 2]), 2)`). Weight explained `r round(fox_devexp * 100)`% of the deviance in offspring number. There was no evidence of overdispersion (dispersion = `r round(fox_disp, 2)`)._
+_Heavier mothers produced more offspring (Poisson GLM, likelihood ratio test: $\chi^2$ = `r f(fox_aov[2, "Deviance"], 1)`, d.f. = 1, p < 0.001). The slope on the log scale was `r f(fox_coef[2], 2)` (95% CI: `r f(fox_ci[2, 1], 2)` to `r f(fox_ci[2, 2], 2)`), meaning that each additional kg of maternal weight multiplied the expected number of offspring by `r f(exp(fox_coef[2]), 2)` (95% CI: `r f(exp(fox_ci[2, 1]), 2)` to `r f(exp(fox_ci[2, 2]), 2)`). Weight explained `r f(fox_devexp * 100, 0)`% of the deviance in offspring number. There was no evidence of overdispersion (residual deviance / residual d.f. = `r f(fox_disp, 2)`)._
 
 A figure showing the data with the fitted line and its confidence band (on the scale of the data) is often the clearest way to present a GLM, and the text can then refer to it.
 
@@ -135,6 +137,6 @@ _To test whether height and hand width predict sex, I fitted a binomial GLM (log
 
 And the results:
 
-_Taller students were more likely to be male (likelihood ratio test: $\chi^2$ = `r round(sex_aov[2, "Deviance"], 1)`, d.f. = 1, p < 0.001), and hand width explained additional variation once height had been accounted for ($\chi^2$ = `r round(sex_aov[3, "Deviance"], 1)`, d.f. = 1, p = `r round(sex_p2, 3)`). Holding hand width constant, the odds of being male increased by a factor of `r round(exp(sex_coef["Height"]), 2)` for each extra cm of height (95% CI: `r round(exp(sex_ci["Height", 1]), 2)` to `r round(exp(sex_ci["Height", 2]), 2)`). Holding height constant, they increased by a factor of `r round(exp(sex_coef["HandWidth"]), 1)` for each extra cm of hand width (95% CI: `r round(exp(sex_ci["HandWidth", 1]), 1)` to `r round(exp(sex_ci["HandWidth", 2]), 1)`). Together, the two variables explained `r round((sex_aov[1, "Resid. Dev"] - sex_aov[3, "Resid. Dev"]) / sex_aov[1, "Resid. Dev"] * 100)`% of the deviance, most of it due to height._
+_In the `r nobs(mod_sex)` students with both measurements, taller students were more likely to be male (likelihood ratio test: $\chi^2$ = `r f(sex_aov[2, "Deviance"], 1)`, d.f. = 1, p < 0.001), and hand width explained additional variation once height had been accounted for ($\chi^2$ = `r f(sex_aov[3, "Deviance"], 1)`, d.f. = 1, p = `r f(sex_p2, 3)`). Holding hand width constant, the odds of being male increased by a factor of `r f(exp(sex_coef["Height"]), 2)` for each extra cm of height (95% CI: `r f(exp(sex_ci["Height", 1]), 2)` to `r f(exp(sex_ci["Height", 2]), 2)`). Holding height constant, they increased by a factor of `r f(exp(sex_coef["HandWidth"]), 1)` for each extra cm of hand width (95% CI: `r f(exp(sex_ci["HandWidth", 1]), 1)` to `r f(exp(sex_ci["HandWidth", 2]), 1)`). Together, the two variables explained `r f((sex_aov[1, "Resid. Dev"] - sex_aov[3, "Resid. Dev"]) / sex_aov[1, "Resid. Dev"] * 100)`% of the deviance, most of it due to height._
 
 Note that the odds ratio for hand width is larger than the one for height, but this does not mean hand width is the "more important" variable: a 1 cm difference in hand width is a much bigger difference than 1 cm of height. The deviances tell a clearer story about how much variation each term explains.
