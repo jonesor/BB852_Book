@@ -254,3 +254,22 @@ Explore what leaving out a variable does to a slope.
 
 Then try the same idea in R.
 ```
+
+## Exercise: Is foot length worth adding?
+
+The `morphometry.csv` data also contain foot length. Foot length is a well-known predictor of height (it is used in forensics to estimate the height of a suspect from a footprint), so it is tempting to add it to the model. In this exercise you will see what happens when two explanatory variables carry almost the same information.
+
+1) Import `morphometry.csv` and convert `Height`, `HandLength` and `FootLength` from mm to cm.
+
+2) Reproduce the model from this chapter: fit `Height ~ HandLength * Sex`, check the diagnostic plots, test the interaction with `anova`, and refit without it if it is not needed.
+
+3) Before adding foot length, look at how it relates to hand length. Plot `FootLength` against `HandLength` and calculate the correlation with `cor()`. What do you expect to happen when both are in the same model?
+
+4) Fit `Height ~ FootLength + Sex`. Does foot length predict height when it is the only length measurement in the model?
+
+5) Now fit `Height ~ HandLength + FootLength + Sex`. Compare it with your model from question 2 and the model from question 4:
+   * What happens to the estimate and the p-value for foot length?
+   * What happens to the standard error of the hand-length estimate?
+   * What happens to the adjusted $R^2$?
+
+6) In two or three sentences, explain what you found, and say which model you would report and why.

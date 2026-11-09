@@ -704,6 +704,70 @@ A + geom_smooth(method = "lm")
 Yes, using the equation from the model. Ask an instructor if you can't figure this out.
 
 
+## Is foot length worth adding?
+
+1. Import the data and convert the measurements to cm.
+
+```{r 6-1-00-AllSolutions-foot-1}
+morph <- read.csv("CourseData/morphometry.csv") %>%
+  mutate(
+    Height = Height / 10,
+    HandLength = HandLength / 10,
+    FootLength = FootLength / 10
+  ) # mm -> cm
+```
+
+2. Reproduce the model from the chapter.
+
+```{r 6-1-00-AllSolutions-foot-2, message = FALSE, warning = FALSE}
+library(ggfortify)
+mod_int <- lm(Height ~ HandLength * Sex, data = morph)
+autoplot(mod_int)
+anova(mod_int)
+mod_B <- lm(Height ~ HandLength + Sex, data = morph)
+summary(mod_B)
+```
+
+The diagnostic plots look acceptable. The interaction is not needed (F = 0.17, d.f. = 1 and 151, p = 0.68), so we use the parallel-lines model `mod_B`: height increases by 3.9 cm per cm of hand length (SE 0.40), and males are 7.4 cm taller than females with the same hand length.
+
+3. Foot length against hand length.
+
+```{r 6-1-00-AllSolutions-foot-3}
+ggplot(morph, aes(x = HandLength, y = FootLength, colour = Sex)) +
+  geom_point()
+cor(morph$HandLength, morph$FootLength)
+```
+
+The two are strongly correlated (r = 0.90): people with long hands nearly always have long feet. (The correlation is still high within each sex: 0.75 in males and 0.80 in females.) So the data contain little information about the effect of one with the other held constant, and we should expect at least one of the estimates to become uncertain.
+
+4. Foot length without hand length.
+
+```{r 6-1-00-AllSolutions-foot-4}
+mod_F <- lm(Height ~ FootLength + Sex, data = morph)
+summary(mod_F)
+confint(mod_F)
+```
+
+On its own (with sex), foot length predicts height well: 1.75 cm of height per cm of foot length (95% CI 1.18 to 2.31, p < 0.001). Adjusted $R^2$ = 0.74, a little lower than the hand-length model (0.80).
+
+5. Both length measurements in the same model.
+
+```{r 6-1-00-AllSolutions-foot-5}
+mod_HF <- lm(Height ~ HandLength + FootLength + Sex, data = morph)
+summary(mod_HF)
+confint(mod_HF)
+anova(mod_B, mod_HF)
+```
+
+* Foot length: the estimate drops from 1.75 to -0.37 cm per cm (SE 0.39, p = 0.34; 95% CI -1.15 to 0.40). Once hand length is in the model, foot length adds nothing detectable (comparing `mod_B` and `mod_HF`: F = 0.91, d.f. = 1 and 151, p = 0.34).
+* Hand length: the standard error rises from 0.40 to 0.62, so the estimate becomes less precise, even though nothing about hand length has changed.
+* Adjusted $R^2$: 0.803 in both `mod_B` and `mod_HF`. Adding foot length explains no extra variation.
+
+6. Summing up.
+
+Hand length and foot length are so strongly correlated (r = 0.90) that the model cannot separate their effects: with both in the model, foot length's estimate collapses towards zero and the hand-length estimate becomes less precise. This is called multicollinearity. It is not an error in R, and it does not mean that foot length is unrelated to height (on its own it predicts height well). I would report `mod_B` (`Height ~ HandLength + Sex`), because it fits as well as the model with both measurements and its estimates are more precise. The general lesson: check correlations between explanatory variables (with `cor()` or a plot) before fitting, and when two are almost the same, choose one (or combine them) rather than fitting both.
+
+
 ## Fish behaviour
 
 1. Import the data set, `fishPersonality.csv`
