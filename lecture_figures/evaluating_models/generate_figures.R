@@ -543,6 +543,112 @@ half_plots$slide_23_order <- stack_plot(shares, 16)
 takeaway_plots$slide_23_order <- stack_plot(shares, 16)
 
 
+# Slide 16a: which line makes the data most likely? ------------------------------
+# Height on hand length (mod3) with four candidate lines: the least-squares
+# (maximum-likelihood) line and the same line shifted up by 4, 10 and 20 cm.
+# Panels are lettered in a shuffled order so the answer is not the first one.
+# Log-likelihoods (normal errors, sigma fixed at the ML estimate of mod3) are
+# written to output/text/slide_16a_loglik.txt for the notes.
+
+b3 <- coef(mod3)
+sigma_ml <- sqrt(mean(residuals(mod3)^2))
+lik_lines <- data.frame(
+  panel = c("A", "B", "C", "D"),
+  shift = c(10, 0, 20, 4)
+)
+lik_lines$intercept <- b3[1] + lik_lines$shift
+lik_lines$slope <- b3[2]
+lik_lines$logLik <- sapply(lik_lines$shift, function(s) {
+  sum(dnorm(morph$Height, mean = b3[1] + s + b3[2] * morph$HandLength,
+            sd = sigma_ml, log = TRUE))
+})
+writeLines(c("Line  shift (cm)  log-likelihood",
+             sprintf("%s     %5.0f       %9.1f", lik_lines$panel,
+                     lik_lines$shift, lik_lines$logLik),
+             sprintf("sigma (ML) = %.3f cm; logLik(mod3) = %.1f",
+                     sigma_ml, as.numeric(logLik(mod3)))),
+           file.path(text_directory, "slide_16a_loglik.txt"))
+
+lik_points <- merge(morph[, c("HandLength", "Height")],
+                    data.frame(panel = lik_lines$panel), by = NULL)
+
+lik_plot <- function(base, nrow) {
+  ggplot(lik_points, aes(HandLength, Height)) +
+    geom_point(colour = bb852$light, alpha = 0.8, size = 1.4) +
+    geom_abline(data = lik_lines,
+                aes(intercept = intercept, slope = slope),
+                colour = bb852$coral, linewidth = 1.4) +
+    facet_wrap(~panel, nrow = nrow) +
+    coord_cartesian(ylim = c(145, 215)) +
+    labs(x = "Hand length (cm)", y = "Height (cm)") +
+    theme_bb852(base) +
+    theme(strip.text = element_text(size = base + 2, face = "bold"),
+          panel.spacing = unit(1, "lines"))
+}
+plots$slide_16a_likelihood <- lik_plot(16, 1)
+half_plots$slide_16a_likelihood <- lik_plot(16, 2)
+takeaway_plots$slide_16a_likelihood <- lik_plot(16, 2)
+
+
+# Slide 12: R-squared and adjusted R-squared as random noise terms are added ------
+# mod1 refitted with the first n of 150 columns of pure noise (n = 0 to 150;
+# 150 leaves 2 residual df). Seed 42 as in the book, so the first noise column
+# is the book's randomVariable (R-squared 0.8063, adjusted 0.8024 at n = 1).
+# Values are written to output/text/slide_12_noise_r2.txt.
+
+set.seed(42)
+max_noise <- 150
+noise_mat <- matrix(rnorm(nrow(morph) * max_noise), nrow = nrow(morph))
+colnames(noise_mat) <- paste0("random", seq_len(max_noise))
+
+noise_r2 <- data.frame(n_terms = 0:max_noise, R2 = NA_real_, adjusted_R2 = NA_real_)
+for (i in seq_len(nrow(noise_r2))) {
+  n <- noise_r2$n_terms[i]
+  dat <- cbind(morph[, c("Height", "HandLength", "Sex")],
+               noise_mat[, seq_len(n), drop = FALSE])
+  s <- summary(lm(Height ~ ., data = dat))
+  noise_r2$R2[i] <- s$r.squared
+  noise_r2$adjusted_R2[i] <- s$adj.r.squared
+}
+writeLines(capture.output(print(noise_r2, row.names = FALSE)),
+           file.path(text_directory, "slide_12_noise_r2.txt"))
+
+noise_long <- rbind(
+  data.frame(n_terms = noise_r2$n_terms, value = noise_r2$R2,
+             measure = "R\u00B2"),
+  data.frame(n_terms = noise_r2$n_terms, value = noise_r2$adjusted_R2,
+             measure = "Adjusted R\u00B2")
+)
+noise_ends <- noise_long[noise_long$n_terms == max_noise, ]
+
+noise_plot <- function(base, wrap_label = FALSE, note_x = 85, note_dy = 0.006,
+                       right = 0.25) {
+  ends <- noise_ends
+  if (wrap_label) ends$measure_label <- sub("Adjusted ", "Adjusted\n", ends$measure)
+  else ends$measure_label <- ends$measure
+  ggplot(noise_long, aes(n_terms, value, colour = measure)) +
+    geom_hline(yintercept = noise_r2$R2[1], linetype = "22",
+               colour = bb852$muted, linewidth = 0.6) +
+    geom_line(linewidth = 1.3) +
+    geom_text(data = ends, aes(label = measure_label),
+              hjust = 0, nudge_x = 3, lineheight = 0.9, size = pt(base), family = bb852_font,
+              fontface = "bold") +
+    annotate("text", x = note_x, y = noise_r2$R2[1] + note_dy, hjust = 0, vjust = 0,
+             label = "mod1 without noise", colour = bb852$muted,
+             size = pt(base - 2), family = bb852_font) +
+    scale_colour_manual(values = c("R\u00B2" = bb852$coral,
+                                   "Adjusted R\u00B2" = bb852$slate)) +
+    scale_x_continuous(breaks = seq(0, max_noise, 25),
+                       expand = expansion(mult = c(0.02, right))) +
+    labs(x = "Number of random noise terms added",
+         y = "R\u00B2 (proportion of\nvariation explained)") +
+    theme_bb852(base)
+}
+plots$slide_12_noise_r2 <- noise_plot(18)
+half_plots$slide_12_noise_r2 <- noise_plot(16, wrap_label = TRUE, note_x = 28,
+                                           note_dy = 0.011, right = 0.36)
+
+
 # Save every figure ------------------------------------------------------------------
 
 for (name in names(plots)) {

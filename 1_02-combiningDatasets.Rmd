@@ -53,7 +53,7 @@ Let's take a quick look at what we have:
 head(mammal)
 ```
 
-Looks good. Now let's import the IUCN Red List data.
+Looks good. Now let's import the IUCN Red List data.^[IUCN. *The IUCN Red List of Threatened Species*. <https://www.iucnredlist.org>. This file contains 5,494 mammal assessments, the latest from 2011, so it reflects a Red List version from about 2011–2012. The Red List is updated regularly, so many species' current statuses will differ.]
 
 
 ```{r 1-02-combiningDatasets-4}
@@ -219,7 +219,7 @@ You are provided with two data sets: one on the birds and another on weather. Yo
 
 The first data set, `eggDates.csv`, is data from the SDU birds project. The data are arranged in columns where each column is a year and each row is a nest box. The data in each column is the day of the year that the first egg in the nest was laid.
 
-These data do NOT fulfil the "tidy data" standard where each variable gets a column. In this case, a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.
+These data do NOT fulfil the "tidy data" standard where each variable gets a column.^[Wickham, H. (2014). Tidy data. *Journal of Statistical Software* 59(10): 1–23. <https://doi.org/10.18637/jss.v059.i10>. For practical rules on entering data in a spreadsheet so that it is tidy from the start, see Broman, K. W. & Woo, K. H. (2018). Data organization in spreadsheets. *The American Statistician* 72(1): 2–10. <https://doi.org/10.1080/00031305.2017.1375989>] In this case, a single variable (first egg date) gets many columns (one for each year), and column headers are data (the years). The data will need to be processed before you can analyse it.
 
 You will need to use `pivot_longer` to fix this issue so that you produce a version of the data with three columns: `boxNumber`, `Year` and `dayNumber`.
 

@@ -18,7 +18,7 @@ library(ggplot2)
 library(dplyr)
 ```
 
-For these examples I will use the animal life-history data set `Anage`. 
+For these examples I will use the animal life-history data set `Anage`.^[AnAge, the database of animal ageing and longevity (<https://genomics.senescence.info/species/>). Tacutu, R. et al. (2018). Human Ageing Genomic Resources: new and updated databases. *Nucleic Acids Research* 46(D1): D1083–D1090. <https://doi.org/10.1093/nar/gkx1042>] 
 
 ```{r 2-03-pimpYourPlots-1,echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 x <- read.csv("CourseData/anage_data.csv")
@@ -239,7 +239,7 @@ p3 +
   theme_economist()
 ```
 
-This package also includes some useful colour scales, including `scale_color_colorblind()`, which uses the Okabe-Ito colours. These stay distinguishable for people with the commonest kinds of colour-vision deficiency (about 1 in 12 men and 1 in 200 women have red-green colour-vision deficiency). The `viridis` palettes above are also designed with this in mind. You can check any figure with a free simulator such as Coblis.
+This package also includes some useful colour scales, including `scale_color_colorblind()`, which uses the Okabe-Ito colours.^[Okabe, M. & Ito, K. (2008). *Color Universal Design (CUD): how to make figures and presentations that are friendly to colorblind people*. <https://jfly.uni-koeln.de/color/>] These stay distinguishable for people with the commonest kinds of colour-vision deficiency (about 1 in 12 men and 1 in 200 women have red-green colour-vision deficiency). The `viridis` palettes above are also designed with this in mind. You can check any figure with a free simulator such as Coblis.
 
 ```{r 2-03-pimpYourPlots-20, echo = TRUE,message=FALSE, fig.height=3, fig.width = 5,fig.align='center',message = FALSE,warning = FALSE}
 p3 +

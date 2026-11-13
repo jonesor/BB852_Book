@@ -18,6 +18,10 @@ Similar questions are also relevant **after** running an experiment. For example
 **Avoid "observed power".** It can be tempting, after a non-significant result, to calculate the power of your study using the effect size you actually observed. This "observed" (or "post hoc") power tells you nothing new: it is simply a re-expression of your p-value (a non-significant result always has low observed power). The useful questions are the ones above: what effect size *could* the study have detected, or what sample size would be needed to detect an effect of a size that matters biologically? The confidence interval for the difference is also very helpful here, because it shows the range of effect sizes that are compatible with your data.
 ```
 
+```{block 3-10-Power-Analysis-effect-size, type="do-something"}
+**Choosing the effect size.** Use pilot data to estimate the *variation* (the standard deviation). For the *effect size*, use the smallest difference that would matter biologically, decided before you see the results. A pilot's observed difference is a noisy estimate from a small sample. Pilots that look promising tend to overestimate the effect, so planning around them often gives a study with less power than intended.
+```
+
 These types of questions are closely related to the two types of error that one can make when testing hypotheses:
 
 * A **Type I** error is the rejection of a true null hypothesis. For example, when there truly is no effect of an experimental treatment, but you detect one in error.
@@ -312,7 +316,7 @@ Then try the same idea in R.
 
 ## Summary
 
-Simulation is a powerful tool to help design studies and to understand their results. The recipe is always the same: (1) decide on realistic values for the effect you hope to detect and the variation you expect, based on previous work or pilot data; (2) simulate data with those properties; (3) analyse the simulated data with the test or model you plan to use; and (4) repeat many times and count how often the result is significant. Only the random-number function (`rnorm`, `rbinom`, `rpois`, ...) and the analysis (`t.test`, `lm`, `glm`, ...) need to change. You can then vary the sample size (or the design, such as the spread of predictor values) until the power reaches your target, usually 80%.
+Simulation is a powerful tool to help design studies and to understand their results. The recipe is always the same: (1) decide on the smallest effect that would matter biologically, and on realistic values for the variation, based on previous work or pilot data; (2) simulate data with those properties; (3) analyse the simulated data with the test or model you plan to use; and (4) repeat many times and count how often the result is significant. Only the random-number function (`rnorm`, `rbinom`, `rpois`, ...) and the analysis (`t.test`, `lm`, `glm`, ...) need to change. You can then vary the sample size (or the design, such as the spread of predictor values) until the power reaches your target, usually 80%.
 
 ## Exercise 1: Snails on the move
 

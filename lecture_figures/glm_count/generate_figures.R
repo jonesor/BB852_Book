@@ -95,7 +95,8 @@ bb852_sizes <- list(
   full     = c(11.73, 3.95),
   takeaway = c(7.40, 4.25),
   half     = c(5.57, 4.25),
-  cover    = c(5.43, 7.50)
+  cover    = c(5.43, 7.50),
+  inset    = c(5.20, 3.40)   # small figure beside the big number on a Big Fact slide
 )
 
 output_root <- file.path("lecture_figures", "glm_count", "output")
@@ -396,9 +397,10 @@ count_panel <- ggplot(newData, aes(weight, fit)) +
   geom_point(data = fox, aes(weight, noffspring), colour = bb852$light,
              size = 1.8, alpha = 0.6) +
   geom_line(colour = bb852$coral, linewidth = 1.4) +
-  annotate("text", x = 1.75, y = 10.8, hjust = 0, size = pt(15),
-           family = bb852_font, fontface = "bold", colour = bb852$coral,
-           label = "each kg: \u00d7 1.88") +
+  # Weight sits in the exponent: a curve, not "+1.88 pups per kg".
+  annotate("text", x = 1.72, y = 10.6, hjust = 0, size = pt(15),
+           family = bb852_font, colour = bb852$coral, parse = TRUE,
+           label = 'bold("0.47") %*% bold("1.88")^bold("weight")') +
   scale_y_continuous(limits = c(0, 11.5), breaks = seq(0, 12, 4)) +
   scale_x_continuous(limits = c(1.65, 4.45)) +
   labs(x = weight_lab, y = "Number of pups",
@@ -425,6 +427,8 @@ plots$slide_22_predictions <- ggplot(fox, aes(weight, noffspring)) +
 
 # Slide 27: overdispersion in the elephant poaching data ---------------------------
 # Same fitted line under poisson and quasipoisson; only the uncertainty differs.
+# No effect-size labels on the panels: the bands tell the story (values are in
+# the slide notes and checked by stopifnot() below).
 
 grid_p <- data.frame(scoutPerKm = seq(min(poaching$scoutPerKm),
                                       max(poaching$scoutPerKm), length.out = 200))
@@ -449,12 +453,6 @@ per10 <- function(model) {
 }
 eff_pois <- per10(mod_pois)
 eff_quasi <- per10(mod_quasi)
-band_labels <- data.frame(
-  model = factor(c("poisson", "quasipoisson"),
-                 levels = c("poisson", "quasipoisson")),
-  text = c(sprintf("\u00d7%.2f (95%% CI %.2f to %.2f)", eff_pois[1], eff_pois[2], eff_pois[3]),
-           sprintf("\u00d7%.2f (95%% CI %.2f to %.2f)", eff_quasi[1], eff_quasi[2], eff_quasi[3]))
-)
 stopifnot(
   abs(eff_pois[1] - 0.68) < 0.005,
   abs(eff_pois[2] - 0.57) < 0.005, abs(eff_pois[3] - 0.81) < 0.005,
@@ -468,11 +466,8 @@ plots$slide_27_overdispersion <- ggplot(poaching, aes(scoutPerKm * 1000, nkilled
   geom_line(data = bands, aes(scoutPerKm * 1000, fit), colour = bb852$coral,
             linewidth = 1.3) +
   geom_point(colour = bb852$slate, size = 2.4, alpha = 0.7) +
-  geom_text(data = band_labels, aes(x = 29, y = 33, label = text),
-            inherit.aes = FALSE, hjust = 1, size = pt(14),
-            family = bb852_font, fontface = "bold", colour = bb852$text) +
   facet_wrap(~model, nrow = 1) +
-  scale_y_continuous(limits = c(0, 35)) +
+  scale_y_continuous(limits = c(0, 30)) +
   labs(x = "Scout patrols per 1000 km", y = "Elephants killed") +
   theme_bb852(16)
 half_plots$slide_27_overdispersion <- plots$slide_27_overdispersion +
@@ -519,6 +514,52 @@ plots$slide_24_groups <- ggplot(rb, aes(habitatType, nSpecies)) +
   theme(panel.grid.major.x = element_blank())
 
 
+# Slide 21: x1.88 is a ratio, shown with 2, 3 and 4 kg mothers --------------------
+# Each extra kg multiplies the expected litter by the same 1.88
+# (1.67 -> 3.15 -> 5.93 pups), so the gain in pups grows (+1.5, then +2.8);
+# it is not +1.88 pups per kg. Also saved at the "inset" size for the Big Fact
+# slide.
+
+ratio_pts <- data.frame(weight = 2:4)
+ratio_pts$mu <- predict(mod1, ratio_pts, type = "response")
+ratio_b <- exp(cf[["weight"]])
+gains <- diff(ratio_pts$mu)
+stopifnot(
+  all(abs(ratio_pts$mu[-1] / ratio_pts$mu[-3] - ratio_b) < 1e-8),
+  all(abs(ratio_pts$mu - c(1.67, 3.15, 5.93)) < 0.01),
+  all(abs(gains - c(1.48, 2.78)) < 0.01)
+)
+calc_labs <- data.frame(
+  y = c(10.1, 9.2),
+  label = sprintf("%.2f \u00d7 %.2f \u2248 %.2f", ratio_pts$mu[-3], ratio_b,
+                  ratio_pts$mu[-1])
+)
+gain_lab <- sprintf("+%.1f pups, then +%.1f: not +%.2f each kg",
+                    gains[1], gains[2], ratio_b)
+
+plots$slide_21_ratio <- ggplot(newData, aes(weight, fit)) +
+  geom_segment(data = ratio_pts, aes(x = weight, xend = weight, y = 0, yend = mu),
+               inherit.aes = FALSE, colour = bb852$grey, linetype = "22",
+               linewidth = 0.6) +
+  geom_line(colour = bb852$coral, linewidth = 1.4) +
+  geom_point(data = ratio_pts, aes(weight, mu), inherit.aes = FALSE,
+             colour = bb852$slate, size = 3.5) +
+  geom_text(data = ratio_pts,
+            aes(weight + 0.1, mu - 0.35, label = sprintf("%.2f pups", mu)),
+            inherit.aes = FALSE, hjust = 0, size = pt(14), family = bb852_font,
+            fontface = "bold", colour = bb852$slate) +
+  geom_text(data = calc_labs, aes(x = 1.72, y = y, label = label),
+            inherit.aes = FALSE, hjust = 0, size = pt(16), family = bb852_font,
+            fontface = "bold", colour = bb852$coral) +
+  annotate("text", x = 1.72, y = 8.3, hjust = 0, size = pt(14),
+           family = bb852_font, colour = bb852$grey, label = gain_lab) +
+  scale_x_continuous(limits = c(1.65, 4.9), breaks = 2:4) +
+  scale_y_continuous(limits = c(0, 10.6), breaks = seq(0, 10, 2),
+                     expand = expansion(mult = c(0, 0.02))) +
+  labs(x = weight_lab, y = "Expected pups") +
+  theme_bb852()
+
+
 # Save every figure ------------------------------------------------------------------
 
 takeaway_slides <- c("slide_06_lm_problems", "slide_19_log_scale")
@@ -537,3 +578,4 @@ for (name in names(plots)) {
                name, layout = "takeaway")
   }
 }
+save_bb852(plots$slide_21_ratio + theme_bb852(14), "slide_21_ratio", layout = "inset")

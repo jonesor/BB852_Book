@@ -44,7 +44,7 @@
 - Confirm that the times are correct by cross referencing the outputs on the website with the official calendar.
 - Edit the Instructors part of `Index.Rmd` to add/remove instructors as appropriate.
 - Edit the Excel schedule `BB852_Schedule.xlsx` to put the instructors in the correct place.
-- Remove/edit the old exam(s) and place in `historicExams` folder
+- Remove/edit the old exam(s) and place in `assessment_private/historicExams` (git-ignored, never committed)
 - Check/add/remove items in `ExtraReading.Rmd`
 - Style check: `scripts/style.R`
 - Spell check: `scripts/SpellCheckScript.R`

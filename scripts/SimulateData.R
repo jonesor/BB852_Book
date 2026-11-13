@@ -87,7 +87,9 @@ write.csv(x3, file = "DataSetLibrary/roundabouts.csv", row.names = FALSE)
 rm(x, x2, x3, sampleSize)
 
 # Crabs -----
-source("examPreparationCode/simulateCrabs.R")
+# Exam data (crabFights.csv, 2022 paper): simulated by
+# assessment_private/examPreparationCode/simulateCrabs.R, which is git-ignored.
+# Not sourced here because the book build on GitHub cannot see that folder.
 
 # Niveoscincus Character displacement----
 

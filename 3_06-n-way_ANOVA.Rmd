@@ -153,7 +153,7 @@ This summary `Analysis of Variance Table` is similar to the ones you have alread
 
 This means that all of those terms in the model explain a significant proportion of the variation in insect length. 
 
-The interaction row is the one to look at first. Because the interaction is significant, the effect of diet *depends on* genotype, so the main-effect rows for diet and genotype cannot be interpreted on their own: there is no single "effect of diet" to report, because its size differs between the genotypes. Instead we describe the effect of diet separately for each genotype, using the plot and the post-hoc test below. (If the interaction had *not* been significant, we would drop it, refit the model with the main effects only, and interpret those, as in the exercise at the end of this chapter.)
+The interaction row is the one to look at first. Because the interaction is significant, the effect of diet *depends on* genotype, so the main-effect rows for diet and genotype cannot be interpreted on their own: there is no single "effect of diet" to report, because its size differs between the genotypes. Instead we describe the effect of diet separately for each genotype, using the plot and the post-hoc test below. (A non-significant interaction would not, by itself, show that the effect of diet is the same in both genotypes: look at the interaction estimate and its confidence interval too. If the interaction is small and not part of your question, you can drop it and interpret the main effects. If it is part of your question, keep it and report it whatever its p-value, as in the exercise at the end of this chapter.)
 
 But as you know, this summary table doesn't tell you the direction of the effects. The obvious way to understand your data is to simply look at the plot you have already produced. You could also make an **interaction plot** which is a simplified version of the plot of the raw data. 
 
@@ -269,7 +269,7 @@ Then try the same idea in R.
 
 Individual differences in animal personality and external appearance such as colouration patterns have both been extensively studied separately. A significant body of research has explored many of the pertinent ecological and biological aspects that can be affected by them and their impact upon fitness. Currently little is known about how both factors interact and their effect on reproductive success.
 
-Researchers carried out a study looking at differences in personality and its interaction with colour phenotype in zebrafish (*Danio rerio*). They used two colour morphs, "homogeneous" which has clearly defined lateral stripes,  and "heterogeneous" which has more variable and less clear patterns.
+Researchers carried out a study looking at differences in personality and its interaction with colour phenotype in zebrafish (*Danio rerio*).^[This exercise is based on Vargas, R., Mackenzie, S. & Rey, S. (2018). "Love at first sight": the effect of personality and colouration patterns in the reproductive success of zebrafish (*Danio rerio*). *PLoS ONE* 13(9): e0203320. <https://doi.org/10.1371/journal.pone.0203320>] They used two colour morphs, "homogeneous" which has clearly defined lateral stripes,  and "heterogeneous" which has more variable and less clear patterns.
 
 They also assigned individuals to two personality types which they called "Proactive" (adventurous, risk taking) and "Reactive" (timid, less risk taking). They did this by recording how they explore a new environment.
 
@@ -291,8 +291,8 @@ The research questions are: *What is the relative influence of colour pattern an
 
 5) Use `anova` to get an Analysis of Variance summary table. Start with the interaction row: is there evidence that the effect of personality depends on colour pattern? There are only 8 fish in each group, so what does a non-significant result tell you, and what does it not tell you?
 
-6) If the interaction is not needed, drop it and refit the model with the two main effects only (`spawning ~ personality + colouration`). Use `anova` on this simpler model to test the main effects.
+6) Whether personality effects depend on colour pattern is part of the research question, so keep the interaction in the model whatever its p-value. Get the coefficient summary (`summary`) and confidence intervals (`confint`) of the interaction model. The interaction coefficient is the difference between the two colour morphs in the effect of personality: how large is it, and what range of values does its confidence interval allow?
 
-7) Get the coefficient summary (`summary`) and confidence intervals (`confint`) of the final model, and interpret them. How much more do proactive fish spawn than reactive ones, and homogeneous than heterogeneous ones? (Each variable has only two levels, so no post-hoc test is needed.)
+7) To summarise the average effect of each variable, fit the main-effects model (`spawning ~ personality + colouration`) and get its `summary` and `confint`. How much more do proactive fish spawn than reactive ones on average, and homogeneous than heterogeneous ones? (Each variable has only two levels, so no post-hoc test is needed.)
 
 8) Sum up your findings with reference to the initial research questions. Avoid concluding that personality matters "in one colour morph but not the other": that is a claim about an interaction, so it needs the interaction test, not separate comparisons within each colour morph.

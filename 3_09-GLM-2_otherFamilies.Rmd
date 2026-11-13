@@ -111,7 +111,7 @@ Given these limitations, it is often better to avoid relying heavily on traditio
 
 ### DHARMa
 
-The **DHARMa** package is an alternative approach to model diagnostics, particularly where traditional tools like `ggfortify::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
+The **DHARMa** package^[Hartig, F. *DHARMa: Residual Diagnostics for Hierarchical (Multi-Level/Mixed) Regression Models*. R package. <https://CRAN.R-project.org/package=DHARMa>] is an alternative approach to model diagnostics, particularly where traditional tools like `ggfortify::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
 
 At the heart of DHARMa's approach is the `simulateResiduals()` function. The function simulates standardised residuals based on the model's assumptions, including the specified error distribution and link function. DHARMa then constructs diagnostic plots that can reveal model deficiencies such as mismatched link functions, unmodelled predictors, and overdispersion.
 
@@ -162,6 +162,17 @@ The slope (`r formatC(coef(nflMod)[["Distance"]], digits = 3, format = "f")`) is
 ```{r 3-09-GLM-2-otherFamilies-or}
 exp(coef(nflMod)[["Distance"]]) # odds ratio per metre
 exp(confint.default(nflMod)["Distance", ]) # 95% CI for the odds ratio
+```
+
+```{block2 3-09-GLM-2-odds-ratio-box, type="do-something"}
+**Reading an odds ratio.** The *odds* of success are the probability of success divided by the probability of failure, p / (1 - p). A probability of 0.8 gives odds of 0.8 / 0.2 = 4 ("4 to 1"); a probability of 0.5 gives odds of 1. An *odds ratio* compares two odds: here, the odds at one distance with the odds one metre further away.
+
+- An odds ratio of **1** means no effect: the odds are the same.
+- Below 1, the odds decrease (an odds ratio of 0.88 means the odds fall by 12%, because 1 - 0.88 = 0.12). Above 1, they increase (1.25 means 25% higher odds).
+- To judge whether the data are compatible with no effect, check whether the 95% confidence interval for the odds ratio includes **1, not 0**. The value 0 is the "no effect" value on the log-odds scale, which is what `summary()` and `coef()` report: exp(0) = 1, so the two checks always agree.
+- An odds ratio is not a ratio of probabilities. Halving the odds does not halve the probability, except when the probability is small. Use `predict()` (below) when you want to talk about probabilities.
+
+The same reading applies to `exp()` of a coefficient from a Poisson GLM (see the previous chapter), except that it multiplies the expected count rather than the odds.
 ```
 
 ```{r 3-09-GLM-2-otherFamilies-or-store, echo = FALSE}
