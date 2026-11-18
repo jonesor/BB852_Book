@@ -39,6 +39,7 @@ In this chapter we use these packages (and, as always, work inside your course R
 library(dplyr)
 library(ggplot2)
 library(ggfortify) # for autoplot()
+library(DHARMa)    # simulation-based diagnostics; install.packages("DHARMa") if needed
 ```
 
 
@@ -63,6 +64,21 @@ autoplot(mod1)
 ```
 
 These diagnostic plots are basically the same as the ones you saw for `lm` models. There is one difference: the plots use standardised *deviance* residuals instead of standardised residuals. These are transformed versions of the residuals that will look *normal* (in the statistical sense) if the family of the GLM is appropriate. So, if "poisson" is the right family, the QQ-plot should show points on the diagonal dashed line, and the Scale-location plot should have no strong patterns.
+
+With count data these plots are often hard to judge. The residuals vs fitted plot shows diagonal bands (one for each integer count), and with small counts the points in the QQ-plot rarely sit exactly on the line even when the model is fine. Is a pattern a real problem, or just what small counts look like?
+
+#### Checking the model with DHARMa
+
+The `DHARMa` package answers this question by simulation. It uses the fitted model to simulate many new data sets (250 by default), each of which is what the data *could* look like if the model were exactly right. For each observation it then asks where the real value falls among its simulated values. If it is lower than all of them its residual is 0, if higher than all of them it is 1, and if it is in the middle it is 0.5. If the model is right these *simulated residuals* are spread evenly (uniformly) between 0 and 1, whatever the family, so they can be judged with the same rules every time.
+
+```{r 3-08-GLM-1-Poisson-4b, echo=TRUE, fig.width=8, fig.height=4, fig.align='center', fig.pos = "ht", message = FALSE, warning = FALSE}
+fox_sim <- simulateResiduals(mod1)
+plot(fox_sim)
+```
+
+Here none of them is significant, so the Poisson model is fine, and the odd-looking patterns in the `autoplot` panels were just what small counts look like. The right-hand panel plots the residuals against the predicted values and checks the same things as the residuals vs fitted plot from `autoplot`.
+
+A useful rule: if `autoplot` and DHARMa agree, fine; if they disagree, believe DHARMa.
 
 Now we can ask for the Analysis of Variance table for this model. This is exactly the same procedure as for the previous linear models (ANOVA, ANCOVA etc.) except that for GLMs it is good practice to state which significance test you want, using `test = "Chi"` or `test = "F"`. For Poisson and binomial GLMs (where the dispersion is fixed) the chi-squared test is most appropriate, while for Gaussian (normal), quasibinomial and quasipoisson models (where the dispersion is estimated) the F test is most appropriate. In versions of R before 4.4.0 no test is shown unless you ask for one; from R 4.4.0, `anova()` chooses the appropriate test by default, but writing it explicitly makes your choice clear and works in every version.
 
@@ -187,7 +203,13 @@ Next, plot the diagnostic plots.
 autoplot(mod_cancer)
 ```
 
-These look a bit dodgy, but we'll stick with it for the moment. (These `autoplot` diagnostics are hard to read here because the data are dominated by low counts and zeros. In the next chapter we will meet a simulation-based diagnostic tool, `DHARMa`, that makes awkward cases like this much clearer: it would be a good exercise to return to this model and re-examine it with DHARMa once you have learned about it.)
+These look a bit dodgy, but the data are dominated by low counts and zeros, which makes `autoplot` hard to read. Check with DHARMa:
+
+```{r 3-08-GLM-1-Poisson-14b, echo=TRUE, fig.width=8, fig.height=4, fig.align='center', fig.pos = "ht", message = FALSE, warning = FALSE}
+plot(simulateResiduals(mod_cancer))
+```
+
+Look at the left-hand panel and the tests printed on it, and keep what you see in mind: we come back to this model in the section on overdispersion below.
 
 Next ask for the Analysis of Variance table.
 
@@ -211,7 +233,7 @@ You might, however, have noticed that the diagnostic plots for this model looked
 
 ### Overdispersion: What It Is and Why It Matters
 
-**Overdispersion** occurs when the observed variance in the response variable exceeds what is expected under the model's assumptions. For example, in a **Poisson model**, the variance is expected to equal the mean. If the actual variance is significantly larger, overdispersion is present. There's a nice intuitive description of this in the textbook (Getting Started With R, section 7.5.1). To diagnose overdispersion, you compare the `Residual deviance` to the `degrees of freedom`.  In a perfect Poisson model, these values will be approximately equal, so we can generate a useful index of overdispersion by dividing the residual deviance by the degrees of freedom. As a "rule of thumb", an overdispersion index below about 1.5 is fine, values between about 1.5 and 2 call for caution, and values above 2 are problematic. The index is only a rough guide, particularly when there are few residual degrees of freedom.
+**Overdispersion** occurs when the observed variance in the response variable exceeds what is expected under the model's assumptions. For example, in a **Poisson model**, the variance is expected to equal the mean. If the actual variance is significantly larger, overdispersion is present. There's a nice intuitive description of this in the textbook (Getting Started With R, section 7.5.1). To diagnose overdispersion, you compare the `Residual deviance` to the `degrees of freedom`.  In a perfect Poisson model, these values will be approximately equal, so we can generate a useful index of overdispersion by dividing the residual deviance by the degrees of freedom. As a "rule of thumb", an overdispersion index below about 1.5 is fine, values between about 1.5 and 2 call for caution, and values above 2 are problematic. The index is only a rough guide, particularly when there are few residual degrees of freedom. DHARMa gives a formal test of the same thing, `testDispersion()`, which compares the spread of the real data with the spread of data simulated from the model.
 
 **Causes of Overdispersion**:
 
@@ -259,6 +281,14 @@ deviance(mod_pois) / df.residual(mod_pois)
 
 This is about `r round(deviance(mod_pois) / df.residual(mod_pois), 1)`, well above 2, so the data are overdispersed. That means the Poisson standard errors, and the p-values derived from them, are **too optimistic** and cannot be trusted.
 
+DHARMa agrees:
+
+```{r 3-08-GLM-1-Poisson-19b}
+testDispersion(simulateResiduals(mod_pois), plot = FALSE)
+```
+
+A dispersion ratio well above 1 with a small p-value means the real data are more spread out than the model can produce.
+
 To account for this we refit with the `quasipoisson` family. This estimates a dispersion parameter and widens the standard errors accordingly; the coefficient estimates themselves are unchanged.
 
 ```{r 3-08-GLM-1-Poisson-20}
@@ -269,7 +299,7 @@ summary(mod_quasi)
 Compare the two summaries. The `scoutPerKm` estimate is *identical*, but its standard error has roughly doubled. As a result, the effect that was wildly significant under the Poisson model (p < 0.001) now has a p-value of about 0.05 (`r round(summary(mod_quasi)$coefficients["scoutPerKm", 4], 3)` in the summary table; `anova(mod_quasi, test = "F")` gives a similar value). It is more informative to look at the size of the effect: 10 more scout patrols per 1000 km (0.01 per km) multiply the expected number of elephants killed by `r round(exp(0.01 * coef(mod_quasi)[["scoutPerKm"]]), 2)` under both models, but the 95% confidence interval widens from `r paste(round(exp(0.01 * (coef(mod_pois)[["scoutPerKm"]] + c(-1.96, 1.96) * sqrt(vcov(mod_pois)[2, 2]))), 2), collapse = " to ")` (Poisson) to `r paste(round(exp(0.01 * (coef(mod_quasi)[["scoutPerKm"]] + c(-1.96, 1.96) * sqrt(vcov(mod_quasi)[2, 2]))), 2), collapse = " to ")` (quasi-Poisson). The relationship is still there (more scout patrols per km is associated with fewer elephants killed), but honestly accounting for the overdispersion gives a much more realistic (and humble) picture of how certain we can be. This is exactly why checking for overdispersion matters: ignore it, and you risk being far more confident than the data warrant.
 
 ```{block 3-08-GLM-1-Poisson-21, type="do-something"}
-Overdispersion is often caused by an important variable being left out of the model (the "unobserved heterogeneity" mentioned above). Try adding `funding` to the Poisson model (`nkilled ~ scoutPerKm + funding`) and re-checking the overdispersion index. You should find that it drops substantially (to about 1.9: better, though still above 1). The missing variable was part of the problem all along.
+Overdispersion is often caused by an important variable being left out of the model (the "unobserved heterogeneity" mentioned above). Try adding `funding` to the Poisson model (`nkilled ~ scoutPerKm + funding`) and re-checking the overdispersion index and `testDispersion()`. You should find that the index drops substantially (to about 1.9: better, though still above 1). The missing variable was part of the problem all along.
 ```
 
 
@@ -293,7 +323,7 @@ In this example, you will be fitting a GLM equivalent of a t-test that is approp
 
 1) Import the data and graph it (`geom_boxplot`). Try adding the points to the `ggplot` using the new (to you) function `geom_dotplot(binaxis = "y", stackdir = "center")`.
 2) Fit an appropriate GLM.
-3) Examine the diagnostic plots of the model (`autoplot`).
+3) Examine the diagnostic plots of the model (`autoplot`), and check them with DHARMa (`plot(simulateResiduals(...))`).
 4) Get the analysis of variance (deviance) table (`anova`). What does this tell you?
 5) Obtain the `summary` table. What does this tell you?
 6) Use the model to get the predicted average number of mistakes for each age group (plus/minus 95% confidence interval). Start from a data frame of the groups to predict for, `newData <- data.frame(Age = c("Adult", "Child"))`. Remember that (i) the model summary is on the scale of the linear predictor, so `exp(AgeChild)` is the *ratio* of the Child mean to the Adult mean, not the Child mean itself; and (ii) the standard error of the Child mean is not in the `summary` table (it combines both coefficients), so use `predict(..., se.fit = TRUE)` as in the fox example: calculate the 95% CI as the fit plus/minus 1.96 times the standard error on the link scale, then back-transform. Ask for help if you get stuck.

@@ -105,29 +105,18 @@ autoplot(nflMod)
 ```
 
 
-Given these limitations, it is often better to avoid relying heavily on traditional diagnostic plots for logistic regression. Instead, it is more prudent to evaluate your model choice based on theoretical principles, particularly those addressing the bounded nature of the response variable.
+Given these limitations, don't rely on `autoplot` for binary data. Instead, check the model with DHARMa, which you met in the Poisson GLM chapter.
 
-**However**, a newer diagnostic method specifically suited to models like logistic regression exists: the `DHARMa` package offers an alternative simulation-based approach that provides clearer and more reliable insights.
+### DHARMa: a recap
 
-### DHARMa
-
-The **DHARMa** package^[Hartig, F. *DHARMa: Residual Diagnostics for Hierarchical (Multi-Level/Mixed) Regression Models*. R package. <https://CRAN.R-project.org/package=DHARMa>] is an alternative approach to model diagnostics, particularly where traditional tools like `ggfortify::autoplot` fall short, especially for models involving non-Gaussian data types such as binomial or Poisson distributions. These types of data often challenge standard diagnostic methods, making interpretation difficult. 
-
-At the heart of DHARMa's approach is the `simulateResiduals()` function. The function simulates standardised residuals based on the model's assumptions, including the specified error distribution and link function. DHARMa then constructs diagnostic plots that can reveal model deficiencies such as mismatched link functions, unmodelled predictors, and overdispersion.
-
-The two plots are the **Q-Q plot** and the **residuals versus predicted values plot**. The **Q-Q plot** compares the observed residuals against an expected distribution generated from the simulations. A well-fitted model is reflected by points aligning along the diagonal. The **residuals versus predicted values plot** allows users to check for patterns in residuals, with a random scatter indicating a well-fitting model. Deviations from these expectations signal issues like incorrect link functions, overdispersion, or omitted variables.
-
-Here is how to implement this approach:
+Recall how DHARMa^[Hartig, F. *DHARMa: Residual Diagnostics for Hierarchical (Multi-Level/Mixed) Regression Models*. R package. <https://CRAN.R-project.org/package=DHARMa>] works: `simulateResiduals()` simulates many new data sets from the fitted model and asks where each real observation falls among its simulated values. If the model is right, these simulated residuals are spread evenly between 0 and 1, whatever the family, so exactly the same checks work for binary data as for counts.
 
 ```{r 3-09-GLM-2-DHARMa}
 sim_res <- simulateResiduals(fittedModel = nflMod)
 plot(sim_res)
 ```
 
-The text on the Q-Q plot reports the results of three tests: the KS test, Dispersion test, and Outlier test, each targeting specific aspects of model fit. The KS (Kolmogorov-Smirnov) test checks whether the distribution of residuals aligns with the expected distribution, flagging deviations that suggest model misspecifications. The Dispersion test evaluates whether the variance in the residuals matches the model's assumptions, identifying overdispersion or underdispersion. Finally, the Outlier test highlights residuals that fall outside expected ranges, pointing to potential anomalies or influential data points. Together, these tests provide a comprehensive diagnostic of model performance and in this case indicate that there are no problems.
-
-
-As you can see, the two plots, and the in-built tests, indicate that the model structure is appropriate: The observed and expected points fall on the QQ diagonal line and the residuals versus predicted values plot looks like a random star-field without any patterns.
+As with the fox data, read the left-hand panel first: the points fall on the diagonal, and the KS, dispersion and outlier tests are all non-significant. The right-hand panel (residuals against predicted values) shows no pattern. So the model structure is appropriate, even though `autoplot` looked alarming.
 
 This example illustrates a general principle. **DHARMa is a reliable, general-purpose diagnostic tool for GLMs.** Because it works by simulation, it produces trustworthy residuals whatever the error family (binomial, Poisson, and so on) and whatever the structure of the data. The traditional `autoplot` diagnostics, by contrast, become less and less reliable as the response data become more discrete. They are perfectly readable for ordinary linear models and remain acceptable for GLMs with *aggregated* or high-count responses, but they can be very misleading for *binary* (0/1) data like the NFL field goals. The reason is that, for binary data, the residual at any given fitted value can only take one of two possible values, so the Q-Q plot looks alarming even when the model is perfectly appropriate, which is exactly what we saw with `autoplot(nflMod)` earlier.
 

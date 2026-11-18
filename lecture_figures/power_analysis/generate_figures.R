@@ -411,6 +411,7 @@ save_text(c(
 
 
 # Slide 20: power against sample size --------------------------------------------------
+# No formula (power.t.test) line on the figure: students meet power by simulation only.
 
 n80 <- power_curve$sampleSize[which(power_curve$Power >= 0.8)[1]]
 n80_analytic <- ceiling(power.t.test(power = 0.8, delta = 2.4, sd = 3)$n)
@@ -418,8 +419,6 @@ n80_analytic <- ceiling(power.t.test(power = 0.8, delta = 2.4, sd = 3)$n)
 plots$slide_20_power_curve <- ggplot(power_curve, aes(sampleSize, Power)) +
   geom_hline(yintercept = 0.8, colour = bb852$coral, linetype = "dashed",
              linewidth = 0.8) +
-  geom_vline(xintercept = n80_analytic, colour = bb852$grey,
-             linetype = "dotted", linewidth = 0.6) +
   geom_line(colour = bb852$slate, linewidth = 0.8) +
   geom_point(colour = bb852$slate, size = 2.2) +
   annotate("point", x = 10, y = power_curve$Power[power_curve$sampleSize == 10],
@@ -427,9 +426,6 @@ plots$slide_20_power_curve <- ggplot(power_curve, aes(sampleSize, Power)) +
   annotate("text", x = 11, y = power_curve$Power[power_curve$sampleSize == 10] - 0.04,
            label = "n = 10", hjust = 0, colour = bb852$coral,
            size = pt(16), family = bb852_font, fontface = "bold") +
-  annotate("text", x = n80_analytic + 0.5, y = 0.1,
-           label = paste(n80_analytic, "(formula)"), hjust = 0,
-           colour = bb852$grey, size = pt(15), family = bb852_font) +
   annotate("text", x = 5, y = 0.86, label = "80% power", hjust = 0,
            colour = bb852$coral, size = pt(16), family = bb852_font) +
   scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.2),

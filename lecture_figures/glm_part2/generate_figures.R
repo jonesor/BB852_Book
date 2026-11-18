@@ -9,6 +9,7 @@
 #   hawksbill.csv         aggregated binomial GLM with cbind() (7 clutches)
 # Simulated residuals: DHARMa::simulateResiduals(nflMod, n = 250, seed = 123)
 #   for the autoplot() vs DHARMa Q-Q comparison (needs the DHARMa package).
+# Binned (nfl_logit only): observed log-odds of success for 5 m distance bins.
 # Analytical (no data): mean-variance curves, logit link curves, exact
 #   binomial confidence intervals for 1/2, 5/10 and 50/100 survivors.
 #
@@ -271,6 +272,73 @@ plots$nfl_fit <- ggplot(NFL, aes(Distance, Success)) +
   labs(x = "Distance (m)", y = "Probability of success") +
   theme_bb852()
 save_all(plots$nfl_fit, "nfl_fit", "takeaway")
+
+# Figure: the same NFL model on the scale of the linear predictor (log-odds).
+# Shown just before nfl_fit so the slope and intercept can be read off a
+# straight line first. Binary data cannot be drawn on this scale (the logit of
+# 0 or 1 is infinite), so the data are shown as observed log-odds for 5 m
+# distance bins (empirical logit, log((successes + 0.5) / (misses + 0.5)));
+# point area shows the number of kicks. Bins with fewer than 10 kicks dropped.
+nfl_bins <- cut(NFL$Distance, breaks = seq(15, 50, by = 5))
+nfl_binned <- do.call(rbind, lapply(split(NFL, nfl_bins), function(d) {
+  data.frame(Distance = mean(d$Distance), n = nrow(d),
+             logit = log((sum(d$Success) + 0.5) /
+                           (sum(1 - d$Success) + 0.5)))
+}))
+nfl_binned <- nfl_binned[nfl_binned$n >= 10, ]
+
+nfl_link <- data.frame(Distance = seq(0, 52, 0.25))
+nfl_link_pv <- predict(nflMod, newdata = nfl_link, se.fit = TRUE)
+nfl_link$fit <- nfl_link_pv$fit
+nfl_link$lwr <- nfl_link_pv$fit - 1.96 * nfl_link_pv$se.fit
+nfl_link$upr <- nfl_link_pv$fit + 1.96 * nfl_link_pv$se.fit
+nfl_in_data <- nfl_link[nfl_link$Distance >= min(NFL$Distance), ]
+nfl_extrap <- nfl_link[nfl_link$Distance <= min(NFL$Distance), ]
+
+b0 <- coef(nflMod)[[1]]
+b1 <- coef(nflMod)[[2]]
+step_x <- c(17, 33)  # two 10 m steps: the same drop in log-odds everywhere
+nfl_steps <- data.frame(x = step_x, xend = step_x + 10,
+                        y = b0 + b1 * step_x, yend = b0 + b1 * (step_x + 10))
+
+plots$nfl_logit <- ggplot() +
+  geom_hline(yintercept = 0, colour = bb852$teal, linewidth = 0.6,
+             linetype = "22") +
+  geom_ribbon(data = nfl_in_data, aes(Distance, ymin = lwr, ymax = upr),
+              fill = bb852$coral, alpha = 0.2) +
+  geom_line(data = nfl_extrap, aes(Distance, fit), colour = bb852$coral,
+            linewidth = 1, linetype = "22") +
+  geom_line(data = nfl_in_data, aes(Distance, fit), colour = bb852$coral,
+            linewidth = 1.2) +
+  geom_point(data = nfl_binned, aes(Distance, logit, size = n),
+             colour = bb852$slate, alpha = 0.7) +
+  scale_size_area(max_size = 6) +
+  # Slope: run 10 m, drop 1.31 in log-odds, at 17 m and again at 33 m
+  geom_segment(data = nfl_steps, aes(x = x, xend = xend, y = y, yend = y),
+               colour = bb852$slate, linewidth = 0.6) +
+  geom_segment(data = nfl_steps, aes(x = xend, xend = xend, y = y, yend = yend),
+               colour = bb852$slate, linewidth = 0.6) +
+  annotate("text", x = step_x + 11, y = (nfl_steps$y + nfl_steps$yend) / 2,
+           label = sub("-", "\u2212", sprintf("%.2f", 10 * b1)), hjust = 0, colour = bb852$slate,
+           size = pt(14), family = bb852_font) +
+  # Intercept: log-odds at 0 m, outside the data
+  annotate("point", x = 0, y = b0, colour = bb852$coral, size = 3) +
+  annotate("text", x = 1.5, y = b0 + 0.05, hjust = 0, vjust = 0,
+           label = sprintf("intercept %.2f (0 m: not a real kick)", b0),
+           colour = bb852$coral, size = pt(14), family = bb852_font) +
+  # 50:50 point, as on the next slide
+  annotate("segment", x = p50, xend = p50, y = -1.6, yend = 0,
+           colour = bb852$teal, linewidth = 0.6, linetype = "22") +
+  annotate("text", x = p50 - 0.8, y = -0.95, hjust = 1,
+           label = sprintf("50:50 at %.1f m", p50), colour = bb852$teal,
+           size = pt(14), family = bb852_font) +
+  coord_cartesian(xlim = c(-1.5, 53), ylim = c(-1.5, 6.3), expand = FALSE) +
+  scale_x_continuous(breaks = seq(0, 50, 10)) +
+  scale_y_continuous(breaks = seq(-1, 6, 1)) +
+  labs(x = "Distance (m)", y = "Log-odds of success") +
+  theme_bb852()
+save_all(plots$nfl_logit, "nfl_logit", "takeaway")
+save_output("nfl_binned", "nfl_logit_bins")
 
 
 # Figure: autoplot() vs DHARMa Q-Q plots for the binary NFL model ------------

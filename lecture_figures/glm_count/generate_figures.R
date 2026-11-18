@@ -14,6 +14,8 @@
 #                                    complex vs simple habitat (simulated in
 #                                    scripts/SimulateData.R)
 # Analytical (no data): Poisson probability distributions (slide 11).
+# Simulated: lineups (real data among data sets simulated from the fitted model)
+#   and DHARMa simulated residuals (next-year slides, added 17 Nov 2026).
 #
 # Run from the repository root:
 # source("lecture_figures/glm_count/generate_figures.R")
@@ -33,6 +35,7 @@
 library(ggplot2)
 library(ragg)
 library(patchwork)
+library(DHARMa)  # install.packages("DHARMa") if missing; used for the next-year DHARMa slides
 
 
 # Define the BB852 theme and export functions -----------------------------
@@ -558,6 +561,104 @@ plots$slide_21_ratio <- ggplot(newData, aes(weight, fit)) +
                      expand = expansion(mult = c(0, 0.02))) +
   labs(x = weight_lab, y = "Expected pups") +
   theme_bb852()
+
+
+# Next-year slides: introducing DHARMa with count data -----------------------------
+# Added 17 Nov 2026 for the 2027 deck. DHARMa is introduced in section 03 (after
+# the autoplot() slide) instead of in lecture 17, then reused for the elephant
+# dispersion check in section 05. Three new figures:
+#   lineup_fox        "Which panel is the real data?": the fox data hidden among
+#                     7 data sets simulated from mod1 (the model fits, so the
+#                     real panel should be hard to spot)
+#   dharma_fox        autoplot() Q-Q vs DHARMa Q-Q for mod1, side by side
+#   lineup_elephants  the same lineup for the Poisson elephant model (the real
+#                     data are overdispersed, so they stand out)
+# The answer to each lineup (the panel holding the real data) is written to
+# output/text/ and goes in the slide notes. Simulations use fixed seeds; with
+# other seeds the panels change but the message does not.
+
+# Lineup: real data in one of 8 panels, the rest simulated from the fitted
+# Poisson model (same x values, new y drawn with rpois()).
+make_lineup <- function(data, model, x, y, n_panels = 8, seed) {
+  set.seed(seed)
+  real_panel <- sample(n_panels, 1)
+  mu <- fitted(model)
+  panels <- lapply(seq_len(n_panels), function(i) {
+    d <- data[, c(x, y)]
+    if (i != real_panel) d[[y]] <- rpois(nrow(d), mu)
+    d$panel <- i
+    d
+  })
+  out <- do.call(rbind, panels)
+  out$panel <- factor(out$panel)
+  attr(out, "real_panel") <- real_panel
+  out
+}
+
+lineup_plot <- function(lineup, x, y, xlab, ylab, x_scale = 1) {
+  ggplot(lineup, aes(.data[[x]] * x_scale, .data[[y]])) +
+    geom_point(colour = bb852$slate, alpha = 0.55, size = 1.6) +
+    facet_wrap(~ panel, nrow = 2) +
+    scale_y_continuous(breaks = function(l) pretty(l, n = 3)) +
+    labs(x = xlab, y = ylab) +
+    theme_bb852(14) +
+    theme(strip.text = element_text(size = 16, face = "bold",
+                                    colour = bb852$coral, hjust = 0),
+          panel.spacing = unit(10, "pt"),
+          axis.text = element_text(size = 12))
+}
+
+lineup_fox <- make_lineup(fox, mod1, "weight", "noffspring", seed = 2027)
+plots$lineup_fox <- lineup_plot(lineup_fox, "weight", "noffspring",
+                                weight_lab, pups_lab)
+writeLines(paste("Real fox data are in panel", attr(lineup_fox, "real_panel")),
+           file.path(text_directory, "lineup_fox_answer.txt"))
+
+lineup_ele <- make_lineup(poaching, mod_pois, "scoutPerKm", "nkilled",
+                          seed = 2028)
+plots$lineup_elephants <- lineup_plot(lineup_ele, "scoutPerKm", "nkilled",
+                                      "Scout patrols per 1000 km",
+                                      "Elephants killed", x_scale = 1000)
+writeLines(paste("Real elephant data are in panel",
+                 attr(lineup_ele, "real_panel")),
+           file.path(text_directory, "lineup_elephants_answer.txt"))
+
+# DHARMa for the fox model: what plot(simulateResiduals(mod1)) shows in its
+# left panel, redrawn in the BB852 style next to the autoplot() Q-Q panel.
+fox_sim <- simulateResiduals(mod1, n = 250, seed = 123)
+save_output("testUniformity(fox_sim, plot = FALSE)", "dharma_fox_ks")
+save_output("testDispersion(fox_sim, plot = FALSE)", "dharma_fox_dispersion")
+save_output("testOutliers(fox_sim, plot = FALSE)", "dharma_fox_outliers")
+
+fox_dev <- sort(rstandard(mod1, type = "deviance"))
+fox_qq <- rbind(
+  data.frame(lab = "autoplot()",
+             expected = qnorm(ppoints(length(fox_dev))), observed = fox_dev),
+  data.frame(lab = "DHARMa",
+             expected = ppoints(length(fox_dev)),
+             observed = sort(fox_sim$scaledResiduals))
+)
+qq_fox_panel <- function(label, colour, xlab) {
+  ggplot(subset(fox_qq, lab == label), aes(expected, observed)) +
+    geom_abline(intercept = 0, slope = 1, colour = bb852$grey,
+                linewidth = 0.6, linetype = "22") +
+    geom_point(colour = colour, alpha = 0.5, size = 2) +
+    labs(title = label, x = xlab, y = "Residual") +
+    theme_bb852() + panel_title()
+}
+plots$dharma_fox <-
+  qq_fox_panel("autoplot()", bb852$grey, "Normal quantile") +
+  qq_fox_panel("DHARMa", bb852$slate, "Uniform quantile")
+half_plots$dharma_fox <- plots$dharma_fox & theme_bb852(14) & panel_title(13)
+
+# DHARMa dispersion test for the elephants, without and with funding.
+ele_sim <- simulateResiduals(mod_pois, n = 250, seed = 123)
+ele_sim_funding <- simulateResiduals(mod_pois_funding, n = 250, seed = 123)
+save_output("testDispersion(ele_sim, plot = FALSE)",
+            "dharma_elephants_dispersion")
+save_output("testDispersion(ele_sim_funding, plot = FALSE)",
+            "dharma_elephants_dispersion_funding")
+stopifnot(testDispersion(ele_sim, plot = FALSE)$p.value < 0.05)
 
 
 # Save every figure ------------------------------------------------------------------
